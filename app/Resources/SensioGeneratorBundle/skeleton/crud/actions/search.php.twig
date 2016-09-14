@@ -1,0 +1,50 @@
+    /**
+{% block phpdoc_method_header %}
+     * Search for {{ entity }} entities.
+	 *
+	 * To make this work, add a method like this one to the 
+	 * {{ bundle }}:{{ entity }} repository. Replace the fieldName with
+	 * something appropriate, and adjust the generated search.html.twig
+	 * template.
+	 * 
+     //    public function searchQuery($q) {
+     //        $qb = $this->createQueryBuilder('e');
+     //        $qb->where("e.fieldName like '%$q%'");
+     //        return $qb->getQuery();
+     //    }
+	 *
+{% endblock phpdoc_method_header %}
+     *
+{% block phpdoc_method_annotations %}
+{% if 'annotation' == format %}
+     * @Route("/search", name="{{ route_name_prefix }}_search")
+     * @Method("GET")
+     * @Template()
+	 * @param Request $request
+{% endif %}
+{% endblock phpdoc_method_annotations %}
+     */
+{% block method_definition %}
+    public function searchAction(Request $request)
+{% endblock method_definition %}
+    {
+{% block method_body %}
+        $em = $this->getDoctrine()->getManager();
+		$repo = $em->getRepository('{{ bundle }}:{{ entity }}');
+		$q = $request->query->get('q');
+		if($q) {
+	        $query = $repo->searchQuery($q);
+			$paginator = $this->get('knp_paginator');
+			${{ entity_pluralized }} = $paginator->paginate($query, $request->query->getInt('page', 1), 25);
+		} else {
+			${{ entity_pluralized }} = array();
+		}
+{% endblock method_body %}
+
+{% block method_return %}
+        return array(
+            '{{ entity_pluralized }}' => ${{ entity_pluralized }},
+			'q' => $q,
+        );
+{% endblock method_return %}
+    }

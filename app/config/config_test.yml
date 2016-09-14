@@ -1,5 +1,11 @@
 imports:
     - { resource: config_dev.yml }
+    - { resource: parameters.yml }
+
+liip_functional_test:
+    cache_sqlite_db: true
+    command_verbosity: debug
+    command_decoration: false
 
 framework:
     test: ~
@@ -14,3 +20,20 @@ web_profiler:
 
 swiftmailer:
     disable_delivery: true
+
+doctrine:
+    dbal:
+        default_connection: default
+        connections:
+            default:
+                driver:   pdo_sqlite
+                path:     "%kernel.cache_dir%/test.sqlite"
+                charset: UTF8
+                
+security:
+    firewalls:
+        main:
+            pattern: ^/
+            http_basic: ~
+    encoders:
+        FOS\UserBundle\Model\UserInterface: plaintext

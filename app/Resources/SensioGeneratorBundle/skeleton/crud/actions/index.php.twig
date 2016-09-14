@@ -1,0 +1,32 @@
+    /**
+{% block phpdoc_method_header %}
+     * Lists all {{ entity }} entities.
+{% endblock phpdoc_method_header %}
+     *
+{% block phpdoc_method_annotations %}
+{% if 'annotation' == format %}
+     * @Route("/", name="{{ route_name_prefix }}_index")
+     * @Method("GET")
+     * @Template()
+	 * @param Request $request
+{% endif %}
+{% endblock phpdoc_method_annotations %}
+     */
+{% block method_definition %}
+    public function indexAction(Request $request)
+{% endblock method_definition %}
+    {
+{% block method_body %}
+        $em = $this->getDoctrine()->getManager();
+        $dql = 'SELECT e FROM {{ bundle }}:{{ entity }} e ORDER BY e.id';
+        $query = $em->createQuery($dql);
+        $paginator = $this->get('knp_paginator');
+        ${{ entity_pluralized }} = $paginator->paginate($query, $request->query->getint('page', 1), 25);
+{% endblock method_body %}
+
+{% block method_return %}
+        return array(
+            '{{ entity_pluralized }}' => ${{ entity_pluralized }},
+        );
+{% endblock method_return %}
+    }
