@@ -40,6 +40,10 @@ class {{ entity_class }}Controller extends Controller
         {%- include 'crud/actions/index.php.twig' %}
     {%- endif %}
 
+    {%- if 'index' in actions %}
+        {%- include 'crud/actions/search.php.twig' %}
+    {%- endif %}
+	
     {%- if 'new' in actions %}
         {%- include 'crud/actions/new.php.twig' %}
     {%- endif %}
