@@ -8,6 +8,8 @@
 {% if 'annotation' == format %}
      * @Route("/{id}/delete", name="{{ route_name_prefix }}_delete")
      * @Method("GET")
+	 * @param Request $request
+	 * @param {{ entity_class }} ${{ entity_singularized }}
 {% endif %}
 {% endblock phpdoc_method_annotations %}
      */

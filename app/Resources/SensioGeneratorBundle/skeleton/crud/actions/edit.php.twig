@@ -9,6 +9,8 @@
      * @Route("/{id}/edit", name="{{ route_name_prefix }}_edit")
      * @Method({"GET", "POST"})
      * @Template()
+	 * @param Request $request
+	 * @param {{ entity_class }} ${{ entity_singularized }}
 {% endif %}
 {% endblock phpdoc_method_annotations %}
      */
