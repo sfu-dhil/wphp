@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block pageheader %}
+    <h1>{{ status_code }} {{ status_text }}</h1>
+{% endblock %}
+
+{% block body %}
+
+    <p><strong>{{ exception.class }}</strong> <br>
+        {{ status_code }} - {{ status_text }}<br> 
+        {{ exception.message|nl2br }}
+    </p>
+
+    <p><button class="btn btn-default" onclick="window.history.go(-1)">Back</button>
+
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#linked" data-toggle="tab">Linked Exceptions</a></li>
+        <li role="presentation"><a href="#traces" data-toggle="tab">Stack Traces</a></li>
+        <li role="presentation"><a href="#messages" data-toggle="tab">Log Messages</a></li>
+        <li role="presentation"><a href="#content" data-toggle="tab">Content</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="linked">
+            {% set previous_count = exception.allPrevious|length %}
+            {% if previous_count %}
+                <ul>
+                    {% for i, previous in exception.allPrevious %}
+                        <li>
+                            <strong>{{ previous.class }}</strong><br>
+                            {{ exception.message|nl2br }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+        <div role="tabpanel" class="tab-pane" id="traces">
+            <ul>
+                {% for position, e in exception.toarray %}
+                    <li>
+                        <strong>{{ e.class }}</strong><br>
+                        {{ e.message|nl2br }}
+                        <ol>
+                            {% for trace in e.trace if trace.file %}
+                                <li>{{ trace.file }}:{{trace.line }} {{ trace.function }}</li>
+                                {% endfor %}
+                        </ol>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="messages">
+            {% if logger and logger.counterrors %}
+                <ol>
+                    {% for log in logger.logs %}
+                        <li>{{ log.priorityName }} - {{ log.message }}</li>
+                    {% endfor %}
+                    </ol>
+            {% endif %}
+        </div>
+        <div role="tabpanel" class="tab-pane" id="content">
+            {{ currentContent }}
+        </div>
+    </div>
+
+
+
+{% endblock %}
