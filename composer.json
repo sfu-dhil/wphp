@@ -43,7 +43,7 @@
         "liip/functional-test-bundle": "^1.6",
         "phpunit/phpunit": "^4.8",
         "symfony/var-dumper": "^3.1",
-        "friendsofphp/php-cs-fixer": "^1.12"
+        "squizlabs/php_codesniffer": "^2.7"
     },
     "scripts": {
         "symfony-scripts": [
