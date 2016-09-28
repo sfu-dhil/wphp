@@ -55,7 +55,8 @@
             </tr>
         </thead>
         <tbody>
-        {{ '{% for ' ~ entity_singularized ~ ' in ' ~ entity_pluralized ~ ' %}' }}
+        {{ '{% for result in ' ~ entity_pluralized ~ ' %}' }}
+			{{ '{% set ' ~ entity_singularized ~ ' = result[0] %}' }}
             <tr>
 
         {%- for field, metadata in fields if field != 'id' %}

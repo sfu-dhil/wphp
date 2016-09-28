@@ -18,7 +18,7 @@
 	 * 
 	 * Requires a MatchAgainst function be added to doctrine, and appropriate
 	 * fulltext indexes on your {{ entity }} entity.
-	 *     @ORM\Index(name="alias_name_idx",columns="name", flags={"fulltext"})
+	 *     ORM\Index(name="alias_name_idx",columns="name", flags={"fulltext"})
 	 *
 {% endblock phpdoc_method_header %}
      *
@@ -43,7 +43,7 @@
 		if($q) {
 	        $query = $repo->fulltextQuery($q);
 			$paginator = $this->get('knp_paginator');
-			${{ entity_pluralized }} = $paginator->paginate($query, $request->query->getint('page', 1), 25);
+			${{ entity_pluralized }} = $paginator->paginate($query, $request->query->getInt('page', 1), 25);
 		} else {
 			${{ entity_pluralized }} = array();
 		}

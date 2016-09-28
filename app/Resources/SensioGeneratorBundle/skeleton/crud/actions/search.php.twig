@@ -35,7 +35,7 @@
 		if($q) {
 	        $query = $repo->searchQuery($q);
 			$paginator = $this->get('knp_paginator');
-			${{ entity_pluralized }} = $paginator->paginate($query, $request->query->getint('page', 1), 25);
+			${{ entity_pluralized }} = $paginator->paginate($query, $request->query->getInt('page', 1), 25);
 		} else {
 			${{ entity_pluralized }} = array();
 		}
