@@ -131,3 +131,8 @@ knp_paginator:
     template:
         pagination: KnpPaginatorBundle:Pagination:twitter_bootstrap_v3_pagination.html.twig     # bootstrapy pagination
         sortable: KnpPaginatorBundle:Pagination:sortable_link.html.twig # sort link template
+
+ivory_ck_editor:
+    configs:
+        my_config:
+            toolbar: standard
