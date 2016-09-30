@@ -6,6 +6,12 @@ body > .container {
 
 /* Custom app styles */
 
+label.required::after {
+	content: ' *';
+	color: red;
+	font-weight: bold;
+}
+
 a[href ^= 'mailto:']::after {
     content: "\2709";
     
