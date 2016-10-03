@@ -5,6 +5,12 @@ body > .container {
 
 /* Custom app styles */
 
+div.label-above label {
+	display:block;
+	float: none;
+	text-align: left !important;
+}
+
 label.required::after {
 	content: ' *';
 	color: red;
