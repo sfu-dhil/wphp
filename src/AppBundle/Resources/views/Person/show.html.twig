@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+ {% block pageheader %} 
+    <h1>Person</h1>
+ {% endblock %} 
+
+{% block body %}
+
+    <div class="btn-toolbar">
+    <div class="btn-group pull-right">
+        <a href="{{ path('person_index') }}" class="btn btn-default">
+            <span class="glyphicon glyphicon-arrow-left"></span> Back
+        </a>
+        <a href="{{ path('person_edit', { 'id': person.id }) }}" class="btn btn-default">
+            <span class='glyphicon glyphicon-edit'></span> Edit
+        </a>
+        <a href="{{ path('person_delete', { 'id': person.id }) }}" class="btn btn-default" data-confirm="Are you sure you want to delete this Person?">
+            <span class='glyphicon glyphicon-remove'></span> Delete
+        </a>
+    </div>
+</div>
+    <table class="table table-bordered table-condensed table-hover table-striped">
+        <tbody>
+            <tr>
+                <th>Lastname</th>
+            <td>{{ person.lastName }}</td>
+            </tr>
+            <tr>
+                <th>Firstname</th>
+            <td>{{ person.firstName }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+            <td>{{ person.title }}</td>
+            </tr>
+            <tr>
+                <th>Gender</th>
+            <td>{{ person.gender }}</td>
+            </tr>
+            <tr>
+                <th>Dob</th>
+            <td>{{ person.dob }}</td>
+            </tr>
+            <tr>
+                <th>Dod</th>
+            <td>{{ person.dod }}</td>
+            </tr>
+            <tr>
+                <th>Checked</th>
+                <td>{% if person.checked %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Finalcheck</th>
+                <td>{% if person.finalcheck %}Yes{% else %}No{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+{% endblock %}
