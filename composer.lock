@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "372b615d44df2d3701139548875e3922",
-    "content-hash": "3a281bf2ff82b8d43ee2d01c4177f703",
+    "hash": "10adcef74fcaee2aba83087081e5957c",
+    "content-hash": "2ef9964a05a574416d5e7585e7f01ab7",
     "packages": [
         {
             "name": "beberlei/DoctrineExtensions",
@@ -71,16 +71,16 @@
         },
         {
             "name": "components/jquery",
-            "version": "3.1.0",
+            "version": "3.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/components/jquery.git",
-                "reference": "39192bee49ceb98f36e9592ee2fc5116a414b6cc"
+                "reference": "09a1658378bc1f818856086396ebeab7d0ec2276"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/components/jquery/zipball/39192bee49ceb98f36e9592ee2fc5116a414b6cc",
-                "reference": "39192bee49ceb98f36e9592ee2fc5116a414b6cc",
+                "url": "https://api.github.com/repos/components/jquery/zipball/09a1658378bc1f818856086396ebeab7d0ec2276",
+                "reference": "09a1658378bc1f818856086396ebeab7d0ec2276",
                 "shasum": ""
             },
             "type": "component",
@@ -107,7 +107,7 @@
             ],
             "description": "jQuery JavaScript Library",
             "homepage": "http://jquery.com",
-            "time": "2016-07-08 05:56:55"
+            "time": "2016-09-23 06:06:29"
         },
         {
             "name": "doctrine/annotations",
@@ -994,32 +994,34 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSUserBundle.git",
-                "reference": "4cb7a29869e4a9bef4f51986d48b1a3af76d3f48"
+                "reference": "42691e1806aa3faff2622dbdaae1c3562c925906"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/4cb7a29869e4a9bef4f51986d48b1a3af76d3f48",
-                "reference": "4cb7a29869e4a9bef4f51986d48b1a3af76d3f48",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/42691e1806aa3faff2622dbdaae1c3562c925906",
+                "reference": "42691e1806aa3faff2622dbdaae1c3562c925906",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.9",
-                "symfony/form": "~2.3|~3.0",
-                "symfony/framework-bundle": "~2.3|~3.0",
-                "symfony/security-bundle": "~2.3|~3.0",
-                "symfony/twig-bundle": "~2.3|~3.0"
+                "php": "^5.3.9 || ^7.0",
+                "symfony/form": "^2.7 || ^3.0",
+                "symfony/framework-bundle": "^2.7 || ^3.0",
+                "symfony/security-bundle": "^2.7 || ^3.0",
+                "symfony/twig-bundle": "^2.7 || ^3.0"
             },
             "conflict": {
-                "symfony/doctrine-bridge": "<2.3"
+                "symfony/doctrine-bridge": "<2.7"
             },
             "require-dev": {
-                "doctrine/doctrine-bundle": "~1.3",
-                "swiftmailer/swiftmailer": "~4.3|~5",
-                "symfony/console": "~2.3|~3.0",
-                "symfony/phpunit-bridge": "~2.7|~3.0",
-                "symfony/validator": "~2.3|~3.0",
-                "symfony/yaml": "~2.3|~3.0",
-                "willdurand/propel-typehintable-behavior": "~1.0"
+                "doctrine/doctrine-bundle": "^1.3",
+                "friendsofphp/php-cs-fixer": "^1.11",
+                "phpunit/phpunit": "~4.8|~5.0",
+                "swiftmailer/swiftmailer": "^4.3 || ^5.0",
+                "symfony/console": "^2.7 || ^3.0",
+                "symfony/phpunit-bridge": "^2.7 || ^3.0",
+                "symfony/validator": "^2.7 || ^3.0",
+                "symfony/yaml": "^2.7 || ^3.0",
+                "willdurand/propel-typehintable-behavior": "^1.0"
             },
             "suggest": {
                 "willdurand/propel-typehintable-behavior": "Needed when using the propel implementation"
@@ -1033,7 +1035,10 @@
             "autoload": {
                 "psr-4": {
                     "FOS\\UserBundle\\": ""
-                }
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -1058,7 +1063,7 @@
             "keywords": [
                 "User management"
             ],
-            "time": "2016-09-12 15:04:02"
+            "time": "2016-10-11 13:29:39"
         },
         {
             "name": "incenteev/composer-parameter-handler",
@@ -1544,22 +1549,30 @@
         },
         {
             "name": "psr/log",
-            "version": "1.0.0",
+            "version": "1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/log.git",
-                "reference": "fe0936ee26643249e916849d48e3a51d5f5e278b"
+                "reference": "4ebe3a8bf773a19edfe0a84b6585ba3d401b724d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/log/zipball/fe0936ee26643249e916849d48e3a51d5f5e278b",
-                "reference": "fe0936ee26643249e916849d48e3a51d5f5e278b",
+                "url": "https://api.github.com/repos/php-fig/log/zipball/4ebe3a8bf773a19edfe0a84b6585ba3d401b724d",
+                "reference": "4ebe3a8bf773a19edfe0a84b6585ba3d401b724d",
                 "shasum": ""
             },
+            "require": {
+                "php": ">=5.3.0"
+            },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
             "autoload": {
-                "psr-0": {
-                    "Psr\\Log\\": ""
+                "psr-4": {
+                    "Psr\\Log\\": "Psr/Log/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -1573,30 +1586,31 @@
                 }
             ],
             "description": "Common interface for logging libraries",
+            "homepage": "https://github.com/php-fig/log",
             "keywords": [
                 "log",
                 "psr",
                 "psr-3"
             ],
-            "time": "2012-12-21 11:40:51"
+            "time": "2016-10-10 12:19:37"
         },
         {
             "name": "sensio/distribution-bundle",
-            "version": "v5.0.12",
+            "version": "v5.0.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/SensioDistributionBundle.git",
-                "reference": "b6dcd04595e4db95ead22ddea58c397864e00c32"
+                "reference": "7bc47dcfdbde6d567e1a834577d1c04ddb970281"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/b6dcd04595e4db95ead22ddea58c397864e00c32",
-                "reference": "b6dcd04595e4db95ead22ddea58c397864e00c32",
+                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/7bc47dcfdbde6d567e1a834577d1c04ddb970281",
+                "reference": "7bc47dcfdbde6d567e1a834577d1c04ddb970281",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.9",
-                "sensiolabs/security-checker": "~3.0",
+                "sensiolabs/security-checker": "~3.0|~4.0",
                 "symfony/class-loader": "~2.3|~3.0",
                 "symfony/config": "~2.3|~3.0",
                 "symfony/dependency-injection": "~2.3|~3.0",
@@ -1630,7 +1644,7 @@
                 "configuration",
                 "distribution"
             ],
-            "time": "2016-09-14 20:25:12"
+            "time": "2016-10-08 18:50:33"
         },
         {
             "name": "sensio/framework-extra-bundle",
@@ -1696,20 +1710,20 @@
         },
         {
             "name": "sensiolabs/security-checker",
-            "version": "v3.0.2",
+            "version": "v4.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/security-checker.git",
-                "reference": "21696b0daa731064c23cfb694c60a2584a7b6e93"
+                "reference": "116027b57b568ed61b7b1c80eeb4f6ee9e8c599c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/security-checker/zipball/21696b0daa731064c23cfb694c60a2584a7b6e93",
-                "reference": "21696b0daa731064c23cfb694c60a2584a7b6e93",
+                "url": "https://api.github.com/repos/sensiolabs/security-checker/zipball/116027b57b568ed61b7b1c80eeb4f6ee9e8c599c",
+                "reference": "116027b57b568ed61b7b1c80eeb4f6ee9e8c599c",
                 "shasum": ""
             },
             "require": {
-                "symfony/console": "~2.0|~3.0"
+                "symfony/console": "~2.7|~3.0"
             },
             "bin": [
                 "security-checker"
@@ -1717,7 +1731,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.0-dev"
+                    "dev-master": "4.0-dev"
                 }
             },
             "autoload": {
@@ -1736,7 +1750,7 @@
                 }
             ],
             "description": "A security checker for your composer.lock",
-            "time": "2015-11-07 08:07:40"
+            "time": "2016-09-23 18:09:57"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -2317,16 +2331,16 @@
         },
         {
             "name": "symfony/symfony",
-            "version": "v3.1.4",
+            "version": "v3.1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "65ca9e4fbdb34f6d463ef77898ca583b101a4162"
+                "reference": "e7e1d01fe103de78bca6fbf7f6f4acf64482d63c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/65ca9e4fbdb34f6d463ef77898ca583b101a4162",
-                "reference": "65ca9e4fbdb34f6d463ef77898ca583b101a4162",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/e7e1d01fe103de78bca6fbf7f6f4acf64482d63c",
+                "reference": "e7e1d01fe103de78bca6fbf7f6f4acf64482d63c",
                 "shasum": ""
             },
             "require": {
@@ -2339,7 +2353,7 @@
                 "symfony/polyfill-php56": "~1.0",
                 "symfony/polyfill-php70": "~1.0",
                 "symfony/polyfill-util": "~1.0",
-                "twig/twig": "~1.23|~2.0"
+                "twig/twig": "~1.26|~2.0"
             },
             "conflict": {
                 "phpdocumentor/reflection-docblock": "<3.0",
@@ -2408,6 +2422,7 @@
                 "ocramius/proxy-manager": "~0.4|~1.0|~2.0",
                 "phpdocumentor/reflection-docblock": "^3.0",
                 "predis/predis": "~1.0",
+                "symfony/phpunit-bridge": "~3.2",
                 "symfony/polyfill-apcu": "~1.1",
                 "symfony/security-acl": "~2.8|~3.0"
             },
@@ -2453,20 +2468,20 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2016-09-03 15:28:43"
+            "time": "2016-10-03 19:01:14"
         },
         {
             "name": "twig/extensions",
-            "version": "v1.3.0",
+            "version": "v1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig-extensions.git",
-                "reference": "449e3c8a9ffad7c2479c7864557275a32b037499"
+                "reference": "531eaf4b9ab778b1d7cdd10d40fc6aa74729dfee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig-extensions/zipball/449e3c8a9ffad7c2479c7864557275a32b037499",
-                "reference": "449e3c8a9ffad7c2479c7864557275a32b037499",
+                "url": "https://api.github.com/repos/twigphp/Twig-extensions/zipball/531eaf4b9ab778b1d7cdd10d40fc6aa74729dfee",
+                "reference": "531eaf4b9ab778b1d7cdd10d40fc6aa74729dfee",
                 "shasum": ""
             },
             "require": {
@@ -2481,7 +2496,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.3-dev"
+                    "dev-master": "1.4-dev"
                 }
             },
             "autoload": {
@@ -2505,20 +2520,20 @@
                 "i18n",
                 "text"
             ],
-            "time": "2015-08-22 16:38:35"
+            "time": "2016-09-22 16:50:57"
         },
         {
             "name": "twig/twig",
-            "version": "v1.24.2",
+            "version": "v1.26.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "33093f6e310e6976baeac7b14f3a6ec02f2d79b7"
+                "reference": "a09d8ee17ac1cfea29ed60c83960ad685c6a898d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/33093f6e310e6976baeac7b14f3a6ec02f2d79b7",
-                "reference": "33093f6e310e6976baeac7b14f3a6ec02f2d79b7",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/a09d8ee17ac1cfea29ed60c83960ad685c6a898d",
+                "reference": "a09d8ee17ac1cfea29ed60c83960ad685c6a898d",
                 "shasum": ""
             },
             "require": {
@@ -2531,7 +2546,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.24-dev"
+                    "dev-master": "1.26-dev"
                 }
             },
             "autoload": {
@@ -2566,7 +2581,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2016-09-01 17:50:53"
+            "time": "2016-10-05 18:57:41"
         },
         {
             "name": "twitter/bootstrap",
@@ -2752,16 +2767,16 @@
         },
         {
             "name": "phpdocumentor/reflection-docblock",
-            "version": "3.1.0",
+            "version": "3.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/ReflectionDocBlock.git",
-                "reference": "9270140b940ff02e58ec577c237274e92cd40cdd"
+                "reference": "8331b5efe816ae05461b7ca1e721c01b46bafb3e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/9270140b940ff02e58ec577c237274e92cd40cdd",
-                "reference": "9270140b940ff02e58ec577c237274e92cd40cdd",
+                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/8331b5efe816ae05461b7ca1e721c01b46bafb3e",
+                "reference": "8331b5efe816ae05461b7ca1e721c01b46bafb3e",
                 "shasum": ""
             },
             "require": {
@@ -2793,7 +2808,7 @@
                 }
             ],
             "description": "With this component, a library can provide support for annotations via DocBlocks or otherwise retrieve information that is embedded in a DocBlock.",
-            "time": "2016-06-10 09:48:41"
+            "time": "2016-09-30 07:12:33"
         },
         {
             "name": "phpdocumentor/type-resolver",
@@ -3649,16 +3664,16 @@
         },
         {
             "name": "sensio/generator-bundle",
-            "version": "v3.0.8",
+            "version": "v3.0.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/SensioGeneratorBundle.git",
-                "reference": "3c20d16512f37d2be159eca0411b99a141b90fa4"
+                "reference": "b9be7f1b3b2e8bcfc1debefc901b71da923a5e5c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/SensioGeneratorBundle/zipball/3c20d16512f37d2be159eca0411b99a141b90fa4",
-                "reference": "3c20d16512f37d2be159eca0411b99a141b90fa4",
+                "url": "https://api.github.com/repos/sensiolabs/SensioGeneratorBundle/zipball/b9be7f1b3b2e8bcfc1debefc901b71da923a5e5c",
+                "reference": "b9be7f1b3b2e8bcfc1debefc901b71da923a5e5c",
                 "shasum": ""
             },
             "require": {
@@ -3697,7 +3712,7 @@
                 }
             ],
             "description": "This bundle generates code for you",
-            "time": "2016-09-06 01:30:19"
+            "time": "2016-10-10 14:17:42"
         },
         {
             "name": "squizlabs/php_codesniffer",
@@ -3779,7 +3794,7 @@
         },
         {
             "name": "symfony/phpunit-bridge",
-            "version": "v3.1.4",
+            "version": "v3.1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/phpunit-bridge.git",
