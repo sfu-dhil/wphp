@@ -29,6 +29,45 @@
                 <th>Signedauthor</th>
             <td>{{ title.signedAuthor }}</td>
             </tr>
+            
+            <tr>
+                <th>Contributors</th>
+                <td>
+                    {% for tr in title.titleRoles %}
+                        {% set person = tr.person %}
+                        {{ tr.role.name }}: {{ person.lastName }}, {{ person.firstName }} <br/>
+                    {% endfor %}
+                </td>
+            </tr>
+            
+            <tr>
+                <th>Firms</th>
+                <td>
+                    {% for tfr in title.titleFirmRoles %}
+                        {% set firm = tfr.firm %}
+                        {{ tfr.firmrole.name }}: {{ firm.name }} ({{firm.city.name }}) <br/>
+                    {% endfor %}
+                </td>            
+            <tr>
+                <th>Format</th>
+                <td>{{ title.format.name }} ({{ title.format.abbrevOne }}).</td>
+            </tr>
+            <tr>
+                <th>Location of printing</th>
+                <td>{{ title.locationOfPrinting.name }} {{ title.locationOfPrinting.country }}</td>
+            </tr>
+            <tr>
+                <th>Genre</th>
+                <td>{{ title.genre.name }}</td>
+            </tr>
+            <tr>
+                <th>Source 1</th>
+                <td>{{ title.source.name }} {{ title.sourceId }}</td>
+            </tr>
+            <tr>
+                <th>Source 2</th>
+                <td>{{ title.source2.name }} {{ title.source2Id }}</td>
+            </tr>
             <tr>
                 <th>Surrogate</th>
             <td>{{ title.surrogate }}</td>

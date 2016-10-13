@@ -7,7 +7,13 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Firm
  *
- * @ORM\Table(name="firm", uniqueConstraints={@ORM\UniqueConstraint(name="unique", columns={"name", "city", "start_date", "end_date"})}, indexes={@ORM\Index(name="city", columns={"city"}), @ORM\Index(name="full", columns={"name", "street_address"}), @ORM\Index(name="firmname", columns={"name"})})
+ * @ORM\Table(name="firm", 
+ *  uniqueConstraints={@ORM\UniqueConstraint(name="unique", columns={"name", "city", "start_date", "end_date"})}, 
+ *  indexes={
+ *      @ORM\Index(name="city", columns={"city"}), 
+ *      @ORM\Index(name="full", columns={"name", "street_address"}), 
+ *      @ORM\Index(name="firmname", columns={"name"})}
+ * )
  * @ORM\Entity
  */
 class Firm
@@ -65,8 +71,6 @@ class Firm
      * })
      */
     private $city;
-
-
 
     /**
      * Get id

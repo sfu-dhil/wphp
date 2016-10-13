@@ -7,8 +7,19 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Title
  *
- * @ORM\Table(name="title", indexes={@ORM\Index(name="location_of_printing", columns={"location_of_printing"}), @ORM\Index(name="format_id", columns={"format_id"}), @ORM\Index(name="genre_id", columns={"genre_id"}), @ORM\Index(name="source", columns={"source"}), @ORM\Index(name="source2", columns={"source2"}), @ORM\Index(name="title", columns={"title"}), @ORM\Index(name="author", columns={"signed_author"}), @ORM\Index(name="titleauthor", columns={"title", "signed_author"}), @ORM\Index(name="imprint", columns={"imprint"})})
- * @ORM\Entity
+ * @ORM\Table(name="title", 
+ *  indexes={
+ *      @ORM\Index(name="location_of_printing", columns={"location_of_printing"}), 
+ *      @ORM\Index(name="format_id", columns={"format_id"}), 
+ *      @ORM\Index(name="genre_id", columns={"genre_id"}), 
+ *      @ORM\Index(name="source", columns={"source"}), 
+ *      @ORM\Index(name="source2", columns={"source2"}), 
+ *      @ORM\Index(name="title", columns={"title"}, flags={"fulltext"}), 
+ *      @ORM\Index(name="author", columns={"signed_author"}, flags={"fulltext"}), 
+ *      @ORM\Index(name="titleauthor", columns={"title", "signed_author"}, flags={"fulltext"}), 
+ *      @ORM\Index(name="imprint", columns={"imprint"}, flags={"fulltext"})
+ * })
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\TitleRepository")
  */
 class Title
 {
@@ -225,8 +236,27 @@ class Title
      */
     private $source2;
 
+    /**
+     * @var Collection|TitleRole[]
+     * @ORM\OneToMany(targetEntity="TitleRole", mappedBy="title")
+     */
+    private $titleRoles;
 
-
+    /**
+     * @var Collection|TitleFirmrole[]
+     * @ORM\OneToMany(targetEntity="TitleFirmrole", mappedBy="title")
+     */
+    private $titleFirmroles;
+    
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->titleRoles = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->titleFirmroles = new \Doctrine\Common\Collections\ArrayCollection();        
+    }
+    
     /**
      * Get id
      *
@@ -883,5 +913,74 @@ class Title
     public function getSource2()
     {
         return $this->source2;
+    }
+
+    /**
+     * Add titleRole
+     *
+     * @param \AppBundle\Entity\TitleRole $titleRole
+     *
+     * @return Title
+     */
+    public function addTitleRole(\AppBundle\Entity\TitleRole $titleRole)
+    {
+        $this->titleRoles[] = $titleRole;
+
+        return $this;
+    }
+
+    /**
+     * Remove titleRole
+     *
+     * @param \AppBundle\Entity\TitleRole $titleRole
+     */
+    public function removeTitleRole(\AppBundle\Entity\TitleRole $titleRole)
+    {
+        $this->titleRoles->removeElement($titleRole);
+    }
+
+    /**
+     * Get titleRoles
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTitleRoles()
+    {
+        return $this->titleRoles;
+    }
+
+
+    /**
+     * Add titleFirmrole
+     *
+     * @param \AppBundle\Entity\TitleFirmrole $titleFirmrole
+     *
+     * @return Title
+     */
+    public function addTitleFirmrole(\AppBundle\Entity\TitleFirmrole $titleFirmrole)
+    {
+        $this->titleFirmroles[] = $titleFirmrole;
+
+        return $this;
+    }
+
+    /**
+     * Remove titleFirmrole
+     *
+     * @param \AppBundle\Entity\TitleFirmrole $titleFirmrole
+     */
+    public function removeTitleFirmrole(\AppBundle\Entity\TitleFirmrole $titleFirmrole)
+    {
+        $this->titleFirmroles->removeElement($titleFirmrole);
+    }
+
+    /**
+     * Get titleFirmroles
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTitleFirmroles()
+    {
+        return $this->titleFirmroles;
     }
 }
