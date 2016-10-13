@@ -12,16 +12,16 @@ use Symfony\Component\Console\Question\Question;
 /**
  * Overrides the CreateUserCommand from FOSUserBundle to add support for
  * fullname and institution.
- *
+ * 
  * Requires Symfony > 3.0
  */
 class CreateUserCommand extends ContainerAwareCommand
 {
-
     /**
      * @see Command
      */
-    protected function configure() {
+    protected function configure()
+    {
         $this
             ->setName('fos:user:create')
             ->setDescription('Create a user.')
@@ -59,7 +59,8 @@ EOT
     /**
      * @see Command
      */
-    protected function execute(InputInterface $input, OutputInterface $output) {
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
         $email = $input->getArgument('email');
         $password = $input->getArgument('password');
         $fullname = $input->getArgument('fullname');
@@ -76,12 +77,13 @@ EOT
     /**
      * @see Command
      */
-    protected function interact(InputInterface $input, OutputInterface $output) {
+    protected function interact(InputInterface $input, OutputInterface $output)
+    {
         $questions = array();
 
         if (!$input->getArgument('email')) {
             $question = new Question('Please choose an email:');
-            $question->setValidator(function ($email) {
+            $question->setValidator(function($email) {
                 if (empty($email)) {
                     throw new \Exception('Email can not be empty');
                 }
@@ -93,7 +95,7 @@ EOT
 
         if (!$input->getArgument('fullname')) {
             $question = new Question('Please choose an fullname:');
-            $question->setValidator(function ($fullname) {
+            $question->setValidator(function($fullname) {
                 if (empty($fullname)) {
                     throw new \Exception('Email can not be empty');
                 }
@@ -105,7 +107,7 @@ EOT
 
         if (!$input->getArgument('institution')) {
             $question = new Question('Please choose an institution:');
-            $question->setValidator(function ($institution) {
+            $question->setValidator(function($institution) {
                 if (empty($institution)) {
                     throw new \Exception('Email can not be empty');
                 }
@@ -117,7 +119,7 @@ EOT
 
         if (!$input->getArgument('password')) {
             $question = new Question('Please choose an password:');
-            $question->setValidator(function ($password) {
+            $question->setValidator(function($password) {
                 if (empty($password)) {
                     throw new \Exception('Email can not be empty');
                 }
@@ -126,12 +128,11 @@ EOT
             });
             $questions['password'] = $question;
         }
-
+		
         foreach ($questions as $name => $question) {
             $answer = $this->getHelper('question')->ask($input, $output, $question);
             $input->setArgument($name, $answer);
         }
-
+		
     }
-
 }

@@ -1,0 +1,81 @@
+{% extends 'base.html.twig' %}
+
+ {% block pageheader %} 
+    <h1>Geonames List</h1>
+    <p class="count">
+        Displaying {{ geonames|length }} geonames of {{ geonames.getTotalItemCount }} total.
+    </p>
+ {% endblock %} 
+
+{% block body %}
+
+        <div class='btn-toolbar pull-right'>
+        <div class='btn-group'>
+            <a href="{{ path('geonames_new') }}" class="btn btn-default">
+                <span class="glyphicon glyphicon-plus"></span> New
+            </a>
+            <a href="{{ path('geonames_search') }}" class="btn btn-default">
+                <span class="glyphicon glyphicon-search"></span> Search
+            </a>
+        </div>
+    </div>
+        
+    <table class="table table-bordered table-condensed table-hover table-striped">
+        <thead>
+            <tr>
+                <th>Geonameid</th>
+                <th>Name</th>
+                <th>Asciiname</th>
+                <th>Alternatenames</th>
+                <th>Latitude</th>
+                <th>Longitude</th>
+                <th>Fclass</th>
+                <th>Fcode</th>
+                <th>Country</th>
+                <th>Cc2</th>
+                <th>Admin1</th>
+                <th>Admin2</th>
+                <th>Admin3</th>
+                <th>Admin4</th>
+                <th>Population</th>
+                <th>Elevation</th>
+                <th>Gtopo30</th>
+                <th>Timezone</th>
+                <th>Moddate</th>            </tr>
+        </thead>
+        <tbody>
+        {% for geoname in geonames %}
+            <tr>
+                <td>
+                    <a href="{{ path('geonames_show', { 'id': geoname.geonameid }) }}">
+                        {{ geoname.geonameid }}
+                    </a>
+                </td>
+                <td>{{ geoname.name }}</td>
+                <td>{{ geoname.asciiname }}</td>
+                <td>{{ geoname.alternatenames }}</td>
+                <td>{{ geoname.latitude }}</td>
+                <td>{{ geoname.longitude }}</td>
+                <td>{{ geoname.fclass }}</td>
+                <td>{{ geoname.fcode }}</td>
+                <td>{{ geoname.country }}</td>
+                <td>{{ geoname.cc2 }}</td>
+                <td>{{ geoname.admin1 }}</td>
+                <td>{{ geoname.admin2 }}</td>
+                <td>{{ geoname.admin3 }}</td>
+                <td>{{ geoname.admin4 }}</td>
+                <td>{{ geoname.population }}</td>
+                <td>{{ geoname.elevation }}</td>
+                <td>{{ geoname.gtopo30 }}</td>
+                <td>{{ geoname.timezone }}</td>
+                <td>{% if geoname.moddate %}{{ geoname.moddate|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+        
+    <div class="navigation">
+        {{ knp_pagination_render(geonames) }}
+    </div>
+
+{% endblock %}

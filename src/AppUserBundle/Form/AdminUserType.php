@@ -3,8 +3,6 @@
 namespace AppUserBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -13,22 +11,26 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  */
 class AdminUserType extends AbstractType
 {
-
     /**
      * @param FormBuilderInterface $builder
      * @param array                $options
      */
-    public function buildForm(FormBuilderInterface $builder, array $options) {
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
         $builder
                 ->remove('username')
                 ->add('email')
                 ->add('fullname')
                 ->add('institution')
-                ->add('enabled', CheckboxType::class, array(
+                ->add('notify', 'checkbox', array(
+                    'label' => 'Notify user when journals go silent',
+                    'required' => false,
+                ))
+                ->add('enabled', 'checkbox', array(
                     'label' => 'Account Enabled',
                     'required' => false,
                 ))
-                ->add('roles', ChoiceType::class, array(
+                ->add('roles', 'choice', array(
                     'label' => 'Roles',
                     'choices' => array(
                         'ROLE_ADMIN' => 'Admin',
@@ -36,13 +38,15 @@ class AdminUserType extends AbstractType
                     'multiple' => true,
                     'expanded' => true,
                     'required' => false,
-                ));
+                ))
+        ;
     }
 
     /**
      * @param OptionsResolverInterface $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver) {
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
         $resolver->setDefaults(array(
             'data_class' => 'AppUserBundle\Entity\User',
         ));
@@ -50,11 +54,11 @@ class AdminUserType extends AbstractType
 
     /**
      * Get the name of the form.
-     *
+     * 
      * @return string
      */
-    public function getName() {
+    public function getName()
+    {
         return 'appbundle_user';
     }
-
 }

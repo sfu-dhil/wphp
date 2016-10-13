@@ -1,5 +1,5 @@
 {
-    "name": "michael/wphp",
+    "name": "mjoyce/wphp",
     "license": "proprietary",
     "type": "project",
     "autoload": {
@@ -43,9 +43,7 @@
         "liip/functional-test-bundle": "^1.6",
         "phpunit/phpunit": "^4.8",
         "symfony/var-dumper": "^3.1",
-        "squizlabs/php_codesniffer": "^2.7",
-        "doctrine/doctrine-fixtures-bundle": "^2.3",
-        "drupal/coder": "^8.2"
+        "squizlabs/php_codesniffer": "^2.7"
     },
     "scripts": {
         "symfony-scripts": [

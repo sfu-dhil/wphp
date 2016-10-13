@@ -35,6 +35,10 @@
                 <td>{{ entity.institution }}</td>
             </tr>
             <tr>
+                <th>Notify</th>
+                <td>{% if entity.notify %} Yes {% else %} No {% endif %}</td>
+            </tr>
+            <tr>
                 <th>Enabled</th>
                 <td>{% if entity.enabled %} Yes {% else %} No {% endif %}</td>
             </tr>

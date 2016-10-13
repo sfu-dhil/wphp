@@ -8,8 +8,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Form\Extension\Core\Type\ButtonType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -20,17 +18,17 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AdminUserController extends Controller
 {
-
     /**
      * Lists all User entities.
      *
      * @Route("/", name="user")
      * @Method("GET")
      * @Template()
-     *
+     * 
      * @return array
      */
-    public function indexAction() {
+    public function indexAction()
+    {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $em = $this->getDoctrine()->getManager();
         $entities = $em->getRepository('AppUserBundle:User')->findAll();
@@ -39,19 +37,19 @@ class AdminUserController extends Controller
             'entities' => $entities,
         );
     }
-
     /**
      * Creates a new User entity.
      *
      * @Route("/", name="user_create")
      * @Method("POST")
      * @Template("AppUserBundle:User:new.html.twig")
-     *
+     * 
      * @param Request $request
      *
      * @return array
      */
-    public function createAction(Request $request) {
+    public function createAction(Request $request)
+    {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $entity = new User();
         $form = $this->createCreateForm($entity);
@@ -80,13 +78,14 @@ class AdminUserController extends Controller
      *
      * @return Form The form
      */
-    private function createCreateForm(User $entity) {
-        $form = $this->createForm(AdminUserType::class, $entity, array(
+    private function createCreateForm(User $entity)
+    {
+        $form = $this->createForm(new AdminUserType(), $entity, array(
             'action' => $this->generateUrl('user_create'),
             'method' => 'POST',
         ));
 
-        $form->add('submit', SubmitType::class, array('label' => 'Create'));
+        $form->add('submit', 'submit', array('label' => 'Create'));
 
         return $form;
     }
@@ -97,10 +96,11 @@ class AdminUserController extends Controller
      * @Route("/new", name="user_new")
      * @Method("GET")
      * @Template()
-     *
+     * 
      * @return array
      */
-    public function newAction() {
+    public function newAction()
+    {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $entity = new User();
         $form = $this->createCreateForm($entity);
@@ -117,12 +117,13 @@ class AdminUserController extends Controller
      * @Route("/{id}", name="user_show")
      * @Method("GET")
      * @Template()
-     *
+     * 
      * @param string $id
      *
      * @return array
      */
-    public function showAction($id) {
+    public function showAction($id)
+    {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('AppUserBundle:User')->find($id);
@@ -145,12 +146,13 @@ class AdminUserController extends Controller
      * @Route("/{id}/edit", name="user_edit")
      * @Method("GET")
      * @Template()
-     *
+     * 
      * @param string $id
      *
      * @return array
      */
-    public function editAction($id) {
+    public function editAction($id)
+    {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $em = $this->getDoctrine()->getManager();
 
@@ -177,30 +179,31 @@ class AdminUserController extends Controller
      *
      * @return Form The form
      */
-    private function createEditForm(User $entity) {
-        $form = $this->createForm(AdminUserType::class, $entity, array(
+    private function createEditForm(User $entity)
+    {
+        $form = $this->createForm(new AdminUserType(), $entity, array(
             'action' => $this->generateUrl('user_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
 
-        $form->add('submit', SubmitType::class, array('label' => 'Update'));
+        $form->add('submit', 'submit', array('label' => 'Update'));
 
         return $form;
     }
-
     /**
      * Edits an existing User entity.
      *
      * @Route("/{id}", name="user_update")
      * @Method("PUT")
      * @Template("AppUserBundle:User:edit.html.twig")
-     *
+     * 
      * @param Request $request
      * @param string  $id
      *
      * @return array
      */
-    public function updateAction(Request $request, $id) {
+    public function updateAction(Request $request, $id)
+    {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('AppUserBundle:User')->find($id);
@@ -227,17 +230,17 @@ class AdminUserController extends Controller
             'delete_form' => $deleteForm->createView(),
         );
     }
-
     /**
      * Deletes a User entity.
      *
      * @Route("/{id}/delete", name="user_delete")
-     *
+     * 
      * @param string $id
      *
      * @return array
      */
-    public function deleteAction($id) {
+    public function deleteAction($id)
+    {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('AppUserBundle:User')->find($id);
@@ -259,27 +262,30 @@ class AdminUserController extends Controller
      *
      * @return Form The form
      */
-    private function createDeleteForm($id) {
+    private function createDeleteForm($id)
+    {
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('user_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', ButtonType::class, array('label' => 'Delete'))
-            ->getForm();
+            ->add('submit', 'submit', array('label' => 'Delete'))
+            ->getForm()
+        ;
     }
 
     /**
      * Change a user's password.
-     *
+     * 
      * @Route("/{id}/password", name="admin_user_password")
      * @Method({"GET", "POST"})
      * @Template()
-     *
+     * 
      * @param Request $request
-     * @param integer $id
+     * @param int     $id
      *
      * @return array
      */
-    public function passwordAction(Request $request, $id) {
+    public function passwordAction(Request $request, $id)
+    {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('AppUserBundle:User')->find($id);
@@ -313,5 +319,4 @@ class AdminUserController extends Controller
             'form' => $form->createView(),
         );
     }
-
 }

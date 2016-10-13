@@ -8,7 +8,7 @@ use FOS\UserBundle\Model\UserManagerInterface;
 /**
  * Custom user manipulator which adds support for fullname and institution, which
  * are not part of the stock FOSUserBundle.
- *
+ * 
  * http://stackoverflow.com/questions/11595261/override-symfony2-console-commands
  */
 class UserManipulator
@@ -20,23 +20,25 @@ class UserManipulator
      */
     private $userManager;
 
-    public function __construct(UserManagerInterface $userManager) {
+    public function __construct(UserManagerInterface $userManager)
+    {
         $this->userManager = $userManager;
     }
 
     /**
      * Creates a user and returns it.
      *
-     * @param string  $email
-     * @param string  $password
-     * @param string  $fullname
-     * @param string  $institution
-     * @param boolean $active
-     * @param boolean $superadmin
+     * @param string $email
+     * @param string $password
+     * @param string $fullname
+     * @param string $institution
+     * @param bool   $active
+     * @param bool   $superadmin
      *
      * @return User
      */
-    public function create($email, $password, $fullname, $institution, $active, $superadmin) {
+    public function create($email, $password, $fullname, $institution, $active, $superadmin)
+    {
         $user = $this->userManager->createUser();
         $user->setEmail($email);
         $user->setPlainPassword($password);
@@ -48,5 +50,4 @@ class UserManipulator
 
         return $user;
     }
-
 }

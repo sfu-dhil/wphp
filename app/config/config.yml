@@ -57,9 +57,6 @@ doctrine:
         auto_generate_proxy_classes: "%kernel.debug%"
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
-        dql:
-            string_functions:
-                MATCH_AGAINST: AppBundle\Extensions\Doctrine\MatchAgainstFunction
 
 # Swiftmailer Configuration
 swiftmailer:
@@ -131,8 +128,3 @@ knp_paginator:
     template:
         pagination: KnpPaginatorBundle:Pagination:twitter_bootstrap_v3_pagination.html.twig     # bootstrapy pagination
         sortable: KnpPaginatorBundle:Pagination:sortable_link.html.twig # sort link template
-
-ivory_ck_editor:
-    configs:
-        my_config:
-            toolbar: standard

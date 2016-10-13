@@ -11,12 +11,12 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class PasswordType extends AbstractType
 {
-
     /**
      * @param FormBuilderInterface $builder
      * @param array                $options
      */
-    public function buildForm(FormBuilderInterface $builder, array $options) {
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
         $builder->add('save', ButtonType::class, array('label' => 'Update'));
     }
 
@@ -25,16 +25,19 @@ class PasswordType extends AbstractType
      *
      * @return string
      */
-    public function getParent() {
+    public function getParent()
+    {
         return 'FOS\UserBundle\Form\Type\ChangePasswordFormType';
     }
 
-    public function getBlockPrefix() {
+	public function getBlockPrefix()
+    {
         return 'app_user_password';
     }
-
-    public function getName() {
+	
+    public function getName()
+    {
         $this->getBlockPrefix();
     }
-
+	
 }

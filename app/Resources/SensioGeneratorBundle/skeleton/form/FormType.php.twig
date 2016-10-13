@@ -6,9 +6,6 @@ namespace {{ namespace }}\Form{{ entity_namespace ? '\\' ~ entity_namespace : ''
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-{% if not configure_options_available %}
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-{% endif %}
 use Symfony\Component\OptionsResolver\OptionsResolver;
 {% endblock use_statements %}
 
@@ -29,21 +26,6 @@ class {{ form_class }} extends AbstractType
         $builder->add('{{ field }}'); {% if fields_mapping[field] is defined and fields_mapping[field]['type'] is defined %} // {{ fields_mapping[field]['type'] }} {% endif %}
         {%- endfor %}
         
-    }
-    {% endif %}
-
-    {%- if not configure_options_available %}
-
-    /**
-     * Sets the default options for this type.
-     *
-     * This method should be removed when upgrading to Symfony 2.7.
-     *
-     * @param OptionsResolverInterface $resolver
-     */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $this->configureOptions($resolver);
     }
     {% endif %}
 

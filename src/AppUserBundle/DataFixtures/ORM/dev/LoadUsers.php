@@ -12,8 +12,7 @@ use Doctrine\Common\Persistence\ObjectManager;
  *
  * @author mjoyce
  */
-class LoadUsers extends AbstractDataFixture implements OrderedFixtureInterface
-{
+class LoadUsers extends AbstractDataFixture implements OrderedFixtureInterface {
 
     protected function doLoad(ObjectManager $manager) {
         $admin = new User();
@@ -24,7 +23,7 @@ class LoadUsers extends AbstractDataFixture implements OrderedFixtureInterface
         $admin->setEnabled(true);
         $admin->addRole('ROLE_ADMIN');
         $manager->persist($admin);
-
+        
         $user = new User();
         $user->setEmail('user@example.com');
         $user->setPlainPassword('abc123');
@@ -32,12 +31,12 @@ class LoadUsers extends AbstractDataFixture implements OrderedFixtureInterface
         $user->setInstitution('SFU');
         $user->setEnabled(true);
         $manager->persist($user);
-
+        
         $manager->flush();
     }
 
     public function getOrder() {
-        return 1;
+        return 1;        
     }
 
     protected function getEnvironments() {
