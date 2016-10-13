@@ -7,7 +7,11 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Geonames
  *
- * @ORM\Table(name="geonames", indexes={@ORM\Index(name="geo_search", columns={"name", "geonameid", "country"}), @ORM\Index(name="names", columns={"alternatenames", "name"})})
+ * @ORM\Table(name="geonames", 
+ *  indexes={
+ *      @ORM\Index(name="geo_search", columns={"name", "geonameid", "country"}), 
+ *      @ORM\Index(name="names", columns={"alternatenames", "name"}, flags={"fulltext"})
+ * })
  * @ORM\Entity
  */
 class Geonames
