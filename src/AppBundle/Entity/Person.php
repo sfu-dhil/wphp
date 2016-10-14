@@ -2,7 +2,9 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\Collection;
 
 /**
  * Person
@@ -14,7 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
  *      @ORM\Index(name="full", columns={"last_name", "first_name", "dob", "dod"}, flags={"fulltext"}), 
  *      @ORM\Index(name="last_name", columns={"last_name", "first_name", "title"}, flags={"fulltext"})
  * })
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\PersonRepository")
  */
 class Person
 {
@@ -94,7 +96,7 @@ class Person
     private $cityOfBirth;
 
     /**
-     * @var \Geonames
+     * @var Geonames
      *
      * @ORM\ManyToOne(targetEntity="Geonames")
      * @ORM\JoinColumns({
@@ -103,7 +105,15 @@ class Person
      */
     private $cityOfDeath;
 
-
+	/**
+	 * @var Collection|TitleRole[]
+	 * @ORM\OneToMany(targetEntity="TitleRole", mappedBy="person")
+	 */
+	private $titleRoles;
+	
+	public function __construct() {
+		$this->titleRoles = new ArrayCollection();
+	}
 
     /**
      * Get id
@@ -310,11 +320,11 @@ class Person
     /**
      * Set cityOfBirth
      *
-     * @param \AppBundle\Entity\Geonames $cityOfBirth
+     * @param Geonames $cityOfBirth
      *
      * @return Person
      */
-    public function setCityOfBirth(\AppBundle\Entity\Geonames $cityOfBirth = null)
+    public function setCityOfBirth(Geonames $cityOfBirth = null)
     {
         $this->cityOfBirth = $cityOfBirth;
 
@@ -324,7 +334,7 @@ class Person
     /**
      * Get cityOfBirth
      *
-     * @return \AppBundle\Entity\Geonames
+     * @return Geonames
      */
     public function getCityOfBirth()
     {
@@ -334,11 +344,11 @@ class Person
     /**
      * Set cityOfDeath
      *
-     * @param \AppBundle\Entity\Geonames $cityOfDeath
+     * @param Geonames $cityOfDeath
      *
      * @return Person
      */
-    public function setCityOfDeath(\AppBundle\Entity\Geonames $cityOfDeath = null)
+    public function setCityOfDeath(Geonames $cityOfDeath = null)
     {
         $this->cityOfDeath = $cityOfDeath;
 
@@ -348,10 +358,44 @@ class Person
     /**
      * Get cityOfDeath
      *
-     * @return \AppBundle\Entity\Geonames
+     * @return Geonames
      */
     public function getCityOfDeath()
     {
         return $this->cityOfDeath;
+    }
+
+    /**
+     * Add titleRole
+     *
+     * @param \AppBundle\Entity\TitleRole $titleRole
+     *
+     * @return Person
+     */
+    public function addTitleRole(\AppBundle\Entity\TitleRole $titleRole)
+    {
+        $this->titleRoles[] = $titleRole;
+
+        return $this;
+    }
+
+    /**
+     * Remove titleRole
+     *
+     * @param \AppBundle\Entity\TitleRole $titleRole
+     */
+    public function removeTitleRole(\AppBundle\Entity\TitleRole $titleRole)
+    {
+        $this->titleRoles->removeElement($titleRole);
+    }
+
+    /**
+     * Get titleRoles
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTitleRoles()
+    {
+        return $this->titleRoles;
     }
 }

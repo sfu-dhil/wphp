@@ -34,7 +34,7 @@ class TitleFirmrole
     /**
      * @var \Firm
      *
-     * @ORM\ManyToOne(targetEntity="Firm")
+     * @ORM\ManyToOne(targetEntity="Firm", inversedBy="titleFirmroles")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="firm_id", referencedColumnName="id")
      * })

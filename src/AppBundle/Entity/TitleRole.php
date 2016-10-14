@@ -34,7 +34,7 @@ class TitleRole
     /**
      * @var \Person
      *
-     * @ORM\ManyToOne(targetEntity="Person")
+     * @ORM\ManyToOne(targetEntity="Person", inversedBy="titleRoles")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="person_id", referencedColumnName="id")
      * })

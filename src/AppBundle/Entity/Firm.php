@@ -2,19 +2,23 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\Collection;
 
 /**
  * Firm
  *
  * @ORM\Table(name="firm", 
- *  uniqueConstraints={@ORM\UniqueConstraint(name="unique", columns={"name", "city", "start_date", "end_date"})}, 
+ *  uniqueConstraints={
+ *		@ORM\UniqueConstraint(name="unique", columns={"name", "city", "start_date", "end_date"})
+ *	}, 
  *  indexes={
  *      @ORM\Index(name="city", columns={"city"}), 
- *      @ORM\Index(name="full", columns={"name", "street_address"}), 
- *      @ORM\Index(name="firmname", columns={"name"})}
+ *      @ORM\Index(name="full", columns={"name", "street_address"}, flags={"fulltext"}), 
+ *      @ORM\Index(name="firmname", columns={"name"}, flags={"fulltext"})}
  * )
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\FirmRepository")
  */
 class Firm
 {
@@ -63,7 +67,7 @@ class Firm
     private $finalcheck = '0';
 
     /**
-     * @var \Geonames
+     * @var Geonames
      *
      * @ORM\ManyToOne(targetEntity="Geonames")
      * @ORM\JoinColumns({
@@ -71,6 +75,16 @@ class Firm
      * })
      */
     private $city;
+	
+	/**
+	 * @var Collection|TitleFirmrole[]
+	 * @ORM\OneToMany(targetEntity="TitleFirmrole", mappedBy="firm")
+	 */
+	private $titleFirmroles;
+	
+	public function __construct() {
+		$this->titleFirmroles = new ArrayCollection();
+	}
 
     /**
      * Get id
@@ -205,11 +219,11 @@ class Firm
     /**
      * Set city
      *
-     * @param \AppBundle\Entity\Geonames $city
+     * @param Geonames $city
      *
      * @return Firm
      */
-    public function setCity(\AppBundle\Entity\Geonames $city = null)
+    public function setCity(Geonames $city = null)
     {
         $this->city = $city;
 
@@ -219,10 +233,44 @@ class Firm
     /**
      * Get city
      *
-     * @return \AppBundle\Entity\Geonames
+     * @return Geonames
      */
     public function getCity()
     {
         return $this->city;
+    }
+
+    /**
+     * Add titleFirmrole
+     *
+     * @param \AppBundle\Entity\TitleFirmrole $titleFirmrole
+     *
+     * @return Firm
+     */
+    public function addTitleFirmrole(\AppBundle\Entity\TitleFirmrole $titleFirmrole)
+    {
+        $this->titleFirmroles[] = $titleFirmrole;
+
+        return $this;
+    }
+
+    /**
+     * Remove titleFirmrole
+     *
+     * @param \AppBundle\Entity\TitleFirmrole $titleFirmrole
+     */
+    public function removeTitleFirmrole(\AppBundle\Entity\TitleFirmrole $titleFirmrole)
+    {
+        $this->titleFirmroles->removeElement($titleFirmrole);
+    }
+
+    /**
+     * Get titleFirmroles
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTitleFirmroles()
+    {
+        return $this->titleFirmroles;
     }
 }
