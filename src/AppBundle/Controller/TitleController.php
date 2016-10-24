@@ -2,13 +2,14 @@
 
 namespace AppBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use AppBundle\Entity\Title;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use AppBundle\Entity\Title;
-use AppBundle\Form\TitleType;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 /**
  * Title controller.
@@ -37,6 +38,80 @@ class TitleController extends Controller
             'titles' => $titles,
         );
     }
+    
+    /**
+     * Export a CSV with the titles.
+     * 
+     * @Route("/export", name="title_export")
+     * @Method("GET")
+     * @param Request $request
+     * @return BinaryFileResponse
+     */
+    public function exportAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $dql = 'SELECT e FROM AppBundle:Title e ORDER BY e.id';
+        $query = $em->createQuery($dql);
+        $iterator = $query->iterate();
+        $tmpPath = tempnam(sys_get_temp_dir(), 'wphp-export-');
+        $fh = fopen($tmpPath, 'w');
+        fputcsv($fh, array(
+            'id', 
+            'title',
+            'signed_author',
+            'pseudonym',
+            'imprint',
+            'selfpublished',
+            'printing_city',
+            'printing_country',
+            'printing_lat',
+            'printing_long',
+            'pubdate',
+            'format',
+            'length',
+            'width',
+            'edition',
+            'volumes',
+            'pagination',
+            'price_pound',
+            'price_shilling',
+            'price_pence',
+            'genre',
+            'shelfmark',
+        ));
+        foreach($iterator as $row) {
+            $title = $row[0];
+            fputcsv($fh, array(
+                $title->getId(),
+                $title->getTitle(),
+                $title->getSignedAuthor(),
+                $title->getPseudonym(),
+                $title->getImprint(),
+                $title->getSelfPublished() ? 'yes' : 'no',
+                $title->getLocationOfPrinting()->getName(),
+                $title->getLocationOfPrinting()->getCountry(),
+                $title->getLocationOfPrinting()->getLatitude(),
+                $title->getLocationOfPrinting()->getLongitude(),
+                $title->getPubDate(),
+                $title->getFormat()->getName(),
+                $title->getSizeL(),
+                $title->getSizeW(),
+                $title->getEdition(),
+                $title->getVolumes(),
+                $title->getPagination(),
+                $title->getPricePound(),
+                $title->getPriceShilling(),
+                $title->getPricePence(),
+                $title->getGenre()->getName(),
+                $title->getShelfmark(),
+            ));
+        }
+        fclose($fh);
+        $response = new BinaryFileResponse($tmpPath);
+        $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'wphp-titles.csv');
+        $response->deleteFileAfterSend(true);
+        return $response;
+    }
+    
     /**
      * Search for Title entities.
      *

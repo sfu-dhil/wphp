@@ -15,7 +15,7 @@ class Genre
     /**
      * @var boolean
      *
-     * @ORM\Column(name="id", type="boolean", nullable=false)
+     * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */

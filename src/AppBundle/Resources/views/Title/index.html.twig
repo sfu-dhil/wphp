@@ -11,6 +11,9 @@
 
         <div class='btn-toolbar pull-right'>
         <div class='btn-group'>
+            <a href="{{ path('title_export') }}" class="btn btn-default">
+                <span class="glyphicon glyphicon-download-alt"></span> Download
+            </a>
             <a href="{{ path('title_new') }}" class="btn btn-default">
                 <span class="glyphicon glyphicon-plus"></span> New
             </a>
@@ -27,27 +30,12 @@
         <thead>
             <tr>
                 <th>Title</th>
-                <th>Signedauthor</th>
-                <th>Surrogate</th>
-                <th>Pseudonym</th>
                 <th>Imprint</th>
-                <th>Selfpublished</th>
                 <th>Pubdate</th>
-                <th>Dateoffirstpublication</th>
-                <th>Sizel</th>
-                <th>Sizew</th>
                 <th>Edition</th>
                 <th>Volumes</th>
-                <th>Pagination</th>
-                <th>Pricepound</th>
-                <th>Priceshilling</th>
-                <th>Pricepence</th>
-                <th>Sourceid</th>
-                <th>Source2id</th>
                 <th>Shelfmark</th>
-                <th>Checked</th>
-                <th>Finalcheck</th>
-                <th>Notes</th>            </tr>
+            </tr>
         </thead>
         <tbody>
         {% for title in titles %}
@@ -57,27 +45,11 @@
                         {{ title.title }}
                     </a>
                 </td>
-                <td>{{ title.signedAuthor }}</td>
-                <td>{{ title.surrogate }}</td>
-                <td>{{ title.pseudonym }}</td>
                 <td>{{ title.imprint }}</td>
-                <td>{% if title.selfpublished %}Yes{% else %}No{% endif %}</td>
                 <td>{{ title.pubdate }}</td>
-                <td>{{ title.dateOfFirstPublication }}</td>
-                <td>{% if title.sizeL %}Yes{% else %}No{% endif %}</td>
-                <td>{% if title.sizeW %}Yes{% else %}No{% endif %}</td>
                 <td>{{ title.edition }}</td>
                 <td>{% if title.volumes %}Yes{% else %}No{% endif %}</td>
-                <td>{{ title.pagination }}</td>
-                <td>{{ title.pricePound }}</td>
-                <td>{{ title.priceShilling }}</td>
-                <td>{{ title.pricePence }}</td>
-                <td>{{ title.sourceId }}</td>
-                <td>{{ title.source2Id }}</td>
                 <td>{{ title.shelfmark }}</td>
-                <td>{% if title.checked %}Yes{% else %}No{% endif %}</td>
-                <td>{% if title.finalcheck %}Yes{% else %}No{% endif %}</td>
-                <td>{{ title.notes }}</td>
             </tr>
         {% endfor %}
         </tbody>
