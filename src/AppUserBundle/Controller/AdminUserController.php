@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -29,7 +30,8 @@ class AdminUserController extends Controller
      */
     public function indexAction()
     {
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        $user = $this->getUser();
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, print_r($user->getRoles(), true));
         $em = $this->getDoctrine()->getManager();
         $entities = $em->getRepository('AppUserBundle:User')->findAll();
 
@@ -80,12 +82,12 @@ class AdminUserController extends Controller
      */
     private function createCreateForm(User $entity)
     {
-        $form = $this->createForm(new AdminUserType(), $entity, array(
+        $form = $this->createForm(AdminUserType::class, $entity, array(
             'action' => $this->generateUrl('user_create'),
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
+        $form->add('submit', SubmitType::class, array('label' => 'Create'));
 
         return $form;
     }
@@ -181,12 +183,12 @@ class AdminUserController extends Controller
      */
     private function createEditForm(User $entity)
     {
-        $form = $this->createForm(new AdminUserType(), $entity, array(
+        $form = $this->createForm(AdminUserType::class, $entity, array(
             'action' => $this->generateUrl('user_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Update'));
+        $form->add('submit', SubmitType::class, array('label' => 'Update'));
 
         return $form;
     }
@@ -267,7 +269,7 @@ class AdminUserController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('user_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
+            ->add('submit', SubmitType::class, array('label' => 'Delete'))
             ->getForm()
         ;
     }
