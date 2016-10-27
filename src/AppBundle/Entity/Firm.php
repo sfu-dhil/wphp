@@ -165,6 +165,9 @@ class Firm
      */
     public function getStartDate()
     {
+		if($this->startDate === '0000-00-00') {
+			return null;
+		}
         return $this->startDate;
     }
 
@@ -189,6 +192,9 @@ class Firm
      */
     public function getEndDate()
     {
+		if($this->endDate === '0000-00-00') {
+			return null;
+		}
         return $this->endDate;
     }
 

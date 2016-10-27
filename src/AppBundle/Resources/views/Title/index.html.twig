@@ -1,19 +1,16 @@
 {% extends 'base.html.twig' %}
 
- {% block pageheader %} 
+{% block pageheader %} 
     <h1>Title List</h1>
     <p class="count">
         Displaying {{ titles|length }} titles of {{ titles.getTotalItemCount }} total.
     </p>
- {% endblock %} 
+{% endblock %} 
 
 {% block body %}
 
-        <div class='btn-toolbar pull-right'>
+	<div class='btn-toolbar pull-right'>
         <div class='btn-group'>
-            <a href="{{ path('title_new') }}" class="btn btn-default">
-                <span class="glyphicon glyphicon-plus"></span> New
-            </a>
             <a href="{{ path('title_search') }}" class="btn btn-default">
                 <span class="glyphicon glyphicon-search"></span> Search
             </a>
@@ -22,7 +19,7 @@
             </a>
         </div>
     </div>
-        
+
     <table class="table table-bordered table-condensed table-hover table-striped">
         <thead>
             <tr>
@@ -50,39 +47,39 @@
                 <th>Notes</th>            </tr>
         </thead>
         <tbody>
-        {% for title in titles %}
-            <tr>
-                <td>
-                    <a href="{{ path('title_show', { 'id': title.id }) }}">
-                        {{ title.title }}
-                    </a>
-                </td>
-                <td>{{ title.signedAuthor }}</td>
-                <td>{{ title.surrogate }}</td>
-                <td>{{ title.pseudonym }}</td>
-                <td>{{ title.imprint }}</td>
-                <td>{% if title.selfpublished %}Yes{% else %}No{% endif %}</td>
-                <td>{{ title.pubdate }}</td>
-                <td>{{ title.dateOfFirstPublication }}</td>
-                <td>{% if title.sizeL %}Yes{% else %}No{% endif %}</td>
-                <td>{% if title.sizeW %}Yes{% else %}No{% endif %}</td>
-                <td>{{ title.edition }}</td>
-                <td>{% if title.volumes %}Yes{% else %}No{% endif %}</td>
-                <td>{{ title.pagination }}</td>
-                <td>{{ title.pricePound }}</td>
-                <td>{{ title.priceShilling }}</td>
-                <td>{{ title.pricePence }}</td>
-                <td>{{ title.sourceId }}</td>
-                <td>{{ title.source2Id }}</td>
-                <td>{{ title.shelfmark }}</td>
-                <td>{% if title.checked %}Yes{% else %}No{% endif %}</td>
-                <td>{% if title.finalcheck %}Yes{% else %}No{% endif %}</td>
-                <td>{{ title.notes }}</td>
-            </tr>
-        {% endfor %}
+			{% for title in titles %}
+				<tr>
+					<td>
+						<a href="{{ path('title_show', { 'id': title.id }) }}">
+							{{ title.title }}
+						</a>
+					</td>
+					<td>{{ title.signedAuthor }}</td>
+					<td>{{ title.surrogate }}</td>
+					<td>{{ title.pseudonym }}</td>
+					<td>{{ title.imprint }}</td>
+					<td>{% if title.selfpublished %}Yes{% else %}No{% endif %}</td>
+					<td>{{ title.pubdate }}</td>
+					<td>{{ title.dateOfFirstPublication }}</td>
+					<td>{% if title.sizeL %}Yes{% else %}No{% endif %}</td>
+					<td>{% if title.sizeW %}Yes{% else %}No{% endif %}</td>
+					<td>{{ title.edition }}</td>
+					<td>{% if title.volumes %}Yes{% else %}No{% endif %}</td>
+					<td>{{ title.pagination }}</td>
+					<td>{{ title.pricePound }}</td>
+					<td>{{ title.priceShilling }}</td>
+					<td>{{ title.pricePence }}</td>
+					<td>{{ title.sourceId }}</td>
+					<td>{{ title.source2Id }}</td>
+					<td>{{ title.shelfmark }}</td>
+					<td>{% if title.checked %}Yes{% else %}No{% endif %}</td>
+					<td>{% if title.finalcheck %}Yes{% else %}No{% endif %}</td>
+					<td>{{ title.notes }}</td>
+				</tr>
+			{% endfor %}
         </tbody>
     </table>
-        
+
     <div class="navigation">
         {{ knp_pagination_render(titles) }}
     </div>
