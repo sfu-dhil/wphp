@@ -1,0 +1,154 @@
+{% extends 'base.html.twig' %}
+
+ {% block pageheader %} 
+    <h1>Title</h1>
+ {% endblock %} 
+
+{% block body %}
+
+    <div class="btn-toolbar">
+    <div class="btn-group pull-right">
+        <a href="{{ path('title_index') }}" class="btn btn-default">
+            <span class="glyphicon glyphicon-arrow-left"></span> Back
+        </a>
+        <a href="{{ path('title_edit', { 'id': title.id }) }}" class="btn btn-default">
+            <span class='glyphicon glyphicon-edit'></span> Edit
+        </a>
+        <a href="{{ path('title_delete', { 'id': title.id }) }}" class="btn btn-default" data-confirm="Are you sure you want to delete this Title?">
+            <span class='glyphicon glyphicon-remove'></span> Delete
+        </a>
+    </div>
+</div>
+    <table class="table table-bordered table-condensed table-hover table-striped">
+        <tbody>
+            <tr>
+                <th>Title</th>
+            <td>{{ title.title }}</td>
+            </tr>
+            <tr>
+                <th>Signedauthor</th>
+            <td>{{ title.signedAuthor }}</td>
+            </tr>
+            
+            <tr>
+                <th>Contributors</th>
+                <td>
+                    {% for tr in title.titleRoles %}
+                        {% set person = tr.person %}
+                        {{ tr.role.name }}: {{ person.lastName }}, {{ person.firstName }} <br/>
+                    {% endfor %}
+                </td>
+            </tr>
+            
+            <tr>
+                <th>Firms</th>
+                <td>
+                    {% for tfr in title.titleFirmRoles %}
+                        {% set firm = tfr.firm %}
+                        {{ tfr.firmrole.name }}: {{ firm.name }} ({{firm.city.name }}) <br/>
+                    {% endfor %}
+                </td>            
+            <tr>
+                <th>Format</th>
+                <td>{{ title.format.name }} ({{ title.format.abbrevOne }}).</td>
+            </tr>
+            <tr>
+                <th>Location of printing</th>
+                <td>{{ title.locationOfPrinting.name }} {{ title.locationOfPrinting.country }}</td>
+            </tr>
+            <tr>
+                <th>Genre</th>
+                <td>{{ title.genre.name }}</td>
+            </tr>
+            <tr>
+                <th>Source 1</th>
+                <td>{{ title.source.name }} {{ title.sourceId }}</td>
+            </tr>
+            <tr>
+                <th>Source 2</th>
+                <td>{{ title.source2.name }} {{ title.source2Id }}</td>
+            </tr>
+            <tr>
+                <th>Surrogate</th>
+            <td>{{ title.surrogate }}</td>
+            </tr>
+            <tr>
+                <th>Pseudonym</th>
+            <td>{{ title.pseudonym }}</td>
+            </tr>
+            <tr>
+                <th>Imprint</th>
+            <td>{{ title.imprint }}</td>
+            </tr>
+            <tr>
+                <th>Selfpublished</th>
+                <td>{% if title.selfpublished %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Pubdate</th>
+            <td>{{ title.pubdate }}</td>
+            </tr>
+            <tr>
+                <th>Dateoffirstpublication</th>
+            <td>{{ title.dateOfFirstPublication }}</td>
+            </tr>
+            <tr>
+                <th>Sizel</th>
+                <td>{% if title.sizeL %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Sizew</th>
+                <td>{% if title.sizeW %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Edition</th>
+            <td>{{ title.edition }}</td>
+            </tr>
+            <tr>
+                <th>Volumes</th>
+                <td>{% if title.volumes %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Pagination</th>
+            <td>{{ title.pagination }}</td>
+            </tr>
+            <tr>
+                <th>Pricepound</th>
+            <td>{{ title.pricePound }}</td>
+            </tr>
+            <tr>
+                <th>Priceshilling</th>
+            <td>{{ title.priceShilling }}</td>
+            </tr>
+            <tr>
+                <th>Pricepence</th>
+            <td>{{ title.pricePence }}</td>
+            </tr>
+            <tr>
+                <th>Sourceid</th>
+            <td>{{ title.sourceId }}</td>
+            </tr>
+            <tr>
+                <th>Source2id</th>
+            <td>{{ title.source2Id }}</td>
+            </tr>
+            <tr>
+                <th>Shelfmark</th>
+            <td>{{ title.shelfmark }}</td>
+            </tr>
+            <tr>
+                <th>Checked</th>
+                <td>{% if title.checked %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Finalcheck</th>
+                <td>{% if title.finalcheck %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Notes</th>
+            <td>{{ title.notes }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+{% endblock %}

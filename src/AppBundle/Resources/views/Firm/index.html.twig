@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+ {% block pageheader %} 
+    <h1>Firm List</h1>
+    <p class="count">
+        Displaying {{ firms|length }} firms of {{ firms.getTotalItemCount }} total.
+    </p>
+ {% endblock %} 
+
+{% block body %}
+
+        <div class='btn-toolbar pull-right'>
+        <div class='btn-group'>
+            <a href="{{ path('firm_new') }}" class="btn btn-default">
+                <span class="glyphicon glyphicon-plus"></span> New
+            </a>
+            <a href="{{ path('firm_search') }}" class="btn btn-default">
+                <span class="glyphicon glyphicon-search"></span> Search
+            </a>
+            <a href="{{ path('firm_fulltext') }}" class="btn btn-default">
+                <span class="glyphicon glyphicon-search"></span> Fulltext
+            </a>
+        </div>
+    </div>
+        
+    <table class="table table-bordered table-condensed table-hover table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Streetaddress</th>
+                <th>Startdate</th>
+                <th>Enddate</th>
+                <th>Finalcheck</th>            </tr>
+        </thead>
+        <tbody>
+        {% for firm in firms %}
+            <tr>
+                <td>
+                    <a href="{{ path('firm_show', { 'id': firm.id }) }}">
+                        {{ firm.name }}
+                    </a>
+                </td>
+                <td>{{ firm.streetAddress }}</td>
+                <td>{{ firm.startDate }}</td>
+                <td>{{ firm.endDate }}</td>
+                <td>{% if firm.finalcheck %}Yes{% else %}No{% endif %}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+        
+    <div class="navigation">
+        {{ knp_pagination_render(firms) }}
+    </div>
+
+{% endblock %}

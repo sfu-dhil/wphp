@@ -1,0 +1,103 @@
+{% extends 'base.html.twig' %}
+
+ {% block pageheader %} 
+    <h1>Geonames</h1>
+ {% endblock %} 
+
+{% block body %}
+
+    <div class="btn-toolbar">
+    <div class="btn-group pull-right">
+        <a href="{{ path('geonames_index') }}" class="btn btn-default">
+            <span class="glyphicon glyphicon-arrow-left"></span> Back
+        </a>
+        <a href="{{ path('geonames_edit', { 'id': geoname.geonameid }) }}" class="btn btn-default">
+            <span class='glyphicon glyphicon-edit'></span> Edit
+        </a>
+        <a href="{{ path('geonames_delete', { 'id': geoname.geonameid }) }}" class="btn btn-default" data-confirm="Are you sure you want to delete this Geonames?">
+            <span class='glyphicon glyphicon-remove'></span> Delete
+        </a>
+    </div>
+</div>
+    <table class="table table-bordered table-condensed table-hover table-striped">
+        <tbody>
+            <tr>
+                <th>Geonameid</th>
+            <td>{{ geoname.geonameid }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+            <td>{{ geoname.name }}</td>
+            </tr>
+            <tr>
+                <th>Asciiname</th>
+            <td>{{ geoname.asciiname }}</td>
+            </tr>
+            <tr>
+                <th>Alternatenames</th>
+            <td>{{ geoname.alternatenames }}</td>
+            </tr>
+            <tr>
+                <th>Latitude</th>
+            <td>{{ geoname.latitude }}</td>
+            </tr>
+            <tr>
+                <th>Longitude</th>
+            <td>{{ geoname.longitude }}</td>
+            </tr>
+            <tr>
+                <th>Fclass</th>
+            <td>{{ geoname.fclass }}</td>
+            </tr>
+            <tr>
+                <th>Fcode</th>
+            <td>{{ geoname.fcode }}</td>
+            </tr>
+            <tr>
+                <th>Country</th>
+            <td>{{ geoname.country }}</td>
+            </tr>
+            <tr>
+                <th>Cc2</th>
+            <td>{{ geoname.cc2 }}</td>
+            </tr>
+            <tr>
+                <th>Admin1</th>
+            <td>{{ geoname.admin1 }}</td>
+            </tr>
+            <tr>
+                <th>Admin2</th>
+            <td>{{ geoname.admin2 }}</td>
+            </tr>
+            <tr>
+                <th>Admin3</th>
+            <td>{{ geoname.admin3 }}</td>
+            </tr>
+            <tr>
+                <th>Admin4</th>
+            <td>{{ geoname.admin4 }}</td>
+            </tr>
+            <tr>
+                <th>Population</th>
+            <td>{{ geoname.population }}</td>
+            </tr>
+            <tr>
+                <th>Elevation</th>
+            <td>{{ geoname.elevation }}</td>
+            </tr>
+            <tr>
+                <th>Gtopo30</th>
+            <td>{{ geoname.gtopo30 }}</td>
+            </tr>
+            <tr>
+                <th>Timezone</th>
+            <td>{{ geoname.timezone }}</td>
+            </tr>
+            <tr>
+                <th>Moddate</th>
+                <td>{% if geoname.moddate %}{{ geoname.moddate|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+{% endblock %}

@@ -1,0 +1,88 @@
+{% block extends %}
+{{ "{% extends 'base.html.twig' %}" }}
+{% endblock extends %}
+
+{{ " {% block pageheader %} "}}
+    <h1>{{ entity }} List</h1>
+    <p class="count">
+        Displaying {{ '{{ ' ~ entity_pluralized  ~ "|length }}" }} {{ entity_pluralized }} of {{ '{{ ' ~ entity_pluralized  ~ ".getTotalItemCount }}" }} total.
+    </p>
+{{ " {% endblock %} "}}
+
+{% block body %}
+{{ "{% block body %}" }}
+
+    {% if 'new' in actions %}
+    <div class='btn-toolbar pull-right'>
+        <div class='btn-group'>
+            <a href="{{ "{{ path('" ~ route_name_prefix ~ "_new') }}" }}" class="btn btn-default">
+                <span class="glyphicon glyphicon-plus"></span> New
+            </a>
+            <a href="{{ "{{ path('" ~ route_name_prefix ~ "_search') }}" }}" class="btn btn-default">
+                <span class="glyphicon glyphicon-search"></span> Search
+            </a>
+        </div>
+    </div>
+    {% endif %}
+    
+    <table class="table table-bordered table-condensed table-hover table-striped">
+        <thead>
+            <tr>
+            {%- for field, metadata in fields if field != 'id' %}
+
+                <th>{{ field|capitalize }}</th>
+
+            {%- endfor %}
+            </tr>
+        </thead>
+        <tbody>
+        {{ '{% for ' ~ entity_singularized ~ ' in ' ~ entity_pluralized ~ ' %}' }}
+            <tr>
+
+        {%- for field, metadata in fields if field != 'id' %}
+            {%- if loop.first and ('show' in actions) %}
+
+                <td>
+                    <a href="{{ "{{ path('" ~ route_name_prefix ~ "_show', { 'id': " ~ entity_singularized ~ "."~ identifier ~" }) }}" }}">
+                        {{ '{{ ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' }}' }}
+                    </a>
+                </td>
+
+            {%- elseif metadata.type in ['datetime'] %}
+
+                <td>{{ '{% if ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' %}{{ ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ '|date(\'Y-m-d H:i:s\') }}{% endif %}' }}</td>
+            
+            {%- elseif metadata.type in ['date'] %}
+
+                <td>{{ '{% if ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' %}{{ ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ '|date(\'Y-m-d\') }}{% endif %}' }}</td>
+          
+            {%- elseif metadata.type in ['time'] %}
+
+                <td>{{ '{% if ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' %}{{ ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ '|date(\'H:i:s\') }}{% endif %}' }}</td>
+
+            {%- elseif metadata.type in ['array'] %}
+
+                <td>{{ '{% if ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' %}{{ ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ '|join(\', \') }}{% endif %}' }}</td>
+
+            {%- elseif metadata.type in ['boolean'] %}
+
+                <td>{{ '{% if ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' %}Yes{% else %}No{% endif %}' }}</td>
+
+            {%- else %}
+
+                <td>{{ '{{ ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' }}' }}</td>
+
+            {%- endif %}
+        {%- endfor %}
+
+            </tr>
+        {{ '{% endfor %}' }}
+        </tbody>
+    </table>
+        
+    <div class="navigation">
+        {{ '{{ knp_pagination_render(' ~ entity_pluralized ~ ') }}' }}
+    </div>
+
+{{ "{% endblock %}" }}
+{% endblock body %}
