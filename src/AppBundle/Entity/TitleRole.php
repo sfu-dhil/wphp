@@ -7,7 +7,13 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * TitleRole
  *
- * @ORM\Table(name="title_role", uniqueConstraints={@ORM\UniqueConstraint(name="title_id", columns={"title_id", "role_id", "person_id"})}, indexes={@ORM\Index(name="person_id", columns={"person_id"}), @ORM\Index(name="role_id", columns={"role_id"}), @ORM\Index(name="IDX_1CB35015A9F87BD", columns={"title_id"})})
+ * @ORM\Table(name="title_role", 
+ *	uniqueConstraints={@ORM\UniqueConstraint(name="title_id", columns={"title_id", "role_id", "person_id"})}, 
+ *	indexes={
+ *		@ORM\Index(name="person_id", columns={"person_id"}), 
+ *		@ORM\Index(name="role_id", columns={"role_id"}), 
+ *		@ORM\Index(name="IDX_1CB35015A9F87BD", columns={"title_id"})
+ * })
  * @ORM\Entity
  */
 class TitleRole

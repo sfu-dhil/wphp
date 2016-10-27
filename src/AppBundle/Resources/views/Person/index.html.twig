@@ -1,19 +1,16 @@
 {% extends 'base.html.twig' %}
 
- {% block pageheader %} 
+{% block pageheader %} 
     <h1>Person List</h1>
     <p class="count">
         Displaying {{ people|length }} people of {{ people.getTotalItemCount }} total.
     </p>
- {% endblock %} 
+{% endblock %} 
 
 {% block body %}
 
-        <div class='btn-toolbar pull-right'>
+	<div class='btn-toolbar pull-right'>
         <div class='btn-group'>
-            <a href="{{ path('person_new') }}" class="btn btn-default">
-                <span class="glyphicon glyphicon-plus"></span> New
-            </a>
             <a href="{{ path('person_search') }}" class="btn btn-default">
                 <span class="glyphicon glyphicon-search"></span> Search
             </a>
@@ -22,7 +19,7 @@
             </a>
         </div>
     </div>
-        
+
     <table class="table table-bordered table-condensed table-hover table-striped">
         <thead>
             <tr>
@@ -33,28 +30,29 @@
                 <th>Dob</th>
                 <th>Dod</th>
                 <th>Checked</th>
-                <th>Finalcheck</th>            </tr>
+                <th>Finalcheck</th>            
+			</tr>
         </thead>
         <tbody>
-        {% for person in people %}
-            <tr>
-                <td>
-                    <a href="{{ path('person_show', { 'id': person.id }) }}">
-                        {{ person.lastName }}
-                    </a>
-                </td>
-                <td>{{ person.firstName }}</td>
-                <td>{{ person.title }}</td>
-                <td>{{ person.gender }}</td>
-                <td>{{ person.dob }}</td>
-                <td>{{ person.dod }}</td>
-                <td>{% if person.checked %}Yes{% else %}No{% endif %}</td>
-                <td>{% if person.finalcheck %}Yes{% else %}No{% endif %}</td>
-            </tr>
-        {% endfor %}
+			{% for person in people %}
+				<tr>
+					<td>
+						<a href="{{ path('person_show', { 'id': person.id }) }}">
+							{{ person.lastName }}
+						</a>
+					</td>
+					<td>{{ person.firstName }}</td>
+					<td>{{ person.title }}</td>
+					<td>{{ person.gender }}</td>
+					<td>{{ person.dob }}</td>
+					<td>{{ person.dod }}</td>
+					<td>{% if person.checked %}Yes{% else %}No{% endif %}</td>
+					<td>{% if person.finalcheck %}Yes{% else %}No{% endif %}</td>
+				</tr>
+			{% endfor %}
         </tbody>
     </table>
-        
+
     <div class="navigation">
         {{ knp_pagination_render(people) }}
     </div>
