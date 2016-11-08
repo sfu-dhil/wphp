@@ -1,21 +1,18 @@
 {% extends 'base.html.twig' %}
 
- {% block pageheader %} 
+{% block pageheader %} 
     <h1>Title List</h1>
     <p class="count">
         Displaying {{ titles|length }} titles of {{ titles.getTotalItemCount }} total.
     </p>
- {% endblock %} 
+{% endblock %} 
 
 {% block body %}
 
-        <div class='btn-toolbar pull-right'>
+	<div class='btn-toolbar pull-right'>
         <div class='btn-group'>
             <a href="{{ path('title_export') }}" class="btn btn-default">
                 <span class="glyphicon glyphicon-download-alt"></span> Download
-            </a>
-            <a href="{{ path('title_new') }}" class="btn btn-default">
-                <span class="glyphicon glyphicon-plus"></span> New
             </a>
             <a href="{{ path('title_search') }}" class="btn btn-default">
                 <span class="glyphicon glyphicon-search"></span> Search
@@ -25,7 +22,7 @@
             </a>
         </div>
     </div>
-        
+
     <table class="table table-bordered table-condensed table-hover table-striped">
         <thead>
             <tr>
@@ -54,7 +51,7 @@
         {% endfor %}
         </tbody>
     </table>
-        
+
     <div class="navigation">
         {{ knp_pagination_render(titles) }}
     </div>
