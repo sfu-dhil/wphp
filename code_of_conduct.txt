@@ -1,7 +1,7 @@
 Digital Humanities Innovation Lab (DHIL) Code of Conduct as of Nov. 8, 2016
 
 
-Be considerate.
+Please Be considerate.
 Our work will be used by other people, and we in turn will depend on the work of others. Any decision we take will affect users and colleagues, and we should take those consequences into account when making decisions. Our contributions to DHIL projects will impact the work of others. For example, changes to code, infrastructure, policy, documentation, and translations during a release may negatively impact others' work.
 
 
