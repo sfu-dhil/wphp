@@ -138,6 +138,26 @@ class TitleController extends Controller
 			'q' => $q,
         );
     }
+    
+    /**
+     * Search for Title entities.
+     *
+     * @Route("/jump", name="title_jump")
+     * @Method("GET")
+     * @Template()
+	 * @param Request $request
+     */
+    public function jumpAction(Request $request)
+    {
+		$q = $request->query->get('q');
+		if($q) {
+            return $this->redirect($this->generateUrl('title_show', array('id' => $q)));
+		} else {
+            return $this->redirect($this->generateUrl('title_index', array('id' => $q)));
+		}
+    }
+    
+    
     /**
      * Full text search for Title entities.
      *

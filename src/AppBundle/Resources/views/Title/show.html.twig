@@ -16,11 +16,15 @@
     <table class="table table-bordered table-condensed table-hover table-striped">
         <tbody>
             <tr>
+                <th>ID</th>
+                <td>{{ title.id }}</td>
+            </tr>
+            <tr>
                 <th>Title</th>
 				<td>{{ title.title }}</td>
             </tr>
             <tr>
-                <th>Signedauthor</th>
+                <th>Signed author</th>
 				<td>{{ title.signedAuthor }}</td>
             </tr>
 
@@ -29,7 +33,7 @@
                 <td>
                     {% for tr in title.titleRoles %}
                         {% set person = tr.person %}
-                        {{ tr.role.name }}: {{ person.lastName }}, {{ person.firstName }} <br/>
+                        {{ tr.role.name }}: <a href="{{ path('person_show', {'id': person.id}) }}">{{ person.lastName }}, {{ person.firstName }}</a><br/>
                     {% endfor %}
                 </td>
             </tr>
@@ -39,7 +43,7 @@
                 <td>
                     {% for tfr in title.titleFirmRoles %}
                         {% set firm = tfr.firm %}
-                        {{ tfr.firmrole.name }}: {{ firm.name }} ({{firm.city.name }}) <br/>
+                        {{ tfr.firmrole.name }}: <a href="{{ path('firm_show', {'id': firm.id}) }}">{{ firm.name }} ({{firm.city.name }})</a><br/>
                     {% endfor %}
                 </td>            
             <tr>
@@ -48,7 +52,7 @@
             </tr>
             <tr>
                 <th>Location of printing</th>
-                <td>{{ title.locationOfPrinting.name }} {{ title.locationOfPrinting.country }}</td>
+                <td>{{ title.locationOfPrinting.name }} {{ title.locationOfPrinting.country }} ({{ title.locationOfPrinting.latitude }}, {{ title.locationOfPrinting.longitude }})</td>
             </tr>
             <tr>
                 <th>Genre</th>
@@ -75,23 +79,23 @@
 				<td>{{ title.imprint }}</td>
             </tr>
             <tr>
-                <th>Selfpublished</th>
+                <th>Self published</th>
                 <td>{% if title.selfpublished %}Yes{% else %}No{% endif %}</td>
             </tr>
             <tr>
-                <th>Pubdate</th>
+                <th>Publication date</th>
 				<td>{{ title.pubdate }}</td>
             </tr>
             <tr>
-                <th>Dateoffirstpublication</th>
+                <th>Date of first publication</th>
 				<td>{{ title.dateOfFirstPublication }}</td>
             </tr>
             <tr>
-                <th>Sizel</th>
+                <th>Size length</th>
                 <td>{% if title.sizeL %}Yes{% else %}No{% endif %}</td>
             </tr>
             <tr>
-                <th>Sizew</th>
+                <th>Size width</th>
                 <td>{% if title.sizeW %}Yes{% else %}No{% endif %}</td>
             </tr>
             <tr>
@@ -107,35 +111,39 @@
 				<td>{{ title.pagination }}</td>
             </tr>
             <tr>
-                <th>Pricepound</th>
+                <th>Price pound</th>
 				<td>{{ title.pricePound }}</td>
             </tr>
             <tr>
-                <th>Priceshilling</th>
+                <th>Price shilling</th>
 				<td>{{ title.priceShilling }}</td>
             </tr>
             <tr>
-                <th>Pricepence</th>
+                <th>Price pence</th>
 				<td>{{ title.pricePence }}</td>
             </tr>
             <tr>
-                <th>Sourceid</th>
+                <th>Source id</th>
 				<td>{{ title.sourceId }}</td>
             </tr>
             <tr>
-                <th>Source2id</th>
+                <th>Source2 id</th>
 				<td>{{ title.source2Id }}</td>
             </tr>
             <tr>
-                <th>Shelfmark</th>
-				<td>{{ title.shelfmark }}</td>
+                <th>Shelf marks</th>
+                <td>
+                    {% for mark in title.shelfmark|split(';') %}
+                        {{ mark }}<br/>
+                    {% endfor %}
+                </td>
             </tr>
             <tr>
                 <th>Checked</th>
                 <td>{% if title.checked %}Yes{% else %}No{% endif %}</td>
             </tr>
             <tr>
-                <th>Finalcheck</th>
+                <th>Final check</th>
                 <td>{% if title.finalcheck %}Yes{% else %}No{% endif %}</td>
             </tr>
             <tr>
