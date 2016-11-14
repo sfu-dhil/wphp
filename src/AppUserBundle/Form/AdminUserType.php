@@ -3,6 +3,8 @@
 namespace AppUserBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -22,15 +24,11 @@ class AdminUserType extends AbstractType
                 ->add('email')
                 ->add('fullname')
                 ->add('institution')
-                ->add('notify', 'checkbox', array(
-                    'label' => 'Notify user when journals go silent',
-                    'required' => false,
-                ))
-                ->add('enabled', 'checkbox', array(
+                ->add('enabled', CheckboxType::class, array(
                     'label' => 'Account Enabled',
                     'required' => false,
                 ))
-                ->add('roles', 'choice', array(
+                ->add('roles', ChoiceType::class, array(
                     'label' => 'Roles',
                     'choices' => array(
                         'ROLE_ADMIN' => 'Admin',

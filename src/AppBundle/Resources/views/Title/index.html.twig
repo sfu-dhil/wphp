@@ -9,8 +9,30 @@
 
 {% block body %}
 
+    <form method="get" class="form-horizontal" action="jump">
+        <fieldset>
+            <div class='form-group'>
+                <label class='col-sm-2 control-label' for='q'>Jump to title ID</label>
+                <div class='col-sm-2'>
+                    <div class='input-group'>
+                        <input type='text' name='q' id='q' class='form-control' value=''>
+                        <span class="input-group-btn">
+                            <button class="btn btn-primary" type="submit">
+                                <span class='glyphicon glyphicon-share-alt'></span>
+                                Jump
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+    
 	<div class='btn-toolbar pull-right'>
         <div class='btn-group'>
+            <a href="{{ path('title_export') }}" class="btn btn-default">
+                <span class="glyphicon glyphicon-download-alt"></span> Download
+            </a>
             <a href="{{ path('title_search') }}" class="btn btn-default">
                 <span class="glyphicon glyphicon-search"></span> Search
             </a>
@@ -24,59 +46,36 @@
         <thead>
             <tr>
                 <th>Title</th>
-                <th>Signedauthor</th>
-                <th>Surrogate</th>
-                <th>Pseudonym</th>
-                <th>Imprint</th>
-                <th>Selfpublished</th>
-                <th>Pubdate</th>
-                <th>Dateoffirstpublication</th>
-                <th>Sizel</th>
-                <th>Sizew</th>
+                <th>Author</th>
+                <th>Firm</th>
+                <th>Date
                 <th>Edition</th>
-                <th>Volumes</th>
-                <th>Pagination</th>
-                <th>Pricepound</th>
-                <th>Priceshilling</th>
-                <th>Pricepence</th>
-                <th>Sourceid</th>
-                <th>Source2id</th>
-                <th>Shelfmark</th>
-                <th>Checked</th>
-                <th>Finalcheck</th>
-                <th>Notes</th>            </tr>
+            </tr>
         </thead>
         <tbody>
-			{% for title in titles %}
-				<tr>
-					<td>
-						<a href="{{ path('title_show', { 'id': title.id }) }}">
-							{{ title.title }}
-						</a>
-					</td>
-					<td>{{ title.signedAuthor }}</td>
-					<td>{{ title.surrogate }}</td>
-					<td>{{ title.pseudonym }}</td>
-					<td>{{ title.imprint }}</td>
-					<td>{% if title.selfpublished %}Yes{% else %}No{% endif %}</td>
-					<td>{{ title.pubdate }}</td>
-					<td>{{ title.dateOfFirstPublication }}</td>
-					<td>{% if title.sizeL %}Yes{% else %}No{% endif %}</td>
-					<td>{% if title.sizeW %}Yes{% else %}No{% endif %}</td>
-					<td>{{ title.edition }}</td>
-					<td>{% if title.volumes %}Yes{% else %}No{% endif %}</td>
-					<td>{{ title.pagination }}</td>
-					<td>{{ title.pricePound }}</td>
-					<td>{{ title.priceShilling }}</td>
-					<td>{{ title.pricePence }}</td>
-					<td>{{ title.sourceId }}</td>
-					<td>{{ title.source2Id }}</td>
-					<td>{{ title.shelfmark }}</td>
-					<td>{% if title.checked %}Yes{% else %}No{% endif %}</td>
-					<td>{% if title.finalcheck %}Yes{% else %}No{% endif %}</td>
-					<td>{{ title.notes }}</td>
-				</tr>
-			{% endfor %}
+        {% for title in titles %}
+            <tr>
+                <td>
+                    <a href="{{ path('title_show', { 'id': title.id }) }}">
+                        {{ title.title }}
+                    </a>
+                </td>
+                <td>
+                    {% for tr in title.titleRoles if tr.role.name == 'Author' %}
+                        {% set person = tr.person %}
+                        <a href="{{ path('person_show', {'id': person.id}) }}">{{ person.lastName }}, {{ person.firstName }}</a><br/>
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for tfr in title.titleFirmRoles if tfr.firmrole.name == 'Publisher' %}
+                        {% set firm = tfr.firm %}
+                        <a href="{{ path('firm_show', {'id': firm.id}) }}">{{ firm.name }} ({{firm.city.name }})</a><br/>
+                    {% endfor %}
+                </td>            
+                <td>{{ title.pubdate }}</td>
+                <td>{{ title.edition }}</td>
+            </tr>
+        {% endfor %}
         </tbody>
     </table>
 
