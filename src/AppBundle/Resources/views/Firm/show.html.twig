@@ -32,7 +32,7 @@
 				<td>
 					{% for tfr in firm.titleFirmroles %}
 						{% set title = tfr.title %}
-						{{tfr.firmrole.name}}: {{ title.title }}<br/>
+                        {{tfr.firmrole.name}}: <a href="{{ path('title_show', {'id': title.id}) }}">{{ title.title }}</a><br/>
 					{% endfor %}
 				</td>
 			</tr>

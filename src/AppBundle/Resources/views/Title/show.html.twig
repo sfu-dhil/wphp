@@ -104,7 +104,7 @@
             </tr>
             <tr>
                 <th>Volumes</th>
-                <td>{% if title.volumes %}Yes{% else %}No{% endif %}</td>
+                <td>{{ title.volumes }}</td>
             </tr>
             <tr>
                 <th>Pagination</th>
@@ -121,14 +121,6 @@
             <tr>
                 <th>Price pence</th>
 				<td>{{ title.pricePence }}</td>
-            </tr>
-            <tr>
-                <th>Source id</th>
-				<td>{{ title.sourceId }}</td>
-            </tr>
-            <tr>
-                <th>Source2 id</th>
-				<td>{{ title.source2Id }}</td>
             </tr>
             <tr>
                 <th>Shelf marks</th>

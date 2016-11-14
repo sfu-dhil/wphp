@@ -44,7 +44,7 @@
 				<td>
 					{% for tr in person.titleRoles %}
 						{% set title = tr.title %}
-						{{ tr.role.name }}: {{ title.title }}<br/>
+                        {{ tr.role.name }}: <a href="{{ path('title_show', {'id': title.id}) }}">{{ title.title }}</a><br/>
 					{% endfor %}
 				</td>
 			</tr>

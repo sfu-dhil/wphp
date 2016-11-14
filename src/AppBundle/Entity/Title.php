@@ -112,7 +112,7 @@ class Title
     /**
      * @var boolean
      *
-     * @ORM\Column(name="volumes", type="boolean", nullable=true)
+     * @ORM\Column(name="volumes", type="integer", nullable=true)
      */
     private $volumes;
 
