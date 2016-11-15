@@ -6,6 +6,10 @@ app:
     resource: "@AppBundle/Controller/"
     type:     annotation
 
+feedback:
+    resource: "@FeedbackBundle/Controller/"
+    type: annotation
+    
 app_user:
     resource: "@AppUserBundle/Controller/"
     type: annotation
