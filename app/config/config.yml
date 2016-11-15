@@ -36,7 +36,7 @@ framework:
 twig:
     form_themes:      
         - 'bootstrap_3_horizontal_layout.html.twig'
-        - 'form/fields.html.twig'
+        - 'Form/fields.html.twig'
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
 
