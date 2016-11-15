@@ -96,7 +96,6 @@ class DefaultController extends Controller {
 		$form->handleRequest($request);
 		if ($form->isSubmitted()) {
 			$data = $form->getData();
-			dump($data);
 			$q = $this->buildQuery($data);
 			$paginator = $this->get('knp_paginator');
 			$titles = $paginator->paginate($q, $request->query->getint('page', 1), 25);
