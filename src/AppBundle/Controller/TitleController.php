@@ -207,13 +207,15 @@ class TitleController extends Controller
         }
 
 		$comments = array();
+		$service = $this->get('feedback.comment');
 		if($this->isGranted('ROLE_ADMIN')) {
-			$comments = $this->get('feedback.comment')->findComments($title);
+			$comments = $service->findComments($title);
 		}
 		return array(
             'form' => $form->createView(),
             'title' => $title,
 			'comments' => $comments,
+			'service' => $service,
         );
     }
 

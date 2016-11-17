@@ -111,13 +111,15 @@ class FirmController extends Controller
         }
 
 		$comments = array();
+		$service = $this->get('feedback.comment');
 		if($this->isGranted('ROLE_ADMIN')) {
-			$comments = $this->get('feedback.comment')->findComments($firm);
+			$comments = $service->findComments($firm);
 		}
 		return array(
             'form' => $form->createView(),
             'firm' => $firm,
 			'comments' => $comments,
+			'service' => $service,
         );
     }
 }

@@ -155,6 +155,10 @@ class CommentController extends Controller
         $em->flush();
         $this->addFlash('success', 'The comment was deleted.');
 
+		if($request->query->has('ref')) {
+			return $this->redirect($request->query->get('ref'));
+		}
+		
         return $this->redirectToRoute('admin_comment_index');
     }
 }

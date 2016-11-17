@@ -113,13 +113,15 @@ class PersonController extends Controller
         }
 
 		$comments = array();
+		$service = $this->get('feedback.comment');
 		if($this->isGranted('ROLE_ADMIN')) {
-			$comments = $this->get('feedback.comment')->findComments($person);
+			$comments = $service->findComments($person);
 		}
 		return array(
             'form' => $form->createView(),
             'person' => $person,
 			'comments' => $comments,
+			'service' => $service,
         );
 
     }
