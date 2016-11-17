@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block pageheader %}
+	<h1>Testing</h1>
+{% endblock %}
+
+{% block body %}
+
+	{{ form(form) }}
+
+	{% if content is defined %}
+		<div class='panel panel-default'>
+			<div class='panel-heading'>
+				<b>Preview</b>
+			</div>
+			<div class='panel-body'>			
+				{{ content|raw }}
+			</div>
+		</div>
+	{% endif %}
+
+{% endblock %}

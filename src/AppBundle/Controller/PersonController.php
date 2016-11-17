@@ -2,13 +2,13 @@
 
 namespace AppBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use AppBundle\Entity\Person;
+use FeedbackBundle\Entity\Comment;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use AppBundle\Entity\Person;
-use AppBundle\Form\PersonType;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Person controller.
@@ -97,16 +97,26 @@ class PersonController extends Controller
      * Finds and displays a Person entity.
      *
      * @Route("/{id}", name="person_show")
-     * @Method("GET")
+     * @Method({"GET","POST"})
      * @Template()
 	 * @param Person $person
      */
-    public function showAction(Person $person)
+    public function showAction(Request $request, Person $person)
     {
+        $comment = new Comment();
+        $form = $this->createForm('FeedbackBundle\Form\CommentType', $comment);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->get('feedback.comment')->addComment($person, $comment);
+            $this->addFlash('success', 'Thank you for your suggestion.');
+            return $this->redirect($this->generateUrl('person_show', array('id' => $person->getId())));
+        }
 
-        return array(
+		return array(
+            'form' => $form->createView(),
             'person' => $person,
         );
+
     }
 
 }

@@ -8,19 +8,18 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use FeedbackBundle\Entity\Comment;
-use FeedbackBundle\Form\CommentType;
 
 /**
  * Comment controller.
  *
- * @Route("/comment")
+ * @Route("/admin/comment")
  */
 class CommentController extends Controller
 {
     /**
      * Lists all Comment entities.
      *
-     * @Route("/", name="comment_index")
+     * @Route("/", name="admin_comment_index")
      * @Method("GET")
      * @Template()
 	 * @param Request $request
@@ -52,7 +51,7 @@ class CommentController extends Controller
      //    }
 	 *
      *
-     * @Route("/search", name="comment_search")
+     * @Route("/search", name="admin_comment_search")
      * @Method("GET")
      * @Template()
 	 * @param Request $request
@@ -97,7 +96,7 @@ class CommentController extends Controller
 	 *     ORM\Index(name="alias_name_idx",columns="name", flags={"fulltext"})
 	 *
      *
-     * @Route("/fulltext", name="comment_fulltext")
+     * @Route("/fulltext", name="admin_comment_fulltext")
      * @Method("GET")
      * @Template()
 	 * @param Request $request
@@ -123,81 +122,26 @@ class CommentController extends Controller
     }
 
     /**
-     * Creates a new Comment entity.
-     *
-     * @Route("/new", name="comment_new")
-     * @Method({"GET", "POST"})
-     * @Template()
-	 * @param Request $request
-     */
-    public function newAction(Request $request)
-    {
-        $comment = new Comment();
-        $form = $this->createForm('FeedbackBundle\Form\CommentType', $comment);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($comment);
-            $em->flush();
-
-            $this->addFlash('success', 'The new comment was created.');
-            return $this->redirectToRoute('comment_show', array('id' => $comment->getId()));
-        }
-
-        return array(
-            'comment' => $comment,
-            'form' => $form->createView(),
-        );
-    }
-
-    /**
      * Finds and displays a Comment entity.
      *
-     * @Route("/{id}", name="comment_show")
+     * @Route("/{id}", name="admin_comment_show")
      * @Method("GET")
      * @Template()
 	 * @param Comment $comment
      */
     public function showAction(Comment $comment)
     {
-
+        $service = $this->get('feedback.comment');
         return array(
             'comment' => $comment,
-        );
-    }
-
-    /**
-     * Displays a form to edit an existing Comment entity.
-     *
-     * @Route("/{id}/edit", name="comment_edit")
-     * @Method({"GET", "POST"})
-     * @Template()
-	 * @param Request $request
-	 * @param Comment $comment
-     */
-    public function editAction(Request $request, Comment $comment)
-    {
-        $editForm = $this->createForm('FeedbackBundle\Form\CommentType', $comment);
-        $editForm->handleRequest($request);
-
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->flush();
-            $this->addFlash('success', 'The comment has been updated.');
-            return $this->redirectToRoute('comment_show', array('id' => $comment->getId()));
-        }
-
-        return array(
-            'comment' => $comment,
-            'edit_form' => $editForm->createView(),
+            'service' => $service,
         );
     }
 
     /**
      * Deletes a Comment entity.
      *
-     * @Route("/{id}/delete", name="comment_delete")
+     * @Route("/{id}/delete", name="admin_comment_delete")
      * @Method("GET")
 	 * @param Request $request
 	 * @param Comment $comment

@@ -279,4 +279,8 @@ class Firm
     {
         return $this->titleFirmroles;
     }
+	
+	public function __toString() {
+		return $this->name;
+	}
 }

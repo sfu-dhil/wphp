@@ -1011,4 +1011,8 @@ class Title
     {
         return $this->titleFirmroles;
     }
+	
+	public function __toString() {
+		return $this->title;
+	}
 }

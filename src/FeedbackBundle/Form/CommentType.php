@@ -16,7 +16,6 @@ class CommentType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {    
-        $builder->add('url', HiddenType::class);  // string     
         $builder->add('fullname');  // string     
         $builder->add('email');  // string     
         $builder->add('followUp');  // boolean     

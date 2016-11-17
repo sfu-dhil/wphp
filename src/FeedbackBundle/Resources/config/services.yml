@@ -1,4 +1,8 @@
 services:
-#    feedback.example:
-#        class: FeedbackBundle\Example
-#        arguments: ["@service_id", "plain_value", %parameter%]
+    feedback.comment:
+        class: FeedbackBundle\Services\CommentService
+        arguments: [ "%feedback.routing%" ]
+        calls:
+            - [ setDoctrine, ["@doctrine"]]
+            - [ setLogger, ["@monolog.logger"]]
+            - [ setRouter, ["@router"]]

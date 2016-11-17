@@ -398,4 +398,8 @@ class Person
     {
         return $this->titleRoles;
     }
+	
+	public function __toString() {
+		return $this->firstName . ' ' . $this->lastName;
+	}
 }

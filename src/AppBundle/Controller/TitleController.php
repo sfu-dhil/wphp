@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Title;
+use FeedbackBundle\Entity\Comment;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -190,14 +191,23 @@ class TitleController extends Controller
      * Finds and displays a Title entity.
      *
      * @Route("/{id}", name="title_show")
-     * @Method("GET")
+     * @Method({"GET","POST"})
      * @Template()
 	 * @param Title $title
      */
-    public function showAction(Title $title)
+    public function showAction(Request $request, Title $title)
     {
+        $comment = new Comment();
+        $form = $this->createForm('FeedbackBundle\Form\CommentType', $comment);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->get('feedback.comment')->addComment($title, $comment);
+            $this->addFlash('success', 'Thank you for your suggestion.');
+            return $this->redirect($this->generateUrl('title_show', array('id' => $title->getId())));
+        }
 
-        return array(
+		return array(
+            'form' => $form->createView(),
             'title' => $title,
         );
     }

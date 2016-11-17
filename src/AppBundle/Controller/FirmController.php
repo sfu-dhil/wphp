@@ -2,13 +2,13 @@
 
 namespace AppBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use AppBundle\Entity\Firm;
+use FeedbackBundle\Entity\Comment;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use AppBundle\Entity\Firm;
-use AppBundle\Form\FirmType;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Firm controller.
@@ -95,14 +95,23 @@ class FirmController extends Controller
      * Finds and displays a Firm entity.
      *
      * @Route("/{id}", name="firm_show")
-     * @Method("GET")
+     * @Method({"GET","POST"})
      * @Template()
 	 * @param Firm $firm
      */
-    public function showAction(Firm $firm)
+    public function showAction(Request $request, Firm $firm)
     {
+        $comment = new Comment();
+        $form = $this->createForm('FeedbackBundle\Form\CommentType', $comment);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->get('feedback.comment')->addComment($firm, $comment);
+            $this->addFlash('success', 'Thank you for your suggestion.');
+            return $this->redirect($this->generateUrl('firm_show', array('id' => $firm->getId())));
+        }
 
-        return array(
+		return array(
+            'form' => $form->createView(),
             'firm' => $firm,
         );
     }
