@@ -110,9 +110,14 @@ class FirmController extends Controller
             return $this->redirect($this->generateUrl('firm_show', array('id' => $firm->getId())));
         }
 
+		$comments = array();
+		if($this->isGranted('ROLE_ADMIN')) {
+			$comments = $this->get('feedback.comment')->findComments($firm);
+		}
 		return array(
             'form' => $form->createView(),
             'firm' => $firm,
+			'comments' => $comments,
         );
     }
 }

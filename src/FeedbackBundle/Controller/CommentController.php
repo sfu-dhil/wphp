@@ -31,9 +31,11 @@ class CommentController extends Controller
         $query = $em->createQuery($dql);
         $paginator = $this->get('knp_paginator');
         $comments = $paginator->paginate($query, $request->query->getInt('page', 1), 25);
+        $service = $this->get('feedback.comment');
 
         return array(
             'comments' => $comments,
+			'service' => $service,
         );
     }
     /**
@@ -153,6 +155,6 @@ class CommentController extends Controller
         $em->flush();
         $this->addFlash('success', 'The comment was deleted.');
 
-        return $this->redirectToRoute('comment_index');
+        return $this->redirectToRoute('admin_comment_index');
     }
 }

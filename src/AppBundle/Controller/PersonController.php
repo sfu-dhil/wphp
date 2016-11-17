@@ -112,9 +112,14 @@ class PersonController extends Controller
             return $this->redirect($this->generateUrl('person_show', array('id' => $person->getId())));
         }
 
+		$comments = array();
+		if($this->isGranted('ROLE_ADMIN')) {
+			$comments = $this->get('feedback.comment')->findComments($person);
+		}
 		return array(
             'form' => $form->createView(),
             'person' => $person,
+			'comments' => $comments,
         );
 
     }

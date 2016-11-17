@@ -60,5 +60,8 @@
     </table>
 
     {% include('FeedbackBundle:Comment:comment-form.html.twig') %}				
+	{% if is_granted('ROLE_ADMIN') %}
+		{% include('FeedbackBundle:Comment:comments-view.html.twig') %}
+	{% endif %}
 				
 {% endblock %}

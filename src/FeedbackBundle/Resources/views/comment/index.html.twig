@@ -22,8 +22,7 @@
             <tr>
                 <th>Title</th>
                 <th>Fullname</th>
-                <th>Email</th>
-                <th>Followup</th>
+				<th>Entity</th>
             </tr>
         </thead>
         <tbody>
@@ -35,8 +34,7 @@
                         </a>
                     </td>
                     <td>{{ comment.fullname }}</td>
-                    <td>{{ comment.email }}</td>
-                    <td>{% if comment.followUp %}Yes{% else %}No{% endif %}</td>
+					<td><a href="{{ service.entityUrl(comment)}}">{{ service.findEntity(comment) }}</a></td>
                 </tr>
             {% endfor %}
         </tbody>

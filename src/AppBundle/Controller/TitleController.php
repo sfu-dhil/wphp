@@ -206,9 +206,14 @@ class TitleController extends Controller
             return $this->redirect($this->generateUrl('title_show', array('id' => $title->getId())));
         }
 
+		$comments = array();
+		if($this->isGranted('ROLE_ADMIN')) {
+			$comments = $this->get('feedback.comment')->findComments($title);
+		}
 		return array(
             'form' => $form->createView(),
             'title' => $title,
+			'comments' => $comments,
         );
     }
 
