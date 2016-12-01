@@ -16,7 +16,7 @@
     <table class="table table-bordered table-condensed table-hover table-striped">
         <tbody>
             <tr>
-                <th>Geonameid</th>
+                <th>Geoname ID</th>
             <td>{{ geoname.geonameid }}</td>
             </tr>
             <tr>
@@ -24,11 +24,11 @@
             <td>{{ geoname.name }}</td>
             </tr>
             <tr>
-                <th>Asciiname</th>
+                <th>ASCII name</th>
             <td>{{ geoname.asciiname }}</td>
             </tr>
             <tr>
-                <th>Alternatenames</th>
+                <th>Alternate names</th>
             <td>{{ geoname.alternatenames }}</td>
             </tr>
             <tr>
@@ -40,11 +40,11 @@
             <td>{{ geoname.longitude }}</td>
             </tr>
             <tr>
-                <th>Fclass</th>
+                <th>Feature class</th>
             <td>{{ geoname.fclass }}</td>
             </tr>
             <tr>
-                <th>Fcode</th>
+                <th>Feature code</th>
             <td>{{ geoname.fcode }}</td>
             </tr>
             <tr>
@@ -52,23 +52,23 @@
             <td>{{ geoname.country }}</td>
             </tr>
             <tr>
-                <th>Cc2</th>
+                <th>CC 2</th>
             <td>{{ geoname.cc2 }}</td>
             </tr>
             <tr>
-                <th>Admin1</th>
+                <th>Admin 1</th>
             <td>{{ geoname.admin1 }}</td>
             </tr>
             <tr>
-                <th>Admin2</th>
+                <th>Admin 2</th>
             <td>{{ geoname.admin2 }}</td>
             </tr>
             <tr>
-                <th>Admin3</th>
+                <th>Admin 3</th>
             <td>{{ geoname.admin3 }}</td>
             </tr>
             <tr>
-                <th>Admin4</th>
+                <th>Admin 4</th>
             <td>{{ geoname.admin4 }}</td>
             </tr>
             <tr>
@@ -80,7 +80,7 @@
             <td>{{ geoname.elevation }}</td>
             </tr>
             <tr>
-                <th>Gtopo30</th>
+                <th>GTOPO30</th>
             <td>{{ geoname.gtopo30 }}</td>
             </tr>
             <tr>
@@ -88,7 +88,7 @@
             <td>{{ geoname.timezone }}</td>
             </tr>
             <tr>
-                <th>Moddate</th>
+                <th>Mod date</th>
                 <td>{% if geoname.moddate %}{{ geoname.moddate|date('Y-m-d') }}{% endif %}</td>
             </tr>
         </tbody>
