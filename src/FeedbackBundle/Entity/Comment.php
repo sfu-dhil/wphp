@@ -19,11 +19,6 @@ class Comment extends AbstractEntity
     /**
      * @ORM\Column(type="string", length=120)
      */
-    private $title;
-    
-    /**
-     * @ORM\Column(type="string", length=120)
-     */
     private $fullname;
     
     /**

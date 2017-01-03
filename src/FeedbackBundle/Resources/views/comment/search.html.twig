@@ -35,7 +35,6 @@
     <table class="table table-bordered table-condensed table-hover table-striped">
         <thead>
             <tr>
-                <th>Title</th>
                 <th>Fullname</th>
                 <th>Email</th>
                 <th>Followup</th>
@@ -49,14 +48,12 @@
             <tr>
                 <td>
                     <a href="{{ path('comment_show', { 'id': comment.id }) }}">
-                        {{ comment.title }}
+                        {{ comment.content|truncate(20) }}
                     </a>
                 </td>
                 <td>{{ comment.fullname }}</td>
                 <td>{{ comment.email }}</td>
                 <td>{% if comment.followUp %}Yes{% else %}No{% endif %}</td>
-                <td>{{ comment.url }}</td>
-                <td>{{ comment.content }}</td>
                 <td>{% if comment.created %}{{ comment.created|date('Y-m-d H:i:s') }}{% endif %}</td>
                 <td>{% if comment.updated %}{{ comment.updated|date('Y-m-d H:i:s') }}{% endif %}</td>
             </tr>

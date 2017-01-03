@@ -20,21 +20,22 @@
     <table class="table table-bordered table-condensed table-hover table-striped">
         <thead>
             <tr>
-                <th>Title</th>
-                <th>Fullname</th>
-				<th>Entity</th>
+                <th>Content</th>
+                <th>Submitter</th>
+                <th>Entity</th>
             </tr>
         </thead>
         <tbody>
             {% for comment in comments %}
+                {% set entity = service.findEntity(comment) %}
                 <tr>
                     <td>
                         <a href="{{ path('admin_comment_show', { 'id': comment.id }) }}">
-                            {{ comment.title }}
+                            {{ comment.content|truncate(40) }}
                         </a>
                     </td>
                     <td>{{ comment.fullname }}</td>
-					<td><a href="{{ service.entityUrl(comment)}}">{{ service.findEntity(comment) }}</a></td>
+                    <td>{{ service.entityType(comment) }} <a href="{{ service.entityUrl(comment)}}">{{ entity|truncate(40) }}</a></td>
                 </tr>
             {% endfor %}
         </tbody>

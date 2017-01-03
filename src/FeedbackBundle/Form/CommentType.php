@@ -19,7 +19,6 @@ class CommentType extends AbstractType
         $builder->add('fullname');  // string     
         $builder->add('email');  // string     
         $builder->add('followUp');  // boolean     
-        $builder->add('title');  // string     
         $builder->add('content', TextareaType::class);  // string         
     }
     
