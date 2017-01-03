@@ -116,33 +116,6 @@ class TitleController extends Controller
     /**
      * Search for Title entities.
      *
-     * @Route("/search", name="title_search")
-     * @Method("GET")
-     * @Template()
-	 * @param Request $request
-     */
-    public function searchAction(Request $request)
-    {
-        $em = $this->getDoctrine()->getManager();
-		$repo = $em->getRepository('AppBundle:Title');
-		$q = $request->query->get('q');
-		if($q) {
-	        $query = $repo->searchQuery($q);
-			$paginator = $this->get('knp_paginator');
-			$titles = $paginator->paginate($query, $request->query->getInt('page', 1), 25);
-		} else {
-			$titles = array();
-		}
-
-        return array(
-            'titles' => $titles,
-			'q' => $q,
-        );
-    }
-    
-    /**
-     * Search for Title entities.
-     *
      * @Route("/jump", name="title_jump")
      * @Method("GET")
      * @Template()
@@ -157,7 +130,6 @@ class TitleController extends Controller
             return $this->redirect($this->generateUrl('title_index', array('id' => $q)));
 		}
     }
-    
     
     /**
      * Full text search for Title entities.

@@ -37,32 +37,7 @@ class FirmController extends Controller
             'firms' => $firms,
         );
     }
-    /**
-     * Search for Firm entities.
-	 *
-     * @Route("/search", name="firm_search")
-     * @Method("GET")
-     * @Template()
-	 * @param Request $request
-     */
-    public function searchAction(Request $request)
-    {
-        $em = $this->getDoctrine()->getManager();
-		$repo = $em->getRepository('AppBundle:Firm');
-		$q = $request->query->get('q');
-		if($q) {
-	        $query = $repo->searchQuery($q);
-			$paginator = $this->get('knp_paginator');
-			$firms = $paginator->paginate($query, $request->query->getInt('page', 1), 25);
-		} else {
-			$firms = array();
-		}
 
-        return array(
-            'firms' => $firms,
-			'q' => $q,
-        );
-    }
     /**
      * Full text search for Firm entities.
 	 *

@@ -39,33 +39,6 @@ class PersonController extends Controller
     }
 	
     /**
-     * Search for Person entities.
-     *
-     * @Route("/search", name="person_search")
-     * @Method("GET")
-     * @Template()
-	 * @param Request $request
-     */
-    public function searchAction(Request $request)
-    {
-        $em = $this->getDoctrine()->getManager();
-		$repo = $em->getRepository('AppBundle:Person');
-		$q = $request->query->get('q');
-		if($q) {
-	        $query = $repo->searchQuery($q);
-			$paginator = $this->get('knp_paginator');
-			$people = $paginator->paginate($query, $request->query->getInt('page', 1), 25);
-		} else {
-			$people = array();
-		}
-
-        return array(
-            'people' => $people,
-			'q' => $q,
-        );
-    }
-	
-    /**
      * Full text search for Person entities.
      *
      * @Route("/fulltext", name="person_fulltext")
