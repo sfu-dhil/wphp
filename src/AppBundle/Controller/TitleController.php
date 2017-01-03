@@ -180,7 +180,6 @@ class TitleController extends Controller
         }
 
 		$comments = array();
-		$service = $this->get('feedback.comment');
 		if($this->isGranted('ROLE_ADMIN')) {
 			$comments = $service->findComments($title);
 		}
