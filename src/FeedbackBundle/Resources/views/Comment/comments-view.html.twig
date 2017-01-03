@@ -21,7 +21,7 @@
                         {{comment.fullname}} - please do not contact.
                     {% endif %}   
                     <span class="pull-right">
-                        {{ comment.created|date }}
+                        <a href="{{ path('admin_comment_show', {'id': comment.id}) }}">{{ comment.created|date }}</a>
                     </span>
                 </div>
             </div>

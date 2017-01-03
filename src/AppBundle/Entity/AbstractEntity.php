@@ -34,6 +34,10 @@ abstract class AbstractEntity implements JsonSerializable
      */
     protected $updated;
 
+    public function __construct() {
+        // nop
+    }
+    
     public function getId() {
         return $this->id;
     }

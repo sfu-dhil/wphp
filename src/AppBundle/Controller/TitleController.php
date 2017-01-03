@@ -200,14 +200,14 @@ class TitleController extends Controller
         $comment = new Comment();
         $form = $this->createForm('FeedbackBundle\Form\CommentType', $comment);
         $form->handleRequest($request);
+		$service = $this->get('feedback.comment');
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->get('feedback.comment')->addComment($title, $comment);
+            $service->addComment($title, $comment);
             $this->addFlash('success', 'Thank you for your suggestion.');
             return $this->redirect($this->generateUrl('title_show', array('id' => $title->getId())));
         }
 
 		$comments = array();
-		$service = $this->get('feedback.comment');
 		if($this->isGranted('ROLE_ADMIN')) {
 			$comments = $service->findComments($title);
 		}

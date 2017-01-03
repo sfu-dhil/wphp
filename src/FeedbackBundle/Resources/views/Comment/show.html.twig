@@ -27,12 +27,18 @@
                 <td>{{ comment.email }}</td>
             </tr>
             <tr>
+                <th>Status</th>
+                <td>
+                    {{ comment.status }}
+                </td>
+            </tr>
+            <tr>
                 <th>Followup</th>
                 <td>{% if comment.followUp %}Yes{% else %}No{% endif %}</td>
             </tr>
             <tr>
                 <th>Entity</th>
-                {% set entity = service.findEntity(comment) %}
+                    {% set entity = service.findEntity(comment) %}
                 <td>{{ service.entityType(comment) }} <a href="{{ service.entityUrl(comment)}}">{{ entity }}</a></td>
             </tr>
             <tr>
@@ -49,5 +55,30 @@
             </tr>
         </tbody>
     </table>
+
+    <h2>Status Update</h2>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Change the comment's status</h3>
+        </div>
+        <div class="panel-body">
+            {{ form_start(statusForm) }}
+            {{ form_widget(statusForm) }}
+            <div class="form-group">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-10">
+                    <input type="submit" value="Submit" class="btn btn-primary" />
+                </div>
+            </div>
+            {{ form_end(statusForm) }}
+        </div>
+        <dl class='dl-horizontal'>
+            {% for status in statuses %}
+                <dt>{{ status.label }}</dt>
+                <dd>{{ status.description }}</dd>
+            {% endfor %}
+        </dl>                
+    </div>
+
 
 {% endblock %}

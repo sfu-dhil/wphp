@@ -64,6 +64,7 @@
 										<li><a href="{{ path('title_index') }}">Titles</a></li>
                                         <li role="separator" class="divider"></li>
 										<li><a href="{{ path('admin_comment_index') }}">Comments</a></li>
+										<li><a href="{{ path('admin_comment_status_index') }}">Comment Statuses</a></li>
                                         <li role="separator" class="divider"></li>										
                                         <li>
                                             <a href="{{ path('user') }}">
@@ -74,7 +75,6 @@
                                 </a>
 							</li>
 						{% endif %}
-
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         {% if app.user is not null and is_granted("IS_AUTHENTICATED_REMEMBERED") %}

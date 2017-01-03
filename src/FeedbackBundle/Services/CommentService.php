@@ -25,8 +25,11 @@ class CommentService {
     
     private $routing;
     
-    public function __construct($routing) {
+    private $defaultName;
+    
+    public function __construct($routing, $defaultName) {
         $this->routing = $routing;
+        $this->defaultName = $defaultName;
     }
     
     public function setDoctrine(Registry $registry) {
@@ -70,7 +73,14 @@ class CommentService {
     }
     
     public function addComment($entity, Comment $comment) {
-        $comment->setEntity(get_class($entity) . ':' . $entity->getId());
+        $comment->setEntity(get_class($entity) . ':' . $entity->getId());    
+        if( ! $comment->getStatus()) {
+            $comment->setStatus($this->em->getRepository('FeedbackBundle:CommentStatus')->findOneBy(array(
+                'name' => $this->defaultName,
+            )));
+        } else {
+            dump($comment->getStatus());
+        }
         $this->em->persist($comment);
         $this->em->flush($comment);
         return $comment;

@@ -4,14 +4,13 @@ namespace FeedbackBundle\Entity;
 
 use AppBundle\Entity\AbstractEntity;
 use Doctrine\ORM\Mapping as ORM;
-use FeedbackBundle\Repository\CommentRepository;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Comment
  *
  * @ORM\Table(name="comment")
- * @ORM\Entity(repositoryClass="CommentRepository")
+ * @ORM\Entity(repositoryClass="FeedbackBundle\Repository\CommentRepository")
  */
 class Comment extends AbstractEntity
 {
@@ -44,6 +43,19 @@ class Comment extends AbstractEntity
      * @ORM\Column(type="string", length=120)
      */
     private $content;
+    
+    /**
+     * @var CommentStatus|null 
+     * 
+     * @ORM\ManyToOne(targetEntity="CommentStatus", inversedBy="comments")
+     * @ORM\JoinColumn(name="status_id", referencedColumnName="id", nullable=false)
+     */
+    private $status;
+    
+    public function __construct() {
+        $this->status = null;
+        parent::__construct();
+    }
     
     public function __toString() {
         return $this->title;
@@ -192,5 +204,29 @@ class Comment extends AbstractEntity
     public function getEntity()
     {
         return $this->entity;
+    }
+
+    /**
+     * Set status
+     *
+     * @param \FeedbackBundle\Entity\CommentStatus $status
+     *
+     * @return Comment
+     */
+    public function setStatus(\FeedbackBundle\Entity\CommentStatus $status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return \FeedbackBundle\Entity\CommentStatus
+     */
+    public function getStatus()
+    {
+        return $this->status;
     }
 }
