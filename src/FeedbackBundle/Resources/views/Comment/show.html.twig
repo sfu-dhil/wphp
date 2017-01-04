@@ -80,5 +80,35 @@
         </dl>                
     </div>
 
+    {% if comment.notes|length > 0 %}
+        <h2>Notes</h2>
+        {% for note in comment.notes %}
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    {{ note.content }}
+                </div>
+                <div class="panel-footer text-right">By {{ note.user.fullname }} on {{ note.created|date }}</div>
+            </div>        
+        {% endfor %}
+    {% endif %}
+    
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Add a note</h3>
+        </div>
+        <div class="panel-body">
+            {{ form_start(noteForm) }}
+            {{ form_widget(noteForm) }}
+            <div class="form-group">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-10">
+                    <input type="submit" value="Submit" class="btn btn-primary" />
+                </div>
+            </div>
+            {{ form_end(noteForm) }}
+        </div>
+    </div>
+
+    
 
 {% endblock %}

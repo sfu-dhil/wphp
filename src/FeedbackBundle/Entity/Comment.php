@@ -9,41 +9,45 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Comment
  *
- * @ORM\Table(name="comment")
+ * @ORM\Table(name="comment", indexes={
+ *  @ORM\Index(name="comment_ft_idx", 
+ *      columns={"fullname", "content"}, 
+ *      flags={"fulltext"}
+ *  )
+ * })
  * @ORM\Entity(repositoryClass="FeedbackBundle\Repository\CommentRepository")
  */
-class Comment extends AbstractEntity
-{
+class Comment extends AbstractEntity {
 
     /**
      * @ORM\Column(type="string", length=120)
      */
     private $fullname;
-    
+
     /**
      * @ORM\Column(type="string", length=120)
      * @Assert\Email()
      */
     private $email;
-    
+
     /**
      * @ORM\Column(type="boolean")
      * @var type 
      */
     private $followUp;
-    
+
     /**
      * A string of the form entity:id where entity is the un-namespaced
      * class name in lowercase and id is the numeric id.
      * @ORM\Column(type="string", length=120)
      */
     private $entity;
-    
+
     /**
-     * @ORM\Column(type="string", length=120)
+     * @ORM\Column(type="text")
      */
     private $content;
-    
+
     /**
      * @var CommentStatus|null 
      * 
@@ -51,16 +55,21 @@ class Comment extends AbstractEntity
      * @ORM\JoinColumn(name="status_id", referencedColumnName="id", nullable=false)
      */
     private $status;
-    
+
+    /**
+     * @var Collection|CommentNote[] 
+     * @ORM\OneToMany(targetEntity="CommentNote", mappedBy="comment")
+     */
+    private $notes;
+
     public function __construct() {
         $this->status = null;
         parent::__construct();
     }
-    
-    public function __toString() {
-        return $this->title;
-    }
 
+    public function __toString() {
+        return $this->content;
+    }
 
     /**
      * Set title
@@ -69,8 +78,7 @@ class Comment extends AbstractEntity
      *
      * @return Comment
      */
-    public function setTitle($title)
-    {
+    public function setTitle($title) {
         $this->title = $title;
 
         return $this;
@@ -81,8 +89,7 @@ class Comment extends AbstractEntity
      *
      * @return string
      */
-    public function getTitle()
-    {
+    public function getTitle() {
         return $this->title;
     }
 
@@ -93,8 +100,7 @@ class Comment extends AbstractEntity
      *
      * @return Comment
      */
-    public function setFullname($fullname)
-    {
+    public function setFullname($fullname) {
         $this->fullname = $fullname;
 
         return $this;
@@ -105,8 +111,7 @@ class Comment extends AbstractEntity
      *
      * @return string
      */
-    public function getFullname()
-    {
+    public function getFullname() {
         return $this->fullname;
     }
 
@@ -117,8 +122,7 @@ class Comment extends AbstractEntity
      *
      * @return Comment
      */
-    public function setEmail($email)
-    {
+    public function setEmail($email) {
         $this->email = $email;
 
         return $this;
@@ -129,8 +133,7 @@ class Comment extends AbstractEntity
      *
      * @return string
      */
-    public function getEmail()
-    {
+    public function getEmail() {
         return $this->email;
     }
 
@@ -141,8 +144,7 @@ class Comment extends AbstractEntity
      *
      * @return Comment
      */
-    public function setFollowUp($followUp)
-    {
+    public function setFollowUp($followUp) {
         $this->followUp = $followUp;
 
         return $this;
@@ -153,8 +155,7 @@ class Comment extends AbstractEntity
      *
      * @return boolean
      */
-    public function getFollowUp()
-    {
+    public function getFollowUp() {
         return $this->followUp;
     }
 
@@ -165,8 +166,7 @@ class Comment extends AbstractEntity
      *
      * @return Comment
      */
-    public function setContent($content)
-    {
+    public function setContent($content) {
         $this->content = $content;
 
         return $this;
@@ -177,8 +177,7 @@ class Comment extends AbstractEntity
      *
      * @return string
      */
-    public function getContent()
-    {
+    public function getContent() {
         return $this->content;
     }
 
@@ -189,8 +188,7 @@ class Comment extends AbstractEntity
      *
      * @return Comment
      */
-    public function setEntity($entity)
-    {
+    public function setEntity($entity) {
         $this->entity = $entity;
 
         return $this;
@@ -201,8 +199,7 @@ class Comment extends AbstractEntity
      *
      * @return string
      */
-    public function getEntity()
-    {
+    public function getEntity() {
         return $this->entity;
     }
 
@@ -213,8 +210,7 @@ class Comment extends AbstractEntity
      *
      * @return Comment
      */
-    public function setStatus(\FeedbackBundle\Entity\CommentStatus $status)
-    {
+    public function setStatus(\FeedbackBundle\Entity\CommentStatus $status) {
         $this->status = $status;
 
         return $this;
@@ -225,8 +221,39 @@ class Comment extends AbstractEntity
      *
      * @return \FeedbackBundle\Entity\CommentStatus
      */
-    public function getStatus()
-    {
+    public function getStatus() {
         return $this->status;
     }
+
+    /**
+     * Add note
+     *
+     * @param \FeedbackBundle\Entity\CommentNote $note
+     *
+     * @return Comment
+     */
+    public function addNote(\FeedbackBundle\Entity\CommentNote $note) {
+        $this->notes[] = $note;
+
+        return $this;
+    }
+
+    /**
+     * Remove note
+     *
+     * @param \FeedbackBundle\Entity\CommentNote $note
+     */
+    public function removeNote(\FeedbackBundle\Entity\CommentNote $note) {
+        $this->notes->removeElement($note);
+    }
+
+    /**
+     * Get notes
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getNotes() {
+        return $this->notes;
+    }
+
 }

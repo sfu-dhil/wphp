@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+ {% block pageheader %} 
+    <h1>CommentNote List</h1>
+    <p class="count">
+        Displaying {{ commentNotes|length }} commentNotes of {{ commentNotes.getTotalItemCount }} total.
+    </p>
+ {% endblock %} 
+
+{% block body %}
+
+        <div class='btn-toolbar pull-right'>
+        <div class='btn-group'>
+            <a href="{{ path('admin_comment_note_new') }}" class="btn btn-default">
+                <span class="glyphicon glyphicon-plus"></span> New
+            </a>
+            <a href="{{ path('admin_comment_note_search') }}" class="btn btn-default">
+                <span class="glyphicon glyphicon-search"></span> Search
+            </a>
+        </div>
+    </div>
+        
+    <table class="table table-bordered table-condensed table-hover table-striped">
+        <thead>
+            <tr>
+                <th>Content</th>
+                <th>Created</th>
+                <th>Updated</th>            </tr>
+        </thead>
+        <tbody>
+        {% for commentNote in commentNotes %}
+            <tr>
+                <td>
+                    <a href="{{ path('admin_comment_note_show', { 'id': commentNote.id }) }}">
+                        {{ commentNote.content }}
+                    </a>
+                </td>
+                <td>{% if commentNote.created %}{{ commentNote.created|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if commentNote.updated %}{{ commentNote.updated|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+        
+    <div class="navigation">
+        {{ knp_pagination_render(commentNotes) }}
+    </div>
+
+{% endblock %}
