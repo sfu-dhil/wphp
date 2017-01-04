@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * CommentType
  *
- * @ORM\Table(name="comment_type")
+ * @ORM\Table(name="comment_status")
  * @ORM\Entity(repositoryClass="FeedbackBundle\Repository\CommentStatusRepository")
  */
 class CommentStatus extends AbstractEntity {
