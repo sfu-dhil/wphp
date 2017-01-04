@@ -66,48 +66,4 @@ class CommentNoteController extends Controller
         );
     }
 
-    /**
-     * Creates a new CommentNote entity.
-     *
-     * @Route("/new", name="admin_comment_note_new")
-     * @Method({"GET", "POST"})
-     * @Template()
-	 * @param Request $request
-     */
-    public function newAction(Request $request)
-    {
-        $commentNote = new CommentNote();
-        $form = $this->createForm('FeedbackBundle\Form\CommentNoteType', $commentNote);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($commentNote);
-            $em->flush();
-
-            $this->addFlash('success', 'The new commentNote was created.');
-            return $this->redirectToRoute('admin_comment_note_show', array('id' => $commentNote->getId()));
-        }
-
-        return array(
-            'commentNote' => $commentNote,
-            'form' => $form->createView(),
-        );
-    }
-
-    /**
-     * Finds and displays a CommentNote entity.
-     *
-     * @Route("/{id}", name="admin_comment_note_show")
-     * @Method("GET")
-     * @Template()
-	 * @param CommentNote $commentNote
-     */
-    public function showAction(CommentNote $commentNote)
-    {
-
-        return array(
-            'commentNote' => $commentNote,
-        );
-    }
 }

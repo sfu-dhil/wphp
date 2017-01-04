@@ -83,7 +83,7 @@
     {% if comment.notes|length > 0 %}
         <h2>Notes</h2>
         {% for note in comment.notes %}
-            <div class="panel panel-default">
+            <div class="panel panel-default" id="note-{{ note.id }}">
                 <div class="panel-body">
                     {{ note.content }}
                 </div>
