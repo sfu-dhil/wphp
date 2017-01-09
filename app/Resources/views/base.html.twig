@@ -7,9 +7,9 @@
 
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}
-			{% stylesheets '@AppBundle/Resources/public/css/*' %}
-			<link rel='stylesheet' href='{{ asset_url }}'>
-			{% endstylesheets %}
+            {% stylesheets '@AppBundle/Resources/public/css/*' %}
+            <link rel='stylesheet' href='{{ asset_url }}'>
+            {% endstylesheets %}
         {% endblock %}
 
         {% stylesheets '@bootstrap_css' %}
@@ -53,18 +53,19 @@
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                     Admin <span class="caret"></span>
                                     <ul class="dropdown-menu">
-										<li><a href="{{ path('firm_index') }}">Firms</a></li>
-										<li><a href="{{ path('firmrole_index') }}">Firm Roles</a></li>										
-										<li><a href="{{ path('format_index') }}">Formats</a></li>
-										<li><a href="{{ path('genre_index') }}">Genres</a></li>
-										<li><a href="{{ path('geonames_index') }}">Geonames</a></li>
-										<li><a href="{{ path('person_index') }}">Persons</a></li>
-										<li><a href="{{ path('role_index') }}">Roles</a></li>
-										<li><a href="{{ path('source_index') }}">Sources</a></li>
-										<li><a href="{{ path('title_index') }}">Titles</a></li>
+                                        <li><a href="{{ path('firm_index') }}">Firms</a></li>
+                                        <li><a href="{{ path('firmrole_index') }}">Firm Roles</a></li>										
+                                        <li><a href="{{ path('format_index') }}">Formats</a></li>
+                                        <li><a href="{{ path('genre_index') }}">Genres</a></li>
+                                        <li><a href="{{ path('geonames_index') }}">Geonames</a></li>
+                                        <li><a href="{{ path('person_index') }}">Persons</a></li>
+                                        <li><a href="{{ path('role_index') }}">Roles</a></li>
+                                        <li><a href="{{ path('source_index') }}">Sources</a></li>
+                                        <li><a href="{{ path('title_index') }}">Titles</a></li>
                                         <li role="separator" class="divider"></li>
-										<li><a href="{{ path('admin_comment_index') }}">Comments</a></li>
-										<li><a href="{{ path('admin_comment_status_index') }}">Comment Statuses</a></li>
+                                        <li><a href="{{ path('admin_comment_index') }}">Comments</a></li>
+                                        <li><a href="{{ path('admin_comment_note_index') }}">Comment Notes</a></li>
+                                        <li><a href="{{ path('admin_comment_status_index') }}">Comment Statuses</a></li>
                                         <li role="separator" class="divider"></li>										
                                         <li>
                                             <a href="{{ path('user') }}">
@@ -73,8 +74,8 @@
                                         </li>
                                     </ul>
                                 </a>
-							</li>
-						{% endif %}
+                            </li>
+                        {% endif %}
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         {% if app.user is not null and is_granted("IS_AUTHENTICATED_REMEMBERED") %}
@@ -134,11 +135,11 @@
     </div>
 
     {% javascripts '@jquery' '@bootstrap_js' 'bundles/app/js/*' %}
-	<script type="text/javascript" src="{{ asset_url }}"></script>
+    <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
 
-	{% javascripts '@AppBundle/Resources/public/js/*' %}	
-	{% endjavascripts %}
+    {% javascripts '@AppBundle/Resources/public/js/*' %}	
+    {% endjavascripts %}
 
 {% block javascripts %}{% endblock %}
 </body>
