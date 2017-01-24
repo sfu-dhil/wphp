@@ -131,7 +131,7 @@
                 </td>
             </tr>
             <tr>
-                <th>Checked</th>
+                <th>Hand checked</th>
                 <td>{% if title.checked %}Yes{% else %}No{% endif %}</td>
             </tr>
             <tr>
@@ -144,5 +144,206 @@
             </tr>
         </tbody>
     </table>
+
+<!--For testing purposes-->
+{% set authors = title.getTitleRoles('Author') %}
+{% set authorCount = authors|length %}
+
+<h3>Bibliographic Entry</h3>
+<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#bibRef">Cite this item</button>
+<div class="modal fade" id="bibRef" tabindex="-1" role="dialog" aria-labelledby="citation">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h3 class="modal-title" id="citation"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Cite</h3>
+			</div>
+			<div class="modal-body">
+				<!--Sets variables to be used in all styles-->
+				{% set authors = title.getTitleRoles('Author') %}
+				{% set authorCount = authors|length %}
+				<!--MLA entry-->
+				<div id="mla">
+					<h4>MLA</h4>
+					<div class="well">
+						<p>
+							<!--Author(s)-->
+							{% if authorCount == 0 %}
+							{% elseif authorCount == 1 %}
+								{{ authors[0].person.lastName }}, {{ authors[0].person.firstName -}}
+								{% if authors[0].person.firstName|last != "." %}.{% endif %}
+							{% elseif authorCount == 2 %}
+								{{ authors[0].person.lastName }}, {{ authors[0].person.firstName }} and {{ authors[1].person.firstName }} {{ authors[1].person.lastName -}}.
+							{% else %}
+								{{ authors[0].person.lastName }}, {{ authors[0].person.firstName -}}, et al.
+							{%- endif %}
+							<!--Title-->
+							<em>{{ title.title }}</em>
+							{%- if title.title matches '{[^[:punct:]]$}' %}.{% endif %}
+							<!--Location-->
+							{{title.locationOfPrinting.name}}:
+							<!--Publisher-->
+							{% for tfr in title.titleFirmRoles %}
+								{% if tfr.firmrole.name == 'Publisher' %}
+									{% set firm = tfr.firm %}
+									{{ firm.name }},
+								{% endif %}
+							{% endfor %}
+							<!--Publication date--> 
+							{{ title.pubdate }}.
+						</p>
+					</div>
+				</div>
+				<!--APA entry-->
+				<div id="apa">
+					<h4>APA</h4>
+					<div class="well">
+						<p>
+							<!--Author(s)-->
+							{% if authorCount == 0 %}
+							{% elseif authorCount == 1 %}
+								{% for author in authors %}
+									<!--Creates array of name parts in firstName for one author-->
+									{% set firstNameSplit = author.person.firstName|split(' ') %}
+
+									{{ author.person.lastName }}, {% for namePart in firstNameSplit %}{{ namePart|first }}.{% endfor %}
+								{% endfor %}
+
+							{% elseif authorCount == 2 %}
+								{% for author in authors %}
+									<!--Creates array of name parts in firstName for one author-->
+									{% set firstNameSplit = author.person.firstName|split(' ') %}
+
+									{% if loop.last == false %}
+										{{author.person.lastName}}, {% for namePart in firstNameSplit %}{{ namePart|first }}.{% endfor %}, &amp;
+									{% else %}
+										{{author.person.lastName}}, {% for namePart in firstNameSplit %}{{ namePart|first }}.{% endfor %}
+									{% endif %}
+								{% endfor %}
+
+							{% elseif (authorCount >= 3) and (authorCount <= 7) %}
+								{% for author in authors %}
+									<!--Creates array of name parts in firstName for one author-->
+									{% set firstNameSplit = author.person.firstName|split(' ') %}
+
+									{% if loop.last == false %}
+										{{author.person.lastName}}, {% for namePart in firstNameSplit %}{{ namePart|first }}.{% endfor %}, &amp;
+									{% else %}
+										{{author.person.lastName}}, {% for namePart in firstNameSplit %}{{ namePart|first }}.{% endfor %}
+									{% endif %}
+								{% endfor %}
+							{% else %}
+								{% for author in authors %}
+									<!--Creates array of name parts in firstName for one author-->
+									{% set firstNameSplit = author.person.firstName|split(' ') %}
+
+									{% if loop.index0 <= 5 %}
+										{{author.person.lastName}}, {% for namePart in firstNameSplit %}{{ namePart|first }}.{% endfor %}, 
+									{% elseif loop.last %}
+										… {{author.person.lastName}}, {% for namePart in firstNameSplit %}{{ namePart|first }}.{% endfor %}
+									{% endif %}
+								{% endfor %}
+							{% endif %}
+							<!--Publication year-->
+							({{ title.pubdate }}).
+							<!--Title-->
+							<em>{{ title.title|capitalize }}</em>
+							{%- if title.title|last != ("." or "?" or "!") %}.{% endif %}
+							<!--Location-->
+							{{title.locationOfPrinting.name}}: 
+							<!--Publisher-->
+							{% for tfr in title.titleFirmRoles %}
+								{% if tfr.firmrole.name == 'Publisher' %}
+									{% set firm = tfr.firm %}
+									{{ firm.name }}{%- if firm.name|last != "." %}.{% endif %}
+								{% endif %}
+							{% endfor %}
+						</p>
+					</div>
+				</div>
+				<!--Chicago/Turabian: Author-Date entry-->
+				<div id="chicago">
+					<h4>Chicago/Turabian: Author-Date</h4>
+					<div class="well">
+						<p>
+							<!--Author(s)-->
+							{% if authorCount == 0 %}
+							{% elseif authorCount == 1 %}
+								{% for author in authors %}
+									<!--Creates array of name parts in firstName for one author-->
+									{% set firstNameSplit = author.person.firstName|split(' ') %}
+									{{ author.person.lastName }}, 
+									{% for namePart in firstNameSplit %}
+										{% if loop.first %}
+											{{ namePart }}
+										{% else %}
+											{{ namePart|first }}.
+										{% endif %}
+										{% if firstNameSplit|length == 1 %}.{% endif %}
+									{% endfor %}
+								{% endfor %}
+
+							{% else %}		
+								{% for author in authors %}
+									<!--Creates array of name parts in firstName for one author-->
+									{% set firstNameSplit = author.person.firstName|split(' ') %}
+
+									{% if loop.first %}
+										{{ author.person.lastName }}, 
+										{% for namePart in firstNameSplit %}
+											{% if loop.first %}
+												{{ namePart }}
+											{% else %}
+												{{ namePart|first }}.
+											{% endif %}, 
+										{% endfor %}
+
+									{% elseif not (loop.first or loop.last) %}
+										{% for namePart in firstNameSplit %}
+											{% if loop.first %}
+												{{ namePart }}
+											{% else %}
+												{{ namePart|first }}.
+											{% endif %} 
+											{% endfor %}
+											{{ author.person.lastName }},
+
+									{% elseif loop.last %}
+										and {% for namePart in firstNameSplit %}
+											{% if loop.first %}
+												{{ namePart }}
+											{% else %}
+												{{ namePart|first }}.
+											{% endif %}
+											{% endfor %}
+											{{ author.person.lastName }}.
+									{% endif %}
+								{% endfor %}
+							{% endif %}
+							<!--Title-->
+							<em>{{ title.title }}</em>
+							{%- if title.title|last != ("." or "?" or "!") %}.{% endif %}
+							<!--Location-->
+							{{title.locationOfPrinting.name}}:
+							<!--Publisher-->
+							{% for tfr in title.titleFirmRoles %}
+								{% if tfr.firmrole.name == 'Publisher' %}
+									{% set firm = tfr.firm %}
+									{{ firm.name }},
+								{% endif %}
+							{% endfor %}
+							<!--Publication year-->
+							{{ title.pubdate }}.
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn primary">Export BibTeX</button>
+			</div>
+		</div>
+	</div>
+</div>
 
 {% endblock %}

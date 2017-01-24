@@ -944,9 +944,14 @@ class Title
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getTitleRoles()
+    public function getTitleRoles($name = null)
     {
+      if($name === null) {
         return $this->titleRoles;
+      }
+      return $this->titleRoles->filter(function(TitleRole $titleRole) use ($name) {
+        return $titleRole->getRole()->getName() === $name;
+      });
     }
 
 
