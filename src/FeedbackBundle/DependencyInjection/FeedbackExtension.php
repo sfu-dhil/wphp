@@ -16,7 +16,6 @@ class FeedbackExtension extends Extension {
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
         $map = array();
-        print_r($config);
         $container->setParameter('feedback.default_status', $config['default_status']);
         $container->setParameter('feedback.public_status', $config['public_status']);
         foreach($config['commenting'] as $routing) {
