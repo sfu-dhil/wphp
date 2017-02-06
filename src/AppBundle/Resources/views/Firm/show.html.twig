@@ -7,42 +7,42 @@
 {% block body %}
 
     <div class="btn-toolbar">
-		<div class="btn-group pull-right">
-			<a href="javascript: history.go(-1)" class="btn btn-default">
-				<span class="glyphicon glyphicon-arrow-left"></span> Back
-			</a>
-		</div>
-	</div>
+        <div class="btn-group pull-right">
+            <a href="javascript: history.go(-1)" class="btn btn-default">
+                <span class="glyphicon glyphicon-arrow-left"></span> Back
+            </a>
+        </div>
+    </div>
     <table class="table table-bordered table-condensed table-hover table-striped">
         <tbody>
             <tr>
                 <th>Name</th>
-				<td>{{ firm.name }}</td>
+                <td>{{ firm.name }}</td>
             </tr>
             <tr>
                 <th>Street address</th>
-				<td>{{ firm.streetAddress }}</td>
+                <td>{{ firm.streetAddress }}</td>
             </tr>
-			<tr>
-				<th>City</th>
-				<td>{{ firm.city.name }}</td>
-			</tr>
-			<tr>
-				<th>Titles</th>
-				<td>
-					{% for tfr in firm.titleFirmroles %}
-						{% set title = tfr.title %}
+            <tr>
+                <th>City</th>
+                <td>{{ firm.city.name }}</td>
+            </tr>
+            <tr>
+                <th>Titles</th>
+                <td>
+                    {% for tfr in firm.titleFirmroles %}
+                        {% set title = tfr.title %}
                         {{tfr.firmrole.name}}: <a href="{{ path('title_show', {'id': title.id}) }}">{{ title.title }}</a><br/>
-					{% endfor %}
-				</td>
-			</tr>
+                    {% endfor %}
+                </td>
+            </tr>
             <tr>
                 <th>Start date</th>
-				<td>{{ firm.startDate }}</td>
+                <td>{{ firm.startDate }}</td>
             </tr>
             <tr>
                 <th>End date</th>
-				<td>{{ firm.endDate }}</td>
+                <td>{{ firm.endDate }}</td>
             </tr>
             <tr>
                 <th>Final check</th>
@@ -51,9 +51,11 @@
         </tbody>
     </table>
 
-    {% include('FeedbackBundle:Comment:comment-form.html.twig') %}				
-	{% if is_granted('ROLE_ADMIN') %}
-		{% include('FeedbackBundle:Comment:comments-view.html.twig') %}
-	{% endif %}
-				
+    {% include 'FeedbackBundle:Comment:comment-form.html.twig' with { 'entity': firm } %}				
+    {% if is_granted('ROLE_ADMIN') %}
+        {% include 'FeedbackBundle:Comment:comments-admin.html.twig' %}
+    {% else %}
+        {% include 'FeedbackBundle:Comment:comments-view.html.twig' %}
+    {% endif %}
+
 {% endblock %}

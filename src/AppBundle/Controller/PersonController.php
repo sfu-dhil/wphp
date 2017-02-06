@@ -79,17 +79,14 @@ class PersonController extends Controller
         $comment = new Comment();
         $form = $this->createForm('FeedbackBundle\Form\CommentType', $comment);
         $form->handleRequest($request);
+		$service = $this->get('feedback.comment');
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->get('feedback.comment')->addComment($person, $comment);
+            $service->addComment($person, $comment);
             $this->addFlash('success', 'Thank you for your suggestion.');
             return $this->redirect($this->generateUrl('person_show', array('id' => $person->getId())));
         }
 
-		$comments = array();
-		$service = $this->get('feedback.comment');
-		if($this->isGranted('ROLE_ADMIN')) {
-			$comments = $service->findComments($person);
-		}
+        $comments = $service->findComments($person);
 		return array(
             'form' => $form->createView(),
             'person' => $person,

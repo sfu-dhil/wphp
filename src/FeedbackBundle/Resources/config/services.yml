@@ -1,8 +1,9 @@
 services:
     feedback.comment:
         class: FeedbackBundle\Services\CommentService
-        arguments: [ "%feedback.routing%", "submitted" ]
+        arguments: [ "%feedback.routing%", "%feedback.default_status%", "%feedback.public_status%" ]
         calls:
+            - [ setAuthorizationChecker, ['@security.authorization_checker']]
             - [ setDoctrine, ["@doctrine"]]
             - [ setLogger, ["@monolog.logger"]]
             - [ setRouter, ["@router"]]

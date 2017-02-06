@@ -13,6 +13,8 @@ class Configuration implements ConfigurationInterface {
         $rootNode = $treeBuilder->root('feedback');
         $rootNode
             ->children()
+                ->scalarNode('default_status')->end()
+                ->scalarNode('public_status')->end()
                 ->arrayNode('commenting')
                     ->prototype('array')
                     ->children()

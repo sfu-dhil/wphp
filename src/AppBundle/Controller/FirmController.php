@@ -79,17 +79,14 @@ class FirmController extends Controller
         $comment = new Comment();
         $form = $this->createForm('FeedbackBundle\Form\CommentType', $comment);
         $form->handleRequest($request);
+		$service = $this->get('feedback.comment');
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->get('feedback.comment')->addComment($firm, $comment);
+            $service->addComment($firm, $comment);
             $this->addFlash('success', 'Thank you for your suggestion.');
             return $this->redirect($this->generateUrl('firm_show', array('id' => $firm->getId())));
         }
 
-		$comments = array();
-		$service = $this->get('feedback.comment');
-		if($this->isGranted('ROLE_ADMIN')) {
-			$comments = $service->findComments($firm);
-		}
+        $comments = $service->findComments($firm);
 		return array(
             'form' => $form->createView(),
             'firm' => $firm,

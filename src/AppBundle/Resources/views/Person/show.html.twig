@@ -7,47 +7,47 @@
 {% block body %}
 
     <div class="btn-toolbar">
-		<div class="btn-group pull-right">
-			<a href="javascript: history.go(-1)" class="btn btn-default">
-				<span class="glyphicon glyphicon-arrow-left"></span> Back
-			</a>
-		</div>
-	</div>
+        <div class="btn-group pull-right">
+            <a href="javascript: history.go(-1)" class="btn btn-default">
+                <span class="glyphicon glyphicon-arrow-left"></span> Back
+            </a>
+        </div>
+    </div>
     <table class="table table-bordered table-condensed table-hover table-striped">
         <tbody>
             <tr>
                 <th>Last name</th>
-				<td>{{ person.lastName }}</td>
+                <td>{{ person.lastName }}</td>
             </tr>
             <tr>
                 <th>First name</th>
-				<td>{{ person.firstName }}</td>
+                <td>{{ person.firstName }}</td>
             </tr>
             <tr>
                 <th>Title</th>
-				<td>{{ person.title }}</td>
+                <td>{{ person.title }}</td>
             </tr>
             <tr>
                 <th>Gender</th>
-				<td>{{ person.gender }}</td>
+                <td>{{ person.gender }}</td>
             </tr>
             <tr>
                 <th>Date of birth</th>
-				<td>{{ person.dob }}</td>
+                <td>{{ person.dob }}</td>
             </tr>
             <tr>
                 <th>Date of death</th>
-				<td>{{ person.dod }}</td>
+                <td>{{ person.dod }}</td>
             </tr>
-			<tr>
-				<th>Titles</th>
-				<td>
-					{% for tr in person.titleRoles %}
-						{% set title = tr.title %}
+            <tr>
+                <th>Titles</th>
+                <td>
+                    {% for tr in person.titleRoles %}
+                        {% set title = tr.title %}
                         {{ tr.role.name }}: <a href="{{ path('title_show', {'id': title.id}) }}">{{ title.title }}</a><br/>
-					{% endfor %}
-				</td>
-			</tr>
+                    {% endfor %}
+                </td>
+            </tr>
             <tr>
                 <th>Hand checked</th>
                 <td>{% if person.checked %}Yes{% else %}No{% endif %}</td>
@@ -59,9 +59,11 @@
         </tbody>
     </table>
 
-    {% include('FeedbackBundle:Comment:comment-form.html.twig') %}				
-	{% if is_granted('ROLE_ADMIN') %}
-		{% include('FeedbackBundle:Comment:comments-view.html.twig') %}
-	{% endif %}
-				
+    {% include 'FeedbackBundle:Comment:comment-form.html.twig' with { 'entity': person } %}				
+    {% if is_granted('ROLE_ADMIN') %}
+        {% include 'FeedbackBundle:Comment:comments-admin.html.twig' %}
+    {% else %}
+        {% include 'FeedbackBundle:Comment:comments-view.html.twig' %}
+    {% endif %}
+
 {% endblock %}

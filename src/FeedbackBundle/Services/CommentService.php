@@ -4,9 +4,12 @@ namespace FeedbackBundle\Services;
 
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\EntityManager;
+use Exception;
 use FeedbackBundle\Entity\Comment;
 use Monolog\Logger;
+use ReflectionClass;
 use Symfony\Component\Routing\Router;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 // service id: feedback.comment
 class CommentService {
@@ -23,13 +26,23 @@ class CommentService {
      */
     private $router;
     
+    private $authChecker;
+    
+    /**
+     * Mapping of class name to route name.
+     *
+     * @var array
+     */
     private $routing;
     
-    private $defaultName;
+    private $defaultStatusName;
     
-    public function __construct($routing, $defaultName) {
+    private $publicStatusName;
+    
+    public function __construct($routing, $defaultStatusName, $publicStatusName) {
         $this->routing = $routing;
-        $this->defaultName = $defaultName;
+        $this->defaultStatusName = $defaultStatusName;
+        $this->publicStatusName = $publicStatusName;
     }
     
     public function setDoctrine(Registry $registry) {
@@ -44,6 +57,10 @@ class CommentService {
         $this->router = $router;
     }
     
+    public function setAuthorizationChecker(AuthorizationCheckerInterface $authChecker) {
+        $this->authChecker = $authChecker;        
+    }
+    
     public function findEntity(Comment $comment) {
         list($class, $id) = explode(':', $comment->getEntity());
         $entity = $this->em->getRepository($class)->find($id);
@@ -52,23 +69,36 @@ class CommentService {
     
     public function entityType(Comment $comment) {
         $entity = $this->findEntity($comment);
-        $reflection = new \ReflectionClass($entity);
+        $reflection = new ReflectionClass($entity);
         return $reflection->getShortName();
     }
     
     public function entityUrl(Comment $comment) {
         list($class, $id) = explode(':', $comment->getEntity());
         if( ! array_key_exists($class, $this->routing)) {
-            throw new \Exception("Cannot map {$class} to a route.");
+            throw new Exception("Cannot map {$class} to a route.");
         }
         return $this->router->generate($this->routing[$class], ['id' => $id]);
     }
     
     public function findComments($entity) {
         $class = get_class($entity);
-        $comments = $this->em->getRepository('FeedbackBundle:Comment')->findBy(array(
-            'entity' => $class . ':' . $entity->getId()
-        ));
+        $comments = array();
+        if($this->authChecker->isGranted('ROLE_ADMIN')) {
+            $comments = $this->em->getRepository('FeedbackBundle:Comment')->findBy(array(
+                'entity' => $class . ':' . $entity->getId()
+            ));
+        } else {
+            $status = $this->em->getRepository('FeedbackBundle:CommentStatus')->findOneBy(array(
+                'name' => $this->publicStatusName
+            ));
+            if( $status) {
+                $comments = $this->em->getRepository('FeedbackBundle:Comment')->findBy(array(
+                    'entity' => $class . ':' . $entity->getId(),
+                    'status' => $status,
+                ));
+            }
+        }
         return $comments;
     }
     
@@ -76,10 +106,8 @@ class CommentService {
         $comment->setEntity(get_class($entity) . ':' . $entity->getId());    
         if( ! $comment->getStatus()) {
             $comment->setStatus($this->em->getRepository('FeedbackBundle:CommentStatus')->findOneBy(array(
-                'name' => $this->defaultName,
+                'name' => $this->defaultStatusName,
             )));
-        } else {
-            dump($comment->getStatus());
         }
         $this->em->persist($comment);
         $this->em->flush($comment);

@@ -133,6 +133,8 @@ knp_paginator:
         sortable: KnpPaginatorBundle:Pagination:sortable_link.html.twig # sort link template
 
 feedback:
+    default_status: submitted
+    public_status: published
     commenting:
         firm:
             class: AppBundle\Entity\Firm
@@ -143,5 +145,3 @@ feedback:
         title:
             class: AppBundle\Entity\Title
             route: title_show
-
-            
