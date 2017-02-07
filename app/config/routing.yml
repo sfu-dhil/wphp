@@ -1,16 +1,16 @@
-nines_blog:
-    resource: "@NinesBlogBundle/Controller"
-    type: annotation
-
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation
+
+nines_blog:
+    resource: "@NinesBlogBundle/Controller"
+    type: annotation
 
 nines_user:
     resource: "@UserBundle/Controller/"
     type: annotation
 
-feedback:
+nines_feedback:
     resource: "@FeedbackBundle/Controller/"
     type: annotation
 

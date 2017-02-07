@@ -36,9 +36,12 @@ framework:
 twig:
     form_themes:      
         - 'bootstrap_3_horizontal_layout.html.twig'
-        - 'Form/fields.html.twig'
+        - '@UtilBundle/Form/fields.html.twig'
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    paths:
+        '%kernel.root_dir%/../src/Nines/UtilBundle/Resources/views': UtilBundle
+    exception_controller:  UtilBundle:Error:showException
 
 # Doctrine Configuration
 doctrine:
@@ -59,7 +62,9 @@ doctrine:
         auto_mapping: true
         dql:
             string_functions:
-                MATCH_AGAINST: AppBundle\Extensions\Doctrine\MatchAgainstFunction
+                MATCH_AGAINST: Nines\UtilBundle\Extensions\Doctrine\MatchAgainstFunction
+            numeric_functions:
+                INT: Nines\UtilBundle\Extensions\Doctrine\CastAsIntegerFunction
 
 # Swiftmailer Configuration
 swiftmailer:

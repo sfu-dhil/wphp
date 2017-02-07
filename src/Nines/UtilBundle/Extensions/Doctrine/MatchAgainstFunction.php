@@ -6,7 +6,7 @@
     * and open the template in the editor.
  */
 
-namespace AppBundle\Extensions\Doctrine;
+namespace Nines\UtilBundle\Extensions\Doctrine;
 
 /*
     *

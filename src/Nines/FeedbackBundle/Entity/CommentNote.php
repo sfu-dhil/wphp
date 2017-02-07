@@ -2,7 +2,7 @@
 
 namespace Nines\FeedbackBundle\Entity;
 
-use AppBundle\Entity\AbstractEntity;
+use Nines\UtilBundle\Entity\AbstractEntity;
 use Nines\UserBundle\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
 

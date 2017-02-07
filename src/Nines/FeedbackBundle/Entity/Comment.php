@@ -2,7 +2,7 @@
 
 namespace Nines\FeedbackBundle\Entity;
 
-use AppBundle\Entity\AbstractEntity;
+use Nines\UtilBundle\Entity\AbstractEntity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 

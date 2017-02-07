@@ -1,16 +1,15 @@
 <?php
 
-namespace AppBundle\Entity;
+namespace Nines\UtilBundle\Entity;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
-use JsonSerializable;
 
 /**
  * @ORM\MappedSuperclass
  * @ORM\HasLifecycleCallbacks
  */
-abstract class AbstractEntity implements JsonSerializable
+abstract class AbstractEntity
 {
 
     /**
@@ -80,13 +79,5 @@ abstract class AbstractEntity implements JsonSerializable
     }
 
     abstract public function __toString();
-
-    public function jsonSerialize() {
-        return array(
-            'id' => $this->id,
-            'created' => $this->created->format('c'),
-            'updated' => $this->updated->format('c'),
-        );
-    }
 
 }
