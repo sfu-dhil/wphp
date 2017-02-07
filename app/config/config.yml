@@ -113,13 +113,13 @@ assetic:
 fos_user:
     db_driver: orm
     firewall_name: main
-    user_class: AppUserBundle\Entity\User
+    user_class: Nines\UserBundle\Entity\User
     profile:
         form:
-            type: AppUserBundle\Form\ProfileType
+            type: Nines\UserBundle\Form\ProfileType
     change_password:
         form:
-            type: AppUserBundle\Form\PasswordType
+            type: Nines\UserBundle\Form\PasswordType
             
 knp_paginator:
     page_range: 5                      # default page range used in pagination control

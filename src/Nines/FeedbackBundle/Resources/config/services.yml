@@ -1,0 +1,9 @@
+services:
+    feedback.comment:
+        class: Nines\FeedbackBundle\Services\CommentService
+        arguments: [ "%feedback.routing%", "%feedback.default_status%", "%feedback.public_status%" ]
+        calls:
+            - [ setAuthorizationChecker, ['@security.authorization_checker']]
+            - [ setDoctrine, ["@doctrine"]]
+            - [ setLogger, ["@monolog.logger"]]
+            - [ setRouter, ["@router"]]

@@ -19,8 +19,8 @@ class AppKernel extends Kernel
 			new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
             new FOS\UserBundle\FOSUserBundle(),
-            new AppUserBundle\AppUserBundle(),
-            new FeedbackBundle\FeedbackBundle(),
+            new Nines\UserBundle\UserBundle(),
+            new Nines\FeedbackBundle\FeedbackBundle(),
             new Nines\BlogBundle\NinesBlogBundle(),
         ];
 

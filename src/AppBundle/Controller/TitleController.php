@@ -3,7 +3,8 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Title;
-use FeedbackBundle\Entity\Comment;
+use Nines\FeedbackBundle\Entity\Comment;
+use Nines\FeedbackBundle\Form\CommentType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -170,7 +171,7 @@ class TitleController extends Controller
     public function showAction(Request $request, Title $title)
     {
         $comment = new Comment();
-        $form = $this->createForm('FeedbackBundle\Form\CommentType', $comment);
+        $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
 		$service = $this->get('feedback.comment');
         if ($form->isSubmitted() && $form->isValid()) {
