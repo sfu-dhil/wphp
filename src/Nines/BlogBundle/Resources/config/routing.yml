@@ -1,3 +1,0 @@
-nines_blog_homepage:
-    path:     /
-    defaults: { _controller: NinesBlogBundle:Default:index }

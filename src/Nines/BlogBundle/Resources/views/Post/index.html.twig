@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+ {% block pageheader %} 
+    <h1>Post List</h1>
+    <p class="count">
+        Displaying {{ posts|length }} posts of {{ posts.getTotalItemCount }} total.
+    </p>
+ {% endblock %} 
+
+{% block body %}
+
+        <div class='btn-toolbar pull-right'>
+        <div class='btn-group'>
+            <a href="{{ path('post_new') }}" class="btn btn-default">
+                <span class="glyphicon glyphicon-plus"></span> New
+            </a>
+            <a href="{{ path('post_search') }}" class="btn btn-default">
+                <span class="glyphicon glyphicon-search"></span> Search
+            </a>
+        </div>
+    </div>
+        
+    <table class="table table-bordered table-condensed table-hover table-striped">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Content</th>
+                <th>Created</th>
+                <th>Updated</th>            </tr>
+        </thead>
+        <tbody>
+        {% for post in posts %}
+            <tr>
+                <td>
+                    <a href="{{ path('post_show', { 'id': post.id }) }}">
+                        {{ post.title }}
+                    </a>
+                </td>
+                <td>{{ post.content }}</td>
+                <td>{% if post.created %}{{ post.created|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if post.updated %}{{ post.updated|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+        
+    <div class="navigation">
+        {{ knp_pagination_render(posts) }}
+    </div>
+
+{% endblock %}
