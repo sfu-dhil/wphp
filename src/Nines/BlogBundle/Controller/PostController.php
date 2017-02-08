@@ -132,12 +132,18 @@ class PostController extends Controller
      */
     public function newAction(Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
         $post = new Post();
+        $post->setCategory($em->getRepository('NinesBlogBundle:PostCategory')->findOneBy(array(
+            'name' => $this->getParameter('nines_blog.default_category'),
+        )));
+        $post->setStatus($em->getRepository('NinesBlogBundle:PostStatus')->findOneBy(array(
+            'name' => $this->getParameter('nines_blog.default_status'),
+        )));        
         $form = $this->createForm('Nines\BlogBundle\Form\PostType', $post);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
             $em->persist($post);
             $em->flush();
 

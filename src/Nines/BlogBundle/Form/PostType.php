@@ -2,9 +2,9 @@
 
 namespace Nines\BlogBundle\Form;
 
+use Ivory\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class PostType extends AbstractType
@@ -16,7 +16,9 @@ class PostType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {    
         $builder->add('title');     
-        $builder->add('content');     
+        $builder->add('content', CKEditorType::class, array(
+            'config_name' => 'wphp_config',
+        ));     
         $builder->add('category');     
         $builder->add('status');         
     }

@@ -36,7 +36,7 @@
                         {{ post.title }}
                     </a>
                 </td>
-                <td>{{ post.content }}</td>
+                <td>{{ post.content|raw }}</td>
                 <td>{% if post.created %}{{ post.created|date('Y-m-d H:i:s') }}{% endif %}</td>
                 <td>{% if post.updated %}{{ post.updated|date('Y-m-d H:i:s') }}{% endif %}</td>
             </tr>
