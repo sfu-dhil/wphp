@@ -19,6 +19,13 @@ class Configuration implements ConfigurationInterface
     {
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('nines_blog');
+        
+        $rootNode
+            ->children()
+                ->scalarNode('default_status')->end()
+                ->scalarNode('published_status')->end()
+                ->scalarNode('default_category')->end()
+            ->end();
 
         // Here you should define the parameters that are allowed to
         // configure your bundle. See the documentation linked above for

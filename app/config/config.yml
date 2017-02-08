@@ -150,3 +150,8 @@ feedback:
         title:
             class: AppBundle\Entity\Title
             route: title_show
+
+nines_blog:
+    default_status: draft
+    published_status: published
+    default_category: ~
