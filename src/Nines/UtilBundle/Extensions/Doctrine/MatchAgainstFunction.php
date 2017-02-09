@@ -1,17 +1,12 @@
 <?php
 
-/*
-    * To change this license header, choose License Headers in Project Properties.
-    * To change this template file, choose Tools | Templates
-    * and open the template in the editor.
- */
-
 namespace Nines\UtilBundle\Extensions\Doctrine;
 
-/*
-    *
-    * @link http://www.xsolve.pl/blog/full-text-searching-in-symfony2-2/
-    * @author mjoyce
+/**
+ * Doctrine doesn't do MATCH AGAINST expressions. This class adds a doctrine
+ * extension that implements it.
+ *
+ * @link http://www.xsolve.pl/blog/full-text-searching-in-symfony2-2/
  */
 
 use Doctrine\ORM\Query\AST\Functions\FunctionNode;
@@ -20,15 +15,39 @@ use Doctrine\ORM\Query\Parser;
 use Doctrine\ORM\Query\SqlWalker;
 
 /**
+ * Implements the MatchAgainst function.
+ * 
  * @example by https://gist.github.com/1234419 Jérémy Hubert
  * "MATCH_AGAINST" "(" {StateFieldPathExpression ","}* InParameter {Literal}? ")"
  */
-class MatchAgainstFunction extends FunctionNode
-{
+class MatchAgainstFunction extends FunctionNode {
+
+    /**
+     * List of the columns to match against.
+     *
+     * @var array
+     */
     public $columns = array();
+    
+    /**
+     * The thing to find.
+     *
+     * @var string
+     */
     public $needle;
+    
+    /**
+     * If true, the match is in boolean mode.
+     *
+     * @var boolean
+     */
     public $mode;
 
+    /**
+     * Parse the expression.
+     * 
+     * @param Parser $parser
+     */
     public function parse(Parser $parser) {
         $parser->match(Lexer::T_IDENTIFIER);
         $parser->match(Lexer::T_OPEN_PARENTHESIS);
@@ -43,6 +62,12 @@ class MatchAgainstFunction extends FunctionNode
         $parser->match(Lexer::T_CLOSE_PARENTHESIS);
     }
 
+    /**
+     * Build the SQL for the expression.
+     * 
+     * @param SqlWalker $sqlWalker
+     * @return string
+     */
     public function getSql(SqlWalker $sqlWalker) {
         $haystack = null;
         $first = true;
@@ -51,7 +76,7 @@ class MatchAgainstFunction extends FunctionNode
             $haystack .= $column->dispatch($sqlWalker);
         }
         $query = "MATCH(" . $haystack .
-            ") AGAINST (" . $this->needle->dispatch($sqlWalker);
+                ") AGAINST (" . $this->needle->dispatch($sqlWalker);
         if ($this->mode) {
             $query .= " " . trim($this->mode->dispatch($sqlWalker), "'") . " )";
         } else {

@@ -1,9 +1,10 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * @file
+ * 
+ * Doctrine lacks a cast function. This file implements an extension which
+ * implements cast.
  */
 
 namespace Nines\UtilBundle\Extensions\Doctrine;
@@ -14,17 +15,26 @@ use Doctrine\ORM\Query\Parser;
 use Doctrine\ORM\Query\SqlWalker;
 
 /**
- * Description of CastAsIntegerFunction
+ * Cast a value to an integer in DQL.
  * 
- * Usage:
- * 
- * $qb->addSelect("INT(value) AS HIDDEN int_value");
+ * Usage:  $qb->addSelect("INT(value) AS HIDDEN int_value");
  * 
  * @author mjoyce
  */
 class CastAsIntegerFunction extends FunctionNode {
+    
+    /**
+     * The string to cast as an integer.
+     *
+     * @var string
+     */
     public $stringPrimary;
 
+    /**
+     * Parse the expression.
+     * 
+     * @param Parser $parser
+     */
     public function parse(Parser $parser)
     {
         $parser->match(Lexer::T_IDENTIFIER);
@@ -35,6 +45,12 @@ class CastAsIntegerFunction extends FunctionNode {
         $parser->match(Lexer::T_CLOSE_PARENTHESIS);
     }
     
+    /**
+     * Build the SQL expression for the parsed DQL.
+     * 
+     * @param SqlWalker $sqlWalker
+     * @return string
+     */
     public function getSql(SqlWalker $sqlWalker)
     {
         return 'CAST(' . $this->stringPrimary->dispatch($sqlWalker) . ' AS unsigned)';

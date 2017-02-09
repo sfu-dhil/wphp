@@ -1,11 +1,21 @@
 <?php
 
+/**
+ * @file
+ * 
+ * A useful base class for Doctrine entities.
+ */
+
 namespace Nines\UtilBundle\Entity;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * AbstractEntity adds id, created, and updated fields along with the
+ * normal getters. And it sets up automatic callbacks to set the created
+ * and updated DateTimes.
+ * 
  * @ORM\MappedSuperclass
  * @ORM\HasLifecycleCallbacks
  */
@@ -13,6 +23,8 @@ abstract class AbstractEntity
 {
 
     /**
+     * The entity's ID.
+     * 
      * @var integer
      *
      * @ORM\Column(name="id", type="integer")
@@ -22,41 +34,65 @@ abstract class AbstractEntity
     protected $id;
 
     /**
+     * The DateTime the entity was created (persisted really).
+     * 
      * @var DateTime
      * @ORM\Column(type="datetime")
      */
     protected $created;
 
     /**
+     * The DateTime the entity was last updated.
+     * 
      * @var DateTime
      * @ORM\Column(type="datetime")
      */
     protected $updated;
 
+    /**
+     * Constructor. Does nothing. Exists incase a subclass accidentally calls
+     * parent::__construct().
+     */
     public function __construct() {
         // nop
     }
     
+    /**
+     * Get the ID.
+     * 
+     * @return integer
+     */
     public function getId() {
         return $this->id;
     }
 
-    private function setCreated() {
+    /**
+     * Does nothing. Setting the created timestamp happens automatically. Exists
+     * to prevent a subclass accien
+     */
+    private final function setCreated() {
         // nop
     }
 
     /**
+     * Get the created timestamp.
+     * 
      * @return DateTime
      */
-    public function getCreated() {
+    public final function getCreated() {
         return $this->created;
     }
 
-    private function setUpdated() {
+    /**
+     * Does nothing. Setting the updated timestamp happens automatically.
+     */
+    private final function setUpdated() {
         // nop
     }
 
     /**
+     * Get the updated timestamp.
+     * 
      * @return DateTime
      */
     public function getUpdated() {
@@ -64,20 +100,29 @@ abstract class AbstractEntity
     }
 
     /**
+     * Sets the created and updated timestamps.
+     * 
      * @ORM\PrePersist()
      */
-    public function prePersist() {
-        $this->created = new DateTime();
+    public final function prePersist() {
+        if( ! isset($this->created)) {
+            $this->created = new DateTime();
+            $this->updated = new DateTime();
+        }
+    }
+
+    /**
+     * Sets the updated timestamp.
+     * 
+     * @ORM\PreUpdate()
+     */
+    public final function preUpdate() {
         $this->updated = new DateTime();
     }
 
     /**
-     * @ORM\PreUpdate()
+     * Force all entities to provide a stringify function.
      */
-    public function preUpdate() {
-        $this->updated = new DateTime();
-    }
-
     abstract public function __toString();
 
 }

@@ -21,8 +21,14 @@ class ErrorController extends Controller
         $env = $this->container->get( 'kernel' )->getEnvironment();
         switch($env) {
             case 'prod':
+                $response->setContent($this->render('UtilBundle:Error:prod.html.twig', array(
+                    'exception' => $exception,
+                )));
                 break;
             case 'dev':
+                $response->setContent($this->render('UtilBundle:Error:dev.html.twig', array(
+                    'exception' => $exception,
+                )));
                 break;
             case 'test':
                 $response->headers->set('Content-Type', 'text/plain');
