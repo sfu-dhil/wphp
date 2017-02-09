@@ -7,7 +7,7 @@ nines_blog:
     type: annotation
 
 nines_user:
-    resource: "@UserBundle/Controller/"
+    resource: "@NinesUserBundle/Controller/"
     type: annotation
 
 nines_feedback:

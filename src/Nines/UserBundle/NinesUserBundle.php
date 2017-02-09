@@ -4,7 +4,7 @@ namespace Nines\UserBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class UserBundle extends Bundle
+class NinesUserBundle extends Bundle
 {
     public function getParent()
     {
