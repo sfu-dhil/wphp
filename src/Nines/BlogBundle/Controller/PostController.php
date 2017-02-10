@@ -2,13 +2,14 @@
 
 namespace Nines\BlogBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Nines\BlogBundle\Entity\Post;
+use Nines\FeedbackBundle\Entity\Comment;
+use Nines\FeedbackBundle\Form\CommentType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Nines\BlogBundle\Entity\Post;
-use Nines\BlogBundle\Form\PostType;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Post controller.
@@ -132,8 +133,12 @@ class PostController extends Controller
      */
     public function newAction(Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page!');
         $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser();
+        
         $post = new Post();
+        $post->setUser($user);
         $post->setCategory($em->getRepository('NinesBlogBundle:PostCategory')->findOneBy(array(
             'name' => $this->getParameter('nines_blog.default_category'),
         )));
@@ -144,6 +149,9 @@ class PostController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if( ! $post->getExcerpt()) {
+                $post->setExcerpt($this->get('nines.util.word_trim')->trim($post->getContent(), $this->getParameter('blog.excerpt_length')));
+            }
             $em->persist($post);
             $em->flush();
 
@@ -165,11 +173,25 @@ class PostController extends Controller
      * @Template()
 	 * @param Post $post
      */
-    public function showAction(Post $post)
+    public function showAction(Request $request, Post $post)
     {
+        $comment = new Comment();
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+		$service = $this->get('feedback.comment');
+        if ($form->isSubmitted() && $form->isValid()) {
+            $service->addComment($post, $comment);
+            $this->addFlash('success', 'Thank you for your suggestion.');
+            return $this->redirect($this->generateUrl('post_show', array('id' => $post->getId())));
+        }
+
+        $comments = $service->findComments($post);
 
         return array(
+            'form' => $form->createView(),
             'post' => $post,
+			'comments' => $comments,
+			'service' => $service,
         );
     }
 
@@ -188,6 +210,9 @@ class PostController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
+            if( ! $post->getExcerpt()) {
+                $post->setExcerpt($this->get('nines.util.word_trim')->trim($post->getContent(), $this->getParameter('blog.excerpt_length')));
+            }
             $em = $this->getDoctrine()->getManager();
             $em->flush();
             $this->addFlash('success', 'The post has been updated.');

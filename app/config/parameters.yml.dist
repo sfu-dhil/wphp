@@ -23,3 +23,5 @@ parameters:
     router.request_context.host: wphp.dv
     router.request_context.scheme: http
     router.request_context.base_url: /web/app_dev.php
+
+    blog.excerpt_length: 100

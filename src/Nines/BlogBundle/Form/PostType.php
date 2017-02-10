@@ -15,7 +15,15 @@ class PostType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {    
-        $builder->add('title');     
+        $builder->add('title');    
+        $builder->add('excerpt', CKEditorType::class, array(
+            'config_name' => 'wphp_config',
+            'attr' => array(
+                'help_block' => 'Excerpts will be shown on the home page and in '
+                . 'lists of blog posts. Leave this field blank and one will be '
+                . 'generated automatically.'
+            ),
+        ));
         $builder->add('content', CKEditorType::class, array(
             'config_name' => 'wphp_config',
         ));     

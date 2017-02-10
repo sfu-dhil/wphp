@@ -11,6 +11,7 @@ use Nines\UserBundle\Entity\User;
  *
  * @ORM\Table(name="blog_post")
  * @ORM\Entity(repositoryClass="Nines\BlogBundle\Repository\PostRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Post extends AbstractEntity
 {
@@ -21,6 +22,15 @@ class Post extends AbstractEntity
      * @ORM\Column(name="name", type="string", nullable=false)
      */
     private $title;
+    
+    /**
+     * An excerpt, to display in lists.
+     *
+     * @var string
+     * 
+     * @ORM\Column(name="excerpt", type="text", nullable=true)
+     */    
+    private $excerpt;
 
     /**
      *
@@ -34,6 +44,7 @@ class Post extends AbstractEntity
      * @var PostCategory
      *
      * @ORM\ManyToOne(targetEntity="PostCategory", inversedBy="posts")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $category;
 
@@ -41,19 +52,20 @@ class Post extends AbstractEntity
      * @var PostStatus
      * 
      * @ORM\ManyToOne(targetEntity="PostStatus", inversedBy="posts")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $status;
     
     /**
      * @var User
      * @ORM\ManyToOne(targetEntity="Nines\UserBundle\Entity\User")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $user;
 
     public function __toString() {
         return $this->title;
     }
-
 
     /**
      * Set title
@@ -174,4 +186,30 @@ class Post extends AbstractEntity
     {
         return $this->user;
     }
+
+    
+    /**
+     * Set excerpt
+     *
+     * @param string $excerpt
+     *
+     * @return Post
+     */
+    public function setExcerpt($excerpt)
+    {
+        $this->excerpt = $excerpt;
+
+        return $this;
+    }
+
+    /**
+     * Get excerpt
+     *
+     * @return string
+     */
+    public function getExcerpt()
+    {
+        return $this->excerpt;
+    }
+    
 }
