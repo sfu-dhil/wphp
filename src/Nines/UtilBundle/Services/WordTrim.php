@@ -4,13 +4,23 @@ namespace Nines\UtilBundle\Services;
 
 use Monolog\Logger;
 
+/**
+ * Word trimming service for Symfony.
+ */
 class WordTrim {
     
     /**
+     * Monolog logger.
+     * 
      * @var Logger
      */
     private $logger;
-    
+
+    /**
+     * Set the service's logger.
+     * 
+     * @param Logger $logger
+     */
     public function setLogger(Logger $logger) {
         $this->logger = $logger;
     }
@@ -25,9 +35,9 @@ class WordTrim {
      */
     public function trim($string, $length, $suffix = '...') {        
         $plain = strip_tags($string);
-        $converted = mb_convert_encoding($plain, 'UTF-8', 'HTML-ENTITIES');
+        $converted = html_entity_decode($plain, ENT_COMPAT | ENT_HTML401, 'UTF-8');
         $trimmed = preg_replace("/(^\s+)|(\s+$)/u", "", $converted);
-        // \xA0 is the result of converting nbsp.
+        // \xA0 is the result of converting nbsp. Requires the /u flag.
         $normalized = preg_replace("/[[:space:]\x{A0}]/su", " ", $trimmed);
         $words = preg_split('/\s/u', $normalized, $length+1, PREG_SPLIT_NO_EMPTY);
 

@@ -7,7 +7,7 @@ use Nines\UtilBundle\Entity\AbstractEntity;
 use Nines\UserBundle\Entity\User;
 
 /**
- * Post
+ * A blog post.
  *
  * @ORM\Table(name="blog_post", indexes={
  *   @ORM\Index(name="blog_post_content", columns={"title","searchable"}, flags={"fulltext"})
@@ -18,6 +18,7 @@ use Nines\UserBundle\Entity\User;
 class Post extends AbstractEntity {
 
     /**
+     * Blog post title.
      *
      * @var string
      * 
@@ -35,6 +36,7 @@ class Post extends AbstractEntity {
     private $excerpt;
 
     /**
+     * The content of the post, as HTML.
      *
      * @var string
      * 
@@ -43,6 +45,8 @@ class Post extends AbstractEntity {
     private $content;
 
     /**
+     * Searchable version of the content, with the tags stripped out.
+     * 
      * @var string
      * 
      * @ORM\Column(name="searchable", type="text", nullable=false)
@@ -50,6 +54,8 @@ class Post extends AbstractEntity {
     private $searchable;
 
     /**
+     * Post category.
+     * 
      * @var PostCategory
      *
      * @ORM\ManyToOne(targetEntity="PostCategory", inversedBy="posts")
@@ -58,6 +64,8 @@ class Post extends AbstractEntity {
     private $category;
 
     /**
+     * Post status.
+     * 
      * @var PostStatus
      * 
      * @ORM\ManyToOne(targetEntity="PostStatus", inversedBy="posts")
@@ -66,12 +74,19 @@ class Post extends AbstractEntity {
     private $status;
 
     /**
+     * User that created the post.
+     * 
      * @var User
      * @ORM\ManyToOne(targetEntity="Nines\UserBundle\Entity\User")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
 
+    /**
+     * Return the title of the post.
+     * 
+     * @return type
+     */
     public function __toString() {
         return $this->title;
     }
@@ -121,7 +136,9 @@ class Post extends AbstractEntity {
     }
 
     /**
-     * Sets the created and updated timestamps.
+     * Build a searchable version of the text.
+     * 
+     * @todo Refactor this into a service.
      * 
      * @ORM\PrePersist()
      * @ORM\PreUpdate()
@@ -135,6 +152,15 @@ class Post extends AbstractEntity {
         $this->searchable = $normalized;
     }
     
+    /**
+     * Find the keyword in the searchable text and highlight it. Returns a list
+     * of the higlights as KWIC results.
+     * 
+     * @todo Refactor this into a service.
+     * 
+     * @param string $keyword
+     * @return array
+     */
     public function searchHighlight($keyword) {
         $i = stripos($this->searchable, $keyword);
         $results = array();
