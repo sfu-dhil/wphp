@@ -10,4 +10,12 @@ namespace Nines\BlogBundle\Repository;
  */
 class PostRepository extends \Doctrine\ORM\EntityRepository
 {
+	    public function fulltextQuery($q) {
+	        $qb = $this->createQueryBuilder('e');
+	        $qb->addSelect("MATCH_AGAINST (e.title, e.searchable, :q 'IN BOOLEAN MODE') as HIDDEN score");
+	        $qb->add('where', "MATCH_AGAINST (e.title, e.searchable, :q 'IN BOOLEAN MODE') > 0");
+	        $qb->orderBy('score', 'desc');
+	        $qb->setParameter('q', $q);
+	        return $qb->getQuery();
+	    }	 
 }

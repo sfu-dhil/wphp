@@ -9,27 +9,29 @@ use Nines\UserBundle\Entity\User;
 /**
  * Post
  *
- * @ORM\Table(name="blog_post")
+ * @ORM\Table(name="blog_post", indexes={
+ *   @ORM\Index(name="blog_post_content", columns={"title","searchable"}, flags={"fulltext"})
+ * })
  * @ORM\Entity(repositoryClass="Nines\BlogBundle\Repository\PostRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class Post extends AbstractEntity
-{
+class Post extends AbstractEntity {
+
     /**
      *
      * @var string
      * 
-     * @ORM\Column(name="name", type="string", nullable=false)
+     * @ORM\Column(name="title", type="string", nullable=false)
      */
     private $title;
-    
+
     /**
      * An excerpt, to display in lists.
      *
      * @var string
      * 
      * @ORM\Column(name="excerpt", type="text", nullable=true)
-     */    
+     */
     private $excerpt;
 
     /**
@@ -37,9 +39,16 @@ class Post extends AbstractEntity
      * @var string
      * 
      * @ORM\Column(name="content", type="text", nullable=false)
-     */    
+     */
     private $content;
-    
+
+    /**
+     * @var string
+     * 
+     * @ORM\Column(name="searchable", type="text", nullable=false)
+     */
+    private $searchable;
+
     /**
      * @var PostCategory
      *
@@ -55,7 +64,7 @@ class Post extends AbstractEntity
      * @ORM\JoinColumn(nullable=false)
      */
     private $status;
-    
+
     /**
      * @var User
      * @ORM\ManyToOne(targetEntity="Nines\UserBundle\Entity\User")
@@ -74,8 +83,7 @@ class Post extends AbstractEntity
      *
      * @return Post
      */
-    public function setTitle($title)
-    {
+    public function setTitle($title) {
         $this->title = $title;
 
         return $this;
@@ -86,8 +94,7 @@ class Post extends AbstractEntity
      *
      * @return string
      */
-    public function getTitle()
-    {
+    public function getTitle() {
         return $this->title;
     }
 
@@ -98,8 +105,7 @@ class Post extends AbstractEntity
      *
      * @return Post
      */
-    public function setContent($content)
-    {
+    public function setContent($content) {
         $this->content = $content;
 
         return $this;
@@ -110,9 +116,34 @@ class Post extends AbstractEntity
      *
      * @return string
      */
-    public function getContent()
-    {
+    public function getContent() {
         return $this->content;
+    }
+
+    /**
+     * Sets the created and updated timestamps.
+     * 
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public final function buildSearchableText() {
+        $plain = strip_tags($this->content);
+        $converted = mb_convert_encoding($plain, 'UTF-8', 'HTML-ENTITIES');
+        $trimmed = preg_replace("/(^\s+)|(\s+$)/u", "", $converted);
+        // \xA0 is the result of converting nbsp.
+        $normalized = preg_replace("/[[:space:]\x{A0}]/su", " ", $trimmed);
+        $this->searchable = $normalized;
+    }
+    
+    public function searchHighlight($keyword) {
+        $i = stripos($this->searchable, $keyword);
+        $results = array();
+        while($i !== false) {
+            $s = substr($this->searchable, max([0, $i - 60]), 120);
+            $results[] = preg_replace("/$keyword/", "<mark>{$keyword}</mark>", $s);
+            $i = stripos($this->searchable, $keyword, $i+1);
+        }
+        return $results;
     }
 
     /**
@@ -122,8 +153,7 @@ class Post extends AbstractEntity
      *
      * @return Post
      */
-    public function setCategory(\Nines\BlogBundle\Entity\PostCategory $category = null)
-    {
+    public function setCategory(\Nines\BlogBundle\Entity\PostCategory $category = null) {
         $this->category = $category;
 
         return $this;
@@ -134,8 +164,7 @@ class Post extends AbstractEntity
      *
      * @return PostCategory
      */
-    public function getCategory()
-    {
+    public function getCategory() {
         return $this->category;
     }
 
@@ -146,8 +175,7 @@ class Post extends AbstractEntity
      *
      * @return Post
      */
-    public function setStatus(PostStatus $status = null)
-    {
+    public function setStatus(PostStatus $status = null) {
         $this->status = $status;
 
         return $this;
@@ -158,8 +186,7 @@ class Post extends AbstractEntity
      *
      * @return PostStatus
      */
-    public function getStatus()
-    {
+    public function getStatus() {
         return $this->status;
     }
 
@@ -170,8 +197,7 @@ class Post extends AbstractEntity
      *
      * @return Post
      */
-    public function setUser(User $user = null)
-    {
+    public function setUser(User $user = null) {
         $this->user = $user;
 
         return $this;
@@ -182,12 +208,10 @@ class Post extends AbstractEntity
      *
      * @return User
      */
-    public function getUser()
-    {
+    public function getUser() {
         return $this->user;
     }
 
-    
     /**
      * Set excerpt
      *
@@ -195,8 +219,7 @@ class Post extends AbstractEntity
      *
      * @return Post
      */
-    public function setExcerpt($excerpt)
-    {
+    public function setExcerpt($excerpt) {
         $this->excerpt = $excerpt;
 
         return $this;
@@ -207,9 +230,32 @@ class Post extends AbstractEntity
      *
      * @return string
      */
-    public function getExcerpt()
-    {
+    public function getExcerpt() {
         return $this->excerpt;
     }
-    
+
+
+    /**
+     * Set searchable
+     *
+     * @param string $searchable
+     *
+     * @return Post
+     */
+    public function setSearchable($searchable)
+    {
+        $this->searchable = $searchable;
+
+        return $this;
+    }
+
+    /**
+     * Get searchable
+     *
+     * @return string
+     */
+    public function getSearchable()
+    {
+        return $this->searchable;
+    }
 }

@@ -47,6 +47,9 @@
                         <li>
                             <a href="{{ path('firm_index') }}">Firms</a>
                         </li>
+                        <li>
+                            <a href='{{ path('post_index') }}'>Announcements</a>
+                        </li>
 
                         {% if app.user is not null and is_granted('ROLE_ADMIN') %}
                             <li>
