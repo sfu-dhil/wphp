@@ -8,6 +8,8 @@
     <p class="count">
         Displaying {{ '{{ ' ~ entity_pluralized  ~ "|length }}" }} {{ entity_pluralized }} of {{ '{{ ' ~ entity_pluralized  ~ ".getTotalItemCount }}" }} total.
     </p>
+        {{ '{% elseif q %}' }}
+    <p>Your search for <i>{{ q }}</i> returned zero results.</p>        
 	{{ '{% endif %}' }}
 {{ " {% endblock %} "}}
 
