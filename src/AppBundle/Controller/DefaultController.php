@@ -17,9 +17,16 @@ class DefaultController extends Controller {
 	 * @Template()
 	 */
 	public function indexAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $status = $em->getRepository('NinesBlogBundle:PostStatus')->findOneBy(array(
+            'name' => $this->getParameter('nines_blog.published_status'
+        )));
+        $posts = $em->getRepository('NinesBlogBundle:Post')->findBy(array(
+            'status' => $status
+        ));
 		// replace this example code with whatever you need
 		return [
-			'base_dir' => realpath($this->getParameter('kernel.root_dir') . '/..'),
+            'posts' => $posts,
 		];
 	}
 
