@@ -6,6 +6,8 @@
         <p class="count">
             Displaying {{ titles|length }} titles of {{ titles.getTotalItemCount }} total.
         </p>
+    {% elseif  q %}
+        <p>Your search for <i>{{ q }}</i> returned zero results.</p>
     {% endif %}
 {% endblock %} 
 
@@ -30,7 +32,6 @@
             </div>
         </fieldset>
     </form>
-
     {% if titles|length > 0 %}
         <table class="table table-bordered table-condensed table-hover table-striped">
             <thead>
