@@ -16,6 +16,10 @@
     <table class="table table-bordered table-condensed table-hover table-striped">
         <tbody>
             <tr>
+                <th>Id</th>
+                <td>{{ firm.id }}</td>
+            </tr>
+            <tr>
                 <th>Name</th>
                 <td>{{ firm.name }}</td>
             </tr>
@@ -43,10 +47,6 @@
             <tr>
                 <th>End date</th>
                 <td>{{ firm.endDate }}</td>
-            </tr>
-            <tr>
-                <th>Final check</th>
-                <td>{% if firm.finalcheck %}Yes{% else %}No{% endif %}</td>
             </tr>
         </tbody>
     </table>

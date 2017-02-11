@@ -36,6 +36,7 @@
         <table class="table table-bordered table-condensed table-hover table-striped">
             <thead>
                 <tr>
+                    <th>Id</th>
                     <th>Title</th>
                     <th>Signed author</th>
                     <th>Surrogate</th>
@@ -50,6 +51,9 @@
                 {% for result in titles %}
                     {% set title = result[0] %}
                     <tr>
+                        <td>
+                            {{ title.id }}
+                        </td>
                         <td>
                             <a href="{{ path('title_show', { 'id': title.id }) }}">
                                 {{ title.title }}

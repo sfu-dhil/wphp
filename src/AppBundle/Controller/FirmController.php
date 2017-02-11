@@ -68,6 +68,24 @@ class FirmController extends Controller
     }
 
     /**
+     * Search for Title entities.
+     *
+     * @Route("/jump", name="firm_jump")
+     * @Method("GET")
+     * @Template()
+	 * @param Request $request
+     */
+    public function jumpAction(Request $request)
+    {
+		$q = $request->query->get('q');
+		if($q) {
+            return $this->redirect($this->generateUrl('firm_show', array('id' => $q)));
+		} else {
+            return $this->redirect($this->generateUrl('firm_index', array('id' => $q)));
+		}
+    }
+    
+    /**
      * Finds and displays a Firm entity.
      *
      * @Route("/{id}", name="firm_show")

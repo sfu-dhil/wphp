@@ -68,6 +68,24 @@ class PersonController extends Controller
     }
 
     /**
+     * Search for Title entities.
+     *
+     * @Route("/jump", name="person_jump")
+     * @Method("GET")
+     * @Template()
+	 * @param Request $request
+     */
+    public function jumpAction(Request $request)
+    {
+		$q = $request->query->get('q');
+		if($q) {
+            return $this->redirect($this->generateUrl('person_show', array('id' => $q)));
+		} else {
+            return $this->redirect($this->generateUrl('person_index', array('id' => $q)));
+		}
+    }
+    
+    /**
      * Finds and displays a Person entity.
      *
      * @Route("/{id}", name="person_show")
