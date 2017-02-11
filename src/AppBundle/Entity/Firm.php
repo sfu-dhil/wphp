@@ -8,6 +8,8 @@ use Symfony\Component\Validator\Constraints\Collection;
 
 /**
  * Firm
+ * 
+ * Doctrine isn't able to manage the unique contstraint on this table at all.
  *
  * @ORM\Table(name="firm", 
  *  uniqueConstraints={
@@ -25,7 +27,7 @@ class Firm
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="bigint", nullable=false)
+     * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -34,14 +36,14 @@ class Firm
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="text", length=16777215, nullable=true)
+     * @ORM\Column(name="name", type="text", nullable=true)
      */
     private $name;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="street_address", type="text", length=16777215, nullable=true)
+     * @ORM\Column(name="street_address", type="text", nullable=true)
      */
     private $streetAddress;
 

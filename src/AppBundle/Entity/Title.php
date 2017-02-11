@@ -26,7 +26,7 @@ class Title
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="bigint", nullable=false)
+     * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -42,14 +42,14 @@ class Title
     /**
      * @var string
      *
-     * @ORM\Column(name="signed_author", type="text", length=16777215, nullable=true)
+     * @ORM\Column(name="signed_author", type="text", nullable=true)
      */
     private $signedAuthor;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="surrogate", type="text", length=16777215, nullable=true)
+     * @ORM\Column(name="surrogate", type="text", nullable=true)
      */
     private $surrogate;
 
@@ -63,7 +63,7 @@ class Title
     /**
      * @var string
      *
-     * @ORM\Column(name="imprint", type="text", length=16777215, nullable=true)
+     * @ORM\Column(name="imprint", type="text", nullable=true)
      */
     private $imprint;
 
@@ -91,14 +91,14 @@ class Title
     /**
      * @var boolean
      *
-     * @ORM\Column(name="size_l", type="boolean", nullable=true)
+     * @ORM\Column(name="size_l", type="integer", nullable=true)
      */
     private $sizeL;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="size_w", type="boolean", nullable=true)
+     * @ORM\Column(name="size_w", type="integer", nullable=true)
      */
     private $sizeW;
 
@@ -161,7 +161,7 @@ class Title
     /**
      * @var string
      *
-     * @ORM\Column(name="shelfmark", type="text", length=16777215, nullable=true)
+     * @ORM\Column(name="shelfmark", type="text", nullable=true)
      */
     private $shelfmark;
 
@@ -182,7 +182,7 @@ class Title
     /**
      * @var string
      *
-     * @ORM\Column(name="notes", type="text", length=16777215, nullable=true)
+     * @ORM\Column(name="notes", type="text", nullable=true)
      */
     private $notes;
 

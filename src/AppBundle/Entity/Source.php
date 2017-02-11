@@ -24,7 +24,7 @@ class Source
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="text", length=16777215, nullable=true)
+     * @ORM\Column(name="name", type="text", nullable=true)
      */
     private $name;
 
