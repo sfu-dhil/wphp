@@ -170,6 +170,9 @@ class TitleController extends Controller
      */
     public function showAction(Request $request, Title $title)
     {
+        $em = $this->getDoctrine()->getManager();
+		$repo = $em->getRepository('AppBundle:Title');        
+        
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
@@ -182,8 +185,11 @@ class TitleController extends Controller
 
         $comments = $service->findComments($title);
 		return array(
-            'form' => $form->createView(),
             'title' => $title,
+            'next' => $repo->next($title),
+            'previous' => $repo->previous($title),
+
+            'form' => $form->createView(),
 			'comments' => $comments,
 			'service' => $service,
         );

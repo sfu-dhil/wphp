@@ -1,7 +1,18 @@
 {% extends 'base.html.twig' %}
 
 {% block pageheader %} 
-    <h1>Person</h1>
+    <h1>{{ person }}</h1>
+    <div class="row">
+        <div class="col-sm-6 text-left">
+            {% if previous %}
+                Previous person: <a href="{{ path('person_show', {'id': previous.id }) }}">{{ previous }}</a>
+            {% endif %}
+        </div>
+        <div class="col-sm-6 text-right">
+            {% if next %}
+                Next person: <a href="{{ path('person_show', {'id': next.id }) }}">{{ next }}</a>
+            {% endif %}
+        </div>
 {% endblock %} 
 
 {% block body %}

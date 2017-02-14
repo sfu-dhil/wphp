@@ -95,6 +95,9 @@ class FirmController extends Controller
      */
     public function showAction(Request $request, Firm $firm)
     {
+        $em = $this->getDoctrine()->getManager();
+		$repo = $em->getRepository('AppBundle:Firm');        
+        
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
@@ -107,8 +110,11 @@ class FirmController extends Controller
 
         $comments = $service->findComments($firm);
 		return array(
-            'form' => $form->createView(),
             'firm' => $firm,
+            'next' => $repo->next($firm),
+            'previous' => $repo->previous($firm),
+        
+            'form' => $form->createView(),
 			'comments' => $comments,
 			'service' => $service,
         );

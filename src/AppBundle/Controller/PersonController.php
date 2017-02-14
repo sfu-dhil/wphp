@@ -95,6 +95,9 @@ class PersonController extends Controller
      */
     public function showAction(Request $request, Person $person)
     {
+        $em = $this->getDoctrine()->getManager();
+		$repo = $em->getRepository('AppBundle:Person');        
+        
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
@@ -109,6 +112,9 @@ class PersonController extends Controller
 		return array(
             'form' => $form->createView(),
             'person' => $person,
+            'next' => $repo->next($person),
+            'previous' => $repo->previous($person),
+            
 			'comments' => $comments,
 			'service' => $service,
         );
