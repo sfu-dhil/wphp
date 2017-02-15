@@ -14,7 +14,7 @@ use Doctrine\ORM\EntityRepository;
 class TitleRepository extends EntityRepository
 {
     /**
-     * Return the next firm by ID.
+     * Return the next title by ID.
      * 
      * @param Title $title
      * @return Title|Null
@@ -29,7 +29,7 @@ class TitleRepository extends EntityRepository
     }
     
     /**
-     * Return the next firm by ID.
+     * Return the next title by ID.
      * 
      * @param Title $title
      * @return Title|Null

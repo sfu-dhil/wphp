@@ -7,3 +7,4 @@ services:
             - [ setDoctrine, ["@doctrine"]]
             - [ setLogger, ["@monolog.logger"]]
             - [ setRouter, ["@router"]]
+            - [ setFormFactory, ["@form.factory"]]

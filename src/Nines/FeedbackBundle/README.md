@@ -17,6 +17,11 @@ The bundle needs to know how to map entity classes to urls. Add something
 like the following to app/config/config.yml:
 
 ```yaml
+twig:
+    # Make the comment service available everywhere in Twig.
+    globals:
+        comment_service: "@feedback.comment"
+
 feedback:
     commenting:
         author:
@@ -36,40 +41,12 @@ feedback:
 Usage
 =====
 
-Add commenting to an entity controller:
-
-Get comments in the entity's show controller:
-
-```php
-    /**
-     * Finds and displays a Author entity.
-     *
-     * @Route("/{id}", name="author_show")
-     * @Method({"GET","POST"})
-     * @Template()
-     * @param Author $author
-     */
-    public function showAction(Request $request, Author $author) {
-        $comment = new Comment();
-        $form = $this->createForm('Nines\FeedbackBundle\Form\CommentType', $comment);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->get('feedback.comment')->addComment($author, $comment);
-            $this->addFlash('success', 'Thank you for your suggestion.');
-            return $this->redirect($this->generateUrl('author_show', array('id' => $author->getId())));
-        }
-        $comments = $this->get('feedback.comment')->findComments($author);
-        return array(
-            'form' => $form->createView(),
-            'author' => $author,
-			'comments' => $comments,
-        );
-    }
-```
-
-Show the comments and comment form in a twig template:
+Add commenting to a twig template:
 
 ```twig
-    {% include 'FeedbackBundle:Comment:comments-view.html.twig' %}                            
-    {% include('FeedbackBundle:Comment:comment-form.html.twig') %}
+    {% include 'FeedbackBundle:Comment:comments-interface.html.twig' with {'entity': entity } %}                            
 ```
+
+This line will show the comment form and public, published comments. If the user
+has ROLE_ADMIN privileges, the private comments will also be shown with some 
+links to edit them as well.

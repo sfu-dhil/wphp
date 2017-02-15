@@ -2,9 +2,11 @@
 
 namespace Nines\FeedbackBundle\Controller;
 
+use Exception;
 use Nines\FeedbackBundle\Entity\Comment;
 use Nines\FeedbackBundle\Entity\CommentNote;
 use Nines\FeedbackBundle\Form\CommentNoteType;
+use Nines\FeedbackBundle\Form\CommentType;
 use Nines\FeedbackBundle\Form\StatusType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -51,6 +53,42 @@ class CommentController extends Controller {
             'comments' => $comments,
             'service' => $service,
             'statuses' => $statusRepo->findAll(),
+        );
+    }
+    
+    /**
+     * Post a comment on an entity.
+     * 
+     * @Method("POST")
+     * @Route("/post", name="comment_post")
+     * @param Request $request
+     * @Template()
+     */
+    public function postAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+		$service = $this->get('feedback.comment');
+        $id = $request->request->get('entity_id', null);
+        $class = $request->request->get('entity_class', null);
+        
+        if(!$service->acceptsComments($class)) {
+            throw new Exception("Cannot accept comments for this class.");
+        }        
+        $repo = $em->getRepository($class);
+        $entity = $repo->find($id);
+        
+        $comment = new Comment();
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            $service->addComment($entity, $comment);
+            $this->addFlash('success', 'Thank you for your suggestion.');
+            return $this->redirect($service->entityUrl($comment));
+        }
+        
+        return array(
+            'entity' => $entity,
+			'service' => $service,
         );
     }
 

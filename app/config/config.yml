@@ -42,6 +42,8 @@ twig:
     paths:
         '%kernel.root_dir%/../src/Nines/UtilBundle/Resources/views': UtilBundle
     exception_controller:  UtilBundle:Error:showException
+    globals:
+        comment_service: "@feedback.comment"
 
 # Doctrine Configuration
 doctrine:

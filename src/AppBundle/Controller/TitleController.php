@@ -164,7 +164,7 @@ class TitleController extends Controller
      * Finds and displays a Title entity.
      *
      * @Route("/{id}", name="title_show")
-     * @Method({"GET","POST"})
+     * @Method("GET")
      * @Template()
 	 * @param Title $title
      */
@@ -172,26 +172,10 @@ class TitleController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 		$repo = $em->getRepository('AppBundle:Title');        
-        
-        $comment = new Comment();
-        $form = $this->createForm(CommentType::class, $comment);
-        $form->handleRequest($request);
-		$service = $this->get('feedback.comment');
-        if ($form->isSubmitted() && $form->isValid()) {
-            $service->addComment($title, $comment);
-            $this->addFlash('success', 'Thank you for your suggestion.');
-            return $this->redirect($this->generateUrl('title_show', array('id' => $title->getId())));
-        }
-
-        $comments = $service->findComments($title);
 		return array(
             'title' => $title,
             'next' => $repo->next($title),
             'previous' => $repo->previous($title),
-
-            'form' => $form->createView(),
-			'comments' => $comments,
-			'service' => $service,
         );
     }
 

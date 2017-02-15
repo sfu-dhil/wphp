@@ -78,11 +78,6 @@
         </tbody>
     </table>
 
-    {% include 'FeedbackBundle:Comment:comment-form.html.twig' with { 'entity': person } %}				
-    {% if is_granted('ROLE_ADMIN') %}
-        {% include 'FeedbackBundle:Comment:comments-admin.html.twig' %}
-    {% else %}
-        {% include 'FeedbackBundle:Comment:comments-view.html.twig' %}
-    {% endif %}
+    {% include 'FeedbackBundle:Comment:comment-interface.html.twig' with { 'entity': firm } %}                
 
 {% endblock %}

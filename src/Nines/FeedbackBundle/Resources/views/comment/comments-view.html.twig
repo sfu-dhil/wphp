@@ -1,3 +1,4 @@
+{% set comments = comment_service.findComments(entity) %}
 {% if comments|length %}
     <div class="well">
         <h2>Comments</h2>

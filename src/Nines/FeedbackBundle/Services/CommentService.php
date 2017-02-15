@@ -5,9 +5,11 @@ namespace Nines\FeedbackBundle\Services;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\EntityManager;
 use Exception;
-use Nines\FeedbackBundle\Entity\Comment;
 use Monolog\Logger;
+use Nines\FeedbackBundle\Entity\Comment;
+use Nines\FeedbackBundle\Form\CommentType;
 use ReflectionClass;
+use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Routing\Router;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
@@ -19,13 +21,19 @@ class CommentService {
      */
     private $em;
     
+    /**
+     * @var Logger
+     */
     private $logger;
     
     /**
      * @var Router
      */
     private $router;
-    
+
+    /**
+     * @var AuthorizationCheckerInterface
+     */
     private $authChecker;
     
     /**
@@ -38,6 +46,8 @@ class CommentService {
     private $defaultStatusName;
     
     private $publicStatusName;
+    
+    private $formFactory;
     
     public function __construct($routing, $defaultStatusName, $publicStatusName) {
         $this->routing = $routing;
@@ -59,6 +69,14 @@ class CommentService {
     
     public function setAuthorizationChecker(AuthorizationCheckerInterface $authChecker) {
         $this->authChecker = $authChecker;        
+    }
+    
+    public function setFormFactory(FormFactory $formFactory) {
+        $this->formFactory = $formFactory;
+    }
+    
+    public function acceptsComments($name) {
+        return array_key_exists($name, $this->routing);
     }
     
     public function findEntity(Comment $comment) {
@@ -112,6 +130,10 @@ class CommentService {
         $this->em->persist($comment);
         $this->em->flush($comment);
         return $comment;
+    }
+    
+    public function getForm() {
+        return $this->formFactory->create(CommentType::class)->createView();
     }
     
 }
