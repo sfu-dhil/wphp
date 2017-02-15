@@ -97,26 +97,10 @@ class PersonController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 		$repo = $em->getRepository('AppBundle:Person');        
-        
-        $comment = new Comment();
-        $form = $this->createForm(CommentType::class, $comment);
-        $form->handleRequest($request);
-		$service = $this->get('feedback.comment');
-        if ($form->isSubmitted() && $form->isValid()) {
-            $service->addComment($person, $comment);
-            $this->addFlash('success', 'Thank you for your suggestion.');
-            return $this->redirect($this->generateUrl('person_show', array('id' => $person->getId())));
-        }
-
-        $comments = $service->findComments($person);
 		return array(
-            'form' => $form->createView(),
             'person' => $person,
             'next' => $repo->next($person),
             'previous' => $repo->previous($person),
-            
-			'comments' => $comments,
-			'service' => $service,
         );
 
     }

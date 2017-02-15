@@ -97,26 +97,10 @@ class FirmController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 		$repo = $em->getRepository('AppBundle:Firm');        
-        
-        $comment = new Comment();
-        $form = $this->createForm(CommentType::class, $comment);
-        $form->handleRequest($request);
-		$service = $this->get('feedback.comment');
-        if ($form->isSubmitted() && $form->isValid()) {
-            $service->addComment($firm, $comment);
-            $this->addFlash('success', 'Thank you for your suggestion.');
-            return $this->redirect($this->generateUrl('firm_show', array('id' => $firm->getId())));
-        }
-
-        $comments = $service->findComments($firm);
 		return array(
             'firm' => $firm,
             'next' => $repo->next($firm),
             'previous' => $repo->previous($firm),
-        
-            'form' => $form->createView(),
-			'comments' => $comments,
-			'service' => $service,
         );
     }
 }

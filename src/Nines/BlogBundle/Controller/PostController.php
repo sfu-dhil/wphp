@@ -119,23 +119,8 @@ class PostController extends Controller
      */
     public function showAction(Request $request, Post $post)
     {
-        $comment = new Comment();
-        $form = $this->createForm(CommentType::class, $comment);
-        $form->handleRequest($request);
-		$service = $this->get('feedback.comment');
-        if ($form->isSubmitted() && $form->isValid()) {
-            $service->addComment($post, $comment);
-            $this->addFlash('success', 'Thank you for your suggestion.');
-            return $this->redirect($this->generateUrl('post_show', array('id' => $post->getId())));
-        }
-
-        $comments = $service->findComments($post);
-
         return array(
-            'form' => $form->createView(),
             'post' => $post,
-			'comments' => $comments,
-			'service' => $service,
         );
     }
 
