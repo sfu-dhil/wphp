@@ -112,7 +112,7 @@ class Page extends AbstractEntity {
         $results = array();
         while($i !== false) {
             $s = substr($this->searchable, max([0, $i - 60]), 120);
-            $results[] = preg_replace("/$keyword/", "<mark>{$keyword}</mark>", $s);
+            $results[] = preg_replace("/($keyword)/iu", '<mark>$1</mark>', $s);
             $i = stripos($this->searchable, $keyword, $i+1);
         }
         return $results;
