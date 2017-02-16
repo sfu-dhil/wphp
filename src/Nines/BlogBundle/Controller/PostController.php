@@ -94,7 +94,7 @@ class PostController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             if( ! $post->getExcerpt()) {
-                $post->setExcerpt($this->get('nines.util.word_trim')->trim($post->getContent(), $this->getParameter('blog.excerpt_length')));
+                $post->setExcerpt($this->get('nines.util.word_trim')->trim($post->getContent(), $this->getParameter('nines_blog.excerpt_length')));
             }
             $em->persist($post);
             $em->flush();
@@ -140,7 +140,7 @@ class PostController extends Controller
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             if( ! $post->getExcerpt()) {
-                $post->setExcerpt($this->get('nines.util.word_trim')->trim($post->getContent(), $this->getParameter('blog.excerpt_length')));
+                $post->setExcerpt($this->get('nines.util.word_trim')->trim($post->getContent(), $this->getParameter('nines_blog.excerpt_length')));
             }
             $em = $this->getDoctrine()->getManager();
             $em->flush();

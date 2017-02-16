@@ -3,7 +3,7 @@ app:
     type:     annotation
 
 nines_blog:
-    resource: "@NinesBlogBundle/Controller"
+    resource: "@NinesBlogBundle/Controller/"
     type: annotation
 
 nines_user:

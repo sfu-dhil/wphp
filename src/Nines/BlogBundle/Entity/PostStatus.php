@@ -32,7 +32,7 @@ class PostStatus extends AbstractEntity
     
     /**
      * @var Collection|Post[]
-     * @ORM\OneToMany(targetEntity="Post", mappedBy="category")
+     * @ORM\OneToMany(targetEntity="Post", mappedBy="status")
      */
     private $posts;
 

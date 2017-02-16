@@ -9,7 +9,10 @@ use Symfony\Component\Validator\Constraints\Collection;
 /**
  * Firm
  * 
- * Doctrine isn't able to manage the unique contstraint on this table at all.
+ * Doctrine isn't able to manage the unique contstraint on this table at all. It
+ * must be created manually:
+ * 
+ * CREATE UNIQUE INDEX `unique` ON firm (name(100), city, start_date, end_date);
  *
  * @ORM\Table(name="firm", 
  *  uniqueConstraints={

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en_CA">
+<html lang="en">
     <head>
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -37,18 +37,26 @@
                 </div>
                 <div id="navbar" class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
+
+
                         <li><a href="{{ path('search') }}">Search</a></li>
                         <li>
-                            <a href="{{ path('title_index') }}">Titles</a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                Browse <span class="caret"></span>
+                            </a>
+                            {{ knp_menu_render('AppBundle:Builder:navMenu') }}
                         </li>
                         <li>
-                            <a href="{{ path('person_index') }}">Persons</a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                About <span class="caret"></span>
+                            </a>
+                            {{ knp_menu_render('NinesBlogBundle:Builder:pageNavMenu') }}
                         </li>
                         <li>
-                            <a href="{{ path('firm_index') }}">Firms</a>
-                        </li>
-                        <li>
-                            <a href='{{ path('post_index') }}'>Announcements</a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                Announcements <span class="caret"></span>
+                            </a>
+                            {{ knp_menu_render('NinesBlogBundle:Builder:postNavMenu') }}
                         </li>
 
                         {% if app.user is not null and is_granted('ROLE_ADMIN') %}
@@ -147,6 +155,8 @@
 
     {% javascripts '@AppBundle/Resources/public/js/*' %}	
     {% endjavascripts %}
+    
+    <script type="text/javascript" src="{{ asset('bundles/bmatznerjqueryui/js/minified/jquery-ui.min.js') }}"></script>
 
 {% block javascripts %}{% endblock %}
 </body>
