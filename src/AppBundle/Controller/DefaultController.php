@@ -18,15 +18,19 @@ class DefaultController extends Controller {
 	 */
 	public function indexAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
-        $status = $em->getRepository('NinesBlogBundle:PostStatus')->findOneBy(array(
-            'name' => $this->getParameter('nines_blog.published_status'
-        )));
-        $posts = $em->getRepository('NinesBlogBundle:Post')->findBy(array(
-            'status' => $status
-        ));
-		// replace this example code with whatever you need
+        $posts = $em->getRepository('NinesBlogBundle:Post')->findRecent(                
+            $this->getParameter('nines_blog.published_status'), 
+            $this->getParameter('nines_blog.homepage_posts')
+        );
+        $titles = $em->getRepository('AppBundle:Title')->random(3);
+        $persons = $em->getRepository('AppBundle:Person')->random(3);
+        $firms = $em->getRepository('AppBundle:Firm')->random(3);
+        
 		return [
             'posts' => $posts,
+            'titles' => $titles,
+            'persons' => $persons,
+            'firms' => $firms,
 		];
 	}
 

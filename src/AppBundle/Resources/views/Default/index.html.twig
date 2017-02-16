@@ -1,5 +1,24 @@
 {% extends 'base.html.twig' %}
 
+{% macro panel(title, entities, path_name) %}
+    <div class="col-sm-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">{{ title }}</div>
+            <div class="panel-body">
+                <ul class="list-group">
+                {% for entity in entities %}
+                    <li class="list-group-item">
+                        <a href="{{ path(path_name, {'id': entity.id}) }}">{{entity|truncate(40)}}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>    
+{% endmacro %}
+
+{% import _self as self %}
+
 {% block pageheader %}
     <h1>Welcome</h1>
 {% endblock %}
@@ -12,6 +31,13 @@
         writing and print. The database, with nearly 2,000 person entries and over 
         8,000 title entries, will enable rigorous quantitative analysis of patterns
         in women's print history.</p>
+    
+    <h2>Random Entries</h2>
+    <div class="row equal">
+        {{ self.panel("Titles", titles, "title_show") }}
+        {{ self.panel("Persons", persons, "person_show") }}
+        {{ self.panel("Firms", firms, "firm_show") }}
+    </div>
     
     <h2>Recent Announcements</h2>
     {% for post in posts %}

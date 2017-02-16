@@ -67,7 +67,7 @@ doctrine:
                 MATCH_AGAINST: Nines\UtilBundle\Extensions\Doctrine\MatchAgainstFunction
             numeric_functions:
                 INT: Nines\UtilBundle\Extensions\Doctrine\CastAsIntegerFunction
-                RAND: Nines\UtilBundle\Extensions\Doctrine\CastAsIntegerFunction
+                RAND: Nines\UtilBundle\Extensions\Doctrine\RandFunction
 
 # Swiftmailer Configuration
 swiftmailer:
