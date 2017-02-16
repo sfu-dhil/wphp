@@ -77,3 +77,34 @@ process for installing a Symfony application.
   
 At this point, the web interface should be up and running, and you should
 be able to login by following the Login link in the top right menu bar.
+
+Updates
+----
+
+Applying updates from git shouldn't be difficult.
+
+1. Get the updates from a git remote
+
+  ```bash
+  git pull
+  ```
+
+1. Install any updated composer dependencies.
+
+  ```bash
+  php -d memory_limit=-1 ./vendor/bin/composer install -o
+  ```
+
+1. Apply any database schema updates
+
+  ```bash
+  ./bin/console doctrine:schema:update --force
+  ```
+
+1. Clear the cache 
+
+  ```
+  ./bin/console cache:clear --env=prod
+  ```
+
+That should be it.
