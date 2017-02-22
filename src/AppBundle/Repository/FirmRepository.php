@@ -64,5 +64,4 @@ class FirmRepository extends EntityRepository
         $qb->setMaxResults($limit);
         return $qb->getQuery()->execute();
     }
-    
 }

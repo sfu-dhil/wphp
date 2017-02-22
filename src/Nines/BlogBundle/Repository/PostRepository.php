@@ -34,5 +34,4 @@ class PostRepository extends EntityRepository {
             $limit
         );
     }
-
 }
