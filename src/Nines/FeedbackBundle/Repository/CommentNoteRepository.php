@@ -18,5 +18,4 @@ class CommentNoteRepository extends \Doctrine\ORM\EntityRepository {
         $qb->setParameter('q', $q);
         return $qb->getQuery();
     }
-
 }

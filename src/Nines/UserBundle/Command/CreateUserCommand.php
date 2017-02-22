@@ -133,6 +133,5 @@ EOT
             $answer = $this->getHelper('question')->ask($input, $output, $question);
             $input->setArgument($name, $answer);
         }
-		
     }
 }

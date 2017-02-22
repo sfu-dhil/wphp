@@ -102,7 +102,5 @@ class PersonController extends Controller
             'next' => $repo->next($person),
             'previous' => $repo->previous($person),
         );
-
     }
-
 }

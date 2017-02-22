@@ -55,5 +55,4 @@ class CastAsIntegerFunction extends FunctionNode {
     {
         return 'CAST(' . $this->stringPrimary->dispatch($sqlWalker) . ' AS unsigned)';
     }
-
 }

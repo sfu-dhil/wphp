@@ -58,12 +58,10 @@ class TitleRepository extends EntityRepository
         return $qb->getQuery();
     }
     
-    
     public function random($limit) {
         $qb = $this->createQueryBuilder('e');
         $qb->orderBy('RAND()');
         $qb->setMaxResults($limit);
         return $qb->getQuery()->execute();
     }
-	
 }

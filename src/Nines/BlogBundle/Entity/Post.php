@@ -143,7 +143,7 @@ class Post extends AbstractEntity {
      * @ORM\PrePersist()
      * @ORM\PreUpdate()
      */
-    public final function buildSearchableText() {
+    final public function buildSearchableText() {
         $plain = strip_tags($this->content);
         $converted = mb_convert_encoding($plain, 'UTF-8', 'HTML-ENTITIES');
         $trimmed = preg_replace("/(^\s+)|(\s+$)/u", "", $converted);

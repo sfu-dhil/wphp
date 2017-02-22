@@ -32,7 +32,7 @@ class TwigExtension extends \Twig_Extension {
      * @throws InvalidArgumentException
      */
     public function classFilter($object) {
-        if( ! is_object($object)) {
+        if(! is_object($object)) {
             throw new InvalidArgumentException("Expected object");
         }
         return get_class($object);
@@ -46,10 +46,9 @@ class TwigExtension extends \Twig_Extension {
      * @throws InvalidArgumentException
      */
     public function shortFilter($object) {
-        if( ! is_object($object)) {
+        if(! is_object($object)) {
             throw new InvalidArgumentException("Expected object");
         }
         return (new ReflectionClass($object))->getShortName();
-
     }
 }

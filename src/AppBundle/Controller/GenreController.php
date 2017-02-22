@@ -53,5 +53,4 @@ class GenreController extends Controller
             'genre' => $genre,
         );
     }
-
 }

@@ -39,5 +39,4 @@ class PasswordType extends AbstractType
     {
         $this->getBlockPrefix();
     }
-	
 }

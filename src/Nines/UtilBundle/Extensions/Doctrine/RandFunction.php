@@ -18,5 +18,4 @@ class RandFunction extends FunctionNode {
     public function getSql(SqlWalker $sqlWalker) {
         return 'RAND()';
     }
-    
 }

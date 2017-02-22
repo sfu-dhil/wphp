@@ -117,7 +117,7 @@ class PageController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if( ! $page->getExcerpt()) {
+            if(! $page->getExcerpt()) {
                 $page->setExcerpt($this->get('nines.util.word_trim')->trim($page->getContent(), $this->getParameter('nines_blog.excerpt_length')));
             }
             $em = $this->getDoctrine()->getManager();
@@ -165,7 +165,7 @@ class PageController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            if( ! $page->getExcerpt()) {
+            if(! $page->getExcerpt()) {
                 $page->setExcerpt($this->get('nines.util.word_trim')->trim($page->getContent(), $this->getParameter('nines_blog.excerpt_length')));
             }
             $em = $this->getDoctrine()->getManager();

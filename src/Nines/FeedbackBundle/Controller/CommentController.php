@@ -187,5 +187,4 @@ class CommentController extends Controller {
 
         return $this->redirectToRoute('admin_comment_index');
     }
-
 }

@@ -178,5 +178,4 @@ class TitleController extends Controller
             'previous' => $repo->previous($title),
         );
     }
-
 }

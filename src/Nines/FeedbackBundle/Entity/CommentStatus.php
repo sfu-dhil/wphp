@@ -67,5 +67,4 @@ class CommentStatus extends AbstractEntity {
     public function __toString() {
         return $this->label;
     }
-
 }

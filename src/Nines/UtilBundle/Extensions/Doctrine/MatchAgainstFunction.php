@@ -84,5 +84,4 @@ class MatchAgainstFunction extends FunctionNode {
         }
         return $query;
     }
-
 }

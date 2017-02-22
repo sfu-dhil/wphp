@@ -93,7 +93,7 @@ class CommentService {
     
     public function entityUrl(Comment $comment) {
         list($class, $id) = explode(':', $comment->getEntity());
-        if( ! array_key_exists($class, $this->routing)) {
+        if(! array_key_exists($class, $this->routing)) {
             throw new Exception("Cannot map {$class} to a route.");
         }
         return $this->router->generate($this->routing[$class], ['id' => $id]);
@@ -110,7 +110,7 @@ class CommentService {
             $status = $this->em->getRepository('FeedbackBundle:CommentStatus')->findOneBy(array(
                 'name' => $this->publicStatusName
             ));
-            if( $status) {
+            if($status) {
                 $comments = $this->em->getRepository('FeedbackBundle:Comment')->findBy(array(
                     'entity' => $class . ':' . $entity->getId(),
                     'status' => $status,
@@ -122,7 +122,7 @@ class CommentService {
     
     public function addComment($entity, Comment $comment) {
         $comment->setEntity(get_class($entity) . ':' . $entity->getId());    
-        if( ! $comment->getStatus()) {
+        if(! $comment->getStatus()) {
             $comment->setStatus($this->em->getRepository('FeedbackBundle:CommentStatus')->findOneBy(array(
                 'name' => $this->defaultStatusName,
             )));
@@ -135,5 +135,4 @@ class CommentService {
     public function getForm() {
         return $this->formFactory->create(CommentType::class)->createView();
     }
-    
 }

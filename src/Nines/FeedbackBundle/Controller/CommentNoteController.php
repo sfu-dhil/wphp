@@ -65,5 +65,4 @@ class CommentNoteController extends Controller
 			'q' => $q,
         );
     }
-
 }

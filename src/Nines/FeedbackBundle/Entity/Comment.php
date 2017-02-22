@@ -255,5 +255,4 @@ class Comment extends AbstractEntity {
     public function getNotes() {
         return $this->notes;
     }
-
 }

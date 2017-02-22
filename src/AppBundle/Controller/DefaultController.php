@@ -119,5 +119,4 @@ class DefaultController extends Controller {
 			'titles' => $titles,
 		];
 	}
-
 }

@@ -46,5 +46,4 @@ class WordTrim {
         }
         return implode(' ', array_slice($words, 0, $length)) . $suffix;
     }
-    
 }

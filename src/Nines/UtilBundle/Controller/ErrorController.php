@@ -32,7 +32,7 @@ class ErrorController extends Controller
         $response->setStatusCode($exception->getStatusCode());
         $response->headers->set('Content-Type', 'text/html');
         
-        $env = $this->container->get( 'kernel' )->getEnvironment();
+        $env = $this->container->get('kernel')->getEnvironment();
         switch($env) {
             case 'prod':
                 $response->setContent($this->render('UtilBundle:Error:prod.html.twig', array(

@@ -47,15 +47,14 @@ class PersonRepository extends EntityRepository {
 	public function searchQuery($q) {
 		$qb = $this->createQueryBuilder('e');
 		$qb->where(
-				$qb->expr()->like(
-						new Func('CONCAT', array(
+            $qb->expr()->like(
+                new Func('CONCAT', array(
 							'e.lastName', 
 							'e.firstName', 
 							'e.title'
-						)
-					),
-					"'%$q%'"
-				)
+						)),
+                "'%$q%'"
+            )
 		);
 		return $qb->getQuery();
 	}

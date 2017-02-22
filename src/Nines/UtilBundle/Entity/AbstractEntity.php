@@ -70,7 +70,7 @@ abstract class AbstractEntity
      * Does nothing. Setting the created timestamp happens automatically. Exists
      * to prevent a subclass accien
      */
-    private final function setCreated() {
+    final private function setCreated() {
         // nop
     }
 
@@ -79,14 +79,14 @@ abstract class AbstractEntity
      * 
      * @return DateTime
      */
-    public final function getCreated() {
+    final public function getCreated() {
         return $this->created;
     }
 
     /**
      * Does nothing. Setting the updated timestamp happens automatically.
      */
-    private final function setUpdated() {
+    final private function setUpdated() {
         // nop
     }
 
@@ -104,8 +104,8 @@ abstract class AbstractEntity
      * 
      * @ORM\PrePersist()
      */
-    public final function prePersist() {
-        if( ! isset($this->created)) {
+    final public function prePersist() {
+        if(! isset($this->created)) {
             $this->created = new DateTime();
             $this->updated = new DateTime();
         }
@@ -116,7 +116,7 @@ abstract class AbstractEntity
      * 
      * @ORM\PreUpdate()
      */
-    public final function preUpdate() {
+    final public function preUpdate() {
         $this->updated = new DateTime();
     }
 
@@ -124,5 +124,4 @@ abstract class AbstractEntity
      * Force all entities to provide a stringify function.
      */
     abstract public function __toString();
-
 }
