@@ -32,7 +32,7 @@ class Builder implements ContainerAwareInterface
         $menu->setAttribute('dropdown', true);
         
         $status = $em->getRepository('NinesBlogBundle:PostStatus')->findOneBy(array(
-            'name' => $this->container->getParameter('nines_blog.published_status')
+            'public' => true,
         ));
         $posts = $em->getRepository('NinesBlogBundle:Post')->findBy(
             array('status' => $status), 
