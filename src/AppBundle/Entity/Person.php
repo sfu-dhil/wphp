@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraints\Collection;
  *  indexes={
  *      @ORM\Index(name="city_id_of_birth", columns={"city_id_of_birth"}), 
  *      @ORM\Index(name="city_id_of_death", columns={"city_id_of_death"}), 
- *      @ORM\Index(name="full", columns={"last_name", "first_name", "dob", "dod"}, flags={"fulltext"}), 
+ *      @ORM\Index(name="person_full_idx", columns={"last_name", "first_name", "dob", "dod"}, flags={"fulltext"}), 
  *      @ORM\Index(name="last_name", columns={"last_name", "first_name", "title"}, flags={"fulltext"})
  * })
  * @ORM\Entity(repositoryClass="AppBundle\Repository\PersonRepository")

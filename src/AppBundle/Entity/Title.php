@@ -9,15 +9,15 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="title", 
  *  indexes={
- *      @ORM\Index(name="location_of_printing", columns={"location_of_printing"}), 
- *      @ORM\Index(name="format_id", columns={"format_id"}), 
- *      @ORM\Index(name="genre_id", columns={"genre_id"}), 
- *      @ORM\Index(name="source", columns={"source"}), 
- *      @ORM\Index(name="source2", columns={"source2"}), 
- *      @ORM\Index(name="title", columns={"title"}, flags={"fulltext"}), 
- *      @ORM\Index(name="author", columns={"signed_author"}, flags={"fulltext"}), 
- *      @ORM\Index(name="titleauthor", columns={"title", "signed_author"}, flags={"fulltext"}), 
- *      @ORM\Index(name="imprint", columns={"imprint"}, flags={"fulltext"})
+ *      @ORM\Index(name="location_idx", columns={"location_of_printing"}), 
+ *      @ORM\Index(name="format_idx", columns={"format_id"}), 
+ *      @ORM\Index(name="genre_idx", columns={"genre_id"}), 
+ *      @ORM\Index(name="source_idx", columns={"source"}), 
+ *      @ORM\Index(name="source2_idx", columns={"source2"}), 
+ *      @ORM\Index(name="title_idx", columns={"title"}, flags={"fulltext"}), 
+ *      @ORM\Index(name="author_idx", columns={"signed_author"}, flags={"fulltext"}), 
+ *      @ORM\Index(name="titleauthor_idx", columns={"title", "signed_author"}, flags={"fulltext"}), 
+ *      @ORM\Index(name="imprint_idx", columns={"imprint"}, flags={"fulltext"})
  * })
  * @ORM\Entity(repositoryClass="AppBundle\Repository\TitleRepository")
  */

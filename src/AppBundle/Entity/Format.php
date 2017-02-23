@@ -7,9 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Format
  *
- * @ORM\Table(name="format", 
- *  indexes={
- *      @ORM\Index(name="full", columns={"abbrev_one", "abbrev_two", "abbrev_three", "abbrev_four"}, flags={"fulltext"})
+ * @ORM\Table(name="format", indexes={
+ *  @ORM\Index(name="format_full_idx", columns={"abbrev_one", "abbrev_two", "abbrev_three", "abbrev_four"}, flags={"fulltext"})
  * })
  * @ORM\Entity
  */
