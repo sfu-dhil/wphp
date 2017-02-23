@@ -7,9 +7,14 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * Blog Post form type.
+ */
 class PostType extends AbstractType
 {
     /**
+     * Build a post form.
+     * 
      * @param FormBuilderInterface $builder
      * @param array $options
      */
@@ -17,7 +22,6 @@ class PostType extends AbstractType
     {    
         $builder->add('title');    
         $builder->add('excerpt', CKEditorType::class, array(
-            'config_name' => 'wphp_config',
             'attr' => array(
                 'help_block' => 'Excerpts will be shown on the home page and in '
                 . 'lists of blog posts. Leave this field blank and one will be '
@@ -25,7 +29,6 @@ class PostType extends AbstractType
             ),
         ));
         $builder->add('content', CKEditorType::class, array(
-            'config_name' => 'wphp_config',
         ));     
         $builder->add('category');     
         $builder->add('status');         

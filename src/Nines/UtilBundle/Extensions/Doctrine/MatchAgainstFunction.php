@@ -1,13 +1,13 @@
 <?php
 
-namespace Nines\UtilBundle\Extensions\Doctrine;
-
 /**
  * Doctrine doesn't do MATCH AGAINST expressions. This class adds a doctrine
  * extension that implements it.
  *
  * @link http://www.xsolve.pl/blog/full-text-searching-in-symfony2-2/
  */
+
+namespace Nines\UtilBundle\Extensions\Doctrine;
 
 use Doctrine\ORM\Query\AST\Functions\FunctionNode;
 use Doctrine\ORM\Query\Lexer;
@@ -84,4 +84,5 @@ class MatchAgainstFunction extends FunctionNode {
         }
         return $query;
     }
+
 }

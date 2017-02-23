@@ -30,6 +30,7 @@ class CommentController extends Controller {
      * @param Request $request
      */
     public function indexAction(Request $request) {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $em = $this->getDoctrine()->getManager();
         $statusRepo = $em->getRepository('FeedbackBundle:CommentStatus');
         $commentRepo = $em->getRepository('FeedbackBundle:Comment');
@@ -102,6 +103,7 @@ class CommentController extends Controller {
      * @return array
      */
     public function fulltextAction(Request $request) {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $em = $this->getDoctrine()->getManager();
         $repo = $em->getRepository('FeedbackBundle:Comment');
         $q = $request->query->get('q');
@@ -128,6 +130,7 @@ class CommentController extends Controller {
      * @param Comment $comment
      */
     public function showAction(Request $request, Comment $comment) {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $em = $this->getDoctrine()->getManager();
         $service = $this->get('feedback.comment');
         $statusForm = $this->createForm(StatusType::class, $comment);
@@ -176,6 +179,7 @@ class CommentController extends Controller {
      * @param Comment $comment
      */
     public function deleteAction(Request $request, Comment $comment) {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $em = $this->getDoctrine()->getManager();
         $em->remove($comment);
         $em->flush();
@@ -187,4 +191,5 @@ class CommentController extends Controller {
 
         return $this->redirectToRoute('admin_comment_index');
     }
+
 }

@@ -10,6 +10,7 @@ class DummyEntity extends AbstractEntity {
     public function __toString() {
         return "dummy";
     }
+
 }
 
 class AbstractEntityTest extends PHPUnit_Framework_TestCase {
@@ -21,4 +22,5 @@ class AbstractEntityTest extends PHPUnit_Framework_TestCase {
         $obj->prePersist();
         $this->assertEquals($dateTime, $obj->getCreated());
     }
+    
 }

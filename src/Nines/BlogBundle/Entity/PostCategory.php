@@ -3,9 +3,9 @@
 namespace Nines\BlogBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Nines\UtilBundle\Entity\AbstractEntity;
-use Symfony\Component\Validator\Constraints\Collection;
 
 /**
  * PostCategory
@@ -16,31 +16,46 @@ use Symfony\Component\Validator\Constraints\Collection;
 class PostCategory extends AbstractEntity
 {
     /**
+     * Name of the category.
+     * @var string
      * @ORM\Column(type="string", length=120)
      */
     private $name;
 
     /**
+     * Category label.
+     * @var string
      * @ORM\Column(type="string", length=120)
      */
     private $label;
 
     /**
+     * Description of the post.
+     * @var string
      * @ORM\Column(type="text")
      */
     private $description;
     
     /**
+     * Posts in the category.
      * @var Collection|Post[]
      * @ORM\OneToMany(targetEntity="Post", mappedBy="category")
      */
     private $posts;
 
+    /**
+     * Construct the category.
+     */
     public function __construct() {
         parent::__construct();
         $this->posts = new ArrayCollection();
     }
     
+    /**
+     * Return the label.
+     * 
+     * @return string
+     */
     public function __toString() {
         return $this->label;
     }
@@ -121,11 +136,11 @@ class PostCategory extends AbstractEntity
     /**
      * Add post
      *
-     * @param \Nines\BlogBundle\Entity\Post $post
+     * @param Post $post
      *
      * @return PostCategory
      */
-    public function addPost(\Nines\BlogBundle\Entity\Post $post)
+    public function addPost(Post $post)
     {
         $this->posts[] = $post;
 
@@ -135,9 +150,9 @@ class PostCategory extends AbstractEntity
     /**
      * Remove post
      *
-     * @param \Nines\BlogBundle\Entity\Post $post
+     * @param Post $post
      */
-    public function removePost(\Nines\BlogBundle\Entity\Post $post)
+    public function removePost(Post $post)
     {
         $this->posts->removeElement($post);
     }
@@ -145,7 +160,7 @@ class PostCategory extends AbstractEntity
     /**
      * Get posts
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getPosts()
     {

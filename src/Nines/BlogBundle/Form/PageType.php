@@ -7,9 +7,14 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * Blog page form type.
+ */
 class PageType extends AbstractType
 {
     /**
+     * Build the form.
+     * 
      * @param FormBuilderInterface $builder
      * @param array $options
      */
@@ -19,7 +24,6 @@ class PageType extends AbstractType
         $builder->add('weight');     
         $builder->add('public');     
         $builder->add('excerpt', CKEditorType::class, array(
-            'config_name' => 'wphp_config',
             'attr' => array(
                 'help_block' => 'Excerpts will be shown on the home page and in '
                 . 'lists of pages. Leave this field blank and one will be '
@@ -27,7 +31,6 @@ class PageType extends AbstractType
             ),
         ));
         $builder->add('content', CKEditorType::class, array(
-            'config_name' => 'wphp_config',
         ));     
     }
     

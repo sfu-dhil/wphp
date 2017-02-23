@@ -2,8 +2,9 @@
 
 namespace Nines\FeedbackBundle\Entity;
 
-use Nines\UtilBundle\Entity\AbstractEntity;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Nines\UtilBundle\Entity\AbstractEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -20,19 +21,24 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Comment extends AbstractEntity {
 
     /**
+     * Full name of the commenter.
+     * @var string
      * @ORM\Column(type="string", length=120)
      */
     private $fullname;
 
     /**
+     * Commenter's email.
+     * @var string
      * @ORM\Column(type="string", length=120)
      * @Assert\Email()
      */
     private $email;
 
     /**
+     * True if the user would like a followup email.
      * @ORM\Column(type="boolean")
-     * @var type 
+     * @var bool
      */
     private $followUp;
 
@@ -40,15 +46,20 @@ class Comment extends AbstractEntity {
      * A string of the form entity:id where entity is the un-namespaced
      * class name in lowercase and id is the numeric id.
      * @ORM\Column(type="string", length=120)
+     * @var string
      */
     private $entity;
 
     /**
+     * Content of the comment.
      * @ORM\Column(type="text")
+     * @var string
      */
     private $content;
 
     /**
+     * Status of the comment.
+     * 
      * @var CommentStatus|null 
      * 
      * @ORM\ManyToOne(targetEntity="CommentStatus", inversedBy="comments")
@@ -57,16 +68,26 @@ class Comment extends AbstractEntity {
     private $status;
 
     /**
+     * Any notes the application users have added to the note.
+     * 
      * @var Collection|CommentNote[] 
      * @ORM\OneToMany(targetEntity="CommentNote", mappedBy="comment")
      */
     private $notes;
 
+    /**
+     * Construct the comment.
+     */
     public function __construct() {
         $this->status = null;
         parent::__construct();
     }
 
+    /**
+     * Return the content of the comment.
+     * 
+     * @return string
+     */
     public function __toString() {
         return $this->content;
     }
@@ -206,11 +227,11 @@ class Comment extends AbstractEntity {
     /**
      * Set status
      *
-     * @param \Nines\FeedbackBundle\Entity\CommentStatus $status
+     * @param CommentStatus $status
      *
      * @return Comment
      */
-    public function setStatus(\Nines\FeedbackBundle\Entity\CommentStatus $status) {
+    public function setStatus(CommentStatus $status) {
         $this->status = $status;
 
         return $this;
@@ -219,7 +240,7 @@ class Comment extends AbstractEntity {
     /**
      * Get status
      *
-     * @return \Nines\FeedbackBundle\Entity\CommentStatus
+     * @return CommentStatus
      */
     public function getStatus() {
         return $this->status;
@@ -228,11 +249,11 @@ class Comment extends AbstractEntity {
     /**
      * Add note
      *
-     * @param \Nines\FeedbackBundle\Entity\CommentNote $note
+     * @param CommentNote $note
      *
      * @return Comment
      */
-    public function addNote(\Nines\FeedbackBundle\Entity\CommentNote $note) {
+    public function addNote(CommentNote $note) {
         $this->notes[] = $note;
 
         return $this;
@@ -241,18 +262,19 @@ class Comment extends AbstractEntity {
     /**
      * Remove note
      *
-     * @param \Nines\FeedbackBundle\Entity\CommentNote $note
+     * @param CommentNote $note
      */
-    public function removeNote(\Nines\FeedbackBundle\Entity\CommentNote $note) {
+    public function removeNote(CommentNote $note) {
         $this->notes->removeElement($note);
     }
 
     /**
      * Get notes
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getNotes() {
         return $this->notes;
     }
+
 }

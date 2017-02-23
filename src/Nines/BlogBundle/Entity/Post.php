@@ -3,8 +3,8 @@
 namespace Nines\BlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Nines\UtilBundle\Entity\AbstractEntity;
 use Nines\UserBundle\Entity\User;
+use Nines\UtilBundle\Entity\AbstractEntity;
 
 /**
  * A blog post.
@@ -136,50 +136,13 @@ class Post extends AbstractEntity {
     }
 
     /**
-     * Build a searchable version of the text.
-     * 
-     * @todo Refactor this into a service.
-     * 
-     * @ORM\PrePersist()
-     * @ORM\PreUpdate()
-     */
-    final public function buildSearchableText() {
-        $plain = strip_tags($this->content);
-        $converted = mb_convert_encoding($plain, 'UTF-8', 'HTML-ENTITIES');
-        $trimmed = preg_replace("/(^\s+)|(\s+$)/u", "", $converted);
-        // \xA0 is the result of converting nbsp.
-        $normalized = preg_replace("/[[:space:]\x{A0}]/su", " ", $trimmed);
-        $this->searchable = $normalized;
-    }
-    
-    /**
-     * Find the keyword in the searchable text and highlight it. Returns a list
-     * of the higlights as KWIC results.
-     * 
-     * @todo Refactor this into a service.
-     * 
-     * @param string $keyword
-     * @return array
-     */
-    public function searchHighlight($keyword) {
-        $i = stripos($this->searchable, $keyword);
-        $results = array();
-        while($i !== false) {
-            $s = substr($this->searchable, max([0, $i - 60]), 120);
-            $results[] = preg_replace("/$keyword/", "<mark>{$keyword}</mark>", $s);
-            $i = stripos($this->searchable, $keyword, $i+1);
-        }
-        return $results;
-    }
-
-    /**
      * Set category
      *
      * @param PostCategory $category
      *
      * @return Post
      */
-    public function setCategory(\Nines\BlogBundle\Entity\PostCategory $category = null) {
+    public function setCategory(PostCategory $category = null) {
         $this->category = $category;
 
         return $this;

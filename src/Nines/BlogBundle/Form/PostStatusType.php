@@ -4,19 +4,24 @@ namespace Nines\BlogBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * Blog Post Status type.
+ */
 class PostStatusType extends AbstractType
 {
     /**
+     * Build the form.
+     * 
      * @param FormBuilderInterface $builder
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {    
         $builder->add('name');     
-        $builder->add('label');     
+        $builder->add('label');    
+        $builder->add('public');
         $builder->add('description');         
     }
     

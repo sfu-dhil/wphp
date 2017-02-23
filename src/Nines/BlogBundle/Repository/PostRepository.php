@@ -3,6 +3,7 @@
 namespace Nines\BlogBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query;
 use Nines\BlogBundle\Entity\PostStatus;
 
 /**
@@ -13,25 +14,47 @@ use Nines\BlogBundle\Entity\PostStatus;
  */
 class PostRepository extends EntityRepository {
 
-    public function fulltextQuery($q) {
+    /**
+     * Return a full text query, respecting private comments.
+     * 
+     * @param string $q
+     * @param string $private
+     * @return Query
+     */
+    public function fulltextQuery($q, $private = false) {
         $qb = $this->createQueryBuilder('e');
         $qb->addSelect("MATCH_AGAINST (e.title, e.searchable, :q 'IN BOOLEAN MODE') as HIDDEN score");
-        $qb->add('where', "MATCH_AGAINST (e.title, e.searchable, :q 'IN BOOLEAN MODE') > 0");
+        $qb->andWhere("MATCH_AGAINST (e.title, e.searchable, :q 'IN BOOLEAN MODE') > 0");
+        if( ! $private) {
+            $em = $this->getEntityManager();
+            $statuses = $em->getRepository(PostStatus::class)->findBy(array(
+                'public' => true,
+            ));
+            $qb->andWhere('e.status = :status');
+            $qb->setParameter('status', $statuses);
+        }
         $qb->orderBy('score', 'desc');
         $qb->setParameter('q', $q);
         return $qb->getQuery();
     }
-
-    public function findRecent($statusName, $limit = null) {
-        $em = $this->getEntityManager()->getRepository('NinesBlogBundle:PostStatus');
-        $status = $em->findOneBy(array(
-            'name' => $statusName
-        ));
-
-        return $this->findBy(
-            array('status' => $status), 
-            array('id' => 'DESC'), 
-            $limit
-        );
+    
+    /**
+     * Get a query to list recent blog posts.
+     * 
+     * @param bool $private
+     * @return Query
+     */
+    public function recentQuery($private = false) {
+        $em = $this->getEntityManager();
+        $qb = $this->createQueryBuilder('e');
+        if( ! $private) {
+            $statuses = $em->getRepository(PostStatus::class)->findBy(array(
+                'public' => true,
+            ));
+            $qb->andWhere('e.status = :status');
+            $qb->setParameter('status', $statuses);
+        }
+        $qb->orderBy('e.id', 'DESC');
+        return $qb->getQuery();
     }
 }

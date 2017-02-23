@@ -30,6 +30,9 @@
             <td>{{ postStatus.label }}</td>
             </tr>
             <tr>
+                <th>Public</th>
+                <td>{% if postStatus.public %}Yes{% else %}No{% endif %}</td>
+            <tr>
                 <th>Description</th>
             <td>{{ postStatus.description }}</td>
             </tr>

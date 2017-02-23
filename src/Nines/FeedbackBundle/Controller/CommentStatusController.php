@@ -11,8 +11,8 @@ use Nines\FeedbackBundle\Entity\CommentStatus;
 use Nines\FeedbackBundle\Form\CommentStatusType;
 
 /**
- * CommentStatus controller.
- *
+ * Administrative interface for comments.
+ * 
  * @Route("/admin/comment_status")
  */
 class CommentStatusController extends Controller
@@ -27,6 +27,7 @@ class CommentStatusController extends Controller
      */
     public function indexAction(Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $em = $this->getDoctrine()->getManager();
         $dql = 'SELECT e FROM FeedbackBundle:CommentStatus e ORDER BY e.id';
         $query = $em->createQuery($dql);
@@ -35,90 +36,6 @@ class CommentStatusController extends Controller
 
         return array(
             'commentStatuses' => $commentStatuses,
-        );
-    }
-    /**
-     * Search for CommentStatus entities.
-	 *
-	 * To make this work, add a method like this one to the 
-	 * FeedbackBundle:CommentStatus repository. Replace the fieldName with
-	 * something appropriate, and adjust the generated search.html.twig
-	 * template.
-	 * 
-     //    public function searchQuery($q) {
-     //        $qb = $this->createQueryBuilder('e');
-     //        $qb->where("e.fieldName like '%$q%'");
-     //        return $qb->getQuery();
-     //    }
-	 *
-     *
-     * @Route("/search", name="admin_comment_status_search")
-     * @Method("GET")
-     * @Template()
-	 * @param Request $request
-     */
-    public function searchAction(Request $request)
-    {
-        $em = $this->getDoctrine()->getManager();
-		$repo = $em->getRepository('FeedbackBundle:CommentStatus');
-		$q = $request->query->get('q');
-		if($q) {
-	        $query = $repo->searchQuery($q);
-			$paginator = $this->get('knp_paginator');
-			$commentStatuses = $paginator->paginate($query, $request->query->getInt('page', 1), 25);
-		} else {
-			$commentStatuses = array();
-		}
-
-        return array(
-            'commentStatuses' => $commentStatuses,
-			'q' => $q,
-        );
-    }
-    /**
-     * Full text search for CommentStatus entities.
-	 *
-	 * To make this work, add a method like this one to the 
-	 * FeedbackBundle:CommentStatus repository. Replace the fieldName with
-	 * something appropriate, and adjust the generated fulltext.html.twig
-	 * template.
-	 * 
-	//    public function fulltextQuery($q) {
-	//        $qb = $this->createQueryBuilder('e');
-	//        $qb->addSelect("MATCH_AGAINST (e.name, :q 'IN BOOLEAN MODE') as score");
-	//        $qb->add('where', "MATCH_AGAINST (e.name, :q 'IN BOOLEAN MODE') > 0.5");
-	//        $qb->orderBy('score', 'desc');
-	//        $qb->setParameter('q', $q);
-	//        return $qb->getQuery();
-	//    }	 
-	 * 
-	 * Requires a MatchAgainst function be added to doctrine, and appropriate
-	 * fulltext indexes on your CommentStatus entity.
-	 *     ORM\Index(name="alias_name_idx",columns="name", flags={"fulltext"})
-	 *
-     *
-     * @Route("/fulltext", name="admin_comment_status_fulltext")
-     * @Method("GET")
-     * @Template()
-	 * @param Request $request
-	 * @return array
-     */
-    public function fulltextAction(Request $request)
-    {
-        $em = $this->getDoctrine()->getManager();
-		$repo = $em->getRepository('FeedbackBundle:CommentStatus');
-		$q = $request->query->get('q');
-		if($q) {
-	        $query = $repo->fulltextQuery($q);
-			$paginator = $this->get('knp_paginator');
-			$commentStatuses = $paginator->paginate($query, $request->query->getInt('page', 1), 25);
-		} else {
-			$commentStatuses = array();
-		}
-
-        return array(
-            'commentStatuses' => $commentStatuses,
-			'q' => $q,
         );
     }
 
@@ -132,6 +49,7 @@ class CommentStatusController extends Controller
      */
     public function newAction(Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $commentStatus = new CommentStatus();
         $form = $this->createForm('Nines\FeedbackBundle\Form\CommentStatusType', $commentStatus);
         $form->handleRequest($request);
@@ -161,7 +79,7 @@ class CommentStatusController extends Controller
      */
     public function showAction(CommentStatus $commentStatus)
     {
-
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         return array(
             'commentStatus' => $commentStatus,
         );
@@ -178,6 +96,7 @@ class CommentStatusController extends Controller
      */
     public function editAction(Request $request, CommentStatus $commentStatus)
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $editForm = $this->createForm('Nines\FeedbackBundle\Form\CommentStatusType', $commentStatus);
         $editForm->handleRequest($request);
 
@@ -204,6 +123,7 @@ class CommentStatusController extends Controller
      */
     public function deleteAction(Request $request, CommentStatus $commentStatus)
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $em = $this->getDoctrine()->getManager();
         $em->remove($commentStatus);
         $em->flush();

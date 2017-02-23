@@ -10,7 +10,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 
 /**
- * Overrides the CreateUserCommand from FOSUserBundle to add support for
+ * Replaces the CreateUserCommand from FOSUserBundle to add support for
  * fullname and institution.
  * 
  * Requires Symfony > 3.0
@@ -57,6 +57,8 @@ EOT
     }
 
     /**
+     * {@inheritDocs}
+     * 
      * @see Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -75,6 +77,8 @@ EOT
     }
 
     /**
+     * {@inheritDocs}
+     * 
      * @see Command
      */
     protected function interact(InputInterface $input, OutputInterface $output)
@@ -133,5 +137,6 @@ EOT
             $answer = $this->getHelper('question')->ask($input, $output, $question);
             $input->setArgument($name, $answer);
         }
+		
     }
 }

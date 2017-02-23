@@ -41,7 +41,7 @@ class AdminUserType extends AbstractType
     }
 
     /**
-     * @param OptionsResolverInterface $resolver
+     * {@inheritdoc}
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
@@ -51,9 +51,7 @@ class AdminUserType extends AbstractType
     }
 
     /**
-     * Get the name of the form.
-     * 
-     * @return string
+     * {@inheritdoc}
      */
     public function getName()
     {

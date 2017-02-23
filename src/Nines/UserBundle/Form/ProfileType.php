@@ -38,11 +38,17 @@ class ProfileType extends AbstractType
         return 'FOS\UserBundle\Form\Type\ProfileFormType';
     }
 	
+    /**
+     * {@inheritdoc}
+     */
 	public function getBlockPrefix()
     {
         return 'app_user_profile';
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getName()
     {
         $this->getBlockPrefix();

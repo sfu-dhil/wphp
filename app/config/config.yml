@@ -18,7 +18,6 @@ framework:
     form:            ~
     csrf_protection: ~
     validation:      { enable_annotations: true }
-    #serializer:      { enable_annotations: true }
     templating:
         engines: ['twig']
     default_locale:  "%locale%"
@@ -87,20 +86,20 @@ assetic:
     assets:
         bootstrap_js:
             inputs:
-                - %kernel.root_dir%/../vendor/twitter/bootstrap/dist/js/bootstrap.js
+                - "%kernel.root_dir%/../vendor/twitter/bootstrap/dist/js/bootstrap.js"
         bootstrap_css:
             inputs:
-                - %kernel.root_dir%/../vendor/twitter/bootstrap/dist/css/bootstrap.css
-                - %kernel.root_dir%/../vendor/twitter/bootstrap/dist/css/bootstrap-theme.css
+                - "%kernel.root_dir%/../vendor/twitter/bootstrap/dist/css/bootstrap.css"
+                - "%kernel.root_dir%/../vendor/twitter/bootstrap/dist/css/bootstrap-theme.css"
             filters: [cssrewrite]
 
         bootstrap_glyphicons_ttf:
             inputs:
-                - %kernel.root_dir%/../vendor/twitter/bootstrap/dist/fonts/glyphicons-halflings-regular.ttf
+                - "%kernel.root_dir%/../vendor/twitter/bootstrap/dist/fonts/glyphicons-halflings-regular.ttf"
             output: "fonts/glyphicons-halflings-regular.ttf"
         bootstrap_glyphicons_eot:
             inputs:
-                - %kernel.root_dir%/../vendor/twitter/bootstrap/dist/fonts/glyphicons-halflings-regular.eot
+                - "%kernel.root_dir%/../vendor/twitter/bootstrap/dist/fonts/glyphicons-halflings-regular.eot"
             output: "fonts/glyphicons-halflings-regular.eot"
 #        bootstrap_glyphicons_svg:
 #            inputs:
@@ -108,27 +107,26 @@ assetic:
 #            output: "fonts/glyphicons-halflings-regular.svg"
         bootstrap_glyphicons_woff:
             inputs:
-                - %kernel.root_dir%/../vendor/twitter/bootstrap/dist/fonts/glyphicons-halflings-regular.woff
+                - "%kernel.root_dir%/../vendor/twitter/bootstrap/dist/fonts/glyphicons-halflings-regular.woff"
             output: "fonts/glyphicons-halflings-regular.woff"
         bootstrap_glyphicons_woff2:
             inputs:
-                - %kernel.root_dir%/../vendor/twitter/bootstrap/dist/fonts/glyphicons-halflings-regular.woff2
+                - "%kernel.root_dir%/../vendor/twitter/bootstrap/dist/fonts/glyphicons-halflings-regular.woff2"
             output: "fonts/glyphicons-halflings-regular.woff2"
 
         jquery:
             inputs:
-                - %kernel.root_dir%/../vendor/components/jquery/jquery.js   
-fos_user:
-    db_driver: orm
-    firewall_name: main
-    user_class: Nines\UserBundle\Entity\User
-    profile:
-        form:
-            type: Nines\UserBundle\Form\ProfileType
-    change_password:
-        form:
-            type: Nines\UserBundle\Form\PasswordType
-            
+                - "%kernel.root_dir%/../vendor/components/jquery/jquery.js"                   
+        typeahead:
+            inputs:
+                - "%kernel.root_dir%/../vendor/twitter/typeahead.js/dist/typeahead.bundle.min.js"
+        bloodhound:
+            inputs:
+                - "%kernel.root_dir%/../vendor/twitter/typeahead.js/dist/bloodhound.min.js"
+        handlebars:
+            inputs:
+                - "%kernel.root_dir%/../vendor/components/handlebars.js/handlebars.js"
+                
 knp_paginator:
     page_range: 5                      # default page range used in pagination control
     default_options:
@@ -140,6 +138,17 @@ knp_paginator:
         pagination: KnpPaginatorBundle:Pagination:twitter_bootstrap_v3_pagination.html.twig     # bootstrapy pagination
         sortable: KnpPaginatorBundle:Pagination:sortable_link.html.twig # sort link template
 
+fos_user:
+    db_driver: orm
+    firewall_name: main
+    user_class: Nines\UserBundle\Entity\User
+    profile:
+        form:
+            type: Nines\UserBundle\Form\ProfileType
+    change_password:
+        form:
+            type: Nines\UserBundle\Form\PasswordType
+            
 ivory_ck_editor:
     input_sync: true
     default_config: wphp_config
@@ -173,5 +182,4 @@ feedback:
 
 nines_blog:
     default_status: draft
-    published_status: published
     default_category: none

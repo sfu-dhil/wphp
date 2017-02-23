@@ -8,11 +8,11 @@ use \Twig_Extension;
 use \Twig_SimpleFilter;
 
 /**
- * Description of TwigExtension
+ * Add some class reflection methods to Twig. 
  *
  * @author mjoyce
  */
-class TwigExtension extends \Twig_Extension {
+class TwigExtension extends Twig_Extension {
     
     /**
      * {@inheritDocs}
@@ -32,7 +32,7 @@ class TwigExtension extends \Twig_Extension {
      * @throws InvalidArgumentException
      */
     public function classFilter($object) {
-        if(! is_object($object)) {
+        if( ! is_object($object)) {
             throw new InvalidArgumentException("Expected object");
         }
         return get_class($object);
@@ -46,9 +46,10 @@ class TwigExtension extends \Twig_Extension {
      * @throws InvalidArgumentException
      */
     public function shortFilter($object) {
-        if(! is_object($object)) {
+        if( ! is_object($object)) {
             throw new InvalidArgumentException("Expected object");
         }
         return (new ReflectionClass($object))->getShortName();
+
     }
 }

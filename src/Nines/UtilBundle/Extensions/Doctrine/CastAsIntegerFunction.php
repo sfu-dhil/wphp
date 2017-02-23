@@ -1,8 +1,6 @@
 <?php
 
 /**
- * @file
- * 
  * Doctrine lacks a cast function. This file implements an extension which
  * implements cast.
  */
@@ -55,4 +53,5 @@ class CastAsIntegerFunction extends FunctionNode {
     {
         return 'CAST(' . $this->stringPrimary->dispatch($sqlWalker) . ' AS unsigned)';
     }
+
 }

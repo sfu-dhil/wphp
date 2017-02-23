@@ -48,17 +48,7 @@
                     {% endif %}
                 </div>
                 <div class="panel-body"> 
-                    {% set result = post.searchHighlight(q) %}
-                    {% if result|length > 0 %}
-                    <ul>
-                        {% for text in post.searchHighlight(q) %}
-                            <li>{{ text|raw }}</li>
-                        {% endfor %}
-                    </ul>
-                    {% else %}
-                        <p>Cannot highlight the search results.</p>
-                        <p>{{ post.excerpt|raw }}</p>
-                    {% endif %}
+                    <p>{{ post.excerpt|raw }}</p>
                 </div>
                 <div class="panel-footer text-right">
                     Posted {{ post.created|date('Y-m-d H:i:s') }} by {{ post.user.fullname }} in 

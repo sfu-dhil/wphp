@@ -3,8 +3,6 @@
 namespace Nines\BlogBundle\Controller;
 
 use Nines\BlogBundle\Entity\Post;
-use Nines\FeedbackBundle\Entity\Comment;
-use Nines\FeedbackBundle\Form\CommentType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -27,10 +25,11 @@ class PostController extends Controller
 	 * @param Request $request
      */
     public function indexAction(Request $request)
-    {
+    {        
         $em = $this->getDoctrine()->getManager();
-        $dql = 'SELECT e FROM NinesBlogBundle:Post e ORDER BY e.id';
-        $query = $em->createQuery($dql);
+        $private = $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN');
+        $repo = $em->getRepository(Post::class);
+        $query = $repo->recentQuery($private);
         $paginator = $this->get('knp_paginator');
         $posts = $paginator->paginate($query, $request->query->getint('page', 1), 25);
 
@@ -51,10 +50,11 @@ class PostController extends Controller
     public function fulltextAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-		$repo = $em->getRepository('NinesBlogBundle:Post');
+        $private = $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN');
+		$repo = $em->getRepository(Post::class);
 		$q = $request->query->get('q');
 		if($q) {
-	        $query = $repo->fulltextQuery($q);
+	        $query = $repo->fulltextQuery($q, $private);
 			$paginator = $this->get('knp_paginator');
 			$posts = $paginator->paginate($query, $request->query->getInt('page', 1), 25);
 		} else {
@@ -77,7 +77,10 @@ class PostController extends Controller
      */
     public function newAction(Request $request)
     {
-        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page!');
+        if( ! $this->isGranted('ROLE_ADMIN')) {
+            $this->addFlash('danger', 'You must login to access this page.');
+            return $this->redirect($this->generateUrl('fos_user_security_login'));
+        }
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
         
@@ -93,9 +96,11 @@ class PostController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if(! $post->getExcerpt()) {
-                $post->setExcerpt($this->get('nines.util.word_trim')->trim($post->getContent(), $this->getParameter('nines_blog.excerpt_length')));
+            $text = $this->get('nines.util.text');
+            if( ! $post->getExcerpt()) {
+                $post->setExcerpt($text->trim($post->getContent(), $this->getParameter('nines_blog.excerpt_length')));
             }
+            $post->setSearchable($text->plain($post->getContent()));
             $em->persist($post);
             $em->flush();
 
@@ -119,6 +124,9 @@ class PostController extends Controller
      */
     public function showAction(Request $request, Post $post)
     {
+        if( ! $post->getStatus()->getPublic()) {
+            $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page!');            
+        }
         return array(
             'post' => $post,
         );
@@ -135,13 +143,16 @@ class PostController extends Controller
      */
     public function editAction(Request $request, Post $post)
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page!');            
         $editForm = $this->createForm('Nines\BlogBundle\Form\PostType', $post);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            if(! $post->getExcerpt()) {
-                $post->setExcerpt($this->get('nines.util.word_trim')->trim($post->getContent(), $this->getParameter('nines_blog.excerpt_length')));
+            $text = $this->get('nines.util.text');
+            if( ! $post->getExcerpt()) {
+                $post->setExcerpt($text->trim($post->getContent(), $this->getParameter('nines_blog.excerpt_length')));
             }
+            $post->setSearchable($text->plain($post->getContent()));
             $em = $this->getDoctrine()->getManager();
             $em->flush();
             $this->addFlash('success', 'The post has been updated.');
@@ -164,6 +175,7 @@ class PostController extends Controller
      */
     public function deleteAction(Request $request, Post $post)
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page!');            
         $em = $this->getDoctrine()->getManager();
         $em->remove($post);
         $em->flush();

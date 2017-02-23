@@ -23,4 +23,5 @@ class FeedbackExtension extends Extension {
         }        
         $container->setParameter('feedback.routing', $map);
     }
+    
 }

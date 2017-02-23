@@ -3,10 +3,12 @@
 namespace Nines\FeedbackBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * Comment note form.
+ */
 class CommentNoteType extends AbstractType
 {
     /**

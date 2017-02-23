@@ -3,13 +3,24 @@
 namespace Nines\BlogBundle\Menu;
 
 use Knp\Menu\FactoryInterface;
+use Knp\Menu\ItemInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
+/**
+ * Class to build some menus for navigation.
+ */
 class Builder implements ContainerAwareInterface
 {
     use ContainerAwareTrait;
 
+    /**
+     * Build a menu for blog posts.
+     * 
+     * @param FactoryInterface $factory
+     * @param array $options
+     * @return ItemInterface
+     */
     public function postNavMenu(FactoryInterface $factory, array $options)
     {
         $em = $this->container->get('doctrine')->getManager();
@@ -51,6 +62,13 @@ class Builder implements ContainerAwareInterface
         return $menu;
     }
     
+    /**
+     * Build a menu for blog pages.
+     * 
+     * @param FactoryInterface $factory
+     * @param array $options
+     * @return ItemInterface
+     */
     public function pageNavMenu(FactoryInterface $factory, array $options) {
         $em = $this->container->get('doctrine')->getManager();
         $menu = $factory->createItem('root');

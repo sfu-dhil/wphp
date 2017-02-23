@@ -2,13 +2,11 @@
 
 namespace Nines\FeedbackBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Nines\FeedbackBundle\Entity\CommentNote;
-use Nines\FeedbackBundle\Form\CommentNoteType;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * CommentNote controller.
@@ -27,6 +25,7 @@ class CommentNoteController extends Controller
      */
     public function indexAction(Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $em = $this->getDoctrine()->getManager();
         $dql = 'SELECT e FROM FeedbackBundle:CommentNote e ORDER BY e.id';
         $query = $em->createQuery($dql);
@@ -49,6 +48,7 @@ class CommentNoteController extends Controller
      */
     public function fulltextAction(Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $em = $this->getDoctrine()->getManager();
 		$repo = $em->getRepository('FeedbackBundle:CommentNote');
 		$q = $request->query->get('q');
@@ -65,4 +65,5 @@ class CommentNoteController extends Controller
 			'q' => $q,
         );
     }
+
 }

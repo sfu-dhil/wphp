@@ -28,8 +28,9 @@ class PageController extends Controller
     public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $dql = 'SELECT e FROM NinesBlogBundle:Page e ORDER BY e.id';
-        $query = $em->createQuery($dql);
+        $private = $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN');
+        $repo = $em->getRepository(Page::class);
+        $query = $repo->listQuery($private);
         $paginator = $this->get('knp_paginator');
         $pages = $paginator->paginate($query, $request->query->getint('page', 1), 25);
 
@@ -109,6 +110,10 @@ class PageController extends Controller
      */
     public function newAction(Request $request)
     {
+        if( ! $this->isGranted('ROLE_ADMIN')) {
+            $this->addFlash('danger', 'You must login to access this page.');
+            return $this->redirect($this->generateUrl('fos_user_security_login'));
+        }
         $user = $this->getUser();
         $page = new Page();
         $page->setUser($user);
@@ -117,9 +122,11 @@ class PageController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if(! $page->getExcerpt()) {
-                $page->setExcerpt($this->get('nines.util.word_trim')->trim($page->getContent(), $this->getParameter('nines_blog.excerpt_length')));
+            $text = $this->get('nines.util.text');
+            if( ! $page->getExcerpt()) {
+                $page->setExcerpt($text->trim($page->getContent(), $this->getParameter('nines_blog.excerpt_length')));
             }
+            $page->setSearchable($text->plain($page->getContent()));
             $em = $this->getDoctrine()->getManager();
             $em->persist($page);
             $em->flush();
@@ -144,6 +151,9 @@ class PageController extends Controller
      */
     public function showAction(Page $page)
     {
+        if( ! $page->getPublic()) {
+            $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page!');            
+        }
 
         return array(
             'page' => $page,
@@ -161,13 +171,16 @@ class PageController extends Controller
      */
     public function editAction(Request $request, Page $page)
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page!');            
         $editForm = $this->createForm('Nines\BlogBundle\Form\PageType', $page);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            if(! $page->getExcerpt()) {
-                $page->setExcerpt($this->get('nines.util.word_trim')->trim($page->getContent(), $this->getParameter('nines_blog.excerpt_length')));
+            $text = $this->get('nines.util.text');
+            if( ! $page->getExcerpt()) {
+                $page->setExcerpt($text->trim($page->getContent(), $this->getParameter('nines_blog.excerpt_length')));
             }
+            $page->setSearchable($text->plain($page->getContent()));
             $em = $this->getDoctrine()->getManager();
             $em->flush();
             $this->addFlash('success', 'The page has been updated.');
@@ -190,6 +203,7 @@ class PageController extends Controller
      */
     public function deleteAction(Request $request, Page $page)
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page!');            
         $em = $this->getDoctrine()->getManager();
         $em->remove($page);
         $em->flush();

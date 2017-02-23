@@ -23,7 +23,6 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->scalarNode('default_status')->end()
-                ->scalarNode('published_status')->end()
                 ->scalarNode('default_category')->end()
             ->end();
 

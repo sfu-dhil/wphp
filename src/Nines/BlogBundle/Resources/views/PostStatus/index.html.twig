@@ -26,8 +26,10 @@
                 <th>Name</th>
                 <th>Label</th>
                 <th>Description</th>
+                <th>Public</th>
                 <th>Created</th>
-                <th>Updated</th>            </tr>
+                <th>Updated</th>    
+            </tr>
         </thead>
         <tbody>
         {% for postStatus in postStatuses %}
@@ -39,6 +41,7 @@
                 </td>
                 <td>{{ postStatus.label }}</td>
                 <td>{{ postStatus.description }}</td>
+                <td>{% if postStatus.public %}Yes{% else %}No{% endif %}</td>
                 <td>{% if postStatus.created %}{{ postStatus.created|date('Y-m-d H:i:s') }}{% endif %}</td>
                 <td>{% if postStatus.updated %}{{ postStatus.updated|date('Y-m-d H:i:s') }}{% endif %}</td>
             </tr>

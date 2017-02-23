@@ -2,12 +2,12 @@
 
 namespace Nines\FeedbackBundle\Entity;
 
-use Nines\UtilBundle\Entity\AbstractEntity;
-use Nines\UserBundle\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
+use Nines\UserBundle\Entity\User;
+use Nines\UtilBundle\Entity\AbstractEntity;
 
 /**
- * CommentNote
+ * Comment Note
  *
  * @ORM\Table(name="comment_note", indexes={
  *  @ORM\Index(name="commentnote_ft_idx", 
@@ -21,6 +21,7 @@ class CommentNote extends AbstractEntity
 {
 
     /**
+     * User who created the note.
      * @var User
      * @ORM\ManyToOne(targetEntity="Nines\UserBundle\Entity\User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
@@ -28,17 +29,25 @@ class CommentNote extends AbstractEntity
     private $user;
     
     /**
+     * Content of the note.
      * @ORM\Column(type="text")
+     * @var string
      */
     private $content;
     
     /**
+     * Note the comment applies to.
      * @var Comment
      * @ORM\ManyToOne(targetEntity="Comment", inversedBy="notes")
      * @ORM\JoinColumn(name="comment_id", referencedColumnName="id", nullable=false)
      */
     private $comment;
     
+    /**
+     * Return the content of the note.
+     * 
+     * @return string
+     */
     public function __toString() {
         return $this->content;
     }
@@ -70,11 +79,11 @@ class CommentNote extends AbstractEntity
     /**
      * Set comment
      *
-     * @param \Nines\FeedbackBundle\Entity\Comment $comment
+     * @param Comment $comment
      *
      * @return CommentNote
      */
-    public function setComment(\Nines\FeedbackBundle\Entity\Comment $comment = null)
+    public function setComment(Comment $comment = null)
     {
         $this->comment = $comment;
 
@@ -84,7 +93,7 @@ class CommentNote extends AbstractEntity
     /**
      * Get comment
      *
-     * @return \Nines\FeedbackBundle\Entity\Comment
+     * @return Comment
      */
     public function getComment()
     {
@@ -94,11 +103,11 @@ class CommentNote extends AbstractEntity
     /**
      * Set user
      *
-     * @param \Nines\UserBundle\Entity\User $user
+     * @param User $user
      *
      * @return CommentNote
      */
-    public function setUser(\Nines\UserBundle\Entity\User $user = null)
+    public function setUser(User $user = null)
     {
         $this->user = $user;
 
@@ -108,7 +117,7 @@ class CommentNote extends AbstractEntity
     /**
      * Get user
      *
-     * @return \Nines\UserBundle\Entity\User
+     * @return User
      */
     public function getUser()
     {
