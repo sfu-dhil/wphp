@@ -57,3 +57,8 @@ a[href ^= 'https://']::after {
     -moz-osx-font-smoothing: grayscale;        
 }
 
+/* make the search form checkboxes less bad. */
+div.checkbox {
+    width: 30%;
+    float: left;
+}

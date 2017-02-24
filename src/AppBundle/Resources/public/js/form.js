@@ -28,5 +28,11 @@
             });
         });
     });
+    
+    $(document).ready(function(){
+        $('#options').click(function(){
+            $(".secondary").toggleClass("hidden");
+        });
+    });
 
 })(jQuery, window);

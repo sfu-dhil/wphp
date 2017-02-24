@@ -43,18 +43,73 @@ class TitleRepository extends EntityRepository
         return $qb->getQuery()->getOneOrNullResult();
     }    
     
-    public function searchQuery($q) {
-        $qb = $this->createQueryBuilder('e');
-        $qb->where("e.title like '%$q%'");
-        return $qb->getQuery();
-    }
-    
-    public function fulltextQuery($q) {
+    public function search($q) {
         $qb = $this->createQueryBuilder('e');
         $qb->addSelect("MATCH_AGAINST (e.title, :q 'IN BOOLEAN MODE') as score");
         $qb->add('where', "MATCH_AGAINST (e.title, :q 'IN BOOLEAN MODE') > 0.5");
         $qb->orderBy('score', 'desc');
         $qb->setParameter('q', $q);
+        return $qb->getQuery();
+    }
+    
+//  "orderby" => "pubdate"
+    public function buildSearchQuery($data = array()) {
+        $qb = $this->createQueryBuilder('e');
+        if(isset($data['title']) && $data['title']) {
+            $qb->andWhere("MATCH_AGAINST (e.title, :title 'IN BOOLEAN MODE') > 0");
+            $qb->setParameter('title', $data['title']);
+        }
+        if(isset($data['pubdate']) && $data['pubdate']) {
+            $m = array();
+            if(preg_match('/^\s*[0-9]{4}\s*$/', $data['pubdate'])) {
+                $qb->andWhere('e.pubdate = :year');
+                $qb->setParameter('year', $data['pubdate']);
+            } else if(preg_match('/^\s*(\*|[0-9]{4})\s*-\s*(\*|[0-9]{4})\s*$/', $data['pubdate'], $m)) {
+                $from = ($m[1] === '*' ? -1 : $m[1]);
+                $to = ($m[2] === '*' ? 9999 : $m[2]);
+                $qb->andWhere(':from <= e.pubdate AND e.pubdate <= :to');
+                $qb->setParameters(array(
+                    'from' => $from,
+                    'to' => $to,
+                ));
+            }
+        }
+        if(isset($data['format']) && is_array($data['format']) && count($data['format'])) {
+            $qb->andWhere('e.format IN (:formats)');
+            $qb->setParameter('formats', $data['format']);
+        }
+        if(isset($data['genre']) && is_array($data['genre']) && count($data['genre'])) {
+            $qb->andWhere('e.genre IN (:genres)');
+            $qb->setParameter('genres', $data['genre']);
+        }
+        if(isset($data['signed_author']) && $data['signed_author']) {
+            $qb->andWhere("MATCH_AGAINST (e.signed_author, :signed_author 'IN BOOLEAN MODE') > 0");
+            $qb->setParameter('signed_author', $data['signed_author']);
+        }
+        if(isset($data['imprint']) && $data['imprint']) {
+            $qb->andWhere("MATCH_AGAINST (e.imprint, :imprint 'IN BOOLEAN MODE') > 0");
+            $qb->setParameter('imprint', $data['imprint']);
+        }
+        if(isset($data['psuedonym']) && $data['psuedonym']) {
+            $qb->andWhere("MATCH_AGAINST (e.psuedonym, :psuedonym 'IN BOOLEAN MODE') > 0");
+            $qb->setParameter('psuedonym', $data['psuedonym']);
+        }
+        if(isset($data['orderby'])) {
+            $dir = 'ASC';
+            if(preg_match('/^(?:asc|desc)$/', $data['orderdir'])) {
+                $dir = $data['orderdir'];
+            }
+            switch($data['orderby']) {
+                case 'pubdate':
+                    $qb->orderBy('e.pubdate', $dir);
+                    break;
+                case 'title':
+                default:
+                    $qb->orderBy('e.title', $dir);
+                    break;
+            }
+        }
+        
         return $qb->getQuery();
     }
     

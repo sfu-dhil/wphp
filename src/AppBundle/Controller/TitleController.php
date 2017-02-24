@@ -3,8 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Title;
-use Nines\FeedbackBundle\Entity\Comment;
-use Nines\FeedbackBundle\Form\CommentType;
+use AppBundle\Form\TitleSearchType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -135,28 +134,55 @@ class TitleController extends Controller
     /**
      * Full text search for Title entities.
      *
-     * @Route("/fulltext", name="title_fulltext")
-     * @Method("GET")
+     * @Route("/search", name="title_search")
+     * @Method({"GET"})
      * @Template()
 	 * @param Request $request
 	 * @return array
      */
-    public function fulltextAction(Request $request)
+    public function searchAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-		$repo = $em->getRepository('AppBundle:Title');
-		$q = $request->query->get('q');
-		if($q) {
-	        $query = $repo->fulltextQuery($q);
-			$paginator = $this->get('knp_paginator');
-			$titles = $paginator->paginate($query, $request->query->getInt('page', 1), 25);
-		} else {
-			$titles = array();
-		}
-
+        $form = $this->createForm(TitleSearchType::class, null, array('entity_manager' => $em));
+        $form->handleRequest($request);
+        $titles = array();
+        
+        if($form->isValid()) {
+            $repo = $em->getRepository(Title::class);
+            $query = $repo->buildSearchQuery($form->getData());
+            $paginator = $this->get('knp_paginator');        
+            $titles = $paginator->paginate($query->execute(), $request->query->getint('page', 1), 25);
+        } 
         return array(
+            'search_form' => $form->createView(),
             'titles' => $titles,
-			'q' => $q,
+        );
+    }
+    
+    /**
+     * Full text search for Title entities.
+     *
+     * @Route("/search/export", name="title_search_export")
+     * @Method({"GET"})
+     * @Template()
+	 * @param Request $request
+	 * @return array
+     */
+    public function searchExportAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $form = $this->createForm(TitleSearchType::class, null, array('entity_manager' => $em));
+        $form->handleRequest($request);
+        $titles = array();
+        
+        if($form->isValid()) {
+            $repo = $em->getRepository(Title::class);
+            $query = $repo->buildSearchQuery($form->getData());
+            $titles = $query->execute();
+        } 
+        
+        return array(
+            'search_form' => $form->createView(),
+            'titles' => $titles,
         );
     }
 	

@@ -33,7 +33,7 @@
             <a href="{{ path('title_export') }}" class="btn btn-default">
                 <span class="glyphicon glyphicon-download-alt"></span> Download
             </a>
-            <a href="{{ path('title_fulltext') }}" class="btn btn-default">
+            <a href="{{ path('title_search') }}" class="btn btn-default">
                 <span class="glyphicon glyphicon-search"></span> Search
             </a>
         </div>
@@ -80,8 +80,5 @@
         </tbody>
     </table>
 
-    <div class="navigation">
-        {{ knp_pagination_render(titles) }}
-    </div>
 
 {% endblock %}

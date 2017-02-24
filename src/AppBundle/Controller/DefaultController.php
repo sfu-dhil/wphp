@@ -18,16 +18,17 @@ class DefaultController extends Controller {
 	 */
 	public function indexAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
-        $posts = $em->getRepository('NinesBlogBundle:Post')->findRecent(                
-            $this->getParameter('nines_blog.published_status'), 
+        $postQuery = $em->getRepository('NinesBlogBundle:Post')->recentQuery(
+            false,
             $this->getParameter('nines_blog.homepage_posts')
         );
-        $titles = $em->getRepository('AppBundle:Title')->random(3);
-        $persons = $em->getRepository('AppBundle:Person')->random(3);
-        $firms = $em->getRepository('AppBundle:Firm')->random(3);
+        $blocksize = $this->getParameter('wphp.homepage_entries');
+        $titles = $em->getRepository('AppBundle:Title')->random($blocksize);
+        $persons = $em->getRepository('AppBundle:Person')->random($blocksize);
+        $firms = $em->getRepository('AppBundle:Firm')->random($blocksize);
         
 		return [
-            'posts' => $posts,
+            'posts' => $postQuery->execute(),
             'titles' => $titles,
             'persons' => $persons,
             'firms' => $firms,

@@ -44,15 +44,19 @@ class PostRepository extends EntityRepository {
      * @param bool $private
      * @return Query
      */
-    public function recentQuery($private = false) {
+    public function recentQuery($private = false, $limit = 0) {
         $em = $this->getEntityManager();
         $qb = $this->createQueryBuilder('e');
         if( ! $private) {
             $statuses = $em->getRepository(PostStatus::class)->findBy(array(
                 'public' => true,
             ));
+            dump($statuses);
             $qb->andWhere('e.status = :status');
             $qb->setParameter('status', $statuses);
+        }
+        if($limit > 0) {
+            $qb->setMaxResults($limit);
         }
         $qb->orderBy('e.id', 'DESC');
         return $qb->getQuery();
