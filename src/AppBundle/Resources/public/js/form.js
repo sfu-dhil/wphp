@@ -30,6 +30,7 @@
     });
     
     $(document).ready(function(){
+        $(".secondary").toggleClass("hidden");        
         $('#options').click(function(){
             $(".secondary").toggleClass("hidden");
         });

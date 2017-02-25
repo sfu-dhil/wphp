@@ -15,7 +15,7 @@
     <div class="form-group {%if attr.group_class is defined %}{{ attr.group_class }}{% endif %} {% if (not compound or force_error|default(false)) and not valid %} has-error{% endif %}">
         {{- form_label(form) -}}
         <div class="{{ block('form_group_class') }}">
-            {{- form_widget(form) -}}
+            <div class="clearfix">{{- form_widget(form) -}}</div>
             {{- form_errors(form) -}}
             {% if attr.help_block is defined %}
                 <p class='help-block'>{{ attr.help_block|raw }}</p>

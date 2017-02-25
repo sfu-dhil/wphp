@@ -62,6 +62,9 @@ doctrine:
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
         dql:
+            datetime_functions:
+                YEAR: DoctrineExtensions\Query\Mysql\Year 
+                DATE: DoctrineExtensions\Query\Mysql\Date
             string_functions:
                 MATCH_AGAINST: Nines\UtilBundle\Extensions\Doctrine\MatchAgainstFunction
             numeric_functions:

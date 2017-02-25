@@ -3,8 +3,8 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Person;
-use Nines\FeedbackBundle\Entity\Comment;
-use Nines\FeedbackBundle\Form\CommentType;
+use AppBundle\Entity\Title;
+use AppBundle\Form\PersonSearchType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -42,28 +42,28 @@ class PersonController extends Controller
     /**
      * Full text search for Person entities.
      *
-     * @Route("/fulltext", name="person_fulltext")
+     * @Route("/search", name="person_search")
      * @Method("GET")
      * @Template()
 	 * @param Request $request
 	 * @return array
      */
-    public function fulltextAction(Request $request)
+    public function searchAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-		$repo = $em->getRepository('AppBundle:Person');
-		$q = $request->query->get('q');
-		if($q) {
-	        $query = $repo->fulltextQuery($q);
-			$paginator = $this->get('knp_paginator');
-			$people = $paginator->paginate($query, $request->query->getInt('page', 1), 25);
-		} else {
-			$people = array();
-		}
-
+        $form = $this->createForm(PersonSearchType::class, null, array('entity_manager' => $em));
+        $form->handleRequest($request);
+        $persons = array();
+        
+        if($form->isValid()) {
+            $repo = $em->getRepository(Person::class);
+            $query = $repo->buildSearchQuery($form->getData());
+            $paginator = $this->get('knp_paginator');        
+            $persons = $paginator->paginate($query->execute(), $request->query->getint('page', 1), 25);
+        } 
         return array(
-            'people' => $people,
-			'q' => $q,
+            'search_form' => $form->createView(),
+            'persons' => $persons,
         );
     }
 

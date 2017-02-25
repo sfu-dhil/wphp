@@ -51,8 +51,12 @@ class TitleRepository extends EntityRepository
         $qb->setParameter('q', $q);
         return $qb->getQuery();
     }
-    
-//  "orderby" => "pubdate"
+
+    /**
+     * @todo Add year(pubdate) everywhere.
+     * @param array $data
+     * @return Query
+     */
     public function buildSearchQuery($data = array()) {
         $qb = $this->createQueryBuilder('e');
         if(isset($data['title']) && $data['title']) {
@@ -62,16 +66,14 @@ class TitleRepository extends EntityRepository
         if(isset($data['pubdate']) && $data['pubdate']) {
             $m = array();
             if(preg_match('/^\s*[0-9]{4}\s*$/', $data['pubdate'])) {
-                $qb->andWhere('e.pubdate = :year');
+                $qb->andWhere('YEAR(e.pubdate) = :year');
                 $qb->setParameter('year', $data['pubdate']);
             } else if(preg_match('/^\s*(\*|[0-9]{4})\s*-\s*(\*|[0-9]{4})\s*$/', $data['pubdate'], $m)) {
                 $from = ($m[1] === '*' ? -1 : $m[1]);
                 $to = ($m[2] === '*' ? 9999 : $m[2]);
-                $qb->andWhere(':from <= e.pubdate AND e.pubdate <= :to');
-                $qb->setParameters(array(
-                    'from' => $from,
-                    'to' => $to,
-                ));
+                $qb->andWhere(':from <= YEAR(e.pubdate) AND YEAR(e.pubdate) <= :to');
+                $qb->setParameter('from', $from);
+                $qb->setParameter('to', $to);
             }
         }
         if(isset($data['format']) && is_array($data['format']) && count($data['format'])) {
@@ -94,9 +96,9 @@ class TitleRepository extends EntityRepository
             $qb->andWhere("MATCH_AGAINST (e.psuedonym, :psuedonym 'IN BOOLEAN MODE') > 0");
             $qb->setParameter('psuedonym', $data['psuedonym']);
         }
-        if(isset($data['orderby'])) {
+        if(isset($data['orderby']) && $data['orderby']) {
             $dir = 'ASC';
-            if(preg_match('/^(?:asc|desc)$/', $data['orderdir'])) {
+            if(preg_match('/^(?:asc|desc)$/i', $data['orderdir'])) {
                 $dir = $data['orderdir'];
             }
             switch($data['orderby']) {

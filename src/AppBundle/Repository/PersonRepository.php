@@ -4,7 +4,7 @@ namespace AppBundle\Repository;
 
 use AppBundle\Entity\Person;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Query\Expr\Func;
+use Doctrine\ORM\Query\Expr\Join;
 
 /**
  * PersonRepository
@@ -28,7 +28,7 @@ class PersonRepository extends EntityRepository {
         $qb->setMaxResults(1);
         return $qb->getQuery()->getOneOrNullResult();
     }
-    
+
     /**
      * Return the next firm by ID.
      * 
@@ -42,31 +42,115 @@ class PersonRepository extends EntityRepository {
         $qb->addOrderBy('e.id', 'DESC');
         $qb->setMaxResults(1);
         return $qb->getQuery()->getOneOrNullResult();
-    }    
-    
-	public function searchQuery($q) {
-		$qb = $this->createQueryBuilder('e');
-		$qb->where(
-            $qb->expr()->like(
-                new Func('CONCAT', array(
-							'e.lastName', 
-							'e.firstName', 
-							'e.title'
-						)),
-                "'%$q%'"
-            )
-		);
-		return $qb->getQuery();
-	}
+    }
 
-	public function fulltextQuery($q) {
-		$qb = $this->createQueryBuilder('e');
-		$qb->addSelect("MATCH_AGAINST (e.lastName, e.firstName, e.dob, e.dod, :q 'IN BOOLEAN MODE') as score");
-		$qb->add('where', "MATCH_AGAINST (e.lastName, e.firstName, e.dob, e.dod, :q 'IN BOOLEAN MODE') > 0.5");
-		$qb->orderBy('score', 'desc');
-		$qb->setParameter('q', $q);
-		return $qb->getQuery();
-	}
+//array:8 [▼
+//  "fullname" => "names"
+//  "gender" => array:1 [▼
+//    0 => ""
+//  ]
+//  "dob" => "1800-*"
+//  "dod" => "*-1750"
+//  "birthplace" => "vancouver"
+//  "deathplace" => "victoria"
+//  "orderby" => "birthplace"
+//  "orderdir" => "desc"
+//]
+    public function buildSearchQuery($data) {
+        $qb = $this->createQueryBuilder('e');
+        if (isset($data['name']) && $data['name']) {
+            $qb->andWhere("MATCH_AGAINST (e.lastName, e.firstName, e.title, :name 'IN BOOLEAN MODE') > 0");
+            $qb->setParameter('name', $data['name']);
+        }
+        if (isset($data['gender']) && $data['gender']) {
+            $genders = [];
+            if (in_array('M', $data['gender'])) {
+                $genders[] = 'M';
+            }
+            if (in_array('F', $data['gender'])) {
+                $genders[] = 'F';
+            }
+            if (in_array('U', $data['gender'])) {
+                $genders[] = '';
+            }
+            $qb->andWhere('e.gender in (:genders)');
+            $qb->setParameter('genders', $genders);
+        }
+
+        if (isset($data['dob']) && $data['dob']) {
+            $m = array();
+            if (preg_match('/^\s*[0-9]{4}\s*$/', $data['dob'])) {
+                $qb->andWhere('YEAR(e.dob) = :yearb');
+                $qb->setParameter('yearb', $data['dob']);
+            } else if (preg_match('/^\s*(\*|[0-9]{4})\s*-\s*(\*|[0-9]{4})\s*$/', $data['dob'], $m)) {
+                $from = ($m[1] === '*' ? -1 : $m[1]);
+                $to = ($m[2] === '*' ? 9999 : $m[2]);
+                $qb->andWhere(':fromb <= YEAR(e.dob) AND YEAR(e.dob) <= :tob');
+                $qb->setParameter('fromb', $from);
+                $qb->setParameter('tob', $to);
+            }
+        }
+
+        if (isset($data['dod']) && $data['dod']) {
+            $m = array();
+            if (preg_match('/^\s*[0-9]{4}\s*$/', $data['dod'])) {
+                $qb->andWhere('e.dod = :yeard');
+                $qb->setParameter('yeard', $data['dod']);
+            } else if (preg_match('/^\s*(\*|[0-9]{4})\s*-\s*(\*|[0-9]{4})\s*$/', $data['dod'], $m)) {
+                $from = ($m[1] === '*' ? -1 : $m[1]);
+                $to = ($m[2] === '*' ? 9999 : $m[2]);
+                $qb->andWhere(':fromd <= e.dod AND e.dod <= :tod');
+                $qb->setParameter('fromd', $from);
+                $qb->setParameter('tod', $to);
+            }
+        }
+
+        if (isset($data['birthplace']) && $data['birthplace']) {
+            $qb->innerJoin('e.cityOfBirth', 'b');
+            $qb->andWhere('MATCH_AGAINST(b.alternatenames, b.name, :bpname) > 0');
+            $qb->setParameter('bpname', $data['birthplace']);
+        }
+
+        if (isset($data['deathplace']) && $data['deathplace']) {
+            $qb->innerJoin('e.cityOfDeath', 'd');
+            $qb->andWhere('MATCH_AGAINST(d.alternatenames, d.name, :dpname) > 0');
+            $qb->setParameter('dpname', $data['deathplace']);
+        }
+        
+        if(isset($data['orderby']) && $data['orderby']) {
+            $dir = 'ASC';
+            if(isset($data['orderdir']) && preg_match('/^(?:asc|desc)$/i', $data['orderdir'])) {
+                $dir = $data['orderdir'];
+            }
+            switch($data['orderby']) {
+                case 'firstname':
+                    $qb->orderBy('e.firstName', $dir);
+                    break;
+                case 'dob':
+                    $qb->orderBy('date(e.dob)', $dir);
+                    break;
+                case 'dod':
+                    $qb->orderBy('date(e.dod)', $dir);
+                    break;
+                case 'lastname':
+                default:
+                    $qb->orderBy('e.lastName', $dir);                    
+                    break;
+            }
+        }
+        dump($qb->getQuery()->getSql());
+        dump($qb->getParameters());
+        return $qb->getQuery();
+    }
+
+    public function fulltextQuery($q) {
+        $qb = $this->createQueryBuilder('e');
+        $qb->addSelect("MATCH_AGAINST (e.lastName, e.firstName, e.dob, e.dod, :q 'IN BOOLEAN MODE') as score");
+        $qb->add('where', "MATCH_AGAINST (e.lastName, e.firstName, e.dob, e.dod, :q 'IN BOOLEAN MODE') > 0.5");
+        $qb->orderBy('score', 'desc');
+        $qb->setParameter('q', $q);
+        return $qb->getQuery();
+    }
 
     public function random($limit) {
         $qb = $this->createQueryBuilder('e');
@@ -74,4 +158,5 @@ class PersonRepository extends EntityRepository {
         $qb->setMaxResults($limit);
         return $qb->getQuery()->execute();
     }
+
 }

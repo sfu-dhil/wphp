@@ -58,7 +58,7 @@ a[href ^= 'https://']::after {
 }
 
 /* make the search form checkboxes less bad. */
-div.checkbox {
+div.checkbox, div.radio {
     width: 30%;
     float: left;
 }
