@@ -3,8 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Firm;
-use Nines\FeedbackBundle\Entity\Comment;
-use Nines\FeedbackBundle\Form\CommentType;
+use AppBundle\Form\FirmSearchType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -42,28 +41,28 @@ class FirmController extends Controller
     /**
      * Full text search for Firm entities.
 	 *
-     * @Route("/fulltext", name="firm_fulltext")
+     * @Route("/search", name="firm_search")
      * @Method("GET")
      * @Template()
 	 * @param Request $request
 	 * @return array
      */
-    public function fulltextAction(Request $request)
+    public function searchAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-		$repo = $em->getRepository('AppBundle:Firm');
-		$q = $request->query->get('q');
-		if($q) {
-	        $query = $repo->fulltextQuery($q);
-			$paginator = $this->get('knp_paginator');
-			$firms = $paginator->paginate($query, $request->query->getInt('page', 1), 25);
-		} else {
-			$firms = array();
-		}
-
+        $form = $this->createForm(FirmSearchType::class, null, array('entity_manager' => $em));
+        $form->handleRequest($request);
+        $firms = array();
+        
+        if($form->isValid()) {
+            $repo = $em->getRepository(Firm::class);
+            $query = $repo->buildSearchQuery($form->getData());
+            $paginator = $this->get('knp_paginator');        
+            $firms = $paginator->paginate($query->execute(), $request->query->getint('page', 1), 25);
+        } 
         return array(
+            'search_form' => $form->createView(),
             'firms' => $firms,
-			'q' => $q,
         );
     }
 

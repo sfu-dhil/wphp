@@ -21,6 +21,7 @@ use Symfony\Component\Validator\Constraints\Collection;
  *  indexes={
  *      @ORM\Index(name="city", columns={"city"}), 
  *      @ORM\Index(name="full", columns={"name", "street_address"}, flags={"fulltext"}), 
+ *      @ORM\Index(name="address_ft_idx", columns={"street_address"}, flags={"fulltext"}), 
  *      @ORM\Index(name="firmname", columns={"name"}, flags={"fulltext"})}
  * )
  * @ORM\Entity(repositoryClass="AppBundle\Repository\FirmRepository")

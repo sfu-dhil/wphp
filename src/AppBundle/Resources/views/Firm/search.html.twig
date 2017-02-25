@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block pageheader %} 
+    <h1>Firm Search</h1>
+{% endblock %} 
+
+{% block body %}
+
+    {{ form_start(search_form) }}
+    {{ form_widget(search_form) }}
+    <div class="form-group">
+        <div class="col-sm-2"></div>
+
+        <div class="col-sm-1">
+            <input type="submit" value="Search" class="btn btn-primary" />            
+        </div>
+        <div class="col-sm-1">
+            <button type="button" id='options' class="btn btn-default"  data-toggle="button" aria-pressed="false" autocomplete="off">Options</button>
+        </div>
+    </div>
+    {{ form_end(search_form) }}
+
+    {% if firms|length > 0 %}
+        <p>Displaying {{ firms|length }} firms of 
+            {{ firms.getTotalItemCount }} total.</p>
+
+        <ul>
+            {% for firm in firms %}
+                <li>
+                    <a href="{{ path('firm_show', {'id': firm.id}) }}">
+                        {{ firm }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+
+        <div class="navigation">
+            {{ knp_pagination_render(firms) }}
+        </div>
+    {% endif %}
+{% endblock %}
