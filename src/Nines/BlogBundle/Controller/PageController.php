@@ -48,6 +48,10 @@ class PageController extends Controller
      * @return array
      */
     public function sortAction(Request $request) {
+        if( ! $this->isGranted('ROLE_ADMIN')) {
+            $this->addFlash('danger', 'You must login to access this page.');
+            return $this->redirect($this->generateUrl('fos_user_security_login'));
+        }
         $em = $this->getDoctrine()->getManager();
         $repo = $em->getRepository('NinesBlogBundle:Page');
         
