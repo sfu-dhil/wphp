@@ -43,24 +43,6 @@ class FirmSearchType extends AbstractType {
                 'group_class' => 'hidden secondary',
             ),
         ));
-
-        $builder->add('start', TextType::class, array(
-            'label' => 'Start Year',
-            'required' => false,
-            'attr' => array(
-                'help_block' => 'Enter a year (eg <kbd>1795</kbd>) or range of years (<kbd>1790-1800</kbd>) or a partial range of years (<kbd>*-1800</kbd>).',
-                'group_class' => 'hidden secondary',
-            ),
-        ));
-        
-        $builder->add('end', TextType::class, array(
-            'label' => 'End Year',
-            'required' => false,
-            'attr' => array(
-                'help_block' => 'Enter a year (eg <kbd>1795</kbd>) or range of years (<kbd>1790-1800</kbd>) or a partial range of years (<kbd>*-1800</kbd>).',
-                'group_class' => 'hidden secondary',
-            ),
-        ));
     }
 
     public function configureOptions(OptionsResolver $resolver) {

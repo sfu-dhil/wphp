@@ -2,7 +2,7 @@
 
 namespace AppBundle\Controller;
 
-use Exception;
+use AppBundle\Form\QueryType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -34,6 +34,17 @@ class DefaultController extends Controller {
             'firms' => $firms,
 		];
 	}
+        
+	/**
+	 * @Route("/query", name="search_query")
+	 * @Template()
+	 */
+    public function queryAction(Request $request) {
+        $form = $this->createForm(QueryType::class);
+        return array(
+            'form' => $form->createView(),
+        );
+    }
 
 	private function searchForm() {
 		$builder = $this->createFormBuilder();

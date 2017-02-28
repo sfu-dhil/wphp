@@ -6,6 +6,7 @@ use AppBundle\Entity\Format;
 use AppBundle\Entity\Genre;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -131,6 +132,19 @@ class TitleSearchType extends AbstractType {
             'multiple' => false,
             'empty_data' => 'asc',
             'data' => 'asc',
+        ));
+        
+        $builder->add('person_filter', CollectionType::class, array(
+            'label' => 'Filter by Person',
+            'entry_type' => PersonFilterType::class,
+            'allow_add' => true,
+            'allow_delete' => true,
+                
+        ));
+        
+        $builder->add('firm_filter', CollectionType::class, array(
+            'label' => 'Filter by Firm',
+            'entry_type' => FirmFilterType::class                
         ));
     }
 
