@@ -650,7 +650,34 @@ class Title
     {
         return $this->pricePence;
     }
-
+		
+		/**
+     * Get totalPrice
+     *
+     * @return integer
+     */
+		public function getTotalPrice()
+		{
+			$L = 0;
+			$S = 0;
+			$D = 0;
+			
+			if ($this->pricePound) {
+				$L = $this->pricePound * 240;
+			}
+			
+			if ($this->priceShilling) {
+				$S = $this->priceShilling * 12;
+			}
+			if ($this->pricePence) {
+				$D = $this->pricePence;
+			}
+			
+			$totalPrice = $L + $S + $D;
+			
+			return $totalPrice;
+		}
+		
     /**
      * Set sourceId
      *

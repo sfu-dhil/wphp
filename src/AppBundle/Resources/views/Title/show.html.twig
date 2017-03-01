@@ -123,6 +123,14 @@
 				<td>{{ title.pricePence }}</td>
             </tr>
             <tr>
+            	<th>Total price (in pence)</th>
+            	<td>
+            		{% if title.totalPrice > 0 %}
+            		{{ title.totalPrice }}
+            		{% endif %}
+            	</td>
+            </tr>
+            <tr>
                 <th>Shelf marks</th>
                 <td>
                     {% for mark in title.shelfmark|split(';') %}
@@ -248,14 +256,14 @@
 							({{ title.pubdate }}).
 							<!--Title-->
 							<em>{{ title.title|capitalize }}</em>
-							{%- if title.title|last != ("." or "?" or "!") %}.{% endif %}
+							{%- if title.title matches '{[^[:punct:]]$}' %}.{% endif %}
 							<!--Location-->
 							{{title.locationOfPrinting.name}}: 
 							<!--Publisher-->
 							{% for tfr in title.titleFirmRoles %}
 								{% if tfr.firmrole.name == 'Publisher' %}
 									{% set firm = tfr.firm %}
-									{{ firm.name }}{%- if firm.name|last != "." %}.{% endif %}
+									{{ firm.name }}{%- if firm.name matches '{[^[:punct:]]$}' %}.{% endif %}
 								{% endif %}
 							{% endfor %}
 						</p>
@@ -322,7 +330,7 @@
 							{% endif %}
 							<!--Title-->
 							<em>{{ title.title }}</em>
-							{%- if title.title|last != ("." or "?" or "!") %}.{% endif %}
+							{%- if title.title matches '{[^[:punct:]]$}' %}.{% endif %}
 							<!--Location-->
 							{{title.locationOfPrinting.name}}:
 							<!--Publisher-->
@@ -337,10 +345,25 @@
 						</p>
 					</div>
 				</div>
+				<!--BibTeX-->
+				<div id="bibtex">
+					<h4>BibTeX</h4>
+					<div class="well">
+						{% set lb = '{' %}
+						{% set rb = '}' %}
+				<pre>
+@book{{lb}}
+author={{lb}}{% for author in authors %}{% if not loop.last %}{{ author.person.lastName }},{{ author.person.firstName }} and {% else %}{{ author.person.lastName }},{{ author.person.firstName }}{%- endif -%}{% endfor %}{{ rb }},
+year={{lb}}{{ title.pubdate }}{{rb}},
+title={{lb}}{{ title.title }}{{rb}},
+publisher={{lb}}{% for tfr in title.titleFirmRoles %}{% if tfr.firmrole.name == 'Publisher' %}{% set firm = tfr.firm %}{{ firm.name }}{% endif %}{% endfor %}{{rb}},
+address={{lb}}{{title.locationOfPrinting.name}}{{rb}},
+{{rb}}</pre>
+					</div>
+				</div>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				<button type="button" class="btn btn primary">Export BibTeX</button>
 			</div>
 		</div>
 	</div>
