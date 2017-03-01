@@ -4,9 +4,9 @@ namespace AppBundle\Form;
 
 use AppBundle\Entity\Format;
 use AppBundle\Entity\Genre;
-use AppBundle\Entity\Person;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -43,7 +43,6 @@ class PersonSearchType extends AbstractType {
                 '(unknown)' => 'U',
             ),
             'attr' => array(
-                'group_class' => 'hidden secondary',
                 'help_block' => 'Leave this field blank to include all genders.'
             ),
             'required' => false,
@@ -58,7 +57,6 @@ class PersonSearchType extends AbstractType {
             'required' => false,
             'attr' => array(
                 'help_block' => 'Enter a year (eg <kbd>1795</kbd>) or range of years (<kbd>1790-1800</kbd>) or a partial range of years (<kbd>*-1800</kbd>).',
-                'group_class' => 'hidden secondary',
             ),
         ));
         
@@ -67,26 +65,18 @@ class PersonSearchType extends AbstractType {
             'required' => false,
             'attr' => array(
                 'help_block' => 'Enter a year (eg <kbd>1795</kbd>) or range of years (<kbd>1790-1800</kbd>) or a partial range of years (<kbd>*-1800</kbd>).',
-                'group_class' => 'hidden secondary',
             ),
         ));
 
         $builder->add('birthplace', TextType::class, array(
             'label' => 'Birth Place',
             'required' => false,
-            'attr' => array(
-                'group_class' => 'hidden secondary',
-            ),
         ));
         
         $builder->add('deathplace', TextType::class, array(
             'label' => 'Death Place',
             'required' => false,
-            'attr' => array(
-                'group_class' => 'hidden secondary',
-            ),
         ));
-        
         
         $builder->add('orderby', ChoiceType::class, array(
             'label' => 'Order by',
@@ -95,9 +85,6 @@ class PersonSearchType extends AbstractType {
                 'First name' => 'firstname',
                 'Birth date' => 'dob',
                 'Death date' => 'dod',
-            ),
-            'attr' => array(
-                'group_class' => 'hidden secondary',
             ),
             'required' => true,
             'expanded' => true,
@@ -111,9 +98,6 @@ class PersonSearchType extends AbstractType {
             'choices' => array(
                 'Ascending (A to Z)' => 'asc',
                 'Descending (Z to A)' => 'desc',
-            ),
-            'attr' => array(
-                'group_class' => 'hidden secondary',
             ),
             'required' => true,
             'expanded' => true,

@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "d8f680a78bcda763d0da8a2ddba1f999",
-    "content-hash": "e865cc359245601d44a93a6ff5dd90de",
+    "hash": "d6be1ac5b053fb5ef68da0a8ad68c8b3",
+    "content-hash": "6f92713676a0a1a6d07d834de16eecdb",
     "packages": [
         {
             "name": "beberlei/DoctrineExtensions",
@@ -1310,7 +1310,7 @@
             ],
             "authors": [
                 {
-                    "name": "KNPLabs Team",
+                    "name": "KnpLabs Team",
                     "homepage": "http://knplabs.com"
                 },
                 {
@@ -1492,7 +1492,7 @@
             ],
             "authors": [
                 {
-                    "name": "KNPLabs Team",
+                    "name": "KnpLabs Team",
                     "homepage": "http://knplabs.com"
                 },
                 {
@@ -1667,6 +1667,34 @@
                 "psr-3"
             ],
             "time": "2016-11-26 00:15:39"
+        },
+        {
+            "name": "ninsuo/symfony-collection",
+            "version": "2.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ninsuo/symfony-collection.git",
+                "reference": "c653467ccb5f829687caf7de986d581d14538652"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ninsuo/symfony-collection/zipball/c653467ccb5f829687caf7de986d581d14538652",
+                "reference": "c653467ccb5f829687caf7de986d581d14538652",
+                "shasum": ""
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alain Tiemblo",
+                    "email": "ninsuo@gmail.com"
+                }
+            ],
+            "description": "A jQuery plugin that manages adding, deleting and moving elements from a Symfony collection",
+            "time": "2017-02-04 23:15:40"
         },
         {
             "name": "paragonie/random_compat",

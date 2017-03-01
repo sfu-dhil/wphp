@@ -44,18 +44,6 @@ class PersonRepository extends EntityRepository {
         return $qb->getQuery()->getOneOrNullResult();
     }
 
-//array:8 [▼
-//  "fullname" => "names"
-//  "gender" => array:1 [▼
-//    0 => ""
-//  ]
-//  "dob" => "1800-*"
-//  "dod" => "*-1750"
-//  "birthplace" => "vancouver"
-//  "deathplace" => "victoria"
-//  "orderby" => "birthplace"
-//  "orderdir" => "desc"
-//]
     public function buildSearchQuery($data) {
         $qb = $this->createQueryBuilder('e');
         if (isset($data['name']) && $data['name']) {
@@ -138,8 +126,7 @@ class PersonRepository extends EntityRepository {
                     break;
             }
         }
-        dump($qb->getQuery()->getSql());
-        dump($qb->getParameters());
+        
         return $qb->getQuery();
     }
 

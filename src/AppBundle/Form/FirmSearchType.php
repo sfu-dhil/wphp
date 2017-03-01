@@ -31,17 +31,11 @@ class FirmSearchType extends AbstractType {
         $builder->add('address', TextType::class, array(
             'label' => 'Address',
             'required' => false,
-            'attr' => array(
-                'group_class' => 'hidden secondary',
-            ),
         ));
         
         $builder->add('city', TextType::class, array(
             'label' => 'City',
             'required' => false,
-            'attr' => array(
-                'group_class' => 'hidden secondary',
-            ),
         ));
     }
 
