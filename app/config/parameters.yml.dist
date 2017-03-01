@@ -24,6 +24,10 @@ parameters:
     router.request_context.scheme: http
     router.request_context.base_url: /web/app_dev.php
 
+    # blog stuff
     nines_blog.excerpt_length: 100
     nines_blog.homepage_posts: 3
     nines_blog.menu_posts: 5
+
+    # home page stuff.
+    wphp.homepage_entries: 5

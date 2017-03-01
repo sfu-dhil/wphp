@@ -16,6 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
  *      @ORM\Index(name="source2_idx", columns={"source2"}), 
  *      @ORM\Index(name="title_idx", columns={"title"}, flags={"fulltext"}), 
  *      @ORM\Index(name="author_idx", columns={"signed_author"}, flags={"fulltext"}), 
+ *      @ORM\Index(name="pseudonym_idx", columns={"pseudonym"}, flags={"fulltext"}), 
  *      @ORM\Index(name="titleauthor_idx", columns={"title", "signed_author"}, flags={"fulltext"}), 
  *      @ORM\Index(name="imprint_idx", columns={"imprint"}, flags={"fulltext"})
  * })

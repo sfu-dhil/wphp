@@ -7,17 +7,17 @@
 {% block body %}
 
     {{ form_start(search_form) }}
-    {{ form_widget(search_form) }}
+    {{ form_widget(search_form) }}    
     <div class="form-group">
         <div class="col-sm-2"></div>
 
-        <div class="col-sm-1">
+        <div class="col-sm-2">
             <input type="submit" value="Search" class="btn btn-primary" />            
         </div>
-        <div class="col-sm-1">
+        <div class="col-sm-2">
             <button type="button" id='options' class="btn btn-default"  data-toggle="button" aria-pressed="false" autocomplete="off">Options</button>
         </div>
-        <div class='col-sm-1'>
+        <div class='col-sm-2'>
             <div class='btn-group'>
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Export <span class="caret"></span>

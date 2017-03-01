@@ -57,7 +57,6 @@ class PersonFilterType extends AbstractType {
                 '(unknown)' => 'U',
             ),
             'attr' => array(
-                'group_class' => 'hidden secondary',
                 'help_block' => 'Leave this field blank to include all genders.'
             ),
             'required' => false,

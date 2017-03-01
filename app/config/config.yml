@@ -104,10 +104,6 @@ assetic:
             inputs:
                 - "%kernel.root_dir%/../vendor/twitter/bootstrap/dist/fonts/glyphicons-halflings-regular.eot"
             output: "fonts/glyphicons-halflings-regular.eot"
-#        bootstrap_glyphicons_svg:
-#            inputs:
-#                - "'%kernel.root_dir%/../vendor/twitter/bootstrap/dist/fonts/glyphicons-halflings-regular.svg"
-#            output: "fonts/glyphicons-halflings-regular.svg"
         bootstrap_glyphicons_woff:
             inputs:
                 - "%kernel.root_dir%/../vendor/twitter/bootstrap/dist/fonts/glyphicons-halflings-regular.woff"

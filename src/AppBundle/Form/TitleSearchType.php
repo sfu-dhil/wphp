@@ -39,8 +39,12 @@ class TitleSearchType extends AbstractType {
             'required' => false,
             'attr' => array(
                 'help_block' => 'Enter a year (eg <kbd>1795</kbd>) or range of years (<kbd>1790-1800</kbd>) or a partial range of years (<kbd>*-1800</kbd>).',
-                'group_class' => 'hidden secondary',
             ),
+        ));
+        
+        $builder->add('location', TextType::class, array(
+            'label' => 'Printing Location',
+            'required' => false,
         ));
 
         $builder->add('format', ChoiceType::class, array(
@@ -51,9 +55,6 @@ class TitleSearchType extends AbstractType {
             'choice_value' => function($value) {
                 return $value->getId();
             },
-            'attr' => array(
-                'group_class' => 'hidden secondary',
-            ),
             'label' => 'Format',
             'required' => false,
             'expanded' => true,
@@ -68,9 +69,6 @@ class TitleSearchType extends AbstractType {
             'choice_value' => function($value) {
                 return $value->getId();
             },
-            'attr' => array(
-                'group_class' => 'hidden secondary',
-            ),
             'label' => 'Genre',
             'required' => false,
             'expanded' => true,
@@ -80,26 +78,17 @@ class TitleSearchType extends AbstractType {
         $builder->add('signed_author', TextType::class, array(
             'label' => 'Signed author',
             'required' => false,
-            'attr' => array(
-                'group_class' => 'hidden secondary',
-            ),
         ));
 
 
         $builder->add('imprint', TextType::class, array(
             'label' => 'Imprint',
             'required' => false,
-            'attr' => array(
-                'group_class' => 'hidden secondary',
-            ),
         ));
 
-        $builder->add('psuedonym', TextType::class, array(
-            'label' => 'Psuedonym',
+        $builder->add('pseudonym', TextType::class, array(
+            'label' => 'pseudonym',
             'required' => false,
-            'attr' => array(
-                'group_class' => 'hidden secondary',
-            ),
         ));
 
         $builder->add('orderby', ChoiceType::class, array(
@@ -107,9 +96,6 @@ class TitleSearchType extends AbstractType {
             'choices' => array(
                 'Title' => 'title',
                 'Publication Date' => 'pubdate',
-            ),
-            'attr' => array(
-                'group_class' => 'hidden secondary',
             ),
             'required' => true,
             'expanded' => true,
@@ -124,9 +110,6 @@ class TitleSearchType extends AbstractType {
                 'Ascending (A to Z)' => 'asc',
                 'Descending (Z to A)' => 'desc',
             ),
-            'attr' => array(
-                'group_class' => 'hidden secondary',
-            ),
             'required' => true,
             'expanded' => true,
             'multiple' => false,
@@ -139,12 +122,22 @@ class TitleSearchType extends AbstractType {
             'entry_type' => PersonFilterType::class,
             'allow_add' => true,
             'allow_delete' => true,
-                
+            'required' => false,
+            'attr' => array(
+                'group_class' => 'collection'
+            ),
         ));
         
         $builder->add('firm_filter', CollectionType::class, array(
             'label' => 'Filter by Firm',
-            'entry_type' => FirmFilterType::class                
+            'entry_type' => FirmFilterType::class,            
+            'required' => false,
+            'allow_add' => true,
+            'allow_delete' => true,
+            'required' => false,
+            'attr' => array(
+                'group_class' => 'collection'
+            ),
         ));
     }
 

@@ -41,6 +41,10 @@ class FirmFilterType extends AbstractType {
         $roles = $firmRoleRepo->findAll(array(
             'name' => 'ASC',
         ));
+        $builder->add('firm_name', TextType::class, array(
+            'label' => 'Firm Name',
+            'required' => false,
+        ));
         $builder->add('firm_role', ChoiceType::class, array(
             'choices' => $roles,
             'choice_label' => function($value, $key, $index) {
@@ -55,10 +59,6 @@ class FirmFilterType extends AbstractType {
             'required' => false,
             'expanded' => true,
             'multiple' => true,
-        ));
-        $builder->add('firm_name', TextType::class, array(
-            'label' => 'Firm Name',
-            'required' => false,
         ));
         $builder->add('firm_address', TextType::class, array(
             'label' => 'Firm Address',
