@@ -15,7 +15,7 @@
             <input type="submit" value="Search" class="btn btn-primary" />            
         </div>
         <div class="col-sm-1">
-            <button type="button" id='options' class="btn btn-default"  data-toggle="button" aria-pressed="false" autocomplete="off">Options</button>
+            <a class="btn btn-default" href="{{ path('firm_search') }}">Reset</a>
         </div>
     </div>
     {{ form_end(search_form) }}

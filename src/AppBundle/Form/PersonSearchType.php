@@ -89,6 +89,17 @@ class PersonSearchType extends AbstractType {
             ),            
         ));
         
+        $builder->add('firm_filter', CollectionType::class, array(
+            'label' => 'Filter by firm',
+            'entry_type' => FirmFilterType::class,
+            'allow_add' => true,
+            'allow_delete' => true,
+            'required' => false,
+            'attr' => array(
+                'group_class' => 'collection'
+            ),            
+        ));
+        
         $builder->add('orderby', ChoiceType::class, array(
             'label' => 'Order by',
             'choices' => array(
