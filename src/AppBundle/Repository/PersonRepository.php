@@ -104,13 +104,56 @@ class PersonRepository extends EntityRepository {
             $qb->andWhere('MATCH_AGAINST(d.alternatenames, d.name, :dpname) > 0');
             $qb->setParameter('dpname', $data['deathplace']);
         }
-        
-        if(isset($data['orderby']) && $data['orderby']) {
+
+        if (isset($data['title_filter']) && count($data['title_filter']) > 0) {
+            foreach ($data['title_filter'] as $idx => $filter) {
+                $trAlias = 'tr_' . $idx;
+                $tAlias = 't_' . $idx;
+                $qb->innerJoin('e.titleRoles', $trAlias)->innerJoin("{$trAlias}.title", $tAlias);
+                if (isset($filter['title']) && $filter['title']) {
+                    $qb->andWhere("MATCH_AGAINST({$tAlias}.title, :{$tAlias}_title 'IN BOOLEAN MODE') > 0");
+                    $qb->setParameter("{$tAlias}_title", $filter['title']);
+                }
+            }
+            
+            if(isset($filter['person_role']) && $filter['person_role']) {
+                $qb->andWhere("{$trAlias}.role IN (:{$trAlias}_roles)");
+                $qb->setParameter("{$trAlias}_roles", $filter['person_role']);
+            }
+
+            if (isset($filter['pubdate']) && $filter['pubdate']) {
+                $m = array();
+                if (preg_match('/^\s*[0-9]{4}\s*$/', $filter['pubdate'])) {
+                    $qb->andWhere("YEAR(STRTODATE({$tAlias}.pubdate, '%Y')) = :{$tAlias}_year");
+                    $qb->setParameter("{$tAlias}_year", $filter['pubdate']);
+                } else if (preg_match('/^\s*(\*|[0-9]{4})\s*-\s*(\*|[0-9]{4})\s*$/', $filter['pubdate'], $m)) {
+                    $from = ($m[1] === '*' ? -1 : $m[1]);
+                    $to = ($m[2] === '*' ? 9999 : $m[2]);
+                    $qb->andWhere(":{$tAlias}_from <= YEAR(STRTODATE({$tAlias}.pubdate, '%Y')) AND YEAR(STRTODATE({$tAlias}.pubdate, '%Y')) <= :{$tAlias}_to");
+                    $qb->setParameter("{$tAlias}_from", $from);
+                    $qb->setParameter("{$tAlias}_to", $to);
+                }
+            }
+            
+            if(isset($filter['genre']) && count($filter['genre']) > 0) {
+                $qb->andWhere("{$tAlias}.genre in (:{$tAlias}_genres)");
+                $qb->setParameter("{$tAlias}_genres", $filter['genre']);
+            }
+            
+            if(isset($filter['location']) && $filter['location']) {
+                $gAlias = 'g_' . $idx;
+                $qb->innerJoin("{$tAlias}.locationOfPrinting", $gAlias);
+                $qb->andWhere("MATCH_AGAINST({$gAlias}.alternatenames, {$gAlias}.name, :{$gAlias}_location 'IN BOOLEAN MODE') > 0");
+                $qb->setParameter("{$gAlias}_location", $filter['location']);
+            }
+        }
+
+        if (isset($data['orderby']) && $data['orderby']) {
             $dir = 'ASC';
-            if(isset($data['orderdir']) && preg_match('/^(?:asc|desc)$/i', $data['orderdir'])) {
+            if (isset($data['orderdir']) && preg_match('/^(?:asc|desc)$/i', $data['orderdir'])) {
                 $dir = $data['orderdir'];
             }
-            switch($data['orderby']) {
+            switch ($data['orderby']) {
                 case 'firstname':
                     $qb->orderBy('e.firstName', $dir);
                     break;
@@ -122,11 +165,11 @@ class PersonRepository extends EntityRepository {
                     break;
                 case 'lastname':
                 default:
-                    $qb->orderBy('e.lastName', $dir);                    
+                    $qb->orderBy('e.lastName', $dir);
                     break;
             }
         }
-        
+
         return $qb->getQuery();
     }
 

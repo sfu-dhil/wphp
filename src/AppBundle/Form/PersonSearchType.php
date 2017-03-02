@@ -78,6 +78,17 @@ class PersonSearchType extends AbstractType {
             'required' => false,
         ));
         
+        $builder->add('title_filter', CollectionType::class, array(
+            'label' => 'Filter by title',
+            'entry_type' => TitleFilterType::class,
+            'allow_add' => true,
+            'allow_delete' => true,
+            'required' => false,
+            'attr' => array(
+                'group_class' => 'collection'
+            ),            
+        ));
+        
         $builder->add('orderby', ChoiceType::class, array(
             'label' => 'Order by',
             'choices' => array(

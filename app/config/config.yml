@@ -65,6 +65,7 @@ doctrine:
             datetime_functions:
                 YEAR: DoctrineExtensions\Query\Mysql\Year 
                 DATE: DoctrineExtensions\Query\Mysql\Date
+                STRTODATE: DoctrineExtensions\Query\Mysql\StrToDate                
             string_functions:
                 MATCH_AGAINST: Nines\UtilBundle\Extensions\Doctrine\MatchAgainstFunction
             numeric_functions:

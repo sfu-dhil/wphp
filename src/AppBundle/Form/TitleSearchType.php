@@ -91,6 +91,29 @@ class TitleSearchType extends AbstractType {
             'required' => false,
         ));
 
+        $builder->add('person_filter', CollectionType::class, array(
+            'label' => 'Filter by Person',
+            'entry_type' => PersonFilterType::class,
+            'allow_add' => true,
+            'allow_delete' => true,
+            'required' => false,
+            'attr' => array(
+                'group_class' => 'collection'
+            ),
+        ));
+        
+        $builder->add('firm_filter', CollectionType::class, array(
+            'label' => 'Filter by Firm',
+            'entry_type' => FirmFilterType::class,            
+            'required' => false,
+            'allow_add' => true,
+            'allow_delete' => true,
+            'required' => false,
+            'attr' => array(
+                'group_class' => 'collection'
+            ),
+        ));
+        
         $builder->add('orderby', ChoiceType::class, array(
             'label' => 'Order by',
             'choices' => array(
@@ -117,28 +140,6 @@ class TitleSearchType extends AbstractType {
             'data' => 'asc',
         ));
         
-        $builder->add('person_filter', CollectionType::class, array(
-            'label' => 'Filter by Person',
-            'entry_type' => PersonFilterType::class,
-            'allow_add' => true,
-            'allow_delete' => true,
-            'required' => false,
-            'attr' => array(
-                'group_class' => 'collection'
-            ),
-        ));
-        
-        $builder->add('firm_filter', CollectionType::class, array(
-            'label' => 'Filter by Firm',
-            'entry_type' => FirmFilterType::class,            
-            'required' => false,
-            'allow_add' => true,
-            'allow_delete' => true,
-            'required' => false,
-            'attr' => array(
-                'group_class' => 'collection'
-            ),
-        ));
     }
 
     public function configureOptions(OptionsResolver $resolver) {

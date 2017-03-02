@@ -67,12 +67,12 @@ class TitleRepository extends EntityRepository {
         if (isset($data['pubdate']) && $data['pubdate']) {
             $m = array();
             if (preg_match('/^\s*[0-9]{4}\s*$/', $data['pubdate'])) {
-                $qb->andWhere('YEAR(e.pubdate) = :year');
+                $qb->andWhere("YEAR(STRTODATE(e.pubdate, '%Y')) = :year");
                 $qb->setParameter('year', $data['pubdate']);
             } else if (preg_match('/^\s*(\*|[0-9]{4})\s*-\s*(\*|[0-9]{4})\s*$/', $data['pubdate'], $m)) {
                 $from = ($m[1] === '*' ? -1 : $m[1]);
                 $to = ($m[2] === '*' ? 9999 : $m[2]);
-                $qb->andWhere(':from <= YEAR(e.pubdate) AND YEAR(e.pubdate) <= :to');
+                $qb->andWhere(":from <= YEAR(STRTODATE(e.pubdate, '%Y')) AND YEAR(STRTODATE(e.pubdate, '%Y')) <= :to");
                 $qb->setParameter('from', $from);
                 $qb->setParameter('to', $to);
             }
