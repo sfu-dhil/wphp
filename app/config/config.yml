@@ -18,7 +18,6 @@ framework:
     form:            ~
     csrf_protection: ~
     validation:      { enable_annotations: true }
-    #serializer:      { enable_annotations: true }
     templating:
         engines: ['twig']
     default_locale:  "%locale%"
@@ -36,9 +35,14 @@ framework:
 twig:
     form_themes:      
         - 'bootstrap_3_horizontal_layout.html.twig'
-        - 'form/fields.html.twig'
+        - '@NinesUtilBundle/Form/fields.html.twig'
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    paths:
+        '%kernel.root_dir%/../src/Nines/UtilBundle/Resources/views': NinesUtilBundle
+    exception_controller:  NinesUtilBundle:Error:showException
+    globals:
+        comment_service: "@feedback.comment"
 
 # Doctrine Configuration
 doctrine:
@@ -58,8 +62,15 @@ doctrine:
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
         dql:
+            datetime_functions:
+                YEAR: DoctrineExtensions\Query\Mysql\Year 
+                DATE: DoctrineExtensions\Query\Mysql\Date
+                STRTODATE: DoctrineExtensions\Query\Mysql\StrToDate                
             string_functions:
-                MATCH_AGAINST: AppBundle\Extensions\Doctrine\MatchAgainstFunction
+                MATCH_AGAINST: Nines\UtilBundle\Extensions\Doctrine\MatchAgainstFunction
+            numeric_functions:
+                INT: Nines\UtilBundle\Extensions\Doctrine\CastAsIntegerFunction
+                RAND: Nines\UtilBundle\Extensions\Doctrine\RandFunction
 
 # Swiftmailer Configuration
 swiftmailer:
@@ -79,48 +90,43 @@ assetic:
     assets:
         bootstrap_js:
             inputs:
-                - %kernel.root_dir%/../vendor/twitter/bootstrap/dist/js/bootstrap.js
+                - "%kernel.root_dir%/../vendor/twitter/bootstrap/dist/js/bootstrap.js"
         bootstrap_css:
             inputs:
-                - %kernel.root_dir%/../vendor/twitter/bootstrap/dist/css/bootstrap.css
-                - %kernel.root_dir%/../vendor/twitter/bootstrap/dist/css/bootstrap-theme.css
+                - "%kernel.root_dir%/../vendor/twitter/bootstrap/dist/css/bootstrap.css"
+                - "%kernel.root_dir%/../vendor/twitter/bootstrap/dist/css/bootstrap-theme.css"
             filters: [cssrewrite]
 
         bootstrap_glyphicons_ttf:
             inputs:
-                - %kernel.root_dir%/../vendor/twitter/bootstrap/dist/fonts/glyphicons-halflings-regular.ttf
+                - "%kernel.root_dir%/../vendor/twitter/bootstrap/dist/fonts/glyphicons-halflings-regular.ttf"
             output: "fonts/glyphicons-halflings-regular.ttf"
         bootstrap_glyphicons_eot:
             inputs:
-                - %kernel.root_dir%/../vendor/twitter/bootstrap/dist/fonts/glyphicons-halflings-regular.eot
+                - "%kernel.root_dir%/../vendor/twitter/bootstrap/dist/fonts/glyphicons-halflings-regular.eot"
             output: "fonts/glyphicons-halflings-regular.eot"
-#        bootstrap_glyphicons_svg:
-#            inputs:
-#                - "'%kernel.root_dir%/../vendor/twitter/bootstrap/dist/fonts/glyphicons-halflings-regular.svg"
-#            output: "fonts/glyphicons-halflings-regular.svg"
         bootstrap_glyphicons_woff:
             inputs:
-                - %kernel.root_dir%/../vendor/twitter/bootstrap/dist/fonts/glyphicons-halflings-regular.woff
+                - "%kernel.root_dir%/../vendor/twitter/bootstrap/dist/fonts/glyphicons-halflings-regular.woff"
             output: "fonts/glyphicons-halflings-regular.woff"
         bootstrap_glyphicons_woff2:
             inputs:
-                - %kernel.root_dir%/../vendor/twitter/bootstrap/dist/fonts/glyphicons-halflings-regular.woff2
+                - "%kernel.root_dir%/../vendor/twitter/bootstrap/dist/fonts/glyphicons-halflings-regular.woff2"
             output: "fonts/glyphicons-halflings-regular.woff2"
 
         jquery:
             inputs:
-                - %kernel.root_dir%/../vendor/components/jquery/jquery.js   
-fos_user:
-    db_driver: orm
-    firewall_name: main
-    user_class: AppUserBundle\Entity\User
-    profile:
-        form:
-            type: AppUserBundle\Form\ProfileType
-    change_password:
-        form:
-            type: AppUserBundle\Form\PasswordType
-            
+                - "%kernel.root_dir%/../vendor/components/jquery/jquery.js"                   
+        typeahead:
+            inputs:
+                - "%kernel.root_dir%/../vendor/twitter/typeahead.js/dist/typeahead.bundle.min.js"
+        bloodhound:
+            inputs:
+                - "%kernel.root_dir%/../vendor/twitter/typeahead.js/dist/bloodhound.min.js"
+        handlebars:
+            inputs:
+                - "%kernel.root_dir%/../vendor/components/handlebars.js/handlebars.js"
+                
 knp_paginator:
     page_range: 5                      # default page range used in pagination control
     default_options:
@@ -131,3 +137,49 @@ knp_paginator:
     template:
         pagination: KnpPaginatorBundle:Pagination:twitter_bootstrap_v3_pagination.html.twig     # bootstrapy pagination
         sortable: KnpPaginatorBundle:Pagination:sortable_link.html.twig # sort link template
+
+fos_user:
+    db_driver: orm
+    firewall_name: main
+    user_class: Nines\UserBundle\Entity\User
+    profile:
+        form:
+            type: Nines\UserBundle\Form\ProfileType
+    change_password:
+        form:
+            type: Nines\UserBundle\Form\PasswordType
+            
+ivory_ck_editor:
+    input_sync: true
+    default_config: wphp_config
+    configs:
+        wphp_config:
+            toolbar: standard
+
+knp_menu:
+    twig:
+        template: KnpMenuBundle::menu.html.twig
+
+nines_feedback:
+    default_status: submitted
+    public_status: published
+    commenting:
+        firm:
+            class: AppBundle\Entity\Firm
+            route: firm_show
+        person:
+            class: AppBundle\Entity\Person
+            route: person_show
+        title:
+            class: AppBundle\Entity\Title
+            route: title_show
+        blog_post:
+            class: Nines\BlogBundle\Post
+            route: post_show
+        blog_page:
+            class: Nines\BlogBundle\Page
+            route: page_show
+
+nines_blog:
+    default_status: draft
+    default_category: none

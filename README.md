@@ -32,7 +32,7 @@ process for installing a Symfony application.
   ```
 
 1. Install composer locally, mostly 
-  following [https://getcomposer.org/download/](the instructions).
+  following [the instructions](https://getcomposer.org/download/).
   
   ```bash
   php composer-setup.php --install-dir=vendor/bin --filename=composer
@@ -53,7 +53,7 @@ process for installing a Symfony application.
 
 1. Update file permissions. The user running the web server must 
   be able to write to `var/cache/*` and `var/logs/*`. The symfony
-  docs provide [http://symfony.com/doc/current/setup/file_permissions.html](recommended commands).
+  docs provide [recommended commands](http://symfony.com/doc/current/setup/file_permissions.html).
   depending on your OS.
   
 1. Load the schema into the database. This is done with the 
@@ -72,8 +72,39 @@ process for installing a Symfony application.
 
 1. Configure the web server. The application's `web/` directory must
   be accessible to the world. Symfony 
-  provides [http://symfony.com/doc/current/setup/web_server_configuration.html](example configurations)
+  provides [example configurations](http://symfony.com/doc/current/setup/web_server_configuration.html)
   for most server setups.
   
 At this point, the web interface should be up and running, and you should
 be able to login by following the Login link in the top right menu bar.
+
+Updates
+----
+
+Applying updates from git shouldn't be difficult.
+
+1. Get the updates from a git remote
+
+  ```bash
+  git pull
+  ```
+
+1. Install any updated composer dependencies.
+
+  ```bash
+  php -d memory_limit=-1 ./vendor/bin/composer install -o
+  ```
+
+1. Apply any database schema updates
+
+  ```bash
+  ./bin/console doctrine:schema:update --force
+  ```
+
+1. Clear the cache 
+
+  ```
+  ./bin/console cache:clear --env=prod
+  ```
+
+That should be it.

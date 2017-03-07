@@ -9,13 +9,30 @@
 
 {% block body %}
 
-	<div class='btn-toolbar pull-right'>
+    <form method="get" class="form-horizontal" action="{{ path('person_jump') }}">
+        <fieldset>
+            <div class='form-group'>
+                <label class='col-sm-2 control-label' for='q'>Jump to ID</label>
+                <div class='col-sm-4'>
+                    <div class='input-group'>
+                        <input type='text' name='q' id='q' class='form-control' value=''>
+                        <span class="input-group-btn">
+                            <button class="btn btn-primary" type="submit">
+                                <span class='glyphicon glyphicon-share-alt'></span>
+                                Jump
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+
+
+    <div class='btn-toolbar pull-right'>
         <div class='btn-group'>
             <a href="{{ path('person_search') }}" class="btn btn-default">
                 <span class="glyphicon glyphicon-search"></span> Search
-            </a>
-            <a href="{{ path('person_fulltext') }}" class="btn btn-default">
-                <span class="glyphicon glyphicon-search"></span> Fulltext
             </a>
         </div>
     </div>
@@ -23,9 +40,9 @@
     <table class="table table-bordered table-condensed table-hover table-striped">
         <thead>
             <tr>
+                <th>Id</th>
                 <th>Last name</th>
                 <th>First name</th>
-                <th>Title</th>
                 <th>Gender</th>
                 <th>Date of birth</th>
                 <th>Date of death</th>
@@ -34,22 +51,20 @@
 			</tr>
         </thead>
         <tbody>
-			{% for person in people %}
-				<tr>
-					<td>
-						<a href="{{ path('person_show', { 'id': person.id }) }}">
-							{{ person.lastName }}
-						</a>
-					</td>
-					<td>{{ person.firstName }}</td>
-					<td>{{ person.title }}</td>
-					<td>{{ person.gender }}</td>
-					<td>{{ person.dob }}</td>
-					<td>{{ person.dod }}</td>
-					<td>{% if person.checked %}Yes{% else %}No{% endif %}</td>
-					<td>{% if person.finalcheck %}Yes{% else %}No{% endif %}</td>
-				</tr>
-			{% endfor %}
+            {% for person in people %}
+                <tr>
+                    <td>{{ person.id }}</td>
+                    <td>
+                        <a href="{{ path('person_show', { 'id': person.id }) }}">
+                            {{ person.lastName }}
+                        </a>
+                    </td>
+                    <td>{{ person.firstName }}</td>
+                    <td>{{ person.gender }}</td>
+                    <td>{{ person.dob }} {{ person.cityOfBirth.name }}</td>
+                    <td>{{ person.dod }} {{ person.cityOfDeath.name }}</td>
+                </tr>
+            {% endfor %}
         </tbody>
     </table>
 

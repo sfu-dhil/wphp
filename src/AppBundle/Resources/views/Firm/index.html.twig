@@ -9,13 +9,29 @@
 
 {% block body %}
 
-        <div class='btn-toolbar pull-right'>
+    <form method="get" class="form-horizontal" action="{{ path('firm_jump') }}">
+        <fieldset>
+            <div class='form-group'>
+                <label class='col-sm-2 control-label' for='q'>Jump to ID</label>
+                <div class='col-sm-4'>
+                    <div class='input-group'>
+                        <input type='text' name='q' id='q' class='form-control' value=''>
+                        <span class="input-group-btn">
+                            <button class="btn btn-primary" type="submit">
+                                <span class='glyphicon glyphicon-share-alt'></span>
+                                Jump
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+
+    <div class='btn-toolbar pull-right'>
         <div class='btn-group'>
             <a href="{{ path('firm_search') }}" class="btn btn-default">
                 <span class="glyphicon glyphicon-search"></span> Search
-            </a>
-            <a href="{{ path('firm_fulltext') }}" class="btn btn-default">
-                <span class="glyphicon glyphicon-search"></span> Fulltext
             </a>
         </div>
     </div>
@@ -23,6 +39,7 @@
     <table class="table table-bordered table-condensed table-hover table-striped">
         <thead>
             <tr>
+                <th>Id</th>
                 <th>Name</th>
                 <th>Street address</th>
                 <th>Start date</th>
@@ -32,14 +49,15 @@
         <tbody>
         {% for firm in firms %}
             <tr>
+                <td>{{ firm.id }}</td>
                 <td>
                     <a href="{{ path('firm_show', { 'id': firm.id }) }}">
                         {{ firm.name }}
                     </a>
                 </td>
-                <td>{{ firm.streetAddress }}</td>
-                <td>{{ firm.startDate }}</td>
-                <td>{{ firm.endDate }}</td>
+                <td>{{ firm.streetAddress }}</td>                
+                <td>{% if firm.startDate %}{{ firm.startDate|date('Y') }}{% endif %}</td>
+                <td>{% if firm.endDate %}{{ firm.endDate|date('Y') }}{% endif %}</td>
                 <td>{% if firm.finalcheck %}Yes{% else %}No{% endif %}</td>
             </tr>
         {% endfor %}

@@ -9,15 +9,16 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="title", 
  *  indexes={
- *      @ORM\Index(name="location_of_printing", columns={"location_of_printing"}), 
- *      @ORM\Index(name="format_id", columns={"format_id"}), 
- *      @ORM\Index(name="genre_id", columns={"genre_id"}), 
- *      @ORM\Index(name="source", columns={"source"}), 
- *      @ORM\Index(name="source2", columns={"source2"}), 
- *      @ORM\Index(name="title", columns={"title"}, flags={"fulltext"}), 
- *      @ORM\Index(name="author", columns={"signed_author"}, flags={"fulltext"}), 
- *      @ORM\Index(name="titleauthor", columns={"title", "signed_author"}, flags={"fulltext"}), 
- *      @ORM\Index(name="imprint", columns={"imprint"}, flags={"fulltext"})
+ *      @ORM\Index(name="location_idx", columns={"location_of_printing"}), 
+ *      @ORM\Index(name="format_idx", columns={"format_id"}), 
+ *      @ORM\Index(name="genre_idx", columns={"genre_id"}), 
+ *      @ORM\Index(name="source_idx", columns={"source"}), 
+ *      @ORM\Index(name="source2_idx", columns={"source2"}), 
+ *      @ORM\Index(name="title_idx", columns={"title"}, flags={"fulltext"}), 
+ *      @ORM\Index(name="author_idx", columns={"signed_author"}, flags={"fulltext"}), 
+ *      @ORM\Index(name="pseudonym_idx", columns={"pseudonym"}, flags={"fulltext"}), 
+ *      @ORM\Index(name="titleauthor_idx", columns={"title", "signed_author"}, flags={"fulltext"}), 
+ *      @ORM\Index(name="imprint_idx", columns={"imprint"}, flags={"fulltext"})
  * })
  * @ORM\Entity(repositoryClass="AppBundle\Repository\TitleRepository")
  */
@@ -26,7 +27,7 @@ class Title
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="bigint", nullable=false)
+     * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -42,14 +43,14 @@ class Title
     /**
      * @var string
      *
-     * @ORM\Column(name="signed_author", type="text", length=16777215, nullable=true)
+     * @ORM\Column(name="signed_author", type="text", nullable=true)
      */
     private $signedAuthor;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="surrogate", type="text", length=16777215, nullable=true)
+     * @ORM\Column(name="surrogate", type="text", nullable=true)
      */
     private $surrogate;
 
@@ -63,7 +64,7 @@ class Title
     /**
      * @var string
      *
-     * @ORM\Column(name="imprint", type="text", length=16777215, nullable=true)
+     * @ORM\Column(name="imprint", type="text", nullable=true)
      */
     private $imprint;
 
@@ -91,14 +92,14 @@ class Title
     /**
      * @var boolean
      *
-     * @ORM\Column(name="size_l", type="boolean", nullable=true)
+     * @ORM\Column(name="size_l", type="integer", nullable=true)
      */
     private $sizeL;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="size_w", type="boolean", nullable=true)
+     * @ORM\Column(name="size_w", type="integer", nullable=true)
      */
     private $sizeW;
 
@@ -161,7 +162,7 @@ class Title
     /**
      * @var string
      *
-     * @ORM\Column(name="shelfmark", type="text", length=16777215, nullable=true)
+     * @ORM\Column(name="shelfmark", type="text", nullable=true)
      */
     private $shelfmark;
 
@@ -182,7 +183,7 @@ class Title
     /**
      * @var string
      *
-     * @ORM\Column(name="notes", type="text", length=16777215, nullable=true)
+     * @ORM\Column(name="notes", type="text", nullable=true)
      */
     private $notes;
 
@@ -1011,4 +1012,8 @@ class Title
     {
         return $this->titleFirmroles;
     }
+	
+	public function __toString() {
+		return $this->title;
+	}
 }

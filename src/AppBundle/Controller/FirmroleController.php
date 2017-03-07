@@ -53,5 +53,4 @@ class FirmroleController extends Controller
             'firmrole' => $firmrole,
         );
     }
-
 }

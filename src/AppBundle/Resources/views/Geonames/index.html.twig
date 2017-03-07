@@ -13,23 +13,9 @@
             <tr>
                 <th>Geoname ID</th>
                 <th>Name</th>
-                <th>ASCII name</th>
                 <th>Alternate names</th>
-                <th>Latitude</th>
-                <th>Longitude</th>
-                <th>Feature class</th>
-                <th>Feature code</th>
                 <th>Country</th>
-                <th>CC 2</th>
-                <th>Admin 1</th>
-                <th>Admin 2</th>
-                <th>Admin 3</th>
-                <th>Admin 4</th>
-                <th>Population</th>
-                <th>Elevation</th>
-                <th>GTOPO30</th>
-                <th>Timezone</th>
-                <th>Mod date</th>            </tr>
+            </tr>
         </thead>
         <tbody>
         {% for geoname in geonames %}
@@ -40,23 +26,8 @@
                     </a>
                 </td>
                 <td>{{ geoname.name }}</td>
-                <td>{{ geoname.asciiname }}</td>
                 <td>{{ geoname.alternatenames }}</td>
-                <td>{{ geoname.latitude }}</td>
-                <td>{{ geoname.longitude }}</td>
-                <td>{{ geoname.fclass }}</td>
-                <td>{{ geoname.fcode }}</td>
                 <td>{{ geoname.country }}</td>
-                <td>{{ geoname.cc2 }}</td>
-                <td>{{ geoname.admin1 }}</td>
-                <td>{{ geoname.admin2 }}</td>
-                <td>{{ geoname.admin3 }}</td>
-                <td>{{ geoname.admin4 }}</td>
-                <td>{{ geoname.population }}</td>
-                <td>{{ geoname.elevation }}</td>
-                <td>{{ geoname.gtopo30 }}</td>
-                <td>{{ geoname.timezone }}</td>
-                <td>{% if geoname.moddate %}{{ geoname.moddate|date('Y-m-d') }}{% endif %}</td>
             </tr>
         {% endfor %}
         </tbody>

@@ -8,6 +8,11 @@ use Symfony\Component\Validator\Constraints\Collection;
 
 /**
  * Firm
+ * 
+ * Doctrine isn't able to manage the unique constraint on this table at all. It
+ * must be created manually:
+ * 
+ * CREATE UNIQUE INDEX `unique` ON firm (name(100), city, start_date, end_date);
  *
  * @ORM\Table(name="firm", 
  *  uniqueConstraints={
@@ -16,6 +21,7 @@ use Symfony\Component\Validator\Constraints\Collection;
  *  indexes={
  *      @ORM\Index(name="city", columns={"city"}), 
  *      @ORM\Index(name="full", columns={"name", "street_address"}, flags={"fulltext"}), 
+ *      @ORM\Index(name="address_ft_idx", columns={"street_address"}, flags={"fulltext"}), 
  *      @ORM\Index(name="firmname", columns={"name"}, flags={"fulltext"})}
  * )
  * @ORM\Entity(repositoryClass="AppBundle\Repository\FirmRepository")
@@ -25,7 +31,7 @@ class Firm
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="bigint", nullable=false)
+     * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -34,14 +40,14 @@ class Firm
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="text", length=16777215, nullable=true)
+     * @ORM\Column(name="name", type="text", nullable=true)
      */
     private $name;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="street_address", type="text", length=16777215, nullable=true)
+     * @ORM\Column(name="street_address", type="text", nullable=true)
      */
     private $streetAddress;
 
@@ -279,4 +285,8 @@ class Firm
     {
         return $this->titleFirmroles;
     }
+	
+	public function __toString() {
+		return $this->name;
+	}
 }

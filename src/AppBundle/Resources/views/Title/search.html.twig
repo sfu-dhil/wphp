@@ -2,71 +2,48 @@
 
 {% block pageheader %} 
     <h1>Title Search</h1>
-    {% if titles|length > 0 %}
-        <p class="count">
-            Displaying {{ titles|length }} titles of {{ titles.getTotalItemCount }} total.
-        </p>
-    {% endif %}
-{% endblock %} 
+{% endblock %}
 
 {% block body %}
 
-    <form method="get" class="form-horizontal">
-        <fieldset>
-            <legend>Title search</legend>
-            <div class='form-group'>
-                <label class='col-sm-2 control-label' for='q'>Title contains</label>
-                <div class='col-sm-10'>
-                    <div class='input-group'>
-                        <input type='text' name='q' id='q' class='form-control' value='{{ q }}'>
-                        <span class="input-group-btn">
-                            <button class="btn btn-primary" type="submit">
-                                <span class='glyphicon glyphicon-search'></span>
-                                Search
-                            </button>
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </fieldset>
-    </form>
+    {{ form_start(search_form) }}
+    {{ form_widget(search_form) }}    
+    <div class="form-group">
+        <div class="col-sm-2"></div>
+
+        <div class="col-sm-2">
+            <input type="submit" value="Search" class="btn btn-primary" />            
+        </div>
+        <div class="col-sm-2">
+            <a class="btn btn-default" href="{{ path('title_search') }}">Reset</a>
+        </div>
+        <div class='col-sm-2'>
+            <div class='btn-group'>
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Export <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a href="{{ path('title_search_export', {'format': 'mla'}) }}&{{app.request.queryString}}">MLA</a></li>
+                    <li><a href="{{ path('title_search_export', {'format': 'chicago'}) }}&{{app.request.queryString}}">Chicago</a></li>
+                    <li><a href="{{ path('title_search_export', {'format': 'apa'}) }}&{{app.request.queryString}}">APA</a></li>
+                    <li><a href="{{ path('title_search_export', {'format': 'bibtex'}) }}&{{app.request.queryString}}">BibTex</a></li>
+                </ul>
+            </div>                
+        </div>
+    </div>
+    {{ form_end(search_form) }}
 
     {% if titles|length > 0 %}
-        <table class="table table-bordered table-condensed table-hover table-striped">
-            <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Signed author</th>
-                    <th>Surrogate</th>
-                    <th>Pseudonym</th>
-                    <th>Imprint</th>
-                    <th>Pubdate</th>
-                    <th>Edition</th>
-                    <th>Volumes</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for title in titles %}
-                    <tr>
-                        <td>
-                            <a href="{{ path('title_show', { 'id': title.id }) }}">
-                                {{ title.title }}
-                            </a>
-                        </td>
-                        <td>{{ title.signedAuthor }}</td>
-                        <td>{{ title.surrogate }}</td>
-                        <td>{{ title.pseudonym }}</td>
-                        <td>{{ title.imprint }}</td>
-                        <td>{{ title.pubdate }}</td>
-                        <td>{{ title.edition }}</td>
-                        <td>{% if title.volumes %}Yes{% else %}No{% endif %}</td>
-                    </tr>
+        Displaying {{ titles|length }} titles of {{ titles.getTotalItemCount }} total.
+        <ul>
+            {% for title in titles %}
+                <li>{{ title }}</li>
                 {% endfor %}
-            </tbody>
-        </table>
+        </ul>
 
         <div class="navigation">
             {{ knp_pagination_render(titles) }}
         </div>
     {% endif %}
+
 {% endblock %}

@@ -2,9 +2,13 @@
 
  {% block pageheader %} 
     <h1>Person List</h1>
+    {% if people|length > 0 %}
     <p class="count">
         Displaying {{ people|length }} people of {{ people.getTotalItemCount }} total.
+    {% elseif  q %}
+        <p>Your search for <i>{{ q }}</i> returned zero results.</p>
     </p>
+    {% endif %}
  {% endblock %} 
 
 {% block body %}
@@ -29,6 +33,7 @@
         </fieldset>
     </form>
         
+    {% if people|length > 0 %}
     <table class="table table-bordered table-condensed table-hover table-striped">
         <thead>
             <tr>
@@ -65,5 +70,6 @@
     <div class="navigation">
         {{ knp_pagination_render(people) }}
     </div>
+    {% endif %}
 
 {% endblock %}

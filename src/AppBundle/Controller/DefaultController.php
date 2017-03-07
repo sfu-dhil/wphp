@@ -2,11 +2,11 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Form\QueryType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -17,11 +17,34 @@ class DefaultController extends Controller {
 	 * @Template()
 	 */
 	public function indexAction(Request $request) {
-		// replace this example code with whatever you need
+        $em = $this->getDoctrine()->getManager();
+        $postQuery = $em->getRepository('NinesBlogBundle:Post')->recentQuery(
+            false,
+            $this->getParameter('nines_blog.homepage_posts')
+        );
+        $blocksize = $this->getParameter('wphp.homepage_entries');
+        $titles = $em->getRepository('AppBundle:Title')->random($blocksize);
+        $persons = $em->getRepository('AppBundle:Person')->random($blocksize);
+        $firms = $em->getRepository('AppBundle:Firm')->random($blocksize);
+        
 		return [
-			'base_dir' => realpath($this->getParameter('kernel.root_dir') . '/..'),
+            'posts' => $postQuery->execute(),
+            'titles' => $titles,
+            'persons' => $persons,
+            'firms' => $firms,
 		];
 	}
+        
+	/**
+	 * @Route("/query", name="search_query")
+	 * @Template()
+	 */
+    public function queryAction(Request $request) {
+        $form = $this->createForm(QueryType::class);
+        return array(
+            'form' => $form->createView(),
+        );
+    }
 
 	private function searchForm() {
 		$builder = $this->createFormBuilder();
@@ -96,7 +119,6 @@ class DefaultController extends Controller {
 		$form->handleRequest($request);
 		if ($form->isSubmitted()) {
 			$data = $form->getData();
-			dump($data);
 			$q = $this->buildQuery($data);
 			$paginator = $this->get('knp_paginator');
 			$titles = $paginator->paginate($q, $request->query->getint('page', 1), 25);
@@ -109,5 +131,4 @@ class DefaultController extends Controller {
 			'titles' => $titles,
 		];
 	}
-
 }

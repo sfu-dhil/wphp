@@ -2,8 +2,16 @@ app:
     resource: "@AppBundle/Controller/"
     type:     annotation
 
-app_user:
-    resource: "@AppUserBundle/Controller/"
+nines_blog:
+    resource: "@NinesBlogBundle/Controller/"
+    type: annotation
+
+nines_user:
+    resource: "@NinesUserBundle/Controller/"
+    type: annotation
+
+nines_feedback:
+    resource: "@NinesFeedbackBundle/Controller/"
     type: annotation
 
 fos_user:
