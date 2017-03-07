@@ -1,0 +1,72 @@
+<!--Sets variables to be used in all styles-->
+{% set authors = title.getTitleRoles('Author') %}
+{% set authorCount = authors|length %}
+
+<!--Author(s)-->
+{% if authorCount == 0 %}
+{% elseif authorCount == 1 %}
+	{% for author in authors %}
+		<!--Creates array of name parts in firstName for one author-->
+		{% set firstNameSplit = author.person.firstName|split(' ') %}
+		{{ author.person.lastName }}, 
+		{% for namePart in firstNameSplit %}
+			{% if loop.first %}
+				{{ namePart }}
+			{% else %}
+				{{ namePart|first }}.
+			{% endif %}
+			{% if firstNameSplit|length == 1 %}.{% endif %}
+		{% endfor %}
+	{% endfor %}
+
+{% else %}		
+	{% for author in authors %}
+		<!--Creates array of name parts in firstName for one author-->
+		{% set firstNameSplit = author.person.firstName|split(' ') %}
+
+		{% if loop.first %}
+			{{ author.person.lastName }}, 
+			{% for namePart in firstNameSplit %}
+				{% if loop.first %}
+					{{ namePart }}
+				{% else %}
+					{{ namePart|first }}.
+				{% endif %},
+			{% endfor %}
+
+		{% elseif not (loop.first or loop.last) %}
+			{% for namePart in firstNameSplit %}
+				{% if loop.first %}
+					{{ namePart }}
+				{% else %}
+					{{ namePart|first }}.
+				{% endif %} 
+				{% endfor %}
+				{{ author.person.lastName }},
+
+		{% elseif loop.last %}
+			and {% for namePart in firstNameSplit %}
+				{% if loop.first %}
+					{{ namePart }}
+				{% else %}
+					{{ namePart|first }}.
+				{% endif %}
+				{% endfor %}
+				{{ author.person.lastName }}.
+		{% endif %}
+	{% endfor %}
+{% endif %}
+<!--Title-->
+<em><a href="{{path("title_show", {"id": title.id})}}">{{ title.title }}</a></em>
+{%- if title.title matches '{[^[:punct:]]$}' %}.{% endif %}
+<!--Location-->
+{{title.locationOfPrinting.name}}:
+<!--Publisher-->
+{% for tfr in title.titleFirmRoles %}
+	{% if tfr.firmrole.name == 'Publisher' %}
+		{% set firm = tfr.firm %}
+		{{ firm.name }},
+	{% endif %}
+{% endfor %}
+<!--Publication year-->
+{{ title.pubdate }}.

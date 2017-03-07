@@ -652,28 +652,24 @@ class Title
     }
 		
 		/**
-     * Get totalPrice
+     * Get the totalPrice in pence.
      *
      * @return integer
      */
 		public function getTotalPrice()
 		{
-			$L = 0;
-			$S = 0;
-			$D = 0;
+			$totalPrice = 0;
 			
-			if ($this->pricePound) {
-				$L = $this->pricePound * 240;
+			if ($this->pricePound && is_int($this->pricePound)) {
+				$totalPrice += $this->pricePound * 240;
 			}
 			
-			if ($this->priceShilling) {
-				$S = $this->priceShilling * 12;
+			if ($this->priceShilling && is_int($this->priceShilling)) {
+				$totalPrice += $this->priceShilling * 12;
 			}
-			if ($this->pricePence) {
-				$D = $this->pricePence;
+			if ($this->pricePence && is_int($this->pricePence)) {
+				$totalPrice += $this->pricePence;
 			}
-			
-			$totalPrice = $L + $S + $D;
 			
 			return $totalPrice;
 		}
