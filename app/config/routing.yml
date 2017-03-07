@@ -11,7 +11,7 @@ nines_user:
     type: annotation
 
 nines_feedback:
-    resource: "@FeedbackBundle/Controller/"
+    resource: "@NinesFeedbackBundle/Controller/"
     type: annotation
 
 fos_user:

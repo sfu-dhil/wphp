@@ -35,12 +35,12 @@ framework:
 twig:
     form_themes:      
         - 'bootstrap_3_horizontal_layout.html.twig'
-        - '@UtilBundle/Form/fields.html.twig'
+        - '@NinesUtilBundle/Form/fields.html.twig'
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
     paths:
-        '%kernel.root_dir%/../src/Nines/UtilBundle/Resources/views': UtilBundle
-    exception_controller:  UtilBundle:Error:showException
+        '%kernel.root_dir%/../src/Nines/UtilBundle/Resources/views': NinesUtilBundle
+    exception_controller:  NinesUtilBundle:Error:showException
     globals:
         comment_service: "@feedback.comment"
 
@@ -160,7 +160,7 @@ knp_menu:
     twig:
         template: KnpMenuBundle::menu.html.twig
 
-feedback:
+nines_feedback:
     default_status: submitted
     public_status: published
     commenting:
