@@ -123,6 +123,14 @@
 				<td>{{ title.pricePence }}</td>
             </tr>
             <tr>
+            	<th>Total price (in pence)</th>
+            	<td>
+            		{% if title.totalPrice > 0 %}
+            		{{ title.totalPrice }}
+            		{% endif %}
+            	</td>
+            </tr>
+            <tr>
                 <th>Shelf marks</th>
                 <td>
                     {% for mark in title.shelfmark|split(';') %}
@@ -131,7 +139,7 @@
                 </td>
             </tr>
             <tr>
-                <th>Checked</th>
+                <th>Hand checked</th>
                 <td>{% if title.checked %}Yes{% else %}No{% endif %}</td>
             </tr>
             <tr>
@@ -144,5 +152,57 @@
             </tr>
         </tbody>
     </table>
+
+<h3>Bibliographic Entry</h3>
+<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#bibRef">Cite this item</button>
+<div class="modal fade" id="bibRef" tabindex="-1" role="dialog" aria-labelledby="citation">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h3 class="modal-title" id="citation"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Cite</h3>
+			</div>
+			<div class="modal-body">
+				<!--MLA entry-->
+				<div id="mla">
+					<h4>MLA</h4>
+					<div class="well">
+						<p>
+							{% include "AppBundle:Title:mla.html.twig" with {'title': title} %}
+						</p>
+					</div>
+				</div>
+				<!--APA entry-->
+				<div id="apa">
+					<h4>APA</h4>
+					<div class="well">
+						<p>
+							{% include "AppBundle:Title:apa.html.twig" with {'title': title} %}
+						</p>
+					</div>
+				</div>
+				<!--Chicago/Turabian: Author-Date entry-->
+				<div id="chicago">
+					<h4>Chicago/Turabian: Author-Date</h4>
+					<div class="well">
+						<p>
+							{% include "AppBundle:Title:chicago.html.twig" with {'title': title} %}
+						</p>
+					</div>
+				</div>
+				<!--BibTeX-->
+				<div id="bibtex">
+					<h4>BibTeX</h4>
+					<div class="well">
+						<pre>{% include "AppBundle:Title:bibtex.html.twig" with {'title': title} %}</pre>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
 
 {% endblock %}

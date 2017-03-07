@@ -650,7 +650,30 @@ class Title
     {
         return $this->pricePence;
     }
-
+		
+		/**
+     * Get the totalPrice in pence.
+     *
+     * @return integer
+     */
+		public function getTotalPrice()
+		{
+			$totalPrice = 0;
+			
+			if ($this->pricePound && is_int($this->pricePound)) {
+				$totalPrice += $this->pricePound * 240;
+			}
+			
+			if ($this->priceShilling && is_int($this->priceShilling)) {
+				$totalPrice += $this->priceShilling * 12;
+			}
+			if ($this->pricePence && is_int($this->pricePence)) {
+				$totalPrice += $this->pricePence;
+			}
+			
+			return $totalPrice;
+		}
+		
     /**
      * Set sourceId
      *
@@ -944,9 +967,14 @@ class Title
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getTitleRoles()
+    public function getTitleRoles($name = null)
     {
+      if($name === null) {
         return $this->titleRoles;
+      }
+      return $this->titleRoles->filter(function(TitleRole $titleRole) use ($name) {
+        return $titleRole->getRole()->getName() === $name;
+      });
     }
 
 
