@@ -23,6 +23,14 @@ process for installing a Symfony application.
   git clone https://github.com/sfu-dhil/wphp.git
   ```
 
+1. Get the submodules from Git. There is quite a bit of reusable code in the
+application, and it's organized with git submodules.
+
+  ```bash
+  git submodule init
+  git submodule update
+  ```
+
 1. Create a database and database user.
   
   ```sql
@@ -87,6 +95,12 @@ Applying updates from git shouldn't be difficult.
 
   ```bash
   git pull
+  ```
+
+1. Update the git submodules.
+
+  ```bash
+  git submodule update
   ```
 
 1. Install any updated composer dependencies.
