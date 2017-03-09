@@ -100,7 +100,7 @@ Applying updates from git shouldn't be difficult.
 1. Update the git submodules.
 
   ```bash
-  git submodule update
+  git submodule update --recursive --remote
   ```
 
 1. Install any updated composer dependencies.
