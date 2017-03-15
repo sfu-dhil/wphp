@@ -15,9 +15,6 @@ use Symfony\Component\Validator\Constraints\Collection;
  * CREATE UNIQUE INDEX `unique` ON firm (name(100), city, start_date, end_date);
  *
  * @ORM\Table(name="firm", 
- *  uniqueConstraints={
- *		@ORM\UniqueConstraint(name="unique", columns={"name", "city", "start_date", "end_date"})
- *	}, 
  *  indexes={
  *      @ORM\Index(name="city", columns={"city"}), 
  *      @ORM\Index(name="full", columns={"name", "street_address"}, flags={"fulltext"}), 
