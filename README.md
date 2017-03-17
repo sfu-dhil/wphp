@@ -60,7 +60,7 @@ application, and it's organized with git submodules.
   ```
 
 1. Update file permissions. The user running the web server must 
-  be able to write to `var/cache/*` and `var/logs/*`. The symfony
+  be able to write to `var/cache/*` and `var/logs/*` and `var/sessions/*`. The symfony
   docs provide [recommended commands](http://symfony.com/doc/current/setup/file_permissions.html).
   depending on your OS.
   
@@ -75,7 +75,16 @@ application, and it's organized with git submodules.
   with the symfony console.
   
   ```bash
-  ./bin/console fos:user:create --super-admin
+  ./bin/console fos:user:create --super-admin  
+  ```
+  
+1. Install the web assets (bundled CSS and Javascript files). Some assets are 
+  managed via Symfony, and some are managed with Assetic. Both commands need to
+  run.
+  
+  ```bash
+  ./bin/console assets:install
+  ./bin/console assetic:dump
   ```
 
 1. Configure the web server. The application's `web/` directory must
@@ -113,6 +122,13 @@ Applying updates from git shouldn't be difficult.
 
   ```bash
   ./bin/console doctrine:schema:update --force
+  ```
+  
+1. Update the web assets.
+  
+  ```bash
+  ./bin/console assets:install
+  ./bin/console assetic:dump
   ```
 
 1. Clear the cache 
