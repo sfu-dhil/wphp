@@ -63,11 +63,6 @@ div.checkbox, div.radio {
     float: left;
 }
 
-.form-group {
-	border-bottom: 1px solid grey;
-	padding-bottom: 12px;
-}
-
 .form-group .form-group {
 	border-bottom: none;
 }
