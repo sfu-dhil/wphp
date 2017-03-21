@@ -19,6 +19,7 @@ class AppKernel extends Kernel {
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new Ivory\CKEditorBundle\IvoryCKEditorBundle(), 
+            new Bmatzner\JQueryUIBundle\BmatznerJQueryUIBundle(),
             
             new AppBundle\AppBundle(),
             

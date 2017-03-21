@@ -117,15 +117,9 @@ assetic:
         jquery:
             inputs:
                 - "%kernel.root_dir%/../vendor/components/jquery/jquery.js"                   
-        typeahead:
+        jquery_ui:
             inputs:
-                - "%kernel.root_dir%/../vendor/twitter/typeahead.js/dist/typeahead.bundle.min.js"
-        bloodhound:
-            inputs:
-                - "%kernel.root_dir%/../vendor/twitter/typeahead.js/dist/bloodhound.min.js"
-        handlebars:
-            inputs:
-                - "%kernel.root_dir%/../vendor/components/handlebars.js/handlebars.js"
+                - "%kernel.root_dir%/../vendor/bmatzner/jquery-ui-bundle/Bmatzner/JQueryUIBundle/Resources/public/js/jquery-ui.js"
                 
 knp_paginator:
     page_range: 5                      # default page range used in pagination control
