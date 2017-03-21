@@ -28,7 +28,7 @@ application, and it's organized with git submodules.
 
   ```bash
   git submodule init
-  git submodule update
+  git submodule update --recursive --remote
   ```
 
 1. Create a database and database user.
