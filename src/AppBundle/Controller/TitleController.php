@@ -148,7 +148,6 @@ class TitleController extends Controller
         $titles = array();
         
         if($form->isValid()) {
-            dump($form->getData());
             $repo = $em->getRepository(Title::class);
             $query = $repo->buildSearchQuery($form->getData());
             $paginator = $this->get('knp_paginator');        
