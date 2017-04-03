@@ -23,8 +23,8 @@ use Symfony\Component\Validator\Constraints\Collection;
  * )
  * @ORM\Entity(repositoryClass="AppBundle\Repository\FirmRepository")
  */
-class Firm
-{
+class Firm {
+
     /**
      * @var integer
      *
@@ -78,24 +78,23 @@ class Firm
      * })
      */
     private $city;
-	
-	/**
-	 * @var Collection|TitleFirmrole[]
-	 * @ORM\OneToMany(targetEntity="TitleFirmrole", mappedBy="firm")
-	 */
-	private $titleFirmroles;
-	
-	public function __construct() {
-		$this->titleFirmroles = new ArrayCollection();
-	}
+
+    /**
+     * @var Collection|TitleFirmrole[]
+     * @ORM\OneToMany(targetEntity="TitleFirmrole", mappedBy="firm")
+     */
+    private $titleFirmroles;
+
+    public function __construct() {
+        $this->titleFirmroles = new ArrayCollection();
+    }
 
     /**
      * Get id
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -106,8 +105,7 @@ class Firm
      *
      * @return Firm
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -118,8 +116,7 @@ class Firm
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -130,8 +127,7 @@ class Firm
      *
      * @return Firm
      */
-    public function setStreetAddress($streetAddress)
-    {
+    public function setStreetAddress($streetAddress) {
         $this->streetAddress = $streetAddress;
 
         return $this;
@@ -142,8 +138,7 @@ class Firm
      *
      * @return string
      */
-    public function getStreetAddress()
-    {
+    public function getStreetAddress() {
         return $this->streetAddress;
     }
 
@@ -154,8 +149,7 @@ class Firm
      *
      * @return Firm
      */
-    public function setStartDate($startDate)
-    {
+    public function setStartDate($startDate) {
         $this->startDate = $startDate;
 
         return $this;
@@ -166,11 +160,10 @@ class Firm
      *
      * @return string
      */
-    public function getStartDate()
-    {
-		if($this->startDate === '0000-00-00') {
-			return null;
-		}
+    public function getStartDate() {
+        if ($this->startDate === '0000-00-00') {
+            return null;
+        }
         return $this->startDate;
     }
 
@@ -181,8 +174,7 @@ class Firm
      *
      * @return Firm
      */
-    public function setEndDate($endDate)
-    {
+    public function setEndDate($endDate) {
         $this->endDate = $endDate;
 
         return $this;
@@ -193,11 +185,10 @@ class Firm
      *
      * @return string
      */
-    public function getEndDate()
-    {
-		if($this->endDate === '0000-00-00') {
-			return null;
-		}
+    public function getEndDate() {
+        if ($this->endDate === '0000-00-00') {
+            return null;
+        }
         return $this->endDate;
     }
 
@@ -208,8 +199,7 @@ class Firm
      *
      * @return Firm
      */
-    public function setFinalcheck($finalcheck)
-    {
+    public function setFinalcheck($finalcheck) {
         $this->finalcheck = $finalcheck;
 
         return $this;
@@ -220,8 +210,7 @@ class Firm
      *
      * @return boolean
      */
-    public function getFinalcheck()
-    {
+    public function getFinalcheck() {
         return $this->finalcheck;
     }
 
@@ -232,8 +221,7 @@ class Firm
      *
      * @return Firm
      */
-    public function setCity(Geonames $city = null)
-    {
+    public function setCity(Geonames $city = null) {
         $this->city = $city;
 
         return $this;
@@ -244,8 +232,7 @@ class Firm
      *
      * @return Geonames
      */
-    public function getCity()
-    {
+    public function getCity() {
         return $this->city;
     }
 
@@ -256,8 +243,7 @@ class Firm
      *
      * @return Firm
      */
-    public function addTitleFirmrole(\AppBundle\Entity\TitleFirmrole $titleFirmrole)
-    {
+    public function addTitleFirmrole(\AppBundle\Entity\TitleFirmrole $titleFirmrole) {
         $this->titleFirmroles[] = $titleFirmrole;
 
         return $this;
@@ -268,8 +254,7 @@ class Firm
      *
      * @param \AppBundle\Entity\TitleFirmrole $titleFirmrole
      */
-    public function removeTitleFirmrole(\AppBundle\Entity\TitleFirmrole $titleFirmrole)
-    {
+    public function removeTitleFirmrole(\AppBundle\Entity\TitleFirmrole $titleFirmrole) {
         $this->titleFirmroles->removeElement($titleFirmrole);
     }
 
@@ -278,12 +263,12 @@ class Firm
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getTitleFirmroles()
-    {
+    public function getTitleFirmroles() {
         return $this->titleFirmroles;
     }
-	
-	public function __toString() {
-		return $this->name;
-	}
+
+    public function __toString() {
+        return $this->name;
+    }
+
 }
