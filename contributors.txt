@@ -1,0 +1,2 @@
+Erik Hanson, SFU, Research Assistant
+Contributed citation formatting, curreny calculation, and data field clean up.
