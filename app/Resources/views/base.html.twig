@@ -55,6 +55,9 @@
                             </a>
                             {{ knp_menu_render('NinesBlogBundle:Builder:postNavMenu') }}
                         </li>
+                        <li>
+                            <a href="{{ asset('docs/html/index.html') }}">Documentation</a>
+                        </li>
 
                         {% if app.user is not null and is_granted('ROLE_ADMIN') %}
                             <li>
