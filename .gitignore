@@ -16,4 +16,7 @@
 /web/bundles/
 /data
 /nbproject
-
+/docs/ui/build/*
+!/docs/ui/build/.gitkeep
+/web/docs/*
+!/web/docs/.gitkeep
