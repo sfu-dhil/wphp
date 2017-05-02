@@ -20,13 +20,6 @@ class PersonSearchType extends AbstractType {
         $builder->setMethod('get');
         $em = $options['entity_manager'];
         
-        $formats = $em->getRepository(Format::class)->findAll(array(
-            'name' => 'ASC',
-        ));
-        $genres = $em->getRepository(Genre::class)->findAll(array(
-            'name' => 'ASC',
-        ));
-
         $builder->add('name', TextType::class, array(
             'label' => 'Name',
             'required' => false,

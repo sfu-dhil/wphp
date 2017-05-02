@@ -63,7 +63,7 @@ class PersonController extends Controller
         } 
         return array(
             'search_form' => $form->createView(),
-            'persons' => $persons,
+            'people' => $persons,
         );
     }
 
@@ -77,7 +77,7 @@ class PersonController extends Controller
      */
     public function jumpAction(Request $request)
     {
-		$q = $request->query->get('q');
+		$q = $request->query->getInt('q');
 		if($q) {
             return $this->redirect($this->generateUrl('person_show', array('id' => $q)));
 		} else {
