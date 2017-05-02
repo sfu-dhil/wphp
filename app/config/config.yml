@@ -43,6 +43,7 @@ twig:
     exception_controller:  NinesUtilBundle:Error:showException
     globals:
         comment_service: "@feedback.comment"
+        google_analytics_id: "%google_analytics_id%"            
 
 # Doctrine Configuration
 doctrine:
