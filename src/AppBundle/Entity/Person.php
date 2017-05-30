@@ -242,6 +242,9 @@ class Person
      */
     public function getDob()
     {
+        if($this->dob === '0000-00-00') {
+            return null;
+        }
         return $this->dob;
     }
 
@@ -266,6 +269,9 @@ class Person
      */
     public function getDod()
     {
+        if($this->dod === '0000-00-00') {
+            return null;
+        }
         return $this->dod;
     }
 

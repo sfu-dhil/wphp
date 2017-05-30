@@ -18,6 +18,7 @@ framework:
     form:            ~
     csrf_protection: ~
     validation:      { enable_annotations: true }
+    #serializer:      { enable_annotations: true }
     templating:
         engines: ['twig']
     default_locale:  "%locale%"
@@ -27,9 +28,14 @@ framework:
         # http://symfony.com/doc/current/reference/configuration/framework.html#handler-id
         handler_id:  session.handler.native_file
         save_path:   "%kernel.root_dir%/../var/sessions/%kernel.environment%"
+        cookie_path: '%router.request_context.base_url%'
+        cookie_domain: '%router.request_context.host%'
+        cookie_secure: '%secure_cookies%'
     fragments:       ~
     http_method_override: true
     assets: ~
+    php_errors:
+        log: true
 
 # Twig Configuration
 twig:
@@ -43,7 +49,9 @@ twig:
     exception_controller:  NinesUtilBundle:Error:showException
     globals:
         comment_service: "@feedback.comment"
-        google_analytics_id: "%google_analytics_id%"            
+    date:
+        format: d.m.Y, H:i:s
+        interval_format: '%%d days'        
 
 # Doctrine Configuration
 doctrine:
@@ -81,47 +89,6 @@ swiftmailer:
     password:  "%mailer_password%"
     spool:     { type: memory }
 
-assetic:
-    debug:          '%kernel.debug%'
-    use_controller: '%kernel.debug%'
-    filters:
-        cssrewrite: ~
-    bundles: 
-        - AppBundle
-    assets:
-        bootstrap_js:
-            inputs:
-                - "%kernel.root_dir%/../vendor/twitter/bootstrap/dist/js/bootstrap.js"
-        bootstrap_css:
-            inputs:
-                - "%kernel.root_dir%/../vendor/twitter/bootstrap/dist/css/bootstrap.css"
-                - "%kernel.root_dir%/../vendor/twitter/bootstrap/dist/css/bootstrap-theme.css"
-            filters: [cssrewrite]
-
-        bootstrap_glyphicons_ttf:
-            inputs:
-                - "%kernel.root_dir%/../vendor/twitter/bootstrap/dist/fonts/glyphicons-halflings-regular.ttf"
-            output: "fonts/glyphicons-halflings-regular.ttf"
-        bootstrap_glyphicons_eot:
-            inputs:
-                - "%kernel.root_dir%/../vendor/twitter/bootstrap/dist/fonts/glyphicons-halflings-regular.eot"
-            output: "fonts/glyphicons-halflings-regular.eot"
-        bootstrap_glyphicons_woff:
-            inputs:
-                - "%kernel.root_dir%/../vendor/twitter/bootstrap/dist/fonts/glyphicons-halflings-regular.woff"
-            output: "fonts/glyphicons-halflings-regular.woff"
-        bootstrap_glyphicons_woff2:
-            inputs:
-                - "%kernel.root_dir%/../vendor/twitter/bootstrap/dist/fonts/glyphicons-halflings-regular.woff2"
-            output: "fonts/glyphicons-halflings-regular.woff2"
-
-        jquery:
-            inputs:
-                - "%kernel.root_dir%/../vendor/components/jquery/jquery.js"                   
-        jquery_ui:
-            inputs:
-                - "%kernel.root_dir%/../vendor/bmatzner/jquery-ui-bundle/Bmatzner/JQueryUIBundle/Resources/public/js/jquery-ui.js"
-                
 knp_paginator:
     page_range: 5                      # default page range used in pagination control
     default_options:
@@ -178,3 +145,6 @@ nines_feedback:
 nines_blog:
     default_status: draft
     default_category: none
+
+nines_user:
+    permission_levels: [ ROLE_ADMIN, ROLE_BLOG_ADMIN, ROLE_COMMENT_ADMIN, ROLE_CONTENT_ADMIN ]

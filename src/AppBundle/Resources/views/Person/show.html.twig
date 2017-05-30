@@ -44,7 +44,7 @@
             </tr>
             <tr>
                 <th>Date of birth</th>
-                <td>{{ person.dob }}</td>
+                <td>{% if person.dob %}{{ person.dob }}{% endif %}</td>
             </tr>
             <tr>
                 <th>Place of birth</th>
@@ -52,7 +52,7 @@
             </tr>
             <tr>
                 <th>Date of death</th>
-                <td>{{ person.dod }}</td>
+                <td>{% if person.dod %}{{ person.dod }}{% endif %}</td>
             </tr>
             <tr>
                 <th>Place of Death</th>
@@ -61,10 +61,25 @@
             <tr>
                 <th>Titles</th>
                 <td>
+                    <p>There are {{ person.titleRoles|length }} titles associated with this person.<p>
+                    <table class="table table-bordered table-condensed table-hover table-striped tablesorter" id="titleRoles">
+                        <thead>
+                            <tr>
+                                <th>Role</th>
+                                <th>Title</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>                        
                     {% for tr in person.titleRoles %}
                         {% set title = tr.title %}
-                        {{ tr.role.name }}: <a href="{{ path('title_show', {'id': title.id}) }}">{{ title.title }}</a><br/>
+                        <tr>
+                            <td>{{ tr.role.name }}</td>
+                            <td><a href="{{ path('title_show', {'id': title.id}) }}">{{ title.title }}</a></td>
+                            <td>{{ title.pubdate }}</td>
+                        </tr>                        
                     {% endfor %}
+                    </table>
                 </td>
             </tr>
             <tr>
@@ -80,4 +95,33 @@
 
     {% include 'NinesFeedbackBundle:Comment:comment-interface.html.twig' with { 'entity': person } %}                
 
+{% endblock %}
+
+{% block styles %}
+    <style type="text/css">
+        /* tables */
+        table.tablesorter thead tr {
+            white-space: nowrap;
+        }
+        table.tablesorter thead tr .header:after {
+            content: ' ↕';
+        }
+        table.tablesorter thead tr .headerSortUp:after {
+            content: ' ↑';
+        }
+        table.tablesorter thead tr .headerSortDown:after {
+            content: ' ↓';
+        }
+    </style>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('bower/tablesorter/jquery.tablesorter.min.js') }}"></script>
+    <script>
+        $(document).ready(function () {
+            $("#titleRoles").tablesorter({
+                sortList: [[0, 0], [1, 0], [2, 0]],
+            });
+        });
+    </script>
 {% endblock %}

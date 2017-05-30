@@ -12,48 +12,25 @@
 {% block body %}
 
     {{ form_start(search_form) }}
+    {{ form_row(search_form.name) }}
+    <div id="controls" class="collapse">
+        {{ form_rest(search_form) }}
+    </div>
     {{ form_widget(search_form) }}
     <div class="form-group">
         <div class="col-sm-2"></div>
 
-        <div class="col-sm-1">
+        <div class="col-sm-10">
             <input type="submit" value="Search" class="btn btn-primary" />            
-        </div>
-        <div class="col-sm-1">
-            <a class="btn btn-default" href="{{ path('person_search') }}">Reset</a>
+            <a class="btn btn-primary" role="button" data-toggle="collapse" href="#controls" aria-expanded="false" aria-controls="collapseExample">Options</a>
+            <a class="btn btn-default" href="{{ path('firm_search') }}">Reset</a>
+            <a class="btn btn-default" href="{{ path('firm_index') }}">Cancel</a>
         </div>
     </div>
     {{ form_end(search_form) }}
 
     {% if people|length %}
-        <table class="table table-bordered table-condensed table-hover table-striped">
-            <thead>
-                <tr>
-                    <th>Last name</th>
-                    <th>First name</th>
-                    <th>Title</th>
-                    <th>Gender</th>
-                    <th>Date of birth</th>
-                    <th>Date of death</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for person in people %}
-                    <tr>
-                        <td>
-                            <a href="{{ path('person_show', { 'id': person.id }) }}">
-                                {{ person.lastName }}
-                            </a>
-                        </td>
-                        <td>{{ person.firstName }}</td>
-                        <td>{{ person.title }}</td>
-                        <td>{{ person.gender }}</td>
-                        <td>{{ person.dob }}</td>
-                        <td>{{ person.dod }}</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+        {{ include('AppBundle:Person:table.html.twig') }}
 
         <div class="navigation">
             {{ knp_pagination_render(people) }}

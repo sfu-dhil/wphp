@@ -1008,9 +1008,14 @@ class Title
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getTitleFirmroles()
+    public function getTitleFirmroles($name = null)
     {
-        return $this->titleFirmroles;
+        if($name === null) {
+            return $this->titleFirmroles;
+        }
+        return $this->titleFirmroles->filter(function(TitleFirmrole $titleFirmrole) use ($name) {
+            return $titleFirmrole->getFirmrole()->getName() === $name;
+        });
     }
 	
 	public function __toString() {

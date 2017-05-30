@@ -3,8 +3,8 @@
 namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints\Collection;
 
 /**
  * Firm
@@ -239,11 +239,11 @@ class Firm {
     /**
      * Add titleFirmrole
      *
-     * @param \AppBundle\Entity\TitleFirmrole $titleFirmrole
+     * @param TitleFirmrole $titleFirmrole
      *
      * @return Firm
      */
-    public function addTitleFirmrole(\AppBundle\Entity\TitleFirmrole $titleFirmrole) {
+    public function addTitleFirmrole(TitleFirmrole $titleFirmrole) {
         $this->titleFirmroles[] = $titleFirmrole;
 
         return $this;
@@ -252,19 +252,31 @@ class Firm {
     /**
      * Remove titleFirmrole
      *
-     * @param \AppBundle\Entity\TitleFirmrole $titleFirmrole
+     * @param TitleFirmrole $titleFirmrole
      */
-    public function removeTitleFirmrole(\AppBundle\Entity\TitleFirmrole $titleFirmrole) {
+    public function removeTitleFirmrole(TitleFirmrole $titleFirmrole) {
         $this->titleFirmroles->removeElement($titleFirmrole);
     }
 
     /**
      * Get titleFirmroles
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
-    public function getTitleFirmroles() {
-        return $this->titleFirmroles;
+    public function getTitleFirmroles($sort = false) {
+        if( ! $sort) {
+            return $this->titleFirmroles;
+        }
+        
+        $iterator = $this->titleFirmroles->getIterator();
+        $iterator->uasort(function(TitleFirmrole $a, TitleFirmrole $b) {
+            $cmp = strcmp($a->getFirmrole()->getName(), $b->getFirmrole()->getName());
+            if($cmp !== 0) {
+                return $cmp;
+            }
+            return strcmp($a->getTitle()->getTitle(), $b->getTitle()->getTitle());
+        });
+        return $iterator;
     }
 
     public function __toString() {

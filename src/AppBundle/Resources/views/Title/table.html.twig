@@ -1,0 +1,42 @@
+<table class="table table-bordered table-condensed table-hover table-striped">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Firms (City)</th>
+            <th>Date
+            <th>Edition</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for title in titles %}
+            <tr>
+                <td>
+                    <a href="{{ path('title_show', { 'id': title.id }) }}">
+                        {{ title.id }}
+                    </a>
+                </td>
+                <td>
+                    <a href="{{ path('title_show', { 'id': title.id }) }}">
+                        {{ title.title }}
+                    </a>
+                </td>
+                <td>
+                    {% for tr in title.titleRoles if tr.role.name == 'Author' %}
+                        {% set person = tr.person %}
+                        <a href="{{ path('person_show', {'id': person.id}) }}">{{ person.lastName }}, {{ person.firstName }}</a><br/>
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for tfr in title.titleFirmRoles if tfr.firmrole.name == 'Publisher' %}
+                        {% set firm = tfr.firm %}
+                        <a href="{{ path('firm_show', {'id': firm.id}) }}">{{ firm.name }} ({{firm.city.name }})</a><br/>
+                    {% endfor %}
+                </td>            
+                <td>{{ title.pubdate }}</td>
+                <td>{{ title.edition }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

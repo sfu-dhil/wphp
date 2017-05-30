@@ -44,25 +44,70 @@
                 <td>{{ firm.city.name }}</td>
             </tr>
             <tr>
-                <th>Titles</th>
-                <td>
-                    {% for tfr in firm.titleFirmroles %}
-                        {% set title = tfr.title %}
-                        {{tfr.firmrole.name}}: <a href="{{ path('title_show', {'id': title.id}) }}">{{ title.title }}</a><br/>
-                    {% endfor %}
-                </td>
-            </tr>
-            <tr>
                 <th>Start date</th>
-                <td>{{ firm.startDate|date('Y') }}</td>
+                <td>{% if firm.startDate %}{{ firm.startDate|date('Y') }}{% endif %}</td>
             </tr>
             <tr>
                 <th>End date</th>
-                <td>{{ firm.endDate|date('Y') }}</td>
+                <td>{% if firm.endDate %}{{ firm.endDate|date('Y') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Titles</th>
+                <td>                        
+                    <p>There are {{ firm.titleFirmroles|length }} titles associated with this firm.</p>
+                    <table class="table table-bordered table-condensed table-hover table-striped tablesorter" id="firmRoles">
+                        <thead>
+                            <tr>
+                                <th>Role</th>
+                                <th>Title</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for tfr in firm.getTitleFirmroles %}
+                                {% set title = tfr.title %}
+                                <tr>
+                                    <td>{{tfr.firmrole.name}}</td>
+                                    <td><a href="{{ path('title_show', {'id': title.id}) }}">{{ title.title }}</a></td>
+                                    <td>{{ title.pubdate }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </td>
             </tr>
         </tbody>
     </table>
 
     {% include 'NinesFeedbackBundle:Comment:comment-interface.html.twig' with { 'entity': firm } %}				
 
+{% endblock %}
+
+{% block styles %}
+    <style type="text/css">
+        /* tables */
+        table.tablesorter thead tr {
+            white-space: nowrap;
+        }
+        table.tablesorter thead tr .header:after {
+            content: ' ↕';
+        }
+        table.tablesorter thead tr .headerSortUp:after {
+            content: ' ↑';
+        }
+        table.tablesorter thead tr .headerSortDown:after {
+            content: ' ↓';
+        }
+    </style>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('bower/tablesorter/jquery.tablesorter.min.js') }}"></script>
+    <script>
+        $(document).ready(function () {
+            $("#firmRoles").tablesorter({
+                sortList: [[0, 0], [1, 0], [2, 0]],
+            });
+        });
+    </script>
 {% endblock %}

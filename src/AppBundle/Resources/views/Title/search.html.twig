@@ -2,44 +2,44 @@
 
 {% block pageheader %} 
     <h1>Title Search</h1>
+    {% if titles|length > 0 %}
+        Displaying {{ titles|length }} titles of {{ titles.getTotalItemCount }} total.
+    {% endif %}
 {% endblock %}
 
 {% block body %}
 
     {{ form_start(search_form) }}
-    {{ form_widget(search_form) }}    
+    {{ form_row(search_form.title) }}
+    <div id="controls" class="collapse">
+        {{ form_rest(search_form) }}    
+    </div>
+    {{ form_widget(search_form) }}
+
     <div class="form-group">
         <div class="col-sm-2"></div>
 
-        <div class="col-sm-2">
+        <div class="col-sm-10">
             <input type="submit" value="Search" class="btn btn-primary" />            
-        </div>
-        <div class="col-sm-2">
+            <a class="btn btn-primary" role="button" data-toggle="collapse" href="#controls" aria-expanded="false" aria-controls="collapseExample">Options</a>            
             <a class="btn btn-default" href="{{ path('title_search') }}">Reset</a>
-        </div>
-        <div class='col-sm-2'>
-            <div class='btn-group'>
+            <div class="btn-group">
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Export <span class="caret"></span>
-                </button>
+                </button>                
                 <ul class="dropdown-menu">
                     <li><a href="{{ path('title_search_export', {'format': 'mla'}) }}&{{app.request.queryString}}">MLA</a></li>
                     <li><a href="{{ path('title_search_export', {'format': 'chicago'}) }}&{{app.request.queryString}}">Chicago</a></li>
                     <li><a href="{{ path('title_search_export', {'format': 'apa'}) }}&{{app.request.queryString}}">APA</a></li>
                     <li><a href="{{ path('title_search_export', {'format': 'bibtex'}) }}&{{app.request.queryString}}">BibTex</a></li>
                 </ul>
-            </div>                
+            </div>
         </div>
     </div>
     {{ form_end(search_form) }}
 
     {% if titles|length > 0 %}
-        Displaying {{ titles|length }} titles of {{ titles.getTotalItemCount }} total.
-        <ul>
-            {% for title in titles %}
-                <li>{{ title }}</li>
-                {% endfor %}
-        </ul>
+        {{ include('AppBundle:Title:table.html.twig') }}
 
         <div class="navigation">
             {{ knp_pagination_render(titles) }}

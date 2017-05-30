@@ -25,4 +25,5 @@
 	{% endif %}
 {% endfor %}
 <!--Publication date--> 
-{{ title.pubdate }}.
+{% set pubdate = title.pubdate %}
+{{ pubdate }}{% if not(pubdate ends with '.') %}.{% endif %}

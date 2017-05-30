@@ -1,0 +1,9 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    <ul>
+    {% for title in titles %}
+        <li>{{ include('AppBundle:Title:' ~ format ~ '.html.twig') }}</li>
+    {% endfor %}
+    </ul>
+{% endblock %}

@@ -179,10 +179,9 @@ class TitleController extends Controller
             $query = $repo->buildSearchQuery($form->getData());
             $titles = $query->execute();
         } 
-        
         return array(
-            'search_form' => $form->createView(),
             'titles' => $titles,
+            'format' => $request->query->get('format', 'mla'),
         );
     }
 	

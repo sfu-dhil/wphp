@@ -20,9 +20,10 @@ parameters:
 
     # make sure the symfony login cookies work with multiple apps on 
     # a single domain.
-    router.request_context.host: wphp.dv
+    router.request_context.host: localhost
     router.request_context.scheme: http
-    router.request_context.base_url: /web/app_dev.php
+    router.request_context.base_url: /wphp/web/app_dev.php
+    secure_cookies: true
 
     # blog stuff
     nines_blog.excerpt_length: 100
