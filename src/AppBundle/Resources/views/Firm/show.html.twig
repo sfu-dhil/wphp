@@ -58,17 +58,20 @@
                     <table class="table table-bordered table-condensed table-hover table-striped tablesorter" id="firmRoles">
                         <thead>
                             <tr>
-                                <th>Role</th>
+                                <th>Firm Role</th>
                                 <th>Title</th>
-                                <th>Date</th>
+                                <th>Author</th>
+                                <th>Date</th>                                
                             </tr>
                         </thead>
                         <tbody>
                             {% for tfr in firm.getTitleFirmroles %}
                                 {% set title = tfr.title %}
+                                {% set authorRole = title.getTitleRoles('Author').first() %}
                                 <tr>
                                     <td>{{tfr.firmrole.name}}</td>
                                     <td><a href="{{ path('title_show', {'id': title.id}) }}">{{ title.title }}</a></td>
+                                    <td>{{ authorRole.person }}</td>
                                     <td>{{ title.pubdate }}</td>
                                 </tr>
                             {% endfor %}

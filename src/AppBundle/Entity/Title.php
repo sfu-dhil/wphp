@@ -2,6 +2,8 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -22,8 +24,8 @@ use Doctrine\ORM\Mapping as ORM;
  * })
  * @ORM\Entity(repositoryClass="AppBundle\Repository\TitleRepository")
  */
-class Title
-{
+class Title {
+
     /**
      * @var integer
      *
@@ -248,23 +250,21 @@ class Title
      * @ORM\OneToMany(targetEntity="TitleFirmrole", mappedBy="title")
      */
     private $titleFirmroles;
-    
+
     /**
      * Constructor
      */
-    public function __construct()
-    {
-        $this->titleRoles = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->titleFirmroles = new \Doctrine\Common\Collections\ArrayCollection();        
+    public function __construct() {
+        $this->titleRoles = new ArrayCollection();
+        $this->titleFirmroles = new ArrayCollection();
     }
-    
+
     /**
      * Get id
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -275,8 +275,7 @@ class Title
      *
      * @return Title
      */
-    public function setTitle($title)
-    {
+    public function setTitle($title) {
         $this->title = $title;
 
         return $this;
@@ -287,8 +286,7 @@ class Title
      *
      * @return string
      */
-    public function getTitle()
-    {
+    public function getTitle() {
         return $this->title;
     }
 
@@ -299,8 +297,7 @@ class Title
      *
      * @return Title
      */
-    public function setSignedAuthor($signedAuthor)
-    {
+    public function setSignedAuthor($signedAuthor) {
         $this->signedAuthor = $signedAuthor;
 
         return $this;
@@ -311,8 +308,7 @@ class Title
      *
      * @return string
      */
-    public function getSignedAuthor()
-    {
+    public function getSignedAuthor() {
         return $this->signedAuthor;
     }
 
@@ -323,8 +319,7 @@ class Title
      *
      * @return Title
      */
-    public function setSurrogate($surrogate)
-    {
+    public function setSurrogate($surrogate) {
         $this->surrogate = $surrogate;
 
         return $this;
@@ -335,8 +330,7 @@ class Title
      *
      * @return string
      */
-    public function getSurrogate()
-    {
+    public function getSurrogate() {
         return $this->surrogate;
     }
 
@@ -347,8 +341,7 @@ class Title
      *
      * @return Title
      */
-    public function setPseudonym($pseudonym)
-    {
+    public function setPseudonym($pseudonym) {
         $this->pseudonym = $pseudonym;
 
         return $this;
@@ -359,8 +352,7 @@ class Title
      *
      * @return string
      */
-    public function getPseudonym()
-    {
+    public function getPseudonym() {
         return $this->pseudonym;
     }
 
@@ -371,8 +363,7 @@ class Title
      *
      * @return Title
      */
-    public function setImprint($imprint)
-    {
+    public function setImprint($imprint) {
         $this->imprint = $imprint;
 
         return $this;
@@ -383,8 +374,7 @@ class Title
      *
      * @return string
      */
-    public function getImprint()
-    {
+    public function getImprint() {
         return $this->imprint;
     }
 
@@ -395,8 +385,7 @@ class Title
      *
      * @return Title
      */
-    public function setSelfpublished($selfpublished)
-    {
+    public function setSelfpublished($selfpublished) {
         $this->selfpublished = $selfpublished;
 
         return $this;
@@ -407,8 +396,7 @@ class Title
      *
      * @return boolean
      */
-    public function getSelfpublished()
-    {
+    public function getSelfpublished() {
         return $this->selfpublished;
     }
 
@@ -419,8 +407,7 @@ class Title
      *
      * @return Title
      */
-    public function setPubdate($pubdate)
-    {
+    public function setPubdate($pubdate) {
         $this->pubdate = $pubdate;
 
         return $this;
@@ -431,8 +418,7 @@ class Title
      *
      * @return string
      */
-    public function getPubdate()
-    {
+    public function getPubdate() {
         return $this->pubdate;
     }
 
@@ -443,8 +429,7 @@ class Title
      *
      * @return Title
      */
-    public function setDateOfFirstPublication($dateOfFirstPublication)
-    {
+    public function setDateOfFirstPublication($dateOfFirstPublication) {
         $this->dateOfFirstPublication = $dateOfFirstPublication;
 
         return $this;
@@ -455,8 +440,7 @@ class Title
      *
      * @return string
      */
-    public function getDateOfFirstPublication()
-    {
+    public function getDateOfFirstPublication() {
         return $this->dateOfFirstPublication;
     }
 
@@ -467,8 +451,7 @@ class Title
      *
      * @return Title
      */
-    public function setSizeL($sizeL)
-    {
+    public function setSizeL($sizeL) {
         $this->sizeL = $sizeL;
 
         return $this;
@@ -479,8 +462,7 @@ class Title
      *
      * @return boolean
      */
-    public function getSizeL()
-    {
+    public function getSizeL() {
         return $this->sizeL;
     }
 
@@ -491,8 +473,7 @@ class Title
      *
      * @return Title
      */
-    public function setSizeW($sizeW)
-    {
+    public function setSizeW($sizeW) {
         $this->sizeW = $sizeW;
 
         return $this;
@@ -503,8 +484,7 @@ class Title
      *
      * @return boolean
      */
-    public function getSizeW()
-    {
+    public function getSizeW() {
         return $this->sizeW;
     }
 
@@ -515,8 +495,7 @@ class Title
      *
      * @return Title
      */
-    public function setEdition($edition)
-    {
+    public function setEdition($edition) {
         $this->edition = $edition;
 
         return $this;
@@ -527,8 +506,7 @@ class Title
      *
      * @return string
      */
-    public function getEdition()
-    {
+    public function getEdition() {
         return $this->edition;
     }
 
@@ -539,8 +517,7 @@ class Title
      *
      * @return Title
      */
-    public function setVolumes($volumes)
-    {
+    public function setVolumes($volumes) {
         $this->volumes = $volumes;
 
         return $this;
@@ -551,8 +528,7 @@ class Title
      *
      * @return boolean
      */
-    public function getVolumes()
-    {
+    public function getVolumes() {
         return $this->volumes;
     }
 
@@ -563,8 +539,7 @@ class Title
      *
      * @return Title
      */
-    public function setPagination($pagination)
-    {
+    public function setPagination($pagination) {
         $this->pagination = $pagination;
 
         return $this;
@@ -575,8 +550,7 @@ class Title
      *
      * @return string
      */
-    public function getPagination()
-    {
+    public function getPagination() {
         return $this->pagination;
     }
 
@@ -587,8 +561,7 @@ class Title
      *
      * @return Title
      */
-    public function setPricePound($pricePound)
-    {
+    public function setPricePound($pricePound) {
         $this->pricePound = $pricePound;
 
         return $this;
@@ -599,8 +572,7 @@ class Title
      *
      * @return integer
      */
-    public function getPricePound()
-    {
+    public function getPricePound() {
         return $this->pricePound;
     }
 
@@ -611,8 +583,7 @@ class Title
      *
      * @return Title
      */
-    public function setPriceShilling($priceShilling)
-    {
+    public function setPriceShilling($priceShilling) {
         $this->priceShilling = $priceShilling;
 
         return $this;
@@ -623,8 +594,7 @@ class Title
      *
      * @return integer
      */
-    public function getPriceShilling()
-    {
+    public function getPriceShilling() {
         return $this->priceShilling;
     }
 
@@ -635,8 +605,7 @@ class Title
      *
      * @return Title
      */
-    public function setPricePence($pricePence)
-    {
+    public function setPricePence($pricePence) {
         $this->pricePence = $pricePence;
 
         return $this;
@@ -647,34 +616,32 @@ class Title
      *
      * @return string
      */
-    public function getPricePence()
-    {
+    public function getPricePence() {
         return $this->pricePence;
     }
-		
-		/**
+
+    /**
      * Get the totalPrice in pence.
      *
      * @return integer
      */
-		public function getTotalPrice()
-		{
-			$totalPrice = 0;
-			
-			if ($this->pricePound && is_int($this->pricePound)) {
-				$totalPrice += $this->pricePound * 240;
-			}
-			
-			if ($this->priceShilling && is_int($this->priceShilling)) {
-				$totalPrice += $this->priceShilling * 12;
-			}
-			if ($this->pricePence && is_int($this->pricePence)) {
-				$totalPrice += $this->pricePence;
-			}
-			
-			return $totalPrice;
-		}
-		
+    public function getTotalPrice() {
+        $totalPrice = 0;
+
+        if ($this->pricePound && is_int($this->pricePound)) {
+            $totalPrice += $this->pricePound * 240;
+        }
+
+        if ($this->priceShilling && is_int($this->priceShilling)) {
+            $totalPrice += $this->priceShilling * 12;
+        }
+        if ($this->pricePence && is_int($this->pricePence)) {
+            $totalPrice += $this->pricePence;
+        }
+
+        return $totalPrice;
+    }
+
     /**
      * Set sourceId
      *
@@ -682,8 +649,7 @@ class Title
      *
      * @return Title
      */
-    public function setSourceId($sourceId)
-    {
+    public function setSourceId($sourceId) {
         $this->sourceId = $sourceId;
 
         return $this;
@@ -694,8 +660,7 @@ class Title
      *
      * @return string
      */
-    public function getSourceId()
-    {
+    public function getSourceId() {
         return $this->sourceId;
     }
 
@@ -706,8 +671,7 @@ class Title
      *
      * @return Title
      */
-    public function setSource2Id($source2Id)
-    {
+    public function setSource2Id($source2Id) {
         $this->source2Id = $source2Id;
 
         return $this;
@@ -718,8 +682,7 @@ class Title
      *
      * @return string
      */
-    public function getSource2Id()
-    {
+    public function getSource2Id() {
         return $this->source2Id;
     }
 
@@ -730,8 +693,7 @@ class Title
      *
      * @return Title
      */
-    public function setShelfmark($shelfmark)
-    {
+    public function setShelfmark($shelfmark) {
         $this->shelfmark = $shelfmark;
 
         return $this;
@@ -742,8 +704,7 @@ class Title
      *
      * @return string
      */
-    public function getShelfmark()
-    {
+    public function getShelfmark() {
         return $this->shelfmark;
     }
 
@@ -754,8 +715,7 @@ class Title
      *
      * @return Title
      */
-    public function setChecked($checked)
-    {
+    public function setChecked($checked) {
         $this->checked = $checked;
 
         return $this;
@@ -766,8 +726,7 @@ class Title
      *
      * @return boolean
      */
-    public function getChecked()
-    {
+    public function getChecked() {
         return $this->checked;
     }
 
@@ -778,8 +737,7 @@ class Title
      *
      * @return Title
      */
-    public function setFinalcheck($finalcheck)
-    {
+    public function setFinalcheck($finalcheck) {
         $this->finalcheck = $finalcheck;
 
         return $this;
@@ -790,8 +748,7 @@ class Title
      *
      * @return boolean
      */
-    public function getFinalcheck()
-    {
+    public function getFinalcheck() {
         return $this->finalcheck;
     }
 
@@ -802,8 +759,7 @@ class Title
      *
      * @return Title
      */
-    public function setNotes($notes)
-    {
+    public function setNotes($notes) {
         $this->notes = $notes;
 
         return $this;
@@ -814,20 +770,18 @@ class Title
      *
      * @return string
      */
-    public function getNotes()
-    {
+    public function getNotes() {
         return $this->notes;
     }
 
     /**
      * Set locationOfPrinting
      *
-     * @param \AppBundle\Entity\Geonames $locationOfPrinting
+     * @param Geonames $locationOfPrinting
      *
      * @return Title
      */
-    public function setLocationOfPrinting(\AppBundle\Entity\Geonames $locationOfPrinting = null)
-    {
+    public function setLocationOfPrinting(Geonames $locationOfPrinting = null) {
         $this->locationOfPrinting = $locationOfPrinting;
 
         return $this;
@@ -836,22 +790,20 @@ class Title
     /**
      * Get locationOfPrinting
      *
-     * @return \AppBundle\Entity\Geonames
+     * @return Geonames
      */
-    public function getLocationOfPrinting()
-    {
+    public function getLocationOfPrinting() {
         return $this->locationOfPrinting;
     }
 
     /**
      * Set format
      *
-     * @param \AppBundle\Entity\Format $format
+     * @param Format $format
      *
      * @return Title
      */
-    public function setFormat(\AppBundle\Entity\Format $format = null)
-    {
+    public function setFormat(Format $format = null) {
         $this->format = $format;
 
         return $this;
@@ -860,22 +812,20 @@ class Title
     /**
      * Get format
      *
-     * @return \AppBundle\Entity\Format
+     * @return Format
      */
-    public function getFormat()
-    {
+    public function getFormat() {
         return $this->format;
     }
 
     /**
      * Set genre
      *
-     * @param \AppBundle\Entity\Genre $genre
+     * @param Genre $genre
      *
      * @return Title
      */
-    public function setGenre(\AppBundle\Entity\Genre $genre = null)
-    {
+    public function setGenre(Genre $genre = null) {
         $this->genre = $genre;
 
         return $this;
@@ -884,22 +834,20 @@ class Title
     /**
      * Get genre
      *
-     * @return \AppBundle\Entity\Genre
+     * @return Genre
      */
-    public function getGenre()
-    {
+    public function getGenre() {
         return $this->genre;
     }
 
     /**
      * Set source
      *
-     * @param \AppBundle\Entity\Source $source
+     * @param Source $source
      *
      * @return Title
      */
-    public function setSource(\AppBundle\Entity\Source $source = null)
-    {
+    public function setSource(Source $source = null) {
         $this->source = $source;
 
         return $this;
@@ -908,22 +856,20 @@ class Title
     /**
      * Get source
      *
-     * @return \AppBundle\Entity\Source
+     * @return Source
      */
-    public function getSource()
-    {
+    public function getSource() {
         return $this->source;
     }
 
     /**
      * Set source2
      *
-     * @param \AppBundle\Entity\Source $source2
+     * @param Source $source2
      *
      * @return Title
      */
-    public function setSource2(\AppBundle\Entity\Source $source2 = null)
-    {
+    public function setSource2(Source $source2 = null) {
         $this->source2 = $source2;
 
         return $this;
@@ -932,22 +878,20 @@ class Title
     /**
      * Get source2
      *
-     * @return \AppBundle\Entity\Source
+     * @return Source
      */
-    public function getSource2()
-    {
+    public function getSource2() {
         return $this->source2;
     }
 
     /**
      * Add titleRole
      *
-     * @param \AppBundle\Entity\TitleRole $titleRole
+     * @param TitleRole $titleRole
      *
      * @return Title
      */
-    public function addTitleRole(\AppBundle\Entity\TitleRole $titleRole)
-    {
+    public function addTitleRole(TitleRole $titleRole) {
         $this->titleRoles[] = $titleRole;
 
         return $this;
@@ -956,38 +900,34 @@ class Title
     /**
      * Remove titleRole
      *
-     * @param \AppBundle\Entity\TitleRole $titleRole
+     * @param TitleRole $titleRole
      */
-    public function removeTitleRole(\AppBundle\Entity\TitleRole $titleRole)
-    {
+    public function removeTitleRole(TitleRole $titleRole) {
         $this->titleRoles->removeElement($titleRole);
     }
 
     /**
      * Get titleRoles
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
-    public function getTitleRoles($name = null)
-    {
-      if($name === null) {
-        return $this->titleRoles;
-      }
-      return $this->titleRoles->filter(function(TitleRole $titleRole) use ($name) {
-        return $titleRole->getRole()->getName() === $name;
-      });
+    public function getTitleRoles($name = null) {
+        if ($name === null) {
+            return $this->titleRoles;
+        }
+        return $this->titleRoles->filter(function(TitleRole $titleRole) use ($name) {
+                    return $titleRole->getRole()->getName() === $name;
+                });
     }
-
 
     /**
      * Add titleFirmrole
      *
-     * @param \AppBundle\Entity\TitleFirmrole $titleFirmrole
+     * @param TitleFirmrole $titleFirmrole
      *
      * @return Title
      */
-    public function addTitleFirmrole(\AppBundle\Entity\TitleFirmrole $titleFirmrole)
-    {
+    public function addTitleFirmrole(TitleFirmrole $titleFirmrole) {
         $this->titleFirmroles[] = $titleFirmrole;
 
         return $this;
@@ -996,29 +936,28 @@ class Title
     /**
      * Remove titleFirmrole
      *
-     * @param \AppBundle\Entity\TitleFirmrole $titleFirmrole
+     * @param TitleFirmrole $titleFirmrole
      */
-    public function removeTitleFirmrole(\AppBundle\Entity\TitleFirmrole $titleFirmrole)
-    {
+    public function removeTitleFirmrole(TitleFirmrole $titleFirmrole) {
         $this->titleFirmroles->removeElement($titleFirmrole);
     }
 
     /**
      * Get titleFirmroles
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
-    public function getTitleFirmroles($name = null)
-    {
-        if($name === null) {
+    public function getTitleFirmroles($name = null) {
+        if ($name === null) {
             return $this->titleFirmroles;
         }
         return $this->titleFirmroles->filter(function(TitleFirmrole $titleFirmrole) use ($name) {
-            return $titleFirmrole->getFirmrole()->getName() === $name;
-        });
+                    return $titleFirmrole->getFirmrole()->getName() === $name;
+                });
     }
-	
-	public function __toString() {
-		return $this->title;
-	}
+
+    public function __toString() {
+        return $this->title;
+    }
+
 }

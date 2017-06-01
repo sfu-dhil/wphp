@@ -16,18 +16,17 @@ use Symfony\Component\HttpFoundation\Request;
  *
  * @Route("/person")
  */
-class PersonController extends Controller
-{
+class PersonController extends Controller {
+
     /**
      * Lists all Person entities.
      *
      * @Route("/", name="person_index")
      * @Method("GET")
      * @Template()
-	 * @param Request $request
+     * @param Request $request
      */
-    public function indexAction(Request $request)
-    {
+    public function indexAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
         $dql = 'SELECT e FROM AppBundle:Person e ORDER BY e.id';
         $query = $em->createQuery($dql);
@@ -38,29 +37,60 @@ class PersonController extends Controller
             'people' => $people,
         );
     }
-	
+
+    /**
+     * Full text search for Firm entities.
+     *
+     * @Route("/quick_search", name="person_quick_search")
+     * @Method("GET")
+     * @Template("AppBundle:Person:search.html.twig")
+     * @param Request $request
+     * @return array
+     */
+    public function quickSearchAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $form = $this->createForm(PersonSearchType::class, null, array(
+            'action' => $this->generateUrl('firm_search'),
+            'entity_manager' => $em
+        ));
+        $q = $request->query->get('q');
+        $form->get('name')->submit($q);
+        $repo = $em->getRepository(Person::class);
+        $query = $repo->buildSearchQuery(array('name' => $q));
+        $paginator = $this->get('knp_paginator');
+        $people = $paginator->paginate($query->execute(), $request->query->getint('page', 1), 25);
+        return array(
+            'search_form' => $form->createView(),
+            'people' => $people,
+        );
+    }
+
     /**
      * Full text search for Person entities.
      *
      * @Route("/search", name="person_search")
      * @Method("GET")
      * @Template()
-	 * @param Request $request
-	 * @return array
+     * @param Request $request
+     * @return array
      */
-    public function searchAction(Request $request)
-    {
+    public function searchAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
         $form = $this->createForm(PersonSearchType::class, null, array('entity_manager' => $em));
         $form->handleRequest($request);
         $persons = array();
-        
-        if($form->isValid()) {
-            $repo = $em->getRepository(Person::class);
-            $query = $repo->buildSearchQuery($form->getData());
-            $paginator = $this->get('knp_paginator');        
-            $persons = $paginator->paginate($query->execute(), $request->query->getint('page', 1), 25);
-        } 
+
+        if ($form->isValid()) {
+            $data = array_filter($form->getData());
+            if (count($data) > 2) {
+                $repo = $em->getRepository(Person::class);
+                $query = $repo->buildSearchQuery($form->getData());
+                $paginator = $this->get('knp_paginator');
+                $persons = $paginator->paginate($query->execute(), $request->query->getint('page', 1), 25);
+            } else {
+                $this->addFlash('warning', 'You must enter a search term');
+            }
+        }
         return array(
             'search_form' => $form->createView(),
             'people' => $persons,
@@ -73,34 +103,33 @@ class PersonController extends Controller
      * @Route("/jump", name="person_jump")
      * @Method("GET")
      * @Template()
-	 * @param Request $request
+     * @param Request $request
      */
-    public function jumpAction(Request $request)
-    {
-		$q = $request->query->getInt('q');
-		if($q) {
+    public function jumpAction(Request $request) {
+        $q = $request->query->getInt('q');
+        if ($q) {
             return $this->redirect($this->generateUrl('person_show', array('id' => $q)));
-		} else {
+        } else {
             return $this->redirect($this->generateUrl('person_index', array('id' => $q)));
-		}
+        }
     }
-    
+
     /**
      * Finds and displays a Person entity.
      *
      * @Route("/{id}", name="person_show")
      * @Method({"GET","POST"})
      * @Template()
-	 * @param Person $person
+     * @param Person $person
      */
-    public function showAction(Request $request, Person $person)
-    {
+    public function showAction(Request $request, Person $person) {
         $em = $this->getDoctrine()->getManager();
-		$repo = $em->getRepository('AppBundle:Person');        
-		return array(
+        $repo = $em->getRepository('AppBundle:Person');
+        return array(
             'person' => $person,
             'next' => $repo->next($person),
             'previous' => $repo->previous($person),
         );
     }
+
 }

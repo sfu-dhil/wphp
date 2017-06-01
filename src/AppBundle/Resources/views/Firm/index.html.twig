@@ -11,52 +11,12 @@
 
     <div class='btn-toolbar pull-right'>
         <div class='btn-group'>
-            <a class="btn btn-primary collapsed" role="button" data-toggle="collapse" href="#options" aria-expanded="false" aria-controls="collapseExample">Options</a>
+            <a class="btn btn-primary collapsed" role="button" data-toggle="collapse" href="#options" aria-expanded="false" aria-controls="collapseExample">Search</a>
         </div>
     </div>
     <div id="options" class="collapse">
-        <form method="get" class="form-horizontal" action="{{ path('firm_jump') }}">
-            <fieldset>
-                <legend>Jump to Firm ID</legend>
-                <div class='form-group'>
-                    <label class='col-sm-2 control-label' for='q'>Jump to ID</label>
-                    <div class='col-sm-4'>
-                        <div class='input-group'>
-                            <input type='text' name='q' id='q' class='form-control' value=''>
-                            <span class="input-group-btn">
-                                <button class="btn btn-primary" type="submit">
-                                    <span class='glyphicon glyphicon-share-alt'></span>
-                                    Jump
-                                </button>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                <p class="help-block">Enter a numeric database ID to jump directly to the entry.</p>
-            </fieldset>
-        </form>
-
-        <form method="get" class="form-horizontal" action="{{ path('firm_quick_search') }}">
-            <fieldset>
-                <legend>Quick Search</legend>
-                <div class='form-group'>
-                    <label class='col-sm-2 control-label' for='q'>Search term</label>
-                    <div class='col-sm-4'>
-                        <div class='input-group'>
-                            <input type='text' name='q' id='q' class='form-control' value=''>
-                            <span class="input-group-btn">
-                                <button class="btn btn-primary" type="submit">
-                                    <span class='glyphicon glyphicon-search'></span>
-                                    Search
-                                </button>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                <p class="help-block">Use this form to quickly search for a firm by name. 
-                    An <a href="{{ path('firm_search') }}">advanced firm search</a> is also available.</p>
-            </fieldset>
-        </form>
+        {{ include('AppBundle:partials:jump.html.twig', {'route_name': 'firm_jump'}) }}
+        {{ include('AppBundle:partials:quick-search.html.twig', {'quick_route': 'firm_quick_search', 'full_route': 'firm_search'}) }} 
     </div>
 
     <legend>Browse Firms</legend>

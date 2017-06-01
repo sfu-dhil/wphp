@@ -18,8 +18,8 @@ use Symfony\Component\Validator\Constraints\Collection;
  * })
  * @ORM\Entity(repositoryClass="AppBundle\Repository\PersonRepository")
  */
-class Person
-{
+class Person {
+
     /**
      * @var integer
      *
@@ -105,23 +105,22 @@ class Person
      */
     private $cityOfDeath;
 
-	/**
-	 * @var Collection|TitleRole[]
-	 * @ORM\OneToMany(targetEntity="TitleRole", mappedBy="person")
-	 */
-	private $titleRoles;
-	
-	public function __construct() {
-		$this->titleRoles = new ArrayCollection();
-	}
+    /**
+     * @var Collection|TitleRole[]
+     * @ORM\OneToMany(targetEntity="TitleRole", mappedBy="person")
+     */
+    private $titleRoles;
+
+    public function __construct() {
+        $this->titleRoles = new ArrayCollection();
+    }
 
     /**
      * Get id
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -132,8 +131,7 @@ class Person
      *
      * @return Person
      */
-    public function setLastName($lastName)
-    {
+    public function setLastName($lastName) {
         $this->lastName = $lastName;
 
         return $this;
@@ -144,8 +142,7 @@ class Person
      *
      * @return string
      */
-    public function getLastName()
-    {
+    public function getLastName() {
         return $this->lastName;
     }
 
@@ -156,8 +153,7 @@ class Person
      *
      * @return Person
      */
-    public function setFirstName($firstName)
-    {
+    public function setFirstName($firstName) {
         $this->firstName = $firstName;
 
         return $this;
@@ -168,8 +164,7 @@ class Person
      *
      * @return string
      */
-    public function getFirstName()
-    {
+    public function getFirstName() {
         return $this->firstName;
     }
 
@@ -180,8 +175,7 @@ class Person
      *
      * @return Person
      */
-    public function setTitle($title)
-    {
+    public function setTitle($title) {
         $this->title = $title;
 
         return $this;
@@ -192,8 +186,7 @@ class Person
      *
      * @return string
      */
-    public function getTitle()
-    {
+    public function getTitle() {
         return $this->title;
     }
 
@@ -204,8 +197,7 @@ class Person
      *
      * @return Person
      */
-    public function setGender($gender)
-    {
+    public function setGender($gender) {
         $this->gender = $gender;
 
         return $this;
@@ -216,8 +208,7 @@ class Person
      *
      * @return string
      */
-    public function getGender()
-    {
+    public function getGender() {
         return $this->gender;
     }
 
@@ -228,8 +219,7 @@ class Person
      *
      * @return Person
      */
-    public function setDob($dob)
-    {
+    public function setDob($dob) {
         $this->dob = $dob;
 
         return $this;
@@ -240,9 +230,8 @@ class Person
      *
      * @return string
      */
-    public function getDob()
-    {
-        if($this->dob === '0000-00-00') {
+    public function getDob() {
+        if ($this->dob === '0000-00-00') {
             return null;
         }
         return $this->dob;
@@ -255,8 +244,7 @@ class Person
      *
      * @return Person
      */
-    public function setDod($dod)
-    {
+    public function setDod($dod) {
         $this->dod = $dod;
 
         return $this;
@@ -267,9 +255,8 @@ class Person
      *
      * @return string
      */
-    public function getDod()
-    {
-        if($this->dod === '0000-00-00') {
+    public function getDod() {
+        if ($this->dod === '0000-00-00') {
             return null;
         }
         return $this->dod;
@@ -282,8 +269,7 @@ class Person
      *
      * @return Person
      */
-    public function setChecked($checked)
-    {
+    public function setChecked($checked) {
         $this->checked = $checked;
 
         return $this;
@@ -294,8 +280,7 @@ class Person
      *
      * @return boolean
      */
-    public function getChecked()
-    {
+    public function getChecked() {
         return $this->checked;
     }
 
@@ -306,8 +291,7 @@ class Person
      *
      * @return Person
      */
-    public function setFinalcheck($finalcheck)
-    {
+    public function setFinalcheck($finalcheck) {
         $this->finalcheck = $finalcheck;
 
         return $this;
@@ -318,8 +302,7 @@ class Person
      *
      * @return boolean
      */
-    public function getFinalcheck()
-    {
+    public function getFinalcheck() {
         return $this->finalcheck;
     }
 
@@ -330,8 +313,7 @@ class Person
      *
      * @return Person
      */
-    public function setCityOfBirth(Geonames $cityOfBirth = null)
-    {
+    public function setCityOfBirth(Geonames $cityOfBirth = null) {
         $this->cityOfBirth = $cityOfBirth;
 
         return $this;
@@ -342,8 +324,7 @@ class Person
      *
      * @return Geonames
      */
-    public function getCityOfBirth()
-    {
+    public function getCityOfBirth() {
         return $this->cityOfBirth;
     }
 
@@ -354,8 +335,7 @@ class Person
      *
      * @return Person
      */
-    public function setCityOfDeath(Geonames $cityOfDeath = null)
-    {
+    public function setCityOfDeath(Geonames $cityOfDeath = null) {
         $this->cityOfDeath = $cityOfDeath;
 
         return $this;
@@ -366,8 +346,7 @@ class Person
      *
      * @return Geonames
      */
-    public function getCityOfDeath()
-    {
+    public function getCityOfDeath() {
         return $this->cityOfDeath;
     }
 
@@ -378,8 +357,7 @@ class Person
      *
      * @return Person
      */
-    public function addTitleRole(\AppBundle\Entity\TitleRole $titleRole)
-    {
+    public function addTitleRole(\AppBundle\Entity\TitleRole $titleRole) {
         $this->titleRoles[] = $titleRole;
 
         return $this;
@@ -390,8 +368,7 @@ class Person
      *
      * @param \AppBundle\Entity\TitleRole $titleRole
      */
-    public function removeTitleRole(\AppBundle\Entity\TitleRole $titleRole)
-    {
+    public function removeTitleRole(\AppBundle\Entity\TitleRole $titleRole) {
         $this->titleRoles->removeElement($titleRole);
     }
 
@@ -400,12 +377,12 @@ class Person
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getTitleRoles()
-    {
+    public function getTitleRoles() {
         return $this->titleRoles;
     }
-	
-	public function __toString() {
-		return $this->firstName . ' ' . $this->lastName;
-	}
+
+    public function __toString() {
+        return $this->lastName . ", " . $this->firstName;
+    }
+
 }

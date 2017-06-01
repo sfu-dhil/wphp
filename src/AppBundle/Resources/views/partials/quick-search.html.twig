@@ -1,0 +1,31 @@
+{#
+    quick search form.
+    parameters: 
+        quick_route: name of the route for the quick search action
+        full_route: name of the route for the full search action. Optional.
+#}
+
+<form method="get" class="form-horizontal" action="{{ path(quick_route) }}">
+    <fieldset>
+        <legend>Quick Search</legend>
+        <div class='form-group'>
+            <label class='col-sm-2 control-label' for='q'>Search term</label>
+            <div class='col-sm-4'>
+                <div class='input-group'>
+                    <input type='text' name='q' id='q' class='form-control' value=''>
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary" type="submit">
+                            <span class='glyphicon glyphicon-search'></span>
+                            Search
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>
+        {% if full_route is defined %}
+            <p class="help-block">Use this form to quickly search for a firm by name. 
+                An <a href="{{ path(full_route) }}">advanced search</a> with more options is also available.
+            </p>
+        {% endif %}
+    </fieldset>
+</form>

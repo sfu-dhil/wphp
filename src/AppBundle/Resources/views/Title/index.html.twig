@@ -9,34 +9,14 @@
 
 {% block body %}
 
-    <form method="get" class="form-horizontal" action="{{ path('title_jump') }}">
-        <fieldset>
-            <div class='form-group'>
-                <label class='col-sm-2 control-label' for='q'>Jump to ID</label>
-                <div class='col-sm-4'>
-                    <div class='input-group'>
-                        <input type='text' name='q' id='q' class='form-control' value=''>
-                        <span class="input-group-btn">
-                            <button class="btn btn-primary" type="submit">
-                                <span class='glyphicon glyphicon-share-alt'></span>
-                                Jump
-                            </button>
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </fieldset>
-    </form>
-
     <div class='btn-toolbar pull-right'>
         <div class='btn-group'>
-            <a href="{{ path('title_export') }}" class="btn btn-default">
-                <span class="glyphicon glyphicon-download-alt"></span> Download
-            </a>
-            <a href="{{ path('title_search') }}" class="btn btn-default">
-                <span class="glyphicon glyphicon-search"></span> Search
-            </a>
+            <a class="btn btn-primary collapsed" role="button" data-toggle="collapse" href="#options" aria-expanded="false" aria-controls="collapseExample">Search</a>
         </div>
+    </div>
+    <div id="options" class="collapse">
+        {{ include('AppBundle:partials:jump.html.twig', {'route_name': 'title_jump'}) }}
+        {{ include('AppBundle:partials:quick-search.html.twig', {'quick_route': 'title_quick_search', 'full_route': 'title_search'}) }} 
     </div>
 
     {{ include('AppBundle:Title:table.html.twig') }}

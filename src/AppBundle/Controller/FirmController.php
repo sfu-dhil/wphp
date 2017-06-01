@@ -80,10 +80,15 @@ class FirmController extends Controller {
         $firms = array();
 
         if ($form->isValid()) {
-            $repo = $em->getRepository(Firm::class);
-            $query = $repo->buildSearchQuery($form->getData());
-            $paginator = $this->get('knp_paginator');
-            $firms = $paginator->paginate($query->execute(), $request->query->getint('page', 1), 25);
+            $data = array_filter($form->getData());
+            if (count($data) > 2) {
+                $repo = $em->getRepository(Firm::class);
+                $query = $repo->buildSearchQuery($form->getData());
+                $paginator = $this->get('knp_paginator');
+                $firms = $paginator->paginate($query->execute(), $request->query->getint('page', 1), 25);
+            } else {
+                $this->addFlash('warning', 'You must enter a search term');                
+            }
         }
         return array(
             'search_form' => $form->createView(),

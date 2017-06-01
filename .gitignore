@@ -20,3 +20,4 @@
 !/docs/ui/build/.gitkeep
 /web/docs/*
 !/web/docs/.gitkeep
+/web/bower
