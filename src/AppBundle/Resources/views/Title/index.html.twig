@@ -9,21 +9,24 @@
 
 {% block body %}
 
-    <div class='btn-toolbar pull-right'>
-        <div class='btn-group'>
-            <a class="btn btn-primary collapsed" role="button" data-toggle="collapse" href="#options" aria-expanded="false" aria-controls="collapseExample">Search</a>
+    {{ form_start(form, {'action': path('title_search')} ) }}
+    {{ form_row(form.title) }}
+
+    <div class="form-group">
+        <div class="col-sm-2"></div>
+
+        <div class="col-sm-10">
+            <input type="submit" value="Search" class="btn btn-primary" />            
         </div>
     </div>
-    <div id="options" class="collapse">
-        {{ include('AppBundle:partials:jump.html.twig', {'route_name': 'title_jump'}) }}
-        {{ include('AppBundle:partials:quick-search.html.twig', {'quick_route': 'title_quick_search', 'full_route': 'title_search'}) }} 
-    </div>
+    {{ form_widget(form._token) }}
+    {{ form_end(form, {'render_rest': false}) }}
 
     {{ include('AppBundle:Title:table.html.twig') }}
 
     <div class="navigation">
         {{ knp_pagination_render(titles) }}
     </div>
-        
+
 
 {% endblock %}
