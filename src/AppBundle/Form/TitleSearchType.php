@@ -87,7 +87,7 @@ class TitleSearchType extends AbstractType {
         ));
 
         $builder->add('pseudonym', TextType::class, array(
-            'label' => 'pseudonym',
+            'label' => 'Pseudonym',
             'required' => false,
         ));
 
