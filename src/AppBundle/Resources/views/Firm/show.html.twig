@@ -71,7 +71,7 @@
                                 <tr>
                                     <td>{{tfr.firmrole.name}}</td>
                                     <td><a href="{{ path('title_show', {'id': title.id}) }}">{{ title.title }}</a></td>
-                                    <td>{{ authorRole.person }}</td>
+                                    <td>{% if authorRole %}{{ authorRole.person }}{% endif %}</td>
                                     <td>{{ title.pubdate }}</td>
                                 </tr>
                             {% endfor %}
