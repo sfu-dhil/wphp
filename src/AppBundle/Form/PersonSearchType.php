@@ -72,7 +72,7 @@ class PersonSearchType extends AbstractType {
         ));
         
         $builder->add('title_filter', CollectionType::class, array(
-            'label' => 'Filter by title',
+            'label' => 'Filter by Title',
             'entry_type' => TitleFilterType::class,
             'allow_add' => true,
             'allow_delete' => true,
@@ -83,7 +83,7 @@ class PersonSearchType extends AbstractType {
         ));
         
         $builder->add('firm_filter', CollectionType::class, array(
-            'label' => 'Filter by firm',
+            'label' => 'Filter by Firm',
             'entry_type' => FirmFilterType::class,
             'allow_add' => true,
             'allow_delete' => true,

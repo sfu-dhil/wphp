@@ -33,9 +33,11 @@ class TitleController extends Controller {
         $query = $em->createQuery($dql);
         $paginator = $this->get('knp_paginator');
         $titles = $paginator->paginate($query, $request->query->getint('page', 1), 25);
+        $form = $this->createForm(TitleSearchType::class, null, array('entity_manager' => $em));
 
         return array(
             'titles' => $titles,
+            'form' => $form->createView(),
         );
     }
 
@@ -182,6 +184,8 @@ class TitleController extends Controller {
             } else {
                 $this->addFlash('warning', 'You must enter a search term.');
             }
+        } else {
+            $this->addFlash('error', $form->getErrors(true, true));
         }
         return array(
             'search_form' => $form->createView(),

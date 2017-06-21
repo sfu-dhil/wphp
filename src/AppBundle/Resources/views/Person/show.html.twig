@@ -13,115 +13,125 @@
                 Next person: <a href="{{ path('person_show', {'id': next.id }) }}">{{ next }}</a>
             {% endif %}
         </div>
-{% endblock %} 
+    {% endblock %} 
 
-{% block body %}
+    {% block body %}
 
-    <div class="btn-toolbar">
-        <div class="btn-group pull-right">
-            <a href="javascript: history.go(-1)" class="btn btn-default">
-                <span class="glyphicon glyphicon-arrow-left"></span> Back
-            </a>
+        <div class="btn-toolbar">
+            <div class="btn-group pull-right">
+                <a href="javascript: history.go(-1)" class="btn btn-default">
+                    <span class="glyphicon glyphicon-arrow-left"></span> Back
+                </a>
+            </div>
         </div>
-    </div>
-    <table class="table table-bordered table-condensed table-hover table-striped">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ person.id }}</td>
-            </tr>
-            <tr>
-                <th>Last name</th>
-                <td>{{ person.lastName }}</td>
-            </tr>
-            <tr>
-                <th>First name</th>
-                <td>{{ person.firstName }}</td>
-            </tr>
-            <tr>
-                <th>Gender</th>
-                <td>{{ person.gender }}</td>
-            </tr>
-            <tr>
-                <th>Date of birth</th>
-                <td>{% if person.dob %}{{ person.dob }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Place of birth</th>
-                <td>{{ person.cityOfBirth.name }}</td>
-            </tr>
-            <tr>
-                <th>Date of death</th>
-                <td>{% if person.dod %}{{ person.dod }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Place of Death</th>
-                <td>{{ person.cityOfDeath.name }}</td>
-            </tr>
-            <tr>
-                <th>Titles</th>
-                <td>
-                    <p>There are {{ person.titleRoles|length }} titles associated with this person.<p>
-                    <table class="table table-bordered table-condensed table-hover table-striped tablesorter" id="titleRoles">
-                        <thead>
-                            <tr>
-                                <th>Role</th>
-                                <th>Title</th>
-                                <th>Date</th>
-                            </tr>
-                        </thead>
-                        <tbody>                        
-                    {% for tr in person.titleRoles %}
-                        {% set title = tr.title %}
-                        <tr>
-                            <td>{{ tr.role.name }}</td>
-                            <td><a href="{{ path('title_show', {'id': title.id}) }}">{{ title.title }}</a></td>
-                            <td>{{ title.pubdate }}</td>
-                        </tr>                        
-                    {% endfor %}
-                    </table>
-                </td>
-            </tr>
-            <tr>
-                <th>Hand checked</th>
-                <td>{% if person.checked %}Yes{% else %}No{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Final check</th>
-                <td>{% if person.finalcheck %}Yes{% else %}No{% endif %}</td>
-            </tr>
-        </tbody>
-    </table>
+        <table class="table table-bordered table-condensed table-hover table-striped">
+            <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ person.id }}</td>
+                </tr>
+                <tr>
+                    <th>Last name</th>
+                    <td>{{ person.lastName }}</td>
+                </tr>
+                <tr>
+                    <th>First name</th>
+                    <td>{{ person.firstName }}</td>
+                </tr>
+                <tr>
+                    <th>Gender</th>
+                    <td>{{ person.gender }}</td>
+                </tr>
+                <tr>
+                    <th>Date of birth</th>
+                    <td>{% if person.dob %}{{ person.dob }}{% endif %}</td>
+                </tr>
+                <tr>
+                    <th>Place of birth</th>
+                    <td>{{ person.cityOfBirth.name }}</td>
+                </tr>
+                <tr>
+                    <th>Date of death</th>
+                    <td>{% if person.dod %}{{ person.dod }}{% endif %}</td>
+                </tr>
+                <tr>
+                    <th>Place of Death</th>
+                    <td>{{ person.cityOfDeath.name }}</td>
+                </tr>
+                <tr>
+                    <th>Titles</th>
+                    <td>
+                        <p>There are {{ person.titleRoles|length }} titles associated with this person.<p>
+                        <table class="table table-bordered table-condensed table-hover table-striped tablesorter" id="titleRoles">
+                            <thead>
+                                <tr>
+                                    <th>Role</th>
+                                    <th>Title</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>                        
+                                {% for tr in person.titleRoles %}
+                                    {% set title = tr.title %}
+                                    <tr>
+                                        <td>{{ tr.role.name }}</td>
+                                        <td><a href="{{ path('title_show', {'id': title.id}) }}">{{ title.title }}</a></td>
+                                        <td>{{ title.pubdate }}</td>
+                                    </tr>                        
+                                {% endfor %}
+                        </table>
+                        <div class='btn-toolbar pull-right'>
+                            <div class='btn-group'>
+                                <a class='btn btn-default' href="{{ path('person_export', {'id': person.id, 'format': 'mla'}) }}">MLA</a>
+                                <a class='btn btn-default' href="{{ path('person_export', {'id': person.id, 'format': 'apa'}) }}">APA</a>
+                                <a class='btn btn-default' href="{{ path('person_export', {'id': person.id, 'format': 'chicago'}) }}">Chicago</a>
+                                <a class='btn btn-default' href="{{ path('person_export', {'id': person.id, 'format': 'bibtex'}) }}">BibTex</a>
+                            </div>
+                        </div>
+                        </ul>
 
-    {% include 'NinesFeedbackBundle:Comment:comment-interface.html.twig' with { 'entity': person } %}                
+                    </td>
+                </tr>
+                <tr>
+                    <th>Hand checked</th>
+                    <td>{% if person.checked %}Yes{% else %}No{% endif %}</td>
+                </tr>
+                <tr>
+                    <th>Final check</th>
+                    <td>{% if person.finalcheck %}Yes{% else %}No{% endif %}</td>
+                </tr>
+            </tbody>
+        </table>
 
-{% endblock %}
+        {% include 'NinesFeedbackBundle:Comment:comment-interface.html.twig' with { 'entity': person } %}                
 
-{% block styles %}
-    <style type="text/css">
-        /* tables */
-        table.tablesorter thead tr {
-            white-space: nowrap;
-        }
-        table.tablesorter thead tr .header:after {
-            content: ' ↕';
-        }
-        table.tablesorter thead tr .headerSortUp:after {
-            content: ' ↑';
-        }
-        table.tablesorter thead tr .headerSortDown:after {
-            content: ' ↓';
-        }
-    </style>
-{% endblock %}
+    {% endblock %}
 
-{% block javascripts %}
-    <script src="{{ asset('bower/tablesorter/jquery.tablesorter.min.js') }}"></script>
-    <script>
-        $(document).ready(function () {
-            $("#titleRoles").tablesorter({
-                sortList: [[0, 0], [1, 0], [2, 0]],
+    {% block styles %}
+        <style type="text/css">
+            /* tables */
+            table.tablesorter thead tr {
+                white-space: nowrap;
+            }
+            table.tablesorter thead tr .header:after {
+                content: ' ↕';
+            }
+            table.tablesorter thead tr .headerSortUp:after {
+                content: ' ↑';
+            }
+            table.tablesorter thead tr .headerSortDown:after {
+                content: ' ↓';
+            }
+        </style>
+    {% endblock %}
+
+    {% block javascripts %}
+        <script src="{{ asset('bower/tablesorter/jquery.tablesorter.min.js') }}"></script>
+        <script>
+            $(document).ready(function () {
+                $("#titleRoles").tablesorter({
+                    sortList: [[0, 0], [1, 0], [2, 0]],
+                });
             });
-        });
-    </script>
-{% endblock %}
+        </script>
+    {% endblock %}

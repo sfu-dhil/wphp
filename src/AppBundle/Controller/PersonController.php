@@ -131,5 +131,22 @@ class PersonController extends Controller {
             'previous' => $repo->previous($person),
         );
     }
+    
+    /**
+     * Exports a person's titles in a format.
+     *
+     * @Route("/{id}/export", name="person_export")
+     * @Method({"GET","POST"})
+     * @Template()
+     * @param Person $person
+     */
+    public function exportAction(Request $request, Person $person) {
+        $titles = $person->getTitleRoles();
+        return array(
+            'person' => $person,
+            'titles' => $titles,
+            'format' => $request->query->get('format', 'mla'),
+        );
+    }
 
 }
