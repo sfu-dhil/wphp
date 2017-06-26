@@ -16,46 +16,43 @@
     {% for author in authors %}
         <!--Creates array of name parts in firstName for one author-->
         {% set firstNameSplit = author.person.firstName|split(' ') %}
-
         {% if loop.first %}
             {{ author.person.lastName }}, 
             {% for namePart in firstNameSplit %}
                 {% if loop.first %}{{ namePart }}{% else %}{{ namePart|first }}.{% endif %},
             {% endfor %}
-
         {% elseif not (loop.first or loop.last) %}
             {% for namePart in firstNameSplit %}
                 {% if loop.first %}
-                    {{ namePart }}
+                        {{ namePart }}
                 {% else %}
-                    {{ namePart|first }}.
+                        {{ namePart|first }}.
                 {% endif %} 
-            {% endfor %}
-            {{ author.person.lastName }},
-
+                {% endfor %}
+                {{ author.person.lastName }},
         {% elseif loop.last %}
             and {% for namePart in firstNameSplit %}
-            {% if loop.first %}
-                {{ namePart }}
-            {% else %}
-                {{ namePart|first }}.
-            {% endif %}
-            {% endfor %}
-                {{ author.person.lastName }}.
-                {% endif %}
+                    {% if loop.first %}
+                            {{ namePart }}
+                    {% else %}
+                            {{ namePart|first }}.
+                    {% endif %}
                     {% endfor %}
-                        {% endif %}
-                            <!--Title-->
-                            <em><a href="{{path("title_show", {"id": title.id})}}">{{ title.title }}</a></em>
-                            {%- if title.title matches '{[^[:punct:]]$}' %}.{% endif %}
-                                <!--Location-->
-                                {{title.locationOfPrinting.name}}:
-                                <!--Publisher-->
-                                {% for tfr in title.titleFirmRoles %}
-                                    {% if tfr.firmrole.name == 'Publisher' %}
-                                        {% set firm = tfr.firm %}
-                                        {{ firm.name }},
-                                    {% endif %}
-                                {% endfor %}
-                                <!--Publication year-->
-                                {{ title.pubdate }}.
+                    {{ author.person.lastName }}.
+        {% endif %}
+    {% endfor %}
+{% endif %}
+<!--Title-->
+<em><a href="{{path("title_show", {"id": title.id})}}">{{ title.title }}</a></em>
+{%- if title.title matches '{[^[:punct:]]$}' %}.{% endif %}
+<!--Location-->
+{{title.locationOfPrinting.name}}:
+<!--Publisher-->
+{% for tfr in title.titleFirmRoles %}
+	{% if tfr.firmrole.name == 'Publisher' %}
+		{% set firm = tfr.firm %}
+		{{ firm.name }},
+	{% endif %}
+{% endfor %}
+<!--Publication year-->
+{{ title.pubdate }}.
