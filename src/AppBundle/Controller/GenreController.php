@@ -23,10 +23,9 @@ class GenreController extends Controller
      * @Route("/", name="genre_index")
      * @Method("GET")
      * @Template()
-	 * @param Request $request
+     * @param Request $request
      */
-    public function indexAction(Request $request)
-    {
+    public function indexAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
         $dql = 'SELECT e FROM AppBundle:Genre e ORDER BY e.id';
         $query = $em->createQuery($dql);
@@ -44,10 +43,9 @@ class GenreController extends Controller
      * @Route("/{id}", name="genre_show")
      * @Method("GET")
      * @Template()
-	 * @param Genre $genre
+     * @param Genre $genre
      */
-    public function showAction(Genre $genre)
-    {
+    public function showAction(Genre $genre) {
 
         return array(
             'genre' => $genre,

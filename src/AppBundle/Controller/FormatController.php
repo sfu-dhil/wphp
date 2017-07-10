@@ -23,10 +23,9 @@ class FormatController extends Controller
      * @Route("/", name="format_index")
      * @Method("GET")
      * @Template()
-	 * @param Request $request
+     * @param Request $request
      */
-    public function indexAction(Request $request)
-    {
+    public function indexAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
         $dql = 'SELECT e FROM AppBundle:Format e ORDER BY e.id';
         $query = $em->createQuery($dql);
@@ -37,17 +36,16 @@ class FormatController extends Controller
             'formats' => $formats,
         );
     }
-	
+
     /**
      * Finds and displays a Format entity.
      *
      * @Route("/{id}", name="format_show")
      * @Method("GET")
      * @Template()
-	 * @param Format $format
+     * @param Format $format
      */
-    public function showAction(Format $format)
-    {
+    public function showAction(Format $format) {
 
         return array(
             'format' => $format,

@@ -7,12 +7,12 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * TitleRole
  *
- * @ORM\Table(name="title_role", 
- *	uniqueConstraints={@ORM\UniqueConstraint(name="title_uq_idx", columns={"title_id", "role_id", "person_id"})}, 
- *	indexes={
- *		@ORM\Index(name="person_idx", columns={"person_id"}), 
- *		@ORM\Index(name="role_idx", columns={"role_id"}), 
- *		@ORM\Index(name="IDX_1CB35015A9F87BD", columns={"title_id"})
+ * @ORM\Table(name="title_role",
+ *  uniqueConstraints={@ORM\UniqueConstraint(name="title_uq_idx", columns={"title_id", "role_id", "person_id"})},
+ *  indexes={
+ *      @ORM\Index(name="person_idx", columns={"person_id"}),
+ *      @ORM\Index(name="role_idx", columns={"role_id"}),
+ *      @ORM\Index(name="IDX_1CB35015A9F87BD", columns={"title_id"})
  * })
  * @ORM\Entity
  */
@@ -64,8 +64,7 @@ class TitleRole
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -76,8 +75,7 @@ class TitleRole
      *
      * @return TitleRole
      */
-    public function setTitle(\AppBundle\Entity\Title $title = null)
-    {
+    public function setTitle(\AppBundle\Entity\Title $title = null) {
         $this->title = $title;
 
         return $this;
@@ -88,8 +86,7 @@ class TitleRole
      *
      * @return \AppBundle\Entity\Title
      */
-    public function getTitle()
-    {
+    public function getTitle() {
         return $this->title;
     }
 
@@ -100,8 +97,7 @@ class TitleRole
      *
      * @return TitleRole
      */
-    public function setPerson(\AppBundle\Entity\Person $person = null)
-    {
+    public function setPerson(\AppBundle\Entity\Person $person = null) {
         $this->person = $person;
 
         return $this;
@@ -112,8 +108,7 @@ class TitleRole
      *
      * @return \AppBundle\Entity\Person
      */
-    public function getPerson()
-    {
+    public function getPerson() {
         return $this->person;
     }
 
@@ -124,8 +119,7 @@ class TitleRole
      *
      * @return TitleRole
      */
-    public function setRole(\AppBundle\Entity\Role $role = null)
-    {
+    public function setRole(\AppBundle\Entity\Role $role = null) {
         $this->role = $role;
 
         return $this;
@@ -136,8 +130,7 @@ class TitleRole
      *
      * @return \AppBundle\Entity\Role
      */
-    public function getRole()
-    {
+    public function getRole() {
         return $this->role;
     }
 }

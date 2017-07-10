@@ -8,22 +8,23 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Firm
- * 
+ *
  * Doctrine isn't able to manage the unique constraint on this table at all. It
  * must be created manually:
- * 
+ *
  * CREATE UNIQUE INDEX `unique` ON firm (name(100), city, start_date, end_date);
  *
- * @ORM\Table(name="firm", 
+ * @ORM\Table(name="firm",
  *  indexes={
- *      @ORM\Index(name="city", columns={"city"}), 
- *      @ORM\Index(name="full", columns={"name", "street_address"}, flags={"fulltext"}), 
- *      @ORM\Index(name="address_ft_idx", columns={"street_address"}, flags={"fulltext"}), 
+ *      @ORM\Index(name="city", columns={"city"}),
+ *      @ORM\Index(name="full", columns={"name", "street_address"}, flags={"fulltext"}),
+ *      @ORM\Index(name="address_ft_idx", columns={"street_address"}, flags={"fulltext"}),
  *      @ORM\Index(name="firmname", columns={"name"}, flags={"fulltext"})}
  * )
  * @ORM\Entity(repositoryClass="AppBundle\Repository\FirmRepository")
  */
-class Firm {
+class Firm
+{
 
     /**
      * @var integer
@@ -264,10 +265,10 @@ class Firm {
      * @return Collection
      */
     public function getTitleFirmroles($sort = false) {
-        if( ! $sort) {
+        if(! $sort) {
             return $this->titleFirmroles;
         }
-        
+
         $iterator = $this->titleFirmroles->getIterator();
         $iterator->uasort(function(TitleFirmrole $a, TitleFirmrole $b) {
             $cmp = strcmp($a->getFirmrole()->getName(), $b->getFirmrole()->getName());
@@ -282,5 +283,4 @@ class Firm {
     public function __toString() {
         return $this->name;
     }
-
 }

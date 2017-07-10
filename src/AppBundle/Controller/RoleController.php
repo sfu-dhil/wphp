@@ -22,10 +22,9 @@ class RoleController extends Controller
      * @Route("/", name="role_index")
      * @Method("GET")
      * @Template()
-	 * @param Request $request
+     * @param Request $request
      */
-    public function indexAction(Request $request)
-    {
+    public function indexAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
         $dql = 'SELECT e FROM AppBundle:Role e ORDER BY e.id';
         $query = $em->createQuery($dql);
@@ -43,10 +42,9 @@ class RoleController extends Controller
      * @Route("/{id}", name="role_show")
      * @Method("GET")
      * @Template()
-	 * @param Role $role
+     * @param Role $role
      */
-    public function showAction(Role $role)
-    {
+    public function showAction(Role $role) {
 
         return array(
             'role' => $role,

@@ -7,9 +7,9 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Geonames
  *
- * @ORM\Table(name="geonames", 
+ * @ORM\Table(name="geonames",
  *  indexes={
- *      @ORM\Index(name="geo_search", columns={"name", "geonameid", "country"}), 
+ *      @ORM\Index(name="geo_search", columns={"name", "geonameid", "country"}),
  *      @ORM\Index(name="names", columns={"alternatenames", "name"}, flags={"fulltext"})
  * })
  * @ORM\Entity
@@ -158,8 +158,7 @@ class Geonames
      *
      * @return integer
      */
-    public function getGeonameid()
-    {
+    public function getGeonameid() {
         return $this->geonameid;
     }
 
@@ -170,8 +169,7 @@ class Geonames
      *
      * @return Geonames
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -182,8 +180,7 @@ class Geonames
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -194,8 +191,7 @@ class Geonames
      *
      * @return Geonames
      */
-    public function setAsciiname($asciiname)
-    {
+    public function setAsciiname($asciiname) {
         $this->asciiname = $asciiname;
 
         return $this;
@@ -206,8 +202,7 @@ class Geonames
      *
      * @return string
      */
-    public function getAsciiname()
-    {
+    public function getAsciiname() {
         return $this->asciiname;
     }
 
@@ -218,8 +213,7 @@ class Geonames
      *
      * @return Geonames
      */
-    public function setAlternatenames($alternatenames)
-    {
+    public function setAlternatenames($alternatenames) {
         $this->alternatenames = $alternatenames;
 
         return $this;
@@ -230,8 +224,7 @@ class Geonames
      *
      * @return string
      */
-    public function getAlternatenames()
-    {
+    public function getAlternatenames() {
         return $this->alternatenames;
     }
 
@@ -242,8 +235,7 @@ class Geonames
      *
      * @return Geonames
      */
-    public function setLatitude($latitude)
-    {
+    public function setLatitude($latitude) {
         $this->latitude = $latitude;
 
         return $this;
@@ -254,8 +246,7 @@ class Geonames
      *
      * @return string
      */
-    public function getLatitude()
-    {
+    public function getLatitude() {
         return $this->latitude;
     }
 
@@ -266,8 +257,7 @@ class Geonames
      *
      * @return Geonames
      */
-    public function setLongitude($longitude)
-    {
+    public function setLongitude($longitude) {
         $this->longitude = $longitude;
 
         return $this;
@@ -278,8 +268,7 @@ class Geonames
      *
      * @return string
      */
-    public function getLongitude()
-    {
+    public function getLongitude() {
         return $this->longitude;
     }
 
@@ -290,8 +279,7 @@ class Geonames
      *
      * @return Geonames
      */
-    public function setFclass($fclass)
-    {
+    public function setFclass($fclass) {
         $this->fclass = $fclass;
 
         return $this;
@@ -302,8 +290,7 @@ class Geonames
      *
      * @return string
      */
-    public function getFclass()
-    {
+    public function getFclass() {
         return $this->fclass;
     }
 
@@ -314,8 +301,7 @@ class Geonames
      *
      * @return Geonames
      */
-    public function setFcode($fcode)
-    {
+    public function setFcode($fcode) {
         $this->fcode = $fcode;
 
         return $this;
@@ -326,8 +312,7 @@ class Geonames
      *
      * @return string
      */
-    public function getFcode()
-    {
+    public function getFcode() {
         return $this->fcode;
     }
 
@@ -338,8 +323,7 @@ class Geonames
      *
      * @return Geonames
      */
-    public function setCountry($country)
-    {
+    public function setCountry($country) {
         $this->country = $country;
 
         return $this;
@@ -350,8 +334,7 @@ class Geonames
      *
      * @return string
      */
-    public function getCountry()
-    {
+    public function getCountry() {
         return $this->country;
     }
 
@@ -362,8 +345,7 @@ class Geonames
      *
      * @return Geonames
      */
-    public function setCc2($cc2)
-    {
+    public function setCc2($cc2) {
         $this->cc2 = $cc2;
 
         return $this;
@@ -374,8 +356,7 @@ class Geonames
      *
      * @return string
      */
-    public function getCc2()
-    {
+    public function getCc2() {
         return $this->cc2;
     }
 
@@ -386,8 +367,7 @@ class Geonames
      *
      * @return Geonames
      */
-    public function setAdmin1($admin1)
-    {
+    public function setAdmin1($admin1) {
         $this->admin1 = $admin1;
 
         return $this;
@@ -398,8 +378,7 @@ class Geonames
      *
      * @return string
      */
-    public function getAdmin1()
-    {
+    public function getAdmin1() {
         return $this->admin1;
     }
 
@@ -410,8 +389,7 @@ class Geonames
      *
      * @return Geonames
      */
-    public function setAdmin2($admin2)
-    {
+    public function setAdmin2($admin2) {
         $this->admin2 = $admin2;
 
         return $this;
@@ -422,8 +400,7 @@ class Geonames
      *
      * @return string
      */
-    public function getAdmin2()
-    {
+    public function getAdmin2() {
         return $this->admin2;
     }
 
@@ -434,8 +411,7 @@ class Geonames
      *
      * @return Geonames
      */
-    public function setAdmin3($admin3)
-    {
+    public function setAdmin3($admin3) {
         $this->admin3 = $admin3;
 
         return $this;
@@ -446,8 +422,7 @@ class Geonames
      *
      * @return string
      */
-    public function getAdmin3()
-    {
+    public function getAdmin3() {
         return $this->admin3;
     }
 
@@ -458,8 +433,7 @@ class Geonames
      *
      * @return Geonames
      */
-    public function setAdmin4($admin4)
-    {
+    public function setAdmin4($admin4) {
         $this->admin4 = $admin4;
 
         return $this;
@@ -470,8 +444,7 @@ class Geonames
      *
      * @return string
      */
-    public function getAdmin4()
-    {
+    public function getAdmin4() {
         return $this->admin4;
     }
 
@@ -482,8 +455,7 @@ class Geonames
      *
      * @return Geonames
      */
-    public function setPopulation($population)
-    {
+    public function setPopulation($population) {
         $this->population = $population;
 
         return $this;
@@ -494,8 +466,7 @@ class Geonames
      *
      * @return integer
      */
-    public function getPopulation()
-    {
+    public function getPopulation() {
         return $this->population;
     }
 
@@ -506,8 +477,7 @@ class Geonames
      *
      * @return Geonames
      */
-    public function setElevation($elevation)
-    {
+    public function setElevation($elevation) {
         $this->elevation = $elevation;
 
         return $this;
@@ -518,8 +488,7 @@ class Geonames
      *
      * @return integer
      */
-    public function getElevation()
-    {
+    public function getElevation() {
         return $this->elevation;
     }
 
@@ -530,8 +499,7 @@ class Geonames
      *
      * @return Geonames
      */
-    public function setGtopo30($gtopo30)
-    {
+    public function setGtopo30($gtopo30) {
         $this->gtopo30 = $gtopo30;
 
         return $this;
@@ -542,8 +510,7 @@ class Geonames
      *
      * @return integer
      */
-    public function getGtopo30()
-    {
+    public function getGtopo30() {
         return $this->gtopo30;
     }
 
@@ -554,8 +521,7 @@ class Geonames
      *
      * @return Geonames
      */
-    public function setTimezone($timezone)
-    {
+    public function setTimezone($timezone) {
         $this->timezone = $timezone;
 
         return $this;
@@ -566,8 +532,7 @@ class Geonames
      *
      * @return string
      */
-    public function getTimezone()
-    {
+    public function getTimezone() {
         return $this->timezone;
     }
 
@@ -578,8 +543,7 @@ class Geonames
      *
      * @return Geonames
      */
-    public function setModdate($moddate)
-    {
+    public function setModdate($moddate) {
         $this->moddate = $moddate;
 
         return $this;
@@ -590,8 +554,7 @@ class Geonames
      *
      * @return \DateTime
      */
-    public function getModdate()
-    {
+    public function getModdate() {
         return $this->moddate;
     }
 }

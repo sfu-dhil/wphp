@@ -65,8 +65,7 @@ class Format
      *
      * @return boolean
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -77,8 +76,7 @@ class Format
      *
      * @return Format
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -89,8 +87,7 @@ class Format
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -101,8 +98,7 @@ class Format
      *
      * @return Format
      */
-    public function setAbbrevOne($abbrevOne)
-    {
+    public function setAbbrevOne($abbrevOne) {
         $this->abbrevOne = $abbrevOne;
 
         return $this;
@@ -113,8 +109,7 @@ class Format
      *
      * @return string
      */
-    public function getAbbrevOne()
-    {
+    public function getAbbrevOne() {
         return $this->abbrevOne;
     }
 
@@ -125,8 +120,7 @@ class Format
      *
      * @return Format
      */
-    public function setAbbrevTwo($abbrevTwo)
-    {
+    public function setAbbrevTwo($abbrevTwo) {
         $this->abbrevTwo = $abbrevTwo;
 
         return $this;
@@ -137,8 +131,7 @@ class Format
      *
      * @return string
      */
-    public function getAbbrevTwo()
-    {
+    public function getAbbrevTwo() {
         return $this->abbrevTwo;
     }
 
@@ -149,8 +142,7 @@ class Format
      *
      * @return Format
      */
-    public function setAbbrevThree($abbrevThree)
-    {
+    public function setAbbrevThree($abbrevThree) {
         $this->abbrevThree = $abbrevThree;
 
         return $this;
@@ -161,8 +153,7 @@ class Format
      *
      * @return string
      */
-    public function getAbbrevThree()
-    {
+    public function getAbbrevThree() {
         return $this->abbrevThree;
     }
 
@@ -173,8 +164,7 @@ class Format
      *
      * @return Format
      */
-    public function setAbbrevFour($abbrevFour)
-    {
+    public function setAbbrevFour($abbrevFour) {
         $this->abbrevFour = $abbrevFour;
 
         return $this;
@@ -185,8 +175,7 @@ class Format
      *
      * @return string
      */
-    public function getAbbrevFour()
-    {
+    public function getAbbrevFour() {
         return $this->abbrevFour;
     }
 }

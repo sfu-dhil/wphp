@@ -21,7 +21,8 @@ use Symfony\Component\Form\FormBuilderInterface;
  *
  * @author mjoyce
  */
-class PersonFilterType extends AbstractType {
+class PersonFilterType extends AbstractType
+{
 
     /**
      * @var EntityManager
@@ -48,7 +49,7 @@ class PersonFilterType extends AbstractType {
                 'help_block' => 'Enter all or part of a perosnal name.'
             ),
         ));
-        
+
         $builder->add('gender', ChoiceType::class, array(
             'label' => 'Gender',
             'choices' => array(
@@ -80,5 +81,4 @@ class PersonFilterType extends AbstractType {
             'multiple' => true,
         ));
     }
-
 }

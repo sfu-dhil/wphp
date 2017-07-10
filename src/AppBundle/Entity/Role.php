@@ -35,8 +35,7 @@ class Role
      *
      * @return boolean
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -47,8 +46,7 @@ class Role
      *
      * @return Role
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -59,8 +57,7 @@ class Role
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 }

@@ -10,14 +10,13 @@ class Builder implements ContainerAwareInterface
 {
     use ContainerAwareTrait;
 
-    public function navMenu(FactoryInterface $factory, array $options)
-    {
+    public function navMenu(FactoryInterface $factory, array $options) {
         $menu = $factory->createItem('root');
         $menu->setChildrenAttributes(array(
             'class' => 'dropdown-menu',
         ));
         $menu->setAttribute('dropdown', true);
-        
+
         $menu->addChild('Titles', array(
             'route' => 'title_index',
         ));
@@ -26,19 +25,18 @@ class Builder implements ContainerAwareInterface
         ));
         $menu->addChild('Firms', array(
             'route' => 'firm_index',
-        ));        
-        
+        ));
+
         return $menu;
     }
-    
-    public function searchMenu(FactoryInterface $factory, array $options)
-    {
+
+    public function searchMenu(FactoryInterface $factory, array $options) {
         $menu = $factory->createItem('root');
         $menu->setChildrenAttributes(array(
             'class' => 'dropdown-menu',
         ));
         $menu->setAttribute('dropdown', true);
-        
+
         $menu->addChild('Titles', array(
             'route' => 'title_search',
         ));
@@ -47,8 +45,8 @@ class Builder implements ContainerAwareInterface
         ));
         $menu->addChild('Firms', array(
             'route' => 'firm_search',
-        ));        
-        
+        ));
+
         return $menu;
     }
 }

@@ -35,8 +35,7 @@ class Genre
      *
      * @return boolean
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -47,8 +46,7 @@ class Genre
      *
      * @return Genre
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -59,8 +57,7 @@ class Genre
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 }

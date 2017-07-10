@@ -22,7 +22,8 @@ use Symfony\Component\Form\FormBuilderInterface;
  *
  * @author mjoyce
  */
-class TitleFilterType extends AbstractType {
+class TitleFilterType extends AbstractType
+{
 
     /**
      * @var EntityManager
@@ -46,7 +47,7 @@ class TitleFilterType extends AbstractType {
         $genres = $genreRepo->findAll(array(
             'name' => 'asc'
         ));
-        
+
         $builder->add('title', TextType::class, array(
             'label' => 'Title',
             'required' => false,
@@ -70,7 +71,7 @@ class TitleFilterType extends AbstractType {
             'expanded' => true,
             'multiple' => true,
         ));
-            
+
         $builder->add('pubdate', TextType::class, array(
             'label' => 'Publication Year',
             'required' => false,
@@ -92,11 +93,10 @@ class TitleFilterType extends AbstractType {
             'expanded' => true,
             'multiple' => true,
         ));
-            
+
         $builder->add('location', TextType::class, array(
             'label' => 'Printing Location',
             'required' => false,
         ));
     }
-
 }

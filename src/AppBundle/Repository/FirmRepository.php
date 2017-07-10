@@ -15,7 +15,7 @@ class FirmRepository extends EntityRepository
 {
     /**
      * Return the next firm by ID.
-     * 
+     *
      * @param Firm $firm
      * @return Firm|Null
      */
@@ -27,10 +27,10 @@ class FirmRepository extends EntityRepository
         $qb->setMaxResults(1);
         return $qb->getQuery()->getOneOrNullResult();
     }
-    
+
     /**
      * Return the next firm by ID.
-     * 
+     *
      * @param Firm $firm
      * @return Firm|Null
      */
@@ -42,13 +42,13 @@ class FirmRepository extends EntityRepository
         $qb->setMaxResults(1);
         return $qb->getQuery()->getOneOrNullResult();
     }
-    
+
     public function searchQuery($q) {
         $qb = $this->createQueryBuilder('e');
         $qb->where("e.name like '%$q%'");
         return $qb->getQuery();
     }
-    
+
     public function fulltextQuery($q) {
         $qb = $this->createQueryBuilder('e');
         $qb->addSelect("MATCH_AGAINST (e.name, :q 'IN BOOLEAN MODE') as score");
@@ -57,14 +57,14 @@ class FirmRepository extends EntityRepository
         $qb->setParameter('q', $q);
         return $qb->getQuery();
     }
-    
+
     public function buildSearchQuery($data) {
         $qb = $this->createQueryBuilder('e');
-        if(isset($data['name']) && $data['name']) {            
+        if(isset($data['name']) && $data['name']) {
             $qb->add('where', "MATCH_AGAINST (e.name, :name 'IN BOOLEAN MODE') > 0");
             $qb->setParameter('name', $data['name']);
         }
-        if(isset($data['address']) && $data['address']) {            
+        if(isset($data['address']) && $data['address']) {
             $qb->add('where', "MATCH_AGAINST (e.streetAddress, :address 'IN BOOLEAN MODE') > 0");
             $qb->setParameter('address', $data['address']);
         }
@@ -73,13 +73,13 @@ class FirmRepository extends EntityRepository
             $qb->andWhere('MATCH_AGAINST(c.alternatenames, c.name, :cname) > 0');
             $qb->setParameter('cname', $data['city']);
         }
-        
+
         if (isset($data['start']) && $data['start']) {
             $m = array();
             if (preg_match('/^\s*[0-9]{4}\s*$/', $data['start'])) {
                 $qb->andWhere('YEAR(e.startDate) = :yearb');
                 $qb->setParameter('yearb', $data['start']);
-            } else if (preg_match('/^\s*(\*|[0-9]{4})\s*-\s*(\*|[0-9]{4})\s*$/', $data['start'], $m)) {
+            } elseif (preg_match('/^\s*(\*|[0-9]{4})\s*-\s*(\*|[0-9]{4})\s*$/', $data['start'], $m)) {
                 $from = ($m[1] === '*' ? -1 : $m[1]);
                 $to = ($m[2] === '*' ? 9999 : $m[2]);
                 $qb->andWhere(':fromb <= YEAR(e.startDate) AND YEAR(e.startDate) <= :tob');
@@ -93,7 +93,7 @@ class FirmRepository extends EntityRepository
             if (preg_match('/^\s*[0-9]{4}\s*$/', $data['end'])) {
                 $qb->andWhere('YEAR(e.endDate) = :yeare');
                 $qb->setParameter('yeare', $data['end']);
-            } else if (preg_match('/^\s*(\*|[0-9]{4})\s*-\s*(\*|[0-9]{4})\s*$/', $data['end'], $m)) {
+            } elseif (preg_match('/^\s*(\*|[0-9]{4})\s*-\s*(\*|[0-9]{4})\s*$/', $data['end'], $m)) {
                 $from = ($m[1] === '*' ? -1 : $m[1]);
                 $to = ($m[2] === '*' ? 9999 : $m[2]);
                 $qb->andWhere(':frome <= YEAR(e.endDate) AND YEAR(e.endDate) <= :toe');
@@ -103,7 +103,7 @@ class FirmRepository extends EntityRepository
         }
         return $qb->getQuery();
     }
-    
+
     public function random($limit) {
         $qb = $this->createQueryBuilder('e');
         $qb->orderBy('RAND()');

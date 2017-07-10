@@ -17,7 +17,8 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
  *
  * @Route("/title")
  */
-class TitleController extends Controller {
+class TitleController extends Controller
+{
 
     /**
      * Lists all Title entities.
@@ -43,7 +44,7 @@ class TitleController extends Controller {
 
     /**
      * Export a CSV with the titles.
-     * 
+     *
      * @Route("/export", name="title_export")
      * @Method("GET")
      * @param Request $request
@@ -236,5 +237,4 @@ class TitleController extends Controller {
             'previous' => $repo->previous($title),
         );
     }
-
 }

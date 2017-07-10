@@ -22,10 +22,9 @@ class SourceController extends Controller
      * @Route("/", name="source_index")
      * @Method("GET")
      * @Template()
-	 * @param Request $request
+     * @param Request $request
      */
-    public function indexAction(Request $request)
-    {
+    public function indexAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
         $dql = 'SELECT e FROM AppBundle:Source e ORDER BY e.id';
         $query = $em->createQuery($dql);
@@ -37,16 +36,15 @@ class SourceController extends Controller
         );
     }
 
-	/**
+    /**
      * Finds and displays a Source entity.
      *
      * @Route("/{id}", name="source_show")
      * @Method("GET")
      * @Template()
-	 * @param Source $source
+     * @param Source $source
      */
-    public function showAction(Source $source)
-    {
+    public function showAction(Source $source) {
 
         return array(
             'source' => $source,

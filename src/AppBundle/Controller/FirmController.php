@@ -15,7 +15,8 @@ use Symfony\Component\HttpFoundation\Request;
  *
  * @Route("/firm")
  */
-class FirmController extends Controller {
+class FirmController extends Controller
+{
 
     /**
      * Lists all Firm entities.
@@ -87,7 +88,7 @@ class FirmController extends Controller {
                 $paginator = $this->get('knp_paginator');
                 $firms = $paginator->paginate($query->execute(), $request->query->getint('page', 1), 25);
             } else {
-                $this->addFlash('warning', 'You must enter a search term');                
+                $this->addFlash('warning', 'You must enter a search term');
             }
         }
         return array(
@@ -130,5 +131,4 @@ class FirmController extends Controller {
             'previous' => $repo->previous($firm),
         );
     }
-
 }

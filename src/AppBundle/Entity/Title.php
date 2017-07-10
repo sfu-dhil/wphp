@@ -9,22 +9,23 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Title
  *
- * @ORM\Table(name="title", 
+ * @ORM\Table(name="title",
  *  indexes={
- *      @ORM\Index(name="location_idx", columns={"location_of_printing"}), 
- *      @ORM\Index(name="format_idx", columns={"format_id"}), 
- *      @ORM\Index(name="genre_idx", columns={"genre_id"}), 
- *      @ORM\Index(name="source_idx", columns={"source"}), 
- *      @ORM\Index(name="source2_idx", columns={"source2"}), 
- *      @ORM\Index(name="title_idx", columns={"title"}, flags={"fulltext"}), 
- *      @ORM\Index(name="author_idx", columns={"signed_author"}, flags={"fulltext"}), 
- *      @ORM\Index(name="pseudonym_idx", columns={"pseudonym"}, flags={"fulltext"}), 
- *      @ORM\Index(name="titleauthor_idx", columns={"title", "signed_author"}, flags={"fulltext"}), 
+ *      @ORM\Index(name="location_idx", columns={"location_of_printing"}),
+ *      @ORM\Index(name="format_idx", columns={"format_id"}),
+ *      @ORM\Index(name="genre_idx", columns={"genre_id"}),
+ *      @ORM\Index(name="source_idx", columns={"source"}),
+ *      @ORM\Index(name="source2_idx", columns={"source2"}),
+ *      @ORM\Index(name="title_idx", columns={"title"}, flags={"fulltext"}),
+ *      @ORM\Index(name="author_idx", columns={"signed_author"}, flags={"fulltext"}),
+ *      @ORM\Index(name="pseudonym_idx", columns={"pseudonym"}, flags={"fulltext"}),
+ *      @ORM\Index(name="titleauthor_idx", columns={"title", "signed_author"}, flags={"fulltext"}),
  *      @ORM\Index(name="imprint_idx", columns={"imprint"}, flags={"fulltext"})
  * })
  * @ORM\Entity(repositoryClass="AppBundle\Repository\TitleRepository")
  */
-class Title {
+class Title
+{
 
     /**
      * @var integer
@@ -917,7 +918,7 @@ class Title {
         }
         return $this->titleRoles->filter(function(TitleRole $titleRole) use ($name) {
                     return $titleRole->getRole()->getName() === $name;
-                });
+        });
     }
 
     /**
@@ -953,11 +954,10 @@ class Title {
         }
         return $this->titleFirmroles->filter(function(TitleFirmrole $titleFirmrole) use ($name) {
                     return $titleFirmrole->getFirmrole()->getName() === $name;
-                });
+        });
     }
 
     public function __toString() {
         return $this->title;
     }
-
 }

@@ -1,4 +1,3 @@
-
 /* Move the content down, to make room for the nav bar. */
 body > .container {
     padding-top: 70px;
@@ -7,9 +6,9 @@ body > .container {
 /* Custom app styles */
 
 label.required::after {
-	content: ' *';
-	color: red;
-	font-weight: bold;
+    content: ' *';
+    color: red;
+    font-weight: bold;
 }
 
 a[href ^= 'mailto:']::after {
@@ -28,7 +27,7 @@ a[href ^= 'mailto:']::after {
 
 a[href ^= 'mailto:']::after {
     content: "\2709";
-    
+
     position: relative;
     top: 1px;
     display: inline-block;
@@ -38,13 +37,13 @@ a[href ^= 'mailto:']::after {
     font-weight: 400;
     line-height: 1;
     -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;    
+    -moz-osx-font-smoothing: grayscale;
 }
 
-a[href ^= 'http://']::after, 
+a[href ^= 'http://']::after,
 a[href ^= 'https://']::after {
     content: "\e164";
-    
+
     position: relative;
     top: 1px;
     display: inline-block;
@@ -54,7 +53,7 @@ a[href ^= 'https://']::after {
     font-weight: 400;
     line-height: 1;
     -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;        
+    -moz-osx-font-smoothing: grayscale;
 }
 
 /* make the search form checkboxes less bad. */
@@ -64,18 +63,18 @@ div.checkbox, div.radio {
 }
 
 .form-group .form-group {
-	border-bottom: none;
+    border-bottom: none;
 }
 
 .collection .form-group {
-	border-bottom: 1px solid grey;	
-	padding-top: 28px;
+    border-bottom: 1px solid grey;
+    padding-top: 28px;
 }
 
 .collection .form-group:last-child {
     border-bottom: none;
 }
 .collection .form-group .form-group {
-	border-bottom: none;
-	padding-top: 0px;
+    border-bottom: none;
+    padding-top: 0px;
 }

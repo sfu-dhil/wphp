@@ -17,15 +17,5 @@ function recrud() {
 	rmdir app/Resources/views/$lc
 };
 
-#recrud Firm firm
-#recrud Firmrole firmrole
-#recrud Format format
-#recrud Genre genre
-#recrud Geonames geonames
-#recrud Person person
-#recrud Relation relation
-#recrud Role role
-#recrud Source source
-#recrud Title title
-#recrud TitleFirmrole titlefirmrole
-#recrud TitleRole titlerole
+# recrud Feedback feedback
+

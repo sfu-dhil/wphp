@@ -17,7 +17,8 @@ use Symfony\Component\Form\FormBuilderInterface;
  *
  * @author mjoyce
  */
-class QueryType extends AbstractType {
+class QueryType extends AbstractType
+{
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder->add('target', ChoiceType::class, array(
@@ -34,7 +35,7 @@ class QueryType extends AbstractType {
             'expanded' => false,
             'multiple' => false,
         ));
-        
+
         $builder->add('title_filters', TitleFilterType::class, array(
             'required' => false
         ));

@@ -39,7 +39,7 @@ class Source
      * @ORM\Column(name="url", type="string", length=60, nullable=true)
      */
     private $url;
-    
+
     /**
      * @var string
      * @ORM\Column(name="sourcetable", type="string", length=60, nullable=true)
@@ -51,8 +51,7 @@ class Source
      *
      * @return boolean
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -63,8 +62,7 @@ class Source
      *
      * @return Source
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -75,8 +73,7 @@ class Source
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -87,8 +84,7 @@ class Source
      *
      * @return Source
      */
-    public function setLocal($local)
-    {
+    public function setLocal($local) {
         $this->local = $local;
 
         return $this;
@@ -99,8 +95,7 @@ class Source
      *
      * @return boolean
      */
-    public function getLocal()
-    {
+    public function getLocal() {
         return $this->local;
     }
 
@@ -111,8 +106,7 @@ class Source
      *
      * @return Source
      */
-    public function setUrl($url)
-    {
+    public function setUrl($url) {
         $this->url = $url;
 
         return $this;
@@ -123,8 +117,7 @@ class Source
      *
      * @return string
      */
-    public function getUrl()
-    {
+    public function getUrl() {
         return $this->url;
     }
 
@@ -135,8 +128,7 @@ class Source
      *
      * @return Source
      */
-    public function setSourceTable($sourceTable)
-    {
+    public function setSourceTable($sourceTable) {
         $this->sourceTable = $sourceTable;
 
         return $this;
@@ -147,8 +139,7 @@ class Source
      *
      * @return string
      */
-    public function getSourceTable()
-    {
+    public function getSourceTable() {
         return $this->sourceTable;
     }
 }

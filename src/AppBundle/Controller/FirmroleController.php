@@ -23,10 +23,9 @@ class FirmroleController extends Controller
      * @Route("/", name="firmrole_index")
      * @Method("GET")
      * @Template()
-	 * @param Request $request
+     * @param Request $request
      */
-    public function indexAction(Request $request)
-    {
+    public function indexAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
         $dql = 'SELECT e FROM AppBundle:Firmrole e ORDER BY e.id';
         $query = $em->createQuery($dql);
@@ -44,10 +43,9 @@ class FirmroleController extends Controller
      * @Route("/{id}", name="firmrole_show")
      * @Method("GET")
      * @Template()
-	 * @param Firmrole $firmrole
+     * @param Firmrole $firmrole
      */
-    public function showAction(Firmrole $firmrole)
-    {
+    public function showAction(Firmrole $firmrole) {
 
         return array(
             'firmrole' => $firmrole,

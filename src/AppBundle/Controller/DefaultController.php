@@ -7,13 +7,14 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
-class DefaultController extends Controller {
+class DefaultController extends Controller
+{
 
-	/**
-	 * @Route("/", name="homepage")
-	 * @Template()
-	 */
-	public function indexAction(Request $request) {
+    /**
+     * @Route("/", name="homepage")
+     * @Template()
+     */
+    public function indexAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
         $postQuery = $em->getRepository('NinesBlogBundle:Post')->recentQuery(
             false,
@@ -23,13 +24,12 @@ class DefaultController extends Controller {
         $titles = $em->getRepository('AppBundle:Title')->random($blocksize);
         $persons = $em->getRepository('AppBundle:Person')->random($blocksize);
         $firms = $em->getRepository('AppBundle:Firm')->random($blocksize);
-        
-		return [
+
+        return [
             'posts' => $postQuery->execute(),
             'titles' => $titles,
             'persons' => $persons,
             'firms' => $firms,
-		];
-	}
-
+        ];
+    }
 }

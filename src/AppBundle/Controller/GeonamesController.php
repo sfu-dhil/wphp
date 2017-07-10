@@ -23,10 +23,9 @@ class GeonamesController extends Controller
      * @Route("/", name="geonames_index")
      * @Method("GET")
      * @Template()
-	 * @param Request $request
+     * @param Request $request
      */
-    public function indexAction(Request $request)
-    {
+    public function indexAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
         $dql = 'SELECT e FROM AppBundle:Geonames e ORDER BY e.geonameid';
         $query = $em->createQuery($dql);
@@ -44,10 +43,9 @@ class GeonamesController extends Controller
      * @Route("/{id}", name="geonames_show")
      * @Method("GET")
      * @Template()
-	 * @param Geonames $geoname
+     * @param Geonames $geoname
      */
-    public function showAction(Geonames $geoname)
-    {
+    public function showAction(Geonames $geoname) {
 
         return array(
             'geoname' => $geoname,

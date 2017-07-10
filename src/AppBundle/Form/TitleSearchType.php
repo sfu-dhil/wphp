@@ -14,7 +14,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Description of TitleSearchType
  */
-class TitleSearchType extends AbstractType {
+class TitleSearchType extends AbstractType
+{
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder->setMethod('get');
@@ -41,7 +42,7 @@ class TitleSearchType extends AbstractType {
                 'help_block' => 'Enter a year (eg <kbd>1795</kbd>) or range of years (<kbd>1790-1800</kbd>) or a partial range of years (<kbd>*-1800</kbd>).',
             ),
         ));
-        
+
         $builder->add('location', TextType::class, array(
             'label' => 'Printing Location',
             'required' => false,
@@ -80,7 +81,6 @@ class TitleSearchType extends AbstractType {
             'required' => false,
         ));
 
-
         $builder->add('imprint', TextType::class, array(
             'label' => 'Imprint',
             'required' => false,
@@ -101,10 +101,10 @@ class TitleSearchType extends AbstractType {
                 'group_class' => 'collection'
             ),
         ));
-        
+
         $builder->add('firm_filter', CollectionType::class, array(
             'label' => 'Filter by Firm',
-            'entry_type' => FirmFilterType::class,            
+            'entry_type' => FirmFilterType::class,
             'required' => false,
             'allow_add' => true,
             'allow_delete' => true,
@@ -113,7 +113,7 @@ class TitleSearchType extends AbstractType {
                 'group_class' => 'collection'
             ),
         ));
-        
+
         $builder->add('orderby', ChoiceType::class, array(
             'label' => 'Order by',
             'choices' => array(
@@ -126,7 +126,7 @@ class TitleSearchType extends AbstractType {
             'empty_data' => 'title',
             'data' => 'title',
         ));
-        
+
         $builder->add('orderdir', ChoiceType::class, array(
             'label' => 'Order Direction',
             'choices' => array(
@@ -139,12 +139,11 @@ class TitleSearchType extends AbstractType {
             'empty_data' => 'asc',
             'data' => 'asc',
         ));
-        
+
     }
 
     public function configureOptions(OptionsResolver $resolver) {
         parent::configureOptions($resolver);
         $resolver->setRequired(array('entity_manager'));
     }
-
 }

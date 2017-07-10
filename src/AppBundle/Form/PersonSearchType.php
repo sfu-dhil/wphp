@@ -14,12 +14,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Description of TitleSearchType
  */
-class PersonSearchType extends AbstractType {
+class PersonSearchType extends AbstractType
+{
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder->setMethod('get');
         $em = $options['entity_manager'];
-        
+
         $builder->add('name', TextType::class, array(
             'label' => 'Name',
             'required' => false,
@@ -27,7 +28,7 @@ class PersonSearchType extends AbstractType {
                 'help_block' => 'Enter all or part of a personal name.'
             ),
         ));
-        
+
         $builder->add('gender', ChoiceType::class, array(
             'label' => 'Gender',
             'choices' => array(
@@ -52,7 +53,7 @@ class PersonSearchType extends AbstractType {
                 'help_block' => 'Enter a year (eg <kbd>1795</kbd>) or range of years (<kbd>1790-1800</kbd>) or a partial range of years (<kbd>*-1800</kbd>).',
             ),
         ));
-        
+
         $builder->add('dod', TextType::class, array(
             'label' => 'Death Year',
             'required' => false,
@@ -65,12 +66,12 @@ class PersonSearchType extends AbstractType {
             'label' => 'Birth Place',
             'required' => false,
         ));
-        
+
         $builder->add('deathplace', TextType::class, array(
             'label' => 'Death Place',
             'required' => false,
         ));
-        
+
         $builder->add('title_filter', CollectionType::class, array(
             'label' => 'Filter by Title',
             'entry_type' => TitleFilterType::class,
@@ -79,9 +80,9 @@ class PersonSearchType extends AbstractType {
             'required' => false,
             'attr' => array(
                 'group_class' => 'collection'
-            ),            
+            ),
         ));
-        
+
         $builder->add('firm_filter', CollectionType::class, array(
             'label' => 'Filter by Firm',
             'entry_type' => FirmFilterType::class,
@@ -90,9 +91,9 @@ class PersonSearchType extends AbstractType {
             'required' => false,
             'attr' => array(
                 'group_class' => 'collection'
-            ),            
+            ),
         ));
-        
+
         $builder->add('orderby', ChoiceType::class, array(
             'label' => 'Order by',
             'choices' => array(
@@ -107,7 +108,7 @@ class PersonSearchType extends AbstractType {
             'empty_data' => 'lastname',
             'data' => 'lastname',
         ));
-        
+
         $builder->add('orderdir', ChoiceType::class, array(
             'label' => 'Order Direction',
             'choices' => array(
@@ -126,5 +127,4 @@ class PersonSearchType extends AbstractType {
         parent::configureOptions($resolver);
         $resolver->setRequired(array('entity_manager'));
     }
-
 }

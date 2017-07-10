@@ -21,7 +21,8 @@ use Symfony\Component\Form\FormBuilderInterface;
  *
  * @author mjoyce
  */
-class FirmFilterType extends AbstractType {
+class FirmFilterType extends AbstractType
+{
 
     /**
      * @var EntityManager
@@ -65,5 +66,4 @@ class FirmFilterType extends AbstractType {
             'required' => false,
         ));
     }
-
 }

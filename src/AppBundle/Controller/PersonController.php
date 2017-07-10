@@ -16,7 +16,8 @@ use Symfony\Component\HttpFoundation\Request;
  *
  * @Route("/person")
  */
-class PersonController extends Controller {
+class PersonController extends Controller
+{
 
     /**
      * Lists all Person entities.
@@ -131,7 +132,7 @@ class PersonController extends Controller {
             'previous' => $repo->previous($person),
         );
     }
-    
+
     /**
      * Exports a person's titles in a format.
      *
@@ -148,5 +149,4 @@ class PersonController extends Controller {
             'format' => $request->query->get('format', 'mla'),
         );
     }
-
 }
