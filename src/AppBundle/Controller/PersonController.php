@@ -26,6 +26,7 @@ class PersonController extends Controller
      * @Method("GET")
      * @Template()
      * @param Request $request
+     * @return array
      */
     public function indexAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
@@ -105,6 +106,7 @@ class PersonController extends Controller
      * @Method("GET")
      * @Template()
      * @param Request $request
+     * @return array
      */
     public function jumpAction(Request $request) {
         $q = $request->query->getInt('q');
@@ -122,8 +124,9 @@ class PersonController extends Controller
      * @Method({"GET","POST"})
      * @Template()
      * @param Person $person
+     * @return array
      */
-    public function showAction(Request $request, Person $person) {
+    public function showAction(Person $person) {
         $em = $this->getDoctrine()->getManager();
         $repo = $em->getRepository('AppBundle:Person');
         return array(
@@ -139,7 +142,9 @@ class PersonController extends Controller
      * @Route("/{id}/export", name="person_export")
      * @Method({"GET","POST"})
      * @Template()
+     * @param Request $request
      * @param Person $person
+     * @return array
      */
     public function exportAction(Request $request, Person $person) {
         $titles = $person->getTitleRoles();

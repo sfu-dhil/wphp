@@ -5,16 +5,22 @@ namespace AppBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * Default controller for the home page.
+ */
 class DefaultController extends Controller
 {
 
     /**
+     * Home page.
+     *
      * @Route("/", name="homepage")
      * @Template()
+     *
+     * @return array
      */
-    public function indexAction(Request $request) {
+    public function indexAction() {
         $em = $this->getDoctrine()->getManager();
         $postQuery = $em->getRepository('NinesBlogBundle:Post')->recentQuery(
             false,

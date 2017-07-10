@@ -112,6 +112,9 @@ class Person
      */
     private $titleRoles;
 
+    /**
+     * Construct the person entity.
+     */
     public function __construct() {
         $this->titleRoles = new ArrayCollection();
     }
@@ -382,6 +385,11 @@ class Person
         return $this->titleRoles;
     }
 
+    /**
+     * Get a string representation of the person, which is lastname, firstname.
+     *
+     * @return string
+     */
     public function __toString() {
         return $this->lastName . ", " . $this->firstName;
     }

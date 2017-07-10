@@ -27,6 +27,7 @@ class TitleController extends Controller
      * @Method("GET")
      * @Template()
      * @param Request $request
+     * @return array
      */
     public function indexAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
@@ -47,10 +48,9 @@ class TitleController extends Controller
      *
      * @Route("/export", name="title_export")
      * @Method("GET")
-     * @param Request $request
      * @return BinaryFileResponse
      */
-    public function exportAction(Request $request) {
+    public function exportAction() {
         $em = $this->getDoctrine()->getManager();
         $dql = 'SELECT e FROM AppBundle:Title e ORDER BY e.id';
         $query = $em->createQuery($dql);
@@ -227,8 +227,9 @@ class TitleController extends Controller
      * @Method("GET")
      * @Template()
      * @param Title $title
+     * @return array
      */
-    public function showAction(Request $request, Title $title) {
+    public function showAction(Title $title) {
         $em = $this->getDoctrine()->getManager();
         $repo = $em->getRepository('AppBundle:Title');
         return array(

@@ -1,11 +1,5 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 namespace AppBundle\Form;
 
 use AppBundle\Entity\Firmrole;
@@ -17,9 +11,9 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
- * Description of FirmFilterType
- *
- * @author mjoyce
+ * FirmFilterType is a subform used in the title search form. The form is
+ * registered as a service so that the doctrine registry is automatically
+ * injected as a dependency.
  */
 class FirmFilterType extends AbstractType
 {
@@ -36,6 +30,12 @@ class FirmFilterType extends AbstractType
         $this->em = $registry->getManager();
     }
 
+    /**
+     * Build the form type.
+     *
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options) {
 
         $firmRoleRepo = $this->em->getRepository(Firmrole::class);

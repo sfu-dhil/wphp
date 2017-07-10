@@ -908,16 +908,18 @@ class Title
     }
 
     /**
-     * Get titleRoles
+     * Get titleRoles, optionally filtered by role name.
+     *
+     * @param string $roleName
      *
      * @return Collection
      */
-    public function getTitleRoles($name = null) {
-        if ($name === null) {
+    public function getTitleRoles($roleName = null) {
+        if ($roleName === null) {
             return $this->titleRoles;
         }
-        return $this->titleRoles->filter(function(TitleRole $titleRole) use ($name) {
-                    return $titleRole->getRole()->getName() === $name;
+        return $this->titleRoles->filter(function(TitleRole $titleRole) use ($roleName) {
+                    return $titleRole->getRole()->getName() === $roleName;
         });
     }
 
@@ -944,19 +946,26 @@ class Title
     }
 
     /**
-     * Get titleFirmroles
+     * Get titleFirmroles, optionally filtered by role name.
+     *
+     * @param $roleName
      *
      * @return Collection
      */
-    public function getTitleFirmroles($name = null) {
-        if ($name === null) {
+    public function getTitleFirmroles($roleName = null) {
+        if ($roleName === null) {
             return $this->titleFirmroles;
         }
-        return $this->titleFirmroles->filter(function(TitleFirmrole $titleFirmrole) use ($name) {
-                    return $titleFirmrole->getFirmrole()->getName() === $name;
+        return $this->titleFirmroles->filter(function(TitleFirmrole $titleFirmrole) use ($roleName) {
+                    return $titleFirmrole->getFirmrole()->getName() === $roleName;
         });
     }
 
+    /**
+     * Return the title's title.
+     * 
+     * @return string
+     */
     public function __toString() {
         return $this->title;
     }

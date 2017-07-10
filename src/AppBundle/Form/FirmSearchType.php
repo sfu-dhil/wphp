@@ -2,21 +2,23 @@
 
 namespace AppBundle\Form;
 
-use AppBundle\Entity\Format;
-use AppBundle\Entity\Genre;
-use AppBundle\Entity\Person;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Description of TitleSearchType
+ * The firmSearchtype is a search form for firms.
  */
 class FirmSearchType extends AbstractType
 {
 
+    /**
+     * Build the form.
+     *
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder->setMethod('get');
         $em = $options['entity_manager'];
@@ -40,6 +42,11 @@ class FirmSearchType extends AbstractType
         ));
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @param OptionsResolver $resolver
+     */
     public function configureOptions(OptionsResolver $resolver) {
         parent::configureOptions($resolver);
         $resolver->setRequired(array('entity_manager'));

@@ -1,11 +1,5 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
@@ -15,11 +9,17 @@ use Symfony\Component\Form\FormBuilderInterface;
 /**
  * Description of QueryType
  *
- * @author mjoyce
+ * @todo is this form actually used anywhere?
  */
 class QueryType extends AbstractType
 {
 
+    /**
+     * Build the form.
+     *
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder->add('target', ChoiceType::class, array(
             'choices' => array(

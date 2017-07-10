@@ -1,11 +1,5 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 namespace AppBundle\Form;
 
 use AppBundle\Entity\Role;
@@ -17,9 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
- * Description of FirmFilterType
- *
- * @author mjoyce
+ * PersonFilterType is a subform used in the title search form.
  */
 class PersonFilterType extends AbstractType
 {
@@ -36,6 +28,12 @@ class PersonFilterType extends AbstractType
         $this->em = $registry->getManager();
     }
 
+    /**
+     * Build the form.
+     *
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options) {
 
         $roleRepo = $this->em->getRepository(Role::class);

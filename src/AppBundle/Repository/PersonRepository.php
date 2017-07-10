@@ -45,6 +45,12 @@ class PersonRepository extends EntityRepository
         return $qb->getQuery()->getOneOrNullResult();
     }
 
+    /**
+     * Build and return a complex search query from a search form.
+     *
+     * @param array $data
+     * @return query
+     */
     public function buildSearchQuery($data) {
         $qb = $this->createQueryBuilder('e');
         if (isset($data['name']) && $data['name']) {
@@ -174,6 +180,12 @@ class PersonRepository extends EntityRepository
         return $qb->getQuery();
     }
 
+    /**
+     * Simple fulltext search query, based on MySQL's MATCH AGAINST functions.
+     *
+     * @param string $q
+     * @return Query
+     */
     public function fulltextQuery($q) {
         $qb = $this->createQueryBuilder('e');
         $qb->addSelect("MATCH_AGAINST (e.lastName, e.firstName, e.dob, e.dod, :q 'IN BOOLEAN MODE') as score");
@@ -183,6 +195,12 @@ class PersonRepository extends EntityRepository
         return $qb->getQuery();
     }
 
+    /**
+     * Find and return $limit random person entities.
+     *
+     * @param integer $limit
+     * @return Collection
+     */
     public function random($limit) {
         $qb = $this->createQueryBuilder('e');
         $qb->orderBy('RAND()');

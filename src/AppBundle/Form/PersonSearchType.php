@@ -12,14 +12,19 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Description of TitleSearchType
+ * Search form for person entities.
  */
 class PersonSearchType extends AbstractType
 {
 
+    /**
+     * Build the form.
+     *
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder->setMethod('get');
-        $em = $options['entity_manager'];
 
         $builder->add('name', TextType::class, array(
             'label' => 'Name',
@@ -123,6 +128,11 @@ class PersonSearchType extends AbstractType
         ));
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @param OptionsResolver $resolver
+     */
     public function configureOptions(OptionsResolver $resolver) {
         parent::configureOptions($resolver);
         $resolver->setRequired(array('entity_manager'));

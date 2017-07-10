@@ -3,6 +3,7 @@
 namespace AppBundle\Repository;
 
 use AppBundle\Entity\Title;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
 
@@ -45,6 +46,12 @@ class TitleRepository extends EntityRepository
         return $qb->getQuery()->getOneOrNullResult();
     }
 
+    /**
+     * Simple MySQL fulltext search via MATCH AGAINST.
+     *
+     * @param string $q
+     * @return Query
+     */
     public function search($q) {
         $qb = $this->createQueryBuilder('e');
         $qb->addSelect("MATCH_AGAINST (e.title, :q 'IN BOOLEAN MODE') as score");
@@ -55,6 +62,8 @@ class TitleRepository extends EntityRepository
     }
 
     /**
+     * Build a complex search query from form data.
+     *
      * @param array $data
      * @return Query
      */
@@ -173,6 +182,12 @@ class TitleRepository extends EntityRepository
         return $qb->getQuery();
     }
 
+    /**
+     * Find and return $limit random titles.
+     *
+     * @param int $limit
+     * @return Collection
+     */
     public function random($limit) {
         $qb = $this->createQueryBuilder('e');
         $qb->orderBy('RAND()');

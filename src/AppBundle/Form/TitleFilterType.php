@@ -1,11 +1,5 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 namespace AppBundle\Form;
 
 use AppBundle\Entity\Genre;
@@ -18,9 +12,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
- * Description of FirmFilterType
- *
- * @author mjoyce
+ * Form to filter search results by title. The form is registered as a symfony
+ * service to have the doctrine registry injected as a dependency.
  */
 class TitleFilterType extends AbstractType
 {
@@ -37,6 +30,12 @@ class TitleFilterType extends AbstractType
         $this->em = $registry->getManager();
     }
 
+    /**
+     * Build the form.
+     *
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options) {
 
         $genreRepo = $this->em->getRepository(Genre::class);

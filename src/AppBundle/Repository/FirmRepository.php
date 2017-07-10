@@ -4,6 +4,7 @@ namespace AppBundle\Repository;
 
 use AppBundle\Entity\Firm;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query;
 
 /**
  * FirmRepository
@@ -43,12 +44,25 @@ class FirmRepository extends EntityRepository
         return $qb->getQuery()->getOneOrNullResult();
     }
 
+    /**
+     * Simple search, based on substring matching.
+     *
+     * @param string $q
+     * @return array
+     */
     public function searchQuery($q) {
         $qb = $this->createQueryBuilder('e');
         $qb->where("e.name like '%$q%'");
         return $qb->getQuery();
     }
 
+    /**
+     * MySQL fulltext searching via match_against (which is included in a
+     * doctrine extension).
+     *
+     * @param string $q
+     * @return Query
+     */
     public function fulltextQuery($q) {
         $qb = $this->createQueryBuilder('e');
         $qb->addSelect("MATCH_AGAINST (e.name, :q 'IN BOOLEAN MODE') as score");
@@ -58,6 +72,13 @@ class FirmRepository extends EntityRepository
         return $qb->getQuery();
     }
 
+    /**
+     * Build a full text, complex search query and return it. Takes all the
+     * parameters from the firm search and does smart things with them.
+     *
+     * @param array $data The search form's data from $form->getData().
+     * @return Query
+     */
     public function buildSearchQuery($data) {
         $qb = $this->createQueryBuilder('e');
         if(isset($data['name']) && $data['name']) {
@@ -104,6 +125,12 @@ class FirmRepository extends EntityRepository
         return $qb->getQuery();
     }
 
+    /**
+     * Find and return $limit firms, selected at random.
+     *
+     * @param int $limit
+     * @return Collection
+     */
     public function random($limit) {
         $qb = $this->createQueryBuilder('e');
         $qb->orderBy('RAND()');

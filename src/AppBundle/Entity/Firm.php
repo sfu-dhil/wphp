@@ -86,6 +86,9 @@ class Firm
      */
     private $titleFirmroles;
 
+    /**
+     * Construct a new firm.
+     */
     public function __construct() {
         $this->titleFirmroles = new ArrayCollection();
     }
@@ -260,7 +263,9 @@ class Firm
     }
 
     /**
-     * Get titleFirmroles
+     * Get titleFirmroles for the firm, optionally sorted by name.
+     *
+     * @param boolean $sort
      *
      * @return Collection
      */
@@ -280,6 +285,11 @@ class Firm
         return $iterator;
     }
 
+    /**
+     * Get the name of the firm.
+     *
+     * @return string
+     */
     public function __toString() {
         return $this->name;
     }

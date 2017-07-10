@@ -24,7 +24,9 @@ class FirmController extends Controller
      * @Route("/", name="firm_index")
      * @Method("GET")
      * @Template()
+     *
      * @param Request $request
+     * @return array
      */
     public function indexAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
@@ -121,8 +123,9 @@ class FirmController extends Controller
      * @Method({"GET","POST"})
      * @Template()
      * @param Firm $firm
+     * @return array
      */
-    public function showAction(Request $request, Firm $firm) {
+    public function showAction(Firm $firm) {
         $em = $this->getDoctrine()->getManager();
         $repo = $em->getRepository('AppBundle:Firm');
         return array(
