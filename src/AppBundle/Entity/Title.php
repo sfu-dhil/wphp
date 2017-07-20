@@ -948,7 +948,7 @@ class Title
     /**
      * Get titleFirmroles, optionally filtered by role name.
      *
-     * @param $roleName
+     * @param string $roleName
      *
      * @return Collection
      */
