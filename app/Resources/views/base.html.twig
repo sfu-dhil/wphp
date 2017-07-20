@@ -53,6 +53,13 @@
                             {{ knp_menu_render('NinesBlogBundle:Builder:postNavMenu') }}
                         </li>
                         <li>
+                          {% if app.user is not null and is_granted('ROLE_ADMIN') %}
+                            <a href="{{ path('feedback_index') }}">Feedback</a>
+                          {% else %}
+                            <a href="{{ path('feedback_new') }}">Feedback</a>
+                          {% endif %}
+                        </li>
+                        <li>
                             <a href="{{ asset('docs/html/index.html') }}">Documentation</a>
                         </li>
 
