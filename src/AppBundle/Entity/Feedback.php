@@ -11,7 +11,7 @@ use DateTime;
  *
  * @ORM\Table(name="feedback")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\FeedbackRepository")
- * @ORM\HasLifeCycleCallbacks
+ * @ORM\HasLifecycleCallbacks()
  */
 class Feedback
 {

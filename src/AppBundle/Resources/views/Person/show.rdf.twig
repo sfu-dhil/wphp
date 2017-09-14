@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rdf:RDF xml:lang="en"
+         xmlns:wphp="http://dhil.lib.sfu.ca/wphp/ns#"
          xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
          xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
          xmlns:schema="http://schema.org/">
@@ -22,12 +23,13 @@
         {% if person.cityOfDeath and person.cityOfDeath.geonameid != 0 %}
         <schema:deathPlace rdf:resource="http://sws.geonames.org/{{ person.cityOfDeath.geonameid }}/about.rdf"/>
         {% endif %}
-        <schema:CreativeWorks>
+        <wphp:Contributions>
             <rdf:Bag>
                 {% for tf in person.titleRoles %}
                     <rdf:li rdf:resource="{{ url('title_show', {'id': tf.title.id}) }}"/>
                 {% endfor %}
             </rdf:Bag>
-        </schema:CreativeWorks>
+        </wphp:Contributions>
     </schema:Person>
 </rdf:RDF>
+            
