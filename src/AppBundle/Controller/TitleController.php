@@ -223,7 +223,7 @@ class TitleController extends Controller
     /**
      * Finds and displays a Title entity.
      *
-     * @Route("/{id}", name="title_show")
+     * @Route("/{id}.{_format}", name="title_show", defaults={"_format": "html"})
      * @Method("GET")
      * @Template()
      * @param Title $title

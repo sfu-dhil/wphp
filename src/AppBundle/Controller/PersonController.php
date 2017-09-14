@@ -120,7 +120,7 @@ class PersonController extends Controller
     /**
      * Finds and displays a Person entity.
      *
-     * @Route("/{id}", name="person_show")
+     * @Route("/{id}.{_format}", name="person_show", defaults={"_format": "html"})
      * @Method({"GET","POST"})
      * @Template()
      * @param Person $person

@@ -119,7 +119,7 @@ class FirmController extends Controller
     /**
      * Finds and displays a Firm entity.
      *
-     * @Route("/{id}", name="firm_show")
+     * @Route("/{id}.{_format}", name="firm_show", defaults={"_format": "html"})
      * @Method({"GET","POST"})
      * @Template()
      * @param Firm $firm

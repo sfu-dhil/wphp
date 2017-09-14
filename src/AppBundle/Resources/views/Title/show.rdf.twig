@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF xml:lang="en"
+         xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+         xmlns:dc="http://purl.org/dc/elements/1.1/"
+         xmlns:dcterm="http://purl.org/dc/terms/">
+    
+    <rdf:Description rdf:about="{{ url('title_show', {'id': title.id}) }}">
+
+        <dc:title>{{ title.title }}</dc:title>
+
+        {% for tr in title.titleRoles %}
+            {% if tr.role.name == 'Author' %}
+                <dc:creator rdf:resource="{{ url('person_show', {'id': tr.person.id}) }}"/>
+            {% else %}
+                <dc:contributor rdf:resource="{{ url('person_show', {'id': tr.person.id}) }}"/>
+            {% endif %}
+        {% endfor %}
+
+        {% for fr in title.titleFirmRoles %}
+            {% if fr.firmrole.name == 'Publisher' %}
+                <dc:publisher rdf:resource="{{ url('firm_show', {'id': fr.firm.id}) }}"/>
+            {% endif %}
+        {% endfor %}
+
+        {% if title.format and title.format.name != 'unknown' and title.format.name != 'other' %}
+            <dc:format>{{ title.format.name }} ({{ title.format.abbrevOne }})</dc:format>
+            {% endif %}
+
+        {% if title.genre and title.genre.name != 'unknown' %}
+            <dc:subject>{{ title.genre.name }}</dc:subject>
+            {% endif %}
+
+        {% if title.source and title.source.name != 'unknown' and title.source.name != 'None' %}
+            <dc:source>{{ title.source.name }} {{ title.sourceId }}</dc:source>
+            {% endif %}
+
+        {% if title.source2 and title.source2.name != 'unknown' and title.source2.name != 'None' %}
+            <dc:source>{{ title.source2.name }} {{ title.source2Id }}</dc:source>
+            {% endif %}
+
+        {% if title.pubdate %}
+            <dc:date>{{ title.pubdate }}</dc:date>
+            {% endif %}
+
+        {% if title.dateOfFirstPublication %}
+            <dc:date>{{ title.dateOfFirstPublication }}</dc:date>
+            {% endif %}
+
+        {% if title.sizeL or title.sizeW %}
+            <dc:format>Length: {{ title.sizeL }}, Width: {{ title.sizeW }}</dc:format>
+        {% endif %}
+
+        {% if title.pagination %}
+            <dc:format>Pagination: {{ title.pagination }}</dc:format>
+        {% endif %}
+        
+        {% for mark in title.shelfMark|split(';') %}
+            {% if mark %}
+            <dc:identifier>{{ mark }}</dc:identifier>
+            {% endif %}
+        {% endfor %}
+        
+        <dcterm:bibliographicCitation>
+            {{ include('AppBundle:Title:mla.html.twig')|striptags }}
+        </dcterm:bibliographicCitation>
+        
+    </rdf:Description>
+</rdf:RDF>
