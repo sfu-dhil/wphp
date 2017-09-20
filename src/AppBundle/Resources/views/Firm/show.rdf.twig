@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rdf:RDF xml:lang="en"
+         xmlns:wphp="http://dhil.lib.sfu.ca/wphp/ns#"
          xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
          xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
          xmlns:schema="http://schema.org/">
@@ -13,13 +14,12 @@
         {% if firm.endDate %}
             <schema:dissolutionDate>{{ firm.endDate|date('Y') }}</schema:dissolutionDate>
         {% endif %}
-        <schema:CreativeWorks>
+        <wphp:Contributions>
             <rdf:Bag>
                 {% for tfr in firm.getTitleFirmroles %}
                     <rdf:li rdf:resource="{{ url('title_show', {'id': tfr.title.id}) }}"/>
                 {% endfor %}
             </rdf:Bag>
-        </schema:CreativeWorks>
+        </wphp:Contributions>
     </schema:Organization>
 </rdf:RDF>
-            

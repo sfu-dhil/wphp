@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rdf:RDF xml:lang="en"
+         xmlns:wphp="http://dhil.lib.sfu.ca/wphp/ns#"
          xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
          xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
          xmlns:dc="http://purl.org/dc/elements/1.1/"
@@ -61,9 +62,24 @@
             {% endif %}
         {% endfor %}
         
-        <dcterm:bibliographicCitation>
-            {{ include('AppBundle:Title:mla.html.twig')|striptags }}
+        <dcterm:bibliographicCitation rdf:parseType="Resource">
+            <rdf:value>{{ include('AppBundle:Title:apa.html.twig')|striptags }}</rdf:value>
+            <wphp:standard>APA</wphp:standard>
         </dcterm:bibliographicCitation>
         
+        <dcterm:bibliographicCitation rdf:parseType="Resource">
+            <rdf:value>{{ include('AppBundle:Title:mla.html.twig')|striptags }}</rdf:value>
+            <wphp:standard>MLA</wphp:standard>
+        </dcterm:bibliographicCitation>
+            
+        <dcterm:bibliographicCitation rdf:parseType="Resource">
+            <rdf:value>{{ include('AppBundle:Title:chicago.html.twig')|striptags }}</rdf:value>
+            <wphp:standard>Chicago</wphp:standard>
+        </dcterm:bibliographicCitation>
+            
+        <dcterm:bibliographicCitation rdf:parseType="Resource">
+            <rdf:value>{{ include('AppBundle:Title:bibtex.html.twig')|striptags }}</rdf:value>
+            <wphp:standard>BibTex</wphp:standard>
+        </dcterm:bibliographicCitation>
     </rdf:Description>
 </rdf:RDF>
