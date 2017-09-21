@@ -1,5 +1,9 @@
 {% extends 'base.html.twig' %}
 
+{% block htmlhead %}
+    <link rel="meta" type="application/rdf+xml" href="{{ path('title_show', {'id': title.id, '_format': 'rdf'}) }}"/>
+{% endblock %}
+
 {% block pageheader %} 
     <h1>{{ title.title }}</h1>
     <div class="row">

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF
+      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+      xmlns:dc="http://purl.org/dc/elements/1.1/"
+      xmlns:dcterms="http://purl.org/dc/terms/"
+      xmlns:collex="http://www.collex.org/schema#"
+      xmlns:ra="http://www.rossettiarchive.org/schema#"
+      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+      xmlns:role="http://www.loc.gov/loc.terms/relators/"
+      xmlns:wphp="http://dhil.lib.sfu.ca/wphp/">
+
+   <wphp:title rdf:about="{{url('title_show', {'id': title.id}) }}">
+
+<!-- choose your federation: multiples are also allowed. -->
+
+      <collex:federation>NINES</collex:federation>
+      <collex:federation>18thConnect</collex:federation>
+      
+      <collex:archive>Women's Print History Project</collex:archive>
+
+      <dc:title>{{ title.title }}</dc:title>
+      <dcterms:alternative>ALTERNATE TITLE</dcterms:alternative>
+      <dc:source>TITLE OF JOURNAL/ANTHOLOGY/LARGER WORK</dc:source>
+
+      <role:ART>VISUAL ARTIST</role:ART>
+      <role:AUT>AUTHOR</role:AUT>
+      <role:EDT>EDITOR</role:EDT>
+      <role:PBL>PUBLISHER</role:PBL>
+      <role:TRL>TRANSLATOR</role:TRL>
+      <role:CRE>CREATOR</role:CRE>
+      <role:ETR>ETCHER</role:ETR>
+      <role:EGR>ENGRAVER</role:EGR>
+
+      <dc:type>TYPE</dc:type>
+
+      <collex:discipline>DISCIPLINE</collex:discipline>
+
+      <collex:genre>GENRE</collex:genre>
+      <collex:genre>ANOTHER GENRE</collex:genre>
+
+      <collex:freeculture>TRUE OR FALSE</collex:freeculture>
+      <collex:ocr>TRUE OR FALSE</collex:ocr>
+      <collex:fulltext>TRUE OR FALSE</collex:fulltext>
+
+      <dc:language>LANGUAGE OF RESOURCE</dc:language>
+
+      <dc:date>4-DIGIT-DATE</dc:date>
+
+      <collex:thumbnail rdf:resource="http://YOUR_PUBLICATION.ORG/THUMBNAIL.JPG"/>
+      <collex:image rdf:resource="http://YOUR_PUBLICATION.ORG/FULL_SIZE_IMAGE.JPG"/>
+
+      <collex:source_xml rdf:resource="http://YOUR_ENCODED_RESOURCE.XML"/>
+      <collex:text rdf:resource="http://PLAIN_TEXT_OBJECT_TRANSCRIPTION.TXT"/>
+      <rdfs:seeAlso rdf:resource="http://YOUR_PUBLICATION.ORG/YOUR_OBJECT.HTML"/>
+
+      <dcterms:hasPart rdf:resource="ANOTHER_OBJECT_CONTAINED_BY_THIS_OBJECT"/>
+      <dcterms:isPartOf rdf:resource="AN_OBJECT_THAT_CONTAINS_THIS_OBJECT"/>
+      <dc:relation rdf:resource="AN_ASSOCIATED_OBJECT"/>
+
+   </wphp:title>
+
+</rdf:RDF>
