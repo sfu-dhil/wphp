@@ -40,6 +40,96 @@ a[href ^= 'https://']::after {
     -moz-osx-font-smoothing: grayscale;
 }
 
+
+span.twitter-typeahead {
+  display: block;
+  width: 100%;
+}
+
+div.tt-cursor, div.tt-selectable:hover {
+  background-color: lightblue !important;
+}
+
+div.tt-selectable {
+  padding: 5px;
+  border: 1px solid lightgrey;
+}
+
+div.tt-menu {
+  background-color: #fff;
+  border-collapse: collapse;
+  border: 1px solid lightgrey;
+  padding: 5px;
+}
+
+div.tab-content {
+  min-height: 200px;
+}
+
+ul.columnated {
+  list-style: none;
+}
+
+ul.columnated li {
+  -webkit-column-break-inside: avoid; /* Chrome, Safari, Opera */
+  page-break-inside: avoid; /* Firefox */
+  break-inside: avoid; /* IE 10+ */
+  position: relative;
+  margin-left: 1em;
+}
+
+ul.columnated li:before {
+  content: '•';
+  position: absolute;
+  left: -1em;
+}
+
+@media (max-width: 480px) {
+  ul.columnated {
+    -moz-column-count: 1;
+    -webkit-column-count: 1;
+    column-count: 1;
+  }
+}
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 481px) and (max-width: 768px) {
+  ul.columnated {
+    -moz-column-count: 2;
+    -webkit-column-count: 2;
+    column-count: 2;
+  }
+}
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: 769px) and (max-width: 992px) {
+  ul.columnated {
+    list-style: none;
+    -moz-column-count: 3;
+    -webkit-column-count: 3;
+    column-count: 3;
+  }
+
+}
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: 993px) {
+  ul.columnated {
+    -moz-column-count: 4;
+    -webkit-column-count: 4;
+    column-count: 4;
+  }
+}
+
+div.homepage {
+    margin: 0 auto;
+    max-width: 80ex;
+}
+
+div.homepage img {
+    max-width: 100%;
+}
+
 /* make the search form checkboxes less bad. */
 div.checkbox, div.radio {
     width: 30%;
@@ -61,4 +151,8 @@ div.checkbox, div.radio {
 .collection .form-group .form-group {
     border-bottom: none;
     padding-top: 0;
+}
+
+.form-group.collection .form-group label {
+    display: none;
 }

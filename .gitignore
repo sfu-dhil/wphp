@@ -21,3 +21,4 @@
 /web/docs/*
 !/web/docs/.gitkeep
 /web/bower
+app/cache
