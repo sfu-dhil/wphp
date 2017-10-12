@@ -19,44 +19,46 @@
       <collex:archive>Women's Print History Project</collex:archive>
 
       <dc:title>{{ title.title }}</dc:title>
-      <dcterms:alternative>ALTERNATE TITLE</dcterms:alternative>
-      <dc:source>TITLE OF JOURNAL/ANTHOLOGY/LARGER WORK</dc:source>
+        {% if title.source and title.source.name != 'unknown' and title.source.name != 'None' %}
+            <dc:source>{{ title.source.name }} {{ title.sourceId }}</dc:source>
+        {% endif %}
 
-      <role:ART>VISUAL ARTIST</role:ART>
-      <role:AUT>AUTHOR</role:AUT>
-      <role:EDT>EDITOR</role:EDT>
-      <role:PBL>PUBLISHER</role:PBL>
-      <role:TRL>TRANSLATOR</role:TRL>
-      <role:CRE>CREATOR</role:CRE>
-      <role:ETR>ETCHER</role:ETR>
-      <role:EGR>ENGRAVER</role:EGR>
+        {% if title.source2 and title.source2.name != 'unknown' and title.source2.name != 'None' %}
+            <dc:source>{{ title.source2.name }} {{ title.source2Id }}</dc:source>
+        {% endif %}
+        
+        {% for tr in title.titleRoles %}
+            {% if tr.role.name == 'Author' %}
+                <role:AUT rdf:resource="{{ url('person_show', {'id': tr.person.id}) }}"/>
+            {% elseif tr.role.name == 'Publisher' %}
+                <role:AUT rdf:resource="{{ url('person_show', {'id': tr.person.id}) }}"/>
+            {% elseif tr.role.name == 'Editor' %}
+                <role:EDT rdf:resource="{{ url('person_show', {'id': tr.person.id}) }}"/>
+            {% elseif tr.role.name == 'Translator' %}
+                <role:TRL rdf:resource="{{ url('person_show', {'id': tr.person.id}) }}"/>
+            {% elseif tr.role.name == 'Engraver' %}
+                <role:EGR rdf:resource="{{ url('person_show', {'id': tr.person.id}) }}"/>
+            {% else %}
+                <dc:contributor rdf:resource="{{ url('person_show', {'id': tr.person.id}) }}"/>
+            {% endif %}
+        {% endfor %}
 
-      <dc:type>TYPE</dc:type>
+      <dc:type>Dataset</dc:type>
 
-      <collex:discipline>DISCIPLINE</collex:discipline>
+      <collex:discipline>Literature</collex:discipline>
+      <collex:discipline>History</collex:discipline>
+      
+      {% for genre in title.genre %}
+          <collex:genre>{{ genre }}</collex:genre>
+      {% endfor %}
 
-      <collex:genre>GENRE</collex:genre>
-      <collex:genre>ANOTHER GENRE</collex:genre>
+      <collex:freeculture>TRUE</collex:freeculture>
+      <collex:ocr>FALSE</collex:ocr>
+      <collex:fulltext>FALSE</collex:fulltext>
 
-      <collex:freeculture>TRUE OR FALSE</collex:freeculture>
-      <collex:ocr>TRUE OR FALSE</collex:ocr>
-      <collex:fulltext>TRUE OR FALSE</collex:fulltext>
+      <dc:language>eng</dc:language>
 
-      <dc:language>LANGUAGE OF RESOURCE</dc:language>
-
-      <dc:date>4-DIGIT-DATE</dc:date>
-
-      <collex:thumbnail rdf:resource="http://YOUR_PUBLICATION.ORG/THUMBNAIL.JPG"/>
-      <collex:image rdf:resource="http://YOUR_PUBLICATION.ORG/FULL_SIZE_IMAGE.JPG"/>
-
-      <collex:source_xml rdf:resource="http://YOUR_ENCODED_RESOURCE.XML"/>
-      <collex:text rdf:resource="http://PLAIN_TEXT_OBJECT_TRANSCRIPTION.TXT"/>
-      <rdfs:seeAlso rdf:resource="http://YOUR_PUBLICATION.ORG/YOUR_OBJECT.HTML"/>
-
-      <dcterms:hasPart rdf:resource="ANOTHER_OBJECT_CONTAINED_BY_THIS_OBJECT"/>
-      <dcterms:isPartOf rdf:resource="AN_OBJECT_THAT_CONTAINS_THIS_OBJECT"/>
-      <dc:relation rdf:resource="AN_ASSOCIATED_OBJECT"/>
-
+      <dc:date>{{ title.date }}</dc:date>
    </wphp:title>
 
 </rdf:RDF>
