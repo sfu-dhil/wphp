@@ -10,9 +10,9 @@
         <link rel="stylesheet" href="{{ asset('bower/bootstrap/dist/css/bootstrap.min.css') }}">
         <link rel="stylesheet" href="{{ asset('bower/bootstrap/dist/css/bootstrap-theme.min.css') }}">
         <link rel="stylesheet" href="{{ asset('bundles/app/css/base.css') }}">        
+        {% block htmlhead %}{% endblock %}
         <script src="{{ asset('bower/jquery/dist/jquery.min.js') }}"></script>        
-        {% block styles %}
-        {% endblock %}
+        {% block styles %}{% endblock -%}
     </head>
     <body>
         <nav class="navbar navbar-default navbar-fixed-top">
