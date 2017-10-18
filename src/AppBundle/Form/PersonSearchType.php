@@ -77,25 +77,19 @@ class PersonSearchType extends AbstractType
             'required' => false,
         ));
 
-        $builder->add('title_filter', CollectionType::class, array(
+        $builder->add('title_filter', TitleFilterType::class, array(
             'label' => 'Filter by Title',
-            'entry_type' => TitleFilterType::class,
-            'allow_add' => true,
-            'allow_delete' => true,
             'required' => false,
             'attr' => array(
-                'group_class' => 'collection'
+                'class' => 'embedded-form'
             ),
         ));
 
-        $builder->add('firm_filter', CollectionType::class, array(
+        $builder->add('firm_filter', FirmFilterType::class, array(
             'label' => 'Filter by Firm',
-            'entry_type' => FirmFilterType::class,
-            'allow_add' => true,
-            'allow_delete' => true,
             'required' => false,
             'attr' => array(
-                'group_class' => 'collection'
+                'class' => 'embedded-form'
             ),
         ));
 

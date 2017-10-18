@@ -128,54 +128,56 @@ class TitleRepository extends EntityRepository
             }
         }
 
-        if (isset($data['person_filter']) && count($data['person_filter']) > 0) {
-            foreach ($data['person_filter'] as $idx => $filter) {
-                $trAlias = 'tr_' . $idx;
-                $pAlias = 'p_' . $idx;
-                $qb->innerJoin('e.titleRoles', $trAlias)->innerJoin("{$trAlias}.person", $pAlias);
-                if (isset($filter['name']) && $filter['name']) {
-                    $qb->andWhere("MATCH_AGAINST ({$pAlias}.lastName, {$pAlias}.firstName, {$pAlias}.title, :{$pAlias}_name 'IN BOOLEAN MODE') > 0");
-                    $qb->setParameter("{$pAlias}_name", $filter['name']);
+        // only add the title filter query parts if the subform has data.
+        if (count(array_filter($data['person_filter']))) {
+            $filter = $data['person_filter'];
+            $idx = '00';
+            $trAlias = 'tr_' . $idx;
+            $pAlias = 'p_' . $idx;
+            $qb->innerJoin('e.titleRoles', $trAlias)->innerJoin("{$trAlias}.person", $pAlias);
+            if (isset($filter['name']) && $filter['name']) {
+                $qb->andWhere("MATCH_AGAINST ({$pAlias}.lastName, {$pAlias}.firstName, {$pAlias}.title, :{$pAlias}_name 'IN BOOLEAN MODE') > 0");
+                $qb->setParameter("{$pAlias}_name", $filter['name']);
+            }
+            if (isset($filter['gender']) && $filter['gender']) {
+                $genders = [];
+                if (in_array('M', $filter['gender'])) {
+                    $genders[] = 'M';
                 }
-                if (isset($filter['gender']) && $filter['gender']) {
-                    $genders = [];
-                    if (in_array('M', $filter['gender'])) {
-                        $genders[] = 'M';
-                    }
-                    if (in_array('F', $filter['gender'])) {
-                        $genders[] = 'F';
-                    }
-                    if (in_array('U', $filter['gender'])) {
-                        $genders[] = '';
-                    }
-                    $qb->andWhere("{$pAlias}.gender in (:genders)");
-                    $qb->setParameter('genders', $genders);
+                if (in_array('F', $filter['gender'])) {
+                    $genders[] = 'F';
                 }
+                if (in_array('U', $filter['gender'])) {
+                    $genders[] = '';
+                }
+                $qb->andWhere("{$pAlias}.gender in (:genders)");
+                $qb->setParameter('genders', $genders);
+            }
 
-                if(isset($filter['person_role']) && count($filter['person_role']) > 0) {
-                    $qb->andWhere("{$trAlias}.role in (:roles_{$idx})");
-                    $qb->setParameter("roles_{$idx}", $filter['person_role']);
-                }
+            if(isset($filter['person_role']) && count($filter['person_role']) > 0) {
+                $qb->andWhere("{$trAlias}.role in (:roles_{$idx})");
+                $qb->setParameter("roles_{$idx}", $filter['person_role']);
             }
         }
 
-        if(isset($data['firm_filter']) && count($data['firm_filter']) > 0) {
-            foreach($data['firm_filter'] as $idx => $filter) {
-                $tfrAlias = 'tfr_' . $idx;
-                $fAlias = 'f_' . $idx;
-                $qb->innerJoin('e.titleFirmroles', $tfrAlias)->innerJoin("{$tfrAlias}.firm", $fAlias);
-                if(isset($filter['firm_name']) && $filter['firm_name']) {
-                    $qb->andWhere("MATCH_AGAINST({$fAlias}.name, :{$fAlias}_name 'IN BOOLEAN MODE') > 0");
-                    $qb->setParameter("{$fAlias}_name", $filter['firm_name']);
-                }
-                if(isset($filter['firm_role']) && count($filter['firm_role']) > 0) {
-                    $qb->andWhere("{$tfrAlias}.firmrole in (:firmroles_{$idx})");
-                    $qb->setParameter("firmroles_{$idx}", $filter['firm_role']);
-                }
-                if(isset($filter['firm_address']) && $filter['firm_address']) {
-                    $qb->andWhere("MATCH_AGAINST({$fAlias}.streetAddress, :{$fAlias}_address 'IN BOOLEAN MODE') > 0");
-                    $qb->setParameter("{$fAlias}_address", $filter['firm_address']);
-                }
+        // only add the firm filter query parts if the subform has data.
+        if(count(array_filter($data['firm_filter']))) {
+            $filter = $data['firm_filter'];
+            $idx = '01';
+            $tfrAlias = 'tfr_' . $idx;
+            $fAlias = 'f_' . $idx;
+            $qb->innerJoin('e.titleFirmroles', $tfrAlias)->innerJoin("{$tfrAlias}.firm", $fAlias);
+            if(isset($filter['firm_name']) && $filter['firm_name']) {
+                $qb->andWhere("MATCH_AGAINST({$fAlias}.name, :{$fAlias}_name 'IN BOOLEAN MODE') > 0");
+                $qb->setParameter("{$fAlias}_name", $filter['firm_name']);
+            }
+            if(isset($filter['firm_role']) && count($filter['firm_role']) > 0) {
+                $qb->andWhere("{$tfrAlias}.firmrole in (:firmroles_{$idx})");
+                $qb->setParameter("firmroles_{$idx}", $filter['firm_role']);
+            }
+            if(isset($filter['firm_address']) && $filter['firm_address']) {
+                $qb->andWhere("MATCH_AGAINST({$fAlias}.streetAddress, :{$fAlias}_address 'IN BOOLEAN MODE') > 0");
+                $qb->setParameter("{$fAlias}_address", $filter['firm_address']);
             }
         }
 

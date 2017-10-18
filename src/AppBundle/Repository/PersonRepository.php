@@ -112,15 +112,15 @@ class PersonRepository extends EntityRepository
             $qb->setParameter('dpname', $data['deathplace']);
         }
 
-        if (isset($data['title_filter']) && count($data['title_filter']) > 0) {
-            foreach ($data['title_filter'] as $idx => $filter) {
-                $trAlias = 'tr_' . $idx;
-                $tAlias = 't_' . $idx;
-                $qb->innerJoin('e.titleRoles', $trAlias)->innerJoin("{$trAlias}.title", $tAlias);
-                if (isset($filter['title']) && $filter['title']) {
-                    $qb->andWhere("MATCH_AGAINST({$tAlias}.title, :{$tAlias}_title 'IN BOOLEAN MODE') > 0");
-                    $qb->setParameter("{$tAlias}_title", $filter['title']);
-                }
+        if(count(array_filter($data['title_filter']))) {
+            $filter = $data['title_filter'];
+            $idx = '00';
+            $trAlias = 'tr_' . $idx;
+            $tAlias = 't_' . $idx;
+            $qb->innerJoin('e.titleRoles', $trAlias)->innerJoin("{$trAlias}.title", $tAlias);
+            if (isset($filter['title']) && $filter['title']) {
+                $qb->andWhere("MATCH_AGAINST({$tAlias}.title, :{$tAlias}_title 'IN BOOLEAN MODE') > 0");
+                $qb->setParameter("{$tAlias}_title", $filter['title']);
             }
 
             if(isset($filter['person_role']) && $filter['person_role']) {
