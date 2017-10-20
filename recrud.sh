@@ -19,3 +19,13 @@ function recrud() {
 
 # recrud Feedback feedback
 
+recrud Firm firm
+recrud Feedback feedback
+recrud Firmrole firmrole
+recrud Format format
+recrud Genre genre
+recrud Geonames geonames
+recrud Person person
+recrud Role role
+recrud Source source
+recrud Title title
