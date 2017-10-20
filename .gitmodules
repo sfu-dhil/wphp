@@ -6,3 +6,7 @@
 	path = docs
 	url=https://github.com/sfu-dhil/wphp-docs.git
 	branch = master
+[submodule "app/Resources/SensioGeneratorBundle/skeleton"]
+	path = app/Resources/SensioGeneratorBundle/skeleton
+	url = https://github.com/ubermichael/skeleton.git
+	branch = master
