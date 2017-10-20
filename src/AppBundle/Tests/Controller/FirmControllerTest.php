@@ -2,24 +2,24 @@
 
 namespace AppBundle\Tests\Controller;
 
-use AppBundle\Entity\Feedback;
-use AppBundle\Tests\DataFixtures\ORM\LoadFeedback;
+use AppBundle\Entity\Firm;
+use AppBundle\Tests\DataFixtures\ORM\LoadFirm;
 use AppBundle\Tests\Util\BaseTestCase;
 use Nines\UserBundle\Tests\DataFixtures\ORM\LoadUsers;
 
-class FeedbackControllerTest extends BaseTestCase
+class FirmControllerTest extends BaseTestCase
 {
 
     protected function getFixtures() {
         return [
             LoadUsers::class,
-            LoadFeedback::class
+            LoadFirm::class
         ];
     }
     
     public function testAnonIndex() {
         $client = $this->makeClient();
-        $crawler = $client->request('GET', '/feedback/');
+        $crawler = $client->request('GET', '/firm/');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertEquals(0, $crawler->selectLink('New')->count());
     }
@@ -29,7 +29,7 @@ class FeedbackControllerTest extends BaseTestCase
             'username' => 'user@example.com',
             'password' => 'secret',
         ]);
-        $crawler = $client->request('GET', '/feedback/');
+        $crawler = $client->request('GET', '/firm/');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertEquals(0, $crawler->selectLink('New')->count());
     }
@@ -39,14 +39,14 @@ class FeedbackControllerTest extends BaseTestCase
             'username' => 'admin@example.com',
             'password' => 'supersecret',
         ]);
-        $crawler = $client->request('GET', '/feedback/');
+        $crawler = $client->request('GET', '/firm/');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertEquals(1, $crawler->selectLink('New')->count());
     }
     
     public function testAnonShow() {
         $client = $this->makeClient();
-        $crawler = $client->request('GET', '/feedback/1');
+        $crawler = $client->request('GET', '/firm/1');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertEquals(0, $crawler->selectLink('Edit')->count());
         $this->assertEquals(0, $crawler->selectLink('Delete')->count());
@@ -57,7 +57,7 @@ class FeedbackControllerTest extends BaseTestCase
             'username' => 'user@example.com',
             'password' => 'secret',
         ]);
-        $crawler = $client->request('GET', '/feedback/1');
+        $crawler = $client->request('GET', '/firm/1');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertEquals(0, $crawler->selectLink('Edit')->count());
         $this->assertEquals(0, $crawler->selectLink('Delete')->count());
@@ -68,7 +68,7 @@ class FeedbackControllerTest extends BaseTestCase
             'username' => 'admin@example.com',
             'password' => 'supersecret',
         ]);
-        $crawler = $client->request('GET', '/feedback/1');
+        $crawler = $client->request('GET', '/firm/1');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertEquals(1, $crawler->selectLink('Edit')->count());
         $this->assertEquals(1, $crawler->selectLink('Delete')->count());
