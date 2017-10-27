@@ -3,17 +3,17 @@
 namespace AppBundle\Tests\Entity;
 
 use AppBundle\Entity\Title;
+use AppBundle\Entity\Role;
+use AppBundle\Entity\Firmrole;
+use AppBundle\Entity\TitleRole;
+use AppBundle\Entity\TitleFirmrole;
 
 class TitleTest extends \PHPUnit_Framework_TestCase {
 	
-	public function testStuff() {
-		$this->assertTrue(true);
-	}
-	
 	/**
-	 * @dataProvider testLSDData
+	 * @dataProvider getTotalPriceData
 	 */
-	public function testLSD($expected, $pence, $shillings, $pounds) {
+	public function testGetTotalPrice($expected, $pence, $shillings, $pounds) {
 		$title = new Title();
 		$title->setPricePence($pence);
 		$title->setPriceShilling($shillings);
@@ -21,7 +21,7 @@ class TitleTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals($expected, $title->getTotalPrice());
 	}
 	
-	public function testLSDData(){
+	public function getTotalPriceData(){
 		return array(
 			// array( expected, pence, shillings, pounds)
 			array(240, 0, 20, 0),
@@ -44,4 +44,50 @@ class TitleTest extends \PHPUnit_Framework_TestCase {
 			array(12, false, 1, 0)
 		);
 	}
+        
+        
+        public function testGetTitleRoles() {
+            
+            $title = new Title();
+            $role = new Role();
+            $titleRole = new TitleRole();
+             
+            $var = "Jane Taylor";
+            
+            $role->setName($var);
+            $titleRole->setRole($role);
+            $title->addTitleRole($titleRole);
+            
+            $this->AssertEquals(1, count($title->getTitleRoles()));
+            
+            $title->removeTitleRole($titleRole);
+            
+            $this->AssertEquals(0, count($title->getTitleRoles()));
+            
+
+                }
+        
+        public function testGetTitleFirmRoles() {
+            
+            $title = new Title();
+            $firmRole = new Firmrole();
+            $titleFirmRole = new TitleFirmrole();
+             
+            $var = "Jane Taylor";
+            
+            $firmRole->setName($var);           
+            $titleFirmRole->setFirmrole($firmRole);           
+            $title->addTitleFirmrole($titleFirmRole);
+            
+            $this->AssertEquals(1, count($title->getTitleFirmroles()));
+            
+            $title->removeTitleFirmrole($titleFirmRole);
+            
+            $this->AssertEquals(0, count($title->getTitleFirmroles()));
+            
+        }
+        
+        
+        
+        
 }
