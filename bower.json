@@ -14,7 +14,7 @@
     "jquery-ui": "^1.12.1",
     "typeahead.js": "^0.11.1",
     "tablesorter": "*",
-    "select2": "^4.0.4",
+    "select2": "^3.5.2",
     "select2-bootstrap-css": "^1.4.6",
     "symfony-collection": "^2.1.18"
   }

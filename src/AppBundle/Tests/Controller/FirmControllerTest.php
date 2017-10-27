@@ -21,7 +21,8 @@ class FirmControllerTest extends BaseTestCase
         $client = $this->makeClient();
         $crawler = $client->request('GET', '/firm/');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertEquals(0, $crawler->selectLink('New')->count());
+        $this->assertEquals(1, $crawler->filter('h1:contains("Firm List")')->count());
+       
     }
     
     public function testUserIndex() {
@@ -31,7 +32,8 @@ class FirmControllerTest extends BaseTestCase
         ]);
         $crawler = $client->request('GET', '/firm/');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertEquals(0, $crawler->selectLink('New')->count());
+        $this->assertEquals(1, $crawler->filter('h1:contains("Firm List")')->count());
+      
     }
     
     public function testAdminIndex() {
@@ -41,15 +43,14 @@ class FirmControllerTest extends BaseTestCase
         ]);
         $crawler = $client->request('GET', '/firm/');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertEquals(1, $crawler->selectLink('New')->count());
+        $this->assertEquals(1, $crawler->filter('h1:contains("Firm List")')->count());
+     
     }
     
     public function testAnonShow() {
         $client = $this->makeClient();
-        $crawler = $client->request('GET', '/firm/1');
+        $crawler = $client->request('GET', '/firm/4');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertEquals(0, $crawler->selectLink('Edit')->count());
-        $this->assertEquals(0, $crawler->selectLink('Delete')->count());
     }
     
     public function testUserShow() {
@@ -57,10 +58,9 @@ class FirmControllerTest extends BaseTestCase
             'username' => 'user@example.com',
             'password' => 'secret',
         ]);
-        $crawler = $client->request('GET', '/firm/1');
+        $crawler = $client->request('GET', '/firm/4');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertEquals(0, $crawler->selectLink('Edit')->count());
-        $this->assertEquals(0, $crawler->selectLink('Delete')->count());
+        
     }
     
     public function testAdminShow() {
@@ -68,10 +68,8 @@ class FirmControllerTest extends BaseTestCase
             'username' => 'admin@example.com',
             'password' => 'supersecret',
         ]);
-        $crawler = $client->request('GET', '/firm/1');
+        $crawler = $client->request('GET', '/firm/4');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertEquals(1, $crawler->selectLink('Edit')->count());
-        $this->assertEquals(1, $crawler->selectLink('Delete')->count());
     }
 
 }
