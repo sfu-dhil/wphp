@@ -19,9 +19,9 @@ class FeedbackControllerTest extends BaseTestCase
     
     public function testAnonIndex() {
         $client = $this->makeClient();
-        $crawler = $client->request('GET', '/feedback/');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertEquals(0, $crawler->selectLink('New')->count());
+        $client->request('GET', '/feedback/');
+        $this->assertEquals(302, $client->getResponse()->getStatusCode());
+        $this->assertTrue($client->getResponse()->isRedirect());
     }
     
     public function testUserIndex() {
@@ -29,9 +29,9 @@ class FeedbackControllerTest extends BaseTestCase
             'username' => 'user@example.com',
             'password' => 'secret',
         ]);
-        $crawler = $client->request('GET', '/feedback/');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertEquals(0, $crawler->selectLink('New')->count());
+        $client->request('GET', '/feedback/');
+        $this->assertEquals(302, $client->getResponse()->getStatusCode());
+        $this->assertTrue($client->getResponse()->isRedirect());
     }
     
     public function testAdminIndex() {
@@ -41,15 +41,15 @@ class FeedbackControllerTest extends BaseTestCase
         ]);
         $crawler = $client->request('GET', '/feedback/');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertEquals(1, $crawler->selectLink('New')->count());
+        $this->assertEquals(1, $crawler->filter('p.count')->count());
     }
     
     public function testAnonShow() {
         $client = $this->makeClient();
-        $crawler = $client->request('GET', '/feedback/1');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertEquals(0, $crawler->selectLink('Edit')->count());
-        $this->assertEquals(0, $crawler->selectLink('Delete')->count());
+        $client->request('GET', '/feedback/1');
+        $this->assertEquals(302, $client->getResponse()->getStatusCode());
+        $this->assertTrue($client->getResponse()->isRedirect());
+   
     }
     
     public function testUserShow() {
@@ -57,10 +57,9 @@ class FeedbackControllerTest extends BaseTestCase
             'username' => 'user@example.com',
             'password' => 'secret',
         ]);
-        $crawler = $client->request('GET', '/feedback/1');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertEquals(0, $crawler->selectLink('Edit')->count());
-        $this->assertEquals(0, $crawler->selectLink('Delete')->count());
+        $client->request('GET', '/feedback/1');
+        $this->assertEquals(302, $client->getResponse()->getStatusCode());
+        $this->assertTrue($client->getResponse()->isRedirect());
     }
     
     public function testAdminShow() {
@@ -70,8 +69,39 @@ class FeedbackControllerTest extends BaseTestCase
         ]);
         $crawler = $client->request('GET', '/feedback/1');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertEquals(1, $crawler->selectLink('Edit')->count());
-        $this->assertEquals(1, $crawler->selectLink('Delete')->count());
+        $this->assertEquals(1, $crawler->filter('h1:contains("Feedback")')->count());
+
+    }
+    
+    public function testAnonNew() {
+        
+        $client = $this->makeClient();
+        $crawler = $client->request('GET', '/feedback/new');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertGreaterThan(0, $crawler->filter('h1:contains("Feedback Creation")')->count());
+    }
+    
+    public function testUserNew() {
+        
+        $client = $this->makeClient([
+            'username' => 'user@example.com',
+            'password' => 'secret',
+        ]);
+        $client->request('GET', '/feedback/new');
+        $this->assertEquals(302, $client->getResponse()->getStatusCode());
+        $this->assertTrue($client->getResponse()->isRedirect());
+        
+    }
+    
+    public function testAdminNew() {
+        
+        $client = $this->makeClient([
+            'username' => 'admin@example.com',
+            'password' => 'supersecret',
+        ]);
+        $client->request('GET', '/feedback/new');
+        $this->assertEquals(302, $client->getResponse()->getStatusCode());
+        $this->assertTrue($client->getResponse()->isRedirect());
     }
 
 }

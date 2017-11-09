@@ -177,7 +177,7 @@ class TitleController extends Controller
         if ($form->isValid()) {
             $data = array_filter($form->getData());
             if (count($data) > 2) {
-                $this->addFlash('success', 'doing search.');
+                //$this->addFlash('success', 'Found relevant entries.');
                 $repo = $em->getRepository(Title::class);
                 $query = $repo->buildSearchQuery($data);
                 $paginator = $this->get('knp_paginator');
