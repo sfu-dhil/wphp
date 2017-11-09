@@ -20,6 +20,7 @@ class LoadGeonames extends AbstractDataFixture {
     
     protected function doLoad(ObjectManager $manager) {
         $geonames = new Geonames();
+        
         $geonames->setName("Some Name");
         $geonames->setCountry("Some Country");
         $geonames->setElevation("12321312");

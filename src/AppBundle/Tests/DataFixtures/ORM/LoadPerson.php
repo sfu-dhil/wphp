@@ -23,13 +23,13 @@ class LoadPerson extends AbstractDataFixture {
         
         $person = new Person();
         $person->setFirstName("Bobby");
-        $person->setLastName("Bobbies");
-        $person->setGender("Man");
+        $person->setLastName("Rock");
+        $person->setGender("M");
         $person->setTitle("Bobby the Man");
         $person->setDob("1952-02-02");
         $person->setDod("1982-02-02");
-        $person->setChecked(true);
-        $person->setFinalcheck(true);
+        $person->setChecked('1');
+        $person->setFinalcheck('1');
         
         $manager->persist($person);
         $manager->flush();

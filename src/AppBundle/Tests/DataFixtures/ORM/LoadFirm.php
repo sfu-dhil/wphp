@@ -22,11 +22,13 @@ class LoadFirm extends AbstractDataFixture {
     protected function doLoad(ObjectManager $manager) {
         $firm = new Firm();
         
+        
         $firm->setName("Great Firm");
         $firm->setStreetAddress("Great Place");
+        
         $firm->setStartDate("1988");
         $firm->setEndDate("2088");
-        $firm->setFinalcheck(true);
+        $firm->setFinalcheck('1');
             
         $manager->persist($firm);
         $manager->flush();

@@ -49,7 +49,7 @@ class FirmControllerTest extends BaseTestCase
     
     public function testAnonShow() {
         $client = $this->makeClient();
-        $crawler = $client->request('GET', '/firm/4');
+        $crawler = $client->request('GET', '/firm/1');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
     
@@ -58,7 +58,7 @@ class FirmControllerTest extends BaseTestCase
             'username' => 'user@example.com',
             'password' => 'secret',
         ]);
-        $crawler = $client->request('GET', '/firm/4');
+        $crawler = $client->request('GET', '/firm/1');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         
     }
@@ -68,8 +68,158 @@ class FirmControllerTest extends BaseTestCase
             'username' => 'admin@example.com',
             'password' => 'supersecret',
         ]);
-        $crawler = $client->request('GET', '/firm/4');
+        $crawler = $client->request('GET', '/firm/1');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
+    
+    public function testAnonJump() {
+        
+        $client = $this->makeClient();
+        $crawler = $client->request('GET', '/firm/');
+        
+        $link = $crawler->selectLink('Search')->link();
+        $crawler = $client->click($link);
 
+        $form = $crawler->selectButton('Jump')->form(array('q' => '4'));
+        $crawler = $client->submit($form);
+        
+        $this->assertTrue($client->getResponse()->isRedirect('/firm/4'));
+    }
+    
+    public function testUserJump() {
+        
+        $client = $this->makeClient([
+            'username' => 'user@example.com',
+            'password' => 'secret',
+        ]);
+        
+        $crawler = $client->request('GET', '/firm/');
+        
+        $link = $crawler->selectLink('Search')->link();
+        $crawler = $client->click($link);
+
+        $form = $crawler->selectButton('Jump')->form(array('q' => '4'));
+        $crawler = $client->submit($form);
+        
+        $this->assertTrue($client->getResponse()->isRedirect('/firm/4'));
+        
+        
+    }
+    
+    public function testAdminJump() {
+        
+        $client = $this->makeClient([
+            'username' => 'admin@example.com',
+            'password' => 'supersecret',
+        ]);
+        
+        $crawler = $client->request('GET', '/firm/');
+        
+        $link = $crawler->selectLink('Search')->link();
+        $crawler = $client->click($link);
+
+        $form = $crawler->selectButton('Jump')->form(array('q' => '4'));
+        $crawler = $client->submit($form);
+        
+        $this->assertTrue($client->getResponse()->isRedirect('/firm/4'));
+        
+        
+    }
+    
+    public function testAnonQuickSearch() {
+        
+        $client = $this->makeClient();
+        $crawler = $client->request('GET', '/firm/');
+        
+        $link = $crawler->selectLink('Search')->link();
+        $crawler = $client->click($link);
+
+        $form = $crawler->selectButton('Search')->form();
+        $crawler = $client->submit($form);
+        
+        $this->assertEquals(1, $crawler->filter('h1:contains("Firm Search")')->count());
+    }
+    
+    
+    public function testUserQuickSearch() {
+        
+        $client = $this->makeClient([
+            'username' => 'user@example.com',
+            'password' => 'secret',
+        ]);
+        
+        $crawler = $client->request('GET', '/firm/');
+        
+        $link = $crawler->selectLink('Search')->link();
+        $crawler = $client->click($link);
+
+        $form = $crawler->selectButton('Search')->form();
+        $crawler = $client->submit($form);
+        
+        $this->assertEquals(1, $crawler->filter('h1:contains("Firm Search")')->count());
+    }
+    
+    public function testAdminQuickSearch() {
+        
+        $client = $this->makeClient([
+            'username' => 'admin@example.com',
+            'password' => 'supersecret',
+        ]);
+        
+        $crawler = $client->request('GET', '/firm/');
+        
+        $link = $crawler->selectLink('Search')->link();
+        $crawler = $client->click($link);
+
+        $form = $crawler->selectButton('Search')->form();
+        $crawler = $client->submit($form);
+        
+        $this->assertEquals(1, $crawler->filter('h1:contains("Firm Search")')->count());
+    }
+    
+    
+    public function testAnonSearch() {
+        
+        $client = $this->makeClient();
+        $crawler = $client->request('GET', '/firm/search');
+        
+        $form = $crawler->selectButton('Search')->form(array('firm_search[name]' => 'Great Firm'));
+        $crawler = $client->submit($form);
+        
+        $this->assertGreaterThan(0, $crawler->filter('tr')->count());
+        
+    }
+    
+    public function testUserSearch() {
+        
+        $client = $this->makeClient([
+            'username' => 'user@example.com',
+            'password' => 'secret',
+        ]);
+        
+        $crawler = $client->request('GET', '/firm/search');
+        
+        $form = $crawler->selectButton('Search')->form(array('firm_search[name]' => 'Great Firm'));
+        $crawler = $client->submit($form);
+        
+        $this->assertGreaterThan(0, $crawler->filter('tr')->count());
+        
+    }
+    
+    public function testAdminSearch() {
+        
+        $client = $this->makeClient([
+            'username' => 'admin@example.com',
+            'password' => 'supersecret',
+        ]);
+        
+        $crawler = $client->request('GET', '/firm/search');
+        
+        $form = $crawler->selectButton('Search')->form(array('firm_search[name]' => 'Great Firm'));
+        $crawler = $client->submit($form);
+        
+        $this->assertGreaterThan(0, $crawler->filter('tr')->count());
+    }  
+
+    
 }

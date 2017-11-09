@@ -26,7 +26,9 @@ class LoadTitle extends AbstractDataFixture {
        $title->setTitle("Demolition Man");
        $title->setSignedAuthor("John Author");
        $title->setNotes("This is a note");
-       $title->setFinalcheck(true);
+       $title->setChecked('1');
+       $title->setFinalcheck('1');
+       $title->setSelfpublished('0');
        
         
         

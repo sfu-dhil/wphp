@@ -41,7 +41,7 @@
             </tr>
             <tr>
                 <th>City</th>
-                <td>{{ firm.city.name }}</td>
+                <td>{% if firm.city %}{{ firm.city.name }}{% endif %}</td>
             </tr>
             <tr>
                 <th>Start date</th>
