@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Constraints\Collection;
  *      @ORM\Index(name="city_id_of_birth", columns={"city_id_of_birth"}),
  *      @ORM\Index(name="city_id_of_death", columns={"city_id_of_death"}),
  *      @ORM\Index(name="person_full_idx", columns={"last_name", "first_name", "dob", "dod"}, flags={"fulltext"}),
- *      @ORM\Index(name="last_name", columns={"last_name", "first_name", "title"}, flags={"fulltext"})
+ *      @ORM\Index(name="last_name", columns={"last_name", "first_name", "title_name"}, flags={"fulltext"})
  * })
  * @ORM\Entity(repositoryClass="AppBundle\Repository\PersonRepository")
  */
@@ -47,7 +47,7 @@ class Person
     /**
      * @var string
      *
-     * @ORM\Column(name="title", type="string", length=200, nullable=true)
+     * @ORM\Column(name="title_name", type="string", length=200, nullable=true)
      */
     private $title;
 
@@ -75,14 +75,14 @@ class Person
     /**
      * @var boolean
      *
-     * @ORM\Column(name="checked", type="boolean", nullable=false)
+     * @ORM\Column(name="person_checked", type="boolean", nullable=false)
      */
     private $checked = '0';
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="finalcheck", type="boolean", nullable=false)
+     * @ORM\Column(name="person_finalcheck", type="boolean", nullable=false)
      */
     private $finalcheck = '0';
 

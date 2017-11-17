@@ -66,7 +66,7 @@ class Firm
     /**
      * @var boolean
      *
-     * @ORM\Column(name="finalcheck", type="boolean", nullable=false)
+     * @ORM\Column(name="firm_finalcheck", type="boolean", nullable=false)
      */
     private $finalcheck = '0';
 
