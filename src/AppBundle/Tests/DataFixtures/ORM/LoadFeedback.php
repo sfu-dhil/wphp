@@ -10,6 +10,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 class LoadFeedback extends AbstractDataFixture {
     
     protected function doLoad(ObjectManager $manager) {
+        
         $feedback = new Feedback();
         $feedback->setContent("I am a feedback.");
         $feedback->setEmail('feedback@example.com');

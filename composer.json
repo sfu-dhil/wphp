@@ -38,7 +38,7 @@
         "symfony/assetic-bundle": "^2.8",
         "knplabs/knp-menu-bundle": "^2.0",
         "bmatzner/jquery-ui-bundle": "^1.10",
-        "tetranz/select2entity-bundle": "^2.9"
+        "tetranz/select2entity-bundle": "^2.7"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",

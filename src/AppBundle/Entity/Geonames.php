@@ -154,6 +154,19 @@ class Geonames
 
 
     /**
+     * Set geonameid
+     *
+     * @param string $geonameid
+     *
+     * @return Geonames
+     */
+    public function setGeonameid($geonameid) {
+        $this->geonameid = $geonameid;
+
+        return $this;
+    }
+    
+    /**
      * Get geonameid
      *
      * @return integer

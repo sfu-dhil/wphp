@@ -28,8 +28,8 @@
                     </a>
                 </td>
                 <td>{{ person.gender }}</td>
-                <td>{% if person.dob %}{{ person.dob }}{% endif %} {{ person.cityOfBirth.name }}</td>
-                <td>{% if person.dod %}{{ person.dod }}{% endif %} {{ person.cityOfDeath.name }}</td>
+                <td>{% if person.dob %}{{ person.dob }}{% endif %} {% if person.cityOfBirth %} {{ person.cityOfBirth.name }} {% endif %}</td>
+                <td>{% if person.dod %}{{ person.dod }}{% endif %} {% if person.cityOfDeath %} {{ person.cityOfDeath.name }} {% endif %}</td>
             </tr>
         {% endfor %}
     </tbody>

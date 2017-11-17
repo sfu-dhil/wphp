@@ -21,7 +21,7 @@ class GeonamesControllerTest extends BaseTestCase
         $client = $this->makeClient();
         $crawler = $client->request('GET', '/geonames/');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertEquals(0, $crawler->selectLink('New')->count());
+        
     }
     
     public function testUserIndex() {
@@ -31,7 +31,7 @@ class GeonamesControllerTest extends BaseTestCase
         ]);
         $crawler = $client->request('GET', '/geonames/');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertEquals(0, $crawler->selectLink('New')->count());
+        
     }
     
     public function testAdminIndex() {
@@ -41,15 +41,14 @@ class GeonamesControllerTest extends BaseTestCase
         ]);
         $crawler = $client->request('GET', '/geonames/');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertEquals(1, $crawler->selectLink('New')->count());
+        
     }
     
     public function testAnonShow() {
         $client = $this->makeClient();
         $crawler = $client->request('GET', '/geonames/1');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertEquals(0, $crawler->selectLink('Edit')->count());
-        $this->assertEquals(0, $crawler->selectLink('Delete')->count());
+        
     }
     
     public function testUserShow() {
@@ -59,8 +58,7 @@ class GeonamesControllerTest extends BaseTestCase
         ]);
         $crawler = $client->request('GET', '/geonames/1');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertEquals(0, $crawler->selectLink('Edit')->count());
-        $this->assertEquals(0, $crawler->selectLink('Delete')->count());
+        
     }
     
     public function testAdminShow() {
@@ -70,8 +68,7 @@ class GeonamesControllerTest extends BaseTestCase
         ]);
         $crawler = $client->request('GET', '/geonames/1');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertEquals(1, $crawler->selectLink('Edit')->count());
-        $this->assertEquals(1, $crawler->selectLink('Delete')->count());
+        
     }
 
 }

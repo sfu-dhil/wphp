@@ -16,7 +16,7 @@ use Symfony\Component\HttpKernel\KernelInterface;
  *
  * http://stackoverflow.com/questions/11817971
  */
-abstract class AbstractDataFixture extends AbstractFixture implements ContainerAwareInterface, OrderedFixtureInterface
+abstract class AbstractDataFixture extends AbstractFixture implements ContainerAwareInterface
 {
     /**
      * @var ContainerInterface

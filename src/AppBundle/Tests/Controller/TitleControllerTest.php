@@ -21,7 +21,7 @@ class TitleControllerTest extends BaseTestCase
         $client = $this->makeClient();
         $crawler = $client->request('GET', '/title/');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertEquals(0, $crawler->selectLink('New')->count());
+        $this->assertEquals(1, $crawler->filter('h1:contains("Title List")')->count());
     }
     
     public function testUserIndex() {
@@ -31,7 +31,7 @@ class TitleControllerTest extends BaseTestCase
         ]);
         $crawler = $client->request('GET', '/title/');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertEquals(0, $crawler->selectLink('New')->count());
+        $this->assertEquals(1, $crawler->filter('h1:contains("Title List")')->count());
     }
     
     public function testAdminIndex() {
@@ -41,15 +41,14 @@ class TitleControllerTest extends BaseTestCase
         ]);
         $crawler = $client->request('GET', '/title/');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertEquals(1, $crawler->selectLink('New')->count());
+        $this->assertEquals(1, $crawler->filter('h1:contains("Title List")')->count());
     }
     
     public function testAnonShow() {
         $client = $this->makeClient();
         $crawler = $client->request('GET', '/title/1');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertEquals(0, $crawler->selectLink('Edit')->count());
-        $this->assertEquals(0, $crawler->selectLink('Delete')->count());
+    
     }
     
     public function testUserShow() {
@@ -59,8 +58,7 @@ class TitleControllerTest extends BaseTestCase
         ]);
         $crawler = $client->request('GET', '/title/1');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertEquals(0, $crawler->selectLink('Edit')->count());
-        $this->assertEquals(0, $crawler->selectLink('Delete')->count());
+       
     }
     
     public function testAdminShow() {
@@ -70,8 +68,96 @@ class TitleControllerTest extends BaseTestCase
         ]);
         $crawler = $client->request('GET', '/title/1');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertEquals(1, $crawler->selectLink('Edit')->count());
-        $this->assertEquals(1, $crawler->selectLink('Delete')->count());
+        
+    }
+    
+    
+    
+    public function testAnonSearch() {
+        
+        $client = $this->makeClient();
+        $crawler = $client->request('GET', '/title/search');
+        
+        $form = $crawler->selectButton('Search')->form(array('title_search[title]' => 'Demolition Man'));
+        $crawler = $client->submit($form);
+        
+        $this->assertGreaterThan(0, $crawler->filter('tr')->count());
+        
+    }
+    
+    public function testUserSearch() {
+        
+        $client = $this->makeClient([
+            'username' => 'user@example.com',
+            'password' => 'secret',
+        ]);
+        
+        $crawler = $client->request('GET', '/title/search');
+        
+        $form = $crawler->selectButton('Search')->form(array('title_search[title]' => 'Demolition Man'));
+        $crawler = $client->submit($form);
+        
+        $this->assertGreaterThan(0, $crawler->filter('tr')->count());
+        
+    }
+    
+    public function testAdminSearch() {
+        
+        $client = $this->makeClient([
+            'username' => 'admin@example.com',
+            'password' => 'supersecret',
+        ]);
+        
+        $crawler = $client->request('GET', '/title/search');
+        
+        $form = $crawler->selectButton('Search')->form(array('title_search[title]' => 'Demolition Man'));
+        $crawler = $client->submit($form);
+        
+        $this->assertGreaterThan(0, $crawler->filter('tr')->count());
+    }  
+    
+    public function testAnonExport() {
+        
+        $client = $this->makeClient();
+        $crawler = $client->request('GET', '/title/1');
+        
+        $this->assertEquals(1, $crawler->filter('div#mla')->count());
+        $this->assertEquals(1, $crawler->filter('div#apa')->count());
+        $this->assertEquals(1, $crawler->filter('div#chicago')->count());
+        $this->assertEquals(1, $crawler->filter('div#bibtex')->count());
+         
+    }
+    
+    public function testUserExport() {
+        
+         $client = $this->makeClient([
+            'username' => 'user@example.com',
+            'password' => 'secret',
+        ]);
+         
+        $crawler = $client->request('GET', '/title/1');
+        
+        $this->assertEquals(1, $crawler->filter('div#mla')->count());
+        $this->assertEquals(1, $crawler->filter('div#apa')->count());
+        $this->assertEquals(1, $crawler->filter('div#chicago')->count());
+        $this->assertEquals(1, $crawler->filter('div#bibtex')->count());
+         
+    }
+    
+    public function testAdminExport() {
+        
+        $client = $this->makeClient([
+            'username' => 'admin@example.com',
+            'password' => 'supersecret',
+        ]);
+        
+        $crawler = $client->request('GET', '/title/1');
+        
+        $this->assertEquals(1, $crawler->filter('div#mla')->count());
+        $this->assertEquals(1, $crawler->filter('div#apa')->count());
+        $this->assertEquals(1, $crawler->filter('div#chicago')->count());
+        $this->assertEquals(1, $crawler->filter('div#bibtex')->count());
+         
     }
 
 }
