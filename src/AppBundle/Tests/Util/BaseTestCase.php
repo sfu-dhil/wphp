@@ -85,7 +85,6 @@ class BaseTestCase extends WebTestCase {
         }
         static::$kernel->shutdown();
         gc_collect_cycles();
-        // fwrite(STDERR, sprintf(" %dM of %dM\n", memory_get_usage() / (1024 * 1024), ini_get('memory_limit')));
     }
 
 }

@@ -52,7 +52,6 @@ class PersonRepository extends EntityRepository
      * @return query
      */
     public function buildSearchQuery($data) {
-        dump($data);
         $qb = $this->createQueryBuilder('e');
         if (isset($data['name']) && $data['name']) {
             $qb->andWhere("MATCH_AGAINST (e.lastName, e.firstName, e.title, :name 'IN BOOLEAN MODE') > 0");
