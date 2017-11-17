@@ -129,7 +129,7 @@ class TitleRepository extends EntityRepository
         }
 
         // only add the title filter query parts if the subform has data.
-        if (count(array_filter($data['person_filter']))) {
+        if (isset($data['person_filter']) && count(array_filter($data['person_filter']))) {
             $filter = $data['person_filter'];
             $idx = '00';
             $trAlias = 'tr_' . $idx;
@@ -161,7 +161,7 @@ class TitleRepository extends EntityRepository
         }
 
         // only add the firm filter query parts if the subform has data.
-        if(count(array_filter($data['firm_filter']))) {
+        if(isset($data['firm_filter']) && count(array_filter($data['firm_filter']))) {
             $filter = $data['firm_filter'];
             $idx = '01';
             $tfrAlias = 'tfr_' . $idx;

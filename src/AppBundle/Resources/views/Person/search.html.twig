@@ -7,6 +7,12 @@
             Displaying {{ people|length }} people of {{ people.getTotalItemCount }} total.
         </p>
     {% endif %}
+    {% if form_errors is defined and form_errors|length > 0 %}
+        {% for error in form_errors %}
+            {{ error.getMessage() }} <br>
+            {{ error.getCause() }}
+        {% endfor %}
+    {% endif %}
 {% endblock %} 
 
 {% block body %}

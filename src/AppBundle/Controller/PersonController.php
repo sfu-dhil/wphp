@@ -52,7 +52,7 @@ class PersonController extends Controller
     public function quickSearchAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
         $form = $this->createForm(PersonSearchType::class, null, array(
-            'action' => $this->generateUrl('firm_search'),
+            'action' => $this->generateUrl('person_search'),
             'entity_manager' => $em
         ));
         $q = $request->query->get('q');
@@ -82,20 +82,20 @@ class PersonController extends Controller
         $form->handleRequest($request);
         $persons = array();
 
-        if ($form->isValid()) {
-            $data = array_filter($form->getData());
-            if (count($data) > 2) {
+        if ($form->isSubmitted()) {
+            if( ! $form->isValid()) {
+                $this->addFlash('error', 'Bad form submission: ');
+            } else {
                 $repo = $em->getRepository(Person::class);
                 $query = $repo->buildSearchQuery($form->getData());
                 $paginator = $this->get('knp_paginator');
                 $persons = $paginator->paginate($query->execute(), $request->query->getint('page', 1), 25);
-            } else {
-                $this->addFlash('warning', 'You must enter a search term');
             }
         }
         return array(
             'search_form' => $form->createView(),
             'people' => $persons,
+            'form_errors' => $form->getErrors(true, true),
         );
     }
 

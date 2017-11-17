@@ -33,6 +33,3 @@ parameters:
     # home page stuff.
     wphp.homepage_entries: 5
 
-    # google analytics id
-    google_analytics_id: ~
-

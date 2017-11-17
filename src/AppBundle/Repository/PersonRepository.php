@@ -52,6 +52,7 @@ class PersonRepository extends EntityRepository
      * @return query
      */
     public function buildSearchQuery($data) {
+        dump($data);
         $qb = $this->createQueryBuilder('e');
         if (isset($data['name']) && $data['name']) {
             $qb->andWhere("MATCH_AGAINST (e.lastName, e.firstName, e.title, :name 'IN BOOLEAN MODE') > 0");
@@ -112,7 +113,7 @@ class PersonRepository extends EntityRepository
             $qb->setParameter('dpname', $data['deathplace']);
         }
 
-        if(count(array_filter($data['title_filter']))) {
+        if(isset($data['title_filter']) && count(array_filter($data['title_filter']))) {
             $filter = $data['title_filter'];
             $idx = '00';
             $trAlias = 'tr_' . $idx;
