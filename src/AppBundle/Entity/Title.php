@@ -80,7 +80,7 @@ class Title
     /**
      * @var boolean
      *
-     * @ORM\Column(name="selfpublished", type="boolean", nullable=false)
+     * @ORM\Column(name="selfpublished", type="boolean", nullable=true)
      */
     private $selfpublished = false;
 

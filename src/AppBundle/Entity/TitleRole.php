@@ -7,8 +7,12 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * TitleRole
  *
+ * @todo clean the data, then add this constraint:
+ * uniqueConstraints={
+ *  ORM\UniqueConstraint(name="title_uq_idx", columns={"title_id", "role_id", "person_id"})
+ * }
+ * 
  * @ORM\Table(name="title_role",
- *  uniqueConstraints={@ORM\UniqueConstraint(name="title_uq_idx", columns={"title_id", "role_id", "person_id"})},
  *  indexes={
  *      @ORM\Index(name="person_idx", columns={"person_id"}),
  *      @ORM\Index(name="role_idx", columns={"role_id"}),

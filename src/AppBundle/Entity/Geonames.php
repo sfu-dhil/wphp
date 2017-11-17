@@ -21,7 +21,6 @@ class Geonames
      *
      * @ORM\Column(name="geonameid", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $geonameid;
 
