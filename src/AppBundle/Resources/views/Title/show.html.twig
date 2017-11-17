@@ -80,7 +80,12 @@
             </tr>
             <tr>
                 <th>Source 2</th>
-                <td>{{ title.source2.name }} {{ title.source2Id }}</td>
+                <td>
+                    {% if title.source2 %}
+                    {{ title.source2.name }} {{ title.source2Id }}
+                    {% endif %}
+                
+                </td>
             </tr>
             <tr>
                 <th>Surrogate</th>

@@ -34,8 +34,8 @@ class PersonTest extends \PHPUnit_Framework_TestCase {
         return array(
             
             [null, '0000-00-00'],
-            ['1982-11-06', '1982-11-06']
-            
+            ['1982-11-06', '1982-11-06'],
+            [null, null]
         );
     }
     
@@ -54,7 +54,8 @@ class PersonTest extends \PHPUnit_Framework_TestCase {
         return array(
             
             [null, '0000-00-00'],
-            ['1982-11-06', '1982-11-06']
+            ['1982-11-06', '1982-11-06'],
+            [null, null]
             
         );
     }

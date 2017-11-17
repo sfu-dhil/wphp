@@ -24,3 +24,5 @@
 app/cache
 /nbproject
 /coverage
+/composer.phar
+/.DS_Store
