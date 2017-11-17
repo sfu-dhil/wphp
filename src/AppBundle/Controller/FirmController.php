@@ -15,8 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
  *
  * @Route("/firm")
  */
-class FirmController extends Controller
-{
+class FirmController extends Controller {
 
     /**
      * Lists all Firm entities.
@@ -82,16 +81,11 @@ class FirmController extends Controller
         $form->handleRequest($request);
         $firms = array();
 
-        if ($form->isValid()) {
-            $data = array_filter($form->getData());
-            if (count($data) > 2) {
-                $repo = $em->getRepository(Firm::class);
-                $query = $repo->buildSearchQuery($form->getData());
-                $paginator = $this->get('knp_paginator');
-                $firms = $paginator->paginate($query->execute(), $request->query->getint('page', 1), 25);
-            } else {
-                $this->addFlash('warning', 'You must enter a search term');
-            }
+        if ($form->isSubmitted() && $form->isValid()) {
+            $repo = $em->getRepository(Firm::class);
+            $query = $repo->buildSearchQuery($form->getData());
+            $paginator = $this->get('knp_paginator');
+            $firms = $paginator->paginate($query->execute(), $request->query->getint('page', 1), 25);
         }
         return array(
             'search_form' => $form->createView(),
@@ -134,4 +128,5 @@ class FirmController extends Controller
             'previous' => $repo->previous($firm),
         );
     }
+
 }

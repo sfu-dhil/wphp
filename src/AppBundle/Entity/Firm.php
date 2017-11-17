@@ -19,7 +19,11 @@ use Doctrine\ORM\Mapping as ORM;
  *      @ORM\Index(name="city", columns={"city"}),
  *      @ORM\Index(name="full", columns={"name", "street_address"}, flags={"fulltext"}),
  *      @ORM\Index(name="address_ft_idx", columns={"street_address"}, flags={"fulltext"}),
- *      @ORM\Index(name="firmname", columns={"name"}, flags={"fulltext"})}
+ *      @ORM\Index(name="firmname", columns={"name"}, flags={"fulltext"})
+ *  },
+ *  uniqueConstraints={
+ *      @ORM\UniqueConstraint(name="unique", columns={"name", "city", "start_date", "end_date"})
+ *  }
  * )
  * @ORM\Entity(repositoryClass="AppBundle\Repository\FirmRepository")
  */

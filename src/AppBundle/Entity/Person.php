@@ -75,7 +75,7 @@ class Person
     /**
      * @var boolean
      *
-     * @ORM\Column(name="person_checked", type="boolean", nullable=false)
+     * @ORM\Column(name="checked", type="boolean", nullable=false)
      */
     private $checked = '0';
 

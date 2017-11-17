@@ -8,7 +8,6 @@ function recrud() {
                   --no-interaction \
                   --entity=AppBundle:$1 \
                   --route-prefix=$2 \
-                  --with-write \
                   --format=annotation \
                   --overwrite
     

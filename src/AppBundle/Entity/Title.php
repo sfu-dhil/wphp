@@ -42,7 +42,13 @@ class Title
      * @ORM\Column(name="title", type="string", length=1000, nullable=true)
      */
     private $title;
-
+    
+    /**
+     * @var int
+     * @ORM\Column(name="edition_number", type="integer", nullable=true)
+     */
+    private $editionNumber;
+    
     /**
      * @var string
      *
@@ -76,7 +82,7 @@ class Title
      *
      * @ORM\Column(name="selfpublished", type="boolean", nullable=false)
      */
-    private $selfpublished = '0';
+    private $selfpublished = false;
 
     /**
      * @var string
