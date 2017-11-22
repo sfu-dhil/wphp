@@ -44,10 +44,17 @@ class SourceController extends Controller
      * @Template()
      * @param Source $source
      */
-    public function showAction(Source $source) {
+    public function showAction(Request $request, Source $source) {
+        $em = $this->getDoctrine()->getManager();
+        $dql = 'SELECT t FROM AppBundle:Title t WHERE t.source = :source OR t.source2 = :source ORDER BY t.title';
+        $query = $em->createQuery($dql);
+        $query->setParameter('source', $source);
+        $paginator = $this->get('knp_paginator');
+        $titles = $paginator->paginate($query, $request->query->getint('page', 1), 25);
 
         return array(
             'source' => $source,
+            'titles' => $titles,
         );
     }
 }

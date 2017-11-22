@@ -199,7 +199,7 @@ class Title
     /**
      * @var \Geonames
      *
-     * @ORM\ManyToOne(targetEntity="Geonames")
+     * @ORM\ManyToOne(targetEntity="Geonames", inversedBy="titles")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="location_of_printing", referencedColumnName="geonameid")
      * })
@@ -209,7 +209,7 @@ class Title
     /**
      * @var \Format
      *
-     * @ORM\ManyToOne(targetEntity="Format")
+     * @ORM\ManyToOne(targetEntity="Format", inversedBy="titles")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="format_id", referencedColumnName="id")
      * })
@@ -219,7 +219,7 @@ class Title
     /**
      * @var \Genre
      *
-     * @ORM\ManyToOne(targetEntity="Genre")
+     * @ORM\ManyToOne(targetEntity="Genre", inversedBy="titles")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="genre_id", referencedColumnName="id")
      * })

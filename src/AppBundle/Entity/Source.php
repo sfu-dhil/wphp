@@ -10,13 +10,10 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="source")
  * @ORM\Entity
  * 
- * The source table has some additional columns which are ignored in
- * this version.
- * 
- * alter table source add local tinyint(1) not null default 0;
- * alter table source add url varchar(60) default null;
- * alter table source add sourcetable varchar(60) default null;
- * 
+ * @todo The Title entity refers to this one in two different ways, and may
+ * do so in a third in future. Until that decision is made, there will not be
+ * any back-references from Source to Title. The references will likely become 
+ * a many-to-many relationship.
  */
 class Source
 {

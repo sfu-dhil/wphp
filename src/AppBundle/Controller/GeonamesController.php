@@ -45,10 +45,17 @@ class GeonamesController extends Controller
      * @Template()
      * @param Geonames $geoname
      */
-    public function showAction(Geonames $geoname) {
+    public function showAction(Request $request, Geonames $geoname) {
+        $em = $this->getDoctrine()->getManager();
+        $dql = 'SELECT t FROM AppBundle:Title t WHERE t.locationOfPrinting = :geoname ORDER BY t.title';
+        $query = $em->createQuery($dql);
+        $query->setParameter('geoname', $geoname);
+        $paginator = $this->get('knp_paginator');
+        $titles = $paginator->paginate($query, $request->query->getint('page', 1), 25);
 
         return array(
             'geoname' => $geoname,
+            'titles' => $titles,
         );
     }
 }

@@ -2,13 +2,15 @@
 
 namespace AppBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use AppBundle\Entity\Format;
+use AppBundle\Form\FormatType;
+use Doctrine\ORM\Query;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use AppBundle\Entity\Format;
-use AppBundle\Form\FormatType;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Format controller.
@@ -45,10 +47,17 @@ class FormatController extends Controller
      * @Template()
      * @param Format $format
      */
-    public function showAction(Format $format) {
-
+    public function showAction(Request $request, Format $format) {
+        $em = $this->getDoctrine()->getManager();
+        $dql = 'SELECT t FROM AppBundle:Title t WHERE t.format = :format ORDER BY t.title';
+        $query = $em->createQuery($dql);
+        $query->setParameter('format', $format);
+        $paginator = $this->get('knp_paginator');
+        $titles = $paginator->paginate($query, $request->query->getint('page', 1), 25);
+        
         return array(
             'format' => $format,
+            'titles' => $titles,
         );
     }
 }
