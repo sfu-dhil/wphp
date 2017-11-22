@@ -54,8 +54,8 @@ class TitleRepository extends EntityRepository
      */
     public function search($q) {
         $qb = $this->createQueryBuilder('e');
-        $qb->addSelect("MATCH_AGAINST (e.title, :q 'IN BOOLEAN MODE') as score");
-        $qb->add('where', "MATCH_AGAINST (e.title, :q 'IN BOOLEAN MODE') > 0.5");
+        $qb->addSelect("MATCH (e.title) AGAINST (:q BOOLEAN) as score");
+        $qb->add('where', "MATCH (e.title) AGAINST (:q BOOLEAN) > 0.5");
         $qb->orderBy('score', 'desc');
         $qb->setParameter('q', $q);
         return $qb->getQuery();
@@ -71,8 +71,16 @@ class TitleRepository extends EntityRepository
         $qb = $this->createQueryBuilder('e');
         $qb->distinct();
         if (isset($data['title']) && $data['title']) {
-            $qb->andWhere("MATCH_AGAINST (e.title, :title 'IN BOOLEAN MODE') > 0");
+            $qb->andWhere("MATCH (e.title) AGAINST (:title BOOLEAN) > 0");
             $qb->setParameter('title', $data['title']);
+        }
+        if(isset($data['checked'])) {
+            $qb->andWhere('e.checked = :checked');
+            $qb->setParameter('checked', $data['checked'] == 'Y');
+        }
+        if(isset($data['finalcheck'])) {
+            $qb->andWhere('e.finalcheck = :finalcheck');
+            $qb->setParameter('finalcheck', $data['finalcheck'] == 'Y');
         }
         if (isset($data['pubdate']) && $data['pubdate']) {
             $m = array();
@@ -89,7 +97,7 @@ class TitleRepository extends EntityRepository
         }
         if (isset($data['location']) && $data['location']) {
             $qb->innerJoin('e.locationOfPrinting', 'g');
-            $qb->andWhere("MATCH_AGAINST(g.alternatenames, g.name, :location 'IN BOOLEAN MODE') > 0");
+            $qb->andWhere("MATCH(g.alternatenames, g.name) AGAINST (:location BOOLEAN) > 0");
             $qb->setParameter('location', $data['location']);
         }
         if (isset($data['format']) && is_array($data['format']) && count($data['format'])) {
@@ -101,15 +109,15 @@ class TitleRepository extends EntityRepository
             $qb->setParameter('genres', $data['genre']);
         }
         if (isset($data['signed_author']) && $data['signed_author']) {
-            $qb->andWhere("MATCH_AGAINST (e.signedAuthor, :signedAuthor 'IN BOOLEAN MODE') > 0");
+            $qb->andWhere("MATCH (e.signedAuthor) AGAINST(:signedAuthor BOOLEAN) > 0");
             $qb->setParameter('signedAuthor', $data['signed_author']);
         }
         if (isset($data['imprint']) && $data['imprint']) {
-            $qb->andWhere("MATCH_AGAINST (e.imprint, :imprint 'IN BOOLEAN MODE') > 0");
+            $qb->andWhere("MATCH (e.imprint) AGAINST(:imprint BOOLEAN) > 0");
             $qb->setParameter('imprint', $data['imprint']);
         }
         if (isset($data['pseudonym']) && $data['pseudonym']) {
-            $qb->andWhere("MATCH_AGAINST (e.pseudonym, :pseudonym 'IN BOOLEAN MODE') > 0");
+            $qb->andWhere("MATCH (e.pseudonym) AGAINST (:pseudonym BOOLEAN) > 0");
             $qb->setParameter('pseudonym', $data['pseudonym']);
         }
         if (isset($data['orderby']) && $data['orderby']) {
@@ -136,7 +144,7 @@ class TitleRepository extends EntityRepository
             $pAlias = 'p_' . $idx;
             $qb->innerJoin('e.titleRoles', $trAlias)->innerJoin("{$trAlias}.person", $pAlias);
             if (isset($filter['name']) && $filter['name']) {
-                $qb->andWhere("MATCH_AGAINST ({$pAlias}.lastName, {$pAlias}.firstName, {$pAlias}.title, :{$pAlias}_name 'IN BOOLEAN MODE') > 0");
+                $qb->andWhere("MATCH ({$pAlias}.lastName, {$pAlias}.firstName, {$pAlias}.title) AGAINST(:{$pAlias}_name BOOLEAN') > 0");
                 $qb->setParameter("{$pAlias}_name", $filter['name']);
             }
             if (isset($filter['gender']) && $filter['gender']) {
@@ -168,7 +176,7 @@ class TitleRepository extends EntityRepository
             $fAlias = 'f_' . $idx;
             $qb->innerJoin('e.titleFirmroles', $tfrAlias)->innerJoin("{$tfrAlias}.firm", $fAlias);
             if(isset($filter['firm_name']) && $filter['firm_name']) {
-                $qb->andWhere("MATCH_AGAINST({$fAlias}.name, :{$fAlias}_name 'IN BOOLEAN MODE') > 0");
+                $qb->andWhere("MATCH({$fAlias}.name) AGAINST(:{$fAlias}_name BOOLEAN) > 0");
                 $qb->setParameter("{$fAlias}_name", $filter['firm_name']);
             }
             if(isset($filter['firm_role']) && count($filter['firm_role']) > 0) {
@@ -176,7 +184,7 @@ class TitleRepository extends EntityRepository
                 $qb->setParameter("firmroles_{$idx}", $filter['firm_role']);
             }
             if(isset($filter['firm_address']) && $filter['firm_address']) {
-                $qb->andWhere("MATCH_AGAINST({$fAlias}.streetAddress, :{$fAlias}_address 'IN BOOLEAN MODE') > 0");
+                $qb->andWhere("MATCH({$fAlias}.streetAddress) AGAINST(:{$fAlias}_address BOOLEAN) > 0");
                 $qb->setParameter("{$fAlias}_address", $filter['firm_address']);
             }
         }

@@ -40,7 +40,39 @@ class TitleSearchType extends AbstractType
                 'help_block' => 'Enter all or part of a title.'
             ),
         ));
+        
+        $builder->add('checked', ChoiceType::class, array(
+            'label' => 'Checked',
+            'choices' => array(
+                'Yes' => 'Y',
+                'No' => 'N',
+            ),
+            'attr' => array(
+                'help_block' => 'Limit results to those that have been checked or not checked.'
+            ),
+            'required' => false,
+            'expanded' => true,
+            'multiple' => false,
+            'empty_data' => null,
+            'data' => null,
+        ));
 
+        $builder->add('finalcheck', ChoiceType::class, array(
+            'label' => 'Double Checked',
+            'choices' => array(
+                'Yes' => 'Y',
+                'No' => 'N',
+            ),
+            'attr' => array(
+                'help_block' => 'Limit results to those that have been double checked or not checked.'
+            ),
+            'required' => false,
+            'expanded' => true,
+            'multiple' => false,
+            'empty_data' => null,
+            'data' => null,
+        ));
+        
         $builder->add('pubdate', TextType::class, array(
             'label' => 'Publication Year',
             'required' => false,

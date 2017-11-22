@@ -57,7 +57,7 @@ class FirmRepository extends EntityRepository
     }
 
     /**
-     * MySQL fulltext searching via match_against (which is included in a
+     * MySQL fulltext searching via match/against (which is included in a
      * doctrine extension).
      *
      * @param string $q
@@ -65,8 +65,8 @@ class FirmRepository extends EntityRepository
      */
     public function fulltextQuery($q) {
         $qb = $this->createQueryBuilder('e');
-        $qb->addSelect("MATCH_AGAINST (e.name, :q 'IN BOOLEAN MODE') as score");
-        $qb->add('where', "MATCH_AGAINST (e.name, :q 'IN BOOLEAN MODE') > 0.5");
+        $qb->addSelect("MATCH (e.name) AGAINST(:q BOOLEAN) as score");
+        $qb->add('where', "MATCH (e.name) AGAINST(:q BOOLEAN) > 0.5");
         $qb->orderBy('score', 'desc');
         $qb->setParameter('q', $q);
         return $qb->getQuery();
@@ -82,16 +82,16 @@ class FirmRepository extends EntityRepository
     public function buildSearchQuery($data) {
         $qb = $this->createQueryBuilder('e');
         if(isset($data['name']) && $data['name']) {
-            $qb->add('where', "MATCH_AGAINST (e.name, :name 'IN BOOLEAN MODE') > 0");
+            $qb->add('where', "MATCH (e.name) AGAINST(:name BOOLEAN) > 0");
             $qb->setParameter('name', $data['name']);
         }
         if(isset($data['address']) && $data['address']) {
-            $qb->add('where', "MATCH_AGAINST (e.streetAddress, :address 'IN BOOLEAN MODE') > 0");
+            $qb->add('where', "MATCH (e.streetAddress) AGAINST(:address BOOLEAN) > 0");
             $qb->setParameter('address', $data['address']);
         }
         if (isset($data['city']) && $data['city']) {
             $qb->innerJoin('e.city', 'c');
-            $qb->andWhere('MATCH_AGAINST(c.alternatenames, c.name, :cname) > 0');
+            $qb->andWhere('MATCH(c.alternatenames, c.name) AGAINST(:cname BOOLEAN) > 0');
             $qb->setParameter('cname', $data['city']);
         }
 

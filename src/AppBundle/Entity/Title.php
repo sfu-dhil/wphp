@@ -975,4 +975,28 @@ class Title
     public function __toString() {
         return $this->title;
     }
+
+    /**
+     * Set editionNumber
+     *
+     * @param integer $editionNumber
+     *
+     * @return Title
+     */
+    public function setEditionNumber($editionNumber)
+    {
+        $this->editionNumber = $editionNumber;
+
+        return $this;
+    }
+
+    /**
+     * Get editionNumber
+     *
+     * @return integer
+     */
+    public function getEditionNumber()
+    {
+        return $this->editionNumber;
+    }
 }

@@ -11,7 +11,9 @@ parameters:
 
 framework:
     #esi:             ~
-    translator:     ~  
+    translator:
+        enabled: true
+        logging: false
     secret:          "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
