@@ -23,11 +23,9 @@ class LoadSource extends AbstractDataFixture {
         
         $source = new Source();
         $source->setName("Some Name");
-        $source->setLocal(true);
         
         $this->setReference('source.1', $source);
-        
-        
+                
         $manager->persist($source);
         $manager->flush();
     }
