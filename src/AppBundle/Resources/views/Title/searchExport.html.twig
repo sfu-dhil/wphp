@@ -1,9 +1,13 @@
 {% extends '::base.html.twig' %}
 
+{% block pageheader %} 
+    <h1>Title Export <small>in {{ format|upper }} format</small></h1>
+{% endblock %} 
+
 {% block body %}
-    <ul>
+    <ul class="list-group">
     {% for title in titles %}
-        <li>{{ include('AppBundle:Title:' ~ format ~ '.html.twig') }}</li>
+        <li class="list-group-item">{{ include('AppBundle:Title:' ~ format ~ '.html.twig') }}</li>
     {% endfor %}
     </ul>
 {% endblock %}

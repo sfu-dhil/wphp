@@ -177,6 +177,7 @@ class PersonControllerTest extends BaseTestCase
     }
     
     public function testAnonSearch() {
+        $this->markTestSkipped('Cannot test this page with SQLite.');
         
         $client = $this->makeClient();
         $crawler = $client->request('GET', '/person/search');
@@ -189,6 +190,7 @@ class PersonControllerTest extends BaseTestCase
     }
     
     public function testUserSearch() {
+        $this->markTestSkipped('Cannot test this page with SQLite.');
         
         $client = $this->makeClient([
             'username' => 'user@example.com',
@@ -205,6 +207,7 @@ class PersonControllerTest extends BaseTestCase
     }
     
     public function testAdminSearch() {
+        $this->markTestSkipped('Cannot test this page with SQLite.');
         
         $client = $this->makeClient([
             'username' => 'admin@example.com',

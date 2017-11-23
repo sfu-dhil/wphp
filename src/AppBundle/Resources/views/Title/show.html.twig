@@ -64,32 +64,54 @@
                 </td>            
             <tr>
                 <th>Format</th>
-                <td>{{ title.format.name }} ({{ title.format.abbrevOne }}).</td>
+                <td>
+                    {% if title.format %}
+                        <a href="{{ path('format_show', {'id': title.format.id}) }}">
+                            {{ title.format.name }} ({{ title.format.abbrevOne }})
+                        </a>
+                    {% endif %}
+                </td>
             </tr>
             <tr>
                 <th>Location of printing</th>
-                <td>{{ title.locationOfPrinting.name }} {{ title.locationOfPrinting.country }} ({{ title.locationOfPrinting.latitude }}, {{ title.locationOfPrinting.longitude }})</td>
+                <td>
+                    {% if title.locationOfPrinting %}
+                        <a href="{{ path('geonames_show', {'id': title.locationOfPrinting.geonameid}) }}">
+                            {{ title.locationOfPrinting.name }} {{ title.locationOfPrinting.country }}
+                        </a>
+                        ({{ title.locationOfPrinting.latitude }}, {{ title.locationOfPrinting.longitude }})
+                    </td>
+                {% endif %}
             </tr>
             <tr>
-                <th>Genre</th>
-                <td>{{ title.genre.name }}</td>
+                <th>Genre</th>                
+                <td>
+                    {% if title.genre %}
+                        <a href="{{ path('genre_show', {'id': title.genre.id}) }}">
+                            {{ title.genre.name }}
+                        </a>
+                    {% endif %}
+                </td>
             </tr>
             <tr>
                 <th>Source 1</th>
-                <td>{{ title.source.name }} {{ title.sourceId }}</td>
+                <td>
+                    {% if title.source %}
+                        <a href="{{ path('source_show', {'id': title.source.id}) }}">
+                        {{ title.source.name }} {{ title.sourceId }}
+                        </a>
+                    {% endif %}
+                </td>
             </tr>
             <tr>
                 <th>Source 2</th>
                 <td>
                     {% if title.source2 %}
-                    {{ title.source2.name }} {{ title.source2Id }}
+                        <a href="{{ path('source_show', {'id': title.source2.id}) }}">
+                        {{ title.source2.name }} {{ title.source2Id }}
+                        </a>
                     {% endif %}
-                
                 </td>
-            </tr>
-            <tr>
-                <th>Surrogate</th>
-                <td>{{ title.surrogate }}</td>
             </tr>
             <tr>
                 <th>Pseudonym</th>
@@ -112,11 +134,11 @@
                 <td>{{ title.dateOfFirstPublication }}</td>
             </tr>
             <tr>
-                <th>Size (length)</th>
+                <th>Length (cm)</th>
                 <td>{{ title.sizeL }}</td>
             </tr>
             <tr>
-                <th>Size (width)</th>
+                <th>Width (cm)</th>
                 <td>{{ title.sizeW }}</td>
             </tr>
             <tr>

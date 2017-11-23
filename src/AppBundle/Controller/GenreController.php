@@ -45,10 +45,17 @@ class GenreController extends Controller
      * @Template()
      * @param Genre $genre
      */
-    public function showAction(Genre $genre) {
+    public function showAction(Request $request, Genre $genre) {
+        $em = $this->getDoctrine()->getManager();
+        $dql = 'SELECT t FROM AppBundle:Title t WHERE t.genre = :genre ORDER BY t.title';
+        $query = $em->createQuery($dql);
+        $query->setParameter('genre', $genre);
+        $paginator = $this->get('knp_paginator');
+        $titles = $paginator->paginate($query, $request->query->getint('page', 1), 25);
 
         return array(
             'genre' => $genre,
+            'titles' => $titles,
         );
     }
 }

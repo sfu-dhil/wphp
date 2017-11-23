@@ -54,7 +54,7 @@ class PersonRepository extends EntityRepository
     public function buildSearchQuery($data) {
         $qb = $this->createQueryBuilder('e');
         if (isset($data['name']) && $data['name']) {
-            $qb->andWhere("MATCH_AGAINST (e.lastName, e.firstName, e.title, :name 'IN BOOLEAN MODE') > 0");
+            $qb->andWhere("MATCH (e.lastName, e.firstName, e.title) AGAINST (:name BOOLEAN) > 0");
             $qb->setParameter('name', $data['name']);
         }
         if (isset($data['gender']) && $data['gender']) {
@@ -102,13 +102,13 @@ class PersonRepository extends EntityRepository
 
         if (isset($data['birthplace']) && $data['birthplace']) {
             $qb->innerJoin('e.cityOfBirth', 'b');
-            $qb->andWhere('MATCH_AGAINST(b.alternatenames, b.name, :bpname) > 0');
+            $qb->andWhere('MATCH(b.alternatenames, b.name) AGAINST(:bpname BOOLEAN) > 0');
             $qb->setParameter('bpname', $data['birthplace']);
         }
 
         if (isset($data['deathplace']) && $data['deathplace']) {
             $qb->innerJoin('e.cityOfDeath', 'd');
-            $qb->andWhere('MATCH_AGAINST(d.alternatenames, d.name, :dpname) > 0');
+            $qb->andWhere('MATCH(d.alternatenames, d.name) AGAINST(:dpname BOOLEAN) > 0');
             $qb->setParameter('dpname', $data['deathplace']);
         }
 
@@ -119,7 +119,7 @@ class PersonRepository extends EntityRepository
             $tAlias = 't_' . $idx;
             $qb->innerJoin('e.titleRoles', $trAlias)->innerJoin("{$trAlias}.title", $tAlias);
             if (isset($filter['title']) && $filter['title']) {
-                $qb->andWhere("MATCH_AGAINST({$tAlias}.title, :{$tAlias}_title 'IN BOOLEAN MODE') > 0");
+                $qb->andWhere("MATCH({$tAlias}.title) AGAINST(:{$tAlias}_title BOOLEAN) > 0");
                 $qb->setParameter("{$tAlias}_title", $filter['title']);
             }
 
@@ -150,7 +150,7 @@ class PersonRepository extends EntityRepository
             if(isset($filter['location']) && $filter['location']) {
                 $gAlias = 'g_' . $idx;
                 $qb->innerJoin("{$tAlias}.locationOfPrinting", $gAlias);
-                $qb->andWhere("MATCH_AGAINST({$gAlias}.alternatenames, {$gAlias}.name, :{$gAlias}_location 'IN BOOLEAN MODE') > 0");
+                $qb->andWhere("MATCH({$gAlias}.alternatenames, {$gAlias}.name AGAINST(:{$gAlias}_location BOOLEAN) > 0");
                 $qb->setParameter("{$gAlias}_location", $filter['location']);
             }
         }
@@ -188,8 +188,8 @@ class PersonRepository extends EntityRepository
      */
     public function fulltextQuery($q) {
         $qb = $this->createQueryBuilder('e');
-        $qb->addSelect("MATCH_AGAINST (e.lastName, e.firstName, e.dob, e.dod, :q 'IN BOOLEAN MODE') as score");
-        $qb->add('where', "MATCH_AGAINST (e.lastName, e.firstName, e.dob, e.dod, :q 'IN BOOLEAN MODE') > 0.5");
+        $qb->addSelect("MATCH (e.lastName, e.firstName, e.dob, e.dod) AGAINST(:q BOOLEAN) as score");
+        $qb->add('where', "MATCH (e.lastName, e.firstName, e.dob, e.dod) AGAINST(:q BOOLEAN)");
         $qb->orderBy('score', 'desc');
         $qb->setParameter('q', $q);
         return $qb->getQuery();

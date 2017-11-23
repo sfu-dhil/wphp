@@ -2,6 +2,7 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
     - { resource: services.yml }
+    - { resource: "../../vendor/beberlei/DoctrineExtensions/config/mysql.yml" }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
@@ -10,7 +11,9 @@ parameters:
 
 framework:
     #esi:             ~
-    translator:     ~  
+    translator:
+        enabled: true
+        logging: false
     secret:          "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -73,16 +76,6 @@ doctrine:
         auto_generate_proxy_classes: "%kernel.debug%"
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
-        dql:
-            datetime_functions:
-                YEAR: DoctrineExtensions\Query\Mysql\Year 
-                DATE: DoctrineExtensions\Query\Mysql\Date
-                STRTODATE: DoctrineExtensions\Query\Mysql\StrToDate                
-            string_functions:
-                MATCH_AGAINST: Nines\UtilBundle\Extensions\Doctrine\MatchAgainstFunction
-            numeric_functions:
-                INT: Nines\UtilBundle\Extensions\Doctrine\CastAsIntegerFunction
-                RAND: Nines\UtilBundle\Extensions\Doctrine\RandFunction
 
 # Swiftmailer Configuration
 swiftmailer:

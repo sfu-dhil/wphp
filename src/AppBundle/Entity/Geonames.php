@@ -2,6 +2,9 @@
 
 namespace AppBundle\Entity;
 
+use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -144,13 +147,25 @@ class Geonames
     private $timezone;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
      * @ORM\Column(name="moddate", type="date", nullable=true)
      */
     private $moddate;
 
+    /**
+     * @var Collection|Title[]
+     * @ORM\OneToMany(targetEntity="Title", mappedBy="locationOfPrinting")
+     */
+    private $titles;
 
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->titles = new ArrayCollection();
+    }
 
     /**
      * Set geonameid
@@ -551,7 +566,7 @@ class Geonames
     /**
      * Set moddate
      *
-     * @param \DateTime $moddate
+     * @param DateTime $moddate
      *
      * @return Geonames
      */
@@ -564,9 +579,43 @@ class Geonames
     /**
      * Get moddate
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getModdate() {
         return $this->moddate;
+    }
+
+    /**
+     * Add title
+     *
+     * @param Title $title
+     *
+     * @return Geonames
+     */
+    public function addTitle(Title $title)
+    {
+        $this->titles[] = $title;
+
+        return $this;
+    }
+
+    /**
+     * Remove title
+     *
+     * @param Title $title
+     */
+    public function removeTitle(Title $title)
+    {
+        $this->titles->removeElement($title);
+    }
+
+    /**
+     * Get titles
+     *
+     * @return Collection
+     */
+    public function getTitles()
+    {
+        return $this->titles;
     }
 }

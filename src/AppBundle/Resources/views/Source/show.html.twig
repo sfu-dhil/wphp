@@ -7,19 +7,22 @@
 {% block body %}
 
     <div class="btn-toolbar">
-		<div class="btn-group pull-right">
-			<a href="javascript: history.go(-1)" class="btn btn-default">
-				<span class="glyphicon glyphicon-arrow-left"></span> Back
-			</a>
-		</div>
-	</div>
+        <div class="btn-group pull-right">
+            <a href="javascript: history.go(-1)" class="btn btn-default">
+                <span class="glyphicon glyphicon-arrow-left"></span> Back
+            </a>
+        </div>
+    </div>
     <table class="table table-bordered table-condensed table-hover table-striped">
         <tbody>
             <tr>
                 <th>Name</th>
-				<td>{{ source.name }}</td>
+                <td>{{ source.name }}</td>
             </tr>
         </tbody>
     </table>
+
+    {% embed 'AppBundle:Title:partials/page.html.twig' with {'titles': titles} %}
+    {% endembed %}
 
 {% endblock %}

@@ -10,6 +10,7 @@
          colors="true"         
          bootstrap="var/bootstrap.php.cache">
     <php>
+        <ini name="error_reporting" value="-1" />
         <server name="KERNEL_CLASS" value="AppKernel" />
         <server name="KERNEL_DIR" value="app/" />
     </php>

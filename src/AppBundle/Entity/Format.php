@@ -2,6 +2,8 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -58,7 +60,19 @@ class Format
      */
     private $abbrevFour;
 
+    /**
+     * @var Collection|Title[]
+     * @ORM\OneToMany(targetEntity="Title", mappedBy="format")
+     */
+    private $titles;
 
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->titles = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -177,5 +191,39 @@ class Format
      */
     public function getAbbrevFour() {
         return $this->abbrevFour;
+    }
+
+    /**
+     * Add title
+     *
+     * @param Title $title
+     *
+     * @return Format
+     */
+    public function addTitle(Title $title)
+    {
+        $this->titles[] = $title;
+
+        return $this;
+    }
+
+    /**
+     * Remove title
+     *
+     * @param Title $title
+     */
+    public function removeTitle(Title $title)
+    {
+        $this->titles->removeElement($title);
+    }
+
+    /**
+     * Get titles
+     *
+     * @return Collection
+     */
+    public function getTitles()
+    {
+        return $this->titles;
     }
 }

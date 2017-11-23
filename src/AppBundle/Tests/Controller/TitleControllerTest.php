@@ -74,6 +74,7 @@ class TitleControllerTest extends BaseTestCase
     
     
     public function testAnonSearch() {
+        $this->markTestSkipped('Cannot test this page with SQLite.');
         
         $client = $this->makeClient();
         $crawler = $client->request('GET', '/title/search');
@@ -86,6 +87,7 @@ class TitleControllerTest extends BaseTestCase
     }
     
     public function testUserSearch() {
+        $this->markTestSkipped('Cannot test this page with SQLite.');
         
         $client = $this->makeClient([
             'username' => 'user@example.com',
@@ -102,6 +104,7 @@ class TitleControllerTest extends BaseTestCase
     }
     
     public function testAdminSearch() {
+        $this->markTestSkipped('Cannot test this page with SQLite.');
         
         $client = $this->makeClient([
             'username' => 'admin@example.com',
