@@ -160,11 +160,32 @@ class Geonames
     private $titles;
 
     /**
+     * @var Collection|Title[]
+     * @ORM\OneToMany(targetEntity="Firm", mappedBy="city")
+     */
+    private $firms;
+    
+    /**
+     * @var Collection|Person[]
+     * @ORM\OneToMany(targetEntity="Person", mappedBy="cityOfBirth")
+     */
+    private $peopleBorn;
+    
+    /**
+     * @var Collection|Title[]
+     * @ORM\OneToMany(targetEntity="Person", mappedBy="cityOfDeath")
+     */
+    private $peopleDied;
+    
+    /**
      * Constructor
      */
     public function __construct()
     {
         $this->titles = new ArrayCollection();
+        $this->firms = new ArrayCollection();
+        $this->peopleBorn = new ArrayCollection();
+        $this->peopleDied = new ArrayCollection();
     }
     
     public function __toString() {
@@ -621,5 +642,107 @@ class Geonames
     public function getTitles()
     {
         return $this->titles;
+    }
+
+    /**
+     * Add firm
+     *
+     * @param Firm $firm
+     *
+     * @return Geonames
+     */
+    public function addFirm(Firm $firm)
+    {
+        $this->firms[] = $firm;
+
+        return $this;
+    }
+
+    /**
+     * Remove firm
+     *
+     * @param Firm $firm
+     */
+    public function removeFirm(Firm $firm)
+    {
+        $this->firms->removeElement($firm);
+    }
+
+    /**
+     * Get firms
+     *
+     * @return Collection
+     */
+    public function getFirms()
+    {
+        return $this->firms;
+    }
+
+    /**
+     * Add peopleBorn
+     *
+     * @param Person $peopleBorn
+     *
+     * @return Geonames
+     */
+    public function addPeopleBorn(Person $peopleBorn)
+    {
+        $this->peopleBorn[] = $peopleBorn;
+
+        return $this;
+    }
+
+    /**
+     * Remove peopleBorn
+     *
+     * @param Person $peopleBorn
+     */
+    public function removePeopleBorn(Person $peopleBorn)
+    {
+        $this->peopleBorn->removeElement($peopleBorn);
+    }
+
+    /**
+     * Get peopleBorn
+     *
+     * @return Collection
+     */
+    public function getPeopleBorn()
+    {
+        return $this->peopleBorn;
+    }
+
+    /**
+     * Add peopleDied
+     *
+     * @param Firm $peopleDied
+     *
+     * @return Geonames
+     */
+    public function addPeopleDied(Firm $peopleDied)
+    {
+        $this->peopleDied[] = $peopleDied;
+
+        return $this;
+    }
+
+    /**
+     * Remove peopleDied
+     *
+     * @param Firm $peopleDied
+     */
+    public function removePeopleDied(Firm $peopleDied)
+    {
+        $this->peopleDied->removeElement($peopleDied);
+    }
+
+    /**
+     * Get peopleDied
+     *
+     * @return Collection
+     */
+    public function getPeopleDied()
+    {
+        return $this->peopleDied;
     }
 }

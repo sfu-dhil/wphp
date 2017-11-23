@@ -48,7 +48,13 @@
                 </tr>
                 <tr>
                     <th>Place of birth</th>
-                    <td>{% if person.CityOfBirth %} {{ person.cityOfBirth.name }} {% endif %}</td>
+                    <td>
+                        {% if person.cityOfBirth %} 
+                            <a href="{{path('geonames_show', {'id': person.cityOfBirth.geonameid}) }}">
+                                {{ person.cityOfBirth.name }} 
+                            </a>
+                        {% endif %}
+                    </td>
                 </tr>
                 <tr>
                     <th>Date of death</th>
@@ -56,7 +62,13 @@
                 </tr>
                 <tr>
                     <th>Place of Death</th>
-                    <td>{% if person.CityOfDeath %} {{ person.cityOfDeath.name }} {% endif %}</td>
+                    <td>
+                        {% if person.cityOfDeath %} 
+                            <a href="{{ path('geonames_show', {'id': person.cityOfDeath.geonameid}) }}">
+                                {{ person.cityOfDeath.name }}
+                            </a>
+                        {% endif %}
+                    </td>
                 </tr>
                 <tr>
                     <th>Titles</th>

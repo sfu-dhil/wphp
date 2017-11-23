@@ -77,7 +77,7 @@ class Firm
     /**
      * @var Geonames
      *
-     * @ORM\ManyToOne(targetEntity="Geonames")
+     * @ORM\ManyToOne(targetEntity="Geonames", inversedBy="firms")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="city", referencedColumnName="geonameid")
      * })

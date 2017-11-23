@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block pageheader %} 
+    <h1>Geonames</h1>
+{% endblock %} 
+
+{% block body %}
+
+    {% embed 'AppBundle:Geonames:partials/header.html.twig' %}
+    {% endembed %}
+
+    {% embed 'AppBundle:Title:partials/page.html.twig' with {'titles': titles } %}
+    {% endembed %}
+
+{% endblock %}

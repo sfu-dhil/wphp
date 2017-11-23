@@ -89,7 +89,7 @@ class Person
     /**
      * @var \Geonames
      *
-     * @ORM\ManyToOne(targetEntity="Geonames")
+     * @ORM\ManyToOne(targetEntity="Geonames", inversedBy="peopleBorn")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="city_id_of_birth", referencedColumnName="geonameid")
      * })
@@ -99,7 +99,7 @@ class Person
     /**
      * @var Geonames
      *
-     * @ORM\ManyToOne(targetEntity="Geonames")
+     * @ORM\ManyToOne(targetEntity="Geonames", inversedBy="peopleDied")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="city_id_of_death", referencedColumnName="geonameid")
      * })

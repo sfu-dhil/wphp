@@ -24,6 +24,30 @@
                 <td>{{ geoname.name }}</td>
             </tr>
             <tr>
+                <th>Titles</th>
+                <td>
+                    <a href="{{ path('geonames_titles', {'id': geoname.geonameid}) }}">
+                        {{ geoname.titles | length }}
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <th>Firms</th>
+                <td>
+                    <a href="{{ path('geonames_firms', {'id': geoname.geonameid}) }}">
+                        {{ geoname.firms | length }}
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <th>People</th>
+                <td>
+                    <a href="{{ path('geonames_people', {'id': geoname.geonameid}) }}">
+                        Born: {{ geoname.peopleBorn | length }}, Died: {{ geoname.peopleDied | length }}
+                    </a>
+                </td>
+            </tr>
+            <tr>
                 <th>ASCII name</th>
                 <td>{{ geoname.asciiname }}</td>
             </tr>
@@ -57,8 +81,5 @@
             </tr>
         </tbody>
     </table>
-            
-    {% embed 'AppBundle:Title:partials/page.html.twig' with {'titles': titles} %}
-    {% endembed %}
 
 {% endblock %}
