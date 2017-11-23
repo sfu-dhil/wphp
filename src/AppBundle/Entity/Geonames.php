@@ -166,6 +166,10 @@ class Geonames
     {
         $this->titles = new ArrayCollection();
     }
+    
+    public function __toString() {
+        return $this->name;
+    }
 
     /**
      * Set geonameid

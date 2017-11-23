@@ -44,7 +44,7 @@ class PersonFilterType extends AbstractType
             'label' => 'Name',
             'required' => false,
             'attr' => array(
-                'help_block' => 'Enter all or part of a perosnal name.'
+                'help_block' => 'Enter all or part of a personal name.'
             ),
         ));
 

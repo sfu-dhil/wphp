@@ -41,7 +41,13 @@
             </tr>
             <tr>
                 <th>City</th>
-                <td>{% if firm.city %}{{ firm.city.name }}{% endif %}</td>
+                <td>
+                    {% if firm.city %}
+                        <a href="{{ path('geonames_show', {'id': firm.city.geonameid}) }}">
+                            {{ firm.city.name }}
+                        </a>
+                    {% endif %}
+                </td>
             </tr>
             <tr>
                 <th>Start date</th>

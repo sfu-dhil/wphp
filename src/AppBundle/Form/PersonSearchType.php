@@ -93,33 +93,6 @@ class PersonSearchType extends AbstractType
             ),
         ));
 
-        $builder->add('orderby', ChoiceType::class, array(
-            'label' => 'Order by',
-            'choices' => array(
-                'Last name' => 'lastname',
-                'First name' => 'firstname',
-                'Birth date' => 'dob',
-                'Death date' => 'dod',
-            ),
-            'required' => true,
-            'expanded' => true,
-            'multiple' => false,
-            'empty_data' => 'lastname',
-            'data' => 'lastname',
-        ));
-
-        $builder->add('orderdir', ChoiceType::class, array(
-            'label' => 'Order Direction',
-            'choices' => array(
-                'Ascending (A to Z)' => 'asc',
-                'Descending (Z to A)' => 'desc',
-            ),
-            'required' => true,
-            'expanded' => true,
-            'multiple' => false,
-            'empty_data' => 'asc',
-            'data' => 'asc',
-        ));
     }
 
     /**

@@ -41,6 +41,32 @@ class TitleSearchType extends AbstractType
             ),
         ));
         
+        $builder->add('orderby', ChoiceType::class, array(
+            'label' => 'Order by',
+            'choices' => array(
+                'Title' => 'title',
+                'Publication Date' => 'pubdate',
+            ),
+            'required' => true,
+            'expanded' => true,
+            'multiple' => false,
+            'empty_data' => 'title',
+            'data' => 'title',
+        ));
+
+        $builder->add('orderdir', ChoiceType::class, array(
+            'label' => 'Order Direction',
+            'choices' => array(
+                'Ascending (A to Z)' => 'asc',
+                'Descending (Z to A)' => 'desc',
+            ),
+            'required' => true,
+            'expanded' => true,
+            'multiple' => false,
+            'empty_data' => 'asc',
+            'data' => 'asc',
+        ));
+
         $builder->add('checked', ChoiceType::class, array(
             'label' => 'Checked',
             'choices' => array(
@@ -145,31 +171,6 @@ class TitleSearchType extends AbstractType
             ),
         ));
 
-        $builder->add('orderby', ChoiceType::class, array(
-            'label' => 'Order by',
-            'choices' => array(
-                'Title' => 'title',
-                'Publication Date' => 'pubdate',
-            ),
-            'required' => true,
-            'expanded' => true,
-            'multiple' => false,
-            'empty_data' => 'title',
-            'data' => 'title',
-        ));
-
-        $builder->add('orderdir', ChoiceType::class, array(
-            'label' => 'Order Direction',
-            'choices' => array(
-                'Ascending (A to Z)' => 'asc',
-                'Descending (Z to A)' => 'desc',
-            ),
-            'required' => true,
-            'expanded' => true,
-            'multiple' => false,
-            'empty_data' => 'asc',
-            'data' => 'asc',
-        ));
 
     }
 

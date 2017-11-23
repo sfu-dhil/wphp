@@ -4,9 +4,9 @@
             <th>Id</th>
             <th>Name</th>
             <th>Street address</th>
+            <th>City</th>
             <th>Start date</th>
             <th>End date</th>
-            <th>Final check</th>    
         </tr>
     </thead>
     <tbody>
@@ -18,10 +18,10 @@
                         {{ firm.name }}
                     </a>
                 </td>
-                <td>{{ firm.streetAddress }}</td>                
+                <td>{{ firm.streetAddress }}</td>    
+                <td>{{ firm.city }}</td>
                 <td>{% if firm.startDate %}{{ firm.startDate|date('Y') }}{% endif %}</td>
                 <td>{% if firm.endDate %}{{ firm.endDate|date('Y') }}{% endif %}</td>
-                <td>{% if firm.finalcheck %}Yes{% else %}No{% endif %}</td>
             </tr>
         {% endfor %}
     </tbody>
