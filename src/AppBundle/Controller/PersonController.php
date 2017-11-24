@@ -126,11 +126,16 @@ class PersonController extends Controller
      * @param Person $person
      * @return array
      */
-    public function showAction(Person $person) {
+    public function showAction(Request $request, Person $person) {
         $em = $this->getDoctrine()->getManager();
         $repo = $em->getRepository('AppBundle:Person');
+        $titleRoles = $person->getTitleRoles();
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate($titleRoles, $request->query->getint('page', 1), 25);
+        
         return array(
             'person' => $person,
+            'pagination' => $pagination,
             'next' => $repo->next($person),
             'previous' => $repo->previous($person),
         );

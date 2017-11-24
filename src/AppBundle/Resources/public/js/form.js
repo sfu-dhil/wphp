@@ -1,5 +1,12 @@
 (function ($, window) {
 
+    function confirm() {
+        var $this = $(this);
+        $this.click(function () {
+            return window.confirm($this.data('confirm'));
+        });
+    }
+    
     function windowBeforeUnload(e) {
         var clean = true;
         $('form').each(function () {
@@ -63,8 +70,16 @@
         $(window).bind('beforeunload', windowBeforeUnload);
         $('form:not(.search)').each(formDirty);
         $("a.popup").click(formPopup);
-        simpleCollection();
-        complexCollection();
+        $("*[data-confirm]").each(confirm);
+        if (typeof $().collection === 'function') {
+            simpleCollection();
+            complexCollection();
+        }
+        if(typeof $().tablesorter === 'function') {
+            $("#titleRoles").tablesorter({
+                sortList: [[0, 0], [1, 0], [2, 0]],
+            });
+        }
     });
 
 })(jQuery, window);

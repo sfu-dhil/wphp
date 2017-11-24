@@ -280,13 +280,9 @@ class Firm
 
         $iterator = $this->titleFirmroles->getIterator();
         $iterator->uasort(function(TitleFirmrole $a, TitleFirmrole $b) {
-            $cmp = strcmp($a->getFirmrole()->getName(), $b->getFirmrole()->getName());
-            if($cmp !== 0) {
-                return $cmp;
-            }
             return strcmp($a->getTitle()->getTitle(), $b->getTitle()->getTitle());
         });
-        return $iterator;
+        return new ArrayCollection(iterator_to_array($iterator));        
     }
 
     /**

@@ -119,13 +119,17 @@ class FirmController extends Controller {
      * @param Firm $firm
      * @return array
      */
-    public function showAction(Firm $firm) {
+    public function showAction(Request $request, Firm $firm) {
         $em = $this->getDoctrine()->getManager();
         $repo = $em->getRepository('AppBundle:Firm');
+        $paginator = $this->get('knp_paginator');
+        $firmRoles = $firm->getTitleFirmroles(true);
+        $pagination = $paginator->paginate($firmRoles, $request->query->getint('page', 1), 25);
         return array(
             'firm' => $firm,
             'next' => $repo->next($firm),
             'previous' => $repo->previous($firm),
+            'pagination' => $pagination,
         );
     }
 

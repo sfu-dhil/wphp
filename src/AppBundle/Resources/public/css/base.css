@@ -40,6 +40,21 @@ a[href ^= 'https://']::after {
     -moz-osx-font-smoothing: grayscale;
 }
 
+/* tables */
+table.tablesorter thead tr {
+    white-space: nowrap;
+}
+table.tablesorter thead tr .header:after {
+    content: ' ↕';
+}
+table.tablesorter thead tr .headerSortUp:after {
+    content: ' ↑';
+}
+table.tablesorter thead tr .headerSortDown:after {
+    content: ' ↓';
+}
+
+
 div.tab-content {
     min-height: 200px;
 }
