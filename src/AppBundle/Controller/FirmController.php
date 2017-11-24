@@ -59,7 +59,7 @@ class FirmController extends Controller {
         $repo = $em->getRepository(Firm::class);
         $query = $repo->buildSearchQuery(array('name' => $q));
         $paginator = $this->get('knp_paginator');
-        $firms = $paginator->paginate($query->execute(), $request->query->getint('page', 1), 25);
+        $firms = $paginator->paginate($query, $request->query->getint('page', 1), 25);
         return array(
             'search_form' => $form->createView(),
             'firms' => $firms,
@@ -85,7 +85,7 @@ class FirmController extends Controller {
             $repo = $em->getRepository(Firm::class);
             $query = $repo->buildSearchQuery($form->getData());
             $paginator = $this->get('knp_paginator');
-            $firms = $paginator->paginate($query->execute(), $request->query->getint('page', 1), 25);
+            $firms = $paginator->paginate($query, $request->query->getint('page', 1), 25);
         }
         return array(
             'search_form' => $form->createView(),

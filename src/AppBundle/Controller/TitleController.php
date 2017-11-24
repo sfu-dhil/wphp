@@ -135,7 +135,7 @@ class TitleController extends Controller
         $repo = $em->getRepository(Title::class);
         $query = $repo->buildSearchQuery(array('title' => $q));
         $paginator = $this->get('knp_paginator');
-        $titles = $paginator->paginate($query->execute(), $request->query->getint('page', 1), 25);
+        $titles = $paginator->paginate($query, $request->query->getint('page', 1), 25);
         return array(
             'search_form' => $form->createView(),
             'titles' => $titles,
@@ -180,7 +180,7 @@ class TitleController extends Controller
                 $repo = $em->getRepository(Title::class);
                 $query = $repo->buildSearchQuery($data);
                 $paginator = $this->get('knp_paginator');
-                $titles = $paginator->paginate($query->execute(), $request->query->getint('page', 1), 25);
+                $titles = $paginator->paginate($query, $request->query->getint('page', 1), 25);
             } else {
                 $this->addFlash('warning', 'You must enter a search term.');
             }

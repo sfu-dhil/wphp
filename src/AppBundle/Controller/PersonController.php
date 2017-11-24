@@ -60,7 +60,7 @@ class PersonController extends Controller
         $repo = $em->getRepository(Person::class);
         $query = $repo->buildSearchQuery(array('name' => $q));
         $paginator = $this->get('knp_paginator');
-        $people = $paginator->paginate($query->execute(), $request->query->getint('page', 1), 25);
+        $people = $paginator->paginate($query, $request->query->getint('page', 1), 25);
         return array(
             'search_form' => $form->createView(),
             'people' => $people,
@@ -89,7 +89,7 @@ class PersonController extends Controller
                 $repo = $em->getRepository(Person::class);
                 $query = $repo->buildSearchQuery($form->getData());
                 $paginator = $this->get('knp_paginator');
-                $persons = $paginator->paginate($query->execute(), $request->query->getint('page', 1), 25);
+                $persons = $paginator->paginate($query, $request->query->getint('page', 1), 25);
             }
         }
         return array(

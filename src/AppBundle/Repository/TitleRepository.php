@@ -69,7 +69,6 @@ class TitleRepository extends EntityRepository
      */
     public function buildSearchQuery($data = array()) {
         $qb = $this->createQueryBuilder('e');
-        $qb->distinct();
         if (isset($data['title']) && $data['title']) {
             $qb->andWhere("MATCH (e.title) AGAINST (:title BOOLEAN) > 0");
             $qb->setParameter('title', $data['title']);
