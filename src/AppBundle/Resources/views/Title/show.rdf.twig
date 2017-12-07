@@ -20,11 +20,13 @@
 
       <dc:title>{{ title.title }}</dc:title>
         {% if title.source and title.source.name != 'unknown' and title.source.name != 'None' %}
-            <dc:source>{{ title.source.name }} {{ title.sourceId }}</dc:source>
+            <dc:source> {{ title.source.name }} </dc:source> 
+            <dc:identifier> {{ title.sourceId }} </dc:identifier>
         {% endif %}
-
-        {% if title.source2 and title.source2.name != 'unknown' and title.source2.name != 'None' %}
-            <dc:source>{{ title.source2.name }} {{ title.source2Id }}</dc:source>
+    
+    {% if title.source2 and title.source2.name != 'unknown' and title.source2.name != 'None' %}
+            <dc:source> {{ title.source2.name }} </dc:source> 
+            <dc:identifier> {{ title.source2Id }} </dc:identifier>
         {% endif %}
         
         {% for tr in title.titleRoles %}
@@ -49,7 +51,7 @@
       <collex:discipline>History</collex:discipline>
       
       {% for genre in title.genre %}
-          <collex:genre>{{ genre }}</collex:genre>
+          <collex:genre>{{ title.genre }}</collex:genre>
       {% endfor %}
 
       <collex:freeculture>TRUE</collex:freeculture>

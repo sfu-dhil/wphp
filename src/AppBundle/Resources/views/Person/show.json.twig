@@ -1,0 +1,43 @@
+
+   {
+        
+   "@context": "http://schema.org",
+   "@type": "Person",
+
+   "url": {"@id": "{{ url('person_show', {'id': person.id}) }}"},
+   "familyName": "{{ person.firstName }}",
+   "givenName": "{{ person.lastName }}",
+   {% if person.title %}
+   "jobTitle": "{{ person.title }}",
+   {% endif %}
+   "birthDate": "{{ person.dob }}",
+   "deathDate": "{{ person.dod }}",
+   {% if person.gender == 'F' %}
+   "gender": "female",         
+   {% elseif person.gender == 'M' %}
+   "gender": "male",        
+   {% else %}
+   "gender": "unknown", 
+   {% endif %}
+       
+   "birthPlace": {
+   {% if person.cityOfBirth and person.cityOfBirth.geonameid != 0 %}
+        "@type": "Place",
+        "url": "http://api.geonames.org/getJSON?geonameId={{ person.cityOfBirth.geonameid }}&username=demo"
+   {% endif %}
+       },
+       
+   "deathPlace": {   
+   {% if person.cityOfDeath and person.cityOfDeath.geonameid != 0 %}
+        "@type": "Place",
+        "url": "http://api.geonames.org/getJSON?geonameId={{ person.cityOfDeath.geonameid }}&username=demo"
+   {% endif %}
+       },
+   {# to show titles that the person worked on -check if schema has something for that#}
+   "contributions": {
+       "@vocab": "http://dhil.lib.sfu.ca/wphp/ns#",
+        "url" : [{% for tf in person.titleRoles %} {% if loop.last %} "{{ url('title_show', {'id': tf.title.id}) }}" {% else %} "{{ url('title_show', {'id': tf.title.id}) }}", {% endif %} {% endfor %}]
+       }
+   
+       
+    }

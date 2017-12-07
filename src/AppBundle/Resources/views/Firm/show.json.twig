@@ -1,0 +1,36 @@
+            
+{
+
+   "@context": "http://schema.org",
+   "@type": "Organization",
+   
+   "url": {"@id": "{{ url('firm_show', {'id': firm.id}) }}"},
+   
+   "name": "{{ firm.name }}",
+   "address": "{{ firm.streetAddress }}",
+   
+   "location": {
+   "@type": "Place",
+   "url": "http://api.geonames.org/getJSON?geonameId={{ firm.city.geonameid }}"
+   },
+
+   
+   {% if firm.startDate|date('Y') %}
+        "foundingDate": "{{ firm.startDate }}"
+        {% endif %}
+   
+   {% if firm.endDate|date('Y')  %}
+        "dissolutionDate": "{{ firm.endDate }}"
+        {% endif %}
+   
+   {% for tfr in firm.getTitleFirmroles %}
+       {% if firm.getTitleFirmroles == 'Publisher' %}
+        "publisher": "{{ url('title_show', {'id': tfr.title.id}) }}"
+       {% elseif firm.getTitleFirmroles == 'Printer' %}
+        "manifacturer": "{{ url('title_show', {'id': tfr.title.id}) }}" {#printer is not publisher#}   
+       {% elseif firm.getTitleFirmroles == 'Bookseller' %}
+        "provider": "{{ url('title_show', {'id': tfr.title.id}) }}"  {#vendor would be better#} 
+       {% endif %}
+    {% endfor %}
+
+}
