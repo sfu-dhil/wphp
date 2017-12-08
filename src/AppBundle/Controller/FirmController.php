@@ -106,7 +106,7 @@ class FirmController extends Controller {
         if ($q) {
             return $this->redirect($this->generateUrl('firm_show', array('id' => $q)));
         } else {
-            return $this->redirect($this->generateUrl('firm_index', array('id' => $q)));
+            return $this->redirect($this->generateUrl('firm_index'));
         }
     }
 
