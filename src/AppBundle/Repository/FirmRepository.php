@@ -45,34 +45,6 @@ class FirmRepository extends EntityRepository
     }
 
     /**
-     * Simple search, based on substring matching.
-     *
-     * @param string $q
-     * @return array
-     */
-    public function searchQuery($q) {
-        $qb = $this->createQueryBuilder('e');
-        $qb->where("e.name like '%$q%'");
-        return $qb->getQuery();
-    }
-
-    /**
-     * MySQL fulltext searching via match/against (which is included in a
-     * doctrine extension).
-     *
-     * @param string $q
-     * @return Query
-     */
-    public function fulltextQuery($q) {
-        $qb = $this->createQueryBuilder('e');
-        $qb->addSelect("MATCH (e.name) AGAINST(:q BOOLEAN) as score");
-        $qb->add('where', "MATCH (e.name) AGAINST(:q BOOLEAN) > 0.5");
-        $qb->orderBy('score', 'desc');
-        $qb->setParameter('q', $q);
-        return $qb->getQuery();
-    }
-
-    /**
      * Build a full text, complex search query and return it. Takes all the
      * parameters from the firm search and does smart things with them.
      *
