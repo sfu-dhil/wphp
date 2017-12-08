@@ -22,22 +22,31 @@ class LoadTitle extends AbstractDataFixture implements DependentFixtureInterface
     protected function doLoad(ObjectManager $manager) {
         
         
-       $title = new Title();
+       $title1 = new Title();
        
-       $title->setTitle("Demolition Man");
-       $title->setSignedAuthor("John Author");
-       $title->setNotes("This is a note");
-       $title->setChecked('1');
-       $title->setFinalcheck('1');
-       $title->setSelfpublished('0');
-       $title->setLocationOfPrinting($this->getReference('geonames.1'));
-       $title->setFormat($this->getReference('format.1'));
-       $title->setGenre($this->getReference('genre.1'));
-       $title->setSource($this->getReference('source.1'));
+       $title1->setTitle("Demolition Man");
+       $title1->setSignedAuthor("John Author");
+       $title1->setNotes("This is a note");
+       $title1->setChecked('1');
+       $title1->setFinalcheck('1');
+       $title1->setSelfpublished('0');
+       $title1->setLocationOfPrinting($this->getReference('geonames.1'));
+       $title1->setFormat($this->getReference('format.1'));
+       $title1->setGenre($this->getReference('genre.1'));
+       $title1->setSource($this->getReference('source.1'));
        
-       $this->setReference('title.1', $title);
+       $this->setReference('title.1', $title1);       
+       $manager->persist($title1);
        
-       $manager->persist($title);
+       $title2 = new Title();
+       
+       $title2->setTitle("Asparagus");
+       $title2->setSignedAuthor("Billy Author");
+       
+       $this->setReference('title.2', $title2);       
+       $manager->persist($title2);
+       
+       
        $manager->flush();
     }
     

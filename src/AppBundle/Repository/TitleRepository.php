@@ -47,21 +47,6 @@ class TitleRepository extends EntityRepository
     }
 
     /**
-     * Simple MySQL fulltext search via MATCH AGAINST.
-     *
-     * @param string $q
-     * @return Query
-     */
-    public function search($q) {
-        $qb = $this->createQueryBuilder('e');
-        $qb->addSelect("MATCH (e.title) AGAINST (:q BOOLEAN) as score");
-        $qb->add('where', "MATCH (e.title) AGAINST (:q BOOLEAN) > 0.5");
-        $qb->orderBy('score', 'desc');
-        $qb->setParameter('q', $q);
-        return $qb->getQuery();
-    }
-
-    /**
      * Build a complex search query from form data.
      *
      * @param array $data

@@ -58,7 +58,7 @@ class FirmRepository extends EntityRepository
             $qb->setParameter('name', $data['name']);
         }
         if(isset($data['address']) && $data['address']) {
-            $qb->add('where', "MATCH (e.streetAddress) AGAINST(:address BOOLEAN) > 0");
+            $qb->andWhere("MATCH (e.streetAddress) AGAINST(:address BOOLEAN) > 0");
             $qb->setParameter('address', $data['address']);
         }
         if (isset($data['city']) && $data['city']) {
