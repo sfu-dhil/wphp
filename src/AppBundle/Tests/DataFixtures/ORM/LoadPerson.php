@@ -23,24 +23,33 @@ class LoadPerson extends AbstractDataFixture implements DependentFixtureInterfac
     
     protected function doLoad(ObjectManager $manager) {
         
-        $person = new Person();
-        $person->setFirstName("Bobby");
-        $person->setLastName("Rock");
-        $person->setGender("M");
-        $person->setTitle("Bobby the Man");
-        $person->setDob("1952-02-02");
-        $person->setDod("1982-02-02");
-        $person->setChecked('1');
-        $person->setFinalcheck('1');
-       
-        $manager->persist($person);
-        
+        $person1 = new Person();
+        $person1->setFirstName("Bobby");
+        $person1->setLastName("Rock");
+        $person1->setGender("M");
+        $person1->setTitle("Bobby the Man");
+        $person1->setDob("1952-02-02");
+        $person1->setDod("1982-02-02");
+        $person1->setChecked('1');
+        $person1->setFinalcheck('1');       
+        $manager->persist($person1);
+        $this->setReference('person.1', $person1);
+
+        // @todo move this TR to a new fixture.
         $role = new TitleRole();
-        $role->setPerson($person);
+        $role->setPerson($person1);
         $role->setRole($this->getReference('role.1'));
-        $role->setTitle($this->getReference('title.1'));
-        
+        $role->setTitle($this->getReference('title.1'));        
         $manager->persist($role);
+        
+        $person2 = new Person();
+        $person2->setFirstName("Shelly");
+        $person2->setLastName("Granite");
+        $person2->setGender("F");
+        $person2->setTitle("Admiral");
+        $manager->persist($person2);
+        $this->setReference('person.2', $person2);
+        
         
         $manager->flush();
     }
