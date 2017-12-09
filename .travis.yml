@@ -1,12 +1,13 @@
-sudo: false
-
 language: php
 
 php:
-    - 5.6
-    - 7.0
-    - 7.1
-    
+  - 5.4
+  - 5.5
+  - 5.6
+  - 7.0
+  - 7.1
+  - 7.2
+  
 cache: apt
 
 env:
@@ -14,17 +15,9 @@ env:
         - SYMFONY_ENV=test
         - COMPOSER_DISABLE_XDEBUG_WARN=1
 
-# Handle git submodules yourself
-# https://stackoverflow.com/questions/15674064
-git:
-    submodules: false
-
-before_install:
-    - sed -i 's/git@github.com:/https:\/\/github.com\//' .gitmodules
-    - git submodule update --init --recursive
-
 before_script:
   - composer install -n -o
+
   - echo 'date.timezone = America/Vancouver' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
 
 script:
