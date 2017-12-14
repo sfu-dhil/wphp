@@ -106,7 +106,7 @@ class TitleRepository extends EntityRepository
         }
         if (isset($data['orderby']) && $data['orderby']) {
             $dir = 'ASC';
-            if (preg_match('/^(?:asc|desc)$/i', $data['orderdir'])) {
+            if (isset($data['orderdir']) && preg_match('/^(?:asc|desc)$/i', $data['orderdir'])) {
                 $dir = $data['orderdir'];
             }
             switch ($data['orderby']) {
@@ -128,7 +128,7 @@ class TitleRepository extends EntityRepository
             $pAlias = 'p_' . $idx;
             $qb->innerJoin('e.titleRoles', $trAlias)->innerJoin("{$trAlias}.person", $pAlias);
             if (isset($filter['name']) && $filter['name']) {
-                $qb->andWhere("MATCH ({$pAlias}.lastName, {$pAlias}.firstName, {$pAlias}.title) AGAINST(:{$pAlias}_name BOOLEAN') > 0");
+                $qb->andWhere("MATCH ({$pAlias}.lastName, {$pAlias}.firstName, {$pAlias}.title) AGAINST(:{$pAlias}_name BOOLEAN) > 0");
                 $qb->setParameter("{$pAlias}_name", $filter['name']);
             }
             if (isset($filter['gender']) && $filter['gender']) {
