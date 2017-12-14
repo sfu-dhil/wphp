@@ -6,6 +6,7 @@ use AppBundle\Entity\Firm;
 use AppBundle\Entity\Title;
 use AppBundle\Tests\DataFixtures\ORM\LoadTitle;
 use AppBundle\Tests\Util\BaseTestCase;
+use Doctrine\ORM\Query;
 
 class TitleRepositoryTest extends BaseTestCase {
 
@@ -51,6 +52,7 @@ class TitleRepositoryTest extends BaseTestCase {
     public function testBuildSearchQuery($data, $expected) {
         $repo = $this->em->getRepository(Title::class);
         $query = $repo->buildSearchQuery($data);
+        $this->assertInstanceOf(Query::class, $query);
         $this->assertStringEndsWith($expected, $query->getSql());
     }
 
@@ -80,7 +82,31 @@ class TitleRepositoryTest extends BaseTestCase {
             [['signed_author' => 'foo'], 'FROM title t0_ WHERE MATCH (t0_.signed_author) AGAINST (? IN BOOLEAN MODE) > 0'],
             [['imprint' => 'foo'], 'FROM title t0_ WHERE MATCH (t0_.imprint) AGAINST (? IN BOOLEAN MODE) > 0'],
             [['pseudonym' => 'foo'], 'FROM title t0_ WHERE MATCH (t0_.pseudonym) AGAINST (? IN BOOLEAN MODE) > 0'],
-
+            
+            [['orderby' => ''], 'FROM title t0_'],
+            [['orderby' => 'title'], 'FROM title t0_ ORDER BY t0_.title ASC'],
+            [['orderby' => 'title', 'orderdir' => 'asc'], 'FROM title t0_ ORDER BY t0_.title ASC'],
+            [['orderby' => 'title', 'orderdir' => 'desc'], 'FROM title t0_ ORDER BY t0_.title DESC'],
+            
+            [['orderby' => 'pubdate'], 'FROM title t0_ ORDER BY t0_.pubdate ASC'],
+            [['orderby' => 'pubdate', 'orderdir' => 'asc'], 'FROM title t0_ ORDER BY t0_.pubdate ASC'],
+            [['orderby' => 'pubdate', 'orderdir' => 'desc'], 'FROM title t0_ ORDER BY t0_.pubdate DESC'],
+            
+            [['orderby' => 'cheese', 'orderdir' => 'colour'], 'FROM title t0_ ORDER BY t0_.title ASC'],
+            
+            [['person_filter' => []], 'FROM title t0_'],
+            [['person_filter' => ['name' => 'foo']], 'FROM title t0_ INNER JOIN title_role t1_ ON t0_.id = t1_.title_id INNER JOIN person p2_ ON t1_.person_id = p2_.id WHERE MATCH (p2_.last_name, p2_.first_name, p2_.title_name) AGAINST (? IN BOOLEAN MODE) > 0'],
+            [['person_filter' => ['gender' => ['M']]], 'FROM title t0_ INNER JOIN title_role t1_ ON t0_.id = t1_.title_id INNER JOIN person p2_ ON t1_.person_id = p2_.id WHERE p2_.gender IN (?)'],
+            [['person_filter' => ['gender' => ['M', 'F']]], 'FROM title t0_ INNER JOIN title_role t1_ ON t0_.id = t1_.title_id INNER JOIN person p2_ ON t1_.person_id = p2_.id WHERE p2_.gender IN (?)'],
+            [['person_filter' => ['person_role' => ['author']]], 'FROM title t0_ INNER JOIN title_role t1_ ON t0_.id = t1_.title_id INNER JOIN person p2_ ON t1_.person_id = p2_.id WHERE t1_.role_id IN (?)'],
+            [['person_filter' => ['person_role' => ['author', 'cheese maker']]], 'FROM title t0_ INNER JOIN title_role t1_ ON t0_.id = t1_.title_id INNER JOIN person p2_ ON t1_.person_id = p2_.id WHERE t1_.role_id IN (?)'],
+            
+            [['firm_filter' => []], 'FROM title t0_'],
+            [['firm_filter' => ['firm_name' => 'cheeseries']], 'FROM title t0_ INNER JOIN title_firmrole t1_ ON t0_.id = t1_.title_id INNER JOIN firm f2_ ON t1_.firm_id = f2_.id WHERE MATCH (f2_.name) AGAINST (? IN BOOLEAN MODE) > 0'],
+            [['firm_filter' => ['firm_role' => ['cheeseries']]], 'FROM title t0_ INNER JOIN title_firmrole t1_ ON t0_.id = t1_.title_id INNER JOIN firm f2_ ON t1_.firm_id = f2_.id WHERE t1_.firmrole_id IN (?)'],
+            [['firm_filter' => ['firm_role' => ['bakeries', 'cheeseries']]], 'FROM title t0_ INNER JOIN title_firmrole t1_ ON t0_.id = t1_.title_id INNER JOIN firm f2_ ON t1_.firm_id = f2_.id WHERE t1_.firmrole_id IN (?)'],
+            [['firm_filter' => ['firm_address' => '10 downing']], 'FROM title t0_ INNER JOIN title_firmrole t1_ ON t0_.id = t1_.title_id INNER JOIN firm f2_ ON t1_.firm_id = f2_.id WHERE MATCH (f2_.street_address) AGAINST (? IN BOOLEAN MODE) > 0'],
+            
         ];
     }
 
