@@ -225,6 +225,21 @@ class FirmControllerTest extends BaseTestCase
         
         $this->assertGreaterThan(0, $crawler->filter('td:contains("Great Firm")')->count());
     }  
+    
+    public function testJson()
+    {
+    
+        $client = $this->makeClient();
+        $client->request('GET', '/firm/1.json');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+    
+        /*
+        $response = $client->getResponse();
+        $content = $response->getContent();
+        $decodedContent = json_decode($content, true);
+        */
+        
+    }
 
     
 }

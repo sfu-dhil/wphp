@@ -162,5 +162,20 @@ class TitleControllerTest extends BaseTestCase
         $this->assertEquals(1, $crawler->filter('div#bibtex')->count());
          
     }
+    
+    public function testJson()
+    {
+    
+        $client = $this->makeClient();
+        $client->request('GET', '/title/1.json');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+    
+        /*
+        $response = $client->getResponse();
+        $content = $response->getContent();
+        $decodedContent = json_decode($content, true);
+        */
+        
+    }
 
 }

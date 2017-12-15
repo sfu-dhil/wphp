@@ -278,5 +278,20 @@ class PersonControllerTest extends BaseTestCase
         $crawler = $client->request('GET', '/person/1/export?format=bibtex');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
+    
+    public function testJson()
+    {
+    
+        $client = $this->makeClient();
+        $client->request('GET', '/person/1.json');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+    
+        /*
+        $response = $client->getResponse();
+        $content = $response->getContent();
+        $decodedContent = json_decode($content, true);
+        */
+        
+    }
 
 }

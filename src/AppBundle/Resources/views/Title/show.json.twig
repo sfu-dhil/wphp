@@ -3,9 +3,19 @@
     "@context": "http://schema.org",
     "@type": "Book",
     
-    "url": {"@id": "{{url('title_show', {'id': title.id}) }}"},
+    "url": "{{url('title_show', {'id': title.id}) }}",
     
     "name": "{{ title.title }}",
+    
+    {% if title.source and title.source.name != 'unknown' and title.source.name != 'None' %}  
+    "source": "{{ title.source.name }}",
+    "identifier": "{{ title.sourceId }}",
+    {% endif %}
+    
+    {% if title.source2 and title.source2.name != 'unknown' and title.source2.name != 'None' %}
+    "source": "{{ title.source2.name }}",
+    "identifier": "{{ title.source2Id }}",
+    {% endif %}
     
     {% for tr in title.titleRoles %}
             {% if tr.role.name == 'Author' %}
@@ -16,8 +26,6 @@
                 "editor": "{{ url('person_show', {'id': tr.person.id}) }}",
             {% elseif tr.role.name == 'Translator' %}
                 "translator": "{{ url('person_show', {'id': tr.person.id}) }}",
-            {% elseif tr.role.name == 'Engraver' %}
-                "engraver": "{{ url('person_show', {'id': tr.person.id}) }}",  {#engraver is not illustrator#}
             {% else %}
                 "contributor": "{{ url('person_show', {'id': tr.person.id}) }}",
             {% endif %}
@@ -33,26 +41,3 @@
       "datePublished": "{{ title.pubdate }}"
     
 }
-
-<?xml version="1.0" encoding="utf-8"?>
- <rdf:RDF
-      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-      xmlns:dc="http://purl.org/dc/elements/1.1/"
-      xmlns:dcterms="http://purl.org/dc/terms/"
-      xmlns:collex="http://www.collex.org/schema#"
-      xmlns:ra="http://www.rossettiarchive.org/schema#"
-      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
-      xmlns:role="http://www.loc.gov/loc.terms/relators/"
-      xmlns:wphp="http://dhil.lib.sfu.ca/wphp/">
-
-    {% if title.source and title.source.name != 'unknown' and title.source.name != 'None' %}
-            <dc:source> {{ title.source.name }} </dc:source> 
-            <dc:identifier> {{ title.sourceId }} </dc:identifier>
-        {% endif %}
-    
-    {% if title.source2 and title.source2.name != 'unknown' and title.source2.name != 'None' %}
-            <dc:source> {{ title.source2.name }} </dc:source> 
-            <dc:identifier> {{ title.source2Id }} </dc:identifier>
-        {% endif %}
-    
-    </rdf:RDF>
