@@ -1,0 +1,43 @@
+
+{
+    "@context": "http://schema.org",
+    "@type": "Book",
+    
+    "url": "{{url('title_show', {'id': title.id}) }}",
+    
+    "name": "{{ title.title }}",
+    
+    {% if title.source and title.source.name != 'unknown' and title.source.name != 'None' %}  
+    "source": "{{ title.source.name }}",
+    "identifier": "{{ title.sourceId }}",
+    {% endif %}
+    
+    {% if title.source2 and title.source2.name != 'unknown' and title.source2.name != 'None' %}
+    "source": "{{ title.source2.name }}",
+    "identifier": "{{ title.source2Id }}",
+    {% endif %}
+    
+    {% for tr in title.titleRoles %}
+            {% if tr.role.name == 'Author' %}
+                "author": "{{ url('person_show', {'id': tr.person.id}) }}",
+            {% elseif tr.role.name == 'Publisher' %}
+                "publisher": "{{ url('person_show', {'id': tr.person.id}) }}",
+            {% elseif tr.role.name == 'Editor' %}
+                "editor": "{{ url('person_show', {'id': tr.person.id}) }}",
+            {% elseif tr.role.name == 'Translator' %}
+                "translator": "{{ url('person_show', {'id': tr.person.id}) }}",
+            {% else %}
+                "contributor": "{{ url('person_show', {'id': tr.person.id}) }}",
+            {% endif %}
+        {% endfor %}
+        
+      
+      {% for genre in title.genre %}
+          "genre": "{{ title.genre }}"
+      {% endfor %}
+
+      "inLanguage": "en-US",
+
+      "datePublished": "{{ title.pubdate }}"
+    
+}
