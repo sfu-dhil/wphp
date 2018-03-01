@@ -105,6 +105,9 @@ fos_user:
     change_password:
         form:
             type: Nines\UserBundle\Form\PasswordType
+    from_email:
+        address: noreply@dhil.lib.sfu.ca
+        sender_name: WPHP User Manager
             
 ivory_ck_editor:
     input_sync: true

@@ -1,5 +1,9 @@
 {% extends 'base.html.twig' %}
 
+{% block htmlhead %}
+    <link rel="alternate" type="application/rdf+xml" href="{{ url('person_show', {'id': person.id, '_format': 'rdf'}) }}"/>
+{% endblock %}
+
 {% block pageheader %} 
     <h1>{{ person }}</h1>
     <div class="row">
