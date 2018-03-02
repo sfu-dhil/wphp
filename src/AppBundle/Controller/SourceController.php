@@ -43,11 +43,14 @@ class SourceController extends Controller
      *
      * @Route("/new", name="source_new")
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_CONTENT_ADMIN')")
      * @Template()
      * @param Request $request
      */
     public function newAction(Request $request) {
+        if (!$this->isGranted('ROLE_CONTENT_ADMIN')) {
+            $this->addFlash('danger', 'You must login to access this page.');
+            return $this->redirect($this->generateUrl('fos_user_security_login'));
+        }
         $source = new Source();
         $form = $this->createForm(SourceType::class, $source);
         $form->handleRequest($request);
@@ -95,11 +98,14 @@ class SourceController extends Controller
      * @Route("/{id}/edit", name="source_edit")
      * @Method({"GET", "POST"})
      * @Template()
-     * @Security("has_role('ROLE_CONTENT_ADMIN')")
      * @param Request $request
      * @param Source $source
      */
     public function editAction(Request $request, Source $source) {
+        if (!$this->isGranted('ROLE_CONTENT_ADMIN')) {
+            $this->addFlash('danger', 'You must login to access this page.');
+            return $this->redirect($this->generateUrl('fos_user_security_login'));
+        }
         $editForm = $this->createForm(SourceType::class, $source);
         $editForm->handleRequest($request);
 
@@ -121,11 +127,14 @@ class SourceController extends Controller
      *
      * @Route("/{id}/delete", name="source_delete")
      * @Method("GET")
-     * @Security("has_role('ROLE_CONTENT_ADMIN')")
      * @param Request $request
      * @param Source $source
      */
     public function deleteAction(Request $request, Source $source) {
+        if (!$this->isGranted('ROLE_CONTENT_ADMIN')) {
+            $this->addFlash('danger', 'You must login to access this page.');
+            return $this->redirect($this->generateUrl('fos_user_security_login'));
+        }
         $em = $this->getDoctrine()->getManager();
         $em->remove($source);
         $em->flush();
