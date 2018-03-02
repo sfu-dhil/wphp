@@ -6,10 +6,10 @@
             <div class="panel-heading">{{ title }}</div>
             <div class="panel-body">
                 <ul class="list-group">
-                {% for entity in entities %}
-                    <li class="list-group-item">
-                        <a href="{{ path(path_name, {'id': entity.id}) }}">{{entity|truncate(40)}}</a>
-                    </li>
+                    {% for entity in entities %}
+                        <li class="list-group-item">
+                            <a href="{{ path(path_name, {'id': entity.id}) }}">{{entity|truncate(40)}}</a>
+                        </li>
                     {% endfor %}
                 </ul>
             </div>
@@ -31,7 +31,7 @@
         writing and print. The database, with nearly 2,000 person entries and over 
         8,000 title entries, will enable rigorous quantitative analysis of patterns
         in women's print history.</p>
-    
+
     <h2>Random Entries</h2>
     <div class="row equal">
         {{ self.panel("Titles", titles, "title_show") }}

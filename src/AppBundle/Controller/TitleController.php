@@ -3,7 +3,8 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Title;
-use AppBundle\Form\TitleSearchType;
+use AppBundle\Form\Title\TitleSearchType;
+use AppBundle\Form\Title\TitleType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -220,6 +221,38 @@ class TitleController extends Controller
     }
 
     /**
+     * Creates a new Title entity.
+     *
+     * @Route("/new", name="title_new")
+     * @Method({"GET", "POST"})
+     * @Template()
+     * @param Request $request
+     */
+    public function newAction(Request $request) {
+        if (!$this->isGranted('ROLE_CONTENT_ADMIN')) {
+            $this->addFlash('danger', 'You must login to access this page.');
+            return $this->redirect($this->generateUrl('fos_user_security_login'));
+        }
+        $title = new Title();
+        $form = $this->createForm(TitleType::class, $title);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($title);
+            $em->flush();
+
+            $this->addFlash('success', 'The new title was created.');
+            return $this->redirectToRoute('title_show', array('id' => $title->getId()));
+        }
+
+        return array(
+            'title' => $title,
+            'form' => $form->createView(),
+        );
+    }
+    
+    /**
      * Finds and displays a Title entity.
      *
      * @Route("/{id}.{_format}", name="title_show", defaults={"_format": "html"})
@@ -237,4 +270,56 @@ class TitleController extends Controller
             'previous' => $repo->previous($title),
         );
     }
+    
+    /**
+     * Displays a form to edit an existing Title entity.
+     *
+     * @Route("/{id}/edit", name="title_edit")
+     * @Method({"GET", "POST"})
+     * @Template()
+     * @param Request $request
+     * @param Title $title
+     */
+    public function editAction(Request $request, Title $title) {
+        if (!$this->isGranted('ROLE_CONTENT_ADMIN')) {
+            $this->addFlash('danger', 'You must login to access this page.');
+            return $this->redirect($this->generateUrl('fos_user_security_login'));
+        }
+        $editForm = $this->createForm(TitleType::class, $title);
+        $editForm->handleRequest($request);
+
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+            $this->addFlash('success', 'The title has been updated.');
+            return $this->redirectToRoute('title_show', array('id' => $title->getId()));
+        }
+
+        return array(
+            'title' => $title,
+            'edit_form' => $editForm->createView(),
+        );
+    }
+
+    /**
+     * Deletes a Title entity.
+     *
+     * @Route("/{id}/delete", name="title_delete")
+     * @Method("GET")
+     * @param Request $request
+     * @param Title $title
+     */
+    public function deleteAction(Request $request, Title $title) {
+        if (!$this->isGranted('ROLE_CONTENT_ADMIN')) {
+            $this->addFlash('danger', 'You must login to access this page.');
+            return $this->redirect($this->generateUrl('fos_user_security_login'));
+        }
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($title);
+        $em->flush();
+        $this->addFlash('success', 'The title was deleted.');
+
+        return $this->redirectToRoute('title_index');
+    }
+
 }

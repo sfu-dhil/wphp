@@ -4,7 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Person;
 use AppBundle\Entity\Title;
-use AppBundle\Form\PersonSearchType;
+use AppBundle\Form\Person\PersonSearchType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -17,8 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
  *
  * @Route("/person")
  */
-class PersonController extends Controller
-{
+class PersonController extends Controller {
 
     /**
      * Lists all Person entities.
@@ -84,7 +83,7 @@ class PersonController extends Controller
         $persons = array();
 
         if ($form->isSubmitted()) {
-            if( ! $form->isValid()) {
+            if (!$form->isValid()) {
                 $this->addFlash('error', 'Bad form submission: ');
             } else {
                 $repo = $em->getRepository(Person::class);
@@ -117,31 +116,6 @@ class PersonController extends Controller
             return $this->redirect($this->generateUrl('person_index', array('id' => $q)));
         }
     }
-
-    /**
-     * Finds and displays a Person entity.
-     *
-     * @Route("/{id}.{_format}", name="person_show", defaults={"_format": "html"})
-     * @Method({"GET","POST"})
-     * @Template()
-     * @param Person $person
-     * @return array
-     */
-    public function showAction(Request $request, Person $person) {
-        $em = $this->getDoctrine()->getManager();
-        $repo = $em->getRepository('AppBundle:Person');
-        $titleRoles = $person->getTitleRoles();
-        $paginator = $this->get('knp_paginator');
-        $pagination = $paginator->paginate($titleRoles, $request->query->getint('page', 1), 25);
-        
-        return array(
-            'person' => $person,
-            'pagination' => $pagination,
-            'next' => $repo->next($person),
-            'previous' => $repo->previous($person),
-        );
-    }
-    
     /**
      * Exports a person's titles in a format.
      *
@@ -160,4 +134,113 @@ class PersonController extends Controller
             'format' => $request->query->get('format', 'mla'),
         );
     }
+
+    /**
+     * Creates a new Person entity.
+     *
+     * @Route("/new", name="person_new")
+     * @Method({"GET", "POST"})
+     * @Template()
+     * @param Request $request
+     */
+    public function newAction(Request $request) {
+        if (!$this->isGranted('ROLE_CONTENT_ADMIN')) {
+            $this->addFlash('danger', 'You must login to access this page.');
+            return $this->redirect($this->generateUrl('fos_user_security_login'));
+        }
+        $person = new Person();
+        $form = $this->createForm(PersonType::class, $person);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($person);
+            $em->flush();
+
+            $this->addFlash('success', 'The new person was created.');
+            return $this->redirectToRoute('person_show', array('id' => $person->getId()));
+        }
+
+        return array(
+            'person' => $person,
+            'form' => $form->createView(),
+        );
+    }
+
+
+    /**
+     * Finds and displays a Person entity.
+     *
+     * @Route("/{id}.{_format}", name="person_show", defaults={"_format": "html"})
+     * @Method({"GET","POST"})
+     * @Template()
+     * @param Person $person
+     * @return array
+     */
+    public function showAction(Request $request, Person $person) {
+        $em = $this->getDoctrine()->getManager();
+        $repo = $em->getRepository('AppBundle:Person');
+        $titleRoles = $person->getTitleRoles();
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate($titleRoles, $request->query->getint('page', 1), 25);
+
+        return array(
+            'person' => $person,
+            'pagination' => $pagination,
+            'next' => $repo->next($person),
+            'previous' => $repo->previous($person),
+        );
+    }
+
+    /**
+     * Displays a form to edit an existing Person entity.
+     *
+     * @Route("/{id}/edit", name="person_edit")
+     * @Method({"GET", "POST"})
+     * @Template()
+     * @param Request $request
+     * @param Person $person
+     */
+    public function editAction(Request $request, Person $person) {
+        if (!$this->isGranted('ROLE_CONTENT_ADMIN')) {
+            $this->addFlash('danger', 'You must login to access this page.');
+            return $this->redirect($this->generateUrl('fos_user_security_login'));
+        }
+        $editForm = $this->createForm(PersonType::class, $person);
+        $editForm->handleRequest($request);
+
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+            $this->addFlash('success', 'The person has been updated.');
+            return $this->redirectToRoute('person_show', array('id' => $person->getId()));
+        }
+
+        return array(
+            'person' => $person,
+            'edit_form' => $editForm->createView(),
+        );
+    }
+
+    /**
+     * Deletes a Person entity.
+     *
+     * @Route("/{id}/delete", name="person_delete")
+     * @Method("GET")
+     * @param Request $request
+     * @param Person $person
+     */
+    public function deleteAction(Request $request, Person $person) {
+        if (!$this->isGranted('ROLE_CONTENT_ADMIN')) {
+            $this->addFlash('danger', 'You must login to access this page.');
+            return $this->redirect($this->generateUrl('fos_user_security_login'));
+        }
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($person);
+        $em->flush();
+        $this->addFlash('success', 'The person was deleted.');
+
+        return $this->redirectToRoute('person_index');
+    }
+
 }

@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Geonames Edit{% endblock %}
+
+{% block body %}
+    <h1>Edit Geonames</h1>
+
+    {{ form_start(edit_form) }}
+    {{ form_widget(edit_form) }}
+    <div class="form-group">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-10">
+            <input type="submit" value="Update" class="btn btn-primary" />
+            <a href="{{ path('geonames_show', { 'id': geoname.geonameid }) }}" class="btn btn-warning">Cancel</a>
+        </div>
+    </div>
+    {{ form_end(edit_form) }}
+
+{% endblock %}

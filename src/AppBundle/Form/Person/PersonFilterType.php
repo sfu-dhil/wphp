@@ -1,10 +1,10 @@
 <?php
 
-namespace AppBundle\Form;
+namespace AppBundle\Form\Person;
 
 use AppBundle\Entity\Role;
-use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -22,10 +22,10 @@ class PersonFilterType extends AbstractType
     private $em;
 
     /**
-     * @param Registry $registry
+     * @param EntityManagerInterface $em
      */
-    public function __construct(Registry $registry) {
-        $this->em = $registry->getManager();
+    public function __construct(EntityManagerInterface $em) {
+        $this->em = $em;
     }
 
     /**

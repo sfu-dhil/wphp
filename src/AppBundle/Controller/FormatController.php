@@ -17,8 +17,8 @@ use Symfony\Component\HttpFoundation\Request;
  *
  * @Route("/format")
  */
-class FormatController extends Controller
-{
+class FormatController extends Controller {
+
     /**
      * Lists all Format entities.
      *
@@ -40,6 +40,38 @@ class FormatController extends Controller
     }
 
     /**
+     * Creates a new Format entity.
+     *
+     * @Route("/new", name="format_new")
+     * @Method({"GET", "POST"})
+     * @Template()
+     * @param Request $request
+     */
+    public function newAction(Request $request) {
+        if (!$this->isGranted('ROLE_CONTENT_ADMIN')) {
+            $this->addFlash('danger', 'You must login to access this page.');
+            return $this->redirect($this->generateUrl('fos_user_security_login'));
+        }
+        $format = new Format();
+        $form = $this->createForm(FormatType::class, $format);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($format);
+            $em->flush();
+
+            $this->addFlash('success', 'The new format was created.');
+            return $this->redirectToRoute('format_show', array('id' => $format->getId()));
+        }
+
+        return array(
+            'format' => $format,
+            'form' => $form->createView(),
+        );
+    }
+
+    /**
      * Finds and displays a Format entity.
      *
      * @Route("/{id}", name="format_show")
@@ -54,10 +86,61 @@ class FormatController extends Controller
         $query->setParameter('format', $format);
         $paginator = $this->get('knp_paginator');
         $titles = $paginator->paginate($query, $request->query->getint('page', 1), 25);
-        
+
         return array(
             'format' => $format,
             'titles' => $titles,
         );
+    }
+
+    /**
+     * Displays a form to edit an existing Format entity.
+     *
+     * @Route("/{id}/edit", name="format_edit")
+     * @Method({"GET", "POST"})
+     * @Template()
+     * @param Request $request
+     * @param Format $format
+     */
+    public function editAction(Request $request, Format $format) {
+        if (!$this->isGranted('ROLE_CONTENT_ADMIN')) {
+            $this->addFlash('danger', 'You must login to access this page.');
+            return $this->redirect($this->generateUrl('fos_user_security_login'));
+        }
+        $editForm = $this->createForm(FormatType::class, $format);
+        $editForm->handleRequest($request);
+
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+            $this->addFlash('success', 'The format has been updated.');
+            return $this->redirectToRoute('format_show', array('id' => $format->getId()));
+        }
+
+        return array(
+            'format' => $format,
+            'edit_form' => $editForm->createView(),
+        );
+    }
+
+    /**
+     * Deletes a Format entity.
+     *
+     * @Route("/{id}/delete", name="format_delete")
+     * @Method("GET")
+     * @param Request $request
+     * @param Format $format
+     */
+    public function deleteAction(Request $request, Format $format) {
+        if (!$this->isGranted('ROLE_CONTENT_ADMIN')) {
+            $this->addFlash('danger', 'You must login to access this page.');
+            return $this->redirect($this->generateUrl('fos_user_security_login'));
+        }
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($format);
+        $em->flush();
+        $this->addFlash('success', 'The format was deleted.');
+
+        return $this->redirectToRoute('format_index');
     }
 }

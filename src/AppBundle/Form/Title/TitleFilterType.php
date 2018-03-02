@@ -1,11 +1,11 @@
 <?php
 
-namespace AppBundle\Form;
+namespace AppBundle\Form\Title;
 
 use AppBundle\Entity\Genre;
 use AppBundle\Entity\Role;
-use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -15,8 +15,7 @@ use Symfony\Component\Form\FormBuilderInterface;
  * Form to filter search results by title. The form is registered as a symfony
  * service to have the doctrine registry injected as a dependency.
  */
-class TitleFilterType extends AbstractType
-{
+class TitleFilterType extends AbstractType {
 
     /**
      * @var EntityManager
@@ -24,10 +23,10 @@ class TitleFilterType extends AbstractType
     private $em;
 
     /**
-     * @param Registry $registry
+     * @param EntityManagerInterface $em
      */
-    public function __construct(Registry $registry) {
-        $this->em = $registry->getManager();
+    public function __construct(EntityManagerInterface $em) {
+        $this->em = $em;
     }
 
     /**
@@ -61,7 +60,7 @@ class TitleFilterType extends AbstractType
                 return $value->getName();
             },
             'choice_value' => function($value) {
-                if($value) {
+                if ($value) {
                     return $value->getId();
                 }
             },
@@ -98,4 +97,5 @@ class TitleFilterType extends AbstractType
             'required' => false,
         ));
     }
+
 }

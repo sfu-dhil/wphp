@@ -1,12 +1,13 @@
 <?php
 
-namespace AppBundle\Form;
+namespace AppBundle\Form\Title;
 
 use AppBundle\Entity\Format;
 use AppBundle\Entity\Genre;
+use AppBundle\Form\Firm\FirmFilterType;
+use AppBundle\Form\Person\PersonFilterType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -14,8 +15,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Search form for titles.
  */
-class TitleSearchType extends AbstractType
-{
+class TitleSearchType extends AbstractType {
 
     /**
      * Build the form.
@@ -40,7 +40,7 @@ class TitleSearchType extends AbstractType
                 'help_block' => 'Enter all or part of a title.'
             ),
         ));
-        
+
         $builder->add('orderby', ChoiceType::class, array(
             'label' => 'Order by',
             'choices' => array(
@@ -98,7 +98,7 @@ class TitleSearchType extends AbstractType
             'empty_data' => null,
             'data' => null,
         ));
-        
+
         $builder->add('pubdate', TextType::class, array(
             'label' => 'Publication Year',
             'required' => false,
@@ -170,8 +170,6 @@ class TitleSearchType extends AbstractType
                 'class' => 'embedded-form'
             ),
         ));
-
-
     }
 
     /**
@@ -183,4 +181,5 @@ class TitleSearchType extends AbstractType
         parent::configureOptions($resolver);
         $resolver->setRequired(array('entity_manager'));
     }
+
 }

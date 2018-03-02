@@ -1,10 +1,10 @@
 <?php
 
-namespace AppBundle\Form;
+namespace AppBundle\Form\Firm;
 
 use AppBundle\Entity\Firmrole;
-use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -15,8 +15,7 @@ use Symfony\Component\Form\FormBuilderInterface;
  * registered as a service so that the doctrine registry is automatically
  * injected as a dependency.
  */
-class FirmFilterType extends AbstractType
-{
+class FirmFilterType extends AbstractType {
 
     /**
      * @var EntityManager
@@ -24,10 +23,10 @@ class FirmFilterType extends AbstractType
     private $em;
 
     /**
-     * @param Registry $registry
+     * @param EntityManagerInterface $em
      */
-    public function __construct(Registry $registry) {
-        $this->em = $registry->getManager();
+    public function __construct(EntityManagerInterface $em) {
+        $this->em = $em;
     }
 
     /**
@@ -52,7 +51,7 @@ class FirmFilterType extends AbstractType
                 return $value->getName();
             },
             'choice_value' => function($value) {
-                if($value) {
+                if ($value) {
                     return $value->getId();
                 }
             },
@@ -66,4 +65,5 @@ class FirmFilterType extends AbstractType
             'required' => false,
         ));
     }
+
 }

@@ -1,12 +1,11 @@
 <?php
 
-namespace AppBundle\Form;
+namespace AppBundle\Form\Person;
 
-use AppBundle\Entity\Format;
-use AppBundle\Entity\Genre;
+use AppBundle\Form\Firm\FirmFilterType;
+use AppBundle\Form\Title\TitleFilterType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -14,8 +13,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Search form for person entities.
  */
-class PersonSearchType extends AbstractType
-{
+class PersonSearchType extends AbstractType {
 
     /**
      * Build the form.
@@ -92,7 +90,6 @@ class PersonSearchType extends AbstractType
                 'class' => 'embedded-form'
             ),
         ));
-
     }
 
     /**
@@ -104,4 +101,5 @@ class PersonSearchType extends AbstractType
         parent::configureOptions($resolver);
         $resolver->setRequired(array('entity_manager'));
     }
+
 }

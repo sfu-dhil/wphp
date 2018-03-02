@@ -36,6 +36,38 @@ class GenreController extends Controller
             'genres' => $genres,
         );
     }
+    
+    /**
+     * Creates a new Genre entity.
+     *
+     * @Route("/new", name="genre_new")
+     * @Method({"GET", "POST"})
+     * @Template()
+     * @param Request $request
+     */
+    public function newAction(Request $request) {
+        if (!$this->isGranted('ROLE_CONTENT_ADMIN')) {
+            $this->addFlash('danger', 'You must login to access this page.');
+            return $this->redirect($this->generateUrl('fos_user_security_login'));
+        }
+        $genre = new Genre();
+        $form = $this->createForm(GenreType::class, $genre);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($genre);
+            $em->flush();
+
+            $this->addFlash('success', 'The new genre was created.');
+            return $this->redirectToRoute('genre_show', array('id' => $genre->getId()));
+        }
+
+        return array(
+            'genre' => $genre,
+            'form' => $form->createView(),
+        );
+    }
 
     /**
      * Finds and displays a Genre entity.
@@ -58,4 +90,56 @@ class GenreController extends Controller
             'titles' => $titles,
         );
     }
+    
+    /**
+     * Displays a form to edit an existing Genre entity.
+     *
+     * @Route("/{id}/edit", name="genre_edit")
+     * @Method({"GET", "POST"})
+     * @Template()
+     * @param Request $request
+     * @param Genre $genre
+     */
+    public function editAction(Request $request, Genre $genre) {
+        if (!$this->isGranted('ROLE_CONTENT_ADMIN')) {
+            $this->addFlash('danger', 'You must login to access this page.');
+            return $this->redirect($this->generateUrl('fos_user_security_login'));
+        }
+        $editForm = $this->createForm(GenreType::class, $genre);
+        $editForm->handleRequest($request);
+
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+            $this->addFlash('success', 'The genre has been updated.');
+            return $this->redirectToRoute('genre_show', array('id' => $genre->getId()));
+        }
+
+        return array(
+            'genre' => $genre,
+            'edit_form' => $editForm->createView(),
+        );
+    }
+
+    /**
+     * Deletes a Genre entity.
+     *
+     * @Route("/{id}/delete", name="genre_delete")
+     * @Method("GET")
+     * @param Request $request
+     * @param Genre $genre
+     */
+    public function deleteAction(Request $request, Genre $genre) {
+        if (!$this->isGranted('ROLE_CONTENT_ADMIN')) {
+            $this->addFlash('danger', 'You must login to access this page.');
+            return $this->redirect($this->generateUrl('fos_user_security_login'));
+        }
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($genre);
+        $em->flush();
+        $this->addFlash('success', 'The genre was deleted.');
+
+        return $this->redirectToRoute('genre_index');
+    }
+
 }

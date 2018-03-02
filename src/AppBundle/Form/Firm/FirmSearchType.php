@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Form;
+namespace AppBundle\Form\Firm;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -10,8 +10,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * The firmSearchtype is a search form for firms.
  */
-class FirmSearchType extends AbstractType
-{
+class FirmSearchType extends AbstractType {
 
     /**
      * Build the form.
@@ -51,4 +50,5 @@ class FirmSearchType extends AbstractType
         parent::configureOptions($resolver);
         $resolver->setRequired(array('entity_manager'));
     }
+
 }
