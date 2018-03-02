@@ -11,9 +11,17 @@
 
     <div class='btn-toolbar pull-right'>
         <div class='btn-group'>
-            <a class="btn btn-primary collapsed" role="button" data-toggle="collapse" href="#options" aria-expanded="false" aria-controls="collapseExample">Search</a>
+            {% if is_granted('ROLE_CONTENT_ADMIN') %}
+                <a href="{{ path('firm_new') }}" class="btn btn-default">
+                    <span class="glyphicon glyphicon-plus"></span> New
+                </a>
+            {% endif %}
+            <a href="{{ path('firm_search') }}" class="btn btn-default">
+                <span class="glyphicon glyphicon-search"></span> Search
+            </a>
         </div>
     </div>
+
     <div id="options" class="collapse">
         {{ include('AppBundle:partials:jump.html.twig', {'route_name': 'firm_jump'}) }}
         {{ include('AppBundle:partials:quick-search.html.twig', {'quick_route': 'firm_quick_search', 'full_route': 'firm_search'}) }} 
