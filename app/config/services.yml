@@ -46,19 +46,3 @@ services:
         class: Twig_Extensions_Extension_Text
         tags:
             - { name: twig.extension }
-            
-    AppBundle\Form\FirmFilterType:
-        arguments: ["@doctrine"]
-        tags:
-            - { name: form.type }
-
-    AppBundle\Form\TitleFilterType:
-        arguments: ["@doctrine"]
-        tags:
-            - { name: form.type }
-
-    AppBundle\Form\PersonFilterType:
-        arguments: ["@doctrine"]
-        tags:
-            - { name: form.type }
-
