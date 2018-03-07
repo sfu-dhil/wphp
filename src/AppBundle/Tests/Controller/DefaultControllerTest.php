@@ -8,7 +8,6 @@ class DefaultControllerTest extends BaseTestCase
 {
     public function testIndex()
     {
-        $this->markTestSkipped('Cannot test this page with SQLite.');
         $client = static::createClient();
 
         $crawler = $client->request('GET', '/');
