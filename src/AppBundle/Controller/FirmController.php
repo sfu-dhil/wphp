@@ -7,6 +7,7 @@ use AppBundle\Form\Firm\FirmSearchType;
 use AppBundle\Form\Firm\FirmType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -117,13 +118,10 @@ class FirmController extends Controller {
      * @Route("/new", name="firm_new")
      * @Method({"GET", "POST"})
      * @Template()
+     * @Security("has_role('ROLE_CONTENT_ADMIN')")
      * @param Request $request
      */
     public function newAction(Request $request) {
-        if (!$this->isGranted('ROLE_CONTENT_ADMIN')) {
-            $this->addFlash('danger', 'You must login to access this page.');
-            return $this->redirect($this->generateUrl('fos_user_security_login'));
-        }
         $firm = new Firm();
         $form = $this->createForm(FirmType::class, $firm);
         $form->handleRequest($request);
@@ -172,14 +170,11 @@ class FirmController extends Controller {
      * @Route("/{id}/edit", name="firm_edit")
      * @Method({"GET", "POST"})
      * @Template()
+     * @Security("has_role('ROLE_CONTENT_ADMIN')")
      * @param Request $request
      * @param Firm $firm
      */
     public function editAction(Request $request, Firm $firm) {
-        if (!$this->isGranted('ROLE_CONTENT_ADMIN')) {
-            $this->addFlash('danger', 'You must login to access this page.');
-            return $this->redirect($this->generateUrl('fos_user_security_login'));
-        }
         $editForm = $this->createForm(FirmType::class, $firm);
         $editForm->handleRequest($request);
 
@@ -201,14 +196,11 @@ class FirmController extends Controller {
      *
      * @Route("/{id}/delete", name="firm_delete")
      * @Method("GET")
+     * @Security("has_role('ROLE_CONTENT_ADMIN')")
      * @param Request $request
      * @param Firm $firm
      */
     public function deleteAction(Request $request, Firm $firm) {
-        if (!$this->isGranted('ROLE_CONTENT_ADMIN')) {
-            $this->addFlash('danger', 'You must login to access this page.');
-            return $this->redirect($this->generateUrl('fos_user_security_login'));
-        }
         $em = $this->getDoctrine()->getManager();
         $em->remove($firm);
         $em->flush();

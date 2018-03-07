@@ -6,6 +6,7 @@ use AppBundle\Entity\Role;
 use AppBundle\Form\RoleType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -42,14 +43,11 @@ class RoleController extends Controller {
      *
      * @Route("/new", name="role_new")
      * @Method({"GET", "POST"})
+     * @Security("has_role('ROLE_CONTENT_ADMIN')")
      * @Template()
      * @param Request $request
      */
     public function newAction(Request $request) {
-        if (!$this->isGranted('ROLE_CONTENT_ADMIN')) {
-            $this->addFlash('danger', 'You must login to access this page.');
-            return $this->redirect($this->generateUrl('fos_user_security_login'));
-        }
         $role = new Role();
         $form = $this->createForm(RoleType::class, $role);
         $form->handleRequest($request);
@@ -89,15 +87,12 @@ class RoleController extends Controller {
      *
      * @Route("/{id}/edit", name="role_edit")
      * @Method({"GET", "POST"})
+     * @Security("has_role('ROLE_CONTENT_ADMIN')")
      * @Template()
      * @param Request $request
      * @param Role $role
      */
     public function editAction(Request $request, Role $role) {
-        if (!$this->isGranted('ROLE_CONTENT_ADMIN')) {
-            $this->addFlash('danger', 'You must login to access this page.');
-            return $this->redirect($this->generateUrl('fos_user_security_login'));
-        }
         $editForm = $this->createForm(RoleType::class, $role);
         $editForm->handleRequest($request);
 
@@ -119,14 +114,11 @@ class RoleController extends Controller {
      *
      * @Route("/{id}/delete", name="role_delete")
      * @Method("GET")
+     * @Security("has_role('ROLE_CONTENT_ADMIN')")
      * @param Request $request
      * @param Role $role
      */
     public function deleteAction(Request $request, Role $role) {
-        if (!$this->isGranted('ROLE_CONTENT_ADMIN')) {
-            $this->addFlash('danger', 'You must login to access this page.');
-            return $this->redirect($this->generateUrl('fos_user_security_login'));
-        }
         $em = $this->getDoctrine()->getManager();
         $em->remove($role);
         $em->flush();

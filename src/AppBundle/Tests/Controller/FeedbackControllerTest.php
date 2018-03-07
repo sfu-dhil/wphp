@@ -29,8 +29,7 @@ class FeedbackControllerTest extends BaseTestCase
             'password' => 'secret',
         ]);
         $client->request('GET', '/feedback/');
-        $this->assertEquals(302, $client->getResponse()->getStatusCode());
-        $this->assertTrue($client->getResponse()->isRedirect());
+        $this->assertEquals(403, $client->getResponse()->getStatusCode());
     }
     
     public function testAdminIndex() {
@@ -57,8 +56,7 @@ class FeedbackControllerTest extends BaseTestCase
             'password' => 'secret',
         ]);
         $client->request('GET', '/feedback/1');
-        $this->assertEquals(302, $client->getResponse()->getStatusCode());
-        $this->assertTrue($client->getResponse()->isRedirect());
+        $this->assertEquals(403, $client->getResponse()->getStatusCode());
     }
     
     public function testAdminShow() {
@@ -87,8 +85,7 @@ class FeedbackControllerTest extends BaseTestCase
             'password' => 'secret',
         ]);
         $client->request('GET', '/feedback/new');
-        $this->assertEquals(302, $client->getResponse()->getStatusCode());
-        $this->assertTrue($client->getResponse()->isRedirect());
+        $this->assertEquals(403, $client->getResponse()->getStatusCode());
         
     }
     
@@ -99,8 +96,7 @@ class FeedbackControllerTest extends BaseTestCase
             'password' => 'supersecret',
         ]);
         $client->request('GET', '/feedback/new');
-        $this->assertEquals(302, $client->getResponse()->getStatusCode());
-        $this->assertTrue($client->getResponse()->isRedirect());
+        $this->assertEquals(403, $client->getResponse()->getStatusCode());
     }
 
 }

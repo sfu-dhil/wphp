@@ -2,13 +2,14 @@
 
 namespace AppBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use AppBundle\Entity\Firmrole;
 use AppBundle\Form\FirmroleType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Firmrole controller.
@@ -42,14 +43,11 @@ class FirmroleController extends Controller {
      *
      * @Route("/new", name="firmrole_new")
      * @Method({"GET", "POST"})
+     * @Security("has_role('ROLE_CONTENT_ADMIN')")
      * @Template()
      * @param Request $request
      */
     public function newAction(Request $request) {
-        if (!$this->isGranted('ROLE_CONTENT_ADMIN')) {
-            $this->addFlash('danger', 'You must login to access this page.');
-            return $this->redirect($this->generateUrl('fos_user_security_login'));
-        }
         $firmrole = new Firmrole();
         $form = $this->createForm(FirmroleType::class, $firmrole);
         $form->handleRequest($request);
@@ -90,14 +88,11 @@ class FirmroleController extends Controller {
      * @Route("/{id}/edit", name="firmrole_edit")
      * @Method({"GET", "POST"})
      * @Template()
+     * @Security("has_role('ROLE_CONTENT_ADMIN')")
      * @param Request $request
      * @param Firmrole $firmrole
      */
     public function editAction(Request $request, Firmrole $firmrole) {
-        if (!$this->isGranted('ROLE_CONTENT_ADMIN')) {
-            $this->addFlash('danger', 'You must login to access this page.');
-            return $this->redirect($this->generateUrl('fos_user_security_login'));
-        }
         $editForm = $this->createForm(FirmroleType::class, $firmrole);
         $editForm->handleRequest($request);
 
@@ -119,14 +114,11 @@ class FirmroleController extends Controller {
      *
      * @Route("/{id}/delete", name="firmrole_delete")
      * @Method("GET")
+     * @Security("has_role('ROLE_CONTENT_ADMIN')")
      * @param Request $request
      * @param Firmrole $firmrole
      */
     public function deleteAction(Request $request, Firmrole $firmrole) {
-        if (!$this->isGranted('ROLE_CONTENT_ADMIN')) {
-            $this->addFlash('danger', 'You must login to access this page.');
-            return $this->redirect($this->generateUrl('fos_user_security_login'));
-        }
         $em = $this->getDoctrine()->getManager();
         $em->remove($firmrole);
         $em->flush();
