@@ -28,4 +28,4 @@ before_script:
   - echo 'date.timezone = America/Vancouver' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
 
 script:
-  - ./vendor/bin/phpunit --testdox
+  - ./vendor/bin/phpunit
