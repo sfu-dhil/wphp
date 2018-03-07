@@ -10,6 +10,6 @@
         {% for tr in person.titleRoles %}
             {% set title = tr.title %}
             <li class="list-group-item">{{ include('AppBundle:Title:' ~ format ~ '.html.twig', {'title': title}) }}</li>            
-        {% endfor %}
+            {% endfor %}
     </ul>
 {% endblock %}

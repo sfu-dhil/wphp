@@ -3,23 +3,23 @@
 namespace AppBundle\Tests\Controller;
 
 use AppBundle\Entity\Firmrole;
-use AppBundle\Tests\DataFixtures\ORM\LoadFirmrole;
-use AppBundle\Tests\Util\BaseTestCase;
-use Nines\UserBundle\Tests\DataFixtures\ORM\LoadUsers;
+use AppBundle\DataFixtures\ORM\LoadFirmrole;
+use Nines\UtilBundle\Tests\Util\BaseTestCase;
+use Nines\UserBundle\DataFixtures\ORM\LoadUser;
 
 class FirmroleControllerTest extends BaseTestCase
 {
 
     protected function getFixtures() {
         return [
-            LoadUsers::class,
+            LoadUser::class,
             LoadFirmrole::class
         ];
     }
     
     public function testAnonIndex() {
         $client = $this->makeClient();
-        $crawler = $client->request('GET', '/firm_role/');
+        $crawler = $client->request('GET', '/firmrole/');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertEquals(0, $crawler->selectLink('New')->count());
     }
@@ -29,7 +29,7 @@ class FirmroleControllerTest extends BaseTestCase
             'username' => 'user@example.com',
             'password' => 'secret',
         ]);
-        $crawler = $client->request('GET', '/firm_role/');
+        $crawler = $client->request('GET', '/firmrole/');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertEquals(0, $crawler->selectLink('New')->count());
     }
@@ -39,14 +39,14 @@ class FirmroleControllerTest extends BaseTestCase
             'username' => 'admin@example.com',
             'password' => 'supersecret',
         ]);
-        $crawler = $client->request('GET', '/firm_role/');
+        $crawler = $client->request('GET', '/firmrole/');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertEquals(1, $crawler->selectLink('New')->count());
     }
     
     public function testAnonShow() {
         $client = $this->makeClient();
-        $crawler = $client->request('GET', '/firm_role/1');
+        $crawler = $client->request('GET', '/firmrole/1');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertEquals(0, $crawler->selectLink('Edit')->count());
         $this->assertEquals(0, $crawler->selectLink('Delete')->count());
@@ -57,7 +57,7 @@ class FirmroleControllerTest extends BaseTestCase
             'username' => 'user@example.com',
             'password' => 'secret',
         ]);
-        $crawler = $client->request('GET', '/firm_role/1');
+        $crawler = $client->request('GET', '/firmrole/1');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertEquals(0, $crawler->selectLink('Edit')->count());
         $this->assertEquals(0, $crawler->selectLink('Delete')->count());
@@ -68,14 +68,14 @@ class FirmroleControllerTest extends BaseTestCase
             'username' => 'admin@example.com',
             'password' => 'supersecret',
         ]);
-        $crawler = $client->request('GET', '/firm_role/1');
+        $crawler = $client->request('GET', '/firmrole/1');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertEquals(1, $crawler->selectLink('Edit')->count());
         $this->assertEquals(1, $crawler->selectLink('Delete')->count());
     }
     public function testAnonEdit() {
         $client = $this->makeClient();
-        $crawler = $client->request('GET', '/firm_role/1/edit');
+        $crawler = $client->request('GET', '/firmrole/1/edit');
         $this->assertEquals(302, $client->getResponse()->getStatusCode());
         $this->assertTrue($client->getResponse()->isRedirect('/login'));
     }
@@ -85,7 +85,7 @@ class FirmroleControllerTest extends BaseTestCase
             'username' => 'user@example.com',
             'password' => 'secret',
         ]);
-        $crawler = $client->request('GET', '/firm_role/1/edit');
+        $crawler = $client->request('GET', '/firmrole/1/edit');
         $this->assertEquals(302, $client->getResponse()->getStatusCode());
         $this->assertTrue($client->getResponse()->isRedirect('/login'));
     }
@@ -95,7 +95,7 @@ class FirmroleControllerTest extends BaseTestCase
             'username' => 'admin@example.com',
             'password' => 'supersecret',
         ]);
-        $formCrawler = $client->request('GET', '/firm_role/1/edit');
+        $formCrawler = $client->request('GET', '/firmrole/1/edit');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         
         $this->markTestIncomplete(
@@ -103,11 +103,11 @@ class FirmroleControllerTest extends BaseTestCase
         );        
         $form = $formCrawler->selectButton('Update')->form([
             // DO STUFF HERE.
-            // 'firm_roles[FIELDNAME]' => 'FIELDVALUE',
+            // 'firmroles[FIELDNAME]' => 'FIELDVALUE',
         ]);
         
         $client->submit($form);
-        $this->assertTrue($client->getResponse()->isRedirect('/firm_role/1'));
+        $this->assertTrue($client->getResponse()->isRedirect('/firmrole/1'));
         $responseCrawler = $client->followRedirect();
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         // $this->assertEquals(1, $responseCrawler->filter('td:contains("FIELDVALUE")')->count());
@@ -115,7 +115,7 @@ class FirmroleControllerTest extends BaseTestCase
     
     public function testAnonNew() {
         $client = $this->makeClient();
-        $crawler = $client->request('GET', '/firm_role/new');
+        $crawler = $client->request('GET', '/firmrole/new');
         $this->assertEquals(302, $client->getResponse()->getStatusCode());
         $this->assertTrue($client->getResponse()->isRedirect('/login'));
     }
@@ -125,7 +125,7 @@ class FirmroleControllerTest extends BaseTestCase
             'username' => 'user@example.com',
             'password' => 'secret',
         ]);
-        $crawler = $client->request('GET', '/firm_role/new');
+        $crawler = $client->request('GET', '/firmrole/new');
         $this->assertEquals(302, $client->getResponse()->getStatusCode());
         $this->assertTrue($client->getResponse()->isRedirect('/login'));
     }
@@ -135,7 +135,7 @@ class FirmroleControllerTest extends BaseTestCase
             'username' => 'admin@example.com',
             'password' => 'supersecret',
         ]);
-        $formCrawler = $client->request('GET', '/firm_role/new');
+        $formCrawler = $client->request('GET', '/firmrole/new');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         
         $this->markTestIncomplete(
@@ -143,7 +143,7 @@ class FirmroleControllerTest extends BaseTestCase
         );        
         $form = $formCrawler->selectButton('Create')->form([
             // DO STUFF HERE.
-            // 'firm_roles[FIELDNAME]' => 'FIELDVALUE',
+            // 'firmroles[FIELDNAME]' => 'FIELDVALUE',
         ]);
         
         $client->submit($form);
@@ -155,7 +155,7 @@ class FirmroleControllerTest extends BaseTestCase
     
     public function testAnonDelete() {
         $client = $this->makeClient();
-        $crawler = $client->request('GET', '/firm_role/1/delete');
+        $crawler = $client->request('GET', '/firmrole/1/delete');
         $this->assertEquals(302, $client->getResponse()->getStatusCode());
         $this->assertTrue($client->getResponse()->isRedirect('/login'));
     }
@@ -165,7 +165,7 @@ class FirmroleControllerTest extends BaseTestCase
             'username' => 'user@example.com',
             'password' => 'secret',
         ]);
-        $crawler = $client->request('GET', '/firm_role/1/delete');
+        $crawler = $client->request('GET', '/firmrole/1/delete');
         $this->assertEquals(302, $client->getResponse()->getStatusCode());
         $this->assertTrue($client->getResponse()->isRedirect('/login'));
     }
@@ -178,7 +178,7 @@ class FirmroleControllerTest extends BaseTestCase
             'username' => 'admin@example.com',
             'password' => 'supersecret',
         ]);
-        $crawler = $client->request('GET', '/firm_role/1/delete');
+        $crawler = $client->request('GET', '/firmrole/1/delete');
         $this->assertEquals(302, $client->getResponse()->getStatusCode());
         $this->assertTrue($client->getResponse()->isRedirect());
         $responseCrawler = $client->followRedirect();

@@ -3,8 +3,8 @@
 namespace AppBundle\Tests\Repository;
 
 use AppBundle\Entity\Person;
-use AppBundle\Tests\DataFixtures\ORM\LoadPerson;
-use AppBundle\Tests\Util\BaseTestCase;
+use AppBundle\DataFixtures\ORM\LoadPerson;
+use Nines\UtilBundle\Tests\Util\BaseTestCase;
 
 class PersonRepositoryTest extends BaseTestCase {
     
@@ -24,7 +24,7 @@ class PersonRepositoryTest extends BaseTestCase {
     
     public function testNullNext() {
         $repo = $this->em->getRepository(Person::class);
-        $person = $this->getReference('person.2');
+        $person = $this->getReference('person.3');
         $next = $repo->next($person);
         $this->assertNull($next);
     }
@@ -39,7 +39,7 @@ class PersonRepositoryTest extends BaseTestCase {
     
     public function testNullPrevious() {
         $repo = $this->em->getRepository(Person::class);
-        $person = $this->getReference('person.1');
+        $person = $this->getReference('person.0');
         $previous = $repo->previous($person);
         $this->assertNull($previous);
     }

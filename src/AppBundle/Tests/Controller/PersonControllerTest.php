@@ -3,16 +3,16 @@
 namespace AppBundle\Tests\Controller;
 
 use AppBundle\Entity\Person;
-use AppBundle\Tests\DataFixtures\ORM\LoadPerson;
-use AppBundle\Tests\Util\BaseTestCase;
-use Nines\UserBundle\Tests\DataFixtures\ORM\LoadUsers;
+use AppBundle\DataFixtures\ORM\LoadPerson;
+use Nines\UtilBundle\Tests\Util\BaseTestCase;
+use Nines\UserBundle\DataFixtures\ORM\LoadUser;
 
 class PersonControllerTest extends BaseTestCase
 {
 
     protected function getFixtures() {
         return [
-            LoadUsers::class,
+            LoadUser::class,
             LoadPerson::class
         ];
     }

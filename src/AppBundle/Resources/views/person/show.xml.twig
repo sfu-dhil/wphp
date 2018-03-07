@@ -9,18 +9,18 @@
         <schema:title>{{ person.title }}</schema:title>
         <schema:birthDate>{{ person.dob }}</schema:birthDate>
         <schema:deathDate>{{ person.dod }}</schema:deathDate>
-        {% if person.gender == 'F' %}
+            {% if person.gender == 'F' %}
             <schema:gender>Female</schema:gender>
-        {% elseif person.gender == 'M' %}
+            {% elseif person.gender == 'M' %}
             <schema:gender>Male</schema:gender>
-        {% elseif person.gender %}
+            {% elseif person.gender %}
             <schema:gender>{{ person.gender }}</schema:gender>
-        {% endif %}
-        {% if person.cityOfBirth and person.cityOfBirth.geonameid != 0 %}
-        <schema:birthPlace rdf:resource="http://sws.geonames.org/{{ person.cityOfBirth.geonameid }}/about.rdf"/>
+            {% endif %}
+            {% if person.cityOfBirth and person.cityOfBirth.geonameid != 0 %}
+            <schema:birthPlace rdf:resource="http://sws.geonames.org/{{ person.cityOfBirth.geonameid }}/about.rdf"/>
         {% endif %}
         {% if person.cityOfDeath and person.cityOfDeath.geonameid != 0 %}
-        <schema:deathPlace rdf:resource="http://sws.geonames.org/{{ person.cityOfDeath.geonameid }}/about.rdf"/>
+            <schema:deathPlace rdf:resource="http://sws.geonames.org/{{ person.cityOfDeath.geonameid }}/about.rdf"/>
         {% endif %}
         <wphp:Contributions>
             <rdf:Bag>

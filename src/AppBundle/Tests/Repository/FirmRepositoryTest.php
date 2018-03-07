@@ -2,9 +2,9 @@
 
 namespace AppBundle\Tests\Repository;
 
+use AppBundle\DataFixtures\ORM\LoadFirm;
 use AppBundle\Entity\Firm;
-use AppBundle\Tests\DataFixtures\ORM\LoadFirm;
-use AppBundle\Tests\Util\BaseTestCase;
+use Nines\UtilBundle\Tests\Util\BaseTestCase;
 
 class FirmRepositoryTest extends BaseTestCase {
     
@@ -24,7 +24,7 @@ class FirmRepositoryTest extends BaseTestCase {
     
     public function testNextNull() {
         $repo = $this->em->getRepository(Firm::class);
-        $firm = $this->getReference('firm.2');
+        $firm = $this->getReference('firm.3');
         $next = $repo->next($firm);
         $this->assertNull($next);
     }
@@ -39,7 +39,7 @@ class FirmRepositoryTest extends BaseTestCase {
     
     public function testPreviousNull() {
         $repo = $this->em->getRepository(Firm::class);
-        $firm = $this->getReference('firm.1');
+        $firm = $this->getReference('firm.0');
         $previous = $repo->previous($firm);
         $this->assertNull($previous);
     }

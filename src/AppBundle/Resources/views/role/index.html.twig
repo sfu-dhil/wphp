@@ -1,31 +1,41 @@
 {% extends 'base.html.twig' %}
 
- {% block pageheader %} 
+{% block pageheader %} 
     <h1>Role List</h1>
     <p class="count">
         Displaying {{ roles|length }} roles of {{ roles.getTotalItemCount }} total.
     </p>
- {% endblock %} 
+{% endblock %} 
 
 {% block body %}
+    <div class='btn-toolbar pull-right'>
+        <div class='btn-group'>
+            {% if is_granted('ROLE_CONTENT_ADMIN') %}
+                <a href="{{ path('role_new') }}" class="btn btn-default">
+                    <span class="glyphicon glyphicon-plus"></span> New
+                </a>
+            {% endif %}
+        </div>
+    </div>
     <table class="table table-bordered table-condensed table-hover table-striped">
         <thead>
             <tr>
-                <th>Name</th>            </tr>
+                <th>Name</th>         
+            </tr>
         </thead>
         <tbody>
-        {% for role in roles %}
-            <tr>
-                <td>
-                    <a href="{{ path('role_show', { 'id': role.id }) }}">
-                        {{ role.name }}
-                    </a>
-                </td>
-            </tr>
-        {% endfor %}
+            {% for role in roles %}
+                <tr>
+                    <td>
+                        <a href="{{ path('role_show', { 'id': role.id }) }}">
+                            {{ role.name }}
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
         </tbody>
     </table>
-        
+
     <div class="navigation">
         {{ knp_pagination_render(roles) }}
     </div>

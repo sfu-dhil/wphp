@@ -24,7 +24,7 @@
     {{ form_end(search_form) }}
 
     {% if firms|length > 0 %}
-    {{ include('AppBundle:Firm:table.html.twig') }}
+        {{ include('AppBundle:Firm:table.html.twig') }}
 
         <div class="navigation">
             {{ knp_pagination_render(firms) }}

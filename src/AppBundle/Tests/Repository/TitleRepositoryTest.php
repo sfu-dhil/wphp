@@ -2,11 +2,10 @@
 
 namespace AppBundle\Tests\Repository;
 
-use AppBundle\Entity\Firm;
 use AppBundle\Entity\Title;
-use AppBundle\Tests\DataFixtures\ORM\LoadTitle;
-use AppBundle\Tests\Util\BaseTestCase;
+use AppBundle\DataFixtures\ORM\LoadTitle;
 use Doctrine\ORM\Query;
+use Nines\UtilBundle\Tests\Util\BaseTestCase;
 
 class TitleRepositoryTest extends BaseTestCase {
 
@@ -26,7 +25,7 @@ class TitleRepositoryTest extends BaseTestCase {
 
     public function testNextNull() {
         $repo = $this->em->getRepository(Title::class);
-        $firm = $this->getReference('title.2');
+        $firm = $this->getReference('title.3');
         $next = $repo->next($firm);
         $this->assertNull($next);
     }
@@ -41,7 +40,7 @@ class TitleRepositoryTest extends BaseTestCase {
 
     public function testPreviousNull() {
         $repo = $this->em->getRepository(Title::class);
-        $firm = $this->getReference('title.1');
+        $firm = $this->getReference('title.0');
         $previous = $repo->previous($firm);
         $this->assertNull($previous);
     }

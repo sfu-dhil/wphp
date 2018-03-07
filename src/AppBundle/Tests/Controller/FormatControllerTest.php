@@ -3,16 +3,16 @@
 namespace AppBundle\Tests\Controller;
 
 use AppBundle\Entity\Format;
-use AppBundle\Tests\DataFixtures\ORM\LoadFormat;
-use AppBundle\Tests\Util\BaseTestCase;
-use Nines\UserBundle\Tests\DataFixtures\ORM\LoadUsers;
+use AppBundle\DataFixtures\ORM\LoadFormat;
+use Nines\UtilBundle\Tests\Util\BaseTestCase;
+use Nines\UserBundle\DataFixtures\ORM\LoadUser;
 
 class FormatControllerTest extends BaseTestCase
 {
 
     protected function getFixtures() {
         return [
-            LoadUsers::class,
+            LoadUser::class,
             LoadFormat::class
         ];
     }

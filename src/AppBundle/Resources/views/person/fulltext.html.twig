@@ -1,15 +1,15 @@
 {% extends 'base.html.twig' %}
 
- {% block pageheader %} 
+{% block pageheader %} 
     <h1>Person List</h1>
     {% if people|length > 0 %}
-    <p class="count">
-        Displaying {{ people|length }} people of {{ people.getTotalItemCount }} total.
-    {% elseif  q %}
+        <p class="count">
+            Displaying {{ people|length }} people of {{ people.getTotalItemCount }} total.
+        {% elseif  q %}
         <p>Your search for <i>{{ q }}</i> returned zero results.</p>
     </p>
-    {% endif %}
- {% endblock %} 
+{% endif %}
+{% endblock %} 
 
 {% block body %}
 
@@ -32,13 +32,13 @@
             </div>
         </fieldset>
     </form>
-        
+
     {% if people|length > 0 %}
-    {{ include('AppBundle:Person:table.html.twig') }}
-        
-    <div class="navigation">
-        {{ knp_pagination_render(people) }}
-    </div>
+        {{ include('AppBundle:Person:table.html.twig') }}
+
+        <div class="navigation">
+            {{ knp_pagination_render(people) }}
+        </div>
     {% endif %}
 
 {% endblock %}

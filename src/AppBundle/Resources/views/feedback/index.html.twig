@@ -1,14 +1,14 @@
 {% extends 'base.html.twig' %}
 
- {% block pageheader %} 
+{% block pageheader %} 
     <h1>Feedback List</h1>
     <p class="count">
         Displaying {{ feedbacks|length }} feedbacks of {{ feedbacks.getTotalItemCount }} total.
     </p>
- {% endblock %} 
+{% endblock %} 
 
 {% block body %}
-  
+
     <table class="table table-bordered table-condensed table-hover table-striped">
         <thead>
             <tr>
@@ -18,21 +18,21 @@
                 <th>Content</th>            </tr>
         </thead>
         <tbody>
-        {% for feedback in feedbacks %}
-            <tr>
-                <td>{{ feedback.created | date('M d, Y, H:i') }}</td>
-                <td>
-                    <a href="{{ path('feedback_show', { 'id': feedback.id }) }}">
-                        {{ feedback.name }}
-                    </a>
-                </td>
-                <td>{{ feedback.email }}</td>
-                <td>{{ feedback.content }}</td>
-            </tr>
-        {% endfor %}
+            {% for feedback in feedbacks %}
+                <tr>
+                    <td>{{ feedback.created | date('M d, Y, H:i') }}</td>
+                    <td>
+                        <a href="{{ path('feedback_show', { 'id': feedback.id }) }}">
+                            {{ feedback.name }}
+                        </a>
+                    </td>
+                    <td>{{ feedback.email }}</td>
+                    <td>{{ feedback.content }}</td>
+                </tr>
+            {% endfor %}
         </tbody>
     </table>
-        
+
     <div class="navigation">
         {{ knp_pagination_render(feedbacks) }}
     </div>

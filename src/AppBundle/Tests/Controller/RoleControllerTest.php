@@ -3,16 +3,16 @@
 namespace AppBundle\Tests\Controller;
 
 use AppBundle\Entity\Role;
-use AppBundle\Tests\DataFixtures\ORM\LoadRole;
-use AppBundle\Tests\Util\BaseTestCase;
-use Nines\UserBundle\Tests\DataFixtures\ORM\LoadUsers;
+use AppBundle\DataFixtures\ORM\LoadRole;
+use Nines\UtilBundle\Tests\Util\BaseTestCase;
+use Nines\UserBundle\DataFixtures\ORM\LoadUser;
 
 class RoleControllerTest extends BaseTestCase
 {
 
     protected function getFixtures() {
         return [
-            LoadUsers::class,
+            LoadUser::class,
             LoadRole::class
         ];
     }

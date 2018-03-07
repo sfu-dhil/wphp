@@ -27,6 +27,14 @@
             <a href="{{ path('title_index') }}" class="btn btn-default">
                 <span class="glyphicon glyphicon-arrow-left"></span> Back
             </a>
+            {% if is_granted('ROLE_CONTENT_ADMIN') %}
+                <a href="{{ path('title_edit', { 'id': title.id }) }}" class="btn btn-default">
+                    <span class='glyphicon glyphicon-edit'></span> Edit
+                </a>
+                <a href="{{ path('title_delete', { 'id': title.id }) }}" class="btn btn-default" data-confirm="Are you sure you want to delete this Firm?">
+                    <span class='glyphicon glyphicon-remove'></span> Delete
+                </a>
+            {% endif %}
         </div>
     </div>
     <table class="table table-bordered table-condensed table-hover table-striped">
@@ -98,7 +106,7 @@
                 <td>
                     {% if title.source %}
                         <a href="{{ path('source_show', {'id': title.source.id}) }}">
-                        {{ title.source.name }} {{ title.sourceId }}
+                            {{ title.source.name }} {{ title.sourceId }}
                         </a>
                     {% endif %}
                 </td>
@@ -108,7 +116,7 @@
                 <td>
                     {% if title.source2 %}
                         <a href="{{ path('source_show', {'id': title.source2.id}) }}">
-                        {{ title.source2.name }} {{ title.source2Id }}
+                            {{ title.source2.name }} {{ title.source2Id }}
                         </a>
                     {% endif %}
                 </td>

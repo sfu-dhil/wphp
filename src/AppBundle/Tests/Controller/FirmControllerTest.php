@@ -3,16 +3,16 @@
 namespace AppBundle\Tests\Controller;
 
 use AppBundle\Entity\Firm;
-use AppBundle\Tests\DataFixtures\ORM\LoadFirm;
-use AppBundle\Tests\Util\BaseTestCase;
-use Nines\UserBundle\Tests\DataFixtures\ORM\LoadUsers;
+use AppBundle\DataFixtures\ORM\LoadFirm;
+use Nines\UtilBundle\Tests\Util\BaseTestCase;
+use Nines\UserBundle\DataFixtures\ORM\LoadUser;
 
 class FirmControllerTest extends BaseTestCase
 {
 
     protected function getFixtures() {
         return [
-            LoadUsers::class,
+            LoadUser::class,
             LoadFirm::class
         ];
     }
