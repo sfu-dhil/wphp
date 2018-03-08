@@ -35,7 +35,7 @@ class LoadGeonames extends Fixture {
             $fixture->setPopulation(($i + 1) * 10000);
             $fixture->setElevation($i);
             $fixture->setGtopo30($i);
-            $fixture->setTimezone('Z+' + $i);
+            $fixture->setTimezone('Z+' . $i);
             $fixture->setModdate(new DateTime());
 
             $em->persist($fixture);
