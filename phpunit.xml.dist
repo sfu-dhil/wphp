@@ -4,12 +4,12 @@
 <phpunit         
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/5.7/phpunit.xsd"
-    backupGlobals="true"
-    backupStaticAttributes="true"
+    backupGlobals="false"
+    backupStaticAttributes="false"
     bootstrap="vendor/autoload.php"
-    cacheTokens="true"
+    cacheTokens="false"
     colors="false"
-    processIsolation="true"
+    processIsolation="false"
     stopOnError="true"
     stopOnFailure="true"
     verbose="false">
