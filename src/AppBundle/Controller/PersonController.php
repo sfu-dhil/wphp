@@ -46,7 +46,7 @@ class PersonController extends Controller {
      *
      * @Route("/quick_search", name="person_quick_search")
      * @Method("GET")
-     * @Template("AppBundle:Person:search.html.twig")
+     * @Template("AppBundle:person:search.html.twig")
      * @param Request $request
      * @return array
      */

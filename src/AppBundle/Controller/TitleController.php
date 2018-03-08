@@ -122,7 +122,7 @@ class TitleController extends Controller
      *
      * @Route("/quick_search", name="title_quick_search")
      * @Method("GET")
-     * @Template("AppBundle:Title:search.html.twig")
+     * @Template("AppBundle:title:search.html.twig")
      * @param Request $request
      * @return array
      */

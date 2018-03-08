@@ -46,7 +46,7 @@ class FirmController extends Controller {
      *
      * @Route("/quick_search", name="firm_quick_search")
      * @Method("GET")
-     * @Template("AppBundle:Firm:search.html.twig")
+     * @Template("AppBundle:firm:search.html.twig")
      * @param Request $request
      * @return array
      */
