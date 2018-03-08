@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Firmrole
  *
  * @ORM\Table(name="firmrole")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\FirmroleRepository")
  */
 class Firmrole
 {

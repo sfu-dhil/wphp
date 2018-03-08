@@ -21,6 +21,10 @@ use Symfony\Component\Validator\Constraints\Collection;
 class Person
 {
 
+    const MALE = 'M';
+    
+    const FEMALE = 'F';
+    
     /**
      * @var integer
      *

@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Source
  *
  * @ORM\Table(name="source")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\SourceRepository")
  * 
  * @todo The Title entity refers to this one in two different ways, and may
  * do so in a third in future. Until that decision is made, there will not be

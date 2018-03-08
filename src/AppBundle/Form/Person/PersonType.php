@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Tetranz\Select2EntityBundle\Form\Type\Select2EntityType;
 
 class PersonType extends AbstractType {
 
@@ -36,12 +37,14 @@ class PersonType extends AbstractType {
                 'help_block' => '',
             ),
         ));
-        $builder->add('gender', null, array(
-            'label' => 'Gender',
-            'required' => false,
-            'attr' => array(
-                'help_block' => '',
-            ),
+        $builder->add('gender', ChoiceType::class, array(
+            'expanded' => true,
+            'multiple' => false,
+            'choices' => array(
+                'Female' => Person::FEMALE,
+                'Male' => Person::MALE,
+                'Unknown' => null,
+            ),            
         ));
         $builder->add('dob', null, array(
             'label' => 'Dob',
@@ -50,12 +53,34 @@ class PersonType extends AbstractType {
                 'help_block' => '',
             ),
         ));
+        $builder->add('cityOfBirth', Select2EntityType::class, array(
+            'multiple' => false,
+            'remote_route' => 'geonames_typeahead',
+            'class' => Geonames::class,
+            'primary_key' => 'geonameid',
+            'text_property' => 'name',
+            'page_limit' => 10,
+            'allow_clear' => true,
+            'delay' => 250,
+            'language' => 'en',            
+        ));
         $builder->add('dod', null, array(
             'label' => 'Dod',
             'required' => false,
             'attr' => array(
                 'help_block' => '',
             ),
+        ));
+        $builder->add('cityOfDeath', Select2EntityType::class, array(
+            'multiple' => false,
+            'remote_route' => 'geonames_typeahead',
+            'class' => Geonames::class,
+            'primary_key' => 'geonameid',
+            'text_property' => 'name',
+            'page_limit' => 10,
+            'allow_clear' => true,
+            'delay' => 250,
+            'language' => 'en',            
         ));
         $builder->add('checked', ChoiceType::class, array(
             'label' => 'Checked',
@@ -85,8 +110,6 @@ class PersonType extends AbstractType {
                 'help_block' => '',
             ),
         ));
-//        $builder->add('cityOfBirth');
-//        $builder->add('cityOfDeath');
     }
 
     /**

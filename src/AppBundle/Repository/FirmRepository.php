@@ -14,6 +14,7 @@ use Doctrine\ORM\Query;
  */
 class FirmRepository extends EntityRepository
 {
+    
     /**
      * Return the next firm by ID.
      *

@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -38,6 +39,29 @@ class RoleController extends Controller {
         );
     }
 
+    /**
+     * @param Request $request
+     * @Route("/typeahead", name="role_typeahead")
+     * @Method("GET")
+     * @return JsonResponse
+     */
+    public function typeaheadAction(Request $request) {
+        $q = $request->query->get('q');
+        if( ! $q) {
+            return new JsonResponse([]);
+        }
+        $em = $this->getDoctrine()->getManager();
+        $repo = $em->getRepository(role::class);
+        $data = [];
+        foreach($repo->typeaheadQuery($q) as $result) {
+            $data[] = [
+                'id' => $result->getId(),
+                'text' => $result->getName(),
+            ];
+        }
+        
+        return new JsonResponse($data);
+    }   
     /**
      * Creates a new Role entity.
      *

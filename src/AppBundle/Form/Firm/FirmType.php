@@ -3,10 +3,12 @@
 namespace AppBundle\Form\Firm;
 
 use AppBundle\Entity\Firm;
+use AppBundle\Entity\Geonames;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Tetranz\Select2EntityBundle\Form\Type\Select2EntityType;
 
 class FirmType extends AbstractType {
 
@@ -28,6 +30,17 @@ class FirmType extends AbstractType {
             'attr' => array(
                 'help_block' => '',
             ),
+        ));
+        $builder->add('city', Select2EntityType::class, array(
+            'multiple' => false,
+            'remote_route' => 'geonames_typeahead',
+            'class' => Geonames::class,
+            'primary_key' => 'geonameid',
+            'text_property' => 'name',
+            'page_limit' => 10,
+            'allow_clear' => true,
+            'delay' => 250,
+            'language' => 'en',            
         ));
         $builder->add('startDate', null, array(
             'label' => 'Start Date',
@@ -57,7 +70,6 @@ class FirmType extends AbstractType {
                 'help_block' => '',
             ),
         ));
-//        $builder->add('city');
     }
 
     /**

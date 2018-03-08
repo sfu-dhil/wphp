@@ -2,11 +2,16 @@
 
 namespace AppBundle\Form\Title;
 
+use AppBundle\Entity\Format;
+use AppBundle\Entity\Genre;
+use AppBundle\Entity\Geonames;
+use AppBundle\Entity\Source;
 use AppBundle\Entity\Title;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Tetranz\Select2EntityBundle\Form\Type\Select2EntityType;
 
 class TitleType extends AbstractType {
 
@@ -56,7 +61,7 @@ class TitleType extends AbstractType {
             'attr' => array(
                 'help_block' => '',
             ),
-        ));
+        ));        
         $builder->add('selfpublished', ChoiceType::class, array(
             'label' => 'Selfpublished',
             'expanded' => true,
@@ -79,6 +84,30 @@ class TitleType extends AbstractType {
                 'help_block' => '',
             ),
         ));
+        $builder->add('genre', Select2EntityType::class, array(
+            'multiple' => false,
+            'remote_route' => 'genre_typeahead',
+            'class' => Genre::class,
+            'primary_key' => 'id',
+            'text_property' => 'name',
+            'page_limit' => 10,
+            'allow_clear' => true,
+            'delay' => 250,
+            'language' => 'en',            
+        ));
+        
+        $builder->add('locationOfPrinting', Select2EntityType::class, array(
+            'multiple' => false,
+            'remote_route' => 'geonames_typeahead',
+            'class' => Geonames::class,
+            'primary_key' => 'geonameid',
+            'text_property' => 'name',
+            'page_limit' => 10,
+            'allow_clear' => true,
+            'delay' => 250,
+            'language' => 'en',            
+        ));
+        
         $builder->add('dateOfFirstPublication', null, array(
             'label' => 'Date Of First Publication',
             'required' => false,
@@ -114,6 +143,17 @@ class TitleType extends AbstractType {
                 'help_block' => '',
             ),
         ));
+        $builder->add('format', Select2EntityType::class, array(
+            'multiple' => false,
+            'remote_route' => 'format_typeahead',
+            'class' => Format::class,
+            'primary_key' => 'id',
+            'text_property' => 'name',
+            'page_limit' => 10,
+            'allow_clear' => true,
+            'delay' => 250,
+            'language' => 'en',            
+        ));
         $builder->add('pagination', null, array(
             'label' => 'Pagination',
             'required' => false,
@@ -142,12 +182,35 @@ class TitleType extends AbstractType {
                 'help_block' => '',
             ),
         ));
+        $builder->add('source', Select2EntityType::class, array(
+            'multiple' => false,
+            'remote_route' => 'source_typeahead',
+            'class' => Source::class,
+            'primary_key' => 'id',
+            'text_property' => 'name',
+            'page_limit' => 10,
+            'allow_clear' => true,
+            'delay' => 250,
+            'language' => 'en',            
+        ));
+        
         $builder->add('sourceId', null, array(
-            'label' => 'Source Id',
+            'label' => 'Source1 Id',
             'required' => false,
             'attr' => array(
                 'help_block' => '',
             ),
+        ));
+        $builder->add('source2', Select2EntityType::class, array(
+            'multiple' => false,
+            'remote_route' => 'source_typeahead',
+            'class' => Source::class,
+            'primary_key' => 'id',
+            'text_property' => 'name',
+            'page_limit' => 10,
+            'allow_clear' => true,
+            'delay' => 250,
+            'language' => 'en',            
         ));
         $builder->add('source2Id', null, array(
             'label' => 'Source2 Id',
@@ -190,7 +253,7 @@ class TitleType extends AbstractType {
             'attr' => array(
                 'help_block' => '',
             ),
-        ));
+        ));        
         $builder->add('notes', null, array(
             'label' => 'Notes',
             'required' => false,
@@ -198,11 +261,6 @@ class TitleType extends AbstractType {
                 'help_block' => '',
             ),
         ));
-//        $builder->add('locationOfPrinting');
-//        $builder->add('format');
-//        $builder->add('genre');
-//        $builder->add('source');
-//        $builder->add('source2');
     }
 
     /**

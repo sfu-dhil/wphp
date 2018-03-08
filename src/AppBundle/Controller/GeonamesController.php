@@ -2,12 +2,13 @@
 
 namespace AppBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use AppBundle\Entity\Geonames;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use AppBundle\Entity\Geonames;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Geonames controller.
@@ -43,7 +44,6 @@ class GeonamesController extends Controller
      * @return JsonResponse
      */
     public function typeaheadAction(Request $request) {
-        error_log($request);
         $q = $request->query->get('q');
         if( ! $q) {
             return new JsonResponse([]);
