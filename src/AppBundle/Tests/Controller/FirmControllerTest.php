@@ -80,30 +80,6 @@ class FirmControllerTest extends BaseTestCase
         $this->assertTrue($client->getResponse()->isRedirect());
     }
     
-    public function testAnonEmptyJump() {
-        
-        $client = $this->makeClient();
-        $crawler = $client->request('GET', '/firm/');
-        
-        $link = $crawler->selectLink('Search')->link();
-        $crawler = $client->click($link);
-
-        $form = $crawler->selectButton('Jump')->form(array('q' => ''));
-        $crawler = $client->submit($form);
-        
-        $this->assertTrue($client->getResponse()->isRedirect('/firm/'));
-    }
-    
-    public function testUserJump() {
-        
-        $client = $this->makeClient([
-            'username' => 'user@example.com',
-            'password' => 'secret',
-        ]);
-        $crawler = $client->request('GET', '/firm/1/edit');
-        $this->assertEquals(403, $client->getResponse()->getStatusCode());
-    }
-    
     public function testAdminEdit() {
         $client = $this->makeClient([
             'username' => 'admin@example.com',

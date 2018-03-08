@@ -24,10 +24,6 @@ services:
         tags:
             - { name: knp_menu.menu_builder, method: userNavMenu, alias: user}
             
-    Nines\BlogBundle\Menu\Builder:
-        tags:
-            - { name: knp_menu.menu_builder, method: userNavMenu, alias: user}
-            
     # makes classes in src/AppBundle available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
     AppBundle\:
@@ -43,11 +39,6 @@ services:
         public: true
         tags: ['controller.service_arguments']
 
-    twig.extension.text:
-        class: Twig_Extensions_Extension_Text
-        tags:
-            - { name: knp_menu.menu_builder, method: userNavMenu, alias: user}
-            
     # makes classes in src/AppBundle available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
     AppBundle\:
