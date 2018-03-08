@@ -9,6 +9,7 @@ use AppBundle\Entity\Source;
 use AppBundle\Entity\Title;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Tetranz\Select2EntityBundle\Form\Type\Select2EntityType;
@@ -46,6 +47,36 @@ class TitleType extends AbstractType {
             'required' => false,
             'attr' => array(
                 'help_block' => '',
+            ),
+        ));
+        $builder->add('titleRoles', CollectionType::class, array(
+            'label' => 'Personal Contributions',
+            'required' => false,
+            'allow_add' => true,
+            'allow_delete' => true,
+            'delete_empty' => true,
+            'entry_type' => TitlePersonType::class,
+            'entry_options' => array(
+                'label' => false,
+            ),
+            'by_reference' => false,
+            'attr' => array(
+                'class' => 'collection collection-complex'
+            ),
+        ));
+        $builder->add('titleFirmroles', CollectionType::class, array(
+            'label' => 'Firm Contributions',
+            'required' => false,
+            'allow_add' => true,
+            'allow_delete' => true,
+            'delete_empty' => true,
+            'entry_type' => TitleFirmType::class,
+            'entry_options' => array(
+                'label' => false,
+            ),
+            'by_reference' => false,
+            'attr' => array(
+                'class' => 'collection collection-complex'
             ),
         ));
         $builder->add('pseudonym', null, array(

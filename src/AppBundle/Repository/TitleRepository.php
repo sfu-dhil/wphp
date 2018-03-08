@@ -16,6 +16,14 @@ use Doctrine\ORM\Query;
 class TitleRepository extends EntityRepository
 {
 
+    public function typeaheadQuery($q) {
+        $qb = $this->createQueryBuilder('e');
+        $qb->andWhere("e.title LIKE :q");
+        $qb->orderBy('e.title');
+        $qb->setParameter('q', "%{$q}%");
+        return $qb->getQuery()->execute();
+    }
+
     /**
      * Return the next title by ID.
      *

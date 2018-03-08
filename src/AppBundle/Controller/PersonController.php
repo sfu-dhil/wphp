@@ -42,6 +42,30 @@ class PersonController extends Controller {
     }
 
     /**
+     * @param Request $request
+     * @Route("/typeahead", name="person_typeahead")
+     * @Method("GET")
+     * @return JsonResponse
+     */
+    public function typeaheadAction(Request $request) {
+        $q = $request->query->get('q');
+        if (!$q) {
+            return new JsonResponse([]);
+        }
+        $em = $this->getDoctrine()->getManager();
+        $repo = $em->getRepository(Person::class);
+        $data = [];
+        foreach ($repo->typeaheadQuery($q) as $result) {
+            $data[] = [
+                'id' => $result->getId(),
+                'text' => $result->getLastname() . ', ' . $result->getFirstname(),
+            ];
+        }
+
+        return new JsonResponse($data);
+    }
+
+    /**
      * Full text search for Firm entities.
      *
      * @Route("/quick_search", name="person_quick_search")

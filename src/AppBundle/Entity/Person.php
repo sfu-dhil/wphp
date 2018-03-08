@@ -122,7 +122,7 @@ class Person
     public function __construct() {
         $this->titleRoles = new ArrayCollection();
     }
-
+    
     /**
      * Get id
      *

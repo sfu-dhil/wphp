@@ -15,6 +15,15 @@ use Doctrine\ORM\Query;
 class FirmRepository extends EntityRepository
 {
     
+
+    public function typeaheadQuery($q) {
+        $qb = $this->createQueryBuilder('e');
+        $qb->andWhere("e.name LIKE :q");
+        $qb->orderBy('e.name');
+        $qb->setParameter('q', "{$q}%");
+        return $qb->getQuery()->execute();
+    }
+    
     /**
      * Return the next firm by ID.
      *

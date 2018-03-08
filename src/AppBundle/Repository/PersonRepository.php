@@ -14,7 +14,15 @@ use Doctrine\ORM\Query\Expr\Join;
  */
 class PersonRepository extends EntityRepository
 {
-
+    
+    public function typeaheadQuery($q) {
+        $qb = $this->createQueryBuilder('e');
+        $qb->andWhere("CONCAT(e.lastName, ' ', e.firstName) LIKE :q");
+        $qb->orderBy('e.lastName, e.firstName');
+        $qb->setParameter('q', "%{$q}%");
+        return $qb->getQuery()->execute();
+    }
+    
     /**
      * Return the next firm by ID.
      *

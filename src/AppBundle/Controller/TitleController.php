@@ -11,6 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
@@ -19,9 +20,8 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
  *
  * @Route("/title")
  */
-class TitleController extends Controller
-{
-
+class TitleController extends Controller {
+    
     /**
      * Lists all Title entities.
      *
@@ -43,6 +43,30 @@ class TitleController extends Controller
             'titles' => $titles,
             'form' => $form->createView(),
         );
+    }
+
+    /**
+     * @param Request $request
+     * @Route("/typeahead", name="title_typeahead")
+     * @Method("GET")
+     * @return JsonResponse
+     */
+    public function typeaheadAction(Request $request) {
+        $q = $request->query->get('q');
+        if (!$q) {
+            return new JsonResponse([]);
+        }
+        $em = $this->getDoctrine()->getManager();
+        $repo = $em->getRepository(Title::class);
+        $data = [];
+        foreach ($repo->typeaheadQuery($q) as $result) {
+            $data[] = [
+                'id' => $result->getId(),
+                'text' => $result->getTitle(),
+            ];
+        }
+
+        return new JsonResponse($data);
     }
 
     /**
@@ -249,7 +273,7 @@ class TitleController extends Controller
             'form' => $form->createView(),
         );
     }
-    
+
     /**
      * Finds and displays a Title entity.
      *
@@ -268,7 +292,7 @@ class TitleController extends Controller
             'previous' => $repo->previous($title),
         );
     }
-    
+
     /**
      * Displays a form to edit an existing Title entity.
      *
