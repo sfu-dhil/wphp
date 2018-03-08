@@ -24,7 +24,7 @@
         {{ include('AppBundle:partials:quick-search.html.twig', {'quick_route': 'person_quick_search', 'full_route': 'person_search'}) }} 
     </div>
 
-    {{ include('AppBundle:Person:table.html.twig') }}
+    {{ include('AppBundle:person:table.html.twig') }}
 
     <div class="navigation">
         {{ knp_pagination_render(people) }}

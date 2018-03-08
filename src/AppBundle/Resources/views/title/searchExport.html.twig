@@ -7,7 +7,7 @@
 {% block body %}
     <ul class="list-group">
         {% for title in titles %}
-            <li class="list-group-item">{{ include('AppBundle:Title:' ~ format ~ '.html.twig') }}</li>
+            <li class="list-group-item">{{ include('AppBundle:title:' ~ format ~ '.html.twig') }}</li>
             {% endfor %}
     </ul>
 {% endblock %}

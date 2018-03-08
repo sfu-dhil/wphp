@@ -6,10 +6,10 @@
 
 {% block body %}
 
-    {% embed 'AppBundle:Geonames:partials/header.html.twig' %}
+    {% embed 'AppBundle:geonames:partials/header.html.twig' %}
     {% endembed %}
 
-    {% embed 'AppBundle:Firm:partials/page.html.twig' with {'firms': firms} %}
+    {% embed 'AppBundle:firm:partials/page.html.twig' with {'firms': firms} %}
     {% endembed %}
 
 {% endblock %}

@@ -34,7 +34,7 @@
     </form>
 
     {% if people|length > 0 %}
-        {{ include('AppBundle:Person:table.html.twig') }}
+        {{ include('AppBundle:person:table.html.twig') }}
 
         <div class="navigation">
             {{ knp_pagination_render(people) }}

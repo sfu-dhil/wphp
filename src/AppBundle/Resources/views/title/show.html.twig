@@ -210,7 +210,7 @@
         <h4>MLA</h4>
         <div class="well">
             <p>
-                {% include "AppBundle:Title:mla.html.twig" with {'title': title} %}
+                {% include "AppBundle:title:mla.html.twig" with {'title': title} %}
             </p>
         </div>
     </div>
@@ -219,7 +219,7 @@
         <h4>APA</h4>
         <div class="well">
             <p>
-                {% include "AppBundle:Title:apa.html.twig" with {'title': title} %}
+                {% include "AppBundle:title:apa.html.twig" with {'title': title} %}
             </p>
         </div>
     </div>
@@ -228,7 +228,7 @@
         <h4>Chicago/Turabian: Author-Date</h4>
         <div class="well">
             <p>
-                {% include "AppBundle:Title:chicago.html.twig" with {'title': title} %}
+                {% include "AppBundle:title:chicago.html.twig" with {'title': title} %}
             </p>
         </div>
     </div>
@@ -236,10 +236,10 @@
     <div id="bibtex">
         <h4>BibTeX</h4>
         <div class="well">
-            <pre>{% include "AppBundle:Title:bibtex.html.twig" with {'title': title} %}</pre>
+            <pre>{% include "AppBundle:title:bibtex.html.twig" with {'title': title} %}</pre>
         </div>
     </div>
 
-    {% include 'NinesFeedbackBundle:Comment:comment-interface.html.twig' with { 'entity': title } %}                
+    {% include 'NinesFeedbackBundle:comment:comment-interface.html.twig' with { 'entity': title } %}                
 
 {% endblock %}

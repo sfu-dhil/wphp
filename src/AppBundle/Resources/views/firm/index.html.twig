@@ -27,7 +27,7 @@
         {{ include('AppBundle:partials:quick-search.html.twig', {'quick_route': 'firm_quick_search', 'full_route': 'firm_search'}) }} 
     </div>
 
-    {{ include('AppBundle:Firm:table.html.twig') }}
+    {{ include('AppBundle:firm:table.html.twig') }}
 
     <div class="navigation">
         {{ knp_pagination_render(firms) }}
