@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/ubermichael/wphp.svg?branch=master)](https://travis-ci.org/ubermichael/wphp)
+
 Women's Print History Project
 ====
 
