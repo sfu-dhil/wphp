@@ -44,7 +44,7 @@ class FeedbackController extends Controller {
      * @Route("/new", name="feedback_new")
      * @Method({"GET", "POST"})
      * @Template()
-     * @Security("not(has_role('ROLE_USER'))")
+     * @Security("not (has_role('ROLE_USER'))")
      * @param Request $request
      */
     public function newAction(Request $request) {
