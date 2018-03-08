@@ -41,6 +41,37 @@ class GeonamesControllerTest extends BaseTestCase
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
     
+    public function testAnonTypeahead() {
+        $client = $this->makeClient();
+        $crawler = $client->request('GET', '/geonames/typeahead?q=name');
+        $this->assertEquals(302, $client->getResponse()->getStatusCode());
+        $this->assertEquals('text/html; charset=UTF-8', $client->getResponse()->headers->get('Content-Type'));
+        $this->assertContains('Redirecting', $client->getResponse()->getContent());
+    }
+    
+    public function testUserTypeahead() {
+        $client = $this->makeClient([
+            'username' => 'user@example.com',
+            'password' => 'secret',
+        ]);
+        $crawler = $client->request('GET', '/geonames/typeahead?q=name');
+        $this->assertEquals(403, $client->getResponse()->getStatusCode());
+        $this->assertEquals('text/plain; charset=UTF-8', $client->getResponse()->headers->get('Content-Type'));
+        $this->assertContains('Access denied.', $client->getResponse()->getContent());
+    }
+    
+    public function testAdminTypeahead() {
+        $client = $this->makeClient([
+            'username' => 'admin@example.com',
+            'password' => 'supersecret',
+        ]);
+        $crawler = $client->request('GET', '/geonames/typeahead?q=name');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals('application/json', $client->getResponse()->headers->get('Content-Type'));
+        $json = json_decode($client->getResponse()->getContent());
+        $this->assertEquals(4, count($json));
+    }
+    
     public function testAnonShow() {
         $client = $this->makeClient();
         $crawler = $client->request('GET', '/geonames/1');

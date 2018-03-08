@@ -44,6 +44,7 @@ class FirmController extends Controller {
 
     /**
      * @param Request $request
+     * @Security("has_role('ROLE_CONTENT_ADMIN')")
      * @Route("/typeahead", name="firm_typeahead")
      * @Method("GET")
      * @return JsonResponse

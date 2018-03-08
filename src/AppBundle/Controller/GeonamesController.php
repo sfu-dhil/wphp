@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Geonames;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -39,6 +40,7 @@ class GeonamesController extends Controller
 
     /**
      * @param Request $request
+     * @Security("has_role('ROLE_CONTENT_ADMIN')")
      * @Route("/typeahead", name="geonames_typeahead")
      * @Method("GET")
      * @return JsonResponse
