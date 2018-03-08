@@ -3,7 +3,7 @@
 {% block pageheader %} 
     <h1>Feedback List</h1>
     <p class="count">
-        Displaying {{ feedbacks|length }} feedbacks of {{ feedbacks.getTotalItemCount }} total.
+        Displaying {{ feedbacks|length }} submissions of {{ feedbacks.getTotalItemCount }} total.
     </p>
 {% endblock %} 
 
@@ -15,7 +15,8 @@
                 <th>Date</th>
                 <th>Name</th>
                 <th>Email</th>
-                <th>Content</th>            </tr>
+                <th>Content</th>     
+            </tr>
         </thead>
         <tbody>
             {% for feedback in feedbacks %}
