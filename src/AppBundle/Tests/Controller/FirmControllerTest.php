@@ -3,9 +3,9 @@
 namespace AppBundle\Tests\Controller;
 
 use AppBundle\Entity\Firm;
-use AppBundle\Tests\DataFixtures\ORM\LoadFirm;
-use AppBundle\Tests\Util\BaseTestCase;
-use Nines\UserBundle\Tests\DataFixtures\ORM\LoadUsers;
+use AppBundle\DataFixtures\ORM\LoadFirm;
+use Nines\UtilBundle\Tests\Util\BaseTestCase;
+use Nines\UserBundle\DataFixtures\ORM\LoadUser;
 
 class FirmControllerTest extends BaseTestCase
 {
@@ -77,17 +77,31 @@ class FirmControllerTest extends BaseTestCase
         $client = $this->makeClient();
         $crawler = $client->request('GET', '/firm/1/edit');
         $this->assertEquals(302, $client->getResponse()->getStatusCode());
-        $this->assertTrue($client->getResponse()->isRedirect('/login'));
+        $this->assertTrue($client->getResponse()->isRedirect());
     }
     
-    public function testUserEdit() {
+    public function testAnonEmptyJump() {
+        
+        $client = $this->makeClient();
+        $crawler = $client->request('GET', '/firm/');
+        
+        $link = $crawler->selectLink('Search')->link();
+        $crawler = $client->click($link);
+
+        $form = $crawler->selectButton('Jump')->form(array('q' => ''));
+        $crawler = $client->submit($form);
+        
+        $this->assertTrue($client->getResponse()->isRedirect('/firm/'));
+    }
+    
+    public function testUserJump() {
+        
         $client = $this->makeClient([
             'username' => 'user@example.com',
             'password' => 'secret',
         ]);
         $crawler = $client->request('GET', '/firm/1/edit');
-        $this->assertEquals(302, $client->getResponse()->getStatusCode());
-        $this->assertTrue($client->getResponse()->isRedirect('/login'));
+        $this->assertEquals(403, $client->getResponse()->getStatusCode());
     }
     
     public function testAdminEdit() {
@@ -117,7 +131,7 @@ class FirmControllerTest extends BaseTestCase
         $client = $this->makeClient();
         $crawler = $client->request('GET', '/firm/new');
         $this->assertEquals(302, $client->getResponse()->getStatusCode());
-        $this->assertTrue($client->getResponse()->isRedirect('/login'));
+        $this->assertTrue($client->getResponse()->isRedirect());
     }
     
     public function testUserNew() {
@@ -126,8 +140,7 @@ class FirmControllerTest extends BaseTestCase
             'password' => 'secret',
         ]);
         $crawler = $client->request('GET', '/firm/new');
-        $this->assertEquals(302, $client->getResponse()->getStatusCode());
-        $this->assertTrue($client->getResponse()->isRedirect('/login'));
+        $this->assertEquals(403, $client->getResponse()->getStatusCode());
     }
 
     public function testAdminNew() {
@@ -157,7 +170,7 @@ class FirmControllerTest extends BaseTestCase
         $client = $this->makeClient();
         $crawler = $client->request('GET', '/firm/1/delete');
         $this->assertEquals(302, $client->getResponse()->getStatusCode());
-        $this->assertTrue($client->getResponse()->isRedirect('/login'));
+        $this->assertTrue($client->getResponse()->isRedirect());
     }
     
     public function testUserDelete() {
@@ -166,8 +179,7 @@ class FirmControllerTest extends BaseTestCase
             'password' => 'secret',
         ]);
         $crawler = $client->request('GET', '/firm/1/delete');
-        $this->assertEquals(302, $client->getResponse()->getStatusCode());
-        $this->assertTrue($client->getResponse()->isRedirect('/login'));
+        $this->assertEquals(403, $client->getResponse()->getStatusCode());
     }
 
     public function testAdminDelete() {

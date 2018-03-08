@@ -41,16 +41,13 @@ class FirmroleController extends Controller {
     /**
      * Creates a new Firmrole entity.
      *
-     * @Route("/new", name="firm_role_new")
+     * @Route("/new", name="firmrole_new")
      * @Method({"GET", "POST"})
+     * @Security("has_role('ROLE_CONTENT_ADMIN')")
      * @Template()
      * @param Request $request
      */
     public function newAction(Request $request) {
-        if (!$this->isGranted('ROLE_CONTENT_ADMIN')) {
-            $this->addFlash('danger', 'You must login to access this page.');
-            return $this->redirect($this->generateUrl('fos_user_security_login'));
-        }
         $firmrole = new Firmrole();
         $form = $this->createForm(FirmroleType::class, $firmrole);
         $form->handleRequest($request);
@@ -61,7 +58,7 @@ class FirmroleController extends Controller {
             $em->flush();
 
             $this->addFlash('success', 'The new firmrole was created.');
-            return $this->redirectToRoute('firm_role_show', array('id' => $firmrole->getId()));
+            return $this->redirectToRoute('firmrole_show', array('id' => $firmrole->getId()));
         }
 
         return array(
@@ -88,17 +85,14 @@ class FirmroleController extends Controller {
     /**
      * Displays a form to edit an existing Firmrole entity.
      *
-     * @Route("/{id}/edit", name="firm_role_edit")
+     * @Route("/{id}/edit", name="firmrole_edit")
      * @Method({"GET", "POST"})
      * @Template()
+     * @Security("has_role('ROLE_CONTENT_ADMIN')")
      * @param Request $request
      * @param Firmrole $firmrole
      */
     public function editAction(Request $request, Firmrole $firmrole) {
-        if (!$this->isGranted('ROLE_CONTENT_ADMIN')) {
-            $this->addFlash('danger', 'You must login to access this page.');
-            return $this->redirect($this->generateUrl('fos_user_security_login'));
-        }
         $editForm = $this->createForm(FirmroleType::class, $firmrole);
         $editForm->handleRequest($request);
 
@@ -106,7 +100,7 @@ class FirmroleController extends Controller {
             $em = $this->getDoctrine()->getManager();
             $em->flush();
             $this->addFlash('success', 'The firmrole has been updated.');
-            return $this->redirectToRoute('firm_role_show', array('id' => $firmrole->getId()));
+            return $this->redirectToRoute('firmrole_show', array('id' => $firmrole->getId()));
         }
 
         return array(
@@ -118,22 +112,19 @@ class FirmroleController extends Controller {
     /**
      * Deletes a Firmrole entity.
      *
-     * @Route("/{id}/delete", name="firm_role_delete")
+     * @Route("/{id}/delete", name="firmrole_delete")
      * @Method("GET")
+     * @Security("has_role('ROLE_CONTENT_ADMIN')")
      * @param Request $request
      * @param Firmrole $firmrole
      */
     public function deleteAction(Request $request, Firmrole $firmrole) {
-        if (!$this->isGranted('ROLE_CONTENT_ADMIN')) {
-            $this->addFlash('danger', 'You must login to access this page.');
-            return $this->redirect($this->generateUrl('fos_user_security_login'));
-        }
         $em = $this->getDoctrine()->getManager();
         $em->remove($firmrole);
         $em->flush();
         $this->addFlash('success', 'The firmrole was deleted.');
 
-        return $this->redirectToRoute('firm_role_index');
+        return $this->redirectToRoute('firmrole_index');
     }
 
 }

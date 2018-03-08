@@ -226,14 +226,11 @@ class TitleController extends Controller
      *
      * @Route("/new", name="title_new")
      * @Method({"GET", "POST"})
+     * @Security("has_role('ROLE_CONTENT_ADMIN')")
      * @Template()
      * @param Request $request
      */
     public function newAction(Request $request) {
-        if (!$this->isGranted('ROLE_CONTENT_ADMIN')) {
-            $this->addFlash('danger', 'You must login to access this page.');
-            return $this->redirect($this->generateUrl('fos_user_security_login'));
-        }
         $title = new Title();
         $form = $this->createForm(TitleType::class, $title);
         $form->handleRequest($request);
@@ -278,14 +275,11 @@ class TitleController extends Controller
      * @Route("/{id}/edit", name="title_edit")
      * @Method({"GET", "POST"})
      * @Template()
+     * @Security("has_role('ROLE_CONTENT_ADMIN')")
      * @param Request $request
      * @param Title $title
      */
     public function editAction(Request $request, Title $title) {
-        if (!$this->isGranted('ROLE_CONTENT_ADMIN')) {
-            $this->addFlash('danger', 'You must login to access this page.');
-            return $this->redirect($this->generateUrl('fos_user_security_login'));
-        }
         $editForm = $this->createForm(TitleType::class, $title);
         $editForm->handleRequest($request);
 
@@ -307,14 +301,11 @@ class TitleController extends Controller
      *
      * @Route("/{id}/delete", name="title_delete")
      * @Method("GET")
+     * @Security("has_role('ROLE_CONTENT_ADMIN')")
      * @param Request $request
      * @param Title $title
      */
     public function deleteAction(Request $request, Title $title) {
-        if (!$this->isGranted('ROLE_CONTENT_ADMIN')) {
-            $this->addFlash('danger', 'You must login to access this page.');
-            return $this->redirect($this->generateUrl('fos_user_security_login'));
-        }
         $em = $this->getDoctrine()->getManager();
         $em->remove($title);
         $em->flush();

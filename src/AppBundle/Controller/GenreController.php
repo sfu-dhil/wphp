@@ -43,14 +43,11 @@ class GenreController extends Controller
      *
      * @Route("/new", name="genre_new")
      * @Method({"GET", "POST"})
+     * @Security("has_role('ROLE_CONTENT_ADMIN')")
      * @Template()
      * @param Request $request
      */
     public function newAction(Request $request) {
-        if (!$this->isGranted('ROLE_CONTENT_ADMIN')) {
-            $this->addFlash('danger', 'You must login to access this page.');
-            return $this->redirect($this->generateUrl('fos_user_security_login'));
-        }
         $genre = new Genre();
         $form = $this->createForm(GenreType::class, $genre);
         $form->handleRequest($request);
@@ -97,15 +94,12 @@ class GenreController extends Controller
      *
      * @Route("/{id}/edit", name="genre_edit")
      * @Method({"GET", "POST"})
+     * @Security("has_role('ROLE_CONTENT_ADMIN')")
      * @Template()
      * @param Request $request
      * @param Genre $genre
      */
     public function editAction(Request $request, Genre $genre) {
-        if (!$this->isGranted('ROLE_CONTENT_ADMIN')) {
-            $this->addFlash('danger', 'You must login to access this page.');
-            return $this->redirect($this->generateUrl('fos_user_security_login'));
-        }
         $editForm = $this->createForm(GenreType::class, $genre);
         $editForm->handleRequest($request);
 
@@ -127,14 +121,11 @@ class GenreController extends Controller
      *
      * @Route("/{id}/delete", name="genre_delete")
      * @Method("GET")
+     * @Security("has_role('ROLE_CONTENT_ADMIN')")
      * @param Request $request
      * @param Genre $genre
      */
     public function deleteAction(Request $request, Genre $genre) {
-        if (!$this->isGranted('ROLE_CONTENT_ADMIN')) {
-            $this->addFlash('danger', 'You must login to access this page.');
-            return $this->redirect($this->generateUrl('fos_user_security_login'));
-        }
         $em = $this->getDoctrine()->getManager();
         $em->remove($genre);
         $em->flush();
