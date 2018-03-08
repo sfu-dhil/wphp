@@ -20,6 +20,11 @@ services:
         # but if a service is unused, it's removed anyway
         exclude: '../../src/Nines/UserBundle/{Entity,Repository,Resources,Tests}'
         
+    Nines\BlogBundle\Menu\Builder:
+        tags:
+            - { name: knp_menu.menu_builder, method: postNavMenu, alias: post}
+            - { name: knp_menu.menu_builder, method: pageNavMenu, alias: page}
+            
     Nines\UserBundle\Menu\Builder:
         tags:
             - { name: knp_menu.menu_builder, method: userNavMenu, alias: user}

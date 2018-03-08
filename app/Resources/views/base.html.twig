@@ -27,6 +27,8 @@
             </div>
             <div id="navbar" class="collapse navbar-collapse">
                 {{ knp_menu_render('main') }}
+                {{ knp_menu_render('page') }}
+                {{ knp_menu_render('post') }}
                 {{ knp_menu_render('user') }}                            
             </div>
         </div>
@@ -50,6 +52,24 @@
         {% block body %}
         {% endblock %}
     </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class='col-md-6'>
+                <p><b>Women's Print History Project</b><br>
+                    <a href="{{ path('feedback_new') }}">Feedback</a> | <a href="{{ asset('docs/html/index.html') }}">Documentation</a> | 
+                    <a href="https://github.com/sfu-dhil/wphp">GitHub</a>
+                </p>
+            </div>
+            <div class='col-md-6'>
+                <p><b>Search</b><br>
+                    <a href="{{ path('title_quick_search') }}">By Title</a> | <a href="{{ path('person_quick_search') }}">By Person</a> | 
+                    <a href="{{ path('firm_quick_search') }}">By Firm</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
 
     <script src="{{ asset('bower/bootstrap/dist/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('bundles/app/js/form.js') }}"></script>
