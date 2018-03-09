@@ -1,0 +1,102 @@
+{% extends 'base.html.twig' %}
+
+{% block pageheader %} 
+    <h1>{{ firm.name }}</h1>
+    <div class="row">
+        <div class="col-sm-6 text-left">
+            {% if previous %}
+                Previous firm: <a href="{{ path('firm_show', {'id': previous.id }) }}">{{ previous }}</a>
+            {% endif %}
+        </div>
+        <div class="col-sm-6 text-right">
+            {% if next %}
+                Next firm: <a href="{{ path('firm_show', {'id': next.id }) }}">{{ next }}</a>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %} 
+
+{% block body %}
+
+    <div class="btn-toolbar">
+        <div class="btn-group pull-right">
+            <a href="{{ path('firm_index') }}" class="btn btn-default">
+                <span class="glyphicon glyphicon-arrow-left"></span> Back
+            </a>
+            {% if is_granted('ROLE_CONTENT_ADMIN') %}
+                <a href="{{ path('firm_edit', { 'id': firm.id }) }}" class="btn btn-default">
+                    <span class='glyphicon glyphicon-edit'></span> Edit
+                </a>
+                <a href="{{ path('firm_delete', { 'id': firm.id }) }}" class="btn btn-default" data-confirm="Are you sure you want to delete this Firm?">
+                    <span class='glyphicon glyphicon-remove'></span> Delete
+                </a>
+            {% endif %}
+        </div>
+    </div>
+    <table class="table table-bordered table-condensed table-hover table-striped">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ firm.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ firm.name }}</td>
+            </tr>
+            <tr>
+                <th>Street address</th>
+                <td>{{ firm.streetAddress }}</td>
+            </tr>
+            <tr>
+                <th>City</th>
+                <td>
+                    {% if firm.city %}
+                        <a href="{{ path('geonames_show', {'id': firm.city.geonameid}) }}">
+                            {{ firm.city.name }}
+                        </a>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th>Start date</th>
+                <td>{% if firm.startDate %}{{ firm.startDate|date('Y') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>End date</th>
+                <td>{% if firm.endDate %}{{ firm.endDate|date('Y') }}{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Titles</h2>
+    Displaying {{ pagination|length }} titles of {{ pagination.getTotalItemCount }} total.
+    <table class="table table-bordered table-condensed table-hover table-striped" id="firmRoles">
+        <thead>
+            <tr>
+                <th>Firm&nbsp;Role</th>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Date</th>                                
+            </tr>
+        </thead>
+        <tbody>
+            {% for tfr in pagination %}
+                {% set title = tfr.title %}
+                {% set authorRole = title.getTitleRoles('Author').first() %}
+                <tr>
+                    <td>{{tfr.firmrole.name}}</td>
+                    <td><a href="{{ path('title_show', {'id': title.id}) }}">{{ title.title }}</a></td>
+                    <td>{% if authorRole %}{{ authorRole.person }}{% endif %}</td>
+                    <td>{{ title.pubdate }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="navigation">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+
+    {% include 'NinesFeedbackBundle:comment:comment-interface.html.twig' with { 'entity': firm } %}				
+
+{% endblock %}

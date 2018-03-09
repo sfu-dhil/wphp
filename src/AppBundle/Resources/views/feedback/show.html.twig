@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block pageheader %} 
+    <h1>Feedback</h1>
+{% endblock %} 
+
+{% block body %}
+
+    <div class="btn-toolbar">
+        <div class="btn-group pull-right">
+            <a href="{{ path('feedback_index') }}" class="btn btn-default">
+                <span class="glyphicon glyphicon-arrow-left"></span> Back
+            </a>
+        </div>
+    </div>
+    <table class="table table-bordered table-condensed table-hover table-striped">
+        <tbody>
+            <tr>
+                <th>Created</th>
+                <td>{{ feedback.created | date('M d, Y, H:i') }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ feedback.name }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ feedback.email }}</td>
+            </tr>
+            <tr>
+                <th>Content</th>
+                <td>{{ feedback.content }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+{% endblock %}

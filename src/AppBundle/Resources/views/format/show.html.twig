@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block pageheader %} 
+    <h1>Format</h1>
+{% endblock %} 
+
+{% block body %}
+
+    <div class="btn-toolbar">
+        <div class="btn-group pull-right">
+            <a href="{{ path('format_index') }}" class="btn btn-default">
+                <span class="glyphicon glyphicon-arrow-left"></span> Back
+            </a>
+            {% if is_granted('ROLE_CONTENT_ADMIN') %}
+                <a href="{{ path('format_edit', { 'id': format.id }) }}" class="btn btn-default">
+                    <span class='glyphicon glyphicon-edit'></span> Edit
+                </a>
+                <a href="{{ path('format_delete', { 'id': format.id }) }}" class="btn btn-default" data-confirm="Are you sure you want to delete this Format?">
+                    <span class='glyphicon glyphicon-remove'></span> Delete
+                </a>
+            {% endif %}
+        </div>
+    </div>
+    <table class="table table-bordered table-condensed table-hover table-striped">
+        <tbody>
+            <tr>
+                <th>Name</th>
+                <td>{{ format.name }}</td>
+            </tr>
+            <tr>
+                <th>Abbreviation 1</th>
+                <td>{{ format.abbrevOne }}</td>
+            </tr>
+            <tr>
+                <th>Abbreviation 2</th>
+                <td>{{ format.abbrevTwo }}</td>
+            </tr>
+            <tr>
+                <th>Abbreviation 3</th>
+                <td>{{ format.abbrevThree }}</td>
+            </tr>
+            <tr>
+                <th>Abbreviation 4</th>
+                <td>{{ format.abbrevFour }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    {% embed 'AppBundle:title:partials/page.html.twig' with {'titles': titles} %}
+    {% endembed %}
+
+{% endblock %}

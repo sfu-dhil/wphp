@@ -10,168 +10,91 @@
         <link rel="stylesheet" href="{{ asset('bower/bootstrap/dist/css/bootstrap.min.css') }}">
         <link rel="stylesheet" href="{{ asset('bower/bootstrap/dist/css/bootstrap-theme.min.css') }}">
         <link rel="stylesheet" href="{{ asset('bundles/app/css/base.css') }}">        
-        {% block htmlhead %}{% endblock %}
-        <script src="{{ asset('bower/jquery/dist/jquery.min.js') }}"></script>        
-        {% block styles %}{% endblock -%}
-    </head>
-    <body>
-        <nav class="navbar navbar-default navbar-fixed-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="{{ path('homepage') }}">Home</a>
-                </div>
-                <div id="navbar" class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav">
-                        <li>
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                Browse <span class="caret"></span>
-                            </a>
-                            {{ knp_menu_render('AppBundle:Builder:navMenu') }}
-                        </li>
-                        <li>
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                Search <span class="caret"></span>
-                            </a>
-                            {{ knp_menu_render('AppBundle:Builder:searchMenu') }}
-                        </li>
-                        <li>
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                About <span class="caret"></span>
-                            </a>
-                            {{ knp_menu_render('NinesBlogBundle:Builder:pageNavMenu') }}
-                        </li>
-                        <li>
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                Announcements <span class="caret"></span>
-                            </a>
-                            {{ knp_menu_render('NinesBlogBundle:Builder:postNavMenu') }}
-                        </li>
-                        <li>
-                          {% if app.user is not null and is_granted('ROLE_ADMIN') %}
-                            <a href="{{ path('feedback_index') }}">Feedback</a>
-                          {% else %}
-                            <a href="{{ path('feedback_new') }}">Feedback</a>
-                          {% endif %}
-                        </li>
-                        <li>
-                            <a href="{{ asset('docs/html/index.html') }}">Documentation</a>
-                        </li>
-
-                        {% if app.user is not null and is_granted('ROLE_ADMIN') %}
-                            <li>
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                    Admin <span class="caret"></span>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="{{ path('firm_index') }}">Firms</a></li>
-                                    <li><a href="{{ path('firmrole_index') }}">Firm Roles</a></li>										
-                                    <li><a href="{{ path('format_index') }}">Formats</a></li>
-                                    <li><a href="{{ path('genre_index') }}">Genres</a></li>
-                                    <li><a href="{{ path('geonames_index') }}">Geonames</a></li>
-                                    <li><a href="{{ path('person_index') }}">Persons</a></li>
-                                    <li><a href="{{ path('role_index') }}">Roles</a></li>
-                                    <li><a href="{{ path('source_index') }}">Sources</a></li>
-                                    <li><a href="{{ path('title_index') }}">Titles</a></li>
-                                    <li role="separator" class="divider"></li>
-                                    <li><a href="{{ path('admin_comment_index') }}">Comments</a></li>
-                                    <li><a href="{{ path('admin_comment_note_index') }}">Comment Notes</a></li>
-                                    <li><a href="{{ path('admin_comment_status_index') }}">Comment Statuses</a></li>
-                                    <li role="separator" class="divider"></li>										
-                                    <li><a href="{{ path('post_index') }}">Blog Posts</a></li>
-                                    <li><a href="{{ path('post_status_index') }}">Post Statuses</a></li>
-                                    <li><a href="{{ path('post_category_index') }}">Post Categories</a></li>
-                                    <li role="separator" class="divider"></li>										
-                                    <li>
-                                        <a href="{{ path('user') }}">
-                                            Users
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                        {% endif %}
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                        {% if app.user is not null and is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                            <li>
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                    {{ app.user.username }} <span class="caret"></span>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a href="{{ path('fos_user_profile_show') }}">
-                                            Profile
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ path('fos_user_change_password') }}">
-                                            Change Password
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ path('fos_user_security_logout') }}">
-                                            Logout
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                        {% else %}
-                            <li>
-                                <a href="{{ path('fos_user_security_login') }}">
-                                    Login
-                                </a>
-                            </li>
-                        {% endif %}
-                    </ul>
-                </div><!--/.nav-collapse -->
-            </div>
-        </nav>
+    {% block htmlhead %}{% endblock %}
+    <script src="{{ asset('bower/jquery/dist/jquery.min.js') }}"></script>        
+{% block styles %}{% endblock -%}
+</head>
+<body>
+    <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container">
-
-            {% if block('pageheader') is defined %}
-                <div class="page-header">
-                    {{ block('pageheader') }}
-                </div>
-            {% endif %}
-
-            {% for type, messages in app.session.flashbag.all() %}
-                {% for message in messages %}
-                    <div class="alert alert-{{ type }}">
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        {{ message }}
-                    </div>
-                {% endfor %}
-            {% endfor %}
-
-            {% block body %}
-            {% endblock %}
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse">
+                {{ knp_menu_render('main') }}
+                {{ knp_menu_render('page') }}
+                {{ knp_menu_render('post') }}
+                {{ knp_menu_render('user') }}                            
+            </div>
         </div>
+    </nav>
+    <div class="container">   
+        {% if block('pageheader') is defined %}
+            <div class="page-header">
+                {{ block('pageheader') }}
+            </div>
+        {% endif %}
 
-        <script src="{{ asset('bower/bootstrap/dist/js/bootstrap.min.js') }}"></script>
-        <script src="{{ asset('bundles/app/js/form.js') }}"></script>
-        {% block javascripts %}
+        {% for type, messages in app.session.flashbag.all() %}
+            {% for message in messages %}
+                <div class="alert alert-{{ type }}">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+
+        {% block body %}
         {% endblock %}
+    </div>
 
-        <!-- Piwik -->
-        <script type="text/javascript">
-            var _paq = _paq || [];
-            _paq.push(['trackPageView']);
-            _paq.push(['enableLinkTracking']);
-            (function () {
-                var u = "//piwik.lib.sfu.ca/piwik/";
-                _paq.push(['setTrackerUrl', u + 'piwik.php']);
-                _paq.push(['setSiteId', '32']);
-                var d = document, g = d.createElement('script'), s = d.getElementsByTagName('script')[0];
-                g.type = 'text/javascript'; g.async = true; g.defer = true; g.src = u + 'piwik.js'; s.parentNode.insertBefore(g, s);
-            })();
-        </script>
-        <noscript><p><img src="//piwik.lib.sfu.ca/piwik/piwik.php?idsite=32" style="border:0;" alt="" /></p></noscript>
-        <!-- End Piwik Code -->
+    <footer class="footer">
+        <div class="container">
+            <div class='col-md-6'>
+                <p><b>Women's Print History Project</b><br>
+                    <a href="{{ path('feedback_new') }}">Feedback</a> | <a href="{{ asset('docs/html/index.html') }}">Documentation</a> | 
+                    <a href="https://github.com/sfu-dhil/wphp">GitHub</a>
+                </p>
+            </div>
+            <div class='col-md-6'>
+                <p><b>Search</b><br>
+                    <a href="{{ path('title_quick_search') }}">By Title</a> | <a href="{{ path('person_quick_search') }}">By Person</a> | 
+                    <a href="{{ path('firm_quick_search') }}">By Firm</a>
+                </p>
+            </div>
+        </div>
+    </footer>
 
-    </body>
+
+    <script src="{{ asset('bower/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('bundles/app/js/form.js') }}"></script>
+    {% block javascripts %}
+    {% endblock %}
+
+    <!-- Piwik -->
+    <script type="text/javascript">
+        var _paq = _paq || [];
+        _paq.push(['trackPageView']);
+        _paq.push(['enableLinkTracking']);
+        (function () {
+            var u = "//piwik.lib.sfu.ca/piwik/";
+            _paq.push(['setTrackerUrl', u + 'piwik.php']);
+            _paq.push(['setSiteId', '32']);
+            var d = document, g = d.createElement('script'), s = d.getElementsByTagName('script')[0];
+            g.type = 'text/javascript';
+            g.async = true;
+            g.defer = true;
+            g.src = u + 'piwik.js';
+            s.parentNode.insertBefore(g, s);
+        })();
+    </script>
+    <noscript><p><img src="//piwik.lib.sfu.ca/piwik/piwik.php?idsite=32" style="border:0;" alt="" /></p></noscript>
+    <!-- End Piwik Code -->
+
+</body>
 </html>

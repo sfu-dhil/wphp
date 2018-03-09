@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Title{% endblock %}
+
+
+{% block body %}
+    <h1>New Title</h1>
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <div class="form-group">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-10">
+            <input type="submit" value="Create" class="btn btn-primary" />
+            <a href="{{ path('title_index') }}" class="btn btn-warning">Cancel</a>
+        </div>
+    </div>
+    {{ form_end(form) }}
+
+{% endblock %}
+
+{% block styles %}
+    <link href="{{ asset('bower/select2/dist/css/select2.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('bower/select2-bootstrap-css/select2-bootstrap.min.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('bower/select2/dist/js/select2.full.min.js') }}"></script>
+    <script src="{{ asset('bundles/tetranzselect2entity/js/select2entity.js') }}"></script>
+    <script src="{{ asset('bower/symfony-collection/jquery.collection.js') }}"></script>
+{% endblock %}

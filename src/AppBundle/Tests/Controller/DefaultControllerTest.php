@@ -2,7 +2,7 @@
 
 namespace AppBundle\Tests\AppBundle\Controller;
 
-use AppBundle\Tests\Util\BaseTestCase;
+use Nines\UtilBundle\Tests\Util\BaseTestCase;
 
 class DefaultControllerTest extends BaseTestCase
 {
@@ -10,9 +10,7 @@ class DefaultControllerTest extends BaseTestCase
     {
         $this->markTestSkipped('Cannot test this page with SQLite.');
         $client = static::createClient();
-
         $crawler = $client->request('GET', '/');
-
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertContains('Welcome to Symfony', $crawler->filter('#container h1')->text());
     }

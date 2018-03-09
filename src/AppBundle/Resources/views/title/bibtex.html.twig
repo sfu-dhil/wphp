@@ -1,0 +1,14 @@
+{#-Sets variables to be used in all styles-#}
+{%- set authors = title.getTitleRoles('Author') -%}
+{%- set authorCount = authors|length -%}
+{%- set lb = '{' -%}
+{%- set rb = '}' -%}
+<pre>
+@book{{lb}} wphp_{{title.id}}
+  author={{lb}}{% for author in authors %}{% if not loop.last %}{{ author.person.lastName }},{{ author.person.firstName }} and {% else %}{{ author.person.lastName }},{{ author.person.firstName }}{%- endif -%}{% endfor %}{{ rb }},
+  year={{lb}}{{ title.pubdate }}{{rb}},
+  title={{lb}}{{ title.title }}{{rb}},
+  publisher={{lb}}{% for tfr in title.getTitleFirmRoles('Publisher') %}{% if tfr.firmrole.name == 'Publisher' %}{% set firm = tfr.firm %}{{ firm.name }}{% if not loop.last %} \& {% endif %}{% endif %}{% endfor %}{{rb}},
+  address={{lb}}{{title.locationOfPrinting.name}}{{rb}},
+    {{rb}}
+</pre>

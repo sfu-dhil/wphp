@@ -3,12 +3,15 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Title;
-use AppBundle\Form\TitleSearchType;
+use AppBundle\Form\Title\TitleSearchType;
+use AppBundle\Form\Title\TitleType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
@@ -17,9 +20,8 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
  *
  * @Route("/title")
  */
-class TitleController extends Controller
-{
-
+class TitleController extends Controller {
+    
     /**
      * Lists all Title entities.
      *
@@ -41,6 +43,31 @@ class TitleController extends Controller
             'titles' => $titles,
             'form' => $form->createView(),
         );
+    }
+
+    /**
+     * @param Request $request
+     * @Security("has_role('ROLE_CONTENT_ADMIN')")
+     * @Route("/typeahead", name="title_typeahead")
+     * @Method("GET")
+     * @return JsonResponse
+     */
+    public function typeaheadAction(Request $request) {
+        $q = $request->query->get('q');
+        if (!$q) {
+            return new JsonResponse([]);
+        }
+        $em = $this->getDoctrine()->getManager();
+        $repo = $em->getRepository(Title::class);
+        $data = [];
+        foreach ($repo->typeaheadQuery($q) as $result) {
+            $data[] = [
+                'id' => $result->getId(),
+                'text' => $result->getTitle(),
+            ];
+        }
+
+        return new JsonResponse($data);
     }
 
     /**
@@ -120,7 +147,7 @@ class TitleController extends Controller
      *
      * @Route("/quick_search", name="title_quick_search")
      * @Method("GET")
-     * @Template("AppBundle:Title:search.html.twig")
+     * @Template("AppBundle:title:search.html.twig")
      * @param Request $request
      * @return array
      */
@@ -220,6 +247,35 @@ class TitleController extends Controller
     }
 
     /**
+     * Creates a new Title entity.
+     *
+     * @Route("/new", name="title_new")
+     * @Method({"GET", "POST"})
+     * @Security("has_role('ROLE_CONTENT_ADMIN')")
+     * @Template()
+     * @param Request $request
+     */
+    public function newAction(Request $request) {
+        $title = new Title();
+        $form = $this->createForm(TitleType::class, $title);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($title);
+            $em->flush();
+
+            $this->addFlash('success', 'The new title was created.');
+            return $this->redirectToRoute('title_show', array('id' => $title->getId()));
+        }
+
+        return array(
+            'title' => $title,
+            'form' => $form->createView(),
+        );
+    }
+
+    /**
      * Finds and displays a Title entity.
      *
      * @Route("/{id}.{_format}", name="title_show", defaults={"_format": "html"})
@@ -237,4 +293,50 @@ class TitleController extends Controller
             'previous' => $repo->previous($title),
         );
     }
+
+    /**
+     * Displays a form to edit an existing Title entity.
+     *
+     * @Route("/{id}/edit", name="title_edit")
+     * @Method({"GET", "POST"})
+     * @Template()
+     * @Security("has_role('ROLE_CONTENT_ADMIN')")
+     * @param Request $request
+     * @param Title $title
+     */
+    public function editAction(Request $request, Title $title) {
+        $editForm = $this->createForm(TitleType::class, $title);
+        $editForm->handleRequest($request);
+
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+            $this->addFlash('success', 'The title has been updated.');
+            return $this->redirectToRoute('title_show', array('id' => $title->getId()));
+        }
+
+        return array(
+            'title' => $title,
+            'edit_form' => $editForm->createView(),
+        );
+    }
+
+    /**
+     * Deletes a Title entity.
+     *
+     * @Route("/{id}/delete", name="title_delete")
+     * @Method("GET")
+     * @Security("has_role('ROLE_CONTENT_ADMIN')")
+     * @param Request $request
+     * @param Title $title
+     */
+    public function deleteAction(Request $request, Title $title) {
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($title);
+        $em->flush();
+        $this->addFlash('success', 'The title was deleted.');
+
+        return $this->redirectToRoute('title_index');
+    }
+
 }

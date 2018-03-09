@@ -14,6 +14,16 @@ use Doctrine\ORM\Query;
  */
 class FirmRepository extends EntityRepository
 {
+    
+
+    public function typeaheadQuery($q) {
+        $qb = $this->createQueryBuilder('e');
+        $qb->andWhere("e.name LIKE :q");
+        $qb->orderBy('e.name');
+        $qb->setParameter('q', "{$q}%");
+        return $qb->getQuery()->execute();
+    }
+    
     /**
      * Return the next firm by ID.
      *
@@ -45,34 +55,6 @@ class FirmRepository extends EntityRepository
     }
 
     /**
-     * Simple search, based on substring matching.
-     *
-     * @param string $q
-     * @return array
-     */
-    public function searchQuery($q) {
-        $qb = $this->createQueryBuilder('e');
-        $qb->where("e.name like '%$q%'");
-        return $qb->getQuery();
-    }
-
-    /**
-     * MySQL fulltext searching via match/against (which is included in a
-     * doctrine extension).
-     *
-     * @param string $q
-     * @return Query
-     */
-    public function fulltextQuery($q) {
-        $qb = $this->createQueryBuilder('e');
-        $qb->addSelect("MATCH (e.name) AGAINST(:q BOOLEAN) as score");
-        $qb->add('where', "MATCH (e.name) AGAINST(:q BOOLEAN) > 0.5");
-        $qb->orderBy('score', 'desc');
-        $qb->setParameter('q', $q);
-        return $qb->getQuery();
-    }
-
-    /**
      * Build a full text, complex search query and return it. Takes all the
      * parameters from the firm search and does smart things with them.
      *
@@ -86,7 +68,7 @@ class FirmRepository extends EntityRepository
             $qb->setParameter('name', $data['name']);
         }
         if(isset($data['address']) && $data['address']) {
-            $qb->add('where', "MATCH (e.streetAddress) AGAINST(:address BOOLEAN) > 0");
+            $qb->andWhere("MATCH (e.streetAddress) AGAINST(:address BOOLEAN) > 0");
             $qb->setParameter('address', $data['address']);
         }
         if (isset($data['city']) && $data['city']) {

@@ -3,11 +3,14 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Firm;
-use AppBundle\Form\FirmSearchType;
+use AppBundle\Form\Firm\FirmSearchType;
+use AppBundle\Form\Firm\FirmType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -40,11 +43,36 @@ class FirmController extends Controller {
     }
 
     /**
+     * @param Request $request
+     * @Security("has_role('ROLE_CONTENT_ADMIN')")
+     * @Route("/typeahead", name="firm_typeahead")
+     * @Method("GET")
+     * @return JsonResponse
+     */
+    public function typeaheadAction(Request $request) {
+        $q = $request->query->get('q');
+        if( ! $q) {
+            return new JsonResponse([]);
+        }
+        $em = $this->getDoctrine()->getManager();
+        $repo = $em->getRepository(Firm::class);
+        $data = [];
+        foreach($repo->typeaheadQuery($q) as $result) {
+            $data[] = [
+                'id' => $result->getId(),
+                'text' => $result->getName(),
+            ];
+        }
+        
+        return new JsonResponse($data);
+    }   
+    
+    /**
      * Full text search for Firm entities.
      *
      * @Route("/quick_search", name="firm_quick_search")
      * @Method("GET")
-     * @Template("AppBundle:Firm:search.html.twig")
+     * @Template("AppBundle:firm:search.html.twig")
      * @param Request $request
      * @return array
      */
@@ -106,8 +134,37 @@ class FirmController extends Controller {
         if ($q) {
             return $this->redirect($this->generateUrl('firm_show', array('id' => $q)));
         } else {
-            return $this->redirect($this->generateUrl('firm_index', array('id' => $q)));
+            return $this->redirect($this->generateUrl('firm_index'));
         }
+    }
+
+    /**
+     * Creates a new Firm entity.
+     *
+     * @Route("/new", name="firm_new")
+     * @Method({"GET", "POST"})
+     * @Template()
+     * @Security("has_role('ROLE_CONTENT_ADMIN')")
+     * @param Request $request
+     */
+    public function newAction(Request $request) {
+        $firm = new Firm();
+        $form = $this->createForm(FirmType::class, $firm);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($firm);
+            $em->flush();
+
+            $this->addFlash('success', 'The new firm was created.');
+            return $this->redirectToRoute('firm_show', array('id' => $firm->getId()));
+        }
+
+        return array(
+            'firm' => $firm,
+            'form' => $form->createView(),
+        );
     }
 
     /**
@@ -131,6 +188,51 @@ class FirmController extends Controller {
             'previous' => $repo->previous($firm),
             'pagination' => $pagination,
         );
+    }
+    
+    /**
+     * Displays a form to edit an existing Firm entity.
+     *
+     * @Route("/{id}/edit", name="firm_edit")
+     * @Method({"GET", "POST"})
+     * @Template()
+     * @Security("has_role('ROLE_CONTENT_ADMIN')")
+     * @param Request $request
+     * @param Firm $firm
+     */
+    public function editAction(Request $request, Firm $firm) {
+        $editForm = $this->createForm(FirmType::class, $firm);
+        $editForm->handleRequest($request);
+
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+            $this->addFlash('success', 'The firm has been updated.');
+            return $this->redirectToRoute('firm_show', array('id' => $firm->getId()));
+        }
+
+        return array(
+            'firm' => $firm,
+            'edit_form' => $editForm->createView(),
+        );
+    }
+
+    /**
+     * Deletes a Firm entity.
+     *
+     * @Route("/{id}/delete", name="firm_delete")
+     * @Method("GET")
+     * @Security("has_role('ROLE_CONTENT_ADMIN')")
+     * @param Request $request
+     * @param Firm $firm
+     */
+    public function deleteAction(Request $request, Firm $firm) {
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($firm);
+        $em->flush();
+        $this->addFlash('success', 'The firm was deleted.');
+
+        return $this->redirectToRoute('firm_index');
     }
 
 }

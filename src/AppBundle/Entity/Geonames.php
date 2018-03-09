@@ -15,7 +15,7 @@ use Doctrine\ORM\Mapping as ORM;
  *      @ORM\Index(name="geo_search", columns={"name", "geonameid", "country"}),
  *      @ORM\Index(name="names", columns={"alternatenames", "name"}, flags={"fulltext"})
  * })
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\GeonamesRepository")
  */
 class Geonames
 {

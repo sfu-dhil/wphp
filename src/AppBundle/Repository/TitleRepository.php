@@ -16,6 +16,14 @@ use Doctrine\ORM\Query;
 class TitleRepository extends EntityRepository
 {
 
+    public function typeaheadQuery($q) {
+        $qb = $this->createQueryBuilder('e');
+        $qb->andWhere("e.title LIKE :q");
+        $qb->orderBy('e.title');
+        $qb->setParameter('q', "%{$q}%");
+        return $qb->getQuery()->execute();
+    }
+
     /**
      * Return the next title by ID.
      *
@@ -44,21 +52,6 @@ class TitleRepository extends EntityRepository
         $qb->addOrderBy('e.id', 'DESC');
         $qb->setMaxResults(1);
         return $qb->getQuery()->getOneOrNullResult();
-    }
-
-    /**
-     * Simple MySQL fulltext search via MATCH AGAINST.
-     *
-     * @param string $q
-     * @return Query
-     */
-    public function search($q) {
-        $qb = $this->createQueryBuilder('e');
-        $qb->addSelect("MATCH (e.title) AGAINST (:q BOOLEAN) as score");
-        $qb->add('where', "MATCH (e.title) AGAINST (:q BOOLEAN) > 0.5");
-        $qb->orderBy('score', 'desc');
-        $qb->setParameter('q', $q);
-        return $qb->getQuery();
     }
 
     /**
@@ -121,7 +114,7 @@ class TitleRepository extends EntityRepository
         }
         if (isset($data['orderby']) && $data['orderby']) {
             $dir = 'ASC';
-            if (preg_match('/^(?:asc|desc)$/i', $data['orderdir'])) {
+            if (isset($data['orderdir']) && preg_match('/^(?:asc|desc)$/i', $data['orderdir'])) {
                 $dir = $data['orderdir'];
             }
             switch ($data['orderby']) {
@@ -143,7 +136,7 @@ class TitleRepository extends EntityRepository
             $pAlias = 'p_' . $idx;
             $qb->innerJoin('e.titleRoles', $trAlias)->innerJoin("{$trAlias}.person", $pAlias);
             if (isset($filter['name']) && $filter['name']) {
-                $qb->andWhere("MATCH ({$pAlias}.lastName, {$pAlias}.firstName, {$pAlias}.title) AGAINST(:{$pAlias}_name BOOLEAN') > 0");
+                $qb->andWhere("MATCH ({$pAlias}.lastName, {$pAlias}.firstName, {$pAlias}.title) AGAINST(:{$pAlias}_name BOOLEAN) > 0");
                 $qb->setParameter("{$pAlias}_name", $filter['name']);
             }
             if (isset($filter['gender']) && $filter['gender']) {

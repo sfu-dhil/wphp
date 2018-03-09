@@ -1,18 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!-- https://phpunit.de/manual/4.8/en/appendixes.configuration.html -->
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/4.8/phpunit.xsd"
-         backupGlobals="false"
-         backupStaticAttributes="false"
-         cacheTokens="false"
-         processIsolation="true"
-         colors="true"         
-         bootstrap="var/bootstrap.php.cache">
+<phpunit         
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/5.7/phpunit.xsd"
+    backupGlobals="false"
+    backupStaticAttributes="false"
+    bootstrap="vendor/autoload.php"
+    cacheTokens="false"
+    colors="false"
+    processIsolation="false"
+    stopOnError="true"
+    stopOnFailure="true"
+    verbose="false">
+    
     <php>
         <ini name="error_reporting" value="-1" />
         <server name="KERNEL_CLASS" value="AppKernel" />
         <server name="KERNEL_DIR" value="app/" />
+        <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak" />        
     </php>
 
     <testsuites>
@@ -23,12 +29,23 @@
 
     <filter>
         <whitelist>
-            <directory>src</directory>
+            <directory>src/AppBundle</directory>
             <exclude>
-                <directory>src/*Bundle/Resources</directory>
-                <directory>src/*/*Bundle/Resources</directory>
-                <directory>src/*/Bundle/*Bundle/Resources</directory>
+                <directory>src/AppBundle/Resources</directory>
+                <directory>src/AppBundle/Tests</directory>
             </exclude>
         </whitelist>
+        <blacklist>
+            <directory>src/Nines</directory>
+            <directory>app</directory>
+            <directory>var</directory>
+            <directory>vendor</directory>
+            <directory>web</directory>
+        </blacklist>
     </filter>
+    
+    <listeners>
+        <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener" />
+    </listeners>
+    
 </phpunit>

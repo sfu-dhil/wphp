@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block pageheader %} 
+    <h1>Titles by <em>{{ person }}</em> <small>in {{ format|upper }} format</small></h1>
+{% endblock %} 
+
+{% block body %}
+    <p>There are {{ person.titleRoles|length }} titles associated with this person.<p>
+    <ul class="list-group">
+        {% for tr in person.titleRoles %}
+            {% set title = tr.title %}
+            <li class="list-group-item">{{ include('AppBundle:title:' ~ format ~ '.html.twig', {'title': title}) }}</li>            
+            {% endfor %}
+    </ul>
+{% endblock %}

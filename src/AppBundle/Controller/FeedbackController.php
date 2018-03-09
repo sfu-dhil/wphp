@@ -2,36 +2,31 @@
 
 namespace AppBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use AppBundle\Entity\Feedback;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use AppBundle\Entity\Feedback;
-use AppBundle\Form\FeedbackType;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Feedback controller.
  *
  * @Route("/feedback")
  */
-class FeedbackController extends Controller
-{
+class FeedbackController extends Controller {
+
     /**
      * Lists all Feedback entities.
      *
      * @Route("/", name="feedback_index")
      * @Method("GET")
      * @Template()
-	 * @param Request $request
+     * @Security("has_role('ROLE_ADMIN')")
+     * @param Request $request
      */
-    public function indexAction(Request $request)
-    {
-        if(! $this->isGranted('ROLE_ADMIN')) {
-          $this->addFlash('danger', "You must login to access this page.");
-          return $this->redirect($this->generateUrl('fos_user_security_login'));
-        }
-        
+    public function indexAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
         $dql = 'SELECT e FROM AppBundle:Feedback e ORDER BY e.id';
         $query = $em->createQuery($dql);
@@ -42,22 +37,17 @@ class FeedbackController extends Controller
             'feedbacks' => $feedbacks,
         );
     }
-    
+
     /**
      * Creates a new Feedback entity.
      *
      * @Route("/new", name="feedback_new")
      * @Method({"GET", "POST"})
      * @Template()
-	 * @param Request $request
+     * @Security("not (has_role('ROLE_USER'))")
+     * @param Request $request
      */
-    public function newAction(Request $request)
-    {
-        if($this->isGranted('ROLE_USER')) {
-          $this->addFlash('danger', "You cannot be logged in to access this page.");
-          return $this->redirect($this->generateUrl('homepage'));
-        }
-      
+    public function newAction(Request $request) {
         $feedback = new Feedback();
         $form = $this->createForm('AppBundle\Form\FeedbackType', $feedback);
         $form->handleRequest($request);
@@ -83,13 +73,13 @@ class FeedbackController extends Controller
      * @Route("/{id}", name="feedback_show")
      * @Method("GET")
      * @Template()
-	 * @param Feedback $feedback
+     * @Security("has_role('ROLE_ADMIN')")
+     * @param Feedback $feedback
      */
-    public function showAction(Feedback $feedback)
-    {
-        if(! $this->isGranted('ROLE_ADMIN')) {
-          $this->addFlash('danger', "You must login to access this page.");
-          return $this->redirect($this->generateUrl('fos_user_security_login'));
+    public function showAction(Feedback $feedback) {
+        if (!$this->isGranted('ROLE_ADMIN')) {
+            $this->addFlash('danger', "You must login to access this page.");
+            return $this->redirect($this->generateUrl('fos_user_security_login'));
         }
 
         return array(

@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block pageheader %} 
+    <h1>Geonames</h1>
+{% endblock %} 
+
+{% block body %}
+
+    {% embed 'AppBundle:geonames:partials/header.html.twig' %}
+    {% endembed %}
+
+    <h2>People</h2>
+
+    <table class="table table-bordered table-condensed table-hover table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Last name</th>
+                <th>First name</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for person in people %}
+                <tr>
+                    <td>
+                        <a href="{{ path('person_show', { 'id': person.id }) }}">
+                            {{ person.id }}
+                        </a>
+                    </td>
+                    <td>
+                        <a href="{{ path('person_show', { 'id': person.id }) }}">
+                            {{ person.lastName }}
+                        </a>
+                    </td>
+                    <td>
+                        <a href="{{ path('person_show', { 'id': person.id }) }}">
+                            {{ person.firstName }}
+                        </a>
+                    </td>
+                    <td>
+                        {% if person.cityOfBirth == geoname %}
+                            Born: {{ person.dob }}
+                        {% endif %}
+                        {% if person.cityOfDeath == geoname %}
+                            Deceased: {{ person.dod }}
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+{% endblock %}

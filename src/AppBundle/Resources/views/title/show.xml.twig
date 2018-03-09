@@ -1,0 +1,62 @@
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:dcterms="http://purl.org/dc/terms/"
+    xmlns:collex="http://www.collex.org/schema#"
+    xmlns:ra="http://www.rossettiarchive.org/schema#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:role="http://www.loc.gov/loc.terms/relators/"
+    xmlns:wphp="http://dhil.lib.sfu.ca/wphp/wphp-schema#">
+
+    <rdf:Description rdf:about="{{url('title_show', {'id': title.id}) }}">
+
+        <dc:title>
+            {{ title.title }}
+        </dc:title>
+        
+        {% if title.source and title.source.name != 'unknown' and title.source.name != 'None' %}
+            <dc:source>
+                {{ title.source.name }} {{ title.sourceId }}
+            </dc:source>
+        {% endif %}
+
+        {% if title.source2 and title.source2.name != 'unknown' and title.source2.name != 'None' %}
+            <dc:source>
+                {{ title.source2.name }} {{ title.source2Id }}
+            </dc:source>
+        {% endif %}
+
+        <wphp:contributors>
+            <rdf:Bag>
+                {% for tr in title.titleRoles %}
+                    <rdf:li rdf:resource="{{ url('person_show', {'id': tr.person.id}) }}" wphp:role="{{ tr.role.name }}"/>
+                {% endfor %}
+            </rdf:Bag>
+        </wphp:contributors>
+            
+        <wphp:firms>
+            <rdf:Bag>
+                {% for tfr in title.titleFirmRoles %}
+                    <rdf:li rdf:resource="{{ url('firm_show', {'id': tfr.firm.id}) }}" wphp:role="{{ tfr.firmRole.name }}"/>
+                {% endfor %}
+            </rdf:Bag>
+        </wphp:firms>
+
+        {% for genre in title.genre %}
+            <dc:genre>
+                {{ genre }}
+            </dc:genre>
+        {% endfor %}
+        
+        {% if title.sizeL or title.sizeW %}
+            <dc:format>
+                {{ title.sizeL }} x {{ title.sizeW }} cm.
+            </dc:format>
+        {% endif %}
+
+        <dc:language>eng</dc:language>
+
+        <dc:date>{{ title.pubdate }}</dc:date>
+    </rdf:Description>
+
+</rdf:RDF>

@@ -2,17 +2,16 @@
 
 namespace AppBundle\Tests\Controller;
 
-use AppBundle\Entity\Feedback;
-use AppBundle\Tests\DataFixtures\ORM\LoadFeedback;
-use AppBundle\Tests\Util\BaseTestCase;
-use Nines\UserBundle\Tests\DataFixtures\ORM\LoadUsers;
+use AppBundle\DataFixtures\ORM\LoadFeedback;
+use Nines\UserBundle\DataFixtures\ORM\LoadUser;
+use Nines\UtilBundle\Tests\Util\BaseTestCase;
 
 class FeedbackControllerTest extends BaseTestCase
 {
 
     protected function getFixtures() {
         return [
-            LoadUsers::class,
+            LoadUser::class,
             LoadFeedback::class
         ];
     }
@@ -30,8 +29,7 @@ class FeedbackControllerTest extends BaseTestCase
             'password' => 'secret',
         ]);
         $client->request('GET', '/feedback/');
-        $this->assertEquals(302, $client->getResponse()->getStatusCode());
-        $this->assertTrue($client->getResponse()->isRedirect());
+        $this->assertEquals(403, $client->getResponse()->getStatusCode());
     }
     
     public function testAdminIndex() {
@@ -58,8 +56,7 @@ class FeedbackControllerTest extends BaseTestCase
             'password' => 'secret',
         ]);
         $client->request('GET', '/feedback/1');
-        $this->assertEquals(302, $client->getResponse()->getStatusCode());
-        $this->assertTrue($client->getResponse()->isRedirect());
+        $this->assertEquals(403, $client->getResponse()->getStatusCode());
     }
     
     public function testAdminShow() {
@@ -88,8 +85,7 @@ class FeedbackControllerTest extends BaseTestCase
             'password' => 'secret',
         ]);
         $client->request('GET', '/feedback/new');
-        $this->assertEquals(302, $client->getResponse()->getStatusCode());
-        $this->assertTrue($client->getResponse()->isRedirect());
+        $this->assertEquals(403, $client->getResponse()->getStatusCode());
         
     }
     
@@ -100,8 +96,7 @@ class FeedbackControllerTest extends BaseTestCase
             'password' => 'supersecret',
         ]);
         $client->request('GET', '/feedback/new');
-        $this->assertEquals(302, $client->getResponse()->getStatusCode());
-        $this->assertTrue($client->getResponse()->isRedirect());
+        $this->assertEquals(403, $client->getResponse()->getStatusCode());
     }
 
 }

@@ -14,7 +14,15 @@ use Doctrine\ORM\Query\Expr\Join;
  */
 class PersonRepository extends EntityRepository
 {
-
+    
+    public function typeaheadQuery($q) {
+        $qb = $this->createQueryBuilder('e');
+        $qb->andWhere("CONCAT(e.lastName, ' ', e.firstName) LIKE :q");
+        $qb->orderBy('e.lastName, e.firstName');
+        $qb->setParameter('q', "%{$q}%");
+        return $qb->getQuery()->execute();
+    }
+    
     /**
      * Return the next firm by ID.
      *
@@ -89,12 +97,12 @@ class PersonRepository extends EntityRepository
         if (isset($data['dod']) && $data['dod']) {
             $m = array();
             if (preg_match('/^\s*[0-9]{4}\s*$/', $data['dod'])) {
-                $qb->andWhere('e.dod = :yeard');
+                $qb->andWhere('YEAR(e.dod) = :yeard');
                 $qb->setParameter('yeard', $data['dod']);
             } elseif (preg_match('/^\s*(\*|[0-9]{4})\s*-\s*(\*|[0-9]{4})\s*$/', $data['dod'], $m)) {
                 $from = ($m[1] === '*' ? -1 : $m[1]);
                 $to = ($m[2] === '*' ? 9999 : $m[2]);
-                $qb->andWhere(':fromd <= e.dod AND e.dod <= :tod');
+                $qb->andWhere(':fromd <= YEAR(e.dod) AND YEAR(e.dod) <= :tod');
                 $qb->setParameter('fromd', $from);
                 $qb->setParameter('tod', $to);
             }
@@ -150,7 +158,7 @@ class PersonRepository extends EntityRepository
             if(isset($filter['location']) && $filter['location']) {
                 $gAlias = 'g_' . $idx;
                 $qb->innerJoin("{$tAlias}.locationOfPrinting", $gAlias);
-                $qb->andWhere("MATCH({$gAlias}.alternatenames, {$gAlias}.name AGAINST(:{$gAlias}_location BOOLEAN) > 0");
+                $qb->andWhere("MATCH({$gAlias}.alternatenames, {$gAlias}.name) AGAINST(:{$gAlias}_location BOOLEAN) > 0");
                 $qb->setParameter("{$gAlias}_location", $filter['location']);
             }
         }
@@ -177,21 +185,6 @@ class PersonRepository extends EntityRepository
             }
         }
 
-        return $qb->getQuery();
-    }
-
-    /**
-     * Simple fulltext search query, based on MySQL's MATCH AGAINST functions.
-     *
-     * @param string $q
-     * @return Query
-     */
-    public function fulltextQuery($q) {
-        $qb = $this->createQueryBuilder('e');
-        $qb->addSelect("MATCH (e.lastName, e.firstName, e.dob, e.dod) AGAINST(:q BOOLEAN) as score");
-        $qb->add('where', "MATCH (e.lastName, e.firstName, e.dob, e.dod) AGAINST(:q BOOLEAN)");
-        $qb->orderBy('score', 'desc');
-        $qb->setParameter('q', $q);
         return $qb->getQuery();
     }
 
