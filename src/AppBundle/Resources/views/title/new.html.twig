@@ -7,7 +7,69 @@
     <h1>New Title</h1>
 
     {{ form_start(form) }}
-    {{ form_widget(form) }}
+    
+    
+    <div>
+
+        <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#citation">Citation Information</a></li>
+            <li><a data-toggle="tab" href="#author">Author Information</a></li>
+            <li><a data-toggle="tab" href="#publisher">Publishing Information</a></li>
+            <li><a data-toggle="tab" href="#catalogue">Cataloguing Information</a></li>
+            <li><a data-toggle="tab" href="#data">Entry Information</a></li>
+        </ul>
+
+        <div class="tab-content">
+            <div id="citation" class="tab-pane fade in active">
+                <h3>Citation Information</h3>
+                <p>{{ form_row(form.title) }}</p>
+                <p>{{ form_row(form.signedAuthor) }}</p>
+                <p>{{ form_row(form.pubdate) }}</p>
+                <p>{{ form_row(form.locationOfPrinting) }}</p>
+                <p>{{ form_row(form.edition) }}</p>
+                <p>{{ form_row(form.editionNumber) }}</p>
+                <p>{{ form_row(form.volumes) }}</p>
+                <p>{{ form_row(form.titleFirmroles) }}</p>
+            </div>
+            <div id="author" class="tab-pane fade">
+                <h3>Author Information</h3>
+                <p>{{ form_row(form.pseudonym) }}</p>
+                <p>{{ form_row(form.surrogate) }}</p>
+                <p>{{ form_row(form.titleRoles) }}</p>
+            </div>
+            <div id="publisher" class="tab-pane fade">
+                <h3>Publishing Information</h3>
+                <p>{{ form_row(form.selfpublished) }}</p>
+                <p>{{ form_row(form.dateOfFirstPublication) }}</p>
+            </div>
+            <div id="catalogue" class="tab-pane fade">
+                <h3>Cataloguing Information</h3>
+                <p>{{ form_row(form.genre) }}</p>
+                <p>{{ form_row(form.format) }}</p>
+                <p>{{ form_row(form.imprint) }}</p>
+                <p>{{ form_row(form.pagination) }}</p>
+                <p>{{ form_row(form.sizeL) }}</p>
+                <p>{{ form_row(form.sizeW) }}</p>
+                <p>{{ form_row(form.pricePound) }}</p>
+                <p>{{ form_row(form.priceShilling) }}</p>
+                <p>{{ form_row(form.pricePence) }}</p>
+                <p>{{ form_row(form.shelfmark) }}</p>
+            </div>
+            <div id="data" class="tab-pane fade">
+                <h3>Entry Information</h3>
+                <p>{{ form_row(form.notes) }}</p>
+                <p>{{ form_row(form.source) }}</p>
+                <p>{{ form_row(form.sourceId) }}</p>
+                <p>{{ form_row(form.source2) }}</p>
+                <p>{{ form_row(form.source2Id) }}</p>
+                <p>{{ form_row(form.checked) }}</p>
+                <p>{{ form_row(form.finalcheck) }}</p>
+            </div>
+        </div>
+   
+    </div>
+    
+    
     <div class="form-group">
         <div class="col-sm-2"></div>
         <div class="col-sm-10">
