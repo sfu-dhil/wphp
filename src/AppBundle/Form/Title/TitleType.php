@@ -74,7 +74,6 @@ class TitleType extends AbstractType {
             'entry_options' => array(
                 'label' => false,
             ),
-            'by_reference' => false,
             'attr' => array(
                 'class' => 'collection collection-complex'
             ),

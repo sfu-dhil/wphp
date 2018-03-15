@@ -307,7 +307,7 @@ class TitleController extends Controller {
     public function editAction(Request $request, Title $title) {
         $editForm = $this->createForm(TitleType::class, $title);
         $editForm->handleRequest($request);
-
+        dump($editForm->getData());
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->flush();
