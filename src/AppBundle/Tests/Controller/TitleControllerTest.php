@@ -127,20 +127,45 @@ class TitleControllerTest extends BaseTestCase
         ]);
         $formCrawler = $client->request('GET', '/title/1/edit');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );        
+                
         $form = $formCrawler->selectButton('Update')->form([
-            // DO STUFF HERE.
-            // 'titles[FIELDNAME]' => 'FIELDVALUE',
+            'title[title]' => 'The Book of Cheese.',
+            'title[editionNumber]' => 1,
+            'title[signedAuthor]' => 'Testy McAuthor',
+            'title[surrogate]' => '',
+            // 'title[titleRoles]' => 1,
+            // 'title[titleFirmroles]' => 0,
+            'title[pseudonym]' => 'Author',
+            'title[imprint]' => 'Cheese Publishers',
+            'title[selfpublished]' => 0,
+            'title[pubdate]' => '1932',
+            'title[genre]' => 0,
+            'title[locationOfPrinting]' => 0,
+            'title[dateOfFirstPublication]' => '1932',
+            'title[sizeL]' => 1,
+            'title[sizeW]' => 1,
+            'title[edition]' => 'First',
+            'title[volumes]' => 1,
+            'title[format]' => 0,
+            'title[pagination]' => '',
+            'title[pricePound]' => 2,
+            'title[priceShilling]' => 3,
+            'title[pricePence]' => 2,
+            'title[source]' => 0,
+            'title[sourceId]' => 'ID',
+            'title[source2]' => 0,
+            'title[source2Id]' => 'ID2',
+            'title[shelfmark]' => '',
+            'title[checked]' => 1,
+            'title[finalcheck]' => 1,
+            'title[notes]' => 'It is about cheese.'
         ]);
-        
+
         $client->submit($form);
         $this->assertTrue($client->getResponse()->isRedirect('/title/1'));
         $responseCrawler = $client->followRedirect();
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        // $this->assertEquals(1, $responseCrawler->filter('td:contains("FIELDVALUE")')->count());
+        $this->assertEquals(1, $responseCrawler->filter('td:contains("The Book of Cheese.")')->count());
     }
     
     public function testAnonNew() {
@@ -166,20 +191,45 @@ class TitleControllerTest extends BaseTestCase
         ]);
         $formCrawler = $client->request('GET', '/title/new');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );        
+             
         $form = $formCrawler->selectButton('Create')->form([
-            // DO STUFF HERE.
-            // 'titles[FIELDNAME]' => 'FIELDVALUE',
+            'title[title]' => 'The Book of Cheese.',
+            'title[editionNumber]' => 1,
+            'title[signedAuthor]' => 'Testy McAuthor',
+            'title[surrogate]' => '',
+            // 'title[titleRoles]' => 1,
+            // 'title[titleFirmroles]' => 0,
+            'title[pseudonym]' => 'Author',
+            'title[imprint]' => 'Cheese Publishers',
+            'title[selfpublished]' => 0,
+            'title[pubdate]' => '1932',
+            'title[genre]' => 0,
+            'title[locationOfPrinting]' => 0,
+            'title[dateOfFirstPublication]' => '1932',
+            'title[sizeL]' => 1,
+            'title[sizeW]' => 1,
+            'title[edition]' => 'First',
+            'title[volumes]' => 1,
+            'title[format]' => 0,
+            'title[pagination]' => '',
+            'title[pricePound]' => 2,
+            'title[priceShilling]' => 3,
+            'title[pricePence]' => 2,
+            'title[source]' => 0,
+            'title[sourceId]' => 'ID',
+            'title[source2]' => 0,
+            'title[source2Id]' => 'ID2',
+            'title[shelfmark]' => '',
+            'title[checked]' => 1,
+            'title[finalcheck]' => 1,
+            'title[notes]' => 'It is about cheese.'
         ]);
         
         $client->submit($form);
         $this->assertTrue($client->getResponse()->isRedirect());
         $responseCrawler = $client->followRedirect();
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        // $this->assertEquals(1, $responseCrawler->filter('td:contains("FIELDVALUE")')->count());
+        $this->assertEquals(1, $responseCrawler->filter('td:contains("The Book of Cheese.")')->count());
     }
     
     public function testAnonDelete() {
