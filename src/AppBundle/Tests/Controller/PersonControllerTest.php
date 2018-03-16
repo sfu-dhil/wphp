@@ -127,20 +127,25 @@ class PersonControllerTest extends BaseTestCase
         ]);
         $formCrawler = $client->request('GET', '/person/1/edit');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );        
+               
         $form = $formCrawler->selectButton('Update')->form([
-            // DO STUFF HERE.
-            // 'persons[FIELDNAME]' => 'FIELDVALUE',
+            'person[lastName]' => 'McName',
+            'person[firstName]' => 'Testy',
+            'person[title]' => '',
+            'person[gender]' => 0,
+            'person[dob]' => '1921',
+            'person[cityOfBirth]' => 0,
+            'person[dod]' => '1999',
+            'person[cityOfDeath]' => 0,
+            'person[checked]' => 1,
+            'person[finalcheck]' => 1
         ]);
         
         $client->submit($form);
         $this->assertTrue($client->getResponse()->isRedirect('/person/1'));
         $responseCrawler = $client->followRedirect();
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        // $this->assertEquals(1, $responseCrawler->filter('td:contains("FIELDVALUE")')->count());
+        $this->assertEquals(1, $responseCrawler->filter('td:contains("Testy")')->count());
     }
     
     public function testAnonNew() {
@@ -166,20 +171,25 @@ class PersonControllerTest extends BaseTestCase
         ]);
         $formCrawler = $client->request('GET', '/person/new');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );        
+            
         $form = $formCrawler->selectButton('Create')->form([
-            // DO STUFF HERE.
-            // 'persons[FIELDNAME]' => 'FIELDVALUE',
+            'person[lastName]' => 'McName',
+            'person[firstName]' => 'Testy',
+            'person[title]' => '',
+            'person[gender]' => 0,
+            'person[dob]' => '1921',
+            'person[cityOfBirth]' => 0,
+            'person[dod]' => '1999',
+            'person[cityOfDeath]' => 0,
+            'person[checked]' => 1,
+            'person[finalcheck]' => 1
         ]);
         
         $client->submit($form);
         $this->assertTrue($client->getResponse()->isRedirect());
         $responseCrawler = $client->followRedirect();
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        // $this->assertEquals(1, $responseCrawler->filter('td:contains("FIELDVALUE")')->count());
+        $this->assertEquals(1, $responseCrawler->filter('td:contains("Testy")')->count());
     }
     
     public function testAnonDelete() {

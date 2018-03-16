@@ -127,20 +127,16 @@ class FirmroleControllerTest extends BaseTestCase
         ]);
         $formCrawler = $client->request('GET', '/firmrole/1/edit');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );        
+           
         $form = $formCrawler->selectButton('Update')->form([
-            // DO STUFF HERE.
-            // 'firmroles[FIELDNAME]' => 'FIELDVALUE',
+            'firmrole[name]' => 'Cheese.'
         ]);
         
         $client->submit($form);
         $this->assertTrue($client->getResponse()->isRedirect('/firmrole/1'));
         $responseCrawler = $client->followRedirect();
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        // $this->assertEquals(1, $responseCrawler->filter('td:contains("FIELDVALUE")')->count());
+        $this->assertEquals(1, $responseCrawler->filter('td:contains("Cheese.")')->count());
     }
     
     public function testAnonNew() {
@@ -166,20 +162,16 @@ class FirmroleControllerTest extends BaseTestCase
         ]);
         $formCrawler = $client->request('GET', '/firmrole/new');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );        
+      
         $form = $formCrawler->selectButton('Create')->form([
-            // DO STUFF HERE.
-            // 'firmroles[FIELDNAME]' => 'FIELDVALUE',
+            'firmrole[name]' => 'Cheese.'
         ]);
         
         $client->submit($form);
         $this->assertTrue($client->getResponse()->isRedirect());
         $responseCrawler = $client->followRedirect();
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        // $this->assertEquals(1, $responseCrawler->filter('td:contains("FIELDVALUE")')->count());
+        $this->assertEquals(1, $responseCrawler->filter('td:contains("Cheese.")')->count());
     }
     
     public function testAnonDelete() {
