@@ -257,12 +257,23 @@ class TitleController extends Controller {
      * @Template()
      * @param Request $request
      */
-    public function newAction(Request $request) {
+    public function newAction(Request $request, EntityManagerInterface $em) {
         $title = new Title();
         $form = $this->createForm(TitleType::class, $title);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // check for new titleFirmRoles and persist them.
+            foreach($title->getTitleFirmroles() as $tfr) {
+                $tfr->setTitle($title);
+                $em->persist($tfr);
+            }
+            
+            // check for new titleFirmRoles and persist them.
+            foreach($title->getTitleroles() as $tr) {
+                $tr->setTitle($title);
+                $em->persist($tr);
+            }
             $em = $this->getDoctrine()->getManager();
             $em->persist($title);
             $em->flush();
