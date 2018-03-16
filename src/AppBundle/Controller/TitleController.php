@@ -366,7 +366,7 @@ class TitleController extends Controller {
 
             $em->flush();
             $this->addFlash('success', 'The title has been updated.');
-            //return $this->redirectToRoute('title_show', array('id' => $title->getId()));
+            return $this->redirectToRoute('title_show', array('id' => $title->getId()));
         }
 
         return array(
