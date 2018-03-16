@@ -9,6 +9,6 @@
   year={{lb}}{{ title.pubdate }}{{rb}},
   title={{lb}}{{ title.title }}{{rb}},
   publisher={{lb}}{% for tfr in title.getTitleFirmRoles('Publisher') %}{% if tfr.firmrole.name == 'Publisher' %}{% set firm = tfr.firm %}{{ firm.name }}{% if not loop.last %} \& {% endif %}{% endif %}{% endfor %}{{rb}},
-  address={{lb}}{{title.locationOfPrinting.name}}{{rb}},
+  {% if title.locationOfPrinting %}address={{lb}}{{title.locationOfPrinting.name}}{{rb}},{% endif %}
     {{rb}}
 </pre>

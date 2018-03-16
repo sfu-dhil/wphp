@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection as Collection2;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints\Collection;
 
@@ -361,11 +362,11 @@ class Person
     /**
      * Add titleRole
      *
-     * @param \AppBundle\Entity\TitleRole $titleRole
+     * @param TitleRole $titleRole
      *
      * @return Person
      */
-    public function addTitleRole(\AppBundle\Entity\TitleRole $titleRole) {
+    public function addTitleRole(TitleRole $titleRole) {
         $this->titleRoles[] = $titleRole;
 
         return $this;
@@ -374,16 +375,16 @@ class Person
     /**
      * Remove titleRole
      *
-     * @param \AppBundle\Entity\TitleRole $titleRole
+     * @param TitleRole $titleRole
      */
-    public function removeTitleRole(\AppBundle\Entity\TitleRole $titleRole) {
+    public function removeTitleRole(TitleRole $titleRole) {
         $this->titleRoles->removeElement($titleRole);
     }
 
     /**
      * Get titleRoles
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection2
      */
     public function getTitleRoles() {
         return $this->titleRoles;
