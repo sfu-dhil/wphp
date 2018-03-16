@@ -132,3 +132,8 @@ div.embedded-form {
     padding-top: 15px;
     padding-right: 15px;    
 }
+
+/* Select2 typeaheads are a bit short. */
+span.select2 {
+    width: 100%!important;
+}

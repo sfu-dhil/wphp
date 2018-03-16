@@ -3,6 +3,7 @@
 namespace AppBundle\Form\Title;
 
 use AppBundle\Entity\Firm;
+use AppBundle\Entity\Firmrole;
 use AppBundle\Entity\TitleFirmrole;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -16,7 +17,7 @@ class TitleFirmType extends AbstractType {
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
-        $builder->add('Firm', Select2EntityType::class, array(
+        $builder->add('firm', Select2EntityType::class, array(
             'multiple' => false,
             'remote_route' => 'firm_typeahead',
             'class' => Firm::class,

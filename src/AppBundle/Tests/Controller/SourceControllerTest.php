@@ -127,20 +127,16 @@ class SourceControllerTest extends BaseTestCase
         ]);
         $formCrawler = $client->request('GET', '/source/1/edit');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );        
+      
         $form = $formCrawler->selectButton('Update')->form([
-            // DO STUFF HERE.
-            // 'sources[FIELDNAME]' => 'FIELDVALUE',
+            'source[name]' => 'Cheese'
         ]);
         
         $client->submit($form);
         $this->assertTrue($client->getResponse()->isRedirect('/source/1'));
         $responseCrawler = $client->followRedirect();
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        // $this->assertEquals(1, $responseCrawler->filter('td:contains("FIELDVALUE")')->count());
+        $this->assertEquals(1, $responseCrawler->filter('td:contains("Cheese")')->count());
     }
     
     public function testAnonNew() {
@@ -167,19 +163,16 @@ class SourceControllerTest extends BaseTestCase
         $formCrawler = $client->request('GET', '/source/new');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );        
+      
         $form = $formCrawler->selectButton('Create')->form([
-            // DO STUFF HERE.
-            // 'sources[FIELDNAME]' => 'FIELDVALUE',
+            'source[name]' => 'Cheese'
         ]);
         
         $client->submit($form);
         $this->assertTrue($client->getResponse()->isRedirect());
         $responseCrawler = $client->followRedirect();
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        // $this->assertEquals(1, $responseCrawler->filter('td:contains("FIELDVALUE")')->count());
+        $this->assertEquals(1, $responseCrawler->filter('td:contains("Cheese")')->count());
     }
     
     public function testAnonDelete() {

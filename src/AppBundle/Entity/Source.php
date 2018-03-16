@@ -32,7 +32,7 @@ class Source
      * @ORM\Column(name="name", type="text", nullable=true)
      */
     private $name;
-    
+        
     /**
      * Get id
      *

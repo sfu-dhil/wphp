@@ -5,6 +5,8 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Title;
 use AppBundle\Form\Title\TitleSearchType;
 use AppBundle\Form\Title\TitleType;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -255,12 +257,23 @@ class TitleController extends Controller {
      * @Template()
      * @param Request $request
      */
-    public function newAction(Request $request) {
+    public function newAction(Request $request, EntityManagerInterface $em) {
         $title = new Title();
         $form = $this->createForm(TitleType::class, $title);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // check for new titleFirmRoles and persist them.
+            foreach($title->getTitleFirmroles() as $tfr) {
+                $tfr->setTitle($title);
+                $em->persist($tfr);
+            }
+            
+            // check for new titleFirmRoles and persist them.
+            foreach($title->getTitleroles() as $tr) {
+                $tr->setTitle($title);
+                $em->persist($tr);
+            }
             $em = $this->getDoctrine()->getManager();
             $em->persist($title);
             $em->flush();
@@ -304,12 +317,53 @@ class TitleController extends Controller {
      * @param Request $request
      * @param Title $title
      */
-    public function editAction(Request $request, Title $title) {
-        $editForm = $this->createForm(TitleType::class, $title);
+    public function editAction(Request $request, Title $title, EntityManagerInterface $em) {
+        // collect the titleFirmRole objects before modification.
+        $titleFirmRoles = new ArrayCollection();        
+        foreach($title->getTitleFirmroles() as $tfr) {
+            $titleFirmRoles->add($tfr);
+        }
+
+        $titleRoles = new ArrayCollection();        
+        foreach($title->getTitleroles() as $tr) {
+            $titleRoles->add($tr);
+        }
+
+        $editForm = $this->createForm(TitleType::class, $title);        
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+            
+            // check for deleted titleFirmRoles and remove them.
+            foreach($titleFirmRoles as $tfr) {
+                if( ! $title->getTitleFirmroles()->contains($tfr)) {
+                    $em->remove($tfr);
+                }
+            }
+            
+            // check for deleted titleRoles and remove them.
+            foreach($titleRoles as $tfr) {
+                if( ! $title->getTitleroles()->contains($tr)) {
+                    $em->remove($tr);
+                }
+            }
+
+            // check for new titleFirmRoles and persist them.
+            foreach($title->getTitleFirmroles() as $tfr) {
+                if( ! $titleFirmRoles->contains($tfr)) {
+                    $tfr->setTitle($title);
+                    $em->persist($tfr);
+                }
+            }
+            
+            // check for new titleFirmRoles and persist them.
+            foreach($title->getTitleroles() as $tr) {
+                if( ! $titleRoles->contains($tr)) {
+                    $tr->setTitle($title);
+                    $em->persist($tr);
+                }
+            }
+
             $em->flush();
             $this->addFlash('success', 'The title has been updated.');
             return $this->redirectToRoute('title_show', array('id' => $title->getId()));
