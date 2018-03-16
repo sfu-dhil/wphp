@@ -74,8 +74,8 @@ class FeedbackControllerTest extends BaseTestCase
         
         $client = $this->makeClient();
         $crawler = $client->request('GET', '/feedback/new');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertGreaterThan(0, $crawler->filter('h1:contains("Feedback Creation")')->count());
+        $this->assertEquals(302, $client->getResponse()->getStatusCode());
+        //$this->assertGreaterThan(0, $crawler->filter('h1:contains("Feedback Creation")')->count());
     }
     
     public function testUserNew() {

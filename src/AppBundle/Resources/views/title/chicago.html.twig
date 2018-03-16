@@ -46,7 +46,7 @@
                             <em><a href="{{path("title_show", {"id": title.id})}}">{{ title.title }}</a></em>
                             {%- if title.title matches '{[^[:punct:]]$}' %}.{% endif %}
                                 <!--Location-->
-                                {{title.locationOfPrinting.name}}:
+                                {% if title.locationOfPrinting %}{{title.locationOfPrinting.name}}:{% endif %}
                                 <!--Publisher-->
                                 {% for tfr in title.titleFirmRoles %}
                                     {% if tfr.firmrole.name == 'Publisher' %}

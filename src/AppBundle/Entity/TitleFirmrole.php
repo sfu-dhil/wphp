@@ -18,8 +18,8 @@ use Doctrine\ORM\Mapping as ORM;
  * })
  * @ORM\Entity
  */
-class TitleFirmrole
-{
+class TitleFirmrole {
+
     /**
      * @var integer
      *
@@ -34,7 +34,7 @@ class TitleFirmrole
      *
      * @ORM\ManyToOne(targetEntity="Title", inversedBy="titleFirmroles")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="title_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="title_id", referencedColumnName="id", nullable=false)
      * })
      */
     private $title;
@@ -44,7 +44,7 @@ class TitleFirmrole
      *
      * @ORM\ManyToOne(targetEntity="Firm", inversedBy="titleFirmroles")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="firm_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="firm_id", referencedColumnName="id", nullable=false)
      * })
      */
     private $firm;
@@ -54,12 +54,10 @@ class TitleFirmrole
      *
      * @ORM\ManyToOne(targetEntity="Firmrole")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="firmrole_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="firmrole_id", referencedColumnName="id", nullable=false)
      * })
      */
     private $firmrole;
-
-
 
     /**
      * Get id
@@ -73,11 +71,11 @@ class TitleFirmrole
     /**
      * Set title
      *
-     * @param \AppBundle\Entity\Title $title
+     * @param Title $title
      *
      * @return TitleFirmrole
      */
-    public function setTitle(\AppBundle\Entity\Title $title = null) {
+    public function setTitle(Title $title = null) {
         $this->title = $title;
 
         return $this;
@@ -86,7 +84,7 @@ class TitleFirmrole
     /**
      * Get title
      *
-     * @return \AppBundle\Entity\Title
+     * @return Title
      */
     public function getTitle() {
         return $this->title;
@@ -95,11 +93,11 @@ class TitleFirmrole
     /**
      * Set firm
      *
-     * @param \AppBundle\Entity\Firm $firm
+     * @param Firm $firm
      *
      * @return TitleFirmrole
      */
-    public function setFirm(\AppBundle\Entity\Firm $firm = null) {
+    public function setFirm(Firm $firm = null) {
         $this->firm = $firm;
 
         return $this;
@@ -108,7 +106,7 @@ class TitleFirmrole
     /**
      * Get firm
      *
-     * @return \AppBundle\Entity\Firm
+     * @return Firm
      */
     public function getFirm() {
         return $this->firm;
@@ -117,11 +115,11 @@ class TitleFirmrole
     /**
      * Set firmrole
      *
-     * @param \AppBundle\Entity\Firmrole $firmrole
+     * @param Firmrole $firmrole
      *
      * @return TitleFirmrole
      */
-    public function setFirmrole(\AppBundle\Entity\Firmrole $firmrole = null) {
+    public function setFirmrole(Firmrole $firmrole = null) {
         $this->firmrole = $firmrole;
 
         return $this;
@@ -130,9 +128,10 @@ class TitleFirmrole
     /**
      * Get firmrole
      *
-     * @return \AppBundle\Entity\Firmrole
+     * @return Firmrole
      */
     public function getFirmrole() {
         return $this->firmrole;
     }
+
 }
