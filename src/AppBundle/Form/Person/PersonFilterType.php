@@ -44,7 +44,7 @@ class PersonFilterType extends AbstractType
             'label' => 'Name',
             'required' => false,
             'attr' => array(
-                'help_block' => 'Enter all or part of a personal name.'
+                'help_block' => 'Enter all or part of a personal name'
             ),
         ));
 
@@ -56,7 +56,7 @@ class PersonFilterType extends AbstractType
                 '(unknown)' => 'U',
             ),
             'attr' => array(
-                'help_block' => 'Leave this field blank to include all genders.'
+                'help_block' => 'Leave this field blank to include all genders'
             ),
             'required' => false,
             'expanded' => true,

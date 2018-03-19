@@ -26,18 +26,24 @@ class FirmSearchType extends AbstractType {
             'label' => 'Name',
             'required' => false,
             'attr' => array(
-                'help_block' => 'Enter all or part of a firm name.'
+                'help_block' => 'Enter all or part of a firm name'
             ),
         ));
 
         $builder->add('address', TextType::class, array(
             'label' => 'Address',
             'required' => false,
+            'attr' => array(
+                'help_block' => 'Text search for a firm address'
+            ),
         ));
 
         $builder->add('city', TextType::class, array(
             'label' => 'City',
             'required' => false,
+            'attr' => array(
+                'help_block' => 'Text search for a firm city'
+            ),
         ));
     }
 

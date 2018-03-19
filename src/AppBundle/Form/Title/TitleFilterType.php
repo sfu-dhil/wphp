@@ -50,7 +50,7 @@ class TitleFilterType extends AbstractType {
             'label' => 'Title',
             'required' => false,
             'attr' => array(
-                'help_block' => 'Enter all or part of a title.'
+                'help_block' => 'Enter all or part of a title'
             ),
         ));
 
@@ -74,7 +74,7 @@ class TitleFilterType extends AbstractType {
             'label' => 'Publication Year',
             'required' => false,
             'attr' => array(
-                'help_block' => 'Enter a year (eg <kbd>1795</kbd>) or range of years (<kbd>1790-1800</kbd>) or a partial range of years (<kbd>*-1800</kbd>).',
+                'help_block' => 'Enter a year (eg <kbd>1795</kbd>) or range of years (<kbd>1790-1800</kbd>) or a partial range of years (<kbd>*-1800</kbd>)',
             ),
         ));
 

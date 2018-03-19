@@ -21,14 +21,14 @@ class FirmType extends AbstractType {
             'label' => 'Name',
             'required' => false,
             'attr' => array(
-                'help_block' => '',
+                'help_block' => 'Most complete name of the firm known',
             ),
         ));
         $builder->add('streetAddress', null, array(
             'label' => 'Street Address',
             'required' => false,
             'attr' => array(
-                'help_block' => '',
+                'help_block' => 'Street address of the firm as geotagged (a new firm entry is made when relocated)',
             ),
         ));
         $builder->add('city', Select2EntityType::class, array(
@@ -40,20 +40,23 @@ class FirmType extends AbstractType {
             'page_limit' => 10,
             'allow_clear' => true,
             'delay' => 250,
-            'language' => 'en',            
+            'language' => 'en',
+            'attr' => array(
+              'help_block' => 'City/town/village in which the firm’s street address is located; geotagged'  
+            ),
         ));
         $builder->add('startDate', null, array(
             'label' => 'Start Date',
             'required' => false,
             'attr' => array(
-                'help_block' => '',
+                'help_block' => 'If known, YYYY-MM-DD',
             ),
         ));
         $builder->add('endDate', null, array(
             'label' => 'End Date',
             'required' => false,
             'attr' => array(
-                'help_block' => '',
+                'help_block' => 'If known, YYYY-MM-DD',
             ),
         ));
         $builder->add('finalcheck', ChoiceType::class, array(
@@ -67,7 +70,7 @@ class FirmType extends AbstractType {
             'required' => true,
             'placeholder' => false,
             'attr' => array(
-                'help_block' => '',
+                'help_block' => 'Indicates the final attempt to find further information about the firm',
             ),
         ));
     }
