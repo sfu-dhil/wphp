@@ -16,6 +16,8 @@
         $(this).attr('target', '_blank');
     }
     
+  
+    
     function windowBeforeUnload(e) {
         var clean = true;
         $('form').each(function () {
@@ -81,6 +83,7 @@
         $("a.popup").click(formPopup);
         $("a").each(link);
         $("*[data-confirm]").each(confirm);
+        $('[data-toggle="popover"]').popover(); //add this line to enable bootstrap popover
         if (typeof $().collection === 'function') {
             simpleCollection();
             complexCollection();

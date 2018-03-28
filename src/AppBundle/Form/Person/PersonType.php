@@ -50,7 +50,7 @@ class PersonType extends AbstractType {
             'label' => 'Dob',
             'required' => false,
             'attr' => array(
-                'help_block' => '',
+                'help_block' => 'Person’s date of birth as YYYY-MM-DD',
             ),
         ));
         $builder->add('cityOfBirth', Select2EntityType::class, array(
@@ -62,13 +62,16 @@ class PersonType extends AbstractType {
             'page_limit' => 10,
             'allow_clear' => true,
             'delay' => 250,
-            'language' => 'en',            
+            'language' => 'en', 
+            'attr' => array(
+                'help_block' => 'Geotagged location of person’s birth'
+            ),
         ));
         $builder->add('dod', null, array(
             'label' => 'Dod',
             'required' => false,
             'attr' => array(
-                'help_block' => '',
+                'help_block' => 'Person’s date of death as YYYY-MM-DD',
             ),
         ));
         $builder->add('cityOfDeath', Select2EntityType::class, array(
@@ -80,7 +83,10 @@ class PersonType extends AbstractType {
             'page_limit' => 10,
             'allow_clear' => true,
             'delay' => 250,
-            'language' => 'en',            
+            'language' => 'en',
+            'attr' => array(
+                'help_block' => 'Geotagged location of person’s death'
+            ),
         ));
         $builder->add('checked', ChoiceType::class, array(
             'label' => 'Checked',
@@ -93,7 +99,7 @@ class PersonType extends AbstractType {
             'required' => true,
             'placeholder' => false,
             'attr' => array(
-                'help_block' => '',
+                'help_block' => 'Indicates the attempt to find person’s information',
             ),
         ));
         $builder->add('finalcheck', ChoiceType::class, array(
@@ -107,7 +113,7 @@ class PersonType extends AbstractType {
             'required' => true,
             'placeholder' => false,
             'attr' => array(
-                'help_block' => '',
+                'help_block' => 'Indicates the final attempt to find person’s information',
             ),
         ));
     }

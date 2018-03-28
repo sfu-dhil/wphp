@@ -28,7 +28,7 @@ class PersonSearchType extends AbstractType {
             'label' => 'Name',
             'required' => false,
             'attr' => array(
-                'help_block' => 'Enter all or part of a personal name.'
+                'help_block' => 'Enter all or part of a personal name'
             ),
         ));
 
@@ -40,7 +40,7 @@ class PersonSearchType extends AbstractType {
                 '(unknown)' => 'U',
             ),
             'attr' => array(
-                'help_block' => 'Leave this field blank to include all genders.'
+                'help_block' => 'Leave this field blank to include all genders'
             ),
             'required' => false,
             'expanded' => true,
@@ -53,7 +53,7 @@ class PersonSearchType extends AbstractType {
             'label' => 'Birth Year',
             'required' => false,
             'attr' => array(
-                'help_block' => 'Enter a year (eg <kbd>1795</kbd>) or range of years (<kbd>1790-1800</kbd>) or a partial range of years (<kbd>*-1800</kbd>).',
+                'help_block' => 'Enter a year (eg <kbd>1795</kbd>) or range of years (<kbd>1790-1800</kbd>) or a partial range of years (<kbd>*-1800</kbd>)',
             ),
         ));
 
@@ -61,7 +61,7 @@ class PersonSearchType extends AbstractType {
             'label' => 'Death Year',
             'required' => false,
             'attr' => array(
-                'help_block' => 'Enter a year (eg <kbd>1795</kbd>) or range of years (<kbd>1790-1800</kbd>) or a partial range of years (<kbd>*-1800</kbd>).',
+                'help_block' => 'Enter a year (eg <kbd>1795</kbd>) or range of years (<kbd>1790-1800</kbd>) or a partial range of years (<kbd>*-1800</kbd>)',
             ),
         ));
 

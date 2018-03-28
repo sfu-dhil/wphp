@@ -37,7 +37,7 @@ class TitleSearchType extends AbstractType {
             'label' => 'Title',
             'required' => false,
             'attr' => array(
-                'help_block' => 'Enter all or part of a title.'
+                'help_block' => 'Enter all or part of a title'
             ),
         ));
 
@@ -74,7 +74,7 @@ class TitleSearchType extends AbstractType {
                 'No' => 'N',
             ),
             'attr' => array(
-                'help_block' => 'Limit results to those that have been checked or not checked.'
+                'help_block' => 'Limit results to those that have been checked or not checked'
             ),
             'required' => false,
             'expanded' => true,
@@ -90,7 +90,7 @@ class TitleSearchType extends AbstractType {
                 'No' => 'N',
             ),
             'attr' => array(
-                'help_block' => 'Limit results to those that have been double checked or not checked.'
+                'help_block' => 'Limit results to those that have been double checked or not checked'
             ),
             'required' => false,
             'expanded' => true,
@@ -103,7 +103,7 @@ class TitleSearchType extends AbstractType {
             'label' => 'Publication Year',
             'required' => false,
             'attr' => array(
-                'help_block' => 'Enter a year (eg <kbd>1795</kbd>) or range of years (<kbd>1790-1800</kbd>) or a partial range of years (<kbd>*-1800</kbd>).',
+                'help_block' => 'Enter a year (eg <kbd>1795</kbd>) or range of years (<kbd>1790-1800</kbd>) or a partial range of years (<kbd>*-1800</kbd>)',
             ),
         ));
 
