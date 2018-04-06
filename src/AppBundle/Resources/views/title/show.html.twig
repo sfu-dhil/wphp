@@ -282,29 +282,29 @@
     <h3>Bibliographic Entry</h3>
     <div>
         <ul class="nav nav-tabs">
-            <li class="active"><a data-toggle="tab" href="#citation">MLA</a></li>
-            <li><a data-toggle="tab" href="#author">APA</a></li>
-            <li><a data-toggle="tab" href="#publisher">Chicago/Turabian: Author-Date</a></li>
-            <li><a data-toggle="tab" href="#catalogue">BibTex</a></li>
+            <li class="active"><a data-toggle="tab" href="#mla">MLA</a></li>
+            <li><a data-toggle="tab" href="#apa">APA</a></li>
+            <li><a data-toggle="tab" href="#chicago">Chicago/Turabian</a></li>
+            <li><a data-toggle="tab" href="#bibtex">BibTex</a></li>
         </ul>
 
         <div class="tab-content">
-            <div id="citation" class="tab-pane fade in active">
+            <div id="mla" class="tab-pane fade in active">
                 <div class="well">
                     <p>{% include "AppBundle:title:mla.html.twig" with {'title': title} %}</p> 
                 </div>
             </div>
-            <div id="author" class="tab-pane fade">
+            <div id="apa" class="tab-pane fade">
                 <div class="well">
                     <p>{% include "AppBundle:title:apa.html.twig" with {'title': title} %}</p>
                 </div> 
             </div>
-            <div id="publisher" class="tab-pane fade">
+            <div id="chicago" class="tab-pane fade">
                 <div class="well">
                     <p>{% include "AppBundle:title:chicago.html.twig" with {'title': title} %}</p>
                 </div>  
             </div>
-            <div id="catalogue" class="tab-pane fade">
+            <div id="bibtex" class="tab-pane fade">
                 <div class="well">
                     <pre>{% include "AppBundle:title:bibtex.html.twig" with {'title': title} %}</pre>
                 </div>    
