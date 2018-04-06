@@ -110,6 +110,9 @@ class TitleSearchType extends AbstractType {
         $builder->add('location', TextType::class, array(
             'label' => 'Printing Location',
             'required' => false,
+            'attr' => array(
+                'help_block' => 'Geotagged location as indicated by the imprint'
+            ),
         ));
 
         $builder->add('format', ChoiceType::class, array(
@@ -143,16 +146,25 @@ class TitleSearchType extends AbstractType {
         $builder->add('signed_author', TextType::class, array(
             'label' => 'Signed author',
             'required' => false,
+            'attr' => array(
+                'help_block' => 'Author attribution as it appears on the title page or at the end of the preface (Ex. “By a lady,” “By the author of“)'
+            ),
         ));
 
         $builder->add('imprint', TextType::class, array(
             'label' => 'Imprint',
             'required' => false,
+            'attr' => array(
+                'help_block' => 'Information about printers, publishers, booksellers as represented on the title page'
+            ),
         ));
 
         $builder->add('pseudonym', TextType::class, array(
             'label' => 'Pseudonym',
             'required' => false,
+            'attr' => array(
+                'help_block' => 'The false name that the author has signed the work with'
+            ),
         ));
 
         $builder->add('person_filter', PersonFilterType::class, array(

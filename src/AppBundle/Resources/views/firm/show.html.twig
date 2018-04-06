@@ -36,19 +36,19 @@
     <table class="table table-bordered table-condensed table-hover table-striped">
         <tbody>
             <tr>
-                <th>Id</th>
+                <th><a href="#" data-toggle="popover" data-content="Unique ID number for this entry" data-trigger="hover" data-placement="bottom">Id</a></th>
                 <td>{{ firm.id }}</td>
             </tr>
             <tr>
-                <th>Name</th>
+                <th><a href="#" data-toggle="popover" data-content="Most complete name of the firm known" data-trigger="hover" data-placement="bottom">Name</a></th>
                 <td>{{ firm.name }}</td>
             </tr>
             <tr>
-                <th>Street address</th>
+                <th><a href="#" data-toggle="popover" data-content="Street address of the firm as geotagged" data-trigger="hover" data-placement="bottom">Street address</a></th>
                 <td>{{ firm.streetAddress }}</td>
             </tr>
             <tr>
-                <th>City</th>
+                <th><a href="#" data-toggle="popover" data-content="City/town/village in which the firm’s street address is located; geotagged" data-trigger="hover" data-placement="bottom">City</a></th>
                 <td>
                     {% if firm.city %}
                         <a href="{{ path('geonames_show', {'id': firm.city.geonameid}) }}">
@@ -58,11 +58,11 @@
                 </td>
             </tr>
             <tr>
-                <th>Start date</th>
+                <th><a href="#" data-toggle="popover" data-content="YYYY-MM-DD" data-trigger="hover" data-placement="bottom">Start date</a></th>
                 <td>{% if firm.startDate %}{{ firm.startDate|date('Y') }}{% endif %}</td>
             </tr>
             <tr>
-                <th>End date</th>
+                <th><a href="#" data-toggle="popover" data-content="YYYY-MM-DD" data-trigger="hover" data-placement="bottom">End date</a></th>
                 <td>{% if firm.endDate %}{{ firm.endDate|date('Y') }}{% endif %}</td>
             </tr>
         </tbody>

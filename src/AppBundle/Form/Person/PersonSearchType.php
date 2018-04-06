@@ -68,11 +68,13 @@ class PersonSearchType extends AbstractType {
         $builder->add('birthplace', TextType::class, array(
             'label' => 'Birth Place',
             'required' => false,
+           
         ));
 
         $builder->add('deathplace', TextType::class, array(
             'label' => 'Death Place',
             'required' => false,
+            
         ));
 
         $builder->add('title_filter', TitleFilterType::class, array(
