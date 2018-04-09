@@ -40,31 +40,31 @@
     <table class="table table-bordered table-condensed table-hover table-striped">
         <tbody>
             <tr>
-                <th>Id</th>
+                <th><a href="#" data-toggle="popover" data-content="Unique ID number for this entry" data-trigger="hover" data-placement="bottom">Id</a></th>
                 <td>{{ person.id }}</td>
             </tr>
             <tr>
-                <th>Last name</th>
+                <th><a href="#" data-toggle="popover" data-content="Person’s last name by which he or she is most commonly known" data-trigger="hover" data-placement="bottom">Last name</a></th>
                 <td>{{ person.lastName }}</td>
             </tr>
             <tr>
-                <th>First name</th>
+                <th><a href="#" data-toggle="popover" data-content="Person’s first name and where appropriate, full aristocratic title" data-trigger="hover" data-placement="bottom">First name</a></th>
                 <td>{{ person.firstName }}</td>
             </tr>
             <tr>
-                <th>Title</th>
+                <th><a href="#" data-toggle="popover" data-content="Person's aristocratic title, if exists" data-trigger="hover" data-placement="bottom">Title</a></th>
                 <td>{{ person.title }}</td>
             </tr>
             <tr>
-                <th>Gender</th>
+                <th><a href="#" data-toggle="popover" data-content="Person's gender, if known" data-trigger="hover" data-placement="bottom">Gender</a></th>
                 <td>{{ person.gender }}</td>
             </tr>
             <tr>
-                <th>Date of birth</th>
+                <th><a href="#" data-toggle="popover" data-content="YYYY-MM-DD" data-trigger="hover" data-placement="bottom">Date of birth</a></th>
                 <td>{% if person.dob %}{{ person.dob }}{% endif %}</td>
             </tr>
             <tr>
-                <th>Place of birth</th>
+                <th><a href="#" data-toggle="popover" data-content="Place of birth as geotagged" data-trigger="hover" data-placement="bottom">Place of birth</a></th>
                 <td>
                     {% if person.cityOfBirth %} 
                         <a href="{{path('geonames_show', {'id': person.cityOfBirth.geonameid}) }}">
@@ -74,11 +74,11 @@
                 </td>
             </tr>
             <tr>
-                <th>Date of death</th>
+                <th><a href="#" data-toggle="popover" data-content="YYYY-MM-DD" data-trigger="hover" data-placement="bottom">Date of death</a></th>
                 <td>{% if person.dod %}{{ person.dod }}{% endif %}</td>
             </tr>
             <tr>
-                <th>Place of Death</th>
+                <th><a href="#" data-toggle="popover" data-content="Place of death as geotagged" data-trigger="hover" data-placement="bottom">Place of Death</a></th>
                 <td>
                     {% if person.cityOfDeath %} 
                         <a href="{{ path('geonames_show', {'id': person.cityOfDeath.geonameid}) }}">
