@@ -36,38 +36,23 @@
             {% endif %}
         </div>
     </div>
-        
-        <br>
-        
-    <div>
-
-        <ul class="nav nav-tabs">
-            <li class="active"><a data-toggle="tab" href="#citation">Citation</a></li>
-            <li><a data-toggle="tab" href="#author">Author</a></li>
-            <li><a data-toggle="tab" href="#publisher">Publishing</a></li>
-            <li><a data-toggle="tab" href="#catalogue">Cataloguing</a></li>
-            <li><a data-toggle="tab" href="#data">Entry</a></li>
-        </ul>
-
-        <div class="tab-content">
-            <div id="citation" class="tab-pane fade in active">
-                <h3>Citation Information</h3>
-                <table class="table table-bordered table-condensed table-hover table-striped">
+ 
+ <div class="container">
+     <div class="row">
+                          
+   <div class="col-sm-6">
+  <table class="table table-bordered table-condensed table-hover table-striped">
                     <tbody>
-                        <tr>
-                            <th><a href="#" data-toggle="popover" data-content="Full title, subtitle, signed author, and edition statement from the title page" data-trigger="hover" data-placement="bottom">Title</a></th>
-                            <td>{{ title.title }}</td>
-                        </tr>
-                        <tr>
-                            <th><a href="#" data-toggle="popover" data-content="Author attribution from the title page or the end of the preface" data-trigger="hover" data-placement="bottom">Signed author</a></th>
+                        <tr class="text-nowrap">
+                            <th><a href="#" data-toggle="popover" data-content="Author attribution from the title page or the end of the preface" data-trigger="hover" data-placement="bottom" style="text-decoration: none; color: black">Signed author</a></th>
                             <td>{{ title.signedAuthor }}</td>
                         </tr>
                         <tr>
-                            <th><a href="#" data-toggle="popover" data-content="Date (year) as it appears on the imprint" data-trigger="hover" data-placement="bottom">Publication date</a></th>
+                            <th><a href="#" data-toggle="popover" data-content="Date (year) as it appears on the imprint" data-trigger="hover" data-placement="bottom" style="text-decoration: none; color: black">Publication date</a></th>
                             <td>{{ title.pubdate }}</td>
                         </tr>
                         <tr>
-                            <th><a href="#" data-toggle="popover" data-content="Geotagged location as indicated by the imprint" data-trigger="hover" data-placement="bottom">Location of printing</a></th>
+                            <th><a href="#" data-toggle="popover" data-content="Geotagged location as indicated by the imprint" data-trigger="hover" data-placement="bottom" style="text-decoration: none; color: black">Location of printing</a></th>
                             <td>
                                 {% if title.locationOfPrinting %}
                                 <a href="{{ path('geonames_show', {'id': title.locationOfPrinting.geonameid}) }}">
@@ -78,19 +63,19 @@
                         {% endif %}
                         </tr>
                         <tr>
-                            <th><a href="#" data-toggle="popover" data-content="Edition as it appears on the title page" data-trigger="hover" data-placement="bottom">Edition</a></th>
+                            <th><a href="#" data-toggle="popover" data-content="Edition as it appears on the title page" data-trigger="hover" data-placement="bottom" style="text-decoration: none; color: black">Edition</a></th>
                             <td>{{ title.edition }}</td>
                         </tr>
                         <tr>
-                            <th><a href="#" data-toggle="popover" data-content="Numerical form of the edition" data-trigger="hover" data-placement="bottom">Edition Number</a></th>
+                            <th><a href="#" data-toggle="popover" data-content="Numerical form of the edition" data-trigger="hover" data-placement="bottom" style="text-decoration: none; color: black">Edition Number</a></th>
                             <td>{{ title.editionNumber }}</td>
                         </tr>
                         <tr>
-                            <th><a href="#" data-toggle="popover" data-content="Number of volumes of the edition, using arabic numerals" data-trigger="hover" data-placement="bottom">Volumes</a></th>
+                            <th><a href="#" data-toggle="popover" data-content="Number of volumes of the edition, using arabic numerals" data-trigger="hover" data-placement="bottom" style="text-decoration: none; color: black">Volumes</a></th>
                             <td>{{ title.volumes }}</td>
                         </tr>
                         <tr>
-                            <th><a href="#" data-toggle="popover" data-content="Names of all printers, publishers, and booksellers listed in the imprint and their role in the work’s production" data-trigger="hover" data-placement="bottom">Firms</a></th>
+                            <th><a href="#" data-toggle="popover" data-content="Names of all printers, publishers, and booksellers listed in the imprint and their role in the work’s production" data-trigger="hover" data-placement="bottom" style="text-decoration: none; color: black">Firms</a></th>
                             <td>
                                 {% for tfr in title.titleFirmRoles %}
                                 {% set firm = tfr.firm %}
@@ -98,61 +83,34 @@
                                 {% endfor %}
                             </td>
                         </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div id="author" class="tab-pane fade">
-                <h3>Author Information</h3>
-                    <table class="table table-bordered table-condensed table-hover table-striped">
-                    <tbody>
+                        
                         <tr>
-                            <th><a href="#" data-toggle="popover" data-content="Any false author name" data-trigger="hover" data-placement="bottom">Pseudonym</a></th>
+                            <th><a href="#" data-toggle="popover" data-content="Any false author name" data-trigger="hover" data-placement="bottom" style="text-decoration: none; color: black">Pseudonym</a></th>
                             <td>{{ title.pseudonym }}</td>
                         </tr>
       
                         <tr>
-                            <th><a href="#" data-toggle="popover" data-content="Names of all women who have contributed to the work and their role in the work’s production" data-trigger="hover" data-placement="bottom">Contributors</a></th>
+                            <th><a href="#" data-toggle="popover" data-content="Names of all women who have contributed to the work and their role in the work’s production" data-trigger="hover" data-placement="bottom" style="text-decoration: none; color: black">Contributors</a></th>
                             <td>
                                 {% for tr in title.titleRoles %}
                                 {% set person = tr.person %}
                                 {{ tr.role.name }}: <a href="{{ path('person_show', {'id': person.id}) }}">{{ person.lastName }}, {{ person.firstName }}</a><br/>
                                 {% endfor %}
                             </td>
-                        </tr>                
-                </tbody>
-                </table>
-                
-            </div>
-            <div id="publisher" class="tab-pane fade">
-                <h3>Publishing Information</h3>
-                
-            <table class="table table-bordered table-condensed table-hover table-striped">
-                <tbody>
-                    <tr>
-                        <th><a href="#" data-toggle="popover" data-content="Indicates if the title was published by the author" data-trigger="hover" data-placement="bottom">Self published</a></th>
+                        </tr>    
+                        
+                        <tr>
+                        <th><a href="#" data-toggle="popover" data-content="Indicates if the title was published by the author" data-trigger="hover" data-placement="bottom" style="text-decoration: none; color: black">Self published</a></th>
                         <td>{% if title.selfpublished %}Yes{% else %}No{% endif %}</td>
                     </tr>
             
                     <tr>
-                        <th><a href="#" data-toggle="popover" data-content="Date (year) that the work was first published" data-trigger="hover" data-placement="bottom">Date of first publication</a></th>
+                        <th><a href="#" data-toggle="popover" data-content="Date (year) that the work was first published" data-trigger="hover" data-placement="bottom" style="text-decoration: none; color: black">Date of first publication</a></th>
                         <td>{{ title.dateOfFirstPublication }}</td>
                     </tr>
-                </tbody>
-            </table>
-            
-            
                     
-                    
-                    
-            </div>
-            <div id="catalogue" class="tab-pane fade">
-                <h3>Cataloguing Information</h3>
-                
-                <table class="table table-bordered table-condensed table-hover table-striped">
-                    <tbody>
-                  
-                        <tr>
-                            <th><a href="#" data-toggle="popover" data-content="Category that the work falls into" data-trigger="hover" data-placement="bottom">Genre</a></th>                
+                    <tr>
+                            <th><a href="#" data-toggle="popover" data-content="Category that the work falls into" data-trigger="hover" data-placement="bottom" style="text-decoration: none; color: black">Genre</a></th>                
                             <td>
                                 {% if title.genre %}
                                 <a href="{{ path('genre_show', {'id': title.genre.id}) }}">
@@ -163,7 +121,7 @@
                     
                         </tr>
                         <tr>
-                            <th><a href="#" data-toggle="popover" data-content="The way that sheets have been folded and gathered into pages" data-trigger="hover" data-placement="bottom">Format</a></th>
+                            <th><a href="#" data-toggle="popover" data-content="The way that sheets have been folded and gathered into pages" data-trigger="hover" data-placement="bottom" style="text-decoration: none; color: black">Format</a></th>
                             <td>
                                 {% if title.format %}
                                 <a href="{{ path('format_show', {'id': title.format.id}) }}">
@@ -172,40 +130,48 @@
                                 {% endif %}
                             </td>
                         </tr>
-            
-                        <tr>
-                            <th><a href="#" data-toggle="popover" data-content="Information about printers, publishers, booksellers as shown on the title page" data-trigger="hover" data-placement="bottom">Imprint</a></th>
+                        
+                                                <tr>
+                            <th><a href="#" data-toggle="popover" data-content="Information about printers, publishers, booksellers as shown on the title page" data-trigger="hover" data-placement="bottom" style="text-decoration: none; color: black">Imprint</a></th>
                             <td>{{ title.imprint }}</td>
-                        </tr>
+                            </tr>
+                    </tbody>
+                    </table>
+  </div> 
+  
+                        
+  <div class="col-sm-6">                      
+  <table class="table table-bordered table-condensed table-hover table-striped">
+                    <tbody>
                     
                         <tr>
-                            <th><a href="#" data-toggle="popover" data-content="Number of pages of each volume" data-trigger="hover" data-placement="bottom">Pagination</a></th>
+                            <th><a href="#" data-toggle="popover" data-content="Number of pages of each volume" data-trigger="hover" data-placement="bottom" style="text-decoration: none; color: black">Pagination</a></th>
                             <td>{{ title.pagination }}</td>
                         </tr>
             
                         <tr>
-                            <th><a href="#" data-toggle="popover" data-content="Length measured in cm" data-trigger="hover" data-placement="bottom">Length (cm)</a></th>
+                            <th><a href="#" data-toggle="popover" data-content="Length measured in cm" data-trigger="hover" data-placement="bottom" style="text-decoration: none; color: black">Length (cm)</a></th>
                             <td>{{ title.sizeL }}</td>
                         </tr>
                         <tr>
-                            <th><a href="#" data-toggle="popover" data-content="Width measured in cm" data-trigger="hover" data-placement="bottom">Width (cm)</a></th>
+                            <th><a href="#" data-toggle="popover" data-content="Width measured in cm" data-trigger="hover" data-placement="bottom" style="text-decoration: none; color: black">Width (cm)</a></th>
                             <td>{{ title.sizeW }}</td>
                         </tr>
             
                         <tr>
-                            <th><a href="#" data-toggle="popover" data-content="Portion of the price of the work in pounds" data-trigger="hover" data-placement="bottom">Price (pound)</a></th>
+                            <th><a href="#" data-toggle="popover" data-content="Portion of the price of the work in pounds" data-trigger="hover" data-placement="bottom" style="text-decoration: none; color: black">Price (pound)</a></th>
                             <td>{{ title.pricePound }}</td>
                         </tr>
                         <tr>
-                            <th><a href="#" data-toggle="popover" data-content="Portion of the price of the work in shillings" data-trigger="hover" data-placement="bottom">Price (shilling)</a></th>
+                            <th><a href="#" data-toggle="popover" data-content="Portion of the price of the work in shillings" data-trigger="hover" data-placement="bottom" style="text-decoration: none; color: black">Price (shilling)</a></th>
                             <td>{{ title.priceShilling }}</td>
                         </tr>
                         <tr>
-                            <th><a href="#" data-toggle="popover" data-content="Portion of the price of the work in pence" data-trigger="hover" data-placement="bottom">Price (pence)</a></th>
+                            <th><a href="#" data-toggle="popover" data-content="Portion of the price of the work in pence" data-trigger="hover" data-placement="bottom" style="text-decoration: none; color: black">Price (pence)</a></th>
                             <td>{{ title.pricePence }}</td>
                         </tr>
                         <tr>
-                            <th><a href="#" data-toggle="popover" data-trigger="hover" data-placement="bottom">Total price (in pence)</a></th>
+                            <th><a href="#" data-toggle="popover" data-trigger="hover" data-placement="bottom" style="text-decoration: none; color: black">Total price (in pence)</a></th>
                             <td>
                                 {% if title.totalPrice > 0 %}
                                 {{ title.totalPrice }}
@@ -213,34 +179,26 @@
                             </td>
                         </tr>
                         <tr>
-                            <th><a href="#" data-toggle="popover" data-content="Call numbers for location in various libraries" data-trigger="hover" data-placement="bottom">Shelf marks</a></th>
+                            <th><a href="#" data-toggle="popover" data-content="Call numbers for location in various libraries" data-trigger="hover" data-placement="bottom" style="text-decoration: none; color: black">Shelf marks</a></th>
                             <td>
                             {% for mark in title.shelfmark|split(';') %}
                             {{ mark }}<br/>
                             {% endfor %}
                             </td>
                         </tr>
-            
-                    </tbody>
-                </table>
-                
-            </div>
-            <div id="data" class="tab-pane fade">
-                <h3>Entry Information</h3>
-                <table class="table table-bordered table-condensed table-hover table-striped">
-                    <tbody>
+                        
                         <tr>
-                            <th><a href="#" data-toggle="popover" data-content="Unique ID number for this entry" data-trigger="hover" data-placement="bottom">ID</a></th>
+                            <th><a href="#" data-toggle="popover" data-content="Unique ID number for this entry" data-trigger="hover" data-placement="bottom" style="text-decoration: none; color: black">ID</a></th>
                             <td>{{ title.id }}</td>
                         </tr>
                     
                         <tr>
-                            <th><a href="#" data-toggle="popover" data-content="Any other important information, including links to sources" data-trigger="hover" data-placement="bottom">Notes</a></th>
+                            <th><a href="#" data-toggle="popover" data-content="Any other important information, including links to sources" data-trigger="hover" data-placement="bottom" style="text-decoration: none; color: black">Notes</a></th>
                             <td>{{ title.notes }}</td>
                         </tr>
             
                         <tr>
-                            <th><a href="#" data-toggle="popover" data-content="First source consulted to populate the entry fields (source ID will vary according to the source)" data-trigger="hover" data-placement="bottom">Source 1</a></th>
+                            <th><a href="#" data-toggle="popover" data-content="First source consulted to populate the entry fields (source ID will vary according to the source)" data-trigger="hover" data-placement="bottom" style="text-decoration: none; color: black">Source 1</a></th>
                             <td>
                                 {% if title.source %}
                                 <a href="{{ path('source_show', {'id': title.source.id}) }}">
@@ -250,7 +208,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <th><a href="#" data-toggle="popover" data-content="Second source consulted to populate the entry fields (source ID will vary according to the source)" data-trigger="hover" data-placement="bottom">Source 2</a></th>
+                            <th><a href="#" data-toggle="popover" data-content="Second source consulted to populate the entry fields (source ID will vary according to the source)" data-trigger="hover" data-placement="bottom" style="text-decoration: none; color: black">Source 2</a></th>
                             <td>
                             {% if title.source2 %}
                             <a href="{{ path('source_show', {'id': title.source2.id}) }}">
@@ -261,26 +219,25 @@
                         </tr>
             
                         <tr>
-                            <th><a href="#" data-toggle="popover" data-content="Indicates that a physical copy of the text has been consulted" data-trigger="hover" data-placement="bottom">Hand checked</a></th>
+                            <th><a href="#" data-toggle="popover" data-content="Indicates that a physical copy of the text has been consulted" data-trigger="hover" data-placement="bottom" style="text-decoration: none; color: black">Hand checked</a></th>
                             <td>{% if title.checked %}Yes{% else %}No{% endif %}</td>
                         </tr>
                         <tr>
-                            <th><a href="#" data-toggle="popover" data-content="Indicates that either two sources have been consulted or the text has been hand-checked" data-trigger="hover" data-placement="bottom">Final check</a></th>
+                            <th><a href="#" data-toggle="popover" data-content="Indicates that either two sources have been consulted or the text has been hand-checked" data-trigger="hover" data-placement="bottom" style="text-decoration: none; color: black">Final check</a></th>
                             <td>{% if title.finalcheck %}Yes{% else %}No{% endif %}</td>
                         </tr>
-            
+                        
                     </tbody>
                 </table>
-            </div>
-        </div>
-   
-    </div>    
-        
-        
-       <br>        
-       
-    <h3>Bibliographic Entry</h3>
-    <div>
+  </div>
+                        
+</div></div>
+    
+       <br>
+ 
+
+    <div class="container">
+        <h3>Bibliographic Entry</h3>
         <ul class="nav nav-tabs">
             <li class="active"><a data-toggle="tab" href="#mla">MLA</a></li>
             <li><a data-toggle="tab" href="#apa">APA</a></li>
