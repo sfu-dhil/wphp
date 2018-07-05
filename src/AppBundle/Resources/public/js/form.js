@@ -1,5 +1,5 @@
 (function ($, window) {
-    
+
     var hostname = window.location.hostname.replace('www.', '');
 
     function confirm() {
@@ -8,16 +8,14 @@
             return window.confirm($this.data('confirm'));
         });
     }
-    
+
     function link() {
-        if(this.hostname.replace('www.', '') === hostname) {
+        if (this.hostname.replace('www.', '') === hostname) {
             return;
         }
         $(this).attr('target', '_blank');
     }
-    
-  
-    
+
     function windowBeforeUnload(e) {
         var clean = true;
         $('form').each(function () {
@@ -32,7 +30,7 @@
             return message;
         }
     }
-    
+
     function formDirty() {
         var $form = $(this);
         $form.data('dirty', false);
@@ -75,7 +73,7 @@
                 return true;
             },
         });
-    }    
+    }
 
     $(document).ready(function () {
         $(window).bind('beforeunload', windowBeforeUnload);
