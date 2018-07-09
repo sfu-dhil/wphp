@@ -42,7 +42,7 @@ class Firm
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="text", nullable=true)
+     * @ORM\Column(name="name", type="string", length=255, nullable=true)
      */
     private $name;
 
@@ -282,7 +282,7 @@ class Firm
         $iterator->uasort(function(TitleFirmrole $a, TitleFirmrole $b) {
             return strcmp($a->getTitle()->getTitle(), $b->getTitle()->getTitle());
         });
-        return new ArrayCollection(iterator_to_array($iterator));        
+        return new ArrayCollection(iterator_to_array($iterator));
     }
 
     /**
