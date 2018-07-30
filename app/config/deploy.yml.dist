@@ -1,0 +1,24 @@
+
+# define the hosts
+10.0.0.12:
+    stage: staging
+    become: ~
+    deploy_path: ~
+    user: ~
+
+# The settings key must start with a dot(.) to prevent it being treated as
+# a host in the inventory.
+.settings:
+    application: ~
+    repository: ~
+    branch: master
+    shared_dirs:
+        - var/logs
+        - var/sessions
+        - var/cache
+    writable_dirs:
+        - var/logs
+        - var/sessions
+        - var/cache
+    composer_options: 'install --no-progress --optimize-autoloader --no-interaction'
+    site_path: /~

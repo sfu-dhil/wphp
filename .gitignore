@@ -27,3 +27,4 @@ app/cache
 /composer.phar
 /.DS_Store
 phpunit.xml
+app/config/deploy.yml
