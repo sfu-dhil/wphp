@@ -16,13 +16,13 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="firm",
  *  indexes={
- *      @ORM\Index(name="city", columns={"city"}),
- *      @ORM\Index(name="full", columns={"name", "street_address"}, flags={"fulltext"}),
+ *      @ORM\Index(name="city_idx", columns={"city"}),
+ *      @ORM\Index(name="full_idx", columns={"name", "street_address"}, flags={"fulltext"}),
  *      @ORM\Index(name="address_ft_idx", columns={"street_address"}, flags={"fulltext"}),
- *      @ORM\Index(name="firmname", columns={"name"}, flags={"fulltext"})
+ *      @ORM\Index(name="firmname_idx", columns={"name"}, flags={"fulltext"})
  *  },
  *  uniqueConstraints={
- *      @ORM\UniqueConstraint(name="unique", columns={"name", "city", "start_date", "end_date"})
+ *      @ORM\UniqueConstraint(name="firm_uniq", columns={"name", "city", "start_date", "end_date"})
  *  }
  * )
  * @ORM\Entity(repositoryClass="AppBundle\Repository\FirmRepository")
@@ -56,14 +56,14 @@ class Firm
     /**
      * @var string
      *
-     * @ORM\Column(name="start_date", type="string", length=20, nullable=true)
+     * @ORM\Column(name="start_date", type="date", nullable=true)
      */
     private $startDate;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="end_date", type="string", length=20, nullable=true)
+     * @ORM\Column(name="end_date", type="date", nullable=true)
      */
     private $endDate;
 

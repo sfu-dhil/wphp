@@ -12,9 +12,9 @@ use Doctrine\ORM\Mapping as ORM;
  *      @ORM\UniqueConstraint(name="title_id", columns={"title_id", "firmrole_id", "firm_id"})
  *  },
  *  indexes={
- *      @ORM\Index(name="firm_id", columns={"firm_id"}),
- *      @ORM\Index(name="firmrole_id", columns={"firmrole_id"}),
- *      @ORM\Index(name="IDX_15768082A9F87BD", columns={"title_id"})
+ *      @ORM\Index(name="firm_idx", columns={"firm_id"}),
+ *      @ORM\Index(name="firmrole_idx", columns={"firmrole_id"}),
+ *      @ORM\Index(name="title_idx", columns={"title_id"})
  * })
  * @ORM\Entity
  */

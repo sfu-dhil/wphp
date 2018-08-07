@@ -3,16 +3,17 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Source
  *
  * @ORM\Table(name="source")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\SourceRepository")
- * 
+ *
  * @todo The Title entity refers to this one in two different ways, and may
  * do so in a third in future. Until that decision is made, there will not be
- * any back-references from Source to Title. The references will likely become 
+ * any back-references from Source to Title. The references will likely become
  * a many-to-many relationship.
  */
 class Source
@@ -29,10 +30,31 @@ class Source
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="text", nullable=true)
+     * @ORM\Column(name="name", type="string", length=100, nullable=false)
      */
     private $name;
-        
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="text", nullable=true)
+     */
+    private $description;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="citation", type="text", nullable=true)
+     */
+    private $citation;
+
+    /**
+     * @var string
+     * @ORM\Column(name="onlinesource", type="string", length=200, nullable=true)
+     * @Assert\Url()
+     */
+    private $onlineSource;
+
     /**
      * Get id
      *

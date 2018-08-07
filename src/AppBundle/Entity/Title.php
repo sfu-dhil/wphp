@@ -39,16 +39,16 @@ class Title
     /**
      * @var string
      *
-     * @ORM\Column(name="title", type="string", length=1000, nullable=true)
+     * @ORM\Column(name="title", type="text", nullable=false)
      */
     private $title;
-    
+
     /**
      * @var int
      * @ORM\Column(name="edition_number", type="integer", nullable=true)
      */
     private $editionNumber;
-    
+
     /**
      * @var string
      *
@@ -157,16 +157,23 @@ class Title
     /**
      * @var string
      *
-     * @ORM\Column(name="source_id", type="string", length=20, nullable=true)
+     * @ORM\Column(name="source_id", type="string", length=300, nullable=true)
      */
     private $sourceId;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="source2_id", type="string", length=20, nullable=true)
+     * @ORM\Column(name="source2_id", type="string", length=300, nullable=true)
      */
     private $source2Id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="source3_id", type="string", length=300, nullable=true)
+     */
+    private $source3Id;
 
     /**
      * @var string
@@ -190,6 +197,13 @@ class Title
     private $finalcheck = '0';
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="finalattempt", type="boolean", nullable=false)
+     */
+    private $finalattempt = '0';
+
+    /**
      * @var string
      *
      * @ORM\Column(name="notes", type="text", nullable=true)
@@ -197,7 +211,7 @@ class Title
     private $notes;
 
     /**
-     * @var \Geonames
+     * @var Geonames
      *
      * @ORM\ManyToOne(targetEntity="Geonames", inversedBy="titles")
      * @ORM\JoinColumns({
@@ -207,7 +221,7 @@ class Title
     private $locationOfPrinting;
 
     /**
-     * @var \Format
+     * @var Format
      *
      * @ORM\ManyToOne(targetEntity="Format", inversedBy="titles")
      * @ORM\JoinColumns({
@@ -217,7 +231,7 @@ class Title
     private $format;
 
     /**
-     * @var \Genre
+     * @var Genre
      *
      * @ORM\ManyToOne(targetEntity="Genre", inversedBy="titles")
      * @ORM\JoinColumns({
@@ -227,7 +241,7 @@ class Title
     private $genre;
 
     /**
-     * @var \Source
+     * @var Source
      *
      * @ORM\ManyToOne(targetEntity="Source")
      * @ORM\JoinColumns({
@@ -237,7 +251,7 @@ class Title
     private $source;
 
     /**
-     * @var \Source
+     * @var Source
      *
      * @ORM\ManyToOne(targetEntity="Source")
      * @ORM\JoinColumns({
@@ -245,6 +259,16 @@ class Title
      * })
      */
     private $source2;
+
+    /**
+     * @var Source
+     *
+     * @ORM\ManyToOne(targetEntity="Source")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="source2", referencedColumnName="id")
+     * })
+     */
+    private $source3;
 
     /**
      * @var Collection|TitleRole[]
@@ -969,7 +993,7 @@ class Title
 
     /**
      * Return the title's title.
-     * 
+     *
      * @return string
      */
     public function __toString() {
