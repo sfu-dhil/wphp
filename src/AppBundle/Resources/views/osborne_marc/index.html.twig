@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}OsborneMarc List{% endblock %}
+
+{% block pageheader %}
+    <h1>OsborneMarc List</h1>
+    <p class="count">
+        Displaying {{ osborneMarcs|length }} osborneMarcs of {{ osborneMarcs.getTotalItemCount }} total.
+    </p>
+{% endblock %}
+
+{% block body %}
+
+    <div class='btn-toolbar pull-right'>
+        <div class='btn-group'>
+            <a href="{{ path('resource_osborne_search') }}" class="btn btn-default">
+                <span class="glyphicon glyphicon-search"></span> Search
+            </a>
+        </div>
+    </div>
+
+    <table class="table table-bordered table-condensed table-hover table-striped">
+        <thead>
+            <tr>
+                <th>Title ID</th>
+                <th>Title</th>
+                <th>Author</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for osborneMarc in osborneMarcs %}
+                <tr>
+                    <td>
+                        <a href="{{ path('resource_osborne_show', { 'id': osborneMarc.titleId }) }}">
+                            {{ osborneMarc.titleId }}
+                        </a>
+                    </td>
+                    <td>{{ manager.getTitle(osborneMarc) }}</td>
+                    <td>{{ manager.getAuthor(osborneMarc) }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="navigation">
+        {{ knp_pagination_render(osborneMarcs) }}
+    </div>
+
+{% endblock %}

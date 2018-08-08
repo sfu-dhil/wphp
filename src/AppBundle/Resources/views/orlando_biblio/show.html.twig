@@ -1,0 +1,207 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}OrlandoBiblio{% endblock %}
+
+{% block pageheader %}
+    <h1>OrlandoBiblio Details</h1>
+{% endblock %}
+
+{% block body %}
+    <div class="btn-toolbar">
+        <div class="btn-group pull-right">
+            <a href="{{ path('resource_orlando_biblio_index') }}" class="btn btn-default">
+                <span class="glyphicon glyphicon-arrow-left"></span> Back
+            </a>
+        </div>
+    </div>
+    <table class="table table-bordered table-condensed table-hover table-striped">
+        <tbody>
+            <tr>
+                <th>Bi Id</th>
+                <td>{{ orlandoBiblio.orlandoId }}</td>
+            </tr>
+            <tr>
+                <th>Workform</th>
+                <td>{{ orlandoBiblio.workform }}</td>
+            </tr>
+            <tr>
+                <th>Author</th>
+                <td>
+                    {% set fields = manager.getField(orlandoBiblio.author) %}
+                    {% if fields|length > 1 %}
+                        <ul>
+                            {% for field in fields %}
+                                <li>{{ field }}</li>
+                                {% endfor %}
+                        </ul>
+                    {% elseif fields | length == 1 %}
+                        {{ fields[0] }}
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th>Editor</th>
+                <td>
+                    {% set fields = manager.getField(orlandoBiblio.editor) %}
+                    {% if fields|length > 1 %}
+                        <ul>
+                            {% for field in fields %}
+                                <li>{{ field }}</li>
+                                {% endfor %}
+                        </ul>
+                    {% elseif fields | length == 1 %}
+                        {{ fields[0] }}
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th>Introduction</th>
+                <td>
+                    {% set fields = manager.getField(orlandoBiblio.introduction) %}
+                    {% if fields|length > 1 %}
+                        <ul>
+                            {% for field in fields %}
+                                <li>{{ field }}</li>
+                                {% endfor %}
+                        </ul>
+                    {% elseif fields | length == 1 %}
+                        {{ fields[0] }}
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th>Translator</th>
+                <td>
+                    {% set fields = manager.getField(orlandoBiblio.translator) %}
+                    {% if fields|length > 1 %}
+                        <ul>
+                            {% for field in fields %}
+                                <li>{{ field }}</li>
+                                {% endfor %}
+                        </ul>
+                    {% elseif fields | length == 1 %}
+                        {{ fields[0] }}
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th>Illustrator</th>
+                <td>
+                    {% set fields = manager.getField(orlandoBiblio.illustrator) %}
+                    {% if fields|length > 1 %}
+                        <ul>
+                            {% for field in fields %}
+                                <li>{{ field }}</li>
+                                {% endfor %}
+                        </ul>
+                    {% elseif fields | length == 1 %}
+                        {{ fields[0] }}
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th>Compiler</th>
+                <td>
+                    {% set fields = manager.getField(orlandoBiblio.compiler) %}
+                    {% if fields|length > 1 %}
+                        <ul>
+                            {% for field in fields %}
+                                <li>{{ field }}</li>
+                                {% endfor %}
+                        </ul>
+                    {% elseif fields | length == 1 %}
+                        {{ fields[0] }}
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th>Analytic Standard Title</th>
+                <td>{{ orlandoBiblio.analyticStandardTitle }}</td>
+            </tr>
+            <tr>
+                <th>Analytic Alternate Title</th>
+                <td>{{ orlandoBiblio.analyticAlternateTitle }}</td>
+            </tr>
+            <tr>
+                <th>Monographic Standard Title</th>
+                <td>{{ orlandoBiblio.monographicStandardTitle }}</td>
+            </tr>
+            <tr>
+                <th>Monographic Alternate Title</th>
+                <td>{{ orlandoBiblio.monographicAlternateTitle }}</td>
+            </tr>
+            <tr>
+                <th>Imprint Date Of Publication</th>
+                <td>{{ orlandoBiblio.imprintDateOfPublication }}</td>
+            </tr>
+            <tr>
+                <th>Imprint Date Of Original Publication</th>
+                <td>{{ orlandoBiblio.imprintDateOfOriginalPublication }}</td>
+            </tr>
+            <tr>
+                <th>Imprint Publisher</th>
+                <td>{{ orlandoBiblio.imprintPublisher }}</td>
+            </tr>
+            <tr>
+                <th>Imprint Place Of Publication</th>
+                <td>{{ orlandoBiblio.imprintPlaceOfPublication }}</td>
+            </tr>
+            <tr>
+                <th>Imprint Cover Title</th>
+                <td>{{ orlandoBiblio.imprintCoverTitle }}</td>
+            </tr>
+            <tr>
+                <th>Imprint Edition</th>
+                <td>{{ orlandoBiblio.imprintEdition }}</td>
+            </tr>
+            <tr>
+                <th>Imprint Date Of Access</th>
+                <td>{{ orlandoBiblio.imprintDateOfAccess }}</td>
+            </tr>
+            <tr>
+                <th>Series Standard Title</th>
+                <td>{{ orlandoBiblio.seriesStandardTitle }}</td>
+            </tr>
+            <tr>
+                <th>Series Alternate Title</th>
+                <td>{{ orlandoBiblio.seriesAlternateTitle }}</td>
+            </tr>
+            <tr>
+                <th>Series Volume Id</th>
+                <td>{{ orlandoBiblio.seriesVolumeId }}</td>
+            </tr>
+            <tr>
+                <th>Scope Medium</th>
+                <td>{{ orlandoBiblio.scopeMedium }}</td>
+            </tr>
+            <tr>
+                <th>Scope Issue Id</th>
+                <td>{{ orlandoBiblio.scopeIssueId }}</td>
+            </tr>
+            <tr>
+                <th>Scope Pages</th>
+                <td>{{ orlandoBiblio.scopePages }}</td>
+            </tr>
+            <tr>
+                <th>Scope Volume Count</th>
+                <td>{{ orlandoBiblio.scopeVolumeCount }}</td>
+            </tr>
+            <tr>
+                <th>Location Urn</th>
+                <td>{{ orlandoBiblio.locationUrn }}</td>
+            </tr>
+            <tr>
+                <th>Location Call No</th>
+                <td>{{ orlandoBiblio.locationCallNo }}</td>
+            </tr>
+            <tr>
+                <th>Scholarnotes</th>
+                <td>{{ orlandoBiblio.scholarnotes }}</td>
+            </tr>
+            <tr>
+                <th>Researchnotes</th>
+                <td>{{ orlandoBiblio.researchnotes }}</td>
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}

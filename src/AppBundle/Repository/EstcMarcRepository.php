@@ -12,4 +12,9 @@ use Doctrine\ORM\EntityRepository;
  */
 class EstcMarcRepository extends EntityRepository
 {
+    public function indexQuery() {
+        $qb = $this->createQueryBuilder('m');
+        $qb->where("m.field = 'ldr'");
+        return $qb->getQuery();
+    }
 }

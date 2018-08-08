@@ -39,4 +39,62 @@ class MarcTagStructure
      */
     private $name;
 
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set tagField
+     *
+     * @param string $tagField
+     *
+     * @return MarcTagStructure
+     */
+    public function setTagField($tagField)
+    {
+        $this->tagField = $tagField;
+
+        return $this;
+    }
+
+    /**
+     * Get tagField
+     *
+     * @return string
+     */
+    public function getTagField()
+    {
+        return $this->tagField;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     *
+     * @return MarcTagStructure
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
 }

@@ -54,4 +54,110 @@ class MarcSubfieldStructure
      */
     private $isUrl;
 
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set tagField
+     *
+     * @param string $tagField
+     *
+     * @return MarcSubfieldStructure
+     */
+    public function setTagField($tagField)
+    {
+        $this->tagField = $tagField;
+
+        return $this;
+    }
+
+    /**
+     * Get tagField
+     *
+     * @return string
+     */
+    public function getTagField()
+    {
+        return $this->tagField;
+    }
+
+    /**
+     * Set tagSubfield
+     *
+     * @param string $tagSubfield
+     *
+     * @return MarcSubfieldStructure
+     */
+    public function setTagSubfield($tagSubfield)
+    {
+        $this->tagSubfield = $tagSubfield;
+
+        return $this;
+    }
+
+    /**
+     * Get tagSubfield
+     *
+     * @return string
+     */
+    public function getTagSubfield()
+    {
+        return $this->tagSubfield;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     *
+     * @return MarcSubfieldStructure
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set isUrl
+     *
+     * @param boolean $isUrl
+     *
+     * @return MarcSubfieldStructure
+     */
+    public function setIsUrl($isUrl)
+    {
+        $this->isUrl = $isUrl;
+
+        return $this;
+    }
+
+    /**
+     * Get isUrl
+     *
+     * @return boolean
+     */
+    public function getIsUrl()
+    {
+        return $this->isUrl;
+    }
 }

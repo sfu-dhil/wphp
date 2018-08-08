@@ -55,5 +55,110 @@ class EstcMarc
     private $fieldData;
 
 
-}
 
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set titleId
+     *
+     * @param integer $titleId
+     *
+     * @return EstcMarc
+     */
+    public function setTitleId($titleId)
+    {
+        $this->titleId = $titleId;
+
+        return $this;
+    }
+
+    /**
+     * Get titleId
+     *
+     * @return integer
+     */
+    public function getTitleId()
+    {
+        return $this->titleId;
+    }
+
+    /**
+     * Set field
+     *
+     * @param string $field
+     *
+     * @return EstcMarc
+     */
+    public function setField($field)
+    {
+        $this->field = $field;
+
+        return $this;
+    }
+
+    /**
+     * Get field
+     *
+     * @return string
+     */
+    public function getField()
+    {
+        return $this->field;
+    }
+
+    /**
+     * Set subfield
+     *
+     * @param string $subfield
+     *
+     * @return EstcMarc
+     */
+    public function setSubfield($subfield)
+    {
+        $this->subfield = $subfield;
+
+        return $this;
+    }
+
+    /**
+     * Get subfield
+     *
+     * @return string
+     */
+    public function getSubfield()
+    {
+        return $this->subfield;
+    }
+
+    /**
+     * Set fieldData
+     *
+     * @param string $fieldData
+     *
+     * @return EstcMarc
+     */
+    public function setFieldData($fieldData)
+    {
+        $this->fieldData = $fieldData;
+
+        return $this;
+    }
+
+    /**
+     * Get fieldData
+     *
+     * @return string
+     */
+    public function getFieldData()
+    {
+        return $this->fieldData;
+    }
+}

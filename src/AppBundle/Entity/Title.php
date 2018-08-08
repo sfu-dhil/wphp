@@ -1010,4 +1010,76 @@ class Title
     {
         return $this->editionNumber;
     }
+
+    /**
+     * Set source3Id
+     *
+     * @param string $source3Id
+     *
+     * @return Title
+     */
+    public function setSource3Id($source3Id)
+    {
+        $this->source3Id = $source3Id;
+
+        return $this;
+    }
+
+    /**
+     * Get source3Id
+     *
+     * @return string
+     */
+    public function getSource3Id()
+    {
+        return $this->source3Id;
+    }
+
+    /**
+     * Set finalattempt
+     *
+     * @param boolean $finalattempt
+     *
+     * @return Title
+     */
+    public function setFinalattempt($finalattempt)
+    {
+        $this->finalattempt = $finalattempt;
+
+        return $this;
+    }
+
+    /**
+     * Get finalattempt
+     *
+     * @return boolean
+     */
+    public function getFinalattempt()
+    {
+        return $this->finalattempt;
+    }
+
+    /**
+     * Set source3
+     *
+     * @param \AppBundle\Entity\Source $source3
+     *
+     * @return Title
+     */
+    public function setSource3(\AppBundle\Entity\Source $source3 = null)
+    {
+        $this->source3 = $source3;
+
+        return $this;
+    }
+
+    /**
+     * Get source3
+     *
+     * @return \AppBundle\Entity\Source
+     */
+    public function getSource3()
+    {
+        return $this->source3;
+    }
 }

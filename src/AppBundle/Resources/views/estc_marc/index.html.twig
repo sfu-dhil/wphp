@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}EstcMarc List{% endblock %}
+
+{% block pageheader %}
+    <h1>EstcMarc List</h1>
+    <p class="count">
+        Displaying {{ estcMarcs|length }} estcMarcs of {{ estcMarcs.getTotalItemCount }} total.
+    </p>
+{% endblock %}
+
+{% block body %}
+
+    <div class='btn-toolbar pull-right'>
+        <div class='btn-group'>
+            <a href="{{ path('resource_estc_search') }}" class="btn btn-default">
+                <span class="glyphicon glyphicon-search"></span> Search
+            </a>
+        </div>
+    </div>
+
+    <table class="table table-bordered table-condensed table-hover table-striped">
+        <thead>
+            <tr>
+                <th>Title ID</th>
+                <th>Title</th>
+                <th>Author</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for estcMarc in estcMarcs %}
+                <tr>
+                    <td>
+                        <a href="{{ path('resource_estc_show', { 'id': estcMarc.titleId }) }}">
+                            {{ estcMarc.titleId }}
+                        </a>
+                    </td>
+                    <td>{{ manager.getTitle(estcMarc) }}</td>
+                    <td>{{ manager.getAuthor(estcMarc) }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="navigation">
+        {{ knp_pagination_render(estcMarcs) }}
+    </div>
+
+{% endblock %}

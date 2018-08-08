@@ -142,5 +142,412 @@ class En
     {
         return $this->id;
     }
-}
 
+    /**
+     * Set enId
+     *
+     * @param string $enId
+     *
+     * @return En
+     */
+    public function setEnId($enId)
+    {
+        $this->enId = $enId;
+
+        return $this;
+    }
+
+    /**
+     * Get enId
+     *
+     * @return string
+     */
+    public function getEnId()
+    {
+        return $this->enId;
+    }
+
+    /**
+     * Set year
+     *
+     * @param integer $year
+     *
+     * @return En
+     */
+    public function setYear($year)
+    {
+        $this->year = $year;
+
+        return $this;
+    }
+
+    /**
+     * Get year
+     *
+     * @return integer
+     */
+    public function getYear()
+    {
+        return $this->year;
+    }
+
+    /**
+     * Set author
+     *
+     * @param string $author
+     *
+     * @return En
+     */
+    public function setAuthor($author)
+    {
+        $this->author = $author;
+
+        return $this;
+    }
+
+    /**
+     * Get author
+     *
+     * @return string
+     */
+    public function getAuthor()
+    {
+        return $this->author;
+    }
+
+    /**
+     * Set editor
+     *
+     * @param string $editor
+     *
+     * @return En
+     */
+    public function setEditor($editor)
+    {
+        $this->editor = $editor;
+
+        return $this;
+    }
+
+    /**
+     * Get editor
+     *
+     * @return string
+     */
+    public function getEditor()
+    {
+        return $this->editor;
+    }
+
+    /**
+     * Set translator
+     *
+     * @param string $translator
+     *
+     * @return En
+     */
+    public function setTranslator($translator)
+    {
+        $this->translator = $translator;
+
+        return $this;
+    }
+
+    /**
+     * Get translator
+     *
+     * @return string
+     */
+    public function getTranslator()
+    {
+        return $this->translator;
+    }
+
+    /**
+     * Set title
+     *
+     * @param string $title
+     *
+     * @return En
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * Set publishPlace
+     *
+     * @param string $publishPlace
+     *
+     * @return En
+     */
+    public function setPublishPlace($publishPlace)
+    {
+        $this->publishPlace = $publishPlace;
+
+        return $this;
+    }
+
+    /**
+     * Get publishPlace
+     *
+     * @return string
+     */
+    public function getPublishPlace()
+    {
+        return $this->publishPlace;
+    }
+
+    /**
+     * Set imprint
+     *
+     * @param string $imprint
+     *
+     * @return En
+     */
+    public function setImprint($imprint)
+    {
+        $this->imprint = $imprint;
+
+        return $this;
+    }
+
+    /**
+     * Get imprint
+     *
+     * @return string
+     */
+    public function getImprint()
+    {
+        return $this->imprint;
+    }
+
+    /**
+     * Set pagination
+     *
+     * @param string $pagination
+     *
+     * @return En
+     */
+    public function setPagination($pagination)
+    {
+        $this->pagination = $pagination;
+
+        return $this;
+    }
+
+    /**
+     * Get pagination
+     *
+     * @return string
+     */
+    public function getPagination()
+    {
+        return $this->pagination;
+    }
+
+    /**
+     * Set format
+     *
+     * @param string $format
+     *
+     * @return En
+     */
+    public function setFormat($format)
+    {
+        $this->format = $format;
+
+        return $this;
+    }
+
+    /**
+     * Get format
+     *
+     * @return string
+     */
+    public function getFormat()
+    {
+        return $this->format;
+    }
+
+    /**
+     * Set price
+     *
+     * @param string $price
+     *
+     * @return En
+     */
+    public function setPrice($price)
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
+    /**
+     * Get price
+     *
+     * @return string
+     */
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+    /**
+     * Set contemporary
+     *
+     * @param string $contemporary
+     *
+     * @return En
+     */
+    public function setContemporary($contemporary)
+    {
+        $this->contemporary = $contemporary;
+
+        return $this;
+    }
+
+    /**
+     * Get contemporary
+     *
+     * @return string
+     */
+    public function getContemporary()
+    {
+        return $this->contemporary;
+    }
+
+    /**
+     * Set shelfmark
+     *
+     * @param string $shelfmark
+     *
+     * @return En
+     */
+    public function setShelfmark($shelfmark)
+    {
+        $this->shelfmark = $shelfmark;
+
+        return $this;
+    }
+
+    /**
+     * Get shelfmark
+     *
+     * @return string
+     */
+    public function getShelfmark()
+    {
+        return $this->shelfmark;
+    }
+
+    /**
+     * Set editions
+     *
+     * @param string $editions
+     *
+     * @return En
+     */
+    public function setEditions($editions)
+    {
+        $this->editions = $editions;
+
+        return $this;
+    }
+
+    /**
+     * Get editions
+     *
+     * @return string
+     */
+    public function getEditions()
+    {
+        return $this->editions;
+    }
+
+    /**
+     * Set genre
+     *
+     * @param string $genre
+     *
+     * @return En
+     */
+    public function setGenre($genre)
+    {
+        $this->genre = $genre;
+
+        return $this;
+    }
+
+    /**
+     * Get genre
+     *
+     * @return string
+     */
+    public function getGenre()
+    {
+        return $this->genre;
+    }
+
+    /**
+     * Set gender
+     *
+     * @param string $gender
+     *
+     * @return En
+     */
+    public function setGender($gender)
+    {
+        $this->gender = $gender;
+
+        return $this;
+    }
+
+    /**
+     * Get gender
+     *
+     * @return string
+     */
+    public function getGender()
+    {
+        return $this->gender;
+    }
+
+    /**
+     * Set notes
+     *
+     * @param string $notes
+     *
+     * @return En
+     */
+    public function setNotes($notes)
+    {
+        $this->notes = $notes;
+
+        return $this;
+    }
+
+    /**
+     * Get notes
+     *
+     * @return string
+     */
+    public function getNotes()
+    {
+        return $this->notes;
+    }
+}

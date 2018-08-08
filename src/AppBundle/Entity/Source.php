@@ -86,4 +86,76 @@ class Source
         return $this->name;
     }
 
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     *
+     * @return Source
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set citation
+     *
+     * @param string $citation
+     *
+     * @return Source
+     */
+    public function setCitation($citation)
+    {
+        $this->citation = $citation;
+
+        return $this;
+    }
+
+    /**
+     * Get citation
+     *
+     * @return string
+     */
+    public function getCitation()
+    {
+        return $this->citation;
+    }
+
+    /**
+     * Set onlineSource
+     *
+     * @param string $onlineSource
+     *
+     * @return Source
+     */
+    public function setOnlineSource($onlineSource)
+    {
+        $this->onlineSource = $onlineSource;
+
+        return $this;
+    }
+
+    /**
+     * Get onlineSource
+     *
+     * @return string
+     */
+    public function getOnlineSource()
+    {
+        return $this->onlineSource;
+    }
 }

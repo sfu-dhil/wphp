@@ -74,4 +74,38 @@ class Genre
     public function getName() {
         return $this->name;
     }
+
+    /**
+     * Add title
+     *
+     * @param \AppBundle\Entity\Title $title
+     *
+     * @return Genre
+     */
+    public function addTitle(\AppBundle\Entity\Title $title)
+    {
+        $this->titles[] = $title;
+
+        return $this;
+    }
+
+    /**
+     * Remove title
+     *
+     * @param \AppBundle\Entity\Title $title
+     */
+    public function removeTitle(\AppBundle\Entity\Title $title)
+    {
+        $this->titles->removeElement($title);
+    }
+
+    /**
+     * Get titles
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTitles()
+    {
+        return $this->titles;
+    }
 }

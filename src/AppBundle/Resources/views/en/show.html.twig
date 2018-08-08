@@ -1,0 +1,89 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}En{% endblock %}
+
+{% block pageheader %}
+    <h1>En Details</h1>
+{% endblock %}
+
+{% block body %}
+    <div class="btn-toolbar">
+        <div class="btn-group pull-right">
+            <a href="{{ path('resource_en_index') }}" class="btn btn-default">
+                <span class="glyphicon glyphicon-arrow-left"></span> Back
+            </a>
+        </div>
+    </div>
+    <table class="table table-bordered table-condensed table-hover table-striped">
+        <tbody>
+            <tr>
+                <th>En Id</th>
+                <td>{{ en.enId }}</td>
+            </tr>
+            <tr>
+                <th>Year</th>
+                <td>{{ en.year }}</td>
+            </tr>
+            <tr>
+                <th>Author</th>
+                <td>{{ en.author }}</td>
+            </tr>
+            <tr>
+                <th>Editor</th>
+                <td>{{ en.editor }}</td>
+            </tr>
+            <tr>
+                <th>Translator</th>
+                <td>{{ en.translator }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ en.title }}</td>
+            </tr>
+            <tr>
+                <th>Publish Place</th>
+                <td>{{ en.publishPlace }}</td>
+            </tr>
+            <tr>
+                <th>Imprint Details</th>
+                <td>{{ en.imprint }}</td>
+            </tr>
+            <tr>
+                <th>Pagination</th>
+                <td>{{ en.pagination }}</td>
+            </tr>
+            <tr>
+                <th>Format</th>
+                <td>{{ en.format }}</td>
+            </tr>
+            <tr>
+                <th>Price</th>
+                <td>{{ en.price }}</td>
+            </tr>
+            <tr>
+                <th>Contemporary</th>
+                <td>{{ en.contemporary }}</td>
+            </tr>
+            <tr>
+                <th>Shelfmark</th>
+                <td>{{ en.shelfmark }}</td>
+            </tr>
+            <tr>
+                <th>Further Editions</th>
+                <td>{{ en.editions }}</td>
+            </tr>
+            <tr>
+                <th>Genre</th>
+                <td>{{ en.genre }}</td>
+            </tr>
+            <tr>
+                <th>Gender</th>
+                <td>{{ en.gender }}</td>
+            </tr>
+            <tr>
+                <th>Notes</th>
+                <td>{{ en.notes }}</td>
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}
