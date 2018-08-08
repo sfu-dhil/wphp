@@ -3,6 +3,7 @@
 namespace AppBundle\DataFixtures\ORM;
 
 use AppBundle\Entity\Firm;
+use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -20,8 +21,8 @@ class LoadFirm extends Fixture implements DependentFixtureInterface {
             $fixture = new Firm();
             $fixture->setName('Name ' . $i);
             $fixture->setStreetAddress('StreetAddress ' . $i);
-            $fixture->setStartDate(1800 - $i * 10);
-            $fixture->setEndDate(1820 + $i * 15);
+            $fixture->setStartDate(new DateTime(1800 - $i * 10));
+            $fixture->setEndDate(new DateTime(1820 + $i * 15));
             $fixture->setFinalcheck($i % 2 === 0);
             $fixture->setCity($this->getReference('geonames.1'));
 
@@ -36,7 +37,7 @@ class LoadFirm extends Fixture implements DependentFixtureInterface {
      * {@inheritdoc}
      */
     public function getDependencies() {
-        // add dependencies here, or remove this 
+        // add dependencies here, or remove this
         // function and "implements DependentFixtureInterface" above
         return [
             LoadGeonames::class,
