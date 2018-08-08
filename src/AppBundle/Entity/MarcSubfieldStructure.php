@@ -7,7 +7,11 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * MarcSubfieldStructure
  *
- * @ORM\Table(name="marc_subfield_structure")
+ * @ORM\Table(name="marc_subfield_structure",
+ *  indexes={
+ *      @ORM\Index(name="marcsubfield_fields_idx", columns={"tagfield", "tagsubfield"})
+ *  }
+ * )
  * @ORM\Entity(repositoryClass="AppBundle\Repository\MarcSubfieldStructureRepository")
  */
 class MarcSubfieldStructure

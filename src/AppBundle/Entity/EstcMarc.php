@@ -7,7 +7,12 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * EstcFields
  *
- * @ORM\Table(name="estc_fields")
+ * @ORM\Table(name="estc_fields",
+ *  indexes={
+ *      @ORM\Index(name="estcmarc_cid_idx", columns={"cid"}),
+ *      @ORM\Index(name="estcmarc_data_ft", columns={"field_data"}, flags={"fulltext"})
+ *  }
+ * )
  * @ORM\Entity(repositoryClass="AppBundle\Repository\EstcMarcRepository")
  */
 class EstcMarc

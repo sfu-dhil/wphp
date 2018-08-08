@@ -12,8 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="geonames",
  *  indexes={
- *      @ORM\Index(name="geo_search_idx", columns={"name", "geonameid", "country"}),
- *      @ORM\Index(name="names_idx", columns={"alternatenames", "name"}, flags={"fulltext"})
+ *      @ORM\Index(name="geonames_search_idx", columns={"name", "geonameid", "country"}),
+ *      @ORM\Index(name="geonames_names_ft", columns={"alternatenames", "name"}, flags={"fulltext"})
  * })
  * @ORM\Entity(repositoryClass="AppBundle\Repository\GeonamesRepository")
  */

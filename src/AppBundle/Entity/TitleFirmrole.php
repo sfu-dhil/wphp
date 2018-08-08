@@ -10,12 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="title_firmrole",
  *  uniqueConstraints={
  *      @ORM\UniqueConstraint(name="title_id", columns={"title_id", "firmrole_id", "firm_id"})
- *  },
- *  indexes={
- *      @ORM\Index(name="firm_idx", columns={"firm_id"}),
- *      @ORM\Index(name="firmrole_idx", columns={"firmrole_id"}),
- *      @ORM\Index(name="title_idx", columns={"title_id"})
- * })
+ *  }
+ * )
  * @ORM\Entity
  */
 class TitleFirmrole {

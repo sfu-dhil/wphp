@@ -7,7 +7,13 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Jackson
  *
- * @ORM\Table(name="jackson_biblio")
+ * @ORM\Table(name="jackson_biblio",
+ *  indexes={
+ *      @ORM\Index(name="jackson_jbid_idx", columns={"jbid"}),
+ *      @ORM\Index(name="jackson_author_ft", columns={"author"}, flags={"fulltext"}),
+ *      @ORM\Index(name="jackson_title_ft", columns={"title"}, flags={"fulltext"})
+ *  }
+ * )
  * @ORM\Entity(repositoryClass="AppBundle\Repository\JacksonRepository")
  */
 class Jackson

@@ -7,7 +7,11 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * OrlandoBiblio
  *
- * @ORM\Table(name="orlando_biblio")
+ * @ORM\Table(name="orlando_biblio",
+ *  indexes={
+ *      @ORM\Index(name="orlandobiblio_biid_idx", columns={"BI_ID"})
+ *  }
+ * )
  * @ORM\Entity(repositoryClass="AppBundle\Repository\OrlandoBiblioRepository")
  */
 class OrlandoBiblio

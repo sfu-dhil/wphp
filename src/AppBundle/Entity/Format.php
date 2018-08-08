@@ -9,9 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Format
  *
- * @ORM\Table(name="format", indexes={
- *  @ORM\Index(name="format_full_idx", columns={"abbrev1", "abbrev2", "abbrev3", "abbrev4"}, flags={"fulltext"})
- * })
+ * @ORM\Table(name="format")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\FormatRepository")
  */
 class Format

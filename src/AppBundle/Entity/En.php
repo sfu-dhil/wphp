@@ -8,7 +8,15 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * English Novel bibliographic entry.
  *
- * @ORM\Table(name="en")
+ * @ORM\Table(name="en",
+ *  indexes={
+ *      @ORM\Index(name="en_author_ft", columns={"author"}, flags={"fulltext"}),
+ *      @ORM\Index(name="en_title_ft", columns={"title"}, flags={"fulltext"})
+ *  },
+ *  uniqueConstraints={
+ *      @ORM\UniqueConstraint(name="en_enid_uniq", columns={"en_id"})
+ *  }
+ * )
  * @ORM\Entity(repositoryClass="AppBundle\Repository\EnRepository")
  */
 class En

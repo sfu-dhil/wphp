@@ -7,7 +7,12 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * OsborneMarc
  *
- * @ORM\Table(name="osborne_marc")
+ * @ORM\Table(name="osborne_marc",
+ *  indexes={
+ *      @ORM\Index(name="osborne_cid_idx", columns={"cid"}),
+ *      @ORM\Index(name="osborne_fielddata_ft", columns={"field_data"}, flags={"fulltext"})
+ *  }
+ * )
  * @ORM\Entity(repositoryClass="AppBundle\Repository\OsborneMarcRepository")
  */
 class OsborneMarc
