@@ -54,6 +54,12 @@ class MarcSubfieldStructure
      */
     private $isUrl;
 
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="hidden", type="integer", nullable=true)
+     */
+    private $hidden;
 
     /**
      * Get id
@@ -159,5 +165,29 @@ class MarcSubfieldStructure
     public function getIsUrl()
     {
         return $this->isUrl;
+    }
+
+    /**
+     * Set hidden
+     *
+     * @param integer $hidden
+     *
+     * @return MarcSubfieldStructure
+     */
+    public function setHidden($hidden)
+    {
+        $this->hidden = $hidden;
+
+        return $this;
+    }
+
+    /**
+     * Get hidden
+     *
+     * @return integer
+     */
+    public function getHidden()
+    {
+        return $this->hidden;
     }
 }

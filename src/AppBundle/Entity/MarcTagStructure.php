@@ -39,6 +39,12 @@ class MarcTagStructure
      */
     private $name;
 
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="hidden", type="integer", nullable=true)
+     */
+    private $hidden;
 
     /**
      * Get id

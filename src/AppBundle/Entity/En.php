@@ -10,8 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="en",
  *  indexes={
- *      @ORM\Index(name="en_author_ft", columns={"author"}, flags={"fulltext"}),
- *      @ORM\Index(name="en_title_ft", columns={"title"}, flags={"fulltext"})
+ *      @ORM\Index(name="en_ft", columns={"author","title"}, flags={"fulltext"})
  *  },
  *  uniqueConstraints={
  *      @ORM\UniqueConstraint(name="en_enid_uniq", columns={"en_id"})

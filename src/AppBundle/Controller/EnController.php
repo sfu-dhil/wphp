@@ -81,21 +81,6 @@ class EnController extends Controller {
     /**
      * Search for En entities.
      *
-     * To make this work, add a method like this one to the
-     * AppBundle:En repository. Replace the fieldName with
-     * something appropriate, and adjust the generated search.html.twig
-     * template.
-     *
-     * <code><pre>
-     *    public function searchQuery($q) {
-     *       $qb = $this->createQueryBuilder('e');
-     *       $qb->addSelect("MATCH (e.title) AGAINST(:q BOOLEAN) as HIDDEN score");
-     *       $qb->orderBy('score', 'DESC');
-     *       $qb->setParameter('q', $q);
-     *       return $qb->getQuery();
-     *    }
-     * </pre></code>
-     *
      * @param Request $request
      *
      * @Route("/search", name="resource_en_search")

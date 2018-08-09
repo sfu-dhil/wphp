@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Estc Search{% endblock %}
+
+{% block pageheader %}
+    <h1>Estc Search</h1>
+    {% if estcMarcs|length %}
+        <p class="count">
+            Displaying {{ estcMarcs|length }} search results of {{ titleIds.getTotalItemCount }} total.
+        </p>
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+
+    <form method="get" class="form-horizontal" action="{{ path('resource_estc_search') }}">
+        <fieldset>
+            <legend>Search the English Novel records</legend>
+            <div class="form-group">
+                <label class='col-sm-2 control-label' for='q'>Search term</label>
+                <div class='input-group'>
+                    <input type='text' name='q' id='q' class='form-control' value='{{ q }}'>
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary" type="submit">
+                            <span class='glyphicon glyphicon-search'></span>
+                            Search
+                        </button>
+                    </span>
+                </div>
+                <p class="help-block col-sm-offset-2">Search the records by title or author.</p>
+            </div>
+        </fieldset>
+    </form>
+
+    {% if estcMarcs|length %}
+        <table class="table table-bordered table-condensed table-hover table-striped">
+            <thead>
+                <tr>
+                    <th>En Id</th>
+                    <th>Author</th>
+                    <th>Title</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for estcMarc in estcMarcs %}
+                <tr>
+                    <td>
+                        <a href="{{ path('resource_estc_show', { 'id': estcMarc.titleId }) }}">
+                            {{ estcMarc.titleId }}
+                        </a>
+                    </td>
+                    <td>{{ manager.getAuthor(estcMarc) }}</td>
+                    <td>{{ manager.getTitle(estcMarc) }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="navigation">
+            {{ knp_pagination_render(titleIds) }}
+        </div>
+    {% endif %}
+
+{% endblock %}

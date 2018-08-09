@@ -10,4 +10,13 @@ namespace AppBundle\Repository;
  */
 class OrlandoBiblioRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function searchQuery($q) {
+        $qb = $this->createQueryBuilder('e');
+        $qb->addSelect("MATCH (e.author, e.monographicStandardTitle) AGAINST(:q BOOLEAN) as HIDDEN score");
+        $qb->where("MATCH (e.author, e.monographicStandardTitle) AGAINST(:q BOOLEAN) > 0");
+        $qb->orderBy('score', 'DESC');
+        $qb->setParameter('q', $q);
+        return $qb->getQuery();
+    }
+
 }

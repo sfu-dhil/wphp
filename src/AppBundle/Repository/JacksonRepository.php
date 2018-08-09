@@ -12,4 +12,12 @@ use Doctrine\ORM\EntityRepository;
  */
 class JacksonRepository extends EntityRepository
 {
+    public function searchQuery($q) {
+        $qb = $this->createQueryBuilder('e');
+        $qb->addSelect("MATCH (e.author, e.title) AGAINST(:q BOOLEAN) as HIDDEN score");
+        $qb->where("MATCH (e.author, e.title) AGAINST(:q BOOLEAN) > 0");
+        $qb->orderBy('score', 'DESC');
+        $qb->setParameter('q', $q);
+        return $qb->getQuery();
+    }
 }

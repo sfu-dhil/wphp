@@ -18,4 +18,16 @@ class OsborneMarcRepository extends EntityRepository {
         return $qb->getQuery();
     }
 
+
+    public function searchQuery($q) {
+        $dql = <<<"ENDSQL"
+SELECT e.titleId, max(MATCH (e.fieldData) AGAINST (:q BOOLEAN)) as HIDDEN score
+FROM AppBundle:OsborneMarc e
+WHERE MATCH (e.fieldData) AGAINST (:q BOOLEAN) > 0 AND e.field IN ('245' , '100')
+group by e.titleId order by score desc
+ENDSQL;
+        $query = $this->_em->createQuery($dql);
+        $query->setParameter('q', $q);
+        return $query->execute();
+    }
 }

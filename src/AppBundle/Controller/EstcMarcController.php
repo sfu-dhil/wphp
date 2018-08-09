@@ -83,42 +83,35 @@ class EstcMarcController extends Controller {
     /**
      * Search for EstcMarc entities.
      *
-     * To make this work, add a method like this one to the
-     * AppBundle:EstcMarc repository. Replace the fieldName with
-     * something appropriate, and adjust the generated search.html.twig
-     * template.
-     *
-     * <code><pre>
-     *    public function searchQuery($q) {
-     *       $qb = $this->createQueryBuilder('e');
-     *       $qb->addSelect("MATCH (e.title) AGAINST(:q BOOLEAN) as HIDDEN score");
-     *       $qb->orderBy('score', 'DESC');
-     *       $qb->setParameter('q', $q);
-     *       return $qb->getQuery();
-     *    }
-     * </pre></code>
-     *
      * @param Request $request
      *
      * @Route("/search", name="resource_estc_search")
      * @Method("GET")
      * @Template()
      */
-    public function searchAction(Request $request) {
+    public function searchAction(Request $request, MarcManager $manager) {
         $em = $this->getDoctrine()->getManager();
         $repo = $em->getRepository('AppBundle:EstcMarc');
         $q = $request->query->get('q');
         if ($q) {
-            $query = $repo->searchQuery($q);
+            $result = $repo->searchQuery($q);
             $paginator = $this->get('knp_paginator');
-            $estcMarcs = $paginator->paginate($query, $request->query->getInt('page', 1), 25);
+            $titleIds = $paginator->paginate($result, $request->query->getInt('page', 1), 25);
         } else {
-            $estcMarcs = array();
+            $titleIds = array();
         }
-
+        $estcMarcs = array();
+        foreach($titleIds as $titleId) {
+            $estcMarcs[] = $repo->findOneBy(array(
+                'titleId' => $titleId,
+                'field' => 'ldr',
+            ));
+        }
         return array(
+            'titleIds' => $titleIds,
             'estcMarcs' => $estcMarcs,
             'q' => $q,
+            'manager' => $manager,
         );
     }
 

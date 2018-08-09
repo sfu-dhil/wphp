@@ -83,28 +83,13 @@ class OrlandoBiblioController extends Controller {
     /**
      * Search for OrlandoBiblio entities.
      *
-     * To make this work, add a method like this one to the
-     * AppBundle:OrlandoBiblio repository. Replace the fieldName with
-     * something appropriate, and adjust the generated search.html.twig
-     * template.
-     *
-     * <code><pre>
-     *    public function searchQuery($q) {
-     *       $qb = $this->createQueryBuilder('e');
-     *       $qb->addSelect("MATCH (e.title) AGAINST(:q BOOLEAN) as HIDDEN score");
-     *       $qb->orderBy('score', 'DESC');
-     *       $qb->setParameter('q', $q);
-     *       return $qb->getQuery();
-     *    }
-     * </pre></code>
-     *
      * @param Request $request
      *
      * @Route("/search", name="resource_orlando_biblio_search")
      * @Method("GET")
      * @Template()
      */
-    public function searchAction(Request $request) {
+    public function searchAction(Request $request,  OrlandoManager $manager) {
         $em = $this->getDoctrine()->getManager();
         $repo = $em->getRepository('AppBundle:OrlandoBiblio');
         $q = $request->query->get('q');
@@ -119,6 +104,7 @@ class OrlandoBiblioController extends Controller {
         return array(
             'orlandoBiblios' => $orlandoBiblios,
             'q' => $q,
+            'manager' => $manager,
         );
     }
 
