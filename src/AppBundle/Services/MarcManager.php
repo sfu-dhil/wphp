@@ -57,7 +57,6 @@ class MarcManager {
     }
 
     public function getFieldName($field) {
-        dump($field);
         if($field->getSubfield()) {
             $repo = $this->em->getRepository(MarcSubfieldStructure::class);
             $tag = $repo->findOneBy(array(

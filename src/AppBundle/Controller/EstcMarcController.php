@@ -46,41 +46,6 @@ class EstcMarcController extends Controller {
     }
 
     /**
-     * Typeahead API endpoint for EstcMarc entities.
-     *
-     * To make this work, add something like this to EstcMarcRepository:
-      //    public function typeaheadQuery($q) {
-      //        $qb = $this->createQueryBuilder('e');
-      //        $qb->andWhere("e.name LIKE :q");
-      //        $qb->orderBy('e.name');
-      //        $qb->setParameter('q', "{$q}%");
-      //        return $qb->getQuery()->execute();
-      //    }
-     *
-     * @param Request $request
-     *
-     * @Route("/typeahead", name="resource_estc_typeahead")
-     * @Method("GET")
-     * @return JsonResponse
-     */
-    public function typeahead(Request $request) {
-        $q = $request->query->get('q');
-        if (!$q) {
-            return new JsonResponse([]);
-        }
-        $em = $this->getDoctrine()->getManager();
-        $repo = $em->getRepository(EstcMarc::class);
-        $data = [];
-        foreach ($repo->typeaheadQuery($q) as $result) {
-            $data[] = [
-                'id' => $result->getId(),
-                'text' => (string) $result,
-            ];
-        }
-        return new JsonResponse($data);
-    }
-
-    /**
      * Search for EstcMarc entities.
      *
      * @param Request $request

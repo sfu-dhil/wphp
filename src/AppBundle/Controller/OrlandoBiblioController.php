@@ -46,41 +46,6 @@ class OrlandoBiblioController extends Controller {
     }
 
     /**
-     * Typeahead API endpoint for OrlandoBiblio entities.
-     *
-     * To make this work, add something like this to OrlandoBiblioRepository:
-      //    public function typeaheadQuery($q) {
-      //        $qb = $this->createQueryBuilder('e');
-      //        $qb->andWhere("e.name LIKE :q");
-      //        $qb->orderBy('e.name');
-      //        $qb->setParameter('q', "{$q}%");
-      //        return $qb->getQuery()->execute();
-      //    }
-     *
-     * @param Request $request
-     *
-     * @Route("/typeahead", name="resource_orlando_biblio_typeahead")
-     * @Method("GET")
-     * @return JsonResponse
-     */
-    public function typeahead(Request $request) {
-        $q = $request->query->get('q');
-        if (!$q) {
-            return new JsonResponse([]);
-        }
-        $em = $this->getDoctrine()->getManager();
-        $repo = $em->getRepository(OrlandoBiblio::class);
-        $data = [];
-        foreach ($repo->typeaheadQuery($q) as $result) {
-            $data[] = [
-                'id' => $result->getId(),
-                'text' => (string) $result,
-            ];
-        }
-        return new JsonResponse($data);
-    }
-
-    /**
      * Search for OrlandoBiblio entities.
      *
      * @param Request $request

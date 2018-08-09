@@ -24,7 +24,7 @@ class EnControllerTest extends BaseTestCase
     public function testAnonIndex() {
         $client = $this->makeClient();
         $crawler = $client->request('GET', '/resource/en/');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals(302, $client->getResponse()->getStatusCode());
         $this->assertEquals(0, $crawler->selectLink('New')->count());
     }
     
@@ -47,7 +47,6 @@ class EnControllerTest extends BaseTestCase
         $client = $this->makeClient(LoadUser::ADMIN);
         $crawler = $client->request('GET', '/resource/en/');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertEquals(1, $crawler->selectLink('New')->count());
     }
     
     /**
@@ -57,7 +56,7 @@ class EnControllerTest extends BaseTestCase
     public function testAnonShow() {
         $client = $this->makeClient();
         $crawler = $client->request('GET', '/resource/en/1');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals(302, $client->getResponse()->getStatusCode());
         $this->assertEquals(0, $crawler->selectLink('Edit')->count());
         $this->assertEquals(0, $crawler->selectLink('Delete')->count());
     }
@@ -82,59 +81,6 @@ class EnControllerTest extends BaseTestCase
         $client = $this->makeClient(LoadUser::ADMIN);
         $crawler = $client->request('GET', '/resource/en/1');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertEquals(1, $crawler->selectLink('Edit')->count());
-        $this->assertEquals(1, $crawler->selectLink('Delete')->count());
-    }
-
-    /**
-     * @group anon
-     * @group typeahead
-     */
-    public function testAnonTypeahead() {
-        $client = $this->makeClient();
-        $client->request('GET', '/resource/en/typeahead?q=STUFF');
-        $response = $client->getResponse();
-        $this->assertEquals(200, $response->getStatusCode());
-        $this->assertEquals('application/json', $response->headers->get('content-type'));
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );        
-        $json = json_decode($response->getContent());
-        $this->assertEquals(4, count($json));
-    }
-
-    /**
-     * @group user
-     * @group typeahead
-     */
-    public function testUserTypeahead() {
-        $client = $this->makeClient(LoadUser::USER);
-        $client->request('GET', '/resource/en/typeahead?q=STUFF');
-        $response = $client->getResponse();
-        $this->assertEquals(200, $response->getStatusCode());
-        $this->assertEquals('application/json', $response->headers->get('content-type'));
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );        
-        $json = json_decode($response->getContent());
-        $this->assertEquals(4, count($json));
-    }
-
-    /**
-     * @group admin
-     * @group typeahead
-     */
-    public function testAdminTypeahead() {
-        $client = $this->makeClient(LoadUser::ADMIN);
-        $client->request('GET', '/resource/en/typeahead?q=STUFF');
-        $response = $client->getResponse();
-        $this->assertEquals(200, $response->getStatusCode());
-        $this->assertEquals('application/json', $response->headers->get('content-type'));
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );        
-        $json = json_decode($response->getContent());
-        $this->assertEquals(4, count($json));
     }
 
 }
