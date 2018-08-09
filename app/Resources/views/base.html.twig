@@ -4,14 +4,14 @@
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="google" content="notranslate" />        
+        <meta name="google" content="notranslate" />
         <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">        
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
         <link rel="stylesheet" href="{{ asset('bower/bootstrap/dist/css/bootstrap.min.css') }}">
         <link rel="stylesheet" href="{{ asset('bower/bootstrap/dist/css/bootstrap-theme.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('bundles/app/css/base.css') }}">        
+        <link rel="stylesheet" href="{{ asset('bundles/app/css/base.css') }}">
     {% block htmlhead %}{% endblock %}
-    <script src="{{ asset('bower/jquery/dist/jquery.min.js') }}"></script>        
+    <script src="{{ asset('bower/jquery/dist/jquery.min.js') }}"></script>
 {% block styles %}{% endblock -%}
 </head>
 <body>
@@ -29,11 +29,11 @@
                 {{ knp_menu_render('main') }}
                 {{ knp_menu_render('page') }}
                 {{ knp_menu_render('post') }}
-                {{ knp_menu_render('user') }}                            
+                {{ knp_menu_render('user') }}
             </div>
         </div>
     </nav>
-    <div class="container">   
+    <div class="container">
         {% if block('pageheader') is defined %}
             <div class="page-header">
                 {{ block('pageheader') }}
@@ -57,13 +57,13 @@
         <div class="container">
             <div class='col-md-6'>
                 <p><b>Women's Print History Project</b><br>
-                    <a href="{{ path('feedback_new') }}">Feedback</a> | <a href="{{ asset('docs/html/index.html') }}">Documentation</a> | 
+                    <a href="{{ path('feedback_new') }}">Feedback</a> | <a href="{{ asset('docs/sphinx/index.html') }}">Documentation</a> |
                     <a href="https://github.com/sfu-dhil/wphp">GitHub</a>
                 </p>
             </div>
             <div class='col-md-6'>
                 <p><b>Search</b><br>
-                    <a href="{{ path('title_quick_search') }}">By Title</a> | <a href="{{ path('person_quick_search') }}">By Person</a> | 
+                    <a href="{{ path('title_quick_search') }}">By Title</a> | <a href="{{ path('person_quick_search') }}">By Person</a> |
                     <a href="{{ path('firm_quick_search') }}">By Firm</a>
                 </p>
             </div>
