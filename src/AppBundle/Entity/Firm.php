@@ -9,11 +9,6 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Firm
  *
- * Doctrine isn't able to manage the unique constraint on this table at all. It
- * must be created manually:
- *
- * CREATE UNIQUE INDEX `unique` ON firm (name(100), city, start_date, end_date);
- *
  * @ORM\Table(name="firm",
  *  indexes={
  *      @ORM\Index(name="firm_name_ft", columns={"name", "street_address"}, flags={"fulltext"}),
@@ -53,14 +48,14 @@ class Firm
     /**
      * @var string
      *
-     * @ORM\Column(name="start_date", type="date", nullable=true)
+     * @ORM\Column(name="start_date", type="string", length=20, nullable=true)
      */
     private $startDate;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="end_date", type="date", nullable=true)
+     * @ORM\Column(name="end_date", type="string", length=20, nullable=true)
      */
     private $endDate;
 

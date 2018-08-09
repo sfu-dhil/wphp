@@ -46,17 +46,15 @@ class FirmType extends AbstractType {
               'help_block' => 'City/town/village in which the firm’s street address is located; geotagged'
             ),
         ));
-        $builder->add('startDate', DateType::class, array(
+        $builder->add('startDate', null, array(
             'label' => 'Start Date',
-            'widget' => 'single_text',
             'required' => false,
             'attr' => array(
                 'help_block' => 'If known, YYYY-MM-DD',
             ),
         ));
-        $builder->add('endDate', DateType::class, array(
+        $builder->add('endDate', null, array(
             'label' => 'End Date',
-            'widget' => 'single_text',
             'required' => false,
             'attr' => array(
                 'help_block' => 'If known, YYYY-MM-DD',

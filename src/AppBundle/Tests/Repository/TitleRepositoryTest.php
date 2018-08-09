@@ -94,7 +94,7 @@ class TitleRepositoryTest extends BaseTestCase {
             [['orderby' => 'cheese', 'orderdir' => 'colour'], 'FROM title t0_ ORDER BY t0_.title ASC'],
             
             [['person_filter' => []], 'FROM title t0_'],
-            [['person_filter' => ['name' => 'foo']], 'FROM title t0_ INNER JOIN title_role t1_ ON t0_.id = t1_.title_id INNER JOIN person p2_ ON t1_.person_id = p2_.id WHERE MATCH (p2_.last_name, p2_.first_name, p2_.title_name) AGAINST (? IN BOOLEAN MODE) > 0'],
+            [['person_filter' => ['name' => 'foo']], 'FROM title t0_ INNER JOIN title_role t1_ ON t0_.id = t1_.title_id INNER JOIN person p2_ ON t1_.person_id = p2_.id WHERE MATCH (p2_.last_name, p2_.first_name, p2_.title) AGAINST (? IN BOOLEAN MODE) > 0'],
             [['person_filter' => ['gender' => ['M']]], 'FROM title t0_ INNER JOIN title_role t1_ ON t0_.id = t1_.title_id INNER JOIN person p2_ ON t1_.person_id = p2_.id WHERE p2_.gender IN (?)'],
             [['person_filter' => ['gender' => ['M', 'F']]], 'FROM title t0_ INNER JOIN title_role t1_ ON t0_.id = t1_.title_id INNER JOIN person p2_ ON t1_.person_id = p2_.id WHERE p2_.gender IN (?)'],
             [['person_filter' => ['person_role' => ['author']]], 'FROM title t0_ INNER JOIN title_role t1_ ON t0_.id = t1_.title_id INNER JOIN person p2_ ON t1_.person_id = p2_.id WHERE t1_.role_id IN (?)'],
