@@ -3,6 +3,7 @@
 namespace AppBundle\DataFixtures\ORM;
 
 use AppBundle\Entity\Firm;
+use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -36,7 +37,7 @@ class LoadFirm extends Fixture implements DependentFixtureInterface {
      * {@inheritdoc}
      */
     public function getDependencies() {
-        // add dependencies here, or remove this 
+        // add dependencies here, or remove this
         // function and "implements DependentFixtureInterface" above
         return [
             LoadGeonames::class,

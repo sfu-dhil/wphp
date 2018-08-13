@@ -1,0 +1,103 @@
+<?php
+
+namespace AppBundle\Controller;
+
+use AppBundle\Entity\EstcMarc;
+use AppBundle\Services\MarcManager;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+
+/**
+ * EstcMarc controller.
+ *
+ * @Security("has_role('ROLE_USER')")
+ * @Route("/resource/estc")
+ */
+class EstcMarcController extends Controller {
+
+    /**
+     * Lists all EstcMarc entities.
+     *
+     * @param Request $request
+     *
+     * @return array
+     *
+     * @Route("/", name="resource_estc_index")
+     * @Method("GET")
+     * @Template()
+     */
+    public function indexAction(Request $request, MarcManager $manager) {
+        $em = $this->getDoctrine()->getManager();
+        $repo = $em->getRepository(EstcMarc::class);
+        $query = $repo->indexQuery();
+        $paginator = $this->get('knp_paginator');
+        $estcMarcs = $paginator->paginate($query, $request->query->getint('page', 1), 25);
+
+        return array(
+            'estcMarcs' => $estcMarcs,
+            'manager' => $manager,
+        );
+    }
+
+    /**
+     * Search for EstcMarc entities.
+     *
+     * @param Request $request
+     *
+     * @Route("/search", name="resource_estc_search")
+     * @Method("GET")
+     * @Template()
+     */
+    public function searchAction(Request $request, MarcManager $manager) {
+        $em = $this->getDoctrine()->getManager();
+        $repo = $em->getRepository('AppBundle:EstcMarc');
+        $q = $request->query->get('q');
+        if ($q) {
+            $result = $repo->searchQuery($q);
+            $paginator = $this->get('knp_paginator');
+            $titleIds = $paginator->paginate($result, $request->query->getInt('page', 1), 25);
+        } else {
+            $titleIds = array();
+        }
+        $estcMarcs = array();
+        foreach($titleIds as $titleId) {
+            $estcMarcs[] = $repo->findOneBy(array(
+                'titleId' => $titleId,
+                'field' => 'ldr',
+            ));
+        }
+        return array(
+            'titleIds' => $titleIds,
+            'estcMarcs' => $estcMarcs,
+            'q' => $q,
+            'manager' => $manager,
+        );
+    }
+
+    /**
+     * Finds and displays a EstcMarc entity.
+     *
+     * @param EstcMarc $estcMarc
+     *
+     * @return array
+     *
+     * @Route("/{id}", name="resource_estc_show")
+     * @Method("GET")
+     * @ParamConverter("estcMarc", options={"mapping": {"id": "titleId"}})
+     * @Template()
+     */
+    public function showAction(EstcMarc $estcMarc, MarcManager $manager) {
+
+        return array(
+            'estcMarc' => $estcMarc,
+            'manager' => $manager,
+        );
+    }
+
+}

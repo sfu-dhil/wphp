@@ -6,6 +6,7 @@ use AppBundle\Entity\Firm;
 use AppBundle\Entity\Geonames;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Tetranz\Select2EntityBundle\Form\Type\Select2EntityType;
@@ -42,7 +43,7 @@ class FirmType extends AbstractType {
             'delay' => 250,
             'language' => 'en',
             'attr' => array(
-              'help_block' => 'City/town/village in which the firm’s street address is located; geotagged'  
+              'help_block' => 'City/town/village in which the firm’s street address is located; geotagged'
             ),
         ));
         $builder->add('startDate', null, array(

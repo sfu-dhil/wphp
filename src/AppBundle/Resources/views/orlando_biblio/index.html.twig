@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}OrlandoBiblio List{% endblock %}
+
+{% block pageheader %}
+    <h1>OrlandoBiblio List</h1>
+    <p class="count">
+        Displaying {{ orlandoBiblios|length }} orlandoBiblios of {{ orlandoBiblios.getTotalItemCount }} total.
+    </p>
+{% endblock %}
+
+{% block body %}
+
+    <div class='btn-toolbar pull-right'>
+        <div class='btn-group'>
+            <a href="{{ path('resource_orlando_biblio_search') }}" class="btn btn-default">
+                <span class="glyphicon glyphicon-search"></span> Search
+            </a>
+        </div>
+    </div>
+
+    <table class="table table-bordered table-condensed table-hover table-striped">
+        <thead>
+            <tr>
+                <th>Bi Id</th>
+                <th>Author</th>
+                <th>Analytic Standard Title</th>
+                <th>Monographic Standard Title</th>
+                <th>Imprint Date Of Publication</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for orlandoBiblio in orlandoBiblios %}
+                <tr>
+                    <td>
+                        <a href="{{ path('resource_orlando_biblio_show', { 'id': orlandoBiblio.id }) }}">
+                            {{ orlandoBiblio.orlandoId }}
+                        </a>
+                    </td>
+                    <td>
+                        {% set fields = manager.getField(orlandoBiblio.author) %}
+                        {% if fields|length > 1 %}
+                            <ul>
+                                {% for field in fields %}
+                                    <li>{{ field }}</li>
+                                    {% endfor %}
+                            </ul>
+                        {% elseif fields | length == 1 %}
+                            {{ fields[0] }}
+                        {% endif %}
+                    </td>
+                    <td>{{ orlandoBiblio.analyticStandardTitle }}</td>
+                    <td>{{ orlandoBiblio.monographicStandardTitle }}</td>
+                    <td>{{ orlandoBiblio.imprintDateOfPublication }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="navigation">
+        {{ knp_pagination_render(orlandoBiblios) }}
+    </div>
+
+{% endblock %}

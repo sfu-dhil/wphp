@@ -9,20 +9,12 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Firm
  *
- * Doctrine isn't able to manage the unique constraint on this table at all. It
- * must be created manually:
- *
- * CREATE UNIQUE INDEX `unique` ON firm (name(100), city, start_date, end_date);
- *
  * @ORM\Table(name="firm",
  *  indexes={
- *      @ORM\Index(name="city", columns={"city"}),
- *      @ORM\Index(name="full", columns={"name", "street_address"}, flags={"fulltext"}),
- *      @ORM\Index(name="address_ft_idx", columns={"street_address"}, flags={"fulltext"}),
- *      @ORM\Index(name="firmname", columns={"name"}, flags={"fulltext"})
+ *      @ORM\Index(name="firm_name_ft", columns={"name", "street_address"}, flags={"fulltext"}),
  *  },
  *  uniqueConstraints={
- *      @ORM\UniqueConstraint(name="unique", columns={"name", "city", "start_date", "end_date"})
+ *      @ORM\UniqueConstraint(name="firm_uniq", columns={"name", "city", "start_date", "end_date"})
  *  }
  * )
  * @ORM\Entity(repositoryClass="AppBundle\Repository\FirmRepository")

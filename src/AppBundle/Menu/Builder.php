@@ -18,7 +18,7 @@ class Builder implements ContainerAwareInterface
 
     // U+25BE, black down-pointing small triangle.
     const CARET = ' ▾';
-    
+
     /**
      * @var FactoryInterface
      */
@@ -33,14 +33,21 @@ class Builder implements ContainerAwareInterface
      * @var TokenStorageInterface
      */
     private $tokenStorage;
-    
+
     /**
-     *
+     * Build the menu builder.
      */
     public function __construct(FactoryInterface $factory, AuthorizationCheckerInterface $authChecker, TokenStorageInterface $tokenStorage) {
         $this->factory = $factory;
         $this->authChecker = $authChecker;
         $this->tokenStorage = $tokenStorage;
+    }
+
+    private function hasRole($role) {
+        if (!$this->tokenStorage->getToken()) {
+            return false;
+        }
+        return $this->authChecker->isGranted($role);
     }
 
     /**
@@ -59,7 +66,7 @@ class Builder implements ContainerAwareInterface
             'label' => 'Home',
             'route' => 'homepage',
         ));
-        
+
         $browse = $menu->addChild('browse', array(
             'uri' => '#',
             'label' => 'Browse ' . self::CARET,
@@ -78,7 +85,32 @@ class Builder implements ContainerAwareInterface
         $browse->addChild('Firms', array(
             'route' => 'firm_index',
         ));
-        
+
+        if ($this->hasRole('ROLE_USER')) {
+            $browse->addChild('divider', array(
+                'label' => '',
+            ));
+            $browse['divider']->setAttributes(array(
+                'role' => 'separator',
+                'class' => 'divider',
+            ));
+            $browse->addChild('English Novel', array(
+                'route' => 'resource_en_index',
+            ));
+            $browse->addChild('ESTC', array(
+                'route' => 'resource_estc_index',
+            ));
+            $browse->addChild('Jackson', array(
+                'route' => 'resource_jackson_index',
+            ));
+            $browse->addChild('Orlando', array(
+                'route' => 'resource_orlando_biblio_index',
+            ));
+            $browse->addChild('Osborne', array(
+                'route' => 'resource_osborne_index',
+            ));
+        }
+
         return $menu;
     }
 

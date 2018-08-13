@@ -11,16 +11,10 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="title",
  *  indexes={
- *      @ORM\Index(name="location_idx", columns={"location_of_printing"}),
- *      @ORM\Index(name="format_idx", columns={"format_id"}),
- *      @ORM\Index(name="genre_idx", columns={"genre_id"}),
- *      @ORM\Index(name="source_idx", columns={"source"}),
- *      @ORM\Index(name="source2_idx", columns={"source2"}),
- *      @ORM\Index(name="title_idx", columns={"title"}, flags={"fulltext"}),
- *      @ORM\Index(name="author_idx", columns={"signed_author"}, flags={"fulltext"}),
- *      @ORM\Index(name="pseudonym_idx", columns={"pseudonym"}, flags={"fulltext"}),
- *      @ORM\Index(name="titleauthor_idx", columns={"title", "signed_author"}, flags={"fulltext"}),
- *      @ORM\Index(name="imprint_idx", columns={"imprint"}, flags={"fulltext"})
+ *      @ORM\Index(name="title_title_ft", columns={"title"}, flags={"fulltext"}),
+ *      @ORM\Index(name="title_signedauthor_ft", columns={"signed_author"}, flags={"fulltext"}),
+ *      @ORM\Index(name="title_pseudonym_idx", columns={"pseudonym"}, flags={"fulltext"}),
+ *      @ORM\Index(name="title_imprint_idx", columns={"imprint"}, flags={"fulltext"})
  * })
  * @ORM\Entity(repositoryClass="AppBundle\Repository\TitleRepository")
  */
@@ -39,29 +33,22 @@ class Title
     /**
      * @var string
      *
-     * @ORM\Column(name="title", type="string", length=1000, nullable=true)
+     * @ORM\Column(name="title", type="text", nullable=false)
      */
     private $title;
-    
+
     /**
      * @var int
      * @ORM\Column(name="edition_number", type="integer", nullable=true)
      */
     private $editionNumber;
-    
+
     /**
      * @var string
      *
      * @ORM\Column(name="signed_author", type="text", nullable=true)
      */
     private $signedAuthor;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="surrogate", type="text", nullable=true)
-     */
-    private $surrogate;
 
     /**
      * @var string
@@ -157,16 +144,23 @@ class Title
     /**
      * @var string
      *
-     * @ORM\Column(name="source_id", type="string", length=20, nullable=true)
+     * @ORM\Column(name="source_id", type="string", length=300, nullable=true)
      */
     private $sourceId;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="source2_id", type="string", length=20, nullable=true)
+     * @ORM\Column(name="source2_id", type="string", length=300, nullable=true)
      */
     private $source2Id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="source3_id", type="string", length=300, nullable=true)
+     */
+    private $source3Id;
 
     /**
      * @var string
@@ -190,6 +184,13 @@ class Title
     private $finalcheck = '0';
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="finalattempt", type="boolean", nullable=false)
+     */
+    private $finalattempt = '0';
+
+    /**
      * @var string
      *
      * @ORM\Column(name="notes", type="text", nullable=true)
@@ -197,7 +198,7 @@ class Title
     private $notes;
 
     /**
-     * @var \Geonames
+     * @var Geonames
      *
      * @ORM\ManyToOne(targetEntity="Geonames", inversedBy="titles")
      * @ORM\JoinColumns({
@@ -207,7 +208,7 @@ class Title
     private $locationOfPrinting;
 
     /**
-     * @var \Format
+     * @var Format
      *
      * @ORM\ManyToOne(targetEntity="Format", inversedBy="titles")
      * @ORM\JoinColumns({
@@ -217,7 +218,7 @@ class Title
     private $format;
 
     /**
-     * @var \Genre
+     * @var Genre
      *
      * @ORM\ManyToOne(targetEntity="Genre", inversedBy="titles")
      * @ORM\JoinColumns({
@@ -227,7 +228,7 @@ class Title
     private $genre;
 
     /**
-     * @var \Source
+     * @var Source
      *
      * @ORM\ManyToOne(targetEntity="Source")
      * @ORM\JoinColumns({
@@ -237,7 +238,7 @@ class Title
     private $source;
 
     /**
-     * @var \Source
+     * @var Source
      *
      * @ORM\ManyToOne(targetEntity="Source")
      * @ORM\JoinColumns({
@@ -245,6 +246,16 @@ class Title
      * })
      */
     private $source2;
+
+    /**
+     * @var Source
+     *
+     * @ORM\ManyToOne(targetEntity="Source")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="source2", referencedColumnName="id")
+     * })
+     */
+    private $source3;
 
     /**
      * @var Collection|TitleRole[]
@@ -969,7 +980,7 @@ class Title
 
     /**
      * Return the title's title.
-     * 
+     *
      * @return string
      */
     public function __toString() {
@@ -998,5 +1009,77 @@ class Title
     public function getEditionNumber()
     {
         return $this->editionNumber;
+    }
+
+    /**
+     * Set source3Id
+     *
+     * @param string $source3Id
+     *
+     * @return Title
+     */
+    public function setSource3Id($source3Id)
+    {
+        $this->source3Id = $source3Id;
+
+        return $this;
+    }
+
+    /**
+     * Get source3Id
+     *
+     * @return string
+     */
+    public function getSource3Id()
+    {
+        return $this->source3Id;
+    }
+
+    /**
+     * Set finalattempt
+     *
+     * @param boolean $finalattempt
+     *
+     * @return Title
+     */
+    public function setFinalattempt($finalattempt)
+    {
+        $this->finalattempt = $finalattempt;
+
+        return $this;
+    }
+
+    /**
+     * Get finalattempt
+     *
+     * @return boolean
+     */
+    public function getFinalattempt()
+    {
+        return $this->finalattempt;
+    }
+
+    /**
+     * Set source3
+     *
+     * @param \AppBundle\Entity\Source $source3
+     *
+     * @return Title
+     */
+    public function setSource3(\AppBundle\Entity\Source $source3 = null)
+    {
+        $this->source3 = $source3;
+
+        return $this;
+    }
+
+    /**
+     * Get source3
+     *
+     * @return \AppBundle\Entity\Source
+     */
+    public function getSource3()
+    {
+        return $this->source3;
     }
 }

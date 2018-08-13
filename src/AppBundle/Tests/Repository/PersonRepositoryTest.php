@@ -56,7 +56,7 @@ class PersonRepositoryTest extends BaseTestCase {
     public function testBuildSearchQueryData() {
         return [
             [[], 'FROM person p0_'],
-            [['name' => 'mary'], 'FROM person p0_ WHERE MATCH (p0_.last_name, p0_.first_name, p0_.title_name) AGAINST (? IN BOOLEAN MODE) > 0'],
+            [['name' => 'mary'], 'FROM person p0_ WHERE MATCH (p0_.last_name, p0_.first_name, p0_.title) AGAINST (? IN BOOLEAN MODE) > 0'],
             [['gender' => ['F']], 'FROM person p0_ WHERE p0_.gender IN (?)'],
             [['gender' => ['F', 'U']], 'FROM person p0_ WHERE p0_.gender IN (?)'],
             

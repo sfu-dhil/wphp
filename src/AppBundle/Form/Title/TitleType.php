@@ -42,13 +42,6 @@ class TitleType extends AbstractType {
                 'help_block' => 'Author attribution from the title page or the end of the preface',
             ),
         ));
-        $builder->add('surrogate', null, array(
-            'label' => 'Surrogate',
-            'required' => false,
-            'attr' => array(
-                'help_block' => 'Obsolete field -please leave empty',
-            ),
-        ));
         $builder->add('titleRoles', CollectionType::class, array(
             'label' => 'Personal Contributions',
             'required' => false,

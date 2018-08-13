@@ -170,4 +170,3 @@ class Feedback
       return $this->created;
     }
 }
-

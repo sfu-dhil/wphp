@@ -6,49 +6,45 @@
     <h1>Edit Title</h1>
 
     {{ form_start(edit_form) }}
-    
-    <div>
-
-                <p>{{ form_row(edit_form.title) }}</p>
-                <p>{{ form_row(edit_form.signedAuthor) }}</p>
-                <p>{{ form_row(edit_form.pubdate) }}</p>
-                <p>{{ form_row(edit_form.locationOfPrinting) }}</p>
-                <p>{{ form_row(edit_form.edition) }}</p>
-                <p>{{ form_row(edit_form.editionNumber) }}</p>
-                <p>{{ form_row(edit_form.volumes) }}</p>
-                <p>{{ form_row(edit_form.titleFirmroles) }}</p>
+                <h3>Citation Information</h3>
+                {{ form_row(edit_form.title) }}
+                {{ form_row(edit_form.signedAuthor) }}
+                {{ form_row(edit_form.pubdate) }}
+                {{ form_row(edit_form.locationOfPrinting) }}
+                {{ form_row(edit_form.edition) }}
+                {{ form_row(edit_form.editionNumber) }}
+                {{ form_row(edit_form.volumes) }}
+                {{ form_row(edit_form.titleFirmroles) }}
 
                 <h3>Author Information</h3>
-                <p>{{ form_row(edit_form.pseudonym) }}</p>
-                <p>{{ form_row(edit_form.surrogate) }}</p>
-                <p>{{ form_row(edit_form.titleRoles) }}</p>
+                {{ form_row(edit_form.pseudonym) }}
+                {{ form_row(edit_form.titleRoles) }}
 
                 <h3>Publishing Information</h3>
-                <p>{{ form_row(edit_form.selfpublished) }}</p>
-                <p>{{ form_row(edit_form.dateOfFirstPublication) }}</p>
+                {{ form_row(edit_form.selfpublished) }}
+                {{ form_row(edit_form.dateOfFirstPublication) }}
 
                 <h3>Cataloguing Information</h3>
-                <p>{{ form_row(edit_form.genre) }}</p>
-                <p>{{ form_row(edit_form.format) }}</p>
-                <p>{{ form_row(edit_form.imprint) }}</p>
-                <p>{{ form_row(edit_form.pagination) }}</p>
-                <p>{{ form_row(edit_form.sizeL) }}</p>
-                <p>{{ form_row(edit_form.sizeW) }}</p>
-                <p>{{ form_row(edit_form.pricePound) }}</p>
-                <p>{{ form_row(edit_form.priceShilling) }}</p>
-                <p>{{ form_row(edit_form.pricePence) }}</p>
-                <p>{{ form_row(edit_form.shelfmark) }}</p>
+                {{ form_row(edit_form.genre) }}
+                {{ form_row(edit_form.format) }}
+                {{ form_row(edit_form.imprint) }}
+                {{ form_row(edit_form.pagination) }}
+                {{ form_row(edit_form.sizeL) }}
+                {{ form_row(edit_form.sizeW) }}
+                {{ form_row(edit_form.pricePound) }}
+                {{ form_row(edit_form.priceShilling) }}
+                {{ form_row(edit_form.pricePence) }}
+                {{ form_row(edit_form.shelfmark) }}
 
                 <h3>Entry Information</h3>
-                <p>{{ form_row(edit_form.notes) }}</p>
-                <p>{{ form_row(edit_form.source) }}</p>
-                <p>{{ form_row(edit_form.sourceId) }}</p>
-                <p>{{ form_row(edit_form.source2) }}</p>
-                <p>{{ form_row(edit_form.source2Id) }}</p>
-                <p>{{ form_row(edit_form.checked) }}</p>
-                <p>{{ form_row(edit_form.finalcheck) }}</p>
-            </div>
-    
+                {{ form_row(edit_form.notes) }}
+                {{ form_row(edit_form.source) }}
+                {{ form_row(edit_form.sourceId) }}
+                {{ form_row(edit_form.source2) }}
+                {{ form_row(edit_form.source2Id) }}
+                {{ form_row(edit_form.checked) }}
+                {{ form_row(edit_form.finalcheck) }}
+
     <div class="form-group">
         <div class="col-sm-2"></div>
         <div class="col-sm-10">

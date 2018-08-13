@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}OrlandoBiblio List{% endblock %}
+
+{% block pageheader %}
+    <h1>OrlandoBiblio List</h1>
+    {% if orlandoBiblios|length %}
+    <p class="count">
+        Displaying {{ orlandoBiblios|length }} orlandoBiblios of {{ orlandoBiblios.getTotalItemCount }} total.
+    </p>
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+
+    <form method="get" class="form-horizontal" action="{{ path('resource_orlando_biblio_search') }}">
+        <fieldset>
+            <legend>Search the English Novel records</legend>
+            <div class="form-group">
+                <label class='col-sm-2 control-label' for='q'>Search term</label>
+                <div class='input-group'>
+                    <input type='text' name='q' id='q' class='form-control' value='{{ q }}'>
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary" type="submit">
+                            <span class='glyphicon glyphicon-search'></span>
+                            Search
+                        </button>
+                    </span>
+                </div>
+                <p class="help-block col-sm-offset-2">Search the records by title or author.</p>
+            </div>
+        </fieldset>
+    </form>
+
+{% if orlandoBiblios|length %}
+    <table class="table table-bordered table-condensed table-hover table-striped">
+        <thead>
+        <tr>
+            <th>Bi Id</th>
+            <th>Author</th>
+            <th>Analytic Standard Title</th>
+            <th>Monographic Standard Title</th>
+            <th>Imprint Date Of Publication</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for orlandoBiblio in orlandoBiblios %}
+            <tr>
+                <td>
+                    <a href="{{ path('resource_orlando_biblio_show', { 'id': orlandoBiblio.id }) }}">
+                        {{ orlandoBiblio.orlandoId }}
+                    </a>
+                </td>
+                <td>
+                    {% set fields = manager.getField(orlandoBiblio.author) %}
+                    {% if fields|length > 1 %}
+                        <ul>
+                            {% for field in fields %}
+                                <li>{{ field }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% elseif fields | length == 1 %}
+                        {{ fields[0] }}
+                    {% endif %}
+                </td>
+                <td>{{ orlandoBiblio.analyticStandardTitle }}</td>
+                <td>{{ orlandoBiblio.monographicStandardTitle }}</td>
+                <td>{{ orlandoBiblio.imprintDateOfPublication }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="navigation">
+        {{ knp_pagination_render(orlandoBiblios) }}
+    </div>
+{% endif %}
+{% endblock %}

@@ -11,13 +11,12 @@ use Doctrine\ORM\Mapping as ORM;
  * uniqueConstraints={
  *  ORM\UniqueConstraint(name="title_uq_idx", columns={"title_id", "role_id", "person_id"})
  * }
- * 
+ *
  * @ORM\Table(name="title_role",
- *  indexes={
- *      @ORM\Index(name="person_idx", columns={"person_id"}),
- *      @ORM\Index(name="role_idx", columns={"role_id"}),
- *      @ORM\Index(name="IDX_1CB35015A9F87BD", columns={"title_id"})
- * })
+ *  uniqueConstraints={
+ *      @ORM\UniqueConstraint(name="titlerole_uniq", columns={"title_id", "person_id", "role_id"})
+ *  }
+ * )
  * @ORM\Entity
  */
 class TitleRole

@@ -12,8 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="geonames",
  *  indexes={
- *      @ORM\Index(name="geo_search", columns={"name", "geonameid", "country"}),
- *      @ORM\Index(name="names", columns={"alternatenames", "name"}, flags={"fulltext"})
+ *      @ORM\Index(name="geonames_search_idx", columns={"name", "geonameid", "country"}),
+ *      @ORM\Index(name="geonames_names_ft", columns={"alternatenames", "name"}, flags={"fulltext"})
  * })
  * @ORM\Entity(repositoryClass="AppBundle\Repository\GeonamesRepository")
  */
@@ -164,19 +164,19 @@ class Geonames
      * @ORM\OneToMany(targetEntity="Firm", mappedBy="city")
      */
     private $firms;
-    
+
     /**
      * @var Collection|Person[]
      * @ORM\OneToMany(targetEntity="Person", mappedBy="cityOfBirth")
      */
     private $peopleBorn;
-    
+
     /**
      * @var Collection|Title[]
      * @ORM\OneToMany(targetEntity="Person", mappedBy="cityOfDeath")
      */
     private $peopleDied;
-    
+
     /**
      * Constructor
      */
@@ -187,7 +187,7 @@ class Geonames
         $this->peopleBorn = new ArrayCollection();
         $this->peopleDied = new ArrayCollection();
     }
-    
+
     public function __toString() {
         return $this->name;
     }
@@ -204,7 +204,7 @@ class Geonames
 
         return $this;
     }
-    
+
     /**
      * Get geonameid
      *
