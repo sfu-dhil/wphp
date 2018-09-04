@@ -11,7 +11,8 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="firm",
  *  indexes={
- *      @ORM\Index(name="firm_name_ft", columns={"name", "street_address"}, flags={"fulltext"}),
+ *      @ORM\Index(name="firm_name_ft", columns={"name"}, flags={"fulltext"}),
+ *      @ORM\Index(name="firm_address_ft", columns={"name", "street_address"}, flags={"fulltext"}),
  *  },
  *  uniqueConstraints={
  *      @ORM\UniqueConstraint(name="firm_uniq", columns={"name", "city", "start_date", "end_date"})

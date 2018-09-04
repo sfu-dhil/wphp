@@ -114,6 +114,7 @@ ivory_ck_editor:
     default_config: wphp_config
     configs:
         wphp_config:
+            entities: false
             toolbar: standard
 
 knp_menu:
