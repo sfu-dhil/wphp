@@ -6,6 +6,9 @@ nines_blog:
     resource: "@NinesBlogBundle/Controller/"
     type: annotation
 
+nines_dc:
+    resource: "@NinesDublinCoreBundle/Controller/"
+
 nines_user:
     resource: "@NinesUserBundle/Controller/"
     type: annotation

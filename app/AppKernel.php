@@ -18,13 +18,14 @@ class AppKernel extends Kernel {
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
             new FOS\UserBundle\FOSUserBundle(),
-            new Ivory\CKEditorBundle\IvoryCKEditorBundle(), 
+            new FOS\CKEditorBundle\FOSCKEditorBundle(),
             new Tetranz\Select2EntityBundle\TetranzSelect2EntityBundle(),
             
             new AppBundle\AppBundle(),
             
             new Nines\UserBundle\NinesUserBundle(),
             new Nines\FeedbackBundle\NinesFeedbackBundle(),
+            new Nines\DublinCoreBundle\NinesDublinCoreBundle(),
             new Nines\BlogBundle\NinesBlogBundle(),
             new Nines\UtilBundle\NinesUtilBundle(),
         ];

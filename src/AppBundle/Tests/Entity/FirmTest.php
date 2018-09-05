@@ -10,13 +10,14 @@ namespace AppBundle\Tests\Entity;
 use AppBundle\Entity\Firm;
 use AppBundle\Entity\Firmrole;
 use AppBundle\Entity\TitleFirmrole;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Description of FirmTest
  *
  * @author dogan
  */
-class FirmTest extends \PHPUnit_Framework_TestCase {
+class FirmTest extends TestCase {
     
     /**
     * @dataProvider getStartDateData

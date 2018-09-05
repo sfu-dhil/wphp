@@ -10,14 +10,14 @@ namespace AppBundle\Tests\Entity;
 use AppBundle\Entity\Person;
 use AppBundle\Entity\Role;
 use AppBundle\Entity\TitleRole;
-
+use PHPUnit\Framework\TestCase;
 
 /**
  * Description of PersonTest
  *
  * @author dogan
  */
-class PersonTest extends \PHPUnit_Framework_TestCase {
+class PersonTest extends TestCase {
     //put your code here
     
     /**

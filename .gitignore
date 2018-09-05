@@ -28,3 +28,4 @@ app/cache
 /.DS_Store
 phpunit.xml
 app/config/deploy.yml
+.idea

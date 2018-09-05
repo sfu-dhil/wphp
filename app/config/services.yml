@@ -14,6 +14,22 @@ services:
         # if you need to do this, you can override this setting on individual services
         public: false
 
+    twig.extension.text:
+        class: Twig_Extensions_Extension_Text
+        tags:
+        - { name: twig.extension }
+
+    Nines\FeedbackBundle\:
+        resource: '../../src/Nines/FeedbackBundle/*'
+        exclude: '../../src/Nines/FeedbackBundle/{Entity,Repository,Resources,Tests}'
+
+    Nines\FeedbackBundle\Services\NotifierService:
+        arguments:
+            $sender: '%nines_feedback.sender%'
+            $recipient: '%nines_feedback.recipient%'
+            $subject: '%nines_feedback.subject%'
+            $service: '@feedback.comment'
+
     Nines\UserBundle\:
         resource: '../../src/Nines/UserBundle/*'
         # you can exclude directories or files
@@ -24,14 +40,14 @@ services:
         resource: '../../src/Nines/UtilBundle/*'
         exclude: '../../src/Nines/UtilBundle/{Entity,Repository,Resources,Tests}'
 
-    Nines\BlogBundle\Menu\Builder:
-        tags:
-            - { name: knp_menu.menu_builder, method: postNavMenu, alias: post}
-            - { name: knp_menu.menu_builder, method: pageNavMenu, alias: page}
-
     Nines\UserBundle\Menu\Builder:
         tags:
-            - { name: knp_menu.menu_builder, method: userNavMenu, alias: user}
+        - { name: knp_menu.menu_builder, method: userNavMenu, alias: user}
+
+    Nines\BlogBundle\Menu\Builder:
+        tags:
+        - { name: knp_menu.menu_builder, method: postNavMenu, alias: posts}
+        - { name: knp_menu.menu_builder, method: pageNavMenu, alias: pages}
 
     # makes classes in src/AppBundle available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
@@ -39,7 +55,7 @@ services:
         resource: '../../src/AppBundle/*'
         # you can exclude directories or files
         # but if a service is unused, it's removed anyway
-        exclude: '../../src/AppBundle/{Entity,Repository,Tests}'
+        exclude: '../../src/AppBundle/{Entity,Repository,Resources,Tests}'
 
     # controllers are imported separately to make sure they're public
     # and have a tag that allows actions to type-hint services
@@ -50,9 +66,4 @@ services:
 
     AppBundle\Menu\Builder:
         tags:
-            - { name: knp_menu.menu_builder, method: mainMenu, alias: main}
-
-    twig.extension.text:
-        class: Twig_Extensions_Extension_Text
-        tags:
-            - { name: twig.extension }
+        - { name: knp_menu.menu_builder, method: mainMenu, alias: main}

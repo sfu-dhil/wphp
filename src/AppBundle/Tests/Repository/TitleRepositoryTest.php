@@ -46,7 +46,7 @@ class TitleRepositoryTest extends BaseTestCase {
     }
 
     /**
-     * @dataProvider testBuildSearchQueryData
+     * @dataProvider searchQueryData
      */
     public function testBuildSearchQuery($data, $expected) {
         $repo = $this->em->getRepository(Title::class);
@@ -55,7 +55,7 @@ class TitleRepositoryTest extends BaseTestCase {
         $this->assertStringEndsWith($expected, $query->getSql());
     }
 
-    public function testBuildSearchQueryData() {
+    public function searchQueryData() {
         return [
             [[], 'FROM title t0_'],
             [['title' => 'foo'], 'FROM title t0_ WHERE MATCH (t0_.title) AGAINST (? IN BOOLEAN MODE) > 0'],
