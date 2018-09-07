@@ -66,6 +66,10 @@ class TitleRepository extends EntityRepository
             $qb->andWhere("MATCH (e.title) AGAINST (:title BOOLEAN) > 0");
             $qb->setParameter('title', $data['title']);
         }
+        if(isset($data['editionNumber']) && $data['editionNumber']) {
+            $qb->andWhere('e.editionNumber = :editionNumber');
+            $qb->setParameter('editionNumber', $data['editionNumber']);
+        }
         if(isset($data['checked'])) {
             $qb->andWhere('e.checked = :checked');
             $qb->setParameter('checked', $data['checked'] == 'Y');

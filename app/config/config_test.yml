@@ -3,9 +3,8 @@ imports:
     - { resource: parameters.yml }
 
 liip_functional_test:
-    cache_sqlite_db: true
-    command_verbosity: debug
-    command_decoration: false
+    cache_db:
+        sqlite: liip_functional_test.services_database_backup.sqlite
 
 framework:
     test: ~

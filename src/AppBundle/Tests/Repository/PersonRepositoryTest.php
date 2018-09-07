@@ -45,7 +45,7 @@ class PersonRepositoryTest extends BaseTestCase {
     }
     
     /**
-     * @dataProvider testBuildSearchQueryData
+     * @dataProvider searchQueryData
      */
     public function testBuildSearchQuery($data, $expected) {
         $repo = $this->em->getRepository(Person::class);
@@ -53,7 +53,7 @@ class PersonRepositoryTest extends BaseTestCase {
         $this->assertStringEndsWith($expected, $query->getSql());
     }
     
-    public function testBuildSearchQueryData() {
+    public function searchQueryData() {
         return [
             [[], 'FROM person p0_'],
             [['name' => 'mary'], 'FROM person p0_ WHERE MATCH (p0_.last_name, p0_.first_name, p0_.title) AGAINST (? IN BOOLEAN MODE) > 0'],

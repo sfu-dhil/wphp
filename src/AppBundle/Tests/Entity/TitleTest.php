@@ -7,8 +7,9 @@ use AppBundle\Entity\Role;
 use AppBundle\Entity\Firmrole;
 use AppBundle\Entity\TitleRole;
 use AppBundle\Entity\TitleFirmrole;
+use PHPUnit\Framework\TestCase;
 
-class TitleTest extends \PHPUnit_Framework_TestCase {
+class TitleTest extends TestCase {
 	
 	/**
 	 * @dataProvider getTotalPriceData

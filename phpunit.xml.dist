@@ -1,29 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!-- https://phpunit.de/manual/4.8/en/appendixes.configuration.html -->
-<phpunit         
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/5.7/phpunit.xsd"
-    backupGlobals="false"
-    backupStaticAttributes="false"
-    bootstrap="vendor/autoload.php"
-    cacheTokens="false"
-    colors="false"
-    processIsolation="false"
-    stopOnError="true"
-    stopOnFailure="true"
-    verbose="false">
-    
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/7.3/phpunit.xsd"
+         backupGlobals="false"
+         backupStaticAttributes="false"
+         cacheTokens="false"
+         processIsolation="false"
+         colors="false"
+         defaultTestSuite="app"
+         bootstrap="var/bootstrap.php.cache">
     <php>
         <ini name="error_reporting" value="-1" />
         <server name="KERNEL_CLASS" value="AppKernel" />
         <server name="KERNEL_DIR" value="app/" />
-        <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak" />        
+        <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak" />
     </php>
 
     <testsuites>
-        <testsuite name="wphp">
+        <testsuite name="app">
             <directory>src/AppBundle/Tests</directory>
+        </testsuite>
+        <testsuite name="nines">
+            <directory>src/Nines/*/Tests</directory>
+        </testsuite>
+        <testsuite name="full">
+            <directory>src/AppBundle/Tests</directory>
+            <directory>src/Nines/*/Tests</directory>
         </testsuite>
     </testsuites>
 
@@ -35,17 +38,5 @@
                 <directory>src/AppBundle/Tests</directory>
             </exclude>
         </whitelist>
-        <blacklist>
-            <directory>src/Nines</directory>
-            <directory>app</directory>
-            <directory>var</directory>
-            <directory>vendor</directory>
-            <directory>web</directory>
-        </blacklist>
     </filter>
-    
-    <listeners>
-        <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener" />
-    </listeners>
-    
 </phpunit>

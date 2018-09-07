@@ -41,6 +41,14 @@ class TitleSearchType extends AbstractType {
             ),
         ));
 
+        $builder->add('editionNumber', TextType::class, array(
+            'label' => 'Edition Number',
+            'required' => false,
+            'attr' => array(
+                'help_block' => 'Edition number.'
+            ),
+        ));
+
         $builder->add('orderby', ChoiceType::class, array(
             'label' => 'Order by',
             'choices' => array(

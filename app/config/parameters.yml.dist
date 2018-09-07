@@ -30,6 +30,11 @@ parameters:
     nines_blog.homepage_posts: 3
     nines_blog.menu_posts: 5
 
+    # comment notifications
+    nines_feedback.sender: ~
+    nines_feedback.recipient: ~
+    nines_feedback.subject: New feedback received
+
     # home page stuff.
     wphp.homepage_entries: 5
 
