@@ -4,7 +4,7 @@
     <link rel="alternate" type="application/rdf+xml" href="{{ url('person_show', {'id': person.id, '_format': 'rdf'}) }}"/>
 {% endblock %}
 
-{% block pageheader %} 
+{% block pageheader %}
     <h1>{{ person }}</h1>
     <div class="row">
         <div class="col-sm-6 text-left">
@@ -18,7 +18,7 @@
             {% endif %}
         </div>
     </div>
-{% endblock %} 
+{% endblock %}
 
 {% block body %}
 
@@ -61,26 +61,26 @@
             </tr>
             <tr>
                 <th><a href="#" data-toggle="popover" data-content="YYYY-MM-DD" data-trigger="hover" data-placement="bottom">Date of birth</a></th>
-                <td>{% if person.dob %}{{ person.dob }}{% endif %}</td>
+                <td>{% if person.dob %}{{ person.dob|replace({'-00': ''}) }}{% endif %}</td>
             </tr>
             <tr>
                 <th><a href="#" data-toggle="popover" data-content="Place of birth as geotagged" data-trigger="hover" data-placement="bottom">Place of birth</a></th>
                 <td>
-                    {% if person.cityOfBirth %} 
+                    {% if person.cityOfBirth %}
                         <a href="{{path('geonames_show', {'id': person.cityOfBirth.geonameid}) }}">
-                            {{ person.cityOfBirth.name }} 
+                            {{ person.cityOfBirth.name }}
                         </a>
                     {% endif %}
                 </td>
             </tr>
             <tr>
                 <th><a href="#" data-toggle="popover" data-content="YYYY-MM-DD" data-trigger="hover" data-placement="bottom">Date of death</a></th>
-                <td>{% if person.dod %}{{ person.dod }}{% endif %}</td>
+                <td>{% if person.dod %}{{ person.dod|replace({'-00': ''}) }}{% endif %}</td>
             </tr>
             <tr>
                 <th><a href="#" data-toggle="popover" data-content="Place of death as geotagged" data-trigger="hover" data-placement="bottom">Place of Death</a></th>
                 <td>
-                    {% if person.cityOfDeath %} 
+                    {% if person.cityOfDeath %}
                         <a href="{{ path('geonames_show', {'id': person.cityOfDeath.geonameid}) }}">
                             {{ person.cityOfDeath.name }}
                         </a>
@@ -102,14 +102,14 @@
                 <th>Date</th>
             </tr>
         </thead>
-        <tbody>                        
+        <tbody>
             {% for tr in pagination %}
                 {% set title = tr.title %}
                 <tr>
                     <td>{{ tr.role.name }}</td>
                     <td><a href="{{ path('title_show', {'id': title.id}) }}">{{ title.title }}</a></td>
                     <td>{{ title.pubdate }}</td>
-                </tr>                        
+                </tr>
             {% endfor %}
     </table>
     <div class='btn-toolbar pull-right'>
@@ -130,7 +130,7 @@
 
     <div class='clearfix'></div>
 
-    {% include 'NinesFeedbackBundle:comment:comment-interface.html.twig' with { 'entity': person } %}                
+    {% include 'NinesFeedbackBundle:comment:comment-interface.html.twig' with { 'entity': person } %}
 
 {% endblock %}
 
