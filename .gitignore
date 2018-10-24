@@ -29,3 +29,4 @@ app/cache
 phpunit.xml
 app/config/deploy.yml
 .idea
+etc
