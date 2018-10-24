@@ -935,9 +935,10 @@ class Title
         if ($roleName === null) {
             return $this->titleRoles;
         }
-        return $this->titleRoles->filter(function(TitleRole $titleRole) use ($roleName) {
+        $roles = $this->titleRoles->filter(function(TitleRole $titleRole) use ($roleName) {
                     return $titleRole->getRole()->getName() === $roleName;
         });
+        return $roles->toArray();
     }
 
     /**
