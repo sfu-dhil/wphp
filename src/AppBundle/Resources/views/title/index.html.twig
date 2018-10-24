@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block pageheader %} 
+{% block pageheader %}
     <h1>Title Search</h1>
     {% if titles|length > 0 %}
         Displaying {{ titles|length }} titles of {{ titles.getTotalItemCount }} total.
@@ -9,10 +9,10 @@
 
 {% block body %}
 
-    {{ form_start(search_form, {'attr': { 'class': 'search'}}) }}    
+    {{ form_start(search_form, {'attr': { 'class': 'search'}}) }}
     {{ form_row(search_form.title) }}
     <div id="controls" class="collapse">
-        {{ form_rest(search_form) }}    
+        {{ form_rest(search_form) }}
     </div>
     {{ form_widget(search_form) }}
 
@@ -20,13 +20,13 @@
         <div class="col-sm-2"></div>
 
         <div class="col-sm-10">
-            <input type="submit" value="Search" class="btn btn-primary" />            
-            <a class="btn btn-primary" role="button" data-toggle="collapse" href="#controls" aria-expanded="false" aria-controls="collapseExample">Options</a>            
+            <input type="submit" value="Search" class="btn btn-primary" />
+            <a class="btn btn-primary" role="button" data-toggle="collapse" href="#controls" aria-expanded="false" aria-controls="collapseExample">Options</a>
             <a class="btn btn-default" href="{{ path('title_search') }}">Reset</a>
             <div class="btn-group">
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Export <span class="caret"></span>
-                </button>                
+                </button>
                 <ul class="dropdown-menu">
                     <li><a href="{{ path('title_search_export', {'format': 'mla'}) }}&{{app.request.queryString}}">MLA</a></li>
                     <li><a href="{{ path('title_search_export', {'format': 'chicago'}) }}&{{app.request.queryString}}">Chicago</a></li>
@@ -38,6 +38,15 @@
     </div>
     {{ form_end(search_form) }}
 
+    <div class='btn-toolbar pull-right'>
+        <div class='btn-group'>
+            {% if is_granted('ROLE_CONTENT_ADMIN') %}
+                <a href="{{ path('title_new') }}" class="btn btn-default">
+                    <span class="glyphicon glyphicon-plus"></span> New
+                </a>
+            {% endif %}
+        </div>
+    </div>
     {% if titles|length > 0 %}
         {{ include('AppBundle:title:table.html.twig') }}
 

@@ -1,13 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block pageheader %} 
+{% block pageheader %}
     <h1>Firm Search</h1>
-{% endblock %} 
+{% endblock %}
 
 {% block body %}
 
-    {{ form_start(search_form, {'attr': { 'class': 'search'}}) }}    
-    {{ form_row(search_form.name) }}    
+
+    {{ form_start(search_form, {'attr': { 'class': 'search'}}) }}
+    {{ form_row(search_form.name) }}
     <div id="controls" class="collapse">
         {{ form_rest(search_form) }}
     </div>
@@ -15,7 +16,7 @@
         <div class="col-sm-2"></div>
 
         <div class="col-sm-10">
-            <input type="submit" value="Search" class="btn btn-primary" />            
+            <input type="submit" value="Search" class="btn btn-primary" />
             <a class="btn btn-primary" role="button" data-toggle="collapse" href="#controls" aria-expanded="false" aria-controls="collapseExample">Options</a>
             <a class="btn btn-default" href="{{ path('firm_search') }}">Reset</a>
             <a class="btn btn-default" href="{{ path('firm_index') }}">Cancel</a>
@@ -23,6 +24,15 @@
     </div>
     {{ form_end(search_form) }}
 
+    <div class='btn-toolbar pull-right'>
+        <div class='btn-group'>
+            {% if is_granted('ROLE_CONTENT_ADMIN') %}
+                <a href="{{ path('firm_new') }}" class="btn btn-default">
+                    <span class="glyphicon glyphicon-plus"></span> New
+                </a>
+            {% endif %}
+        </div>
+    </div>
     {% if firms|length > 0 %}
         {{ include('AppBundle:firm:table.html.twig') }}
 

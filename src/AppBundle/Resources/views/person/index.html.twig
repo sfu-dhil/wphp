@@ -35,6 +35,15 @@
     </div>
     {{ form_end(search_form) }}
 
+    <div class='btn-toolbar pull-right'>
+        <div class='btn-group'>
+            {% if is_granted('ROLE_CONTENT_ADMIN') %}
+                <a href="{{ path('person_new') }}" class="btn btn-default">
+                    <span class="glyphicon glyphicon-plus"></span> New
+                </a>
+            {% endif %}
+        </div>
+    </div>
     {% if people|length %}
         {{ include('AppBundle:person:table.html.twig') }}
 
