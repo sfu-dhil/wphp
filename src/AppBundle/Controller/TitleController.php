@@ -23,7 +23,7 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
  * @Route("/title")
  */
 class TitleController extends Controller {
-    
+
     /**
      * Lists all Title entities.
      *
@@ -35,15 +35,19 @@ class TitleController extends Controller {
      */
     public function indexAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
-        $dql = 'SELECT e FROM AppBundle:Title e ORDER BY e.id';
-        $query = $em->createQuery($dql);
+        $form = $this->createForm(TitleSearchType::class, null, array(
+            'action' => $this->generateUrl('title_search'),
+            'entity_manager' => $em
+        ));
+        $q = $request->query->get('q');
+        $form->get('title')->submit($q);
+        $repo = $em->getRepository(Title::class);
+        $query = $repo->buildSearchQuery(array('title' => $q));
         $paginator = $this->get('knp_paginator');
         $titles = $paginator->paginate($query, $request->query->getint('page', 1), 25);
-        $form = $this->createForm(TitleSearchType::class, null, array('entity_manager' => $em));
-
         return array(
+            'search_form' => $form->createView(),
             'titles' => $titles,
-            'form' => $form->createView(),
         );
     }
 
@@ -145,33 +149,6 @@ class TitleController extends Controller {
     }
 
     /**
-     * Full text search for Title entities.
-     *
-     * @Route("/quick_search", name="title_quick_search")
-     * @Method("GET")
-     * @Template("AppBundle:title:search.html.twig")
-     * @param Request $request
-     * @return array
-     */
-    public function quickSearchAction(Request $request) {
-        $em = $this->getDoctrine()->getManager();
-        $form = $this->createForm(TitleSearchType::class, null, array(
-            'action' => $this->generateUrl('title_search'),
-            'entity_manager' => $em
-        ));
-        $q = $request->query->get('q');
-        $form->get('title')->submit($q);
-        $repo = $em->getRepository(Title::class);
-        $query = $repo->buildSearchQuery(array('title' => $q));
-        $paginator = $this->get('knp_paginator');
-        $titles = $paginator->paginate($query, $request->query->getint('page', 1), 25);
-        return array(
-            'search_form' => $form->createView(),
-            'titles' => $titles,
-        );
-    }
-
-    /**
      * Search for Title entities.
      *
      * @Route("/jump", name="title_jump")
@@ -268,7 +245,7 @@ class TitleController extends Controller {
                 $tfr->setTitle($title);
                 $em->persist($tfr);
             }
-            
+
             // check for new titleFirmRoles and persist them.
             foreach($title->getTitleroles() as $tr) {
                 $tr->setTitle($title);
@@ -319,28 +296,28 @@ class TitleController extends Controller {
      */
     public function editAction(Request $request, Title $title, EntityManagerInterface $em) {
         // collect the titleFirmRole objects before modification.
-        $titleFirmRoles = new ArrayCollection();        
+        $titleFirmRoles = new ArrayCollection();
         foreach($title->getTitleFirmroles() as $tfr) {
             $titleFirmRoles->add($tfr);
         }
 
-        $titleRoles = new ArrayCollection();        
+        $titleRoles = new ArrayCollection();
         foreach($title->getTitleroles() as $tr) {
             $titleRoles->add($tr);
         }
 
-        $editForm = $this->createForm(TitleType::class, $title);        
+        $editForm = $this->createForm(TitleType::class, $title);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            
+
             // check for deleted titleFirmRoles and remove them.
             foreach($titleFirmRoles as $tfr) {
                 if( ! $title->getTitleFirmroles()->contains($tfr)) {
                     $em->remove($tfr);
                 }
             }
-            
+
             // check for deleted titleRoles and remove them.
             foreach($titleRoles as $tfr) {
                 if( ! $title->getTitleroles()->contains($tr)) {
@@ -355,7 +332,7 @@ class TitleController extends Controller {
                     $em->persist($tfr);
                 }
             }
-            
+
             // check for new titleFirmRoles and persist them.
             foreach($title->getTitleroles() as $tr) {
                 if( ! $titleRoles->contains($tr)) {

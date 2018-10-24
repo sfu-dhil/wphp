@@ -32,12 +32,18 @@ class FirmController extends Controller {
      */
     public function indexAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
-        $dql = 'SELECT e FROM AppBundle:Firm e ORDER BY e.id';
-        $query = $em->createQuery($dql);
+        $form = $this->createForm(FirmSearchType::class, null, array(
+            'action' => $this->generateUrl('firm_search'),
+            'entity_manager' => $em
+        ));
+        $q = $request->query->get('q');
+        $form->get('name')->submit($q);
+        $repo = $em->getRepository(Firm::class);
+        $query = $repo->buildSearchQuery(array('name' => $q));
         $paginator = $this->get('knp_paginator');
         $firms = $paginator->paginate($query, $request->query->getint('page', 1), 25);
-
         return array(
+            'search_form' => $form->createView(),
             'firms' => $firms,
         );
     }
@@ -63,35 +69,8 @@ class FirmController extends Controller {
                 'text' => $result->getName(),
             ];
         }
-        
+
         return new JsonResponse($data);
-    }   
-    
-    /**
-     * Full text search for Firm entities.
-     *
-     * @Route("/quick_search", name="firm_quick_search")
-     * @Method("GET")
-     * @Template("AppBundle:firm:search.html.twig")
-     * @param Request $request
-     * @return array
-     */
-    public function quickSearchAction(Request $request) {
-        $em = $this->getDoctrine()->getManager();
-        $form = $this->createForm(FirmSearchType::class, null, array(
-            'action' => $this->generateUrl('firm_search'),
-            'entity_manager' => $em
-        ));
-        $q = $request->query->get('q');
-        $form->get('name')->submit($q);
-        $repo = $em->getRepository(Firm::class);
-        $query = $repo->buildSearchQuery(array('name' => $q));
-        $paginator = $this->get('knp_paginator');
-        $firms = $paginator->paginate($query, $request->query->getint('page', 1), 25);
-        return array(
-            'search_form' => $form->createView(),
-            'firms' => $firms,
-        );
     }
 
     /**
@@ -189,7 +168,7 @@ class FirmController extends Controller {
             'pagination' => $pagination,
         );
     }
-    
+
     /**
      * Displays a form to edit an existing Firm entity.
      *

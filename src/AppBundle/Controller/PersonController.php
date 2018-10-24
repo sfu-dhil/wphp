@@ -31,12 +31,18 @@ class PersonController extends Controller {
      */
     public function indexAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
-        $dql = 'SELECT e FROM AppBundle:Person e ORDER BY e.id';
-        $query = $em->createQuery($dql);
+        $form = $this->createForm(PersonSearchType::class, null, array(
+            'action' => $this->generateUrl('person_search'),
+            'entity_manager' => $em
+        ));
+        $q = $request->query->get('q');
+        $form->get('name')->submit($q);
+        $repo = $em->getRepository(Person::class);
+        $query = $repo->buildSearchQuery(array('name' => $q));
         $paginator = $this->get('knp_paginator');
         $people = $paginator->paginate($query, $request->query->getint('page', 1), 25);
-
         return array(
+            'search_form' => $form->createView(),
             'people' => $people,
         );
     }
@@ -64,33 +70,6 @@ class PersonController extends Controller {
         }
 
         return new JsonResponse($data);
-    }
-
-    /**
-     * Full text search for Firm entities.
-     *
-     * @Route("/quick_search", name="person_quick_search")
-     * @Method("GET")
-     * @Template("AppBundle:person:search.html.twig")
-     * @param Request $request
-     * @return array
-     */
-    public function quickSearchAction(Request $request) {
-        $em = $this->getDoctrine()->getManager();
-        $form = $this->createForm(PersonSearchType::class, null, array(
-            'action' => $this->generateUrl('person_search'),
-            'entity_manager' => $em
-        ));
-        $q = $request->query->get('q');
-        $form->get('name')->submit($q);
-        $repo = $em->getRepository(Person::class);
-        $query = $repo->buildSearchQuery(array('name' => $q));
-        $paginator = $this->get('knp_paginator');
-        $people = $paginator->paginate($query, $request->query->getint('page', 1), 25);
-        return array(
-            'search_form' => $form->createView(),
-            'people' => $people,
-        );
     }
 
     /**
@@ -214,7 +193,7 @@ class PersonController extends Controller {
             'previous' => $repo->previous($person),
         );
     }
-    
+
     /**
      * Displays a form to edit an existing Person entity.
      *

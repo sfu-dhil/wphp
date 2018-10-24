@@ -1,39 +1,49 @@
 {% extends 'base.html.twig' %}
 
 {% block pageheader %} 
-    <h1>Title List</h1>
-    <p class="count">
+    <h1>Title Search</h1>
+    {% if titles|length > 0 %}
         Displaying {{ titles|length }} titles of {{ titles.getTotalItemCount }} total.
-    </p>
-{% endblock %} 
+    {% endif %}
+{% endblock %}
 
 {% block body %}
 
-    <div class='btn-toolbar pull-right'>
-        <div class='btn-group'>
-            {% if is_granted('ROLE_CONTENT_ADMIN') %}
-                <a href="{{ path('title_new') }}" class="btn btn-default">
-                    <span class="glyphicon glyphicon-plus"></span> New
-                </a>
-            {% endif %}
-            <a href="{{ path('title_search') }}" class="btn btn-default">
-                <span class="glyphicon glyphicon-search"></span> Search
-            </a>
+    {{ form_start(search_form, {'attr': { 'class': 'search'}}) }}    
+    {{ form_row(search_form.title) }}
+    <div id="controls" class="collapse">
+        {{ form_rest(search_form) }}    
+    </div>
+    {{ form_widget(search_form) }}
+
+    <div class="form-group">
+        <div class="col-sm-2"></div>
+
+        <div class="col-sm-10">
+            <input type="submit" value="Search" class="btn btn-primary" />            
+            <a class="btn btn-primary" role="button" data-toggle="collapse" href="#controls" aria-expanded="false" aria-controls="collapseExample">Options</a>            
+            <a class="btn btn-default" href="{{ path('title_search') }}">Reset</a>
+            <div class="btn-group">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Export <span class="caret"></span>
+                </button>                
+                <ul class="dropdown-menu">
+                    <li><a href="{{ path('title_search_export', {'format': 'mla'}) }}&{{app.request.queryString}}">MLA</a></li>
+                    <li><a href="{{ path('title_search_export', {'format': 'chicago'}) }}&{{app.request.queryString}}">Chicago</a></li>
+                    <li><a href="{{ path('title_search_export', {'format': 'apa'}) }}&{{app.request.queryString}}">APA</a></li>
+                    <li><a href="{{ path('title_search_export', {'format': 'bibtex'}) }}&{{app.request.queryString}}">BibTex</a></li>
+                </ul>
+            </div>
         </div>
     </div>
-    <div id="options" class="collapse">
-        {{ include('AppBundle:partials:jump.html.twig', {'route_name': 'title_jump'}) }}
-        {{ include('AppBundle:partials:quick-search.html.twig', {'quick_route': 'title_quick_search', 'full_route': 'title_search'}) }} 
-    </div>
+    {{ form_end(search_form) }}
 
-    {{ form_widget(form._token) }}
-    {{ form_end(form, {'render_rest': false}) }}
+    {% if titles|length > 0 %}
+        {{ include('AppBundle:title:table.html.twig') }}
 
-    {{ include('AppBundle:title:table.html.twig') }}
-
-    <div class="navigation">
-        {{ knp_pagination_render(titles) }}
-    </div>
-
+        <div class="navigation">
+            {{ knp_pagination_render(titles) }}
+        </div>
+    {% endif %}
 
 {% endblock %}
