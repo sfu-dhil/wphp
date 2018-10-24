@@ -14,8 +14,7 @@ class EnRepository extends EntityRepository {
 
     public function searchQuery($q) {
         $qb = $this->createQueryBuilder('e');
-        $qb->addSelect("MATCH (e.author, e.title) AGAINST(:q BOOLEAN) as HIDDEN score");
-        $qb->orderBy('score', 'DESC');
+        $qb->andWhere("MATCH (e.author, e.title) AGAINST(:q BOOLEAN) > 0");
         $qb->setParameter('q', $q);
         return $qb->getQuery();
     }
