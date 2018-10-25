@@ -1,0 +1,12 @@
+{% spaceless %}
+    {% if source %}
+        {% set url=linker.url(source, sourceId) %}
+        {% if url %}
+            <a href="{{ url }}">
+                {{ source.name }}: {{ sourceId }}
+            </a>
+        {% else %}
+            {{ source.name }}: {{ sourceId }}
+        {% endif %}
+    {% endif %}
+{% endspaceless %}

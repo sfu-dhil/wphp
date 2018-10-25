@@ -205,27 +205,15 @@
                         <tr>
                             <th><a href="#" data-toggle="popover" data-content="First source consulted to populate the entry fields (source ID will vary according to the source)" data-trigger="hover" data-placement="bottom" style="text-decoration: none; color: black">Source 1</a></th>
                             <td>
-                                {% if title.source %}
-                                    {% set url=linker.url(title.source, title.sourceId) %}
-                                    {% if url %}
-                                        <a href="{{ url }}">
-                                            {{ title.source.name }}: {{ title.sourceId }}
-                                        </a>
-                                    {% endif %}
-                                {% endif %}
+                                {% include "AppBundle:title:partials/source-link.html.twig"
+                                    with {'source': title.source, 'sourceId': title.sourceId} %}
                             </td>
                         </tr>
                         <tr>
                             <th><a href="#" data-toggle="popover" data-content="Second source consulted to populate the entry fields (source ID will vary according to the source)" data-trigger="hover" data-placement="bottom" style="text-decoration: none; color: black">Source 2</a></th>
                             <td>
-                                {% if title.source2 %}
-                                    {% set url=linker.url(title.source2, title.source2Id) %}
-                                    {% if url %}
-                                        <a href="{{ url }}">
-                                            {{ title.source2.name }}: {{ title.source2Id }}
-                                        </a>
-                                    {% endif %}
-                                {% endif %}
+                                {% include "AppBundle:title:partials/source-link.html.twig"
+                                    with {'source': title.source2, 'sourceId': title.source2Id} %}
                             </td>
                         </tr>
 
