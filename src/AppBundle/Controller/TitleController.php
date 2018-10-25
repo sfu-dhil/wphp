@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Title;
 use AppBundle\Form\Title\TitleSearchType;
 use AppBundle\Form\Title\TitleType;
+use AppBundle\Services\SourceLinker;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -274,13 +275,14 @@ class TitleController extends Controller {
      * @param Title $title
      * @return array
      */
-    public function showAction(Title $title) {
+    public function showAction(Title $title, SourceLinker $linker) {
         $em = $this->getDoctrine()->getManager();
         $repo = $em->getRepository('AppBundle:Title');
         return array(
             'title' => $title,
             'next' => $repo->next($title),
             'previous' => $repo->previous($title),
+            'linker' => $linker,
         );
     }
 
