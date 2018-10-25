@@ -7,10 +7,19 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * OsborneMarc
  *
+ * This table requires a manually-created index.
+ *
+ * ALTER TABLE `osborne_marc` ADD INDEX `osborne_data_idx` (`field_data`(24) ASC);
+ *
+ * The field_data column is text, but Doctrine isn't able to manage a non-fulltext
+ * index on a text column. So create it manually.
+ *
  * @ORM\Table(name="osborne_marc",
  *  indexes={
  *      @ORM\Index(name="osborne_cid_idx", columns={"cid"}),
- *      @ORM\Index(name="osborne_fielddata_ft", columns={"field_data"}, flags={"fulltext"})
+ *      @ORM\Index(name="osborne_fielddata_ft", columns={"field_data"}, flags={"fulltext"}),
+ *      @ORM\Index(name="osborne_data_idx", columns={"field_data"}, options={"length": 24}),
+ *      @ORM\Index(name="osborne_field_idx", columns={"field"})
  *  }
  * )
  * @ORM\Entity(repositoryClass="AppBundle\Repository\OsborneMarcRepository")
