@@ -83,7 +83,9 @@
                             <td>
                                 {% for tfr in title.titleFirmRoles %}
                                     {% set firm = tfr.firm %}
-                                    {{ tfr.firmrole.name }}: <a href="{{ path('firm_show', {'id': firm.id}) }}">{{ firm.name }} ({{firm.city.name }})</a><br/>
+                                    {{ tfr.firmrole.name }}: <a href="{{ path('firm_show', {'id': firm.id}) }}">
+                                        {{ firm.name }} {% if firm.city %}({{firm.city.name }}){% endif %}
+                                    </a><br/>
                                 {% endfor %}
                             </td>
                         </tr>
@@ -217,9 +219,12 @@
                             <th><a href="#" data-toggle="popover" data-content="Second source consulted to populate the entry fields (source ID will vary according to the source)" data-trigger="hover" data-placement="bottom" style="text-decoration: none; color: black">Source 2</a></th>
                             <td>
                                 {% if title.source2 %}
-                                    <a href="{{ path('source_show', {'id': title.source2.id}) }}">
-                                        {{ title.source2.name }} {{ title.source2Id }}
-                                    </a>
+                                    {% set url=linker.url(title.source2, title.source2Id) %}
+                                    {% if url %}
+                                        <a href="{{ url }}">
+                                            {{ title.source2.name }}: {{ title.source2Id }}
+                                        </a>
+                                    {% endif %}
                                 {% endif %}
                             </td>
                         </tr>
