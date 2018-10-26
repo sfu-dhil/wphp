@@ -130,7 +130,7 @@ task('deploy', [
     'deploy:cache:clear',
     'deploy:writable',
     'dhil:db:backup',
-    'dhil:db:update',
+//    'dhil:db:update',
     'dhil:sphinx',
     'dhil:bower',
     'deploy:symlink',
