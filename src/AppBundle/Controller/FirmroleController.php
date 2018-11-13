@@ -36,6 +36,7 @@ class FirmroleController extends Controller {
 
         return array(
             'firmroles' => $firmroles,
+            'repo' => $em->getRepository(FirmRole::class),
         );
     }
 
@@ -60,10 +61,10 @@ class FirmroleController extends Controller {
                 'text' => $result->getName(),
             ];
         }
-        
+
         return new JsonResponse($data);
     }
-    
+
     /**
      * Creates a new Firmrole entity.
      *
@@ -101,10 +102,17 @@ class FirmroleController extends Controller {
      * @Template()
      * @param Firmrole $firmrole
      */
-    public function showAction(Firmrole $firmrole) {
+    public function showAction(Request $request, Firmrole $firmrole) {
+        $em = $this->getDoctrine()->getManager();
+        $dql = 'SELECT tfr FROM AppBundle:TitleFirmrole tfr WHERE tfr.firmrole = :firmrole';
+        $query = $em->createQuery($dql);
+        $query->setParameter('firmrole', $firmrole);
+        $paginator = $this->get('knp_paginator');
+        $titleFirmRoles = $paginator->paginate($query, $request->query->getint('page', 1), 25);
 
         return array(
             'firmrole' => $firmrole,
+            'titleFirmRoles' => $titleFirmRoles,
         );
     }
 

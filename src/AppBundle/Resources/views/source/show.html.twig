@@ -1,8 +1,8 @@
 {% extends 'base.html.twig' %}
 
-{% block pageheader %} 
+{% block pageheader %}
     <h1>Source</h1>
-{% endblock %} 
+{% endblock %}
 
 {% block body %}
 
@@ -33,6 +33,14 @@
             <tr>
                 <th>Name</th>
                 <td>{{ source.name }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ source.description|raw }}</td>
+            </tr>
+            <tr>
+                <th>Citation</th>
+                <td>{{ source.citation|raw }}</td>
             </tr>
         </tbody>
     </table>

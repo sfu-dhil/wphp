@@ -36,6 +36,7 @@ class SourceController extends Controller
 
         return array(
             'sources' => $sources,
+            'repo' => $em->getRepository(Source::class),
         );
     }
 
@@ -60,9 +61,9 @@ class SourceController extends Controller
                 'text' => $result->getName(),
             ];
         }
-        
+
         return new JsonResponse($data);
-    }   
+    }
     /**
      * Creates a new Source entity.
      *
@@ -113,7 +114,7 @@ class SourceController extends Controller
             'titles' => $titles,
         );
     }
-    
+
     /**
      * Displays a form to edit an existing Source entity.
      *
@@ -159,5 +160,5 @@ class SourceController extends Controller
         return $this->redirectToRoute('source_index');
     }
 
-    
+
     }

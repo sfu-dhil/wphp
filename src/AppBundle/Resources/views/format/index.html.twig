@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block pageheader %} 
+{% block pageheader %}
     <h1>Format List</h1>
     <p class="count">
         Displaying {{ formats|length }} formats of {{ formats.getTotalItemCount }} total.
     </p>
-{% endblock %} 
+{% endblock %}
 
 {% block body %}
 
@@ -23,10 +23,10 @@
         <thead>
             <tr>
                 <th>Name</th>
-                <th>Abbreviation 1</th>
-                <th>Abbreviation 2</th>
-                <th>Abbreviation 3</th>
-                <th>Abbreviation 4</th>            </tr>
+                <th>Abbreviations</th>
+                <th>Description</th>
+                <th>Titles</th>
+            </tr>
         </thead>
         <tbody>
             {% for format in formats %}
@@ -36,10 +36,13 @@
                             {{ format.name }}
                         </a>
                     </td>
-                    <td>{{ format.abbrevOne }}</td>
-                    <td>{{ format.abbrevTwo }}</td>
-                    <td>{{ format.abbrevThree }}</td>
-                    <td>{{ format.abbrevFour }}</td>
+                    <td>{{ format.abbrevOne }} {{ format.abbrevTwo }} {{ format.abbrevThree }} {{ format.abbrevFour }}</td>
+                    <td>{{ format.description|raw }}</td>
+                    <td>
+                        <a href="{{ path('format_show', { 'id': format.id }) }}">
+                            {{ repo.countTitles(format) }}
+                        </a>
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>

@@ -36,9 +36,9 @@ class FormatController extends Controller {
 
         return array(
             'formats' => $formats,
+            'repo' => $em->getRepository(Format::class),
         );
     }
-
 
     /**
      * @param Request $request
@@ -49,21 +49,21 @@ class FormatController extends Controller {
      */
     public function typeaheadAction(Request $request) {
         $q = $request->query->get('q');
-        if( ! $q) {
+        if (!$q) {
             return new JsonResponse([]);
         }
         $em = $this->getDoctrine()->getManager();
         $repo = $em->getRepository(Format::class);
         $data = [];
-        foreach($repo->typeaheadQuery($q) as $result) {
+        foreach ($repo->typeaheadQuery($q) as $result) {
             $data[] = [
                 'id' => $result->getId(),
                 'text' => $result->getName(),
             ];
         }
-        
+
         return new JsonResponse($data);
-    }   
+    }
 
     /**
      * Creates a new Format entity.
@@ -160,4 +160,5 @@ class FormatController extends Controller {
 
         return $this->redirectToRoute('format_index');
     }
+
 }

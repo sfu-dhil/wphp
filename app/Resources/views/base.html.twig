@@ -26,9 +26,14 @@
                 </button>
             </div>
             <div id="navbar" class="collapse navbar-collapse">
-                {{ knp_menu_render('main') }}
+                <ul class="nav navbar-nav">
+                    <li><a href="{{ path('homepage') }}">Home</a></li>
+                </ul>
                 {{ knp_menu_render('pages') }}
-                {{ knp_menu_render('posts') }}
+                {{ knp_menu_render('main') }}
+                {{ knp_menu_render('search') }}
+                {% set postMenu = knp_menu_get('posts', [], {'title': 'News & Events'}) %}
+                {{ knp_menu_render(postMenu) }}
                 {{ knp_menu_render('user') }}
             </div>
         </div>
@@ -55,16 +60,10 @@
 
     <footer class="footer">
         <div class="container">
-            <div class='col-md-6'>
+            <div class='col-md-12'>
                 <p><b>Women's Print History Project</b><br>
                     <a href="{{ path('feedback_new') }}">Feedback</a> | <a href="{{ asset('docs/sphinx/index.html') }}">Documentation</a> |
                     <a href="https://github.com/sfu-dhil/wphp">GitHub</a>
-                </p>
-            </div>
-            <div class='col-md-6'>
-                <p><b>Browse</b><br>
-                    <a href="{{ path('title_index') }}">By Title</a> | <a href="{{ path('person_index') }}">By Person</a> |
-                    <a href="{{ path('firm_index') }}">By Firm</a>
                 </p>
             </div>
         </div>

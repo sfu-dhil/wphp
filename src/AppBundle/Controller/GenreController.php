@@ -36,9 +36,10 @@ class GenreController extends Controller
 
         return array(
             'genres' => $genres,
+            'repo' => $em->getRepository(Genre::class),
         );
     }
-    
+
     /**
      * @param Request $request
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
@@ -60,10 +61,10 @@ class GenreController extends Controller
                 'text' => $result->getName(),
             ];
         }
-        
+
         return new JsonResponse($data);
-    }   
-    
+    }
+
     /**
      * Creates a new Genre entity.
      *
@@ -114,7 +115,7 @@ class GenreController extends Controller
             'titles' => $titles,
         );
     }
-    
+
     /**
      * Displays a form to edit an existing Genre entity.
      *

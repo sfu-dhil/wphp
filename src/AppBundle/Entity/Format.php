@@ -12,8 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="format")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\FormatRepository")
  */
-class Format
-{
+class Format {
+
     /**
      * @var boolean
      *
@@ -59,6 +59,12 @@ class Format
     private $abbrevFour;
 
     /**
+     * @var string
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $description;
+
+    /**
      * @var Collection|Title[]
      * @ORM\OneToMany(targetEntity="Title", mappedBy="format")
      */
@@ -67,8 +73,7 @@ class Format
     /**
      * Constructor
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->titles = new ArrayCollection();
     }
 
@@ -198,8 +203,7 @@ class Format
      *
      * @return Format
      */
-    public function addTitle(Title $title)
-    {
+    public function addTitle(Title $title) {
         $this->titles[] = $title;
 
         return $this;
@@ -210,8 +214,7 @@ class Format
      *
      * @param Title $title
      */
-    public function removeTitle(Title $title)
-    {
+    public function removeTitle(Title $title) {
         $this->titles->removeElement($title);
     }
 
@@ -220,8 +223,30 @@ class Format
      *
      * @return Collection
      */
-    public function getTitles()
-    {
+    public function getTitles() {
         return $this->titles;
     }
+
+    /**
+     * Set description.
+     *
+     * @param string|null $description
+     *
+     * @return Format
+     */
+    public function setDescription($description = null) {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description.
+     *
+     * @return string|null
+     */
+    public function getDescription() {
+        return $this->description;
+    }
+
 }

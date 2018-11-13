@@ -45,6 +45,7 @@ class FirmController extends Controller {
         return array(
             'search_form' => $form->createView(),
             'firms' => $firms,
+            'repo' => $em->getRepository(Role::class),
         );
     }
 

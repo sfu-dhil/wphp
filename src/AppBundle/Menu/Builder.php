@@ -62,14 +62,10 @@ class Builder implements ContainerAwareInterface
         $menu->setChildrenAttributes(array(
             'class' => 'nav navbar-nav',
         ));
-        $menu->addChild('home', array(
-            'label' => 'Home',
-            'route' => 'homepage',
-        ));
 
         $browse = $menu->addChild('browse', array(
             'uri' => '#',
-            'label' => 'Browse ' . self::CARET,
+            'label' => 'Explore ' . self::CARET,
         ));
         $browse->setAttribute('dropdown', true);
         $browse->setLinkAttribute('class', 'dropdown-toggle');
@@ -84,6 +80,19 @@ class Builder implements ContainerAwareInterface
         ));
         $browse->addChild('Firms', array(
             'route' => 'firm_index',
+        ));
+
+        $browse->addChild('Formats', array(
+            'route' => 'format_index',
+        ));
+        $browse->addChild('Genres', array(
+            'route' => 'genre_index',
+        ));
+        $browse->addChild('Contributor Roles', array(
+            'route' => 'role_index',
+        ));
+        $browse->addChild('Firm Roles', array(
+            'route' => 'firmrole_index',
         ));
 
         if ($this->hasRole('ROLE_USER')) {
@@ -114,4 +123,38 @@ class Builder implements ContainerAwareInterface
         return $menu;
     }
 
+    /**
+     * Build the search menu and return it.
+     *
+     * @param FactoryInterface $factory
+     * @param array $options
+     * @return ItemInterface
+     */
+    public function searchMenu(array $options) {
+        $menu = $this->factory->createItem('root');
+        $menu->setChildrenAttributes(array(
+            'class' => 'nav navbar-nav',
+        ));
+
+        $browse = $menu->addChild('browse', array(
+            'uri' => '#',
+            'label' => 'Search ' . self::CARET,
+        ));
+        $browse->setAttribute('dropdown', true);
+        $browse->setLinkAttribute('class', 'dropdown-toggle');
+        $browse->setLinkAttribute('data-toggle', 'dropdown');
+        $browse->setChildrenAttribute('class', 'dropdown-menu');
+
+        $browse->addChild('Titles', array(
+            'route' => 'title_search',
+        ));
+        $browse->addChild('Persons', array(
+            'route' => 'person_search',
+        ));
+        $browse->addChild('Firms', array(
+            'route' => 'firm_search',
+        ));
+
+        return $menu;
+    }
 }

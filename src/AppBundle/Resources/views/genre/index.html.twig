@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block pageheader %} 
+{% block pageheader %}
     <h1>Genre List</h1>
     <p class="count">
         Displaying {{ genres|length }} genres of {{ genres.getTotalItemCount }} total.
     </p>
-{% endblock %} 
+{% endblock %}
 
 {% block body %}
     <div class='btn-toolbar pull-right'>
@@ -21,6 +21,8 @@
         <thead>
             <tr>
                 <th>Name</th>
+                <th>Description</th>
+                <th>Titles</th>
             </tr>
         </thead>
         <tbody>
@@ -29,6 +31,12 @@
                     <td>
                         <a href="{{ path('genre_show', { 'id': genre.id }) }}">
                             {{ genre.name }}
+                        </a>
+                    </td>
+                    <td>{{ genre.description|raw }}</td>
+                    <td>
+                        <a href="{{ path('genre_show', { 'id': genre.id }) }}">
+                            {{ repo.countTitles(genre) }}
                         </a>
                     </td>
                 </tr>

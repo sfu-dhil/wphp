@@ -36,6 +36,7 @@ class RoleController extends Controller {
 
         return array(
             'roles' => $roles,
+            'repo' => $em->getRepository(Role::class),
         );
     }
 
@@ -60,9 +61,9 @@ class RoleController extends Controller {
                 'text' => $result->getName(),
             ];
         }
-        
+
         return new JsonResponse($data);
-    }   
+    }
     /**
      * Creates a new Role entity.
      *
@@ -100,13 +101,20 @@ class RoleController extends Controller {
      * @Template()
      * @param Role $role
      */
-    public function showAction(Role $role) {
+    public function showAction(Request $request, Role $role) {
+        $em = $this->getDoctrine()->getManager();
+        $dql = 'SELECT tr FROM AppBundle:TitleRole tr WHERE tr.role = :role';
+        $query = $em->createQuery($dql);
+        $query->setParameter('role', $role);
+        $paginator = $this->get('knp_paginator');
+        $titleRoles = $paginator->paginate($query, $request->query->getint('page', 1), 25);
 
         return array(
             'role' => $role,
+            'titleRoles' => $titleRoles,
         );
     }
-    
+
     /**
      * Displays a form to edit an existing Role entity.
      *
