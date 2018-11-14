@@ -1,0 +1,7 @@
+{% spaceless %}
+    {% if person.gender == constant('AppBundle\\Entity\\Person::FEMALE') %}
+        Female
+    {% elseif person.gender == constant('AppBundle\\Entity\\Person::MALE') %}
+        Male
+    {% endif %}
+{% endspaceless %}

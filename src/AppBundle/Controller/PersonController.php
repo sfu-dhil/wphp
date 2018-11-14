@@ -35,10 +35,8 @@ class PersonController extends Controller {
             'action' => $this->generateUrl('person_search'),
             'entity_manager' => $em
         ));
-        $q = $request->query->get('q');
-        $form->get('name')->submit($q);
-        $repo = $em->getRepository(Person::class);
-        $query = $repo->buildSearchQuery(array('name' => $q));
+        $dql = 'SELECT e FROM AppBundle:Person e ORDER BY e.lastName, e.firstName, e.dob';
+        $query = $em->createQuery($dql);
         $paginator = $this->get('knp_paginator');
         $people = $paginator->paginate($query, $request->query->getint('page', 1), 25);
         return array(
@@ -86,21 +84,19 @@ class PersonController extends Controller {
         $form = $this->createForm(PersonSearchType::class, null, array('entity_manager' => $em));
         $form->handleRequest($request);
         $persons = array();
+        $submitted = false;
 
         if ($form->isSubmitted()) {
-            if (!$form->isValid()) {
-                $this->addFlash('error', 'Bad form submission: ');
-            } else {
-                $repo = $em->getRepository(Person::class);
-                $query = $repo->buildSearchQuery($form->getData());
-                $paginator = $this->get('knp_paginator');
-                $persons = $paginator->paginate($query, $request->query->getint('page', 1), 25);
-            }
+            $submitted = true;
+            $repo = $em->getRepository(Person::class);
+            $query = $repo->buildSearchQuery($form->getData());
+            $paginator = $this->get('knp_paginator');
+            $persons = $paginator->paginate($query, $request->query->getint('page', 1), 25);
         }
         return array(
             'search_form' => $form->createView(),
             'people' => $persons,
-            'form_errors' => $form->getErrors(true, true),
+            'submitted' => $submitted,
         );
     }
 
@@ -180,8 +176,6 @@ class PersonController extends Controller {
      * @return array
      */
     public function showAction(Request $request, Person $person) {
-        $em = $this->getDoctrine()->getManager();
-        $repo = $em->getRepository('AppBundle:Person');
         $titleRoles = $person->getTitleRoles();
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate($titleRoles, $request->query->getint('page', 1), 25);
@@ -189,8 +183,6 @@ class PersonController extends Controller {
         return array(
             'person' => $person,
             'pagination' => $pagination,
-            'next' => $repo->next($person),
-            'previous' => $repo->previous($person),
         );
     }
 

@@ -27,9 +27,9 @@
                         {{ person.firstName }}
                     </a>
                 </td>
-                <td>{{ person.gender }}</td>
-                <td>{% if person.dob %}{{ person.dob|replace({'-00': ''}) }}{% endif %} {% if person.cityOfBirth %} {{ person.cityOfBirth.name }} {% endif %}</td>
-                <td>{% if person.dod %}{{ person.dod|replace({'-00': ''}) }}{% endif %} {% if person.cityOfDeath %} {{ person.cityOfDeath.name }} {% endif %}</td>
+                <td>{% include 'AppBundle:Person:gender.html.twig' %}</td>
+                <td>{% if person.dob %}{{ person.dob|replace({'-00': ''}) }}{% endif %}</td>
+                <td>{% if person.dod %}{{ person.dod|replace({'-00': ''}) }}{% endif %}</td>
             </tr>
         {% endfor %}
     </tbody>

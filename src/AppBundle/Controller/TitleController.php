@@ -180,23 +180,22 @@ class TitleController extends Controller {
         $form = $this->createForm(TitleSearchType::class, null, array('entity_manager' => $em));
         $form->handleRequest($request);
         $titles = array();
+        $submitted = false;
 
         if ($form->isValid()) {
             $data = array_filter($form->getData());
             if (count($data) > 2) {
+                $submitted = true;
                 $repo = $em->getRepository(Title::class);
                 $query = $repo->buildSearchQuery($data);
                 $paginator = $this->get('knp_paginator');
                 $titles = $paginator->paginate($query, $request->query->getint('page', 1), 25);
-            } else {
-                $this->addFlash('warning', 'You must enter a search term.');
             }
-        } else {
-            $this->addFlash('error', $form->getErrors(true, true));
         }
         return array(
             'search_form' => $form->createView(),
             'titles' => $titles,
+            'submitted' => $submitted,
         );
     }
 

@@ -31,21 +31,18 @@ class FirmController extends Controller {
      * @return array
      */
     public function indexAction(Request $request) {
-        $em = $this->getDoctrine()->getManager();
         $form = $this->createForm(FirmSearchType::class, null, array(
             'action' => $this->generateUrl('firm_search'),
-            'entity_manager' => $em
         ));
-        $q = $request->query->get('q');
-        $form->get('name')->submit($q);
-        $repo = $em->getRepository(Firm::class);
-        $query = $repo->buildSearchQuery(array('name' => $q));
+        $em = $this->getDoctrine()->getManager();
+        $dql = 'SELECT e FROM AppBundle:Firm e ORDER BY e.name, e.startDate';
+        $query = $em->createQuery($dql);
+
         $paginator = $this->get('knp_paginator');
         $firms = $paginator->paginate($query, $request->query->getint('page', 1), 25);
         return array(
             'search_form' => $form->createView(),
             'firms' => $firms,
-            'repo' => $em->getRepository(Role::class),
         );
     }
 
@@ -85,11 +82,13 @@ class FirmController extends Controller {
      */
     public function searchAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
-        $form = $this->createForm(FirmSearchType::class, null, array('entity_manager' => $em));
+        $form = $this->createForm(FirmSearchType::class);
         $form->handleRequest($request);
         $firms = array();
+        $submitted = false;
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $submitted = true;
             $repo = $em->getRepository(Firm::class);
             $query = $repo->buildSearchQuery($form->getData());
             $paginator = $this->get('knp_paginator');
@@ -98,6 +97,7 @@ class FirmController extends Controller {
         return array(
             'search_form' => $form->createView(),
             'firms' => $firms,
+            'submitted' => $submitted,
         );
     }
 
@@ -158,14 +158,11 @@ class FirmController extends Controller {
      */
     public function showAction(Request $request, Firm $firm) {
         $em = $this->getDoctrine()->getManager();
-        $repo = $em->getRepository('AppBundle:Firm');
         $paginator = $this->get('knp_paginator');
         $firmRoles = $firm->getTitleFirmroles(true);
         $pagination = $paginator->paginate($firmRoles, $request->query->getint('page', 1), 25);
         return array(
             'firm' => $firm,
-            'next' => $repo->next($firm),
-            'previous' => $repo->previous($firm),
             'pagination' => $pagination,
         );
     }

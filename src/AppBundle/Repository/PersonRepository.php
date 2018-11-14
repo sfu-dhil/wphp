@@ -14,43 +14,13 @@ use Doctrine\ORM\Query\Expr\Join;
  */
 class PersonRepository extends EntityRepository
 {
-    
+
     public function typeaheadQuery($q) {
         $qb = $this->createQueryBuilder('e');
         $qb->andWhere("CONCAT(e.lastName, ' ', e.firstName) LIKE :q");
         $qb->orderBy('e.lastName, e.firstName');
         $qb->setParameter('q', "%{$q}%");
         return $qb->getQuery()->execute();
-    }
-    
-    /**
-     * Return the next firm by ID.
-     *
-     * @param Person $person
-     * @return Person|Null
-     */
-    public function next(Person $person) {
-        $qb = $this->createQueryBuilder('e');
-        $qb->andWhere('e.id > :id');
-        $qb->setParameter('id', $person->getId());
-        $qb->addOrderBy('e.id', 'ASC');
-        $qb->setMaxResults(1);
-        return $qb->getQuery()->getOneOrNullResult();
-    }
-
-    /**
-     * Return the next firm by ID.
-     *
-     * @param Person $person
-     * @return Person|Null
-     */
-    public function previous(Person $person) {
-        $qb = $this->createQueryBuilder('e');
-        $qb->andWhere('e.id < :id');
-        $qb->setParameter('id', $person->getId());
-        $qb->addOrderBy('e.id', 'DESC');
-        $qb->setMaxResults(1);
-        return $qb->getQuery()->getOneOrNullResult();
     }
 
     /**
@@ -64,6 +34,10 @@ class PersonRepository extends EntityRepository
         if (isset($data['name']) && $data['name']) {
             $qb->andWhere("MATCH (e.lastName, e.firstName, e.title) AGAINST (:name BOOLEAN) > 0");
             $qb->setParameter('name', $data['name']);
+        }
+        if(isset($data['id']) && $data['id']) {
+            $qb->andWhere('e.id = :id');
+            $qb->setParameter('id', $data['id']);
         }
         if (isset($data['gender']) && $data['gender']) {
             $genders = [];
@@ -183,6 +157,10 @@ class PersonRepository extends EntityRepository
                     $qb->orderBy('e.lastName', $dir);
                     break;
             }
+        } else {
+            $qb->orderBy('e.lastName');
+            $qb->addOrderBy('e.firstName');
+            $qb->addOrderBy('e.dob');
         }
 
         return $qb->getQuery();

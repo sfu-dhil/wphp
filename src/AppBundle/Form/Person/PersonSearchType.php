@@ -25,11 +25,19 @@ class PersonSearchType extends AbstractType {
         $builder->setMethod('get');
 
         $builder->add('name', TextType::class, array(
-            'label' => 'Name',
+            'label' => 'Search People by Name',
             'required' => false,
             'attr' => array(
                 'help_block' => 'Enter all or part of a personal name'
             ),
+        ));
+
+        $builder->add('id', TextType::class, array(
+            'label' => 'Firm ID',
+            'required' => false,
+            'attr' => array(
+                'help_block' => 'Find this exact person ID.',
+            )
         ));
 
         $builder->add('gender', ChoiceType::class, array(
@@ -68,13 +76,13 @@ class PersonSearchType extends AbstractType {
         $builder->add('birthplace', TextType::class, array(
             'label' => 'Birth Place',
             'required' => false,
-           
+
         ));
 
         $builder->add('deathplace', TextType::class, array(
             'label' => 'Death Place',
             'required' => false,
-            
+
         ));
 
         $builder->add('title_filter', TitleFilterType::class, array(
