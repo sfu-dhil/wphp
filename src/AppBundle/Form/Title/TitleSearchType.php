@@ -34,7 +34,7 @@ class TitleSearchType extends AbstractType {
         ));
 
         $builder->add('title', TextType::class, array(
-            'label' => 'Title',
+            'label' => 'Search Titles',
             'required' => false,
             'attr' => array(
                 'help_block' => 'Enter all or part of a title'
