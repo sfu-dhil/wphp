@@ -7,6 +7,7 @@ use AppBundle\Entity\Genre;
 use AppBundle\Entity\Geonames;
 use AppBundle\Entity\Source;
 use AppBundle\Entity\Title;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -153,19 +154,11 @@ class TitleType extends AbstractType {
                 'help_block' => 'Geotagged location as indicated by the imprint'
             ),
         ));
-        $builder->add('format', Select2EntityType::class, array(
-            'multiple' => false,
-            'remote_route' => 'format_typeahead',
+        $builder->add('format', EntityType::class, array(
             'class' => Format::class,
-            'primary_key' => 'id',
-            'text_property' => 'name',
-            'page_limit' => 10,
-            'allow_clear' => true,
-            'delay' => 250,
-            'language' => 'en',
-            'attr' => array(
-                'help_block' => 'The way that sheets have been folded and gathered into pages',
-            ),
+            'choice_label' => 'name',
+            'multiple' => false,
+            'expanded' => false,
         ));
         $builder->add('sizeL', null, array(
             'label' => 'Size L',

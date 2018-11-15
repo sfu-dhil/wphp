@@ -18,6 +18,9 @@
                 <a href="{{ path('title_new') }}" class="btn btn-default">
                     <span class='glyphicon glyphicon-plus'></span> Add new Record
                 </a>
+                <a href="{{ path('title_copy', {'id': title.id}) }}" class="btn btn-default">
+                    <span class='glyphicon glyphicon-copy'></span> Copy Record
+                </a>
                 <a href="{{ path('title_edit', { 'id': title.id }) }}" class="btn btn-default">
                     <span class='glyphicon glyphicon-edit'></span> Edit Record
                 </a>

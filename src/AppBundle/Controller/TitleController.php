@@ -348,6 +348,27 @@ class TitleController extends Controller {
     }
 
     /**
+     * Displays a form to edit an existing Title entity.
+     *
+     * @Route("/{id}/copy", name="title_copy")
+     * @Method({"GET", "POST"})
+     * @Template()
+     * @Security("has_role('ROLE_CONTENT_ADMIN')")
+     * @param Request $request
+     * @param Title $title
+     */
+    public function copyAction(Request $request, Title $title, EntityManagerInterface $em) {
+        $form = $this->createForm(TitleType::class, $title, array(
+            'action' => $this->generateUrl('title_new'),
+        ));
+        
+        return array(
+            'title' => $title,
+            'form' => $form->createView(),
+        );
+    }
+
+    /**
      * Deletes a Title entity.
      *
      * @Route("/{id}/delete", name="title_delete")

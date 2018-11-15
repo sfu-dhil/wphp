@@ -4,8 +4,8 @@ namespace AppBundle\Form\Title;
 
 use AppBundle\Entity\Person;
 use AppBundle\Entity\Role;
-use AppBundle\Entity\Title;
 use AppBundle\Entity\TitleRole;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -26,19 +26,14 @@ class TitlePersonType extends AbstractType {
             'page_limit' => 10,
             'allow_clear' => true,
             'delay' => 250,
-            'language' => 'en',            
+            'language' => 'en',
         ));
-        
-        $builder->add('role', Select2EntityType::class, array(
-            'multiple' => false,
-            'remote_route' => 'role_typeahead',
+
+        $builder->add('role', EntityType::class, array(
             'class' => Role::class,
-            'primary_key' => 'id',
-            'text_property' => 'name',
-            'page_limit' => 10,
-            'allow_clear' => true,
-            'delay' => 250,
-            'language' => 'en',            
+            'choice_label' => 'name',
+            'multiple' => false,
+            'expanded' => false,
         ));
     }
 
