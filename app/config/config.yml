@@ -54,6 +54,7 @@ twig:
     exception_controller:  NinesUtilBundle:Error:showException
     globals:
         comment_service: "@feedback.comment"
+        title_index_authors: "%wphp.title_index_authors%"
     date:
         format: d.m.Y, H:i:s
         interval_format: '%%d days'

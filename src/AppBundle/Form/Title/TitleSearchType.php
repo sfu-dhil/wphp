@@ -41,6 +41,14 @@ class TitleSearchType extends AbstractType {
             ),
         ));
 
+        $builder->add('id', TextType::class, array(
+            'label' => 'Title ID',
+            'required' => false,
+            'attr' => array(
+                'help_block' => 'Find this exact title ID.',
+            )
+        ));
+
         $builder->add('editionNumber', TextType::class, array(
             'label' => 'Edition Number',
             'required' => false,

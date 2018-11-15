@@ -28,20 +28,6 @@ class TitleType extends AbstractType {
                 'help_block' => 'Full title, subtitle, signed author, and edition statement from the title page',
             ),
         ));
-        $builder->add('editionNumber', null, array(
-            'label' => 'Edition Number',
-            'required' => false,
-            'attr' => array(
-                'help_block' => 'Numerical form of the edition',
-            ),
-        ));
-        $builder->add('signedAuthor', null, array(
-            'label' => 'Signed Author',
-            'required' => false,
-            'attr' => array(
-                'help_block' => 'Author attribution from the title page or the end of the preface',
-            ),
-        ));
         $builder->add('titleRoles', CollectionType::class, array(
             'label' => 'Personal Contributions',
             'required' => false,
@@ -56,6 +42,20 @@ class TitleType extends AbstractType {
             'attr' => array(
                 'class' => 'collection collection-complex',
                 'help_block' => 'Names of all women who have contributed to the work and their role in the work’s production',
+            ),
+        ));
+        $builder->add('signedAuthor', null, array(
+            'label' => 'Signed Author',
+            'required' => false,
+            'attr' => array(
+                'help_block' => 'Author attribution from the title page or the end of the preface',
+            ),
+        ));
+        $builder->add('pseudonym', null, array(
+            'label' => 'Pseudonym',
+            'required' => false,
+            'attr' => array(
+                'help_block' => 'Any false author name',
             ),
         ));
         $builder->add('titleFirmroles', CollectionType::class, array(
@@ -74,20 +74,6 @@ class TitleType extends AbstractType {
                 'help_block' => 'Names of all printers, publishers, and booksellers listed in the imprint and their role in the work’s production',
             ),
         ));
-        $builder->add('pseudonym', null, array(
-            'label' => 'Pseudonym',
-            'required' => false,
-            'attr' => array(
-                'help_block' => 'Any false author name',
-            ),
-        ));
-        $builder->add('imprint', null, array(
-            'label' => 'Imprint',
-            'required' => false,
-            'attr' => array(
-                'help_block' => 'Information about printers, publishers, booksellers as shown on the title page',
-            ),
-        ));        
         $builder->add('selfpublished', ChoiceType::class, array(
             'label' => 'Selfpublished',
             'expanded' => true,
@@ -103,6 +89,20 @@ class TitleType extends AbstractType {
                 'help_block' => 'Indicates if the title was published by the author',
             ),
         ));
+        $builder->add('volumes', null, array(
+            'label' => 'Volumes',
+            'required' => false,
+            'attr' => array(
+                'help_block' => 'Number of volumes of the edition, using arabic numerals',
+            ),
+        ));
+        $builder->add('pagination', null, array(
+            'label' => 'Pagination',
+            'required' => false,
+            'attr' => array(
+                'help_block' => 'Number of pages of each volume',
+            ),
+        ));
         $builder->add('pubdate', null, array(
             'label' => 'Pubdate',
             'required' => false,
@@ -110,21 +110,35 @@ class TitleType extends AbstractType {
                 'help_block' => 'Date (year) as it appears in the imprint',
             ),
         ));
-        $builder->add('genre', Select2EntityType::class, array(
-            'multiple' => false,
-            'remote_route' => 'genre_typeahead',
-            'class' => Genre::class,
-            'primary_key' => 'id',
-            'text_property' => 'name',
-            'page_limit' => 10,
-            'allow_clear' => true,
-            'delay' => 250,
-            'language' => 'en',
+        $builder->add('edition', null, array(
+            'label' => 'Edition',
+            'required' => false,
             'attr' => array(
-                'help_block' => 'Category of the work',
-            ),            
+                'help_block' => 'Edition as it appears on the title page',
+            ),
         ));
-        
+        $builder->add('editionNumber', null, array(
+            'label' => 'Edition Number',
+            'required' => false,
+            'attr' => array(
+                'help_block' => 'Numerical form of the edition',
+            ),
+        ));
+        $builder->add('dateOfFirstPublication', null, array(
+            'label' => 'Date Of First Publication',
+            'required' => false,
+            'attr' => array(
+                'help_block' => 'Date (year) that the work was first published',
+            ),
+        ));
+        $builder->add('imprint', null, array(
+            'label' => 'Imprint',
+            'required' => false,
+            'attr' => array(
+                'help_block' => 'Information about printers, publishers, booksellers as shown on the title page',
+            ),
+        ));
+
         $builder->add('locationOfPrinting', Select2EntityType::class, array(
             'multiple' => false,
             'remote_route' => 'geonames_typeahead',
@@ -135,16 +149,22 @@ class TitleType extends AbstractType {
             'allow_clear' => true,
             'delay' => 250,
             'language' => 'en',
-            'attr' => array (
-                'help_block' => 'Geotagged location as indicated by the imprint'
-                ),
-        ));
-        
-        $builder->add('dateOfFirstPublication', null, array(
-            'label' => 'Date Of First Publication',
-            'required' => false,
             'attr' => array(
-                'help_block' => 'Date (year) that the work was first published',
+                'help_block' => 'Geotagged location as indicated by the imprint'
+            ),
+        ));
+        $builder->add('format', Select2EntityType::class, array(
+            'multiple' => false,
+            'remote_route' => 'format_typeahead',
+            'class' => Format::class,
+            'primary_key' => 'id',
+            'text_property' => 'name',
+            'page_limit' => 10,
+            'allow_clear' => true,
+            'delay' => 250,
+            'language' => 'en',
+            'attr' => array(
+                'help_block' => 'The way that sheets have been folded and gathered into pages',
             ),
         ));
         $builder->add('sizeL', null, array(
@@ -159,42 +179,6 @@ class TitleType extends AbstractType {
             'required' => false,
             'attr' => array(
                 'help_block' => 'Width measured in cm',
-            ),
-        ));
-        $builder->add('edition', null, array(
-            'label' => 'Edition',
-            'required' => false,
-            'attr' => array(
-                'help_block' => 'Edition as it appears on the title page',
-            ),
-        ));
-        $builder->add('volumes', null, array(
-            'label' => 'Volumes',
-            'required' => false,
-            'attr' => array(
-                'help_block' => 'Number of volumes of the edition, using arabic numerals',
-            ),
-        ));
-        $builder->add('format', Select2EntityType::class, array(
-            'multiple' => false,
-            'remote_route' => 'format_typeahead',
-            'class' => Format::class,
-            'primary_key' => 'id',
-            'text_property' => 'name',
-            'page_limit' => 10,
-            'allow_clear' => true,
-            'delay' => 250,
-            'language' => 'en',
-            'attr' => array(
-                'help_block'=> 'The way that sheets have been folded and gathered into pages',
-                ),
-        ));
-        
-        $builder->add('pagination', null, array(
-            'label' => 'Pagination',
-            'required' => false,
-            'attr' => array(
-                'help_block' => 'Number of pages of each volume',
             ),
         ));
         $builder->add('pricePound', null, array(
@@ -218,6 +202,27 @@ class TitleType extends AbstractType {
                 'help_block' => 'Portion of the price of the work in pence',
             ),
         ));
+        $builder->add('genre', Select2EntityType::class, array(
+            'multiple' => false,
+            'remote_route' => 'genre_typeahead',
+            'class' => Genre::class,
+            'primary_key' => 'id',
+            'text_property' => 'name',
+            'page_limit' => 10,
+            'allow_clear' => true,
+            'delay' => 250,
+            'language' => 'en',
+            'attr' => array(
+                'help_block' => 'Category of the work',
+            ),
+        ));
+        $builder->add('shelfmark', null, array(
+            'label' => 'Shelfmark',
+            'required' => false,
+            'attr' => array(
+                'help_block' => 'Call numbers for location in various libraries',
+            ),
+        ));
         $builder->add('source', Select2EntityType::class, array(
             'multiple' => false,
             'remote_route' => 'source_typeahead',
@@ -230,9 +235,9 @@ class TitleType extends AbstractType {
             'language' => 'en',
             'attr' => array(
                 'help_block' => 'First source consulted to populate the entry fields',
-            ),            
+            ),
         ));
-        
+
         $builder->add('sourceId', null, array(
             'label' => 'Source1 Id',
             'required' => false,
@@ -261,15 +266,36 @@ class TitleType extends AbstractType {
                 'help_block' => 'Unique numeric source identifier if available',
             ),
         ));
-        $builder->add('shelfmark', null, array(
-            'label' => 'Shelfmark',
+        $builder->add('source3', Select2EntityType::class, array(
+            'multiple' => false,
+            'remote_route' => 'source_typeahead',
+            'class' => Source::class,
+            'primary_key' => 'id',
+            'text_property' => 'name',
+            'page_limit' => 10,
+            'allow_clear' => true,
+            'delay' => 250,
+            'language' => 'en',
+            'attr' => array(
+                'help_block' => 'Second source consulted to populate the entry fields',
+            ),
+        ));
+        $builder->add('source3Id', null, array(
+            'label' => 'Source3 Id',
             'required' => false,
             'attr' => array(
-                'help_block' => 'Call numbers for location in various libraries',
+                'help_block' => 'Unique numeric source identifier if available',
+            ),
+        ));
+        $builder->add('notes', null, array(
+            'label' => 'Notes',
+            'required' => false,
+            'attr' => array(
+                'help_block' => 'Any other important information, including links to sources',
             ),
         ));
         $builder->add('checked', ChoiceType::class, array(
-            'label' => 'Checked',
+            'label' => 'Hand-verified',
             'expanded' => true,
             'multiple' => false,
             'choices' => array(
@@ -283,7 +309,7 @@ class TitleType extends AbstractType {
             ),
         ));
         $builder->add('finalcheck', ChoiceType::class, array(
-            'label' => 'Finalcheck',
+            'label' => 'Attempted verification',
             'expanded' => true,
             'multiple' => false,
             'choices' => array(
@@ -295,12 +321,19 @@ class TitleType extends AbstractType {
             'attr' => array(
                 'help_block' => 'Indicates that either two sources have been consulted or the text has been hand-checked',
             ),
-        ));        
-        $builder->add('notes', null, array(
-            'label' => 'Notes',
-            'required' => false,
+        ));
+        $builder->add('finalattempt', ChoiceType::class, array(
+            'label' => 'Verified',
+            'expanded' => true,
+            'multiple' => false,
+            'choices' => array(
+                'Yes' => true,
+                'No' => false,
+            ),
+            'required' => true,
+            'placeholder' => false,
             'attr' => array(
-                'help_block' => 'Any other important information, including links to sources',
+                'help_block' => '',
             ),
         ));
     }

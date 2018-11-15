@@ -6,45 +6,8 @@
 {% block body %}
     <h1>New Title</h1>
 
-    {{ form_start(form) }}
-    <h3>Citation Information</h3>
-    {{ form_row(form.title) }}
-    {{ form_row(form.signedAuthor) }}
-    {{ form_row(form.pubdate) }}
-    {{ form_row(form.locationOfPrinting) }}
-    {{ form_row(form.edition) }}
-    {{ form_row(form.editionNumber) }}
-    {{ form_row(form.volumes) }}
-    {{ form_row(form.titleFirmroles) }}
-
-    <h3>Author Information</h3>
-    {{ form_row(form.pseudonym) }}
-    {{ form_row(form.titleRoles) }}
-
-    <h3>Publishing Information</h3>
-    {{ form_row(form.selfpublished) }}
-    {{ form_row(form.dateOfFirstPublication) }}
-
-    <h3>Cataloguing Information</h3>
-    {{ form_row(form.genre) }}
-    {{ form_row(form.format) }}
-    {{ form_row(form.imprint) }}
-    {{ form_row(form.pagination) }}
-    {{ form_row(form.sizeL) }}
-    {{ form_row(form.sizeW) }}
-    {{ form_row(form.pricePound) }}
-    {{ form_row(form.priceShilling) }}
-    {{ form_row(form.pricePence) }}
-    {{ form_row(form.shelfmark) }}
-
-    <h3>Entry Information</h3>
-    {{ form_row(form.notes) }}
-    {{ form_row(form.source) }}
-    {{ form_row(form.sourceId) }}
-    {{ form_row(form.source2) }}
-    {{ form_row(form.source2Id) }}
-    {{ form_row(form.checked) }}
-    {{ form_row(form.finalcheck) }}
+    {{ form(form) }}
+    {{ form_widget(form) }}
 
     <div class="form-group">
         <div class="col-sm-2"></div>

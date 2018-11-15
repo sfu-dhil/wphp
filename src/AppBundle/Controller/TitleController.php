@@ -273,12 +273,8 @@ class TitleController extends Controller {
      * @return array
      */
     public function showAction(Title $title, SourceLinker $linker) {
-        $em = $this->getDoctrine()->getManager();
-        $repo = $em->getRepository('AppBundle:Title');
         return array(
             'title' => $title,
-            'next' => $repo->next($title),
-            'previous' => $repo->previous($title),
             'linker' => $linker,
         );
     }

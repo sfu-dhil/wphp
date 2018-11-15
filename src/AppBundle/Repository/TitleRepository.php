@@ -32,36 +32,6 @@ class TitleRepository extends EntityRepository
     }
 
     /**
-     * Return the next title by ID.
-     *
-     * @param Title $title
-     * @return Title|Null
-     */
-    public function next(Title $title) {
-        $qb = $this->createQueryBuilder('e');
-        $qb->andWhere('e.id > :id');
-        $qb->setParameter('id', $title->getId());
-        $qb->addOrderBy('e.id', 'ASC');
-        $qb->setMaxResults(1);
-        return $qb->getQuery()->getOneOrNullResult();
-    }
-
-    /**
-     * Return the next title by ID.
-     *
-     * @param Title $title
-     * @return Title|Null
-     */
-    public function previous(Title $title) {
-        $qb = $this->createQueryBuilder('e');
-        $qb->andWhere('e.id < :id');
-        $qb->setParameter('id', $title->getId());
-        $qb->addOrderBy('e.id', 'DESC');
-        $qb->setMaxResults(1);
-        return $qb->getQuery()->getOneOrNullResult();
-    }
-
-    /**
      * Build a complex search query from form data.
      *
      * @param array $data
@@ -72,6 +42,10 @@ class TitleRepository extends EntityRepository
         if (isset($data['title']) && $data['title']) {
             $qb->andWhere("MATCH (e.title) AGAINST (:title BOOLEAN) > 0");
             $qb->setParameter('title', $data['title']);
+        }
+        if(isset($data['id']) && $data['id']) {
+            $qb->andWhere('e.id = :id');
+            $qb->setParameter('id', $data['id']);
         }
         if(isset($data['editionNumber']) && $data['editionNumber']) {
             $qb->andWhere('e.editionNumber = :editionNumber');
