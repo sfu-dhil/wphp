@@ -40,10 +40,8 @@ class TitleController extends Controller {
             'action' => $this->generateUrl('title_search'),
             'entity_manager' => $em
         ));
-        $q = $request->query->get('q');
-        $form->get('title')->submit($q);
         $repo = $em->getRepository(Title::class);
-        $query = $repo->buildSearchQuery(array('title' => $q));
+        $query = $repo->indexQuery();
         $paginator = $this->get('knp_paginator');
         $titles = $paginator->paginate($query, $request->query->getint('page', 1), 25);
         return array(
