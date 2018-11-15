@@ -27,7 +27,7 @@
                         {{ person.firstName }}
                     </a>
                 </td>
-                <td>{% include 'AppBundle:Person:gender.html.twig' %}</td>
+                <td>{% include 'AppBundle:person:gender.html.twig' %}</td>
                 <td>{% if person.dob %}{{ person.dob|replace({'-00': ''}) }}{% endif %}</td>
                 <td>{% if person.dod %}{{ person.dod|replace({'-00': ''}) }}{% endif %}</td>
             </tr>
