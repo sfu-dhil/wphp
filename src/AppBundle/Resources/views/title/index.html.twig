@@ -30,7 +30,7 @@
         <div class='btn-group'>
             {% if is_granted('ROLE_CONTENT_ADMIN') %}
                 <a href="{{ path('title_new') }}" class="btn btn-default">
-                    <span class="glyphicon glyphicon-plus"></span> New
+                    <span class="glyphicon glyphicon-plus"></span> Add New Record
                 </a>
             {% endif %}
         </div>
@@ -39,7 +39,7 @@
         <div class="navigation">
             {{ knp_pagination_render(titles) }}
         </div>
-        
+
         {{ include('AppBundle:title:table.html.twig') }}
 
         <div class="navigation">

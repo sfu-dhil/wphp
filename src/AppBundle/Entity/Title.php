@@ -15,7 +15,8 @@ use Doctrine\ORM\Mapping as ORM;
  *      @ORM\Index(name="title_signedauthor_ft", columns={"signed_author"}, flags={"fulltext"}),
  *      @ORM\Index(name="title_pseudonym_idx", columns={"pseudonym"}, flags={"fulltext"}),
  *      @ORM\Index(name="title_imprint_idx", columns={"imprint"}, flags={"fulltext"}),
- *      @ORM\Index(name="title_colophon_idx", columns={"colophon"}, flags={"fulltext"})
+ *      @ORM\Index(name="title_colophon_idx", columns={"colophon"}, flags={"fulltext"}),
+ *      @ORM\Index(name="title_shelfmark_idx", columns={"shelfmark"}, flags={"fulltext"})
  * })
  * @ORM\Entity(repositoryClass="AppBundle\Repository\TitleRepository")
  */

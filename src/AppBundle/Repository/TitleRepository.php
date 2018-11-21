@@ -39,6 +39,8 @@ class TitleRepository extends EntityRepository
      */
     public function buildSearchQuery($data = array()) {
         $qb = $this->createQueryBuilder('e');
+        $qb->orderBy('e.pubdate');
+        $qb->addOrderBy('e.title');
         if (isset($data['title']) && $data['title']) {
             $qb->andWhere("MATCH (e.title) AGAINST (:title BOOLEAN) > 0");
             $qb->setParameter('title', $data['title']);
@@ -50,6 +52,18 @@ class TitleRepository extends EntityRepository
         if(isset($data['editionNumber']) && $data['editionNumber']) {
             $qb->andWhere('e.editionNumber = :editionNumber');
             $qb->setParameter('editionNumber', $data['editionNumber']);
+        }
+        if(isset($data['volumes']) && $data['volumes']) {
+            $qb->andWhere('e.volumes = :volumes');
+            $qb->setParameter('volumes', $data['volumes']);
+        }
+        if(isset($data['sizeW']) && $data['sizeW']) {
+            $qb->andWhere('e.sizeW = :sizeW');
+            $qb->setParameter('sizeW', $data['sizeW']);
+        }
+        if(isset($data['sizeL']) && $data['sizeL']) {
+            $qb->andWhere('e.sizeL = :sizeL');
+            $qb->setParameter('sizeL', $data['sizeL']);
         }
         if(isset($data['checked'])) {
             $qb->andWhere('e.checked = :checked');
@@ -101,20 +115,9 @@ class TitleRepository extends EntityRepository
             $qb->andWhere("MATCH (e.pseudonym) AGAINST (:pseudonym BOOLEAN) > 0");
             $qb->setParameter('pseudonym', $data['pseudonym']);
         }
-        if (isset($data['orderby']) && $data['orderby']) {
-            $dir = 'ASC';
-            if (isset($data['orderdir']) && preg_match('/^(?:asc|desc)$/i', $data['orderdir'])) {
-                $dir = $data['orderdir'];
-            }
-            switch ($data['orderby']) {
-                case 'pubdate':
-                    $qb->orderBy('e.pubdate', $dir);
-                    break;
-                case 'title':
-                default:
-                    $qb->orderBy('e.title', $dir);
-                    break;
-            }
+        if (isset($data['shelfmark']) && $data['shelfmark']) {
+            $qb->andWhere("MATCH (e.shelfmark) AGAINST (:shelfmark BOOLEAN) > 0");
+            $qb->setParameter('shelfmark', $data['shelfmark']);
         }
 
         // only add the title filter query parts if the subform has data.

@@ -48,7 +48,48 @@ class TitleSearchType extends AbstractType {
                 'help_block' => 'Find this exact title ID.',
             )
         ));
-
+        $builder->add('person_filter', PersonFilterType::class, array(
+            'label' => 'Filter by Person',
+            'required' => false,
+            'attr' => array(
+                'class' => 'embedded-form'
+            ),
+        ));
+        $builder->add('signed_author', TextType::class, array(
+            'label' => 'Signed author',
+            'required' => false,
+            'attr' => array(
+                'help_block' => 'Author attribution as it appears on the title page or at the end of the preface (Ex. “By a lady,” “By the author of“)'
+            ),
+        ));
+        $builder->add('pseudonym', TextType::class, array(
+            'label' => 'Pseudonym',
+            'required' => false,
+            'attr' => array(
+                'help_block' => 'The false name that the author has signed the work with'
+            ),
+        ));
+        $builder->add('firm_filter', FirmFilterType::class, array(
+            'label' => 'Filter by Firm',
+            'required' => false,
+            'attr' => array(
+                'class' => 'embedded-form'
+            ),
+        ));
+        $builder->add('volumes', TextType::class, array(
+            'label' => 'Volumes',
+            'required' => false,
+            'attr' => array(
+                'help_block' => 'Limit results to titles with this exact number of volumes.',
+            ),
+        ));
+        $builder->add('pubdate', TextType::class, array(
+            'label' => 'Publication Year',
+            'required' => false,
+            'attr' => array(
+                'help_block' => 'Enter a year (eg <kbd>1795</kbd>) or range of years (<kbd>1790-1800</kbd>) or a partial range of years (<kbd>*-1800</kbd>)',
+            ),
+        ));
         $builder->add('editionNumber', TextType::class, array(
             'label' => 'Edition Number',
             'required' => false,
@@ -56,33 +97,71 @@ class TitleSearchType extends AbstractType {
                 'help_block' => 'Edition number.'
             ),
         ));
-
-        $builder->add('orderby', ChoiceType::class, array(
-            'label' => 'Order by',
-            'choices' => array(
-                'Title' => 'title',
-                'Publication Date' => 'pubdate',
+        $builder->add('imprint', TextType::class, array(
+            'label' => 'Imprint',
+            'required' => false,
+            'attr' => array(
+                'help_block' => 'Information about printers, publishers, booksellers as represented on the title page'
             ),
-            'required' => true,
+        ));
+        $builder->add('colophon', null, array(
+            'label' => 'Colophon',
+            'required' => false,
+        ));
+        $builder->add('location', TextType::class, array(
+            'label' => 'Printing Location',
+            'required' => false,
+            'attr' => array(
+                'help_block' => 'Geotagged location as indicated by the imprint'
+            ),
+        ));
+        $builder->add('format', ChoiceType::class, array(
+            'choices' => $formats,
+            'choice_label' => function($value, $key, $index) {
+                return $value->getName();
+            },
+            'choice_value' => function($value) {
+                return $value->getId();
+            },
+            'label' => 'Format',
+            'required' => false,
             'expanded' => true,
-            'multiple' => false,
-            'empty_data' => 'title',
-            'data' => 'title',
+            'multiple' => true,
+        ));
+        $builder->add('sizeL', TextType::class, array(
+            'label' => 'Length',
+            'required' => false,
+            'attr' => array(
+                'help_block' => 'Length of the book in cm.',
+            ),
+        ));
+        $builder->add('sizeW', TextType::class, array(
+            'label' => 'Width',
+            'required' => false,
+            'attr' => array(
+                'help_block' => 'Width of the book in cm.',
+            ),
+        ));
+        $builder->add('genre', ChoiceType::class, array(
+            'choices' => $genres,
+            'choice_label' => function($value, $key, $index) {
+                return $value->getName();
+            },
+            'choice_value' => function($value) {
+                return $value->getId();
+            },
+            'label' => 'Genre',
+            'required' => false,
+            'expanded' => true,
+            'multiple' => true,
         ));
 
-        $builder->add('orderdir', ChoiceType::class, array(
-            'label' => 'Order Direction',
-            'choices' => array(
-                'Ascending (A to Z)' => 'asc',
-                'Descending (Z to A)' => 'desc',
-            ),
-            'required' => true,
-            'expanded' => true,
-            'multiple' => false,
-            'empty_data' => 'asc',
-            'data' => 'asc',
-        ));
 
+        $builder->add('shelfmark', null, array(
+            'label' => 'Shelfmark',
+            'required' => false,
+        ));
+        
         $builder->add('checked', ChoiceType::class, array(
             'label' => 'Checked',
             'choices' => array(
@@ -115,93 +194,12 @@ class TitleSearchType extends AbstractType {
             'data' => null,
         ));
 
-        $builder->add('pubdate', TextType::class, array(
-            'label' => 'Publication Year',
-            'required' => false,
-            'attr' => array(
-                'help_block' => 'Enter a year (eg <kbd>1795</kbd>) or range of years (<kbd>1790-1800</kbd>) or a partial range of years (<kbd>*-1800</kbd>)',
-            ),
-        ));
 
-        $builder->add('location', TextType::class, array(
-            'label' => 'Printing Location',
-            'required' => false,
-            'attr' => array(
-                'help_block' => 'Geotagged location as indicated by the imprint'
-            ),
-        ));
 
-        $builder->add('format', ChoiceType::class, array(
-            'choices' => $formats,
-            'choice_label' => function($value, $key, $index) {
-                return $value->getName();
-            },
-            'choice_value' => function($value) {
-                return $value->getId();
-            },
-            'label' => 'Format',
-            'required' => false,
-            'expanded' => true,
-            'multiple' => true,
-        ));
 
-        $builder->add('genre', ChoiceType::class, array(
-            'choices' => $genres,
-            'choice_label' => function($value, $key, $index) {
-                return $value->getName();
-            },
-            'choice_value' => function($value) {
-                return $value->getId();
-            },
-            'label' => 'Genre',
-            'required' => false,
-            'expanded' => true,
-            'multiple' => true,
-        ));
 
-        $builder->add('signed_author', TextType::class, array(
-            'label' => 'Signed author',
-            'required' => false,
-            'attr' => array(
-                'help_block' => 'Author attribution as it appears on the title page or at the end of the preface (Ex. “By a lady,” “By the author of“)'
-            ),
-        ));
 
-        $builder->add('imprint', TextType::class, array(
-            'label' => 'Imprint',
-            'required' => false,
-            'attr' => array(
-                'help_block' => 'Information about printers, publishers, booksellers as represented on the title page'
-            ),
-        ));
-        $builder->add('colophon', null, array(
-            'label' => 'Colophon',
-            'required' => false,
-        ));
 
-        $builder->add('pseudonym', TextType::class, array(
-            'label' => 'Pseudonym',
-            'required' => false,
-            'attr' => array(
-                'help_block' => 'The false name that the author has signed the work with'
-            ),
-        ));
-
-        $builder->add('person_filter', PersonFilterType::class, array(
-            'label' => 'Filter by Person',
-            'required' => false,
-            'attr' => array(
-                'class' => 'embedded-form'
-            ),
-        ));
-
-        $builder->add('firm_filter', FirmFilterType::class, array(
-            'label' => 'Filter by Firm',
-            'required' => false,
-            'attr' => array(
-                'class' => 'embedded-form'
-            ),
-        ));
     }
 
     /**
