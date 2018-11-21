@@ -174,6 +174,10 @@ class TitleSearchType extends AbstractType {
                 'help_block' => 'Information about printers, publishers, booksellers as represented on the title page'
             ),
         ));
+        $builder->add('colophon', null, array(
+            'label' => 'Colophon',
+            'required' => false,
+        ));
 
         $builder->add('pseudonym', TextType::class, array(
             'label' => 'Pseudonym',

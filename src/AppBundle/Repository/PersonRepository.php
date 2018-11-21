@@ -93,6 +93,30 @@ class PersonRepository extends EntityRepository
             $qb->andWhere('MATCH(d.alternatenames, d.name) AGAINST(:dpname BOOLEAN) > 0');
             $qb->setParameter('dpname', $data['deathplace']);
         }
+        if (isset($data['viafUrl']) && $data['viafUrl']) {
+            if($data['viafUrl'] === 'blank') {
+                $qb->andWhere('e.viafUrl IS NULL');
+            } else {
+                $qb->andWhere('MATCH(e.viafUrl) AGAINST(:viafUrl BOOLEAN) > 0');
+                $qb->setParameter('viafUrl', $data['viafUrl']);
+            }
+        }
+        if (isset($data['wikipediaUrl']) && $data['wikipediaUrl']) {
+            if($data['wikipediaUrl'] === 'blank') {
+                $qb->andWhere('e.wikipediaUrl IS NULL');
+            } else {
+                $qb->andWhere('MATCH(e.wikipediaUrl) AGAINST(:wikipediaUrl BOOLEAN) > 0');
+                $qb->setParameter('wikipediaUrl', $data['wikipediaUrl']);
+            }
+        }
+        if (isset($data['imageUrl']) && $data['imageUrl']) {
+            if($data['imageUrl'] === 'blank') {
+                $qb->andWhere('e.imageUrl IS NULL');
+            } else {
+                $qb->andWhere('MATCH(e.imageUrl) AGAINST(:imageUrl BOOLEAN) > 0');
+                $qb->setParameter('imageUrl', $data['imageUrl']);
+            }
+        }
 
         if(isset($data['title_filter']) && count(array_filter($data['title_filter']))) {
             $filter = $data['title_filter'];

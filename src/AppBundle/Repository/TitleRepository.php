@@ -93,6 +93,10 @@ class TitleRepository extends EntityRepository
             $qb->andWhere("MATCH (e.imprint) AGAINST(:imprint BOOLEAN) > 0");
             $qb->setParameter('imprint', $data['imprint']);
         }
+        if (isset($data['colophon']) && $data['colophon']) {
+            $qb->andWhere("MATCH (e.colophon) AGAINST(:colophon BOOLEAN) > 0");
+            $qb->setParameter('colophon', $data['colophon']);
+        }
         if (isset($data['pseudonym']) && $data['pseudonym']) {
             $qb->andWhere("MATCH (e.pseudonym) AGAINST (:pseudonym BOOLEAN) > 0");
             $qb->setParameter('pseudonym', $data['pseudonym']);

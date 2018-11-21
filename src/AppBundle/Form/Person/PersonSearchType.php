@@ -85,6 +85,28 @@ class PersonSearchType extends AbstractType {
 
         ));
 
+        $builder->add('viafUrl', TextType::class, array(
+            'label' => 'VIAF Url',
+            'required' => false,
+            'attr' => array(
+                'help_block' => 'Enter a VIAF URI to check if we have a corresponding record. Enter <kbd>blank</kbd> to find records which do not have VIAF URIs.',
+            ),
+        ));
+        $builder->add('wikipediaUrl', TextType::class, array(
+            'label' => 'Wikipedia URL',
+            'required' => false,
+            'attr' => array(
+                'help_block' => 'Enter a Wikipedia URL to check if we have a corresponding record. Enter <kbd>blank</kbd> to find records which do not have Wikipedia URLs.',
+            ),
+        ));
+        $builder->add('imageUrl', TextType::class, array(
+            'label' => 'Death Place',
+            'required' => false,
+            'attr' => array(
+                'help_block' => 'Enter an image URL to check if we have a corresponding record. Enter <kbd>blank</kbd> to find records which do not have image URLs.',
+            ),
+        ));
+
         $builder->add('title_filter', TitleFilterType::class, array(
             'label' => 'Filter by Title',
             'required' => false,

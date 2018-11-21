@@ -75,6 +75,32 @@
                     {% endif %}
                 </td>
             </tr>
+            <tr>
+                <th>VIAF Entry</th>
+                <td>
+                    {% if person.viafUrl %}
+                        <a href="{{person.viafUrl }}">{{ person.viafUrl }}</a>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th>Wikipedia Entry</th>
+                <td>
+                    {% if person.wikipediaUrl %}
+                        <a href="{{person.wikipediaUrl }}">{{ person.wikipediaUrl }}</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% if is_granted('ROLE_USER') %}
+                <tr>
+                    <th>Image URL</th>
+                    <td>
+                        {% if person.imageUrl %}
+                            <a href="{{person.imageUrl }}">{{ person.imageUrl }}</a>
+                        {% endif %}
+                    </td>
+                    </tr>
+            {% endif %}
         </tbody>
     </table>
 

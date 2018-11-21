@@ -3,9 +3,9 @@
 namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection as Collection2;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints\Collection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Person
@@ -13,6 +13,9 @@ use Symfony\Component\Validator\Constraints\Collection;
  * @ORM\Table(name="person",
  *  indexes={
  *      @ORM\Index(name="person_full_idx", columns={"last_name", "first_name", "title"}, flags={"fulltext"}),
+ *      @ORM\Index(name="person_viaf_idx", columns={"viaf_permalink"}, flags={"fulltext"}),
+ *      @ORM\Index(name="person_wikipedia_idx", columns={"wikipedia_link"}, flags={"fulltext"}),
+ *      @ORM\Index(name="person_image_idx", columns={"image_link"}, flags={"fulltext"}),
  * })
  * @ORM\Entity(repositoryClass="AppBundle\Repository\PersonRepository")
  */
@@ -73,6 +76,30 @@ class Person
      * @ORM\Column(name="dod", type="string", length=20, nullable=true)
      */
     private $dod;
+
+    /**
+     * @var string
+     *
+     * @Assert\Url
+     * @ORM\Column(name="viaf_permalink", type="string", length=127, nullable=true)
+     */
+    private $viafUrl;
+
+    /**
+     * @var string
+     *
+     * @Assert\Url
+     * @ORM\Column(name="wikipedia_link", type="string", length=127, nullable=true)
+     */
+    private $wikipediaUrl;
+
+    /**
+     * @var string
+     *
+     * @Assert\Url
+     * @ORM\Column(name="image_link", type="string", length=255, nullable=true)
+     */
+    private $imageUrl;
 
     /**
      * @var boolean
@@ -381,7 +408,7 @@ class Person
     /**
      * Get titleRoles
      *
-     * @return Collection2
+     * @return Collection
      */
     public function getTitleRoles() {
         return $this->titleRoles;
@@ -394,5 +421,77 @@ class Person
      */
     public function __toString() {
         return $this->lastName . ", " . $this->firstName;
+    }
+
+    /**
+     * Set viafUrl.
+     *
+     * @param string|null $viafUrl
+     *
+     * @return Person
+     */
+    public function setViafUrl($viafUrl = null)
+    {
+        $this->viafUrl = $viafUrl;
+
+        return $this;
+    }
+
+    /**
+     * Get viafUrl.
+     *
+     * @return string|null
+     */
+    public function getViafUrl()
+    {
+        return $this->viafUrl;
+    }
+
+    /**
+     * Set wikipediaUrl.
+     *
+     * @param string|null $wikipediaUrl
+     *
+     * @return Person
+     */
+    public function setWikipediaUrl($wikipediaUrl = null)
+    {
+        $this->wikipediaUrl = $wikipediaUrl;
+
+        return $this;
+    }
+
+    /**
+     * Get wikipediaUrl.
+     *
+     * @return string|null
+     */
+    public function getWikipediaUrl()
+    {
+        return $this->wikipediaUrl;
+    }
+
+    /**
+     * Set imageUrl.
+     *
+     * @param string|null $imageUrl
+     *
+     * @return Person
+     */
+    public function setImageUrl($imageUrl = null)
+    {
+        $this->imageUrl = $imageUrl;
+
+        return $this;
+    }
+
+    /**
+     * Get imageUrl.
+     *
+     * @return string|null
+     */
+    public function getImageUrl()
+    {
+        return $this->imageUrl;
     }
 }

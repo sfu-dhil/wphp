@@ -139,6 +139,10 @@ class TitleType extends AbstractType {
                 'help_block' => 'Information about printers, publishers, booksellers as shown on the title page',
             ),
         ));
+        $builder->add('colophon', null, array(
+            'label' => 'Colophon',
+            'required' => false,
+        ));
 
         $builder->add('locationOfPrinting', Select2EntityType::class, array(
             'multiple' => false,

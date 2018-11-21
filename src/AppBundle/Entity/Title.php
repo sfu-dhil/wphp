@@ -14,7 +14,8 @@ use Doctrine\ORM\Mapping as ORM;
  *      @ORM\Index(name="title_title_ft", columns={"title"}, flags={"fulltext"}),
  *      @ORM\Index(name="title_signedauthor_ft", columns={"signed_author"}, flags={"fulltext"}),
  *      @ORM\Index(name="title_pseudonym_idx", columns={"pseudonym"}, flags={"fulltext"}),
- *      @ORM\Index(name="title_imprint_idx", columns={"imprint"}, flags={"fulltext"})
+ *      @ORM\Index(name="title_imprint_idx", columns={"imprint"}, flags={"fulltext"}),
+ *      @ORM\Index(name="title_colophon_idx", columns={"colophon"}, flags={"fulltext"})
  * })
  * @ORM\Entity(repositoryClass="AppBundle\Repository\TitleRepository")
  */
@@ -105,6 +106,13 @@ class Title
      * @ORM\Column(name="edition", type="string", length=200, nullable=true)
      */
     private $edition;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="colophon", type="string", length=200, nullable=true)
+     */
+    private $colophon;
 
     /**
      * @var boolean
@@ -252,7 +260,7 @@ class Title
      *
      * @ORM\ManyToOne(targetEntity="Source")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="source2", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="source3", referencedColumnName="id")
      * })
      */
     private $source3;
@@ -1082,5 +1090,29 @@ class Title
     public function getSource3()
     {
         return $this->source3;
+    }
+
+    /**
+     * Set colophon.
+     *
+     * @param string|null $colophon
+     *
+     * @return Title
+     */
+    public function setColophon($colophon = null)
+    {
+        $this->colophon = $colophon;
+
+        return $this;
+    }
+
+    /**
+     * Get colophon.
+     *
+     * @return string|null
+     */
+    public function getColophon()
+    {
+        return $this->colophon;
     }
 }

@@ -2,9 +2,11 @@
 
 namespace AppBundle\Form\Person;
 
+use AppBundle\Entity\Geonames;
 use AppBundle\Entity\Person;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Tetranz\Select2EntityBundle\Form\Type\Select2EntityType;
@@ -44,7 +46,7 @@ class PersonType extends AbstractType {
                 'Female' => Person::FEMALE,
                 'Male' => Person::MALE,
                 'Unknown' => null,
-            ),            
+            ),
         ));
         $builder->add('dob', null, array(
             'label' => 'Dob',
@@ -62,7 +64,7 @@ class PersonType extends AbstractType {
             'page_limit' => 10,
             'allow_clear' => true,
             'delay' => 250,
-            'language' => 'en', 
+            'language' => 'en',
             'attr' => array(
                 'help_block' => 'Geotagged location of person’s birth'
             ),
@@ -86,6 +88,27 @@ class PersonType extends AbstractType {
             'language' => 'en',
             'attr' => array(
                 'help_block' => 'Geotagged location of person’s death'
+            ),
+        ));
+        $builder->add('viafUrl', UrlType::class, array(
+            'label' => 'VIAF URL',
+            'required' => false,
+            'attr' => array(
+                'help_block' => 'Enter a VIAF URL for this person'
+            ),
+        ));
+        $builder->add('wikipediaUrl', UrlType::class, array(
+            'label' => 'VIAF URL',
+            'required' => false,
+            'attr' => array(
+                'help_block' => 'Enter a Wikipedia URL for this person'
+            ),
+        ));
+        $builder->add('imageUrl', UrlType::class, array(
+            'label' => 'VIAF URL',
+            'required' => false,
+            'attr' => array(
+                'help_block' => 'Enter the URL for an image for this person. Make sure the licensing on the image is permissive.'
             ),
         ));
         $builder->add('checked', ChoiceType::class, array(
