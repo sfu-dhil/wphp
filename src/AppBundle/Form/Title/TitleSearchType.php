@@ -142,6 +142,14 @@ class TitleSearchType extends AbstractType {
                 'help_block' => 'Width of the book in cm.',
             ),
         ));
+        $builder->add('price_filter', PriceType::class, array(
+            'label' => 'Filter by Price',
+            'required' => false,
+            'attr' => array(
+                'class' => 'embedded-form'
+            ),
+        ));
+
         $builder->add('genre', ChoiceType::class, array(
             'choices' => $genres,
             'choice_label' => function($value, $key, $index) {
@@ -155,13 +163,11 @@ class TitleSearchType extends AbstractType {
             'expanded' => true,
             'multiple' => true,
         ));
-
-
         $builder->add('shelfmark', null, array(
             'label' => 'Shelfmark',
             'required' => false,
         ));
-        
+
         $builder->add('checked', ChoiceType::class, array(
             'label' => 'Checked',
             'choices' => array(

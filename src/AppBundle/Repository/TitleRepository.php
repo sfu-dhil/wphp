@@ -95,6 +95,27 @@ class TitleRepository extends EntityRepository
             $qb->andWhere('e.format IN (:formats)');
             $qb->setParameter('formats', $data['format']);
         }
+        if($data['price_filter']['price_pound'] !== null ||
+            $data['price_filter']['price_shilling'] !== null ||
+            $data['price_filter']['price_pence'] !== null) {
+            $total = $data['price_filter']['price_pound'] * 240
+                + $data['price_filter']['price_shilling'] * 12
+                + $data['price_filter']['price_pence'];
+            $operator = '<';
+            switch($data['price_filter']['price_comparison']) {
+                case 'eg':
+                    $operator = '=';
+                    break;
+                case 'lt':
+                    $operator = '<';
+                    break;
+                case 'gt';
+                    $operator = '>';
+            }
+            $qb->andWhere("e.totalPrice {$operator} :total");
+            $qb->andWhere('e.totalPrice > 0');
+            $qb->setParameter('total', $total);
+        }
         if (isset($data['genre']) && is_array($data['genre']) && count($data['genre'])) {
             $qb->andWhere('e.genre IN (:genres)');
             $qb->setParameter('genres', $data['genre']);
