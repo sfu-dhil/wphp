@@ -681,6 +681,7 @@ class Title
      * @return integer
      */
     public function getTotalPrice() {
+        $this->setTotalPrice();
         return $this->totalPrice;
     }
 
