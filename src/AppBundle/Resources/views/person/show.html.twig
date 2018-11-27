@@ -28,31 +28,31 @@
     <table class="table table-bordered table-condensed table-hover table-striped">
         <tbody>
             <tr>
-                <th><a href="#" data-toggle="popover" data-content="Unique ID number for this entry" data-trigger="hover" data-placement="bottom">Id</a></th>
+                <th data-toggle="popover" data-content="Unique ID number for this entry">Id</th>
                 <td>{{ person.id }}</td>
             </tr>
             <tr>
-                <th><a href="#" data-toggle="popover" data-content="Person’s last name by which he or she is most commonly known" data-trigger="hover" data-placement="bottom">Last name</a></th>
+                <th data-toggle="popover" data-content="Person’s last name by which he or she is most commonly known">Last name</th>
                 <td>{{ person.lastName }}</td>
             </tr>
             <tr>
-                <th><a href="#" data-toggle="popover" data-content="Person’s first name and where appropriate, full aristocratic title" data-trigger="hover" data-placement="bottom">First name</a></th>
+                <th data-toggle="popover" data-content="Person’s first name and where appropriate, full aristocratic title">First name</th>
                 <td>{{ person.firstName }}</td>
             </tr>
             <tr>
-                <th><a href="#" data-toggle="popover" data-content="Person's aristocratic title, if exists" data-trigger="hover" data-placement="bottom">Title</a></th>
+                <th data-toggle="popover" data-content="Person's aristocratic title, if exists">Title</th>
                 <td>{{ person.title }}</td>
             </tr>
             <tr>
-                <th><a href="#" data-toggle="popover" data-content="Person's gender, if known" data-trigger="hover" data-placement="bottom">Gender</a></th>
+                <th data-toggle="popover" data-content="Person's gender, if known">Gender</th>
                 <td>{% include 'AppBundle:person:gender.html.twig' %}</td>
             </tr>
             <tr>
-                <th><a href="#" data-toggle="popover" data-content="YYYY-MM-DD" data-trigger="hover" data-placement="bottom">Date of birth</a></th>
+                <th data-toggle="popover" data-content="YYYY-MM-DD">Date of birth</th>
                 <td>{% if person.dob %}{{ person.dob|replace({'-00': ''}) }}{% endif %}</td>
             </tr>
             <tr>
-                <th><a href="#" data-toggle="popover" data-content="Place of birth as geotagged" data-trigger="hover" data-placement="bottom">Place of birth</a></th>
+                <th data-toggle="popover" data-content="Place of birth as geotagged">Place of birth</th>
                 <td>
                     {% if person.cityOfBirth %}
                         <a href="{{path('geonames_show', {'id': person.cityOfBirth.geonameid}) }}">
@@ -62,11 +62,11 @@
                 </td>
             </tr>
             <tr>
-                <th><a href="#" data-toggle="popover" data-content="YYYY-MM-DD" data-trigger="hover" data-placement="bottom">Date of death</a></th>
+                <th data-toggle="popover" data-content="YYYY-MM-DD">Date of death</th>
                 <td>{% if person.dod %}{{ person.dod|replace({'-00': ''}) }}{% endif %}</td>
             </tr>
             <tr>
-                <th><a href="#" data-toggle="popover" data-content="Place of death as geotagged" data-trigger="hover" data-placement="bottom">Place of Death</a></th>
+                <th data-toggle="popover" data-content="Place of death as geotagged">Place of Death</th>
                 <td>
                     {% if person.cityOfDeath %}
                         <a href="{{ path('geonames_show', {'id': person.cityOfDeath.geonameid}) }}">

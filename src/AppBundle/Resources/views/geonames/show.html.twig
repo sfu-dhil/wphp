@@ -1,8 +1,8 @@
 {% extends 'base.html.twig' %}
 
-{% block pageheader %}  
+{% block pageheader %}
     <h1>Geonames</h1>
-{% endblock %} 
+{% endblock %}
 
 {% block body %}
 
@@ -16,15 +16,15 @@
     <table class="table table-bordered table-condensed table-hover table-striped">
         <tbody>
             <tr>
-                <th><a href="#" data-toggle="popover" data-content="Location’s URI from Geonames.com" data-trigger="hover" data-placement="bottom">Geoname ID</a></th>
+                <th data-toggle="popover" data-content="Location’s URI from Geonames.com">Geoname ID</th>
                 <td>{{ geoname.geonameid }}</td>
             </tr>
             <tr>
-                <th><a href="#" data-toggle="popover" data-content="Location’s name" data-trigger="hover" data-placement="bottom">Name</a></th>
+                <th data-toggle="popover" data-content="Location’s name">Name</th>
                 <td>{{ geoname.name }}</td>
             </tr>
             <tr>
-                <th><a href="#" data-toggle="popover" data-content="Number of titles associated with the location" data-trigger="hover" data-placement="bottom">Titles</a></th>
+                <th data-toggle="popover" data-content="Number of titles associated with the location">Titles</th>
                 <td>
                     <a href="{{ path('geonames_titles', {'id': geoname.geonameid}) }}">
                         {{ geoname.titles | length }}
@@ -32,7 +32,7 @@
                 </td>
             </tr>
             <tr>
-                <th><a href="#" data-toggle="popover" data-content="Number of firms associated with the location" data-trigger="hover" data-placement="bottom">Firms</a></th>
+                <th data-toggle="popover" data-content="Number of firms associated with the location">Firms</th>
                 <td>
                     <a href="{{ path('geonames_firms', {'id': geoname.geonameid}) }}">
                         {{ geoname.firms | length }}
@@ -40,7 +40,7 @@
                 </td>
             </tr>
             <tr>
-                <th><a href="#" data-toggle="popover" data-content="Number of people that were born and died in the location" data-trigger="hover" data-placement="bottom">People</a></th>
+                <th data-toggle="popover" data-content="Number of people that were born and died in the location">People</th>
                 <td>
                     <a href="{{ path('geonames_people', {'id': geoname.geonameid}) }}">
                         Born: {{ geoname.peopleBorn | length }}, Died: {{ geoname.peopleDied | length }}
@@ -48,35 +48,35 @@
                 </td>
             </tr>
             <tr>
-                <th><a href="#" data-toggle="popover" data-content="Location’s name in ASCII code" data-trigger="hover" data-placement="bottom">ASCII name</a></th>
+                <th data-toggle="popover" data-content="Location’s name in ASCII code">ASCII name</th>
                 <td>{{ geoname.asciiname }}</td>
             </tr>
             <tr>
-                <th><a href="#" data-toggle="popover" data-content="Location’s latitude" data-trigger="hover" data-placement="bottom">Latitude</a></th>
+                <th data-toggle="popover" data-content="Location’s latitude">Latitude</th>
                 <td>{{ geoname.latitude }}</td>
             </tr>
             <tr>
-                <th><a href="#" data-toggle="popover" data-content="Location’s longitude" data-trigger="hover" data-placement="bottom">Longitude</a></th>
+                <th data-toggle="popover" data-content="Location’s longitude">Longitude</th>
                 <td>{{ geoname.longitude }}</td>
             </tr>
             <tr>
-                <th><a href="#" data-toggle="popover" data-content="Initials of the country" data-trigger="hover" data-placement="bottom">Country</a></th>
+                <th data-toggle="popover" data-content="Initials of the country">Country</th>
                 <td>{{ geoname.country }}</td>
             </tr>
             <tr>
-                <th><a href="#" data-toggle="popover" data-content="Feature code of a primary administrative division of a country" data-trigger="hover" data-placement="bottom">Admin 1</a></th>
+                <th data-toggle="popover" data-content="Feature code of a primary administrative division of a country">Admin 1</th>
                 <td>{{ geoname.admin1 }}</td>
             </tr>
             <tr>
-                <th><a href="#" data-toggle="popover" data-content="Feature code of a subdivision of a first-order administrative division" data-trigger="hover" data-placement="bottom">Admin 2</a></th>
+                <th data-toggle="popover" data-content="Feature code of a subdivision of a first-order administrative division">Admin 2</th>
                 <td>{{ geoname.admin2 }}</td>
             </tr>
             <tr>
-                <th><a href="#" data-toggle="popover" data-content="Feature code of a subdivision of a second-order administrative division" data-trigger="hover" data-placement="bottom">Admin 3</a></th>
+                <th data-toggle="popover" data-content="Feature code of a subdivision of a second-order administrative division">Admin 3</th>
                 <td>{{ geoname.admin3 }}</td>
             </tr>
             <tr>
-                <th><a href="#" data-toggle="popover" data-content="Feature code of a subdivision of a third-order administrative division" data-trigger="hover" data-placement="bottom">Admin 4</a></th>
+                <th data-toggle="popover" data-content="Feature code of a subdivision of a third-order administrative division">Admin 4</th>
                 <td>{{ geoname.admin4 }}</td>
             </tr>
         </tbody>

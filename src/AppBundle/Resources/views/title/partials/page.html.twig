@@ -38,7 +38,7 @@
                         {% set firm = tfr.firm %}
                         <a href="{{ path('firm_show', {'id': firm.id}) }}">{{ firm.name }} {% if firm.city %}({{firm.city.name }}){% endif %}</a><br/>
                     {% endfor %}
-                </td>
+                </td>            
                 <td>{{ title.pubdate }}</td>
                 <td>{{ title.edition }}</td>
             </tr>

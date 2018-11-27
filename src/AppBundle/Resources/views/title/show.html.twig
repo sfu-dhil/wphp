@@ -39,15 +39,15 @@
                 <table class="table table-bordered table-condensed table-hover table-striped">
                     <tbody>
                          <tr>
-                            <th data-toggle="popover" data-container="body" data-content="WPHP database ID of the title" data-trigger="hover" data-placement="bottom" >Id</th>
+                            <th data-toggle="popover" data-content="WPHP database ID of the title">Id</th>
                             <td>{{ title.id }}</td>
                         </tr>
                         <tr>
-                            <th data-toggle="popover"  data-container="body" data-content="Title of the book" data-trigger="hover" data-placement="bottom" >Title</th>
+                            <th data-toggle="popover"  data-content="Title of the book">Title</th>
                             <td>{{ title.title }}</td>
                         </tr>
                         <tr>
-                            <th data-toggle="popover"  data-container="body" data-content="Names of all women who have contributed to the work and their role in the work’s production" data-trigger="hover" data-placement="bottom" >Contributors</th>
+                            <th data-toggle="popover"  data-content="Names of all women who have contributed to the work and their role in the work’s production">Contributors</th>
                             <td>
                                 {% for tr in title.titleRoles %}
                                     {% set person = tr.person %}
@@ -57,15 +57,15 @@
                             </td>
                         </tr>
                         <tr>
-                            <th data-toggle="popover"  data-container="body" data-content="Author attribution from the title page or the end of the preface" data-trigger="hover" data-placement="bottom" >Signed author</th>
+                            <th data-toggle="popover"  data-content="Author attribution from the title page or the end of the preface">Signed author</th>
                             <td>{{ title.signedAuthor }}</td>
                         </tr>
                          <tr>
-                            <th data-toggle="popover"  data-container="body" data-content="Any false author name" data-trigger="hover" data-placement="bottom" >Pseudonym</th>
+                            <th data-toggle="popover"  data-content="Any false author name">Pseudonym</th>
                             <td>{{ title.pseudonym }}</td>
                         </tr>
                         <tr>
-                            <th data-toggle="popover"  data-container="body" data-content="Names of all printers, publishers, and booksellers listed in the imprint and their role in the work’s production" data-trigger="hover" data-placement="bottom" >Firms</th>
+                            <th data-toggle="popover"  data-content="Names of all printers, publishers, and booksellers listed in the imprint and their role in the work’s production">Firms</th>
                             <td>
                                 {% for tfr in title.titleFirmRoles %}
                                     {% set firm = tfr.firm %}
@@ -75,31 +75,31 @@
                             </td>
                         </tr>
                         <tr>
-                            <th data-toggle="popover"  data-container="body" data-content="Indicates if the title was published by the author" data-trigger="hover" data-placement="bottom" >Self published</th>
+                            <th data-toggle="popover"  data-content="Indicates if the title was published by the author">Self published</th>
                             <td>{% if title.selfpublished %}Yes{% else %}No{% endif %}</td>
                         </tr>
                         <tr>
-                            <th data-toggle="popover"  data-container="body" data-content="Number of volumes of the edition, using arabic numerals" data-trigger="hover" data-placement="bottom" >Volumes</th>
+                            <th data-toggle="popover"  data-content="Number of volumes of the edition, using arabic numerals">Volumes</th>
                             <td>{{ title.volumes }}</td>
                         </tr>
                         <tr>
-                            <th data-toggle="popover"  data-container="body" data-content="Number of pages of each volume" data-trigger="hover" data-placement="bottom" >Pagination</th>
+                            <th data-toggle="popover"  data-content="Number of pages of each volume">Pagination</th>
                             <td>{{ title.pagination }}</td>
                         </tr>
                        <tr>
-                            <th data-toggle="popover"  data-container="body" data-content="Date (year) as it appears on the imprint" data-trigger="hover" data-placement="bottom" >Date</th>
+                            <th data-toggle="popover"  data-content="Date (year) as it appears on the imprint">Date</th>
                             <td>{{ title.pubdate }}</td>
                         </tr>
                         <tr>
-                            <th data-toggle="popover"  data-container="body" data-content="Edition as it appears on the title page" data-trigger="hover" data-placement="bottom" >Edition</th>
+                            <th data-toggle="popover"  data-content="Edition as it appears on the title page">Edition</th>
                             <td>{{ title.edition }} {{ title.editionNumber }}</td>
                         </tr>
                         <tr>
-                            <th data-toggle="popover"  data-container="body" data-content="Date (year) that the work was first published" data-trigger="hover" data-placement="bottom" >Date of first publication</th>
+                            <th data-toggle="popover"  data-content="Date (year) that the work was first published">Date of first publication</th>
                             <td>{{ title.dateOfFirstPublication }}</td>
                         </tr>
                         <tr>
-                            <th data-toggle="popover"  data-container="body" data-content="Information about printers, publishers, booksellers as shown on the title page" data-trigger="hover" data-placement="bottom" >Imprint</th>
+                            <th data-toggle="popover"  data-content="Information about printers, publishers, booksellers as shown on the title page">Imprint</th>
                             <td>{{ title.imprint }}</td>
                         </tr>
                         <tr>
@@ -107,7 +107,7 @@
                             <td>{{ title.colophon }}</td>
                         </tr>
                         <tr>
-                            <th data-toggle="popover"  data-container="body" data-content="Geotagged location as indicated by the imprint" data-trigger="hover" data-placement="bottom" >Location of printing</th>
+                            <th data-toggle="popover"  data-content="Geotagged location as indicated by the imprint">Location of printing</th>
                             <td>
                                 {% if title.locationOfPrinting %}
                                     <a href="{{ path('geonames_show', {'id': title.locationOfPrinting.geonameid}) }}">
@@ -117,7 +117,7 @@
                             {% endif %}
                         </tr>
                         <tr>
-                            <th data-toggle="popover"  data-container="body" data-content="The way that sheets have been folded and gathered into pages" data-trigger="hover" data-placement="bottom" >Format</th>
+                            <th data-toggle="popover"  data-content="The way that sheets have been folded and gathered into pages">Format</th>
                             <td>
                                 {% if title.format %}
                                     <a href="{{ path('format_show', {'id': title.format.id}) }}">
@@ -127,11 +127,11 @@
                             </td>
                         </tr>
                         <tr>
-                            <th data-toggle="popover"  data-container="body" data-content="Length measured in cm" data-trigger="hover" data-placement="bottom" >Length (cm)</th>
+                            <th data-toggle="popover"  data-content="Length measured in cm">Length (cm)</th>
                             <td>{{ title.sizeL }}</td>
                         </tr>
                         <tr>
-                            <th data-toggle="popover"  data-container="body" data-content="Width measured in cm" data-trigger="hover" data-placement="bottom" >Width (cm)</th>
+                            <th data-toggle="popover"  data-content="Width measured in cm">Width (cm)</th>
                             <td>{{ title.sizeW }}</td>
                         </tr>
                     </tbody>
@@ -142,19 +142,19 @@
                 <table class="table table-bordered table-condensed table-hover table-striped">
                     <tbody>
                         <tr>
-                            <th data-toggle="popover"  data-container="body" data-content="Portion of the price of the work in pounds" data-trigger="hover" data-placement="bottom" >Price (pound)</th>
+                            <th data-toggle="popover"  data-content="Portion of the price of the work in pounds">Price (pound)</th>
                             <td>{{ title.pricePound }}</td>
                         </tr>
                         <tr>
-                            <th data-toggle="popover"  data-container="body" data-content="Portion of the price of the work in shillings" data-trigger="hover" data-placement="bottom" >Price (shilling)</th>
+                            <th data-toggle="popover"  data-content="Portion of the price of the work in shillings">Price (shilling)</th>
                             <td>{{ title.priceShilling }}</td>
                         </tr>
                         <tr>
-                            <th data-toggle="popover"  data-container="body" data-content="Portion of the price of the work in pence" data-trigger="hover" data-placement="bottom" >Price (pence)</th>
+                            <th data-toggle="popover"  data-content="Portion of the price of the work in pence">Price (pence)</th>
                             <td>{{ title.pricePence }}</td>
                         </tr>
                         <tr>
-                            <th data-toggle="popover" data-trigger="hover" data-placement="bottom" >Total price (in pence)</th>
+                            <th data-toggle="popover">Total price (in pence)</th>
                             <td>
                                 {% if title.totalPrice > 0 %}
                                     {{ title.totalPrice }}
@@ -162,7 +162,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <th data-toggle="popover"  data-container="body" data-content="Category that the work falls into" data-trigger="hover" data-placement="bottom" >Genre</th>
+                            <th data-toggle="popover"  data-content="Category that the work falls into">Genre</th>
                             <td>
                                 {% if title.genre %}
                                     <a href="{{ path('genre_show', {'id': title.genre.id}) }}">
@@ -172,7 +172,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <th data-toggle="popover"  data-container="body" data-content="Sources consulted to populate the entry fields" data-trigger="hover" data-placement="bottom" >Sources</th>
+                            <th data-toggle="popover"  data-content="Sources consulted to populate the entry fields">Sources</th>
                             <td>
                                 {% include "AppBundle:title:partials/source-link.html.twig"
                                     with {'source': title.source, 'sourceId': title.sourceId} %}
@@ -183,7 +183,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <th data-toggle="popover"  data-container="body" data-content="Call numbers for location in various libraries" data-trigger="hover" data-placement="bottom" >Shelf marks</th>
+                            <th data-toggle="popover"  data-content="Call numbers for location in various libraries">Shelf marks</th>
                             <td>
                                 {% for mark in title.shelfmark|split(';') %}
                                     {{ mark }}<br/>
@@ -191,19 +191,19 @@
                             </td>
                         </tr>
                         <tr>
-                            <th data-toggle="popover"  data-container="body" data-content="Any other important information, including links to sources" data-trigger="hover" data-placement="bottom" >Notes</th>
+                            <th data-toggle="popover"  data-content="Any other important information, including links to sources">Notes</th>
                             <td>{{ title.notes }}</td>
                         </tr>
                         <tr>
-                            <th data-toggle="popover"  data-container="body" data-content="Indicates that a physical copy of the text has been consulted" data-trigger="hover" data-placement="bottom" >Hand-verified</th>
+                            <th data-toggle="popover"  data-content="Indicates that a physical copy of the text has been consulted">Hand-verified</th>
                             <td>{% if title.checked %}Yes{% else %}No{% endif %}</td>
                         </tr>
                         <tr>
-                            <th data-toggle="popover"  data-container="body" data-content="Indicates that either two sources have been consulted or the text has been hand-checked" data-trigger="hover" data-placement="bottom" >Attempted Verification</th>
+                            <th data-toggle="popover"  data-content="Indicates that either two sources have been consulted or the text has been hand-checked">Attempted Verification</th>
                             <td>{% if title.finalcheck %}Yes{% else %}No{% endif %}</td>
                         </tr>
                         <tr>
-                            <th data-toggle="popover"  data-container="body" data-content="Indicates that either two sources have been consulted or the text has been hand-checked" data-trigger="hover" data-placement="bottom" >Verified</th>
+                            <th data-toggle="popover"  data-content="Indicates that either two sources have been consulted or the text has been hand-checked">Verified</th>
                             <td>{% if title.finalattempt %}Yes{% else %}No{% endif %}</td>
                         </tr>
                     </tbody>

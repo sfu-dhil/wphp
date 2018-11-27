@@ -24,19 +24,19 @@
     <table class="table table-bordered table-condensed table-hover table-striped">
         <tbody>
             <tr>
-                <th><a href="#" data-toggle="popover" data-content="Unique ID number for this entry" data-trigger="hover" data-placement="bottom">Id</a></th>
+                <th data-toggle="popover" data-content="Unique ID number for this entry">Id</th>
                 <td>{{ firm.id }}</td>
             </tr>
             <tr>
-                <th><a href="#" data-toggle="popover" data-content="Most complete name of the firm known" data-trigger="hover" data-placement="bottom">Name</a></th>
+                <th data-toggle="popover" data-content="Most complete name of the firm known">Name</th>
                 <td>{{ firm.name }}</td>
             </tr>
             <tr>
-                <th><a href="#" data-toggle="popover" data-content="Street address of the firm as geotagged" data-trigger="hover" data-placement="bottom">Street address</a></th>
+                <th data-toggle="popover" data-content="Street address of the firm as geotagged">Street address</th>
                 <td>{{ firm.streetAddress }}</td>
             </tr>
             <tr>
-                <th><a href="#" data-toggle="popover" data-content="City/town/village in which the firm’s street address is located; geotagged" data-trigger="hover" data-placement="bottom">City</a></th>
+                <th data-toggle="popover" data-content="City/town/village in which the firm’s street address is located; geotagged">City</th>
                 <td>
                     {% if firm.city %}
                         <a href="{{ path('geonames_show', {'id': firm.city.geonameid}) }}">
@@ -46,11 +46,11 @@
                 </td>
             </tr>
             <tr>
-                <th><a href="#" data-toggle="popover" data-content="YYYY-MM-DD" data-trigger="hover" data-placement="bottom">Start date</a></th>
+                <th data-toggle="popover" data-content="YYYY-MM-DD">Start date</th>
                 <td>{% if firm.startDate %}{{ firm.startDate|date('Y') }}{% endif %}</td>
             </tr>
             <tr>
-                <th><a href="#" data-toggle="popover" data-content="YYYY-MM-DD" data-trigger="hover" data-placement="bottom">End date</a></th>
+                <th data-toggle="popover" data-content="YYYY-MM-DD">End date</th>
                 <td>{% if firm.endDate %}{{ firm.endDate|date('Y') }}{% endif %}</td>
             </tr>
         </tbody>

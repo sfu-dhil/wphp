@@ -3,10 +3,10 @@
 {% block title %}En List{% endblock %}
 
 {% block pageheader %}
-    <h1>En List</h1>
+    <h1>Search the English Bibliography</h1>
     {% if ens|length %}
         <p class="count">
-            Displaying {{ ens|length }} ens of {{ ens.getTotalItemCount }} total.
+            Displaying {{ ens|length }} entries of {{ ens.getTotalItemCount }} total.
         </p>
     {% endif %}
 {% endblock %}
