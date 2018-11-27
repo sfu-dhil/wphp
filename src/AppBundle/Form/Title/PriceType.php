@@ -50,20 +50,6 @@ class PriceType extends AbstractType {
             'expanded' => false,
             'multiple' => false,
         ));
-
-//        $builder->add('genre', ChoiceType::class, array(
-//            'choices' => $genres,
-//            'choice_label' => function($value, $key, $index) {
-//                return $value->getName();
-//            },
-//            'choice_value' => function($value) {
-//                return $value->getId();
-//            },
-//            'label' => 'Genre',
-//            'required' => false,
-//            'expanded' => true,
-//            'multiple' => true,
-//        ));
     }
 
 }
