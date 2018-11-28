@@ -4,13 +4,13 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\EstcMarc;
 use AppBundle\Services\MarcManager;
+use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -19,7 +19,10 @@ use Symfony\Component\HttpFoundation\Request;
  * @Security("has_role('ROLE_USER')")
  * @Route("/resource/estc")
  */
-class EstcMarcController extends Controller {
+class EstcMarcController extends Controller  implements PaginatorAwareInterface {
+
+    use PaginatorTrait;
+
 
     /**
      * Lists all EstcMarc entities.
@@ -36,8 +39,7 @@ class EstcMarcController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $repo = $em->getRepository(EstcMarc::class);
         $query = $repo->indexQuery();
-        $paginator = $this->get('knp_paginator');
-        $estcMarcs = $paginator->paginate($query, $request->query->getint('page', 1), 25);
+        $estcMarcs = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
 
         return array(
             'estcMarcs' => $estcMarcs,
@@ -60,8 +62,7 @@ class EstcMarcController extends Controller {
         $q = $request->query->get('q');
         if ($q) {
             $result = $repo->searchQuery($q);
-            $paginator = $this->get('knp_paginator');
-            $titleIds = $paginator->paginate($result, $request->query->getInt('page', 1), 25);
+                $titleIds = $this->paginator->paginate($result, $request->query->getInt('page', 1), 25);
         } else {
             $titleIds = array();
         }

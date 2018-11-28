@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Genre;
 use AppBundle\Form\GenreType;
+use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -17,8 +18,10 @@ use Symfony\Component\HttpFoundation\Request;
  *
  * @Route("/genre")
  */
-class GenreController extends Controller
-{
+class GenreController extends Controller implements PaginatorAwareInterface {
+
+    use PaginatorTrait;
+
     /**
      * Lists all Genre entities.
      *
@@ -31,8 +34,7 @@ class GenreController extends Controller
         $em = $this->getDoctrine()->getManager();
         $dql = 'SELECT e FROM AppBundle:Genre e ORDER BY e.id';
         $query = $em->createQuery($dql);
-        $paginator = $this->get('knp_paginator');
-        $genres = $paginator->paginate($query, $request->query->getint('page', 1), 25);
+        $genres = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
 
         return array(
             'genres' => $genres,
@@ -107,8 +109,7 @@ class GenreController extends Controller
         $dql = 'SELECT t FROM AppBundle:Title t WHERE t.genre = :genre ORDER BY t.title';
         $query = $em->createQuery($dql);
         $query->setParameter('genre', $genre);
-        $paginator = $this->get('knp_paginator');
-        $titles = $paginator->paginate($query, $request->query->getint('page', 1), 25);
+        $titles = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
 
         return array(
             'genre' => $genre,

@@ -2,11 +2,9 @@
 
 namespace AppBundle\Repository;
 
-use AppBundle\Entity\Title;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
-use Doctrine\ORM\Query\Expr\Join;
 
 /**
  * Title Repository
@@ -16,13 +14,6 @@ use Doctrine\ORM\Query\Expr\Join;
  */
 class TitleRepository extends EntityRepository
 {
-    public function indexQuery() {
-        $qb = $this->createQueryBuilder('e');
-        $qb->orderBy('e.pubdate');
-        $qb->addOrderBy('e.title');
-        return $qb->getQuery();
-    }
-
     public function typeaheadQuery($q) {
         $qb = $this->createQueryBuilder('e');
         $qb->andWhere("e.title LIKE :q");

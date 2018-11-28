@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Firmrole;
 use AppBundle\Form\FirmroleType;
+use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -17,7 +18,9 @@ use Symfony\Component\HttpFoundation\Request;
  *
  * @Route("/firmrole")
  */
-class FirmroleController extends Controller {
+class FirmroleController extends Controller  implements PaginatorAwareInterface {
+
+    use PaginatorTrait;
 
     /**
      * Lists all Firmrole entities.
@@ -29,14 +32,16 @@ class FirmroleController extends Controller {
      */
     public function indexAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
-        $dql = 'SELECT e FROM AppBundle:Firmrole e ORDER BY e.id';
+        $dql = 'SELECT e FROM AppBundle:Firmrole e';
         $query = $em->createQuery($dql);
-        $paginator = $this->get('knp_paginator');
-        $firmroles = $paginator->paginate($query, $request->query->getint('page', 1), 25);
+        $firmroles = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25, array(
+            'defaultSortFieldName' => 'e.name',
+            'defaultSortDirection' => 'asc',
+        ));
 
         return array(
             'firmroles' => $firmroles,
-            'repo' => $em->getRepository(FirmRole::class),
+            'repo' => $em->getRepository(Firmrole::class),
         );
     }
 
@@ -107,8 +112,7 @@ class FirmroleController extends Controller {
         $dql = 'SELECT tfr FROM AppBundle:TitleFirmrole tfr WHERE tfr.firmrole = :firmrole';
         $query = $em->createQuery($dql);
         $query->setParameter('firmrole', $firmrole);
-        $paginator = $this->get('knp_paginator');
-        $titleFirmRoles = $paginator->paginate($query, $request->query->getint('page', 1), 25);
+        $titleFirmRoles = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
 
         return array(
             'firmrole' => $firmrole,

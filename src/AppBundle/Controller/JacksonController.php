@@ -2,14 +2,14 @@
 
 namespace AppBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use AppBundle\Entity\Jackson;
+use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use AppBundle\Entity\Jackson;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Jackson controller.
@@ -17,7 +17,9 @@ use AppBundle\Entity\Jackson;
  * @Security("has_role('ROLE_USER')")
  * @Route("/resource/jackson")
  */
-class JacksonController extends Controller {
+class JacksonController extends Controller  implements PaginatorAwareInterface {
+
+    use PaginatorTrait;
 
     /**
      * Lists all Jackson entities.
@@ -35,8 +37,7 @@ class JacksonController extends Controller {
         $qb = $em->createQueryBuilder();
         $qb->select('e')->from(Jackson::class, 'e')->orderBy('e.id', 'ASC');
         $query = $qb->getQuery();
-        $paginator = $this->get('knp_paginator');
-        $jacksons = $paginator->paginate($query, $request->query->getint('page', 1), 25);
+        $jacksons = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
 
         return array(
             'jacksons' => $jacksons,
@@ -73,8 +74,7 @@ class JacksonController extends Controller {
         $q = $request->query->get('q');
         if ($q) {
             $query = $repo->searchQuery($q);
-            $paginator = $this->get('knp_paginator');
-            $jacksons = $paginator->paginate($query, $request->query->getInt('page', 1), 25);
+                $jacksons = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
         } else {
             $jacksons = array();
         }

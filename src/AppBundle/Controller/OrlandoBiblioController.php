@@ -4,12 +4,12 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\OrlandoBiblio;
 use AppBundle\Services\OrlandoManager;
+use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -18,7 +18,9 @@ use Symfony\Component\HttpFoundation\Request;
  * @Security("has_role('ROLE_USER')")
  * @Route("/resource/orlando_biblio")
  */
-class OrlandoBiblioController extends Controller {
+class OrlandoBiblioController extends Controller implements PaginatorAwareInterface {
+
+    use PaginatorTrait;
 
     /**
      * Lists all OrlandoBiblio entities.
@@ -36,8 +38,7 @@ class OrlandoBiblioController extends Controller {
         $qb = $em->createQueryBuilder();
         $qb->select('e')->from(OrlandoBiblio::class, 'e')->orderBy('e.id', 'ASC');
         $query = $qb->getQuery();
-        $paginator = $this->get('knp_paginator');
-        $orlandoBiblios = $paginator->paginate($query, $request->query->getint('page', 1), 25);
+        $orlandoBiblios = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
 
         return array(
             'orlandoBiblios' => $orlandoBiblios,
@@ -60,8 +61,7 @@ class OrlandoBiblioController extends Controller {
         $q = $request->query->get('q');
         if ($q) {
             $query = $repo->searchQuery($q);
-            $paginator = $this->get('knp_paginator');
-            $orlandoBiblios = $paginator->paginate($query, $request->query->getInt('page', 1), 25);
+                $orlandoBiblios = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
         } else {
             $orlandoBiblios = array();
         }

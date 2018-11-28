@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Firm;
 use AppBundle\Form\Firm\FirmSearchType;
 use AppBundle\Form\Firm\FirmType;
+use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -18,7 +19,9 @@ use Symfony\Component\HttpFoundation\Request;
  *
  * @Route("/firm")
  */
-class FirmController extends Controller {
+class FirmController extends Controller  implements PaginatorAwareInterface {
+
+    use PaginatorTrait;
 
     /**
      * Lists all Firm entities.
@@ -35,11 +38,15 @@ class FirmController extends Controller {
             'action' => $this->generateUrl('firm_search'),
         ));
         $em = $this->getDoctrine()->getManager();
-        $dql = 'SELECT e FROM AppBundle:Firm e ORDER BY e.name, e.startDate';
+        $dql = 'SELECT e FROM AppBundle:Firm e';
+        if($request->query->get('sort') === 'g.name+e.name') {
+            $dql = 'SELECT e FROM AppBundle:Firm e INNER JOIN e.city g ORDER BY e.name, e.startDate';
+        }
         $query = $em->createQuery($dql);
-
-        $paginator = $this->get('knp_paginator');
-        $firms = $paginator->paginate($query, $request->query->getint('page', 1), 25);
+        $firms = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25, array(
+            'defaultSortFieldName' => ['e.name', 'e.startDate'],
+            'defaultSortDirection' => 'asc',
+        ));
         return array(
             'search_form' => $form->createView(),
             'firms' => $firms,
@@ -91,8 +98,7 @@ class FirmController extends Controller {
             $submitted = true;
             $repo = $em->getRepository(Firm::class);
             $query = $repo->buildSearchQuery($form->getData());
-            $paginator = $this->get('knp_paginator');
-            $firms = $paginator->paginate($query, $request->query->getint('page', 1), 25);
+                $firms = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
         }
         return array(
             'search_form' => $form->createView(),
@@ -158,9 +164,8 @@ class FirmController extends Controller {
      */
     public function showAction(Request $request, Firm $firm) {
         $em = $this->getDoctrine()->getManager();
-        $paginator = $this->get('knp_paginator');
         $firmRoles = $firm->getTitleFirmroles(true);
-        $pagination = $paginator->paginate($firmRoles, $request->query->getint('page', 1), 25);
+        $pagination = $this->paginator->paginate($firmRoles, $request->query->getInt('page', 1), 25);
         return array(
             'firm' => $firm,
             'pagination' => $pagination,

@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -9,8 +10,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 /**
  * Default controller for the home page.
  */
-class DefaultController extends Controller
-{
+class DefaultController extends Controller implements PaginatorAwareInterface {
+
+    use PaginatorTrait;
 
     /**
      * Home page.

@@ -30,7 +30,7 @@ class TitleFirmType extends AbstractType {
         ));
 
         $builder->add('firmrole', EntityType::class, array(
-            'class' => FirmRole::class,
+            'class' => Firmrole::class,
             'choice_label' => 'name',
             'multiple' => false,
             'expanded' => false,

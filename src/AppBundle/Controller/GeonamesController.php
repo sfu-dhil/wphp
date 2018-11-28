@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Geonames;
+use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -16,8 +17,10 @@ use Symfony\Component\HttpFoundation\Request;
  *
  * @Route("/geonames")
  */
-class GeonamesController extends Controller
-{
+class GeonamesController extends Controller  implements PaginatorAwareInterface {
+
+    use PaginatorTrait;
+
     /**
      * Lists all Geonames entities.
      *
@@ -30,8 +33,7 @@ class GeonamesController extends Controller
         $em = $this->getDoctrine()->getManager();
         $dql = 'SELECT e FROM AppBundle:Geonames e ORDER BY e.geonameid';
         $query = $em->createQuery($dql);
-        $paginator = $this->get('knp_paginator');
-        $geonames = $paginator->paginate($query, $request->query->getint('page', 1), 25);
+        $geonames = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
 
         return array(
             'geonames' => $geonames,
@@ -59,11 +61,11 @@ class GeonamesController extends Controller
                 'text' => $result->getName(),
             ];
         }
-        
+
         return new JsonResponse($data);
     }
-    
-    
+
+
     /**
      * Finds and displays a Geonames entity.
      *
@@ -77,15 +79,14 @@ class GeonamesController extends Controller
         $dql = 'SELECT t FROM AppBundle:Title t WHERE t.locationOfPrinting = :geoname ORDER BY t.title';
         $query = $em->createQuery($dql);
         $query->setParameter('geoname', $geoname);
-        $paginator = $this->get('knp_paginator');
-        $titles = $paginator->paginate($query, $request->query->getint('page', 1), 25);
+        $titles = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
 
         return array(
             'geoname' => $geoname,
             'titles' => $titles,
         );
     }
-    
+
     /**
      * Finds and displays a Geonames entity.
      *
@@ -99,15 +100,14 @@ class GeonamesController extends Controller
         $dql = 'SELECT t FROM AppBundle:Title t WHERE t.locationOfPrinting = :geoname ORDER BY t.title';
         $query = $em->createQuery($dql);
         $query->setParameter('geoname', $geoname);
-        $paginator = $this->get('knp_paginator');
-        $titles = $paginator->paginate($query, $request->query->getint('page', 1), 25);
+        $titles = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
 
         return array(
             'geoname' => $geoname,
             'titles' => $titles,
         );
     }
-    
+
         /**
      * Finds and displays a Geonames entity.
      *
@@ -121,15 +121,14 @@ class GeonamesController extends Controller
         $dql = 'SELECT f FROM AppBundle:Firm f WHERE f.city = :geoname ORDER BY f.name';
         $query = $em->createQuery($dql);
         $query->setParameter('geoname', $geoname);
-        $paginator = $this->get('knp_paginator');
-        $firms = $paginator->paginate($query, $request->query->getint('page', 1), 25);
+        $firms = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
 
         return array(
             'geoname' => $geoname,
             'firms' => $firms,
         );
     }
-    
+
     /**
      * Finds and displays a Geonames entity.
      *
@@ -143,8 +142,7 @@ class GeonamesController extends Controller
         $dql = 'SELECT p FROM AppBundle:Person p WHERE (p.cityOfBirth = :geoname) OR (p.cityOfDeath = :geoname) ORDER BY p.lastName, p.firstName';
         $query = $em->createQuery($dql);
         $query->setParameter('geoname', $geoname);
-        $paginator = $this->get('knp_paginator');
-        $people = $paginator->paginate($query, $request->query->getint('page', 1), 25);
+        $people = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
 
         return array(
             'geoname' => $geoname,

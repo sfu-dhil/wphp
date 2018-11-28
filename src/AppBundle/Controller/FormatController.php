@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Format;
 use AppBundle\Form\FormatType;
+use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -17,7 +18,10 @@ use Symfony\Component\HttpFoundation\Request;
  *
  * @Route("/format")
  */
-class FormatController extends Controller {
+class FormatController extends Controller  implements PaginatorAwareInterface {
+
+    use PaginatorTrait;
+
 
     /**
      * Lists all Format entities.
@@ -31,8 +35,7 @@ class FormatController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $dql = 'SELECT e FROM AppBundle:Format e ORDER BY e.id';
         $query = $em->createQuery($dql);
-        $paginator = $this->get('knp_paginator');
-        $formats = $paginator->paginate($query, $request->query->getint('page', 1), 25);
+        $formats = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
 
         return array(
             'formats' => $formats,
@@ -107,8 +110,7 @@ class FormatController extends Controller {
         $dql = 'SELECT t FROM AppBundle:Title t WHERE t.format = :format ORDER BY t.title';
         $query = $em->createQuery($dql);
         $query->setParameter('format', $format);
-        $paginator = $this->get('knp_paginator');
-        $titles = $paginator->paginate($query, $request->query->getint('page', 1), 25);
+        $titles = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
 
         return array(
             'format' => $format,

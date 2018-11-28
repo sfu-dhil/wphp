@@ -92,8 +92,14 @@
                         </tr>
                         <tr>
                             <th data-toggle="popover"  data-content="Edition as it appears on the title page">Edition</th>
-                            <td>{{ title.edition }} {{ title.editionNumber }}</td>
+                            <td>{{ title.edition }}</td>
                         </tr>
+                        {% if is_granted('ROLE_USER') %}
+                            <tr>
+                                <th data-toggle="popover"  data-content="Edition number for sorting, extracted from the edition field.">Edition Number</th>
+                                <td>{{ title.editionNumber }}</td>
+                            </tr>
+                        {% endif %}
                         <tr>
                             <th data-toggle="popover"  data-content="Date (year) that the work was first published">Date of first publication</th>
                             <td>{{ title.dateOfFirstPublication }}</td>

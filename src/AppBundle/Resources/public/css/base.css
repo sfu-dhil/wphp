@@ -47,6 +47,13 @@ table.tablesorter thead tr .headerSortDown:after {
     content: ' ↓';
 }
 
+th.sorted.asc:after {
+    content: ' ↓';
+}
+
+th.sorted.desc:after {
+    content: ' ↑';
+}
 
 div.tab-content {
     min-height: 200px;
@@ -130,7 +137,7 @@ div.collection-complex > div:not(:last-child) {
 div.embedded-form {
     border: 1px solid lightgrey;
     padding-top: 15px;
-    padding-right: 15px;    
+    padding-right: 15px;
 }
 
 /* Select2 typeaheads are a bit short. */

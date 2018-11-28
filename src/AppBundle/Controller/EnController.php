@@ -2,14 +2,14 @@
 
 namespace AppBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use AppBundle\Entity\En;
+use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use AppBundle\Entity\En;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * En controller.
@@ -17,7 +17,9 @@ use AppBundle\Entity\En;
  * @Security("has_role('ROLE_USER')")
  * @Route("/resource/en")
  */
-class EnController extends Controller {
+class EnController extends Controller  implements PaginatorAwareInterface {
+
+    use PaginatorTrait;
 
     /**
      * Lists all En entities.
@@ -35,8 +37,7 @@ class EnController extends Controller {
         $qb = $em->createQueryBuilder();
         $qb->select('e')->from(En::class, 'e')->orderBy('e.id', 'ASC');
         $query = $qb->getQuery();
-        $paginator = $this->get('knp_paginator');
-        $ens = $paginator->paginate($query, $request->query->getint('page', 1), 25);
+        $ens = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
 
         return array(
             'ens' => $ens,
@@ -58,8 +59,7 @@ class EnController extends Controller {
         $q = $request->query->get('q');
         if ($q) {
             $query = $repo->searchQuery($q);
-            $paginator = $this->get('knp_paginator');
-            $ens = $paginator->paginate($query, $request->query->getInt('page', 1), 25);
+                $ens = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
         } else {
             $ens = array();
         }
