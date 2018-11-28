@@ -132,7 +132,7 @@ task('deploy', [
     'deploy:vendors',
     'dhil:clear:test-cache',
     'dhil:phpunit',
-    'dhil:ckeditor',
+//    'dhil:ckeditor',
     'deploy:assets:install',
     'deploy:cache:clear',
     'deploy:writable',
