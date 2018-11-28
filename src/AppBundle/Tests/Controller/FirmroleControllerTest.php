@@ -2,18 +2,19 @@
 
 namespace AppBundle\Tests\Controller;
 
-use AppBundle\Entity\Firmrole;
 use AppBundle\DataFixtures\ORM\LoadFirmrole;
-use Nines\UtilBundle\Tests\Util\BaseTestCase;
+use AppBundle\DataFixtures\ORM\LoadTitleFirmrole;
+use AppBundle\Entity\Firmrole;
 use Nines\UserBundle\DataFixtures\ORM\LoadUser;
+use Nines\UtilBundle\Tests\Util\BaseTestCase;
 
-class FirmroleControllerTest extends BaseTestCase
-{
+class FirmroleControllerTest extends BaseTestCase {
 
     protected function getFixtures() {
         return [
             LoadUser::class,
-            LoadFirmrole::class
+            LoadFirmrole::class,
+            LoadTitleFirmrole::class,
         ];
     }
 
@@ -30,7 +31,6 @@ class FirmroleControllerTest extends BaseTestCase
             'password' => 'secret',
         ]);
         $crawler = $client->request('GET', '/firmrole/');
-        print "\n" . $client->getResponse()->getContent() . "\n";
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertEquals(0, $crawler->selectLink('New')->count());
     }
@@ -105,6 +105,7 @@ class FirmroleControllerTest extends BaseTestCase
         $this->assertEquals(1, $crawler->selectLink('Edit')->count());
         $this->assertEquals(1, $crawler->selectLink('Delete')->count());
     }
+
     public function testAnonEdit() {
         $client = $this->makeClient();
         $crawler = $client->request('GET', '/firmrole/1/edit');
