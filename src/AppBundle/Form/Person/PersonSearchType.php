@@ -25,11 +25,19 @@ class PersonSearchType extends AbstractType {
         $builder->setMethod('get');
 
         $builder->add('name', TextType::class, array(
-            'label' => 'Name',
+            'label' => 'Search People by Name',
             'required' => false,
             'attr' => array(
                 'help_block' => 'Enter all or part of a personal name'
             ),
+        ));
+
+        $builder->add('id', TextType::class, array(
+            'label' => 'Firm ID',
+            'required' => false,
+            'attr' => array(
+                'help_block' => 'Find this exact person ID.',
+            )
         ));
 
         $builder->add('gender', ChoiceType::class, array(
@@ -68,13 +76,35 @@ class PersonSearchType extends AbstractType {
         $builder->add('birthplace', TextType::class, array(
             'label' => 'Birth Place',
             'required' => false,
-           
+
         ));
 
         $builder->add('deathplace', TextType::class, array(
             'label' => 'Death Place',
             'required' => false,
-            
+
+        ));
+
+        $builder->add('viafUrl', TextType::class, array(
+            'label' => 'VIAF Url',
+            'required' => false,
+            'attr' => array(
+                'help_block' => 'Enter a VIAF URI to check if we have a corresponding record. Enter <kbd>blank</kbd> to find records which do not have VIAF URIs.',
+            ),
+        ));
+        $builder->add('wikipediaUrl', TextType::class, array(
+            'label' => 'Wikipedia URL',
+            'required' => false,
+            'attr' => array(
+                'help_block' => 'Enter a Wikipedia URL to check if we have a corresponding record. Enter <kbd>blank</kbd> to find records which do not have Wikipedia URLs.',
+            ),
+        ));
+        $builder->add('imageUrl', TextType::class, array(
+            'label' => 'Death Place',
+            'required' => false,
+            'attr' => array(
+                'help_block' => 'Enter an image URL to check if we have a corresponding record. Enter <kbd>blank</kbd> to find records which do not have image URLs.',
+            ),
         ));
 
         $builder->add('title_filter', TitleFilterType::class, array(

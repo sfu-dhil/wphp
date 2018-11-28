@@ -10,8 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="firmrole")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\FirmroleRepository")
  */
-class Firmrole
-{
+class Firmrole {
+
     /**
      * @var boolean
      *
@@ -28,7 +28,15 @@ class Firmrole
      */
     private $name;
 
+    /**
+     * @var string
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $description;
 
+    public function __toString() {
+        return $this->name;
+    }
 
     /**
      * Get id
@@ -60,4 +68,27 @@ class Firmrole
     public function getName() {
         return $this->name;
     }
+
+    /**
+     * Set description.
+     *
+     * @param string|null $description
+     *
+     * @return Format
+     */
+    public function setDescription($description = null) {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description.
+     *
+     * @return string|null
+     */
+    public function getDescription() {
+        return $this->description;
+    }
+
 }

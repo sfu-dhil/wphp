@@ -12,8 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="genre")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\GenreRepository")
  */
-class Genre
-{
+class Genre {
+
     /**
      * @var boolean
      *
@@ -31,6 +31,12 @@ class Genre
     private $name;
 
     /**
+     * @var string
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $description;
+
+    /**
      * @var Collection|Title[]
      * @ORM\OneToMany(targetEntity="Title", mappedBy="genre")
      */
@@ -39,8 +45,7 @@ class Genre
     /**
      * Constructor
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->titles = new ArrayCollection();
     }
 
@@ -78,12 +83,11 @@ class Genre
     /**
      * Add title
      *
-     * @param \AppBundle\Entity\Title $title
+     * @param Title $title
      *
      * @return Genre
      */
-    public function addTitle(\AppBundle\Entity\Title $title)
-    {
+    public function addTitle(Title $title) {
         $this->titles[] = $title;
 
         return $this;
@@ -92,20 +96,41 @@ class Genre
     /**
      * Remove title
      *
-     * @param \AppBundle\Entity\Title $title
+     * @param Title $title
      */
-    public function removeTitle(\AppBundle\Entity\Title $title)
-    {
+    public function removeTitle(Title $title) {
         $this->titles->removeElement($title);
     }
 
     /**
      * Get titles
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
-    public function getTitles()
-    {
+    public function getTitles() {
         return $this->titles;
     }
+
+    /**
+     * Set description.
+     *
+     * @param string|null $description
+     *
+     * @return Format
+     */
+    public function setDescription($description = null) {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description.
+     *
+     * @return string|null
+     */
+    public function getDescription() {
+        return $this->description;
+    }
+
 }

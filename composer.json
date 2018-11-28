@@ -23,18 +23,17 @@
         ]
     },
     "require": {
-        "php": ">=7.1.0",
+        "php": ">=7.2.0",
         "beberlei/DoctrineExtensions": "^1.0",
         "doctrine/doctrine-bundle": "^1.8",
         "doctrine/orm": "^2.6",
-        "friendsofsymfony/ckeditor-bundle": "^1.1",
+        "friendsofsymfony/ckeditor-bundle": "^2.0",
         "friendsofsymfony/user-bundle": "^2.0",
         "incenteev/composer-parameter-handler": "^2.0",
         "knplabs/knp-menu-bundle": "^2.2",
         "knplabs/knp-paginator-bundle": "^2.7",
-
         "ninsuo/symfony-collection": "^2.1",
-
+        "ocramius/proxy-manager": "^2.2",
         "sensio/distribution-bundle": "^5.0.19",
         "sensio/framework-extra-bundle": "^5.0.0",
         "symfony/monolog-bundle": "^3.1.0",
@@ -60,6 +59,7 @@
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
+            "@php bin/console ckeditor:install --no-progress-bar --clear=drop",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"

@@ -92,13 +92,13 @@ class En
 
     /**
      * @var string
-     * @ORM\Column(name="price", type="string", length=100)
+     * @ORM\Column(name="price", type="string", length=100, nullable=true)
      */
     private $price;
 
     /**
      * @var string
-     * @ORM\Column(name="contemporary", type="string", length=200)
+     * @ORM\Column(name="contemporary", type="string", length=200, nullable=true)
      */
     private $contemporary;
 

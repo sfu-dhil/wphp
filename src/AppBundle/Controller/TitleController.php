@@ -8,6 +8,7 @@ use AppBundle\Form\Title\TitleType;
 use AppBundle\Services\SourceLinker;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -23,7 +24,9 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
  *
  * @Route("/title")
  */
-class TitleController extends Controller {
+class TitleController extends Controller  implements PaginatorAwareInterface {
+
+    use PaginatorTrait;
 
     /**
      * Lists all Title entities.
@@ -36,16 +39,17 @@ class TitleController extends Controller {
      */
     public function indexAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
+        $dql = 'SELECT e FROM AppBundle:Title e';
+        $query = $em->createQuery($dql);
+
         $form = $this->createForm(TitleSearchType::class, null, array(
             'action' => $this->generateUrl('title_search'),
             'entity_manager' => $em
         ));
-        $q = $request->query->get('q');
-        $form->get('title')->submit($q);
-        $repo = $em->getRepository(Title::class);
-        $query = $repo->buildSearchQuery(array('title' => $q));
-        $paginator = $this->get('knp_paginator');
-        $titles = $paginator->paginate($query, $request->query->getint('page', 1), 25);
+        $titles = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25, array(
+            'defaultSortFieldName' => ['e.title', 'e.pubdate'],
+            'defaultSortDirection' => 'asc',
+        ));
         return array(
             'search_form' => $form->createView(),
             'titles' => $titles,
@@ -180,23 +184,21 @@ class TitleController extends Controller {
         $form = $this->createForm(TitleSearchType::class, null, array('entity_manager' => $em));
         $form->handleRequest($request);
         $titles = array();
+        $submitted = false;
 
         if ($form->isValid()) {
             $data = array_filter($form->getData());
             if (count($data) > 2) {
+                $submitted = true;
                 $repo = $em->getRepository(Title::class);
                 $query = $repo->buildSearchQuery($data);
-                $paginator = $this->get('knp_paginator');
-                $titles = $paginator->paginate($query, $request->query->getint('page', 1), 25);
-            } else {
-                $this->addFlash('warning', 'You must enter a search term.');
+                        $titles = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
             }
-        } else {
-            $this->addFlash('error', $form->getErrors(true, true));
         }
         return array(
             'search_form' => $form->createView(),
             'titles' => $titles,
+            'submitted' => $submitted,
         );
     }
 
@@ -276,12 +278,8 @@ class TitleController extends Controller {
      * @return array
      */
     public function showAction(Title $title, SourceLinker $linker) {
-        $em = $this->getDoctrine()->getManager();
-        $repo = $em->getRepository('AppBundle:Title');
         return array(
             'title' => $title,
-            'next' => $repo->next($title),
-            'previous' => $repo->previous($title),
             'linker' => $linker,
         );
     }
@@ -351,6 +349,27 @@ class TitleController extends Controller {
         return array(
             'title' => $title,
             'edit_form' => $editForm->createView(),
+        );
+    }
+
+    /**
+     * Displays a form to edit an existing Title entity.
+     *
+     * @Route("/{id}/copy", name="title_copy")
+     * @Method({"GET", "POST"})
+     * @Template()
+     * @Security("has_role('ROLE_CONTENT_ADMIN')")
+     * @param Request $request
+     * @param Title $title
+     */
+    public function copyAction(Request $request, Title $title, EntityManagerInterface $em) {
+        $form = $this->createForm(TitleType::class, $title, array(
+            'action' => $this->generateUrl('title_new'),
+        ));
+
+        return array(
+            'title' => $title,
+            'form' => $form->createView(),
         );
     }
 

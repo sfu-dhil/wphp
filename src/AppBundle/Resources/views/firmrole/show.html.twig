@@ -1,8 +1,8 @@
 {% extends 'base.html.twig' %}
 
-{% block pageheader %} 
+{% block pageheader %}
     <h1>Firm role</h1>
-{% endblock %} 
+{% endblock %}
 
 {% block body %}
 
@@ -27,7 +27,39 @@
                 <th>Name</th>
                 <td>{{ firmrole.name }}</td>
             </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ firmrole.description|raw }}</td>
+            </tr>
         </tbody>
     </table>
+
+    <h2>Firms</h2>
+    <table class="table table-bordered table-condensed table-hover table-striped">
+        <thead>
+            <tr>
+                <th>Firm</th>
+                <th>Title</th>
+            </tr>
+        </thead>
+        {% for tfr in titleFirmRoles %}
+            <tr>
+                <td>
+                    <a href="{{path('firm_show', {'id': tfr.firm.id}) }}">
+                        {{ tfr.firm }}
+                    </a>
+                </td>
+                <td>
+                    <a href="{{path('title_show', {'id': tfr.title.id}) }}">
+                        {{ tfr.title }}
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    <div class="navigation">
+        {{ knp_pagination_render(titleFirmRoles) }}
+    </div>
 
 {% endblock %}

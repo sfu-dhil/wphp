@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Source;
 use AppBundle\Form\SourceType;
+use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -17,8 +18,10 @@ use Symfony\Component\HttpFoundation\Request;
  *
  * @Route("/source")
  */
-class SourceController extends Controller
-{
+class SourceController extends Controller implements PaginatorAwareInterface {
+
+    use PaginatorTrait;
+
     /**
      * Lists all Source entities.
      *
@@ -31,11 +34,11 @@ class SourceController extends Controller
         $em = $this->getDoctrine()->getManager();
         $dql = 'SELECT e FROM AppBundle:Source e ORDER BY e.id';
         $query = $em->createQuery($dql);
-        $paginator = $this->get('knp_paginator');
-        $sources = $paginator->paginate($query, $request->query->getint('page', 1), 25);
+        $sources = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
 
         return array(
             'sources' => $sources,
+            'repo' => $em->getRepository(Source::class),
         );
     }
 
@@ -60,9 +63,9 @@ class SourceController extends Controller
                 'text' => $result->getName(),
             ];
         }
-        
+
         return new JsonResponse($data);
-    }   
+    }
     /**
      * Creates a new Source entity.
      *
@@ -105,15 +108,14 @@ class SourceController extends Controller
         $dql = 'SELECT t FROM AppBundle:Title t WHERE t.source = :source OR t.source2 = :source ORDER BY t.title';
         $query = $em->createQuery($dql);
         $query->setParameter('source', $source);
-        $paginator = $this->get('knp_paginator');
-        $titles = $paginator->paginate($query, $request->query->getint('page', 1), 25);
+        $titles = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
 
         return array(
             'source' => $source,
             'titles' => $titles,
         );
     }
-    
+
     /**
      * Displays a form to edit an existing Source entity.
      *
@@ -159,5 +161,5 @@ class SourceController extends Controller
         return $this->redirectToRoute('source_index');
     }
 
-    
+
     }

@@ -62,8 +62,9 @@ services:
     AppBundle\Controller\:
         resource: '../../src/AppBundle/Controller'
         public: true
-        tags: ['controller.service_arguments']
+        tags: ['controller.service_arguments', 'knp_paginator.injectable']
 
     AppBundle\Menu\Builder:
         tags:
         - { name: knp_menu.menu_builder, method: mainMenu, alias: main}
+        - { name: knp_menu.menu_builder, method: searchMenu, alias: search}

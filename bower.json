@@ -16,7 +16,8 @@
     "tablesorter": "*",
     "select2": "^4.0.4",
     "select2-bootstrap-css": "^1.4.6",
-    "symfony-collection": "^2.1.18"
+    "symfony-collection": "^2.1.18",
+    "jQuery.fn.autoResize": "*"
   },
   "resolutions": {
     "select2": "^4.0.4"

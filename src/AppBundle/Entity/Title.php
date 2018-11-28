@@ -14,9 +14,13 @@ use Doctrine\ORM\Mapping as ORM;
  *      @ORM\Index(name="title_title_ft", columns={"title"}, flags={"fulltext"}),
  *      @ORM\Index(name="title_signedauthor_ft", columns={"signed_author"}, flags={"fulltext"}),
  *      @ORM\Index(name="title_pseudonym_idx", columns={"pseudonym"}, flags={"fulltext"}),
- *      @ORM\Index(name="title_imprint_idx", columns={"imprint"}, flags={"fulltext"})
+ *      @ORM\Index(name="title_imprint_idx", columns={"imprint"}, flags={"fulltext"}),
+ *      @ORM\Index(name="title_colophon_idx", columns={"colophon"}, flags={"fulltext"}),
+ *      @ORM\Index(name="title_shelfmark_idx", columns={"shelfmark"}, flags={"fulltext"}),
+ *      @ORM\Index(name="title_price_idx", columns={"price_total"})
  * })
  * @ORM\Entity(repositoryClass="AppBundle\Repository\TitleRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Title
 {
@@ -107,6 +111,13 @@ class Title
     private $edition;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="colophon", type="string", length=200, nullable=true)
+     */
+    private $colophon;
+
+    /**
      * @var boolean
      *
      * @ORM\Column(name="volumes", type="integer", nullable=true)
@@ -119,6 +130,13 @@ class Title
      * @ORM\Column(name="pagination", type="string", length=100, nullable=true)
      */
     private $pagination;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="price_total", type="integer", nullable=false)
+     */
+    private $totalPrice;
 
     /**
      * @var integer
@@ -252,7 +270,7 @@ class Title
      *
      * @ORM\ManyToOne(targetEntity="Source")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="source2", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="source3", referencedColumnName="id")
      * })
      */
     private $source3;
@@ -273,6 +291,7 @@ class Title
      * Constructor
      */
     public function __construct() {
+        $this->totalPrice = 0;
         $this->titleRoles = new ArrayCollection();
         $this->titleFirmroles = new ArrayCollection();
     }
@@ -639,25 +658,31 @@ class Title
     }
 
     /**
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    public function setTotalPrice() {
+        $this->totalPrice = 0;
+
+        if ($this->pricePound && is_int($this->pricePound)) {
+            $this->totalPrice += $this->pricePound * 240;
+        }
+        if ($this->priceShilling && is_int($this->priceShilling)) {
+            $this->totalPrice += $this->priceShilling * 12;
+        }
+        if ($this->pricePence && is_int($this->pricePence)) {
+            $this->totalPrice += $this->pricePence;
+        }
+    }
+
+    /**
      * Get the totalPrice in pence.
      *
      * @return integer
      */
     public function getTotalPrice() {
-        $totalPrice = 0;
-
-        if ($this->pricePound && is_int($this->pricePound)) {
-            $totalPrice += $this->pricePound * 240;
-        }
-
-        if ($this->priceShilling && is_int($this->priceShilling)) {
-            $totalPrice += $this->priceShilling * 12;
-        }
-        if ($this->pricePence && is_int($this->pricePence)) {
-            $totalPrice += $this->pricePence;
-        }
-
-        return $totalPrice;
+        $this->setTotalPrice();
+        return $this->totalPrice;
     }
 
     /**
@@ -1082,5 +1107,29 @@ class Title
     public function getSource3()
     {
         return $this->source3;
+    }
+
+    /**
+     * Set colophon.
+     *
+     * @param string|null $colophon
+     *
+     * @return Title
+     */
+    public function setColophon($colophon = null)
+    {
+        $this->colophon = $colophon;
+
+        return $this;
+    }
+
+    /**
+     * Get colophon.
+     *
+     * @return string|null
+     */
+    public function getColophon()
+    {
+        return $this->colophon;
     }
 }

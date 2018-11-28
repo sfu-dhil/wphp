@@ -5,6 +5,7 @@ namespace AppBundle\Form\Title;
 use AppBundle\Entity\Firm;
 use AppBundle\Entity\Firmrole;
 use AppBundle\Entity\TitleFirmrole;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -25,19 +26,14 @@ class TitleFirmType extends AbstractType {
             'page_limit' => 10,
             'allow_clear' => true,
             'delay' => 250,
-            'language' => 'en',            
+            'language' => 'en',
         ));
-        
-        $builder->add('firmrole', Select2EntityType::class, array(
-            'multiple' => false,
-            'remote_route' => 'firmrole_typeahead',
+
+        $builder->add('firmrole', EntityType::class, array(
             'class' => Firmrole::class,
-            'primary_key' => 'id',
-            'text_property' => 'name',
-            'page_limit' => 10,
-            'allow_clear' => true,
-            'delay' => 250,
-            'language' => 'en',            
+            'choice_label' => 'name',
+            'multiple' => false,
+            'expanded' => false,
         ));
     }
 

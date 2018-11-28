@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Format;
 use AppBundle\Form\FormatType;
+use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -17,7 +18,10 @@ use Symfony\Component\HttpFoundation\Request;
  *
  * @Route("/format")
  */
-class FormatController extends Controller {
+class FormatController extends Controller  implements PaginatorAwareInterface {
+
+    use PaginatorTrait;
+
 
     /**
      * Lists all Format entities.
@@ -31,14 +35,13 @@ class FormatController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $dql = 'SELECT e FROM AppBundle:Format e ORDER BY e.id';
         $query = $em->createQuery($dql);
-        $paginator = $this->get('knp_paginator');
-        $formats = $paginator->paginate($query, $request->query->getint('page', 1), 25);
+        $formats = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
 
         return array(
             'formats' => $formats,
+            'repo' => $em->getRepository(Format::class),
         );
     }
-
 
     /**
      * @param Request $request
@@ -49,21 +52,21 @@ class FormatController extends Controller {
      */
     public function typeaheadAction(Request $request) {
         $q = $request->query->get('q');
-        if( ! $q) {
+        if (!$q) {
             return new JsonResponse([]);
         }
         $em = $this->getDoctrine()->getManager();
         $repo = $em->getRepository(Format::class);
         $data = [];
-        foreach($repo->typeaheadQuery($q) as $result) {
+        foreach ($repo->typeaheadQuery($q) as $result) {
             $data[] = [
                 'id' => $result->getId(),
                 'text' => $result->getName(),
             ];
         }
-        
+
         return new JsonResponse($data);
-    }   
+    }
 
     /**
      * Creates a new Format entity.
@@ -107,8 +110,7 @@ class FormatController extends Controller {
         $dql = 'SELECT t FROM AppBundle:Title t WHERE t.format = :format ORDER BY t.title';
         $query = $em->createQuery($dql);
         $query->setParameter('format', $format);
-        $paginator = $this->get('knp_paginator');
-        $titles = $paginator->paginate($query, $request->query->getint('page', 1), 25);
+        $titles = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
 
         return array(
             'format' => $format,
@@ -160,4 +162,5 @@ class FormatController extends Controller {
 
         return $this->redirectToRoute('format_index');
     }
+
 }

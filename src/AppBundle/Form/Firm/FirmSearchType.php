@@ -20,14 +20,21 @@ class FirmSearchType extends AbstractType {
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder->setMethod('get');
-        $em = $options['entity_manager'];
 
         $builder->add('name', TextType::class, array(
-            'label' => 'Name',
+            'label' => 'Search Firms by Name',
             'required' => false,
             'attr' => array(
                 'help_block' => 'Enter all or part of a firm name'
             ),
+        ));
+
+        $builder->add('id', TextType::class, array(
+            'label' => 'Firm ID',
+            'required' => false,
+            'attr' => array(
+                'help_block' => 'Find this exact firm ID.',
+            )
         ));
 
         $builder->add('address', TextType::class, array(
@@ -45,6 +52,21 @@ class FirmSearchType extends AbstractType {
                 'help_block' => 'Text search for a firm city'
             ),
         ));
+        $builder->add('start', TextType::class, array(
+            'label' => 'Start date',
+            'required' => false,
+            'attr' => array(
+                'help_block' => 'Enter a year (eg <kbd>1795</kbd>) or range of years (<kbd>1790-1800</kbd>) or a partial range of years (<kbd>*-1800</kbd>)',
+            ),
+        ));
+        $builder->add('end', TextType::class, array(
+            'label' => 'End Date',
+            'required' => false,
+            'attr' => array(
+                'help_block' => 'Enter a year (eg <kbd>1795</kbd>) or range of years (<kbd>1790-1800</kbd>) or a partial range of years (<kbd>*-1800</kbd>)',
+            ),
+        ));
+
     }
 
     /**
@@ -54,7 +76,6 @@ class FirmSearchType extends AbstractType {
      */
     public function configureOptions(OptionsResolver $resolver) {
         parent::configureOptions($resolver);
-        $resolver->setRequired(array('entity_manager'));
     }
 
 }

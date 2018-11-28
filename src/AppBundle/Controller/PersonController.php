@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Person;
 use AppBundle\Form\Person\PersonSearchType;
 use AppBundle\Form\Person\PersonType;
+use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -18,7 +19,10 @@ use Symfony\Component\HttpFoundation\Request;
  *
  * @Route("/person")
  */
-class PersonController extends Controller {
+class PersonController extends Controller  implements PaginatorAwareInterface {
+
+    use PaginatorTrait;
+
 
     /**
      * Lists all Person entities.
@@ -35,12 +39,12 @@ class PersonController extends Controller {
             'action' => $this->generateUrl('person_search'),
             'entity_manager' => $em
         ));
-        $q = $request->query->get('q');
-        $form->get('name')->submit($q);
-        $repo = $em->getRepository(Person::class);
-        $query = $repo->buildSearchQuery(array('name' => $q));
-        $paginator = $this->get('knp_paginator');
-        $people = $paginator->paginate($query, $request->query->getint('page', 1), 25);
+        $dql = 'SELECT e FROM AppBundle:Person e';
+        $query = $em->createQuery($dql);
+        $people = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25, array(
+            'defaultSortFieldName' => ['e.lastName', 'e.firstName', 'e.dob'],
+            'defaultSortDirection' => 'asc',
+        ));
         return array(
             'search_form' => $form->createView(),
             'people' => $people,
@@ -86,21 +90,18 @@ class PersonController extends Controller {
         $form = $this->createForm(PersonSearchType::class, null, array('entity_manager' => $em));
         $form->handleRequest($request);
         $persons = array();
+        $submitted = false;
 
         if ($form->isSubmitted()) {
-            if (!$form->isValid()) {
-                $this->addFlash('error', 'Bad form submission: ');
-            } else {
-                $repo = $em->getRepository(Person::class);
-                $query = $repo->buildSearchQuery($form->getData());
-                $paginator = $this->get('knp_paginator');
-                $persons = $paginator->paginate($query, $request->query->getint('page', 1), 25);
-            }
+            $submitted = true;
+            $repo = $em->getRepository(Person::class);
+            $query = $repo->buildSearchQuery($form->getData());
+                $persons = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
         }
         return array(
             'search_form' => $form->createView(),
             'people' => $persons,
-            'form_errors' => $form->getErrors(true, true),
+            'submitted' => $submitted,
         );
     }
 
@@ -180,17 +181,12 @@ class PersonController extends Controller {
      * @return array
      */
     public function showAction(Request $request, Person $person) {
-        $em = $this->getDoctrine()->getManager();
-        $repo = $em->getRepository('AppBundle:Person');
         $titleRoles = $person->getTitleRoles();
-        $paginator = $this->get('knp_paginator');
-        $pagination = $paginator->paginate($titleRoles, $request->query->getint('page', 1), 25);
+        $pagination = $this->paginator->paginate($titleRoles, $request->query->getInt('page', 1), 25);
 
         return array(
             'person' => $person,
             'pagination' => $pagination,
-            'next' => $repo->next($person),
-            'previous' => $repo->previous($person),
         );
     }
 

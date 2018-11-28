@@ -14,7 +14,7 @@ use Doctrine\ORM\Query;
  */
 class FirmRepository extends EntityRepository
 {
-    
+
 
     public function typeaheadQuery($q) {
         $qb = $this->createQueryBuilder('e');
@@ -22,36 +22,6 @@ class FirmRepository extends EntityRepository
         $qb->orderBy('e.name');
         $qb->setParameter('q', "{$q}%");
         return $qb->getQuery()->execute();
-    }
-    
-    /**
-     * Return the next firm by ID.
-     *
-     * @param Firm $firm
-     * @return Firm|Null
-     */
-    public function next(Firm $firm) {
-        $qb = $this->createQueryBuilder('e');
-        $qb->andWhere('e.id > :id');
-        $qb->setParameter('id', $firm->getId());
-        $qb->addOrderBy('e.id', 'ASC');
-        $qb->setMaxResults(1);
-        return $qb->getQuery()->getOneOrNullResult();
-    }
-
-    /**
-     * Return the next firm by ID.
-     *
-     * @param Firm $firm
-     * @return Firm|Null
-     */
-    public function previous(Firm $firm) {
-        $qb = $this->createQueryBuilder('e');
-        $qb->andWhere('e.id < :id');
-        $qb->setParameter('id', $firm->getId());
-        $qb->addOrderBy('e.id', 'DESC');
-        $qb->setMaxResults(1);
-        return $qb->getQuery()->getOneOrNullResult();
     }
 
     /**
@@ -67,6 +37,10 @@ class FirmRepository extends EntityRepository
             $qb->add('where', "MATCH (e.name) AGAINST(:name BOOLEAN) > 0");
             $qb->setParameter('name', $data['name']);
         }
+        if(isset($data['id']) && $data['id']) {
+            $qb->andWhere('e.id = :id');
+            $qb->setParameter('id', $data['id']);
+        }
         if(isset($data['address']) && $data['address']) {
             $qb->andWhere("MATCH (e.streetAddress) AGAINST(:address BOOLEAN) > 0");
             $qb->setParameter('address', $data['address']);
@@ -76,7 +50,6 @@ class FirmRepository extends EntityRepository
             $qb->andWhere('MATCH(c.alternatenames, c.name) AGAINST(:cname BOOLEAN) > 0');
             $qb->setParameter('cname', $data['city']);
         }
-
         if (isset($data['start']) && $data['start']) {
             $m = array();
             if (preg_match('/^\s*[0-9]{4}\s*$/', $data['start'])) {
@@ -104,6 +77,8 @@ class FirmRepository extends EntityRepository
                 $qb->setParameter('toe', $to);
             }
         }
+        $qb->addOrderBy("e.name");
+        $qb->addOrderBy("e.startDate");
         return $qb->getQuery();
     }
 

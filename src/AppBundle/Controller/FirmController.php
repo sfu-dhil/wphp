@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Firm;
 use AppBundle\Form\Firm\FirmSearchType;
 use AppBundle\Form\Firm\FirmType;
+use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -18,7 +19,9 @@ use Symfony\Component\HttpFoundation\Request;
  *
  * @Route("/firm")
  */
-class FirmController extends Controller {
+class FirmController extends Controller  implements PaginatorAwareInterface {
+
+    use PaginatorTrait;
 
     /**
      * Lists all Firm entities.
@@ -31,17 +34,19 @@ class FirmController extends Controller {
      * @return array
      */
     public function indexAction(Request $request) {
-        $em = $this->getDoctrine()->getManager();
         $form = $this->createForm(FirmSearchType::class, null, array(
             'action' => $this->generateUrl('firm_search'),
-            'entity_manager' => $em
         ));
-        $q = $request->query->get('q');
-        $form->get('name')->submit($q);
-        $repo = $em->getRepository(Firm::class);
-        $query = $repo->buildSearchQuery(array('name' => $q));
-        $paginator = $this->get('knp_paginator');
-        $firms = $paginator->paginate($query, $request->query->getint('page', 1), 25);
+        $em = $this->getDoctrine()->getManager();
+        $dql = 'SELECT e FROM AppBundle:Firm e';
+        if($request->query->get('sort') === 'g.name+e.name') {
+            $dql = 'SELECT e FROM AppBundle:Firm e INNER JOIN e.city g ORDER BY e.name, e.startDate';
+        }
+        $query = $em->createQuery($dql);
+        $firms = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25, array(
+            'defaultSortFieldName' => ['e.name', 'e.startDate'],
+            'defaultSortDirection' => 'asc',
+        ));
         return array(
             'search_form' => $form->createView(),
             'firms' => $firms,
@@ -84,19 +89,21 @@ class FirmController extends Controller {
      */
     public function searchAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
-        $form = $this->createForm(FirmSearchType::class, null, array('entity_manager' => $em));
+        $form = $this->createForm(FirmSearchType::class);
         $form->handleRequest($request);
         $firms = array();
+        $submitted = false;
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $submitted = true;
             $repo = $em->getRepository(Firm::class);
             $query = $repo->buildSearchQuery($form->getData());
-            $paginator = $this->get('knp_paginator');
-            $firms = $paginator->paginate($query, $request->query->getint('page', 1), 25);
+                $firms = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
         }
         return array(
             'search_form' => $form->createView(),
             'firms' => $firms,
+            'submitted' => $submitted,
         );
     }
 
@@ -157,14 +164,10 @@ class FirmController extends Controller {
      */
     public function showAction(Request $request, Firm $firm) {
         $em = $this->getDoctrine()->getManager();
-        $repo = $em->getRepository('AppBundle:Firm');
-        $paginator = $this->get('knp_paginator');
         $firmRoles = $firm->getTitleFirmroles(true);
-        $pagination = $paginator->paginate($firmRoles, $request->query->getint('page', 1), 25);
+        $pagination = $this->paginator->paginate($firmRoles, $request->query->getInt('page', 1), 25);
         return array(
             'firm' => $firm,
-            'next' => $repo->next($firm),
-            'previous' => $repo->previous($firm),
             'pagination' => $pagination,
         );
     }

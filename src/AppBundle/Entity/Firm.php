@@ -15,7 +15,7 @@ use Doctrine\ORM\Mapping as ORM;
  *      @ORM\Index(name="firm_address_ft", columns={"street_address"}, flags={"fulltext"}),
  *  },
  *  uniqueConstraints={
- *      @ORM\UniqueConstraint(name="firm_uniq", columns={"name", "city", "start_date", "end_date"})
+ *      @ORM\UniqueConstraint(name="firm_uniq", columns={"name", "city_id", "start_date", "end_date"})
  *  }
  * )
  * @ORM\Entity(repositoryClass="AppBundle\Repository\FirmRepository")
@@ -63,7 +63,7 @@ class Firm
     /**
      * @var boolean
      *
-     * @ORM\Column(name="firm_finalcheck", type="boolean", nullable=false)
+     * @ORM\Column(name="finalcheck", type="boolean", nullable=false)
      */
     private $finalcheck = '0';
 
@@ -72,7 +72,7 @@ class Firm
      *
      * @ORM\ManyToOne(targetEntity="Geonames", inversedBy="firms")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="city", referencedColumnName="geonameid")
+     *   @ORM\JoinColumn(name="city_id", referencedColumnName="geonameid")
      * })
      */
     private $city;

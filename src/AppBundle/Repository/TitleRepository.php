@@ -2,7 +2,6 @@
 
 namespace AppBundle\Repository;
 
-use AppBundle\Entity\Title;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
@@ -15,43 +14,12 @@ use Doctrine\ORM\Query;
  */
 class TitleRepository extends EntityRepository
 {
-
     public function typeaheadQuery($q) {
         $qb = $this->createQueryBuilder('e');
         $qb->andWhere("e.title LIKE :q");
         $qb->orderBy('e.title');
         $qb->setParameter('q', "%{$q}%");
         return $qb->getQuery()->execute();
-    }
-
-    /**
-     * Return the next title by ID.
-     *
-     * @param Title $title
-     * @return Title|Null
-     */
-    public function next(Title $title) {
-        $qb = $this->createQueryBuilder('e');
-        $qb->andWhere('e.id > :id');
-        $qb->setParameter('id', $title->getId());
-        $qb->addOrderBy('e.id', 'ASC');
-        $qb->setMaxResults(1);
-        return $qb->getQuery()->getOneOrNullResult();
-    }
-
-    /**
-     * Return the next title by ID.
-     *
-     * @param Title $title
-     * @return Title|Null
-     */
-    public function previous(Title $title) {
-        $qb = $this->createQueryBuilder('e');
-        $qb->andWhere('e.id < :id');
-        $qb->setParameter('id', $title->getId());
-        $qb->addOrderBy('e.id', 'DESC');
-        $qb->setMaxResults(1);
-        return $qb->getQuery()->getOneOrNullResult();
     }
 
     /**
@@ -62,13 +30,31 @@ class TitleRepository extends EntityRepository
      */
     public function buildSearchQuery($data = array()) {
         $qb = $this->createQueryBuilder('e');
+        $qb->orderBy('e.pubdate');
+        $qb->addOrderBy('e.title');
         if (isset($data['title']) && $data['title']) {
             $qb->andWhere("MATCH (e.title) AGAINST (:title BOOLEAN) > 0");
             $qb->setParameter('title', $data['title']);
         }
+        if(isset($data['id']) && $data['id']) {
+            $qb->andWhere('e.id = :id');
+            $qb->setParameter('id', $data['id']);
+        }
         if(isset($data['editionNumber']) && $data['editionNumber']) {
             $qb->andWhere('e.editionNumber = :editionNumber');
             $qb->setParameter('editionNumber', $data['editionNumber']);
+        }
+        if(isset($data['volumes']) && $data['volumes']) {
+            $qb->andWhere('e.volumes = :volumes');
+            $qb->setParameter('volumes', $data['volumes']);
+        }
+        if(isset($data['sizeW']) && $data['sizeW']) {
+            $qb->andWhere('e.sizeW = :sizeW');
+            $qb->setParameter('sizeW', $data['sizeW']);
+        }
+        if(isset($data['sizeL']) && $data['sizeL']) {
+            $qb->andWhere('e.sizeL = :sizeL');
+            $qb->setParameter('sizeL', $data['sizeL']);
         }
         if(isset($data['checked'])) {
             $qb->andWhere('e.checked = :checked');
@@ -100,6 +86,27 @@ class TitleRepository extends EntityRepository
             $qb->andWhere('e.format IN (:formats)');
             $qb->setParameter('formats', $data['format']);
         }
+        if($data['price_filter']['price_pound'] !== null ||
+            $data['price_filter']['price_shilling'] !== null ||
+            $data['price_filter']['price_pence'] !== null) {
+            $total = $data['price_filter']['price_pound'] * 240
+                + $data['price_filter']['price_shilling'] * 12
+                + $data['price_filter']['price_pence'];
+            $operator = '<';
+            switch($data['price_filter']['price_comparison']) {
+                case 'eg':
+                    $operator = '=';
+                    break;
+                case 'lt':
+                    $operator = '<';
+                    break;
+                case 'gt';
+                    $operator = '>';
+            }
+            $qb->andWhere("e.totalPrice {$operator} :total");
+            $qb->andWhere('e.totalPrice > 0');
+            $qb->setParameter('total', $total);
+        }
         if (isset($data['genre']) && is_array($data['genre']) && count($data['genre'])) {
             $qb->andWhere('e.genre IN (:genres)');
             $qb->setParameter('genres', $data['genre']);
@@ -112,24 +119,17 @@ class TitleRepository extends EntityRepository
             $qb->andWhere("MATCH (e.imprint) AGAINST(:imprint BOOLEAN) > 0");
             $qb->setParameter('imprint', $data['imprint']);
         }
+        if (isset($data['colophon']) && $data['colophon']) {
+            $qb->andWhere("MATCH (e.colophon) AGAINST(:colophon BOOLEAN) > 0");
+            $qb->setParameter('colophon', $data['colophon']);
+        }
         if (isset($data['pseudonym']) && $data['pseudonym']) {
             $qb->andWhere("MATCH (e.pseudonym) AGAINST (:pseudonym BOOLEAN) > 0");
             $qb->setParameter('pseudonym', $data['pseudonym']);
         }
-        if (isset($data['orderby']) && $data['orderby']) {
-            $dir = 'ASC';
-            if (isset($data['orderdir']) && preg_match('/^(?:asc|desc)$/i', $data['orderdir'])) {
-                $dir = $data['orderdir'];
-            }
-            switch ($data['orderby']) {
-                case 'pubdate':
-                    $qb->orderBy('e.pubdate', $dir);
-                    break;
-                case 'title':
-                default:
-                    $qb->orderBy('e.title', $dir);
-                    break;
-            }
+        if (isset($data['shelfmark']) && $data['shelfmark']) {
+            $qb->andWhere("MATCH (e.shelfmark) AGAINST (:shelfmark BOOLEAN) > 0");
+            $qb->setParameter('shelfmark', $data['shelfmark']);
         }
 
         // only add the title filter query parts if the subform has data.

@@ -4,13 +4,13 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\OsborneMarc;
 use AppBundle\Services\MarcManager;
+use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -19,7 +19,9 @@ use Symfony\Component\HttpFoundation\Request;
  * @Security("has_role('ROLE_USER')")
  * @Route("/resource/osborne")
  */
-class OsborneMarcController extends Controller {
+class OsborneMarcController extends Controller  implements PaginatorAwareInterface {
+
+    use PaginatorTrait;
 
     /**
      * Lists all OsborneMarc entities.
@@ -36,8 +38,7 @@ class OsborneMarcController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $repo = $em->getRepository(OsborneMarc::class);
         $query = $repo->indexQuery();
-        $paginator = $this->get('knp_paginator');
-        $osborneMarcs = $paginator->paginate($query, $request->query->getint('page', 1), 25);
+        $osborneMarcs = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
 
         return array(
             'osborneMarcs' => $osborneMarcs,
@@ -60,8 +61,7 @@ class OsborneMarcController extends Controller {
         $q = $request->query->get('q');
         if ($q) {
             $result = $repo->searchQuery($q);
-            $paginator = $this->get('knp_paginator');
-            $titleIds = $paginator->paginate($result, $request->query->getInt('page', 1), 25);
+                $titleIds = $this->paginator->paginate($result, $request->query->getInt('page', 1), 25);
         } else {
             $titleIds = array();
         }
