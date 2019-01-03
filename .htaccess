@@ -1,0 +1,1 @@
+RedirectMatch "/wphp/?$" "/wphp/web/app_dev.php"
