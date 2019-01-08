@@ -65,7 +65,9 @@
         <div class="container">
             <div class='col-md-12'>
                 <p><b>Women's Print History Project</b><br>
-                    <a href="{{ path('feedback_new') }}">Feedback</a> | <a href="{{ asset('docs/sphinx/index.html') }}">Documentation</a> |
+                    <a href="{{ path('feedback_new') }}">Feedback</a> |
+                    <a href="{{ asset('docs/sphinx/index.html') }}">Documentation</a> |
+                    <a href="{{ path('privacy') }}">Privacy</a> |
                     <a href="https://github.com/sfu-dhil/wphp">GitHub</a>
                 </p>
             </div>
@@ -78,25 +80,31 @@
     {% block javascripts %}
     {% endblock %}
 
-    <!-- Piwik -->
-    <script type="text/javascript">
-        var _paq = _paq || [];
-        _paq.push(['trackPageView']);
-        _paq.push(['enableLinkTracking']);
-        (function () {
-            var u = "//piwik.lib.sfu.ca/piwik/";
-            _paq.push(['setTrackerUrl', u + 'piwik.php']);
-            _paq.push(['setSiteId', '32']);
-            var d = document, g = d.createElement('script'), s = d.getElementsByTagName('script')[0];
-            g.type = 'text/javascript';
-            g.async = true;
-            g.defer = true;
-            g.src = u + 'piwik.js';
-            s.parentNode.insertBefore(g, s);
-        })();
-    </script>
-    <noscript><p><img src="//piwik.lib.sfu.ca/piwik/piwik.php?idsite=32" style="border:0;" alt="" /></p></noscript>
-    <!-- End Piwik Code -->
+        {% if piwik_enabled %}
+        <!-- Piwik -->
+        <script type="text/javascript">
+            var _paq = _paq || [];
+            _paq.push(["setDomains", ["{{ piwik_domain }}"]]);
+            _paq.push(["setDoNotTrack", true]);
+            _paq.push(['trackPageView']);
+            _paq.push(['enableLinkTracking']);
+            (function () {
+                var u = "{{ piwik_url }}";
+                _paq.push(['setTrackerUrl', u + 'piwik.php']);
+                _paq.push(['setSiteId', '{{ piwik_siteid }}']);
+                var d = document, g = d.createElement('script'), s = d.getElementsByTagName('script')[0];
+                g.type = 'text/javascript';
+                g.async = true;
+                g.defer = true;
+                g.src = u + 'piwik.js';
+                s.parentNode.insertBefore(g, s);
+            })();
+        </script>
+        <noscript>
+        <p><img src="{{ piwik_url }}piwik.php?idsite={{ piwik_siteid }}" style="border:0;" alt="" /></p>
+        </noscript>
+        <!-- End Piwik Code -->
+        {% endif %}
 
-</body>
+    </body>
 </html>
