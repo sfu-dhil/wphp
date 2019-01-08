@@ -23,6 +23,10 @@ services:
         resource: '../../src/Nines/FeedbackBundle/*'
         exclude: '../../src/Nines/FeedbackBundle/{Entity,Repository,Resources,Tests}'
 
+    Nines\FeedbackBundle\Menu\Builder:
+        tags:
+        - { name: knp_menu.menu_builder, method: navMenu, alias: feedback}
+
     Nines\FeedbackBundle\Services\NotifierService:
         arguments:
             $sender: '%nines_feedback.sender%'

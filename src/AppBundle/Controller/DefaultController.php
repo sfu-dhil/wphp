@@ -6,6 +6,7 @@ use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Default controller for the home page.
@@ -39,5 +40,13 @@ class DefaultController extends Controller implements PaginatorAwareInterface {
             'persons' => $persons,
             'firms' => $firms,
         ];
+    }
+
+    /**
+     * @Route("/privacy", name="privacy")
+     * @Template()
+     */
+    public function privacyAction(Request $request) {
+
     }
 }
