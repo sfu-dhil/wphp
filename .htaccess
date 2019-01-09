@@ -11,5 +11,5 @@
   RewriteCond %{REQUEST_URI}::$1 ^(/.+)/(.*)::\2$
   RewriteRule ^(.*) - [E=BASE:%1]
 
-  RewriteRule ^$ %{ENV:BASE}/web/app_dev.php [R,L]
+  RewriteRule ^$ /wphp/web/app_dev.php [R,L]
 </IfModule>

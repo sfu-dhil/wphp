@@ -96,10 +96,10 @@ class Builder implements ContainerAwareInterface
         ));
 
         if ($this->hasRole('ROLE_USER')) {
-            $browse->addChild('divider', array(
+            $divider = $browse->addChild('divider', array(
                 'label' => '',
             ));
-            $browse['divider']->setAttributes(array(
+            $divider->setAttributes(array(
                 'role' => 'separator',
                 'class' => 'divider',
             ));

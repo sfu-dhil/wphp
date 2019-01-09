@@ -14,45 +14,6 @@ services:
         # if you need to do this, you can override this setting on individual services
         public: false
 
-    twig.extension.text:
-        class: Twig_Extensions_Extension_Text
-        tags:
-        - { name: twig.extension }
-
-    Nines\FeedbackBundle\:
-        resource: '../../src/Nines/FeedbackBundle/*'
-        exclude: '../../src/Nines/FeedbackBundle/{Entity,Repository,Resources,Tests}'
-
-    Nines\FeedbackBundle\Menu\Builder:
-        tags:
-        - { name: knp_menu.menu_builder, method: navMenu, alias: feedback}
-
-    Nines\FeedbackBundle\Services\NotifierService:
-        arguments:
-            $sender: '%nines_feedback.sender%'
-            $recipient: '%nines_feedback.recipient%'
-            $subject: '%nines_feedback.subject%'
-            $service: '@feedback.comment'
-
-    Nines\UserBundle\:
-        resource: '../../src/Nines/UserBundle/*'
-        # you can exclude directories or files
-        # but if a service is unused, it's removed anyway
-        exclude: '../../src/Nines/UserBundle/{Entity,Repository,Resources,Tests}'
-
-    Nines\UtilBundle\:
-        resource: '../../src/Nines/UtilBundle/*'
-        exclude: '../../src/Nines/UtilBundle/{Entity,Repository,Resources,Tests}'
-
-    Nines\UserBundle\Menu\Builder:
-        tags:
-        - { name: knp_menu.menu_builder, method: userNavMenu, alias: user}
-
-    Nines\BlogBundle\Menu\Builder:
-        tags:
-        - { name: knp_menu.menu_builder, method: postNavMenu, alias: posts}
-        - { name: knp_menu.menu_builder, method: pageNavMenu, alias: pages}
-
     # makes classes in src/AppBundle available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
     AppBundle\:
