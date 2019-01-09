@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Estc Search{% endblock %}
+{% block title %}ESTC Marc Record Search{% endblock %}
 
 {% block pageheader %}
-    <h1>Estc Search</h1>
+    <h1>ESTC Marc Record Search</h1>
     {% if estcMarcs|length %}
         <p class="count">
             Displaying {{ estcMarcs|length }} search results of {{ titleIds.getTotalItemCount }} total.
@@ -15,7 +15,7 @@
 
     <form method="get" class="form-horizontal" action="{{ path('resource_estc_search') }}">
         <fieldset>
-            <legend>Search the English Novel records</legend>
+            <legend>Search the ESTC Marc records</legend>
             <div class="form-group">
                 <label class='col-sm-2 control-label' for='q'>Search term</label>
                 <div class='input-group'>
@@ -36,7 +36,7 @@
         <table class="table table-bordered table-condensed table-hover table-striped">
             <thead>
                 <tr>
-                    <th>En Id</th>
+                    <th> Id</th>
                     <th>Author</th>
                     <th>Title</th>
                 </tr>

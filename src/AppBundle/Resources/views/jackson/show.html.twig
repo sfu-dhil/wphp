@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Jackson{% endblock %}
+{% block title %}Jackson Bibliography Details{% endblock %}
 
 {% block pageheader %}
-    <h1>Jackson Details</h1>
+    <h1>Jackson Bibliography Details</h1>
 {% endblock %}
 
 {% block body %}
@@ -17,11 +17,11 @@
     <table class="table table-bordered table-condensed table-hover table-striped">
         <tbody>
             <tr>
-                <th>Jbid</th>
+                <th>Jackson Id</th>
                 <td>{{ jackson.jbid }}</td>
             </tr>
             <tr>
-                <th>Detailedentry</th>
+                <th>Detailed Entry</th>
                 <td>{{ jackson.detailedEntry }}</td>
             </tr>
             <tr>
@@ -37,7 +37,7 @@
                 <td>{{ jackson.editor }}</td>
             </tr>
             <tr>
-                <th>Pubplace</th>
+                <th>Publication Place</th>
                 <td>{{ jackson.pubplace }}</td>
             </tr>
             <tr>
@@ -45,7 +45,7 @@
                 <td>{{ jackson.publisher }}</td>
             </tr>
             <tr>
-                <th>Pubdate</th>
+                <th>Publication Date</th>
                 <td>{{ jackson.pubdate }}</td>
             </tr>
             <tr>
@@ -81,7 +81,7 @@
                 <td>{{ jackson.comment }}</td>
             </tr>
             <tr>
-                <th>Examnote</th>
+                <th>Exam Note</th>
                 <td>{{ jackson.examnote }}</td>
             </tr>
         </tbody>

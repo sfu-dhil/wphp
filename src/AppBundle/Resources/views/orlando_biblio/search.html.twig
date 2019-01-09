@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}OrlandoBiblio List{% endblock %}
+{% block title %}Search Orlando Bibliography{% endblock %}
 
 {% block pageheader %}
-    <h1>OrlandoBiblio List</h1>
+    <h1>Search Orlando Bibliography</h1>
     {% if orlandoBiblios|length %}
     <p class="count">
-        Displaying {{ orlandoBiblios|length }} orlandoBiblios of {{ orlandoBiblios.getTotalItemCount }} total.
+        Displaying {{ orlandoBiblios|length }} Orlando Bibliography records of {{ orlandoBiblios.getTotalItemCount }} total.
     </p>
     {% endif %}
 {% endblock %}
@@ -15,7 +15,7 @@
 
     <form method="get" class="form-horizontal" action="{{ path('resource_orlando_biblio_search') }}">
         <fieldset>
-            <legend>Search the English Novel records</legend>
+            <legend>Search the Orlando Bibliography records</legend>
             <div class="form-group">
                 <label class='col-sm-2 control-label' for='q'>Search term</label>
                 <div class='input-group'>
@@ -36,7 +36,7 @@
     <table class="table table-bordered table-condensed table-hover table-striped">
         <thead>
         <tr>
-            <th>Bi Id</th>
+            <th>Orlando Id</th>
             <th>Author</th>
             <th>Analytic Standard Title</th>
             <th>Monographic Standard Title</th>

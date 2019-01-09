@@ -1,12 +1,12 @@
 <table class="table table-bordered table-condensed table-hover table-striped">
     <thead>
         <tr>
-            {% include('AppBundle:partials:sortable.html.twig') with {'pagination': firms, 'header': 'Id', 'field': 'e.id'} %}
-            {% include('AppBundle:partials:sortable.html.twig') with {'pagination': firms, 'header': 'Name', 'field': ['e.name','e.startDate']} %}
+            <th>Id</th>
+            <th>Name</th>
             <th>Street address</th>
-            {% include('AppBundle:partials:sortable.html.twig') with {'pagination': firms, 'header': 'City', 'field': ['g.name', 'e.name']} %}
-            {% include('AppBundle:partials:sortable.html.twig') with {'pagination': firms, 'header': 'Start date', 'field': ['e.startDate', 'e.name']} %}
-            {% include('AppBundle:partials:sortable.html.twig') with {'pagination': firms, 'header': 'End date', 'field': ['e.endDate', 'e.name']} %}
+            <th>City</th>
+            <th>Start date</th>
+            <th>End date</th>
         </tr>
     </thead>
     <tbody>
@@ -18,7 +18,7 @@
                         {{ firm.name }}
                     </a>
                 </td>
-                <td>{{ firm.streetAddress }}</td>
+                <td>{{ firm.streetAddress }}</td>    
                 <td>{{ firm.city }}</td>
                 <td>{% if firm.startDate %}{{ firm.startDate|date('Y') }}{% endif %}</td>
                 <td>{% if firm.endDate %}{{ firm.endDate|date('Y') }}{% endif %}</td>

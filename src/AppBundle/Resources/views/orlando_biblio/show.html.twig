@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}OrlandoBiblio{% endblock %}
+{% block title %}Orlando Bibliography Details{% endblock %}
 
 {% block pageheader %}
-    <h1>OrlandoBiblio Details</h1>
+    <h1>Orlando Bibliography Details</h1>
 {% endblock %}
 
 {% block body %}
@@ -17,7 +17,7 @@
     <table class="table table-bordered table-condensed table-hover table-striped">
         <tbody>
             <tr>
-                <th>Bi Id</th>
+                <th>Orlando Id</th>
                 <td>{{ orlandoBiblio.orlandoId }}</td>
             </tr>
             <tr>
@@ -195,11 +195,11 @@
                 <td>{{ orlandoBiblio.locationCallNo }}</td>
             </tr>
             <tr>
-                <th>Scholarnotes</th>
+                <th>Scholar Notes</th>
                 <td>{{ orlandoBiblio.scholarnotes }}</td>
             </tr>
             <tr>
-                <th>Researchnotes</th>
+                <th>Research Notes</th>
                 <td>{{ orlandoBiblio.researchnotes }}</td>
             </tr>
         </tbody>

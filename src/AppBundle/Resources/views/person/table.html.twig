@@ -1,12 +1,12 @@
 <table class="table table-bordered table-condensed table-hover table-striped">
     <thead>
         <tr>
-            {% include('AppBundle:partials:sortable.html.twig') with {'pagination': people, 'header': 'Id', 'field': 'e.id'} %}
-            {% include('AppBundle:partials:sortable.html.twig') with {'pagination': people, 'header': 'Last name', 'field': ['e.lastName', 'e.firstName', 'e.dob']} %}
+            <th>Id</th>
+            <th>Last name</th>
             <th>First name</th>
             <th>Gender</th>
-            {% include('AppBundle:partials:sortable.html.twig') with {'pagination': people, 'header': 'Date of birth', 'field': 'e.dob'} %}
-            {% include('AppBundle:partials:sortable.html.twig') with {'pagination': people, 'header': 'Date of death', 'field': 'e.dod'} %}
+            <th>Date of birth</th>
+            <th>Date of death</th>
         </tr>
     </thead>
     <tbody>

@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}En List{% endblock %}
+{% block title %}Jackson Bibliography List{% endblock %}
 
 {% block pageheader %}
-    <h1>Jackson Search</h1>
+    <h1>Jackson Bibliography List</h1>
     {% if jacksons|length %}
         <p class="count">
-            Displaying {{ jacksons|length }} ens of {{ jacksons.getTotalItemCount }} total.
+            Displaying {{ jacksons|length }} entries of {{ jacksons.getTotalItemCount }} total.
         </p>
     {% endif %}
 {% endblock %}
@@ -15,7 +15,7 @@
 
     <form method="get" class="form-horizontal" action="{{ path('resource_jackson_search') }}">
         <fieldset>
-            <legend>Search the English Novel records</legend>
+            <legend>Search the Jackson Bibliography records</legend>
             <div class="form-group">
                 <label class='col-sm-2 control-label' for='q'>Search term</label>
                 <div class='input-group'>
@@ -36,7 +36,7 @@
         <table class="table table-bordered table-condensed table-hover table-striped">
             <thead>
                 <tr>
-                    <th>Id</th>
+                    <th>Jackson Id</th>
                     <th>Author</th>
                     <th>Title</th>
                 </tr>
