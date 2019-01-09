@@ -22,11 +22,6 @@ task('dhil:precheck', function(){
     }
 });
 
-task('dhil:ckeditor', function(){
-    $output = run('{{bin/php}} {{bin/console}} ckeditor:install');
-    writeln($output);
-});
-
 option('skip-tests', null, InputOption::VALUE_NONE, 'Skip testing. Probably a bad idea.');
 task('dhil:phpunit', function() {
 	if(input()->getOption('skip-tests')) {
@@ -141,7 +136,6 @@ task('deploy', [
     'deploy:vendors',
     'dhil:clear:test-cache',
     'dhil:phpunit',
-    'dhil:ckeditor',
     'deploy:assets:install',
     'deploy:cache:clear',
     'deploy:writable',
