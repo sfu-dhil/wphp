@@ -53,7 +53,8 @@ twig:
         '%kernel.root_dir%/../src/Nines/UtilBundle/Resources/views': NinesUtilBundle
     exception_controller:  NinesUtilBundle:Error:showException
     globals:
-        comment_service: "@feedback.comment"
+        comment_service: '@Nines\FeedbackBundle\Services\CommentService'
+        text_service: '@Nines\UtilBundle\Services\Text'
         title_index_authors: "%wphp.title_index_authors%"
         piwik_enabled: '%dhil.piwik_enabled%'
         piwik_url: '%dhil.piwik_url%'
