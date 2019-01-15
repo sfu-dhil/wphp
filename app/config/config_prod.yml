@@ -8,14 +8,14 @@ imports:
 #        query_cache_driver: apc
 
 monolog:
+    use_microseconds: false
     handlers:
         main:
-            type:         fingers_crossed
-            action_level: error
-            handler:      nested
-        nested:
-            type:  stream
-            path:  "%kernel.logs_dir%/%kernel.environment%.log"
+            type: rotating_file
+            max_files: 30
+            path: "%kernel.logs_dir%/%kernel.environment%.log"
             level: warning
+            channels: ['!event', '!doctrine', '!console', '!translation']
         console:
-            type:  console
+            type:   console
+            channels: ['!event', '!doctrine', '!console', '!translation']

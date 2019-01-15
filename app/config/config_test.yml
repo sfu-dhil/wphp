@@ -1,25 +1,9 @@
 imports:
     - { resource: config_dev.yml }
-    - { resource: parameters.yml }
 
 liip_functional_test:
     cache_db:
         sqlite: liip_functional_test.services_database_backup.sqlite
-
-framework:
-    test: ~
-    session:
-        storage_id: session.storage.mock_file
-    profiler:
-        enabled: false
-        collect: false
-
-web_profiler:
-    toolbar: false
-    intercept_redirects: false
-
-swiftmailer:
-    disable_delivery: true
 
 doctrine:
     dbal:
@@ -27,13 +11,40 @@ doctrine:
         connections:
             default:
                 driver:   pdo_sqlite
-                path:     "%kernel.cache_dir%/test.sqlite"
-                charset:  UTF8
-                
+                path:     %kernel.cache_dir%/test.db
+                logging:  false
+                profiling: false
+
 security:
-    firewalls:
-        main:
-            pattern: ^/
-            http_basic: ~
     encoders:
         FOS\UserBundle\Model\UserInterface: plaintext
+    firewalls:
+        main:
+            http_basic: ~
+
+framework:
+    test: ~
+    session:
+        storage_id: session.storage.mock_file
+    profiler:
+        collect: false
+
+monolog:
+    use_microseconds: false
+    handlers:
+        main:
+            type: rotating_file
+            max_files: 10
+            path: "%kernel.logs_dir%/%kernel.environment%.log"
+            level: warning
+            channels: ['!event', '!doctrine', '!console', '!translation']
+        console:
+            type:   console
+            channels: ['!event', '!doctrine', '!console', '!translation']
+
+web_profiler:
+    toolbar: false
+    intercept_redirects: false
+
+swiftmailer:
+    disable_delivery: true
