@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="google" content="notranslate"/>
+        <title>Internal Server Error</title>
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
+        <link rel="stylesheet" href="{{ asset('bower/bootstrap/dist/css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('bower/bootstrap/dist/css/bootstrap-theme.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('bundles/app/css/base.css') }}">
+        <script src="{{ asset('bower/jquery/dist/jquery.min.js') }}"></script>
+    </head>
+    <body>
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                            aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div id="navbar" class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="first">
+                            <a href="/sen">Home</a>
+                        </li>
+                    </ul>
+                </div><!--/.nav-collapse -->
+            </div>
+        </nav>
+        <div class="container">
+
+            <h1>Internal Server Error</h1>
+
+            <p>The page you have requested has caused an internal error. Please
+                <a href="mailto:dhil@sfu.ca">contact the DHIL</a> and include
+                the details below.
+            </p>
+
+            <dl class="dl-horizontal">
+                <dt>Date</dt>
+                <dd>{{ "now"|date('c') }}</dd>
+                <dt>IP</dt>
+                <dd>{{ app.request.getClientIps()|join(';') }}</dd>
+                <dt>URL</dt>
+                <dd>{{ app.request.getUri() }}</dd>
+                <dt>Class</dt>
+                <dd>{{ exception.getStatusCode() }} - {{ exception.class }}</dd>
+                <dt>Message</dt>
+                <dd>{{ exception.message }}</dd>
+            </dl>
+
+            <p><button class="btn btn-default" onclick="window.history.go(-1);">Back</button></p>
+
+        </div>
+
+        <footer class="footer">
+            <div class="container">
+                <p>
+                    <b>Reconstructing Early Circus</b>
+                    <br/>
+                    <a href="docs/build/html/index.html">Documentation</a> |
+                    <a href="{{ path('privacy') }}">Privacy</a> |
+                    <a href="https://github.com/sfu-dhil/sen">GitHub</a>
+                </p>
+            </div>
+        </footer>
+
+        <script src="{{ asset('bower/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('bundles/app/js/form.js') }}"></script>
+
+    </body>
+</html>
