@@ -94,14 +94,15 @@ class TitleRepository extends EntityRepository
                 + $data['price_filter']['price_pence'];
             $operator = '<';
             switch($data['price_filter']['price_comparison']) {
-                case 'eg':
+                case "eq":
                     $operator = '=';
                     break;
-                case 'lt':
+                case "lt":
                     $operator = '<';
                     break;
-                case 'gt';
+                case "gt";
                     $operator = '>';
+                    break;
             }
             $qb->andWhere("e.totalPrice {$operator} :total");
             $qb->andWhere('e.totalPrice > 0');
