@@ -185,7 +185,7 @@ class TitleSearchType extends AbstractType {
         ));
 
         $builder->add('finalcheck', ChoiceType::class, array(
-            'label' => 'Double Checked',
+            'label' => 'Verified',
             'choices' => array(
                 'Yes' => 'Y',
                 'No' => 'N',
@@ -200,11 +200,21 @@ class TitleSearchType extends AbstractType {
             'data' => null,
         ));
 
-
-
-
-
-
+        $builder->add('finalattempt', ChoiceType::class, array(
+            'label' => 'Attempted Verification',
+            'choices' => array(
+                'Yes' => 'Y',
+                'No' => 'N',
+            ),
+            'attr' => array(
+                'help_block' => 'Limit results to those that someone has attempted to verify'
+            ),
+            'required' => false,
+            'expanded' => true,
+            'multiple' => false,
+            'empty_data' => null,
+            'data' => null,
+        ));
 
     }
 

@@ -64,6 +64,10 @@ class TitleRepository extends EntityRepository
             $qb->andWhere('e.finalcheck = :finalcheck');
             $qb->setParameter('finalcheck', $data['finalcheck'] == 'Y');
         }
+        if(isset($data['finalattempt'])) {
+            $qb->andWhere('e.finalattempt = :finalattempt');
+            $qb->setParameter('finalattempt', $data['finalattempt'] == 'Y');
+        }
         if (isset($data['pubdate']) && $data['pubdate']) {
             $m = array();
             if (preg_match('/^\s*[0-9]{4}\s*$/', $data['pubdate'])) {

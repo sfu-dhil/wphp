@@ -306,7 +306,7 @@ class TitleType extends AbstractType {
             ),
         ));
         $builder->add('finalcheck', ChoiceType::class, array(
-            'label' => 'Attempted verification',
+            'label' => 'Verified',
             'expanded' => true,
             'multiple' => false,
             'choices' => array(
@@ -320,7 +320,7 @@ class TitleType extends AbstractType {
             ),
         ));
         $builder->add('finalattempt', ChoiceType::class, array(
-            'label' => 'Verified',
+            'label' => 'Attempted Verification',
             'expanded' => true,
             'multiple' => false,
             'choices' => array(
