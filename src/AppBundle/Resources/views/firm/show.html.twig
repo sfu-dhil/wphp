@@ -9,7 +9,7 @@
     {% if is_granted('ROLE_CONTENT_ADMIN') %}
         <div class="btn-toolbar">
             <div class="btn-group pull-right">
-                <a href="{{ path('firm_edit', { 'id': firm.id }) }}" class="btn btn-default">
+                <a href="{{ path('firm_new') }}" class="btn btn-default">
                     <span class='glyphicon glyphicon-plus'></span> Add Record
                 </a>
                 <a href="{{ path('firm_edit', { 'id': firm.id }) }}" class="btn btn-default">
