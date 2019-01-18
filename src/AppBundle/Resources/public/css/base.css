@@ -38,21 +38,21 @@ table.tablesorter thead tr {
     white-space: nowrap;
 }
 table.tablesorter thead tr .header:after {
-    content: ' ↕';
+    content: '↕';
 }
 table.tablesorter thead tr .headerSortUp:after {
-    content: ' ↑';
+    content: '↑';
 }
 table.tablesorter thead tr .headerSortDown:after {
-    content: ' ↓';
+    content: '↓';
 }
 
-th.sorted.asc:after {
-    content: ' ↓';
+th.sorted.asc:after, a.asc:after {
+    content: '↓';
 }
 
-th.sorted.desc:after {
-    content: ' ↑';
+th.sorted.desc:after, a.desc:after {
+    content: '↑';
 }
 
 div.tab-content {

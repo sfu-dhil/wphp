@@ -1,12 +1,12 @@
 <table class="table table-bordered table-condensed table-hover table-striped">
     <thead>
         <tr>
-            <th>Id</th>
-            <th>Title</th>
+            <th>{{ knp_pagination_sortable(titles, 'Id', 'e.id') }}</th>
+            <th>{{ knp_pagination_sortable(titles, 'Title', ['e.title', 'e.pubdate']) }}</th>
             <th>Contributors</th>
             <th>Firms</th>
-            <th>Year</th>
-            <th>Edition</th>
+            <th>{{ knp_pagination_sortable(titles, 'Year', ['e.pubdate', 'e.title']) }}</th>
+            <th>{{ knp_pagination_sortable(titles, 'Edition', ['e.editionNumber', 'e.pubdate', 'e.title']) }}</th>
         </tr>
     </thead>
     <tbody>
