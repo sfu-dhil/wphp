@@ -59,7 +59,6 @@ class FormatControllerTest extends BaseTestCase
         ]);
         $crawler = $client->request('GET', '/format/typeahead?q=name');
         $this->assertEquals(403, $client->getResponse()->getStatusCode());
-        $this->assertEquals('text/plain; charset=UTF-8', $client->getResponse()->headers->get('Content-Type'));
         $this->assertContains('Access denied.', $client->getResponse()->getContent());
     }
     

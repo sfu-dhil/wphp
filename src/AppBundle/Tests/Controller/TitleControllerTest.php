@@ -59,7 +59,6 @@ class TitleControllerTest extends BaseTestCase
         ]);
         $crawler = $client->request('GET', '/title/typeahead?q=title');
         $this->assertEquals(403, $client->getResponse()->getStatusCode());
-        $this->assertEquals('text/plain; charset=UTF-8', $client->getResponse()->headers->get('Content-Type'));
         $this->assertContains('Access denied.', $client->getResponse()->getContent());
     }
 
