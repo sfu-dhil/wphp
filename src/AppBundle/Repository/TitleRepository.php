@@ -81,6 +81,19 @@ class TitleRepository extends EntityRepository
                 $qb->setParameter('to', $to);
             }
         }
+        if (isset($data['date_of_first_publication']) && $data['date_of_first_publication']) {
+            $m = array();
+            if (preg_match('/^\s*[0-9]{4}\s*$/', $data['date_of_first_publication'])) {
+                $qb->andWhere("YEAR(STRTODATE(e.dateOfFirstPublication, '%Y')) = :year");
+                $qb->setParameter('year', $data['date_of_first_publication']);
+            } elseif (preg_match('/^\s*(\*|[0-9]{4})\s*-\s*(\*|[0-9]{4})\s*$/', $data['date_of_first_publication'], $m)) {
+                $from = ($m[1] === '*' ? -1 : $m[1]);
+                $to = ($m[2] === '*' ? 9999 : $m[2]);
+                $qb->andWhere(":from <= YEAR(STRTODATE(e.dateOfFirstPublication, '%Y')) AND YEAR(STRTODATE(e.dateOfFirstPublication, '%Y')) <= :to");
+                $qb->setParameter('from', $from);
+                $qb->setParameter('to', $to);
+            }
+        }
         if (isset($data['location']) && $data['location']) {
             $qb->innerJoin('e.locationOfPrinting', 'g');
             $qb->andWhere("MATCH(g.alternatenames, g.name) AGAINST (:location BOOLEAN) > 0");
@@ -135,6 +148,10 @@ class TitleRepository extends EntityRepository
         if (isset($data['shelfmark']) && $data['shelfmark']) {
             $qb->andWhere("MATCH (e.shelfmark) AGAINST (:shelfmark BOOLEAN) > 0");
             $qb->setParameter('shelfmark', $data['shelfmark']);
+        }
+        if (isset($data['notes']) && $data['notes']) {
+            $qb->andWhere("MATCH (e.notes) AGAINST (:notes BOOLEAN) > 0");
+            $qb->setParameter('notes', $data['notes']);
         }
 
         // only add the title filter query parts if the subform has data.

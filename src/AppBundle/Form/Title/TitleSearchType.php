@@ -90,6 +90,13 @@ class TitleSearchType extends AbstractType {
                 'help_block' => 'Enter a year (eg <kbd>1795</kbd>) or range of years (<kbd>1790-1800</kbd>) or a partial range of years (<kbd>*-1800</kbd>)',
             ),
         ));
+        $builder->add('date_of_first_publication', TextType::class, array(
+            'label' => 'Date Of First Publication',
+            'required' => false,
+            'attr' => array(
+                'help_block' => 'Enter a year (eg <kbd>1795</kbd>) or range of years (<kbd>1790-1800</kbd>) or a partial range of years (<kbd>*-1800</kbd>)',
+            ),
+        ));
         $builder->add('editionNumber', TextType::class, array(
             'label' => 'Edition Number',
             'required' => false,
@@ -167,9 +174,13 @@ class TitleSearchType extends AbstractType {
             'label' => 'Shelfmark',
             'required' => false,
         ));
+        $builder->add('notes', null, array(
+            'label' => 'Notes',
+            'required' => false,
+        ));
 
         $builder->add('checked', ChoiceType::class, array(
-            'label' => 'Checked',
+            'label' => 'Hand-Verified',
             'choices' => array(
                 'Yes' => 'Y',
                 'No' => 'N',

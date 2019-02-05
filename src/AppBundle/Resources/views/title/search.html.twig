@@ -45,6 +45,15 @@
             {{ knp_pagination_render(titles) }}
         </div>
 
+        <div class='btn-toolbar pull-right'>
+            <div class='btn-group'>
+                {% if is_granted('ROLE_CONTENT_ADMIN') %}
+                    <a href="{{ path('title_new') }}" class="btn btn-default">
+                        <span class="glyphicon glyphicon-plus"></span> Add New Record
+                    </a>
+                {% endif %}
+            </div>
+        </div>
         {{ include('AppBundle:title:table.html.twig') }}
 
         <div class="navigation">
@@ -56,8 +65,8 @@
 
 {% block javascripts %}
     <script>
-        $(document).ready(function(){
-            $("#advanced_search").click(function(){
+        $(document).ready(function () {
+            $("#advanced_search").click(function () {
                 $(this).hide();
             });
         });

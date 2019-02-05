@@ -17,6 +17,7 @@ use Doctrine\ORM\Mapping as ORM;
  *      @ORM\Index(name="title_imprint_idx", columns={"imprint"}, flags={"fulltext"}),
  *      @ORM\Index(name="title_colophon_idx", columns={"colophon"}, flags={"fulltext"}),
  *      @ORM\Index(name="title_shelfmark_idx", columns={"shelfmark"}, flags={"fulltext"}),
+ *      @ORM\Index(name="title_notes_idx", columns={"notes"}, flags={"fulltext"}),
  *      @ORM\Index(name="title_price_idx", columns={"price_total"})
  * })
  * @ORM\Entity(repositoryClass="AppBundle\Repository\TitleRepository")
