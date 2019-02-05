@@ -11,15 +11,17 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 /**
  * Firm controller.
  *
  * @Route("/firm")
  */
-class FirmController extends Controller  implements PaginatorAwareInterface {
+class FirmController extends Controller implements PaginatorAwareInterface {
 
     use PaginatorTrait;
 
@@ -39,7 +41,7 @@ class FirmController extends Controller  implements PaginatorAwareInterface {
         ));
         $em = $this->getDoctrine()->getManager();
         $dql = 'SELECT e FROM AppBundle:Firm e';
-        if($request->query->get('sort') === 'g.name+e.name') {
+        if ($request->query->get('sort') === 'g.name+e.name') {
             $dql = 'SELECT e FROM AppBundle:Firm e INNER JOIN e.city g ORDER BY e.name, e.startDate';
         }
         $query = $em->createQuery($dql);
@@ -62,13 +64,13 @@ class FirmController extends Controller  implements PaginatorAwareInterface {
      */
     public function typeaheadAction(Request $request) {
         $q = $request->query->get('q');
-        if( ! $q) {
+        if (!$q) {
             return new JsonResponse([]);
         }
         $em = $this->getDoctrine()->getManager();
         $repo = $em->getRepository(Firm::class);
         $data = [];
-        foreach($repo->typeaheadQuery($q) as $result) {
+        foreach ($repo->typeaheadQuery($q) as $result) {
             $data[] = [
                 'id' => $result->getId(),
                 'text' => $result->getName(),
@@ -98,13 +100,57 @@ class FirmController extends Controller  implements PaginatorAwareInterface {
             $submitted = true;
             $repo = $em->getRepository(Firm::class);
             $query = $repo->buildSearchQuery($form->getData());
-                $firms = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
+            $firms = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
         }
         return array(
             'search_form' => $form->createView(),
             'firms' => $firms,
             'submitted' => $submitted,
         );
+    }
+
+    /**
+     * Full text search export for Title entities.
+     *
+     * @Route("/search/export", name="firm_search_export")
+     * @Method({"GET"})
+     * @param Request $request
+     * @return array
+     */
+    public function searchExportAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $form = $this->createForm(FirmSearchType::class);
+        $form->handleRequest($request);
+        $submitted = false;
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $submitted = true;
+            $repo = $em->getRepository(Firm::class);
+            $query = $repo->buildSearchQuery($form->getData());
+
+            $iterator = $query->iterate();
+            $tmpPath = tempnam(sys_get_temp_dir(), 'wphp-export-');
+            $fh = fopen($tmpPath, 'w');
+            fputcsv($fh, array('ID', 'Name', 'Street Address', 'City', 'Start Date', 'End Date'));
+            foreach($iterator as $row) {
+                $firm = $row[0];
+                fputcsv($fh, array(
+                    $firm->getId(),
+                    $firm->getName(),
+                    $firm->getStreetAddress(),
+                    $firm->getCity()->getName(),
+                    preg_replace('/-00/', '', $firm->getStartDate()),
+                    preg_replace('/-00/', '', $firm->getEndDate()),
+                ));
+            }
+            fclose($fh);
+            $response = new BinaryFileResponse($tmpPath);
+            $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'wphp-firms.csv');
+            $response->deleteFileAfterSend(true);
+            return $response;
+        }
+        $this->addFlash('error', 'form not submitted.');
+        return $this->redirectToRoute('firm_search');
     }
 
     /**
