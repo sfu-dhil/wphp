@@ -32,6 +32,30 @@ class PersonSearchType extends AbstractType {
             ),
         ));
 
+        $builder->add('order', ChoiceType::class, array(
+            'label' => 'Results Sorted By',
+            'choices' => array(
+                'Last Name (A to Z)' => 'lastname_asc',
+                'Last Name (Z to A)' => 'lastname_desc',
+                'First name (A to Z)' => 'firstname_asc',
+                'First name (Z to A)' => 'firstname_desc',
+                'Gender (Unknown, Female, Male)' => 'gender_asc',
+                'Gender (Male, Female, Unknown)' => 'gender_desc',
+                'Birth Date (Oldest First)' => 'birth_asc',
+                'Birth Date (Youngest First)' => 'birth_desc',
+                'Death Date (Most Recent Last)' => 'death_asc',
+                'Death Date (Most Recent First)' => 'death_desc',
+            ),
+            'attr' => array(
+                'help_block' => 'Choose a sort method for the results'
+            ),
+            'required' => false,
+            'expanded' => false,
+            'multiple' => false,
+            'empty_data' => null,
+            'data' => null,
+        ));
+
         $builder->add('id', TextType::class, array(
             'label' => 'Firm ID',
             'required' => false,

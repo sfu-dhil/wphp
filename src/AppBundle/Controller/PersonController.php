@@ -19,10 +19,9 @@ use Symfony\Component\HttpFoundation\Request;
  *
  * @Route("/person")
  */
-class PersonController extends Controller  implements PaginatorAwareInterface {
+class PersonController extends Controller implements PaginatorAwareInterface {
 
     use PaginatorTrait;
-
 
     /**
      * Lists all Person entities.
@@ -96,7 +95,7 @@ class PersonController extends Controller  implements PaginatorAwareInterface {
             $submitted = true;
             $repo = $em->getRepository(Person::class);
             $query = $repo->buildSearchQuery($form->getData());
-                $persons = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
+            $persons = $this->paginator->paginate($query->execute(), $request->query->getInt('page', 1), 25);
         }
         return array(
             'search_form' => $form->createView(),
@@ -122,6 +121,7 @@ class PersonController extends Controller  implements PaginatorAwareInterface {
             return $this->redirect($this->generateUrl('person_index', array('id' => $q)));
         }
     }
+
     /**
      * Exports a person's titles in a format.
      *
@@ -169,7 +169,6 @@ class PersonController extends Controller  implements PaginatorAwareInterface {
             'form' => $form->createView(),
         );
     }
-
 
     /**
      * Finds and displays a Person entity.
