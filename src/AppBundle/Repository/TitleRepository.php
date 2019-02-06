@@ -36,6 +36,44 @@ class TitleRepository extends EntityRepository
             $qb->andWhere("MATCH (e.title) AGAINST (:title BOOLEAN) > 0");
             $qb->setParameter('title', $data['title']);
         }
+        if(isset($data['order']) && $data['order']) {
+            switch($data['order']) {
+                case 'title_asc':
+                    $qb->orderBy('e.title', 'ASC');
+                    $qb->addOrderBy('e.pubdate');
+                    break;
+                case 'title_desc':
+                    $qb->orderBy('e.title', 'DESC');
+                    $qb->addOrderBy('e.pubdate');
+                    break;
+                case 'pubdate_asc':
+                    $qb->orderBy('e.pubdate', 'ASC');
+                    $qb->addOrderBy('e.title');
+                    break;
+                case 'pubdate_desc':
+                    $qb->orderBy('e.pubdate', 'DESC');
+                    $qb->addOrderBy('e.title');
+                    break;
+                case 'first_pubdate_asc':
+                    $qb->orderBy('e.dateOfFirstPublication', 'ASC');
+                    $qb->addOrderBy('e.title');
+                    break;
+                case 'first_pubdate_desc':
+                    $qb->orderBy('e.dateOfFirstPublication', 'DESC');
+                    $qb->addOrderBy('e.title');
+                    break;
+                case 'edition_asc':
+                    $qb->orderBy('e.editionNumber', 'ASC');
+                    $qb->orderBy('e.edition', 'ASC');
+                    $qb->addOrderBy('e.title');
+                    break;
+                case 'edition_desc':
+                    $qb->orderBy('e.editionNumber', 'DESC');
+                    $qb->orderBy('e.edition', 'DESC');
+                    $qb->addOrderBy('e.title');
+                    break;
+            }
+        }
         if(isset($data['id']) && $data['id']) {
             $qb->andWhere('e.id = :id');
             $qb->setParameter('id', $data['id']);

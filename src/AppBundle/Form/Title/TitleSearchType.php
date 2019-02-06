@@ -41,6 +41,28 @@ class TitleSearchType extends AbstractType {
             ),
         ));
 
+        $builder->add('order', ChoiceType::class, array(
+            'label' => 'Results Sorted By',
+            'choices' => array(
+                'Title (A to Z)' => 'title_asc',
+                'Title (Z to A)' => 'title_desc',
+                'Publication Date (Oldest to Newest)' => 'pubdate_asc',
+                'Publication Date (Newest to Oldest)' => 'pubdate_desc',
+                'First Publication Date (Oldest to Newest)' => 'first_pubdate_asc',
+                'First Publication Date (Newest to Oldest)' => 'first_pubdate_desc',
+                'Edition Number (Lowest to Highest)' => 'edition_asc',
+                'Edition Number (Highest to Lowest)' => 'edition_desc',
+            ),
+            'attr' => array(
+                'help_block' => 'Choose a sort method for the results'
+            ),
+            'required' => false,
+            'expanded' => false,
+            'multiple' => false,
+            'empty_data' => null,
+            'data' => null,
+        ));
+
         $builder->add('id', TextType::class, array(
             'label' => 'Title ID',
             'required' => false,
@@ -48,6 +70,7 @@ class TitleSearchType extends AbstractType {
                 'help_block' => 'Find this exact title ID.',
             )
         ));
+
         $builder->add('person_filter', PersonFilterType::class, array(
             'label' => 'Filter by Person',
             'required' => false,
@@ -226,7 +249,6 @@ class TitleSearchType extends AbstractType {
             'empty_data' => null,
             'data' => null,
         ));
-
     }
 
     /**
