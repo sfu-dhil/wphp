@@ -33,9 +33,51 @@ class FirmRepository extends EntityRepository
      */
     public function buildSearchQuery($data) {
         $qb = $this->createQueryBuilder('e');
+        $qb->orderBy("e.name");
+        $qb->addOrderBy("e.startDate");
         if(isset($data['name']) && $data['name']) {
             $qb->add('where', "MATCH (e.name) AGAINST(:name BOOLEAN) > 0");
             $qb->setParameter('name', $data['name']);
+        }
+        if(isset($data['order']) && $data['order']) {
+            switch($data['order']) {
+                case 'name_asc':
+                    $qb->orderBy("e.name", 'ASC');
+                    $qb->addOrderBy("e.startDate");
+                    break;
+                case 'name_desc':
+                    $qb->orderBy("e.name", 'DESC');
+                    $qb->addOrderBy("e.startDate");
+                    break;
+                case 'city_asc':
+                    $qb->innerJoin('e.city', 'c');
+                    $qb->orderBy('c.name', 'ASC');
+                    $qb->addOrderBy("e.name", 'ASC');
+                    $qb->addOrderBy("e.startDate");
+                    break;
+                case 'city_desc':
+                    $qb->innerJoin('e.city', 'c');
+                    $qb->orderBy('c.name', 'DESC');
+                    $qb->addOrderBy("e.name", 'ASC');
+                    $qb->addOrderBy("e.startDate");
+                    break;
+                case 'start_asc':
+                    $qb->orderBy('e.startDate');
+                    $qb->addOrderBy("e.name", 'ASC');
+                    break;
+                case 'start_desc':
+                    $qb->orderBy('e.startDate', 'DESC');
+                    $qb->addOrderBy("e.name", 'ASC');
+                    break;
+                case 'end_asc':
+                    $qb->orderBy('e.endDate', 'ASC');
+                    $qb->addOrderBy("e.name", 'ASC');
+                    break;
+                case 'end_desc':
+                    $qb->orderBy('e.endDate', 'DESC');
+                    $qb->addOrderBy("e.name", 'ASC');
+                    break;
+            }
         }
         if(isset($data['id']) && $data['id']) {
             $qb->andWhere('e.id = :id');
@@ -46,7 +88,9 @@ class FirmRepository extends EntityRepository
             $qb->setParameter('address', $data['address']);
         }
         if (isset($data['city']) && $data['city']) {
-            $qb->innerJoin('e.city', 'c');
+            if( ! $data['order'] || ($data['order'] !== 'city_asc' && $data['order'] !== 'city_desc')) {
+                $qb->innerJoin('e.city', 'c');
+            }
             $qb->andWhere('MATCH(c.alternatenames, c.name) AGAINST(:cname BOOLEAN) > 0');
             $qb->setParameter('cname', $data['city']);
         }
@@ -77,8 +121,6 @@ class FirmRepository extends EntityRepository
                 $qb->setParameter('toe', $to);
             }
         }
-        $qb->addOrderBy("e.name");
-        $qb->addOrderBy("e.startDate");
         return $qb->getQuery();
     }
 
