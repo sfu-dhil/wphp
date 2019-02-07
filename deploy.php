@@ -67,6 +67,22 @@ task('dhil:sphinx', function(){
     }
 })->desc('Build sphinx docs locally and upload to server.');
 
+task('dhil:download:images', function(){
+    $user = get('user');
+    $host = get('hostname');
+    $become = get('become');
+
+    runLocally("rsync -av -e 'ssh' --rsync-path='sudo -u $become rsync' $user@$host:/home/btd/uploads/ ./app/data/uploads", ['timeout' => null]);
+})->desc('Download clipping images from server.');
+
+task('dhil:upload:images', function(){
+    $user = get('user');
+    $host = get('hostname');
+    $become = get('become');
+
+    runLocally("rsync -av -e 'ssh' --rsync-path='sudo -u $become rsync' ./web/images/clippings/ $user@$host:{{release_path}}/web/images/clippings", ['timeout' => null]);
+})->desc('Upload clipping images to server.');
+
 option('update-db', null, InputOption::VALUE_NONE, 'Force the action to run');
 task('dhil:db:update', function() {
     $update = run('{{bin/php}} {{bin/console}} doctrine:schema:update --dump-sql');

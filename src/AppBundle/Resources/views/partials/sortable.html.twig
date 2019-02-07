@@ -1,15 +1,14 @@
 {% spaceless %}
-    {% if field is iterable %}
-        {% set fieldQ = field|join('+') %}
+    {% if sortable is defined and sortable == true %}
+        {% if field is iterable %}
+            {% set fieldQ = field|join('+') %}
+        {% else %}
+            {% set fieldQ = field %}
+        {% endif %}
+        <th>
+            {{ knp_pagination_sortable(pagination, header, field) }}
+        </th>
     {% else %}
-        {% set fieldQ = field %}
+        <th>{{ header }}</th>
     {% endif %}
-    {% if pagination.isSorted(fieldQ) %}
-        {% set class="sorted " ~ pagination.getDirection %}
-    {% else %}
-        {% set class="" %}
-    {% endif %}
-    <th class="{{ class }}">
-        {{ knp_pagination_sortable(pagination, header, field) }}
-    </th>
 {% endspaceless %}

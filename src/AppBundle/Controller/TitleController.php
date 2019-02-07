@@ -53,6 +53,7 @@ class TitleController extends Controller implements PaginatorAwareInterface {
         return array(
             'search_form' => $form->createView(),
             'titles' => $titles,
+            'sortable' => true,
         );
     }
 

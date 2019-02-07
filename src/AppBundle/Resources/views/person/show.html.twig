@@ -99,7 +99,15 @@
                             <a href="{{person.imageUrl }}">{{ person.imageUrl }}</a>
                         {% endif %}
                     </td>
-                    </tr>
+                </tr>
+                <tr>
+                    <th>Checked</th>
+                    <td>{% if person.checked %}Yes{% else %}No{% endif %}</td>
+                </tr>
+                <tr>
+                    <th>Final Check</th>
+                    <td>{% if person.finalCheck %}Yes{% else %}No{% endif %}</td>
+                </tr>
             {% endif %}
         </tbody>
     </table>
@@ -108,6 +116,9 @@
     <p class="count">
         Displaying {{ pagination|length }} titles of {{ pagination.getTotalItemCount }} total.
     </p>
+    <div class="navigation">
+        {{ knp_pagination_render(pagination) }}
+    </div>
     <table class="table table-bordered table-condensed table-hover table-striped tablesorter" id="titleRoles">
         <thead>
             <tr>

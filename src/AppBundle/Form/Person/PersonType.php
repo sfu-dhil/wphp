@@ -33,7 +33,7 @@ class PersonType extends AbstractType {
             ),
         ));
         $builder->add('title', null, array(
-            'label' => 'Title Name',
+            'label' => 'Title',
             'required' => false,
             'attr' => array(
                 'help_block' => '',
@@ -49,13 +49,14 @@ class PersonType extends AbstractType {
             ),
         ));
         $builder->add('dob', null, array(
-            'label' => 'Dob',
+            'label' => 'Birth Date',
             'required' => false,
             'attr' => array(
                 'help_block' => 'Person’s date of birth as YYYY-MM-DD',
             ),
         ));
         $builder->add('cityOfBirth', Select2EntityType::class, array(
+            'label' => 'Birth Place',
             'multiple' => false,
             'remote_route' => 'geonames_typeahead',
             'class' => Geonames::class,
@@ -70,13 +71,14 @@ class PersonType extends AbstractType {
             ),
         ));
         $builder->add('dod', null, array(
-            'label' => 'Dod',
+            'label' => 'Death Date',
             'required' => false,
             'attr' => array(
                 'help_block' => 'Person’s date of death as YYYY-MM-DD',
             ),
         ));
         $builder->add('cityOfDeath', Select2EntityType::class, array(
+            'label' => 'Death Place',
             'multiple' => false,
             'remote_route' => 'geonames_typeahead',
             'class' => Geonames::class,
@@ -98,35 +100,21 @@ class PersonType extends AbstractType {
             ),
         ));
         $builder->add('wikipediaUrl', UrlType::class, array(
-            'label' => 'VIAF URL',
+            'label' => 'Wikipedia URL',
             'required' => false,
             'attr' => array(
                 'help_block' => 'Enter a Wikipedia URL for this person'
             ),
         ));
         $builder->add('imageUrl', UrlType::class, array(
-            'label' => 'VIAF URL',
+            'label' => 'Image URL',
             'required' => false,
             'attr' => array(
                 'help_block' => 'Enter the URL for an image for this person. Make sure the licensing on the image is permissive.'
             ),
         ));
-        $builder->add('checked', ChoiceType::class, array(
-            'label' => 'Checked',
-            'expanded' => true,
-            'multiple' => false,
-            'choices' => array(
-                'Yes' => true,
-                'No' => false,
-            ),
-            'required' => true,
-            'placeholder' => false,
-            'attr' => array(
-                'help_block' => 'Indicates the attempt to find person’s information',
-            ),
-        ));
         $builder->add('finalcheck', ChoiceType::class, array(
-            'label' => 'Person Finalcheck',
+            'label' => 'Verified',
             'expanded' => true,
             'multiple' => false,
             'choices' => array(

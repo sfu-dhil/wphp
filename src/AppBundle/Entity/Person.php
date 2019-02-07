@@ -104,16 +104,16 @@ class Person
     /**
      * @var boolean
      *
-     * @ORM\Column(name="checked", type="boolean", nullable=false)
+     * @ORM\Column(name="finalcheck", type="boolean", nullable=false)
      */
-    private $checked = '0';
+    private $finalcheck = '0';
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="finalcheck", type="boolean", nullable=false)
+     * @ORM\Column(name="checked", type="boolean", nullable=false)
      */
-    private $finalcheck = '0';
+    private $checked = '0';
 
     /**
      * @var Geonames
@@ -296,28 +296,6 @@ class Person
     }
 
     /**
-     * Set checked
-     *
-     * @param boolean $checked
-     *
-     * @return Person
-     */
-    public function setChecked($checked) {
-        $this->checked = $checked;
-
-        return $this;
-    }
-
-    /**
-     * Get checked
-     *
-     * @return boolean
-     */
-    public function getChecked() {
-        return $this->checked;
-    }
-
-    /**
      * Set finalcheck
      *
      * @param boolean $finalcheck
@@ -493,5 +471,29 @@ class Person
     public function getImageUrl()
     {
         return $this->imageUrl;
+    }
+
+    /**
+     * Set checked.
+     *
+     * @param bool $checked
+     *
+     * @return Person
+     */
+    public function setChecked($checked)
+    {
+        $this->checked = $checked;
+
+        return $this;
+    }
+
+    /**
+     * Get checked.
+     *
+     * @return bool
+     */
+    public function getChecked()
+    {
+        return $this->checked;
     }
 }

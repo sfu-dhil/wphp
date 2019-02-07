@@ -1,12 +1,28 @@
 <table class="table table-bordered table-condensed table-hover table-striped">
     <thead>
         <tr>
-            <th>{{ knp_pagination_sortable(titles, 'Id', 'e.id') }}</th>
-            <th>{{ knp_pagination_sortable(titles, 'Title', ['e.title', 'e.pubdate']) }}</th>
+            {% include 'AppBundle:partials:sortable.html.twig' with {
+                'pagination': titles,
+                'header': 'Id',
+                'field': 'e.id',
+            } %}
+            {% include 'AppBundle:partials:sortable.html.twig' with {
+                'pagination': titles,
+                'header': 'Title',
+                'field': ['e.title', 'e.pubdate'],
+            } %}
             <th>Contributors</th>
             <th>Firms</th>
-            <th>{{ knp_pagination_sortable(titles, 'Year', ['e.pubdate', 'e.title']) }}</th>
-            <th>{{ knp_pagination_sortable(titles, 'Edition', ['e.editionNumber', 'e.pubdate', 'e.title']) }}</th>
+            {% include 'AppBundle:partials:sortable.html.twig' with {
+                'pagination': titles,
+                'header': 'Year',
+                'field': ['e.pubdate', 'e.title'],
+            } %}
+            {% include 'AppBundle:partials:sortable.html.twig' with {
+                'pagination': titles,
+                'header': 'Edition',
+                'field': ['e.editionNumber', 'e.pubdate', 'e.title'],
+            } %}
         </tr>
     </thead>
     <tbody>

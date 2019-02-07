@@ -1,12 +1,36 @@
 <table class="table table-bordered table-condensed table-hover table-striped">
     <thead>
         <tr>
-            <th>Id</th>
-            <th>Last name</th>
-            <th>First name</th>
-            <th>Gender</th>
-            <th>Date of birth</th>
-            <th>Date of death</th>
+            {% include 'AppBundle:partials:sortable.html.twig' with {
+                'pagination': people,
+                'header': 'Id',
+                'field': 'e.id',
+            } %}
+            {% include 'AppBundle:partials:sortable.html.twig' with {
+                'pagination': people,
+                'header': 'Last name',
+                'field': ['e.lastName', 'e.firstName', 'e.dob'],
+            } %}
+            {% include 'AppBundle:partials:sortable.html.twig' with {
+                'pagination': people,
+                'header': 'First name',
+                'field': ['e.firstName', 'e.lastName', 'e.dob'],
+            } %}
+            {% include 'AppBundle:partials:sortable.html.twig' with {
+                'pagination': people,
+                'header': 'Gender',
+                'field': ['e.gender', 'e.lastName', 'e.firstName', 'e.dob'],
+            } %}
+            {% include 'AppBundle:partials:sortable.html.twig' with {
+                'pagination': people,
+                'header': 'Date of birth',
+                'field': ['e.dob', 'e.lastName', 'e.firstName'],
+            } %}
+            {% include 'AppBundle:partials:sortable.html.twig' with {
+                'pagination': people,
+                'header': 'Date of death',
+                'field': ['e.dod', 'e.lastName', 'e.firstName'],
+            } %}
         </tr>
     </thead>
     <tbody>

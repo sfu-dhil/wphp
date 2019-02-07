@@ -58,6 +58,9 @@
 
     <h2>Titles</h2>
     Displaying {{ pagination|length }} titles of {{ pagination.getTotalItemCount }} total.
+    <div class="navigation">
+        {{ knp_pagination_render(pagination) }}
+    </div>
     <table class="table table-bordered table-condensed table-hover table-striped" id="firmRoles">
         <thead>
             <tr>

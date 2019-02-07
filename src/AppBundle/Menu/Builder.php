@@ -88,6 +88,9 @@ class Builder implements ContainerAwareInterface
         $browse->addChild('Genres', array(
             'route' => 'genre_index',
         ));
+        $browse->addChild('Sources', array(
+            'route' => 'source_index',
+        ));
         $browse->addChild('Contributor Roles', array(
             'route' => 'role_index',
         ));
@@ -136,25 +139,51 @@ class Builder implements ContainerAwareInterface
             'class' => 'nav navbar-nav',
         ));
 
-        $browse = $menu->addChild('browse', array(
+        $search = $menu->addChild('search', array(
             'uri' => '#',
             'label' => 'Search ' . self::CARET,
         ));
-        $browse->setAttribute('dropdown', true);
-        $browse->setLinkAttribute('class', 'dropdown-toggle');
-        $browse->setLinkAttribute('data-toggle', 'dropdown');
-        $browse->setChildrenAttribute('class', 'dropdown-menu');
+        $search->setAttribute('dropdown', true);
+        $search->setLinkAttribute('class', 'dropdown-toggle');
+        $search->setLinkAttribute('data-toggle', 'dropdown');
+        $search->setChildrenAttribute('class', 'dropdown-menu');
 
-        $browse->addChild('Titles', array(
+        $search->addChild('Titles', array(
             'route' => 'title_search',
         ));
-        $browse->addChild('Persons', array(
+        $search->addChild('Persons', array(
             'route' => 'person_search',
         ));
-        $browse->addChild('Firms', array(
+        $search->addChild('Firms', array(
             'route' => 'firm_search',
         ));
-
+        if ($this->hasRole('ROLE_USER')) {
+            $divider = $search->addChild('divider', array(
+                'label' => '',
+            ));
+            $divider->setAttributes(array(
+                'role' => 'separator',
+                'class' => 'divider',
+            ));
+            
+            $search->addChild('Admin Reports', array(
+                'uri' => '#',
+            ));
+            
+            $search->addChild('First Pub Dates', array(
+                'route' => 'report_first_pub_date',
+            ));
+            
+            $search->addChild('Titles to Check', array(
+                'route' => 'report_titles_check',
+            ));
+            $search->addChild('Firms to Check', array(
+                'route' => 'report_firms_check',
+            ));
+            $search->addChild('Persons to Check', array(
+                'route' => 'report_person_check',
+            ));
+        }
         return $menu;
     }
 }

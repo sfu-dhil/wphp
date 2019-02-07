@@ -47,6 +47,7 @@ class PersonController extends Controller implements PaginatorAwareInterface {
         return array(
             'search_form' => $form->createView(),
             'people' => $people,
+            'sortable' => true,
         );
     }
 

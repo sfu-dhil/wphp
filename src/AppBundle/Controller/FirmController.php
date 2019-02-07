@@ -42,7 +42,7 @@ class FirmController extends Controller implements PaginatorAwareInterface {
         $em = $this->getDoctrine()->getManager();
         $dql = 'SELECT e FROM AppBundle:Firm e';
         if ($request->query->get('sort') === 'g.name+e.name') {
-            $dql = 'SELECT e FROM AppBundle:Firm e INNER JOIN e.city g ORDER BY e.name, e.startDate';
+            $dql = 'SELECT e FROM AppBundle:Firm e LEFT JOIN e.city g ORDER BY e.name, e.startDate';
         }
         $query = $em->createQuery($dql);
         $firms = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25, array(
@@ -52,6 +52,7 @@ class FirmController extends Controller implements PaginatorAwareInterface {
         return array(
             'search_form' => $form->createView(),
             'firms' => $firms,
+            'sortable' => true,
         );
     }
 
