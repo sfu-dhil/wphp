@@ -24,7 +24,9 @@ class SourceRepository extends EntityRepository
     public function countTitles(Source $source) {
         $qb = $this->_em->createQueryBuilder();
         $qb->select('count(title.id)');
-        $qb->andWhere('title.source = :source');
+        $qb->where('title.source = :source');
+        $qb->orWhere('title.source2 = :source');
+        $qb->orWhere('title.source3 = :source');
         $qb->setParameter('source', $source);
         $qb->from(Title::class, 'title');
         return $qb->getQuery()->getSingleScalarResult();
