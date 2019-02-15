@@ -55,6 +55,10 @@ class Source
      */
     private $onlineSource;
 
+    public function __toString() {
+        return $this->name;
+    }
+    
     /**
      * Get id
      *
