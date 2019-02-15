@@ -183,6 +183,12 @@ class Builder implements ContainerAwareInterface
             $search->addChild('Persons to Check', array(
                 'route' => 'report_person_check',
             ));
+            $search->addChild('Titles with missing Sources', array(
+                'route' => 'report_title_source_id_null'
+            ));
+            $search->addChild('Titles with Missing Source IDs', array(
+                'route' => 'report_title_source_null'
+            ));
         }
         return $menu;
     }

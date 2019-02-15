@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @Route("/report")
  * @Security("has_role('ROLE_CONTENT_ADMIN')")
  */
-class ReportController extends Controller  implements PaginatorAwareInterface {
+class ReportController extends Controller implements PaginatorAwareInterface {
 
     use PaginatorTrait;
 
@@ -56,7 +56,7 @@ class ReportController extends Controller  implements PaginatorAwareInterface {
             'titles' => $titles,
         );
     }
-    
+
     /**
      * List bad dates of publication
      *
@@ -74,7 +74,7 @@ class ReportController extends Controller  implements PaginatorAwareInterface {
             'firms' => $firms,
         );
     }
-    
+
     /**
      * List bad dates of publication
      *
@@ -93,4 +93,49 @@ class ReportController extends Controller  implements PaginatorAwareInterface {
         );
     }
     
+    /**
+     * 
+     * @param Request $request
+     * @param EntityManagerInterface $em
+     * @return Title[]|Collection
+     * 
+     * @Route("/title_source_id_null", name="report_title_source_id_null")
+     * @Method("GET")
+     * @Template()
+     */
+    public function titleSourceIdNull(Request $request, EntityManagerInterface $em) {
+        $qb = $em->createQueryBuilder();
+        $qb->select('e')->from('AppBundle:Title', 'e');
+        $qb->orWhere('e.source is not null and e.sourceId is null');
+        $qb->orWhere('e.source2 is not null and e.source2Id is null');
+        $qb->orWhere('e.source3 is not null and e.source3Id is null');
+        $titles = $this->paginator->paginate($qb, $request->query->getInt('page', 1), 25);
+
+        return array(
+            'titles' => $titles,
+        );
+    }
+
+    /**
+     * 
+     * @param Request $request
+     * @param EntityManagerInterface $em
+     * @return Title[]|Collection
+     * 
+     * @Route("/title_source_null", name="report_title_source_null")
+     * @Method("GET")
+     * @Template()
+     */
+    public function titleSourceNull(Request $request, EntityManagerInterface $em) {
+        $qb = $em->createQueryBuilder();
+        $qb->select('e')->from('AppBundle:Title', 'e');
+        $qb->orWhere('e.source is null and e.sourceId is not null');
+        $qb->orWhere('e.source2 is null and e.source2Id is not null');
+        $qb->orWhere('e.source3 is null and e.source3Id is not null');
+        $titles = $this->paginator->paginate($qb, $request->query->getInt('page', 1), 25);
+
+        return array(
+            'titles' => $titles,
+        );
+    }
 }
