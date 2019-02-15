@@ -3,7 +3,8 @@
 {% block pageheader %}
     <h1>Titles to Final Check</h1>
     {% if titles|length > 0 %}
-        Displaying {{ titles|length }} titles of {{ titles.getTotalItemCount }} total, published on or before 1800 where Verified and Attempted Verification are unchecked.
+        Displaying {{ titles|length }} titles of {{ titles.getTotalItemCount }} total, 
+        where a source is missing even though there is a source identifier.
     {% else %}
         No titles to display.
     {% endif %}
@@ -21,8 +22,9 @@
                 <tr>
                     <th>ID</th>
                     <th>Title</th>
-                    <th>Pub Date</th>
-                    <th>First Pub Date</th>
+                    <th>Source 1</th>
+                    <th>Source 2</th>
+                    <th>Source 3</th>
                 </tr>
             </thead>
             <tbody>
@@ -38,8 +40,9 @@
                                 {{ title.title }}
                             </a>
                         </td>
-                        <td>{{ title.pubdate }}</td>
-                        <td>{{ title.dateOfFirstPublication }}</td>
+                        <td>{{ title.source }} / {{ title.sourceId }}</td>
+                        <td>{{ title.source2 }} / {{ title.source2Id }}</td>
+                        <td>{{ title.source3 }} / {{ title.source3Id }}</td>
                     </tr>
                 {% endfor %}
             </tbody>
