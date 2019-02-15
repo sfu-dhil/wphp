@@ -10,29 +10,34 @@ require 'recipe/symfony3.php';
 inventory('app/config/deploy.yml');
 
 $settings = Yaml::parseFile('app/config/deploy.yml');
-foreach($settings['.settings'] as $key => $value) {
+foreach ($settings['.settings'] as $key => $value) {
     set($key, $value);
 }
 
-task('dhil:precheck', function(){
+task('dhil:precheck', function() {
     $out = runLocally('git cherry -v');
-    if($out !== '') {
+    if ($out !== '') {
         $commits = count(explode("\n", $out));
         writeln("<error>Warning: {$commits} unpublished commits will not be included in the deployment.</error>");
     }
 });
 
+task('dhil:deploy:quick', function() {
+    writeln(run('cd {{ current_path }} && git pull origin master'));
+    writeln(run('{{bin/php}} {{bin/console}} cache:clear --env=prod'));
+});
+
 option('skip-tests', null, InputOption::VALUE_NONE, 'Skip testing. Probably a bad idea.');
 task('dhil:phpunit', function() {
-	if(input()->getOption('skip-tests')) {
-		writeln('Skipped');
-		return;
-	}
+    if (input()->getOption('skip-tests')) {
+        writeln('Skipped');
+        return;
+    }
     $output = run('cd {{ release_path }} && ./vendor/bin/phpunit', ['timeout' => null]);
     writeln($output);
 })->desc('Run phpunit.');
 
-task('dhil:clear:test-cache', function(){
+task('dhil:clear:test-cache', function() {
     $output = run('{{bin/php}} {{bin/console}} cache:clear --env=test');
     writeln($output);
 });
@@ -56,8 +61,8 @@ task('dhil:bower', function() {
     writeln($output);
 })->desc('Install bower dependencies.');
 
-task('dhil:sphinx', function(){
-    if(file_exists('docs')) {
+task('dhil:sphinx', function() {
+    if (file_exists('docs')) {
         $user = get('user');
         $host = get('hostname');
         $become = get('become');
@@ -67,7 +72,7 @@ task('dhil:sphinx', function(){
     }
 })->desc('Build sphinx docs locally and upload to server.');
 
-task('dhil:download:images', function(){
+task('dhil:download:images', function() {
     $user = get('user');
     $host = get('hostname');
     $become = get('become');
@@ -75,7 +80,7 @@ task('dhil:download:images', function(){
     runLocally("rsync -av -e 'ssh' --rsync-path='sudo -u $become rsync' $user@$host:/home/btd/uploads/ ./app/data/uploads", ['timeout' => null]);
 })->desc('Download clipping images from server.');
 
-task('dhil:upload:images', function(){
+task('dhil:upload:images', function() {
     $user = get('user');
     $host = get('hostname');
     $become = get('become');
@@ -88,15 +93,15 @@ task('dhil:db:update', function() {
     $update = run('{{bin/php}} {{bin/console}} doctrine:schema:update --dump-sql');
     writeln($update);
     if (input()->getOption('update-db')) {
-    	writeln("Updating database.");
+        writeln("Updating database.");
         $result = run('{{bin/php}} {{bin/console}} doctrine:schema:update --force');
         writeln($result);
     } else {
-		writeln("Database updates are not automatically applied. Use dhil:db:update --update-db to apply.");
-	}
+        writeln("Database updates are not automatically applied. Use dhil:db:update --update-db to apply.");
+    }
 })->desc('Run a docctrine:schema:update.');
 
-task('dhil:db:backup', function(){
+task('dhil:db:backup', function() {
     $user = get('user');
     $become = get('become');
     $app = get('application');
@@ -110,7 +115,7 @@ task('dhil:db:backup', function(){
     set('become', $become);
 })->desc('Backup the mysql database.');
 
-task('dhil:db:fetch', function(){
+task('dhil:db:fetch', function() {
     $user = get('user');
     $become = get('become');
     $app = get('application');
@@ -129,7 +134,7 @@ task('dhil:db:fetch', function(){
     writeln("Downloaded database dump to " . basename($file));
 })->desc('Make a database backup and download it.');
 
-task('success', function(){
+task('success', function() {
     $target = get('target');
     $release = get('release_name');
     $host = get('hostname');
