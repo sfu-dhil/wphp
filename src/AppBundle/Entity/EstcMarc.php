@@ -18,7 +18,7 @@ use Doctrine\ORM\Mapping as ORM;
  *  indexes={
  *      @ORM\Index(name="estcmarc_cid_idx", columns={"cid"}),
  *      @ORM\Index(name="estcmarc_data_ft", columns={"field_data"}, flags={"fulltext"}),
- *      @ORM\Index(name="estcmarc_data_idx", columns={"field_data"}, options={"length": 24}),
+ *      @ORM\Index(name="estcmarc_data_idx", columns={"field_data"}, options={"lengths": {24} }),
  *      @ORM\Index(name="estcmarc_field_idx", columns={"field"})
  *  }
  * )
