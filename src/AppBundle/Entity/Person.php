@@ -398,7 +398,7 @@ class Person
      * @return string
      */
     public function __toString() {
-        return $this->lastName . ", " . $this->firstName;
+        return implode(', ', array_filter(array($this->lastName, $this->firstName)));
     }
 
     /**
