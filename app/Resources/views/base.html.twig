@@ -10,101 +10,101 @@
         <link rel="stylesheet" href="{{ asset('bower/bootstrap/dist/css/bootstrap.min.css') }}">
         <link rel="stylesheet" href="{{ asset('bower/bootstrap/dist/css/bootstrap-theme.min.css') }}">
         <link rel="stylesheet" href="{{ asset('bundles/app/css/base.css') }}">
-    {% block htmlhead %}{% endblock %}
-    <script src="{{ asset('bower/jquery/dist/jquery.min.js') }}"></script>
-{% block styles %}{% endblock -%}
-</head>
-<body>
-    <nav class="navbar navbar-default navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-            </div>
-            <div id="navbar" class="collapse navbar-collapse">
-                <ul class="nav navbar-nav">
-                    <li><a href="{{ path('homepage') }}">Home</a></li>
-                </ul>
-                {{ knp_menu_render('pages') }}
-                {{ knp_menu_render('main') }}
-                {{ knp_menu_render('search') }}
-                {% set postMenu = knp_menu_get('posts', [], {'title': 'News & Events'}) %}
-                {{ knp_menu_render(postMenu) }}
-                {% if is_granted('ROLE_COMMENT_ADMIN') %}
-                    {{ knp_menu_render('feedback') }}
-                {% endif %}
-                {{ knp_menu_render('user') }}
-            </div>
-        </div>
-    </nav>
-    <div class="container">
-        {% if block('pageheader') is defined %}
-            <div class="page-header">
-                {{ block('pageheader') }}
-            </div>
-        {% endif %}
-
-        {% for type, messages in app.session.flashbag.all() %}
-            {% for message in messages %}
-                <div class="alert alert-{{ type }}">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    {{ message }}
+        {% block htmlhead %}{% endblock %}
+        <script src="{{ asset('bower/jquery/dist/jquery.min.js') }}"></script>
+        {% block styles %}{% endblock -%}
+    </head>
+    <body>
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
                 </div>
-            {% endfor %}
-        {% endfor %}
-
-        {% block body %}
-        {% endblock %}
-    </div>
-
-    <footer class="footer">
-        <div class="container">
-            <div class='col-md-12'>
-                <p><b>Women's Print History Project</b><br>
-                    <a href="{{ path('feedback_new') }}">Feedback</a> |
-                    <a href="{{ asset('docs/sphinx/index.html') }}">Documentation</a> |
-                    <a href="{{ path('privacy') }}">Privacy</a> |
-                    <a href="https://github.com/sfu-dhil/wphp">GitHub</a>
-                </p>
+                <div id="navbar" class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="{{ path('homepage') }}">Home</a></li>
+                    </ul>
+                    {{ knp_menu_render('pages') }}
+                    {{ knp_menu_render('main') }}
+                    {{ knp_menu_render('search') }}
+                    {% set postMenu = knp_menu_get('posts', [], {'title': 'News & Events'}) %}
+                    {{ knp_menu_render(postMenu) }}
+                    {% if is_granted('ROLE_COMMENT_ADMIN') %}
+                        {{ knp_menu_render('feedback') }}
+                    {% endif %}
+                    {{ knp_menu_render('user') }}
+                </div>
             </div>
+        </nav>
+        <div class="container">
+            {% if block('pageheader') is defined %}
+                <div class="page-header">
+                    {{ block('pageheader') }}
+                </div>
+            {% endif %}
+
+            {% for type, messages in app.session.flashbag.all() %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ type }}">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+
+            {% block body %}
+            {% endblock %}
         </div>
-    </footer>
+
+        <footer class="footer">
+            <div class="container">
+                <div class='col-md-12'>
+                    <p><b>Women's Print History Project</b><br>
+                        <a href="{{ path('feedback_new') }}">Feedback</a> |
+                        <a href="{{ asset('docs/sphinx/index.html') }}">Documentation</a> |
+                        <a href="{{ path('privacy') }}">Privacy</a> |
+                        <a href="https://github.com/sfu-dhil/wphp">GitHub</a>
+                    </p>
+                </div>
+            </div>
+        </footer>
 
 
-    <script src="{{ asset('bower/bootstrap/dist/js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('bundles/app/js/form.js') }}"></script>
-    {% block javascripts %}
-    {% endblock %}
+        <script src="{{ asset('bower/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('bundles/app/js/form.js') }}"></script>
+        {% block javascripts %}
+        {% endblock %}
 
-    {% if piwik_enabled %}
-    <!-- Piwik -->
-    <script type="text/javascript">
-        var _paq = _paq || [];
-        _paq.push(["setDomains", ["{{ piwik_domain }}"]]);
-        _paq.push(["setDoNotTrack", true]);
-        _paq.push(['trackPageView']);
-        _paq.push(['enableLinkTracking']);
-        (function () {
-            var u = "{{ piwik_url }}";
-            _paq.push(['setTrackerUrl', u + 'piwik.php']);
-            _paq.push(['setSiteId', '{{ piwik_siteid }}']);
-            var d = document, g = d.createElement('script'), s = d.getElementsByTagName('script')[0];
-            g.type = 'text/javascript';
-            g.async = true;
-            g.defer = true;
-            g.src = u + 'piwik.js';
-            s.parentNode.insertBefore(g, s);
-        })();
-    </script>
-    <noscript>
-    <p><img src="{{ piwik_url }}piwik.php?idsite={{ piwik_siteid }}" style="border:0;" alt="" /></p>
-    </noscript>
-    <!-- End Piwik Code -->
-    {% endif %}
+        {% if piwik_enabled %}
+            <!-- Piwik -->
+            <script type="text/javascript">
+                var _paq = _paq || [];
+                _paq.push(["setDomains", ["{{ piwik_domain }}"]]);
+                _paq.push(["setDoNotTrack", true]);
+                _paq.push(['trackPageView']);
+                _paq.push(['enableLinkTracking']);
+                (function () {
+                    var u = "{{ piwik_url }}";
+                    _paq.push(['setTrackerUrl', u + 'piwik.php']);
+                    _paq.push(['setSiteId', '{{ piwik_siteid }}']);
+                    var d = document, g = d.createElement('script'), s = d.getElementsByTagName('script')[0];
+                    g.type = 'text/javascript';
+                    g.async = true;
+                    g.defer = true;
+                    g.src = u + 'piwik.js';
+                    s.parentNode.insertBefore(g, s);
+                })();
+            </script>
+            <noscript>
+            <p><img src="{{ piwik_url }}piwik.php?idsite={{ piwik_siteid }}" style="border:0;" alt="" /></p>
+            </noscript>
+            <!-- End Piwik Code -->
+        {% endif %}
 
     </body>
 </html>
