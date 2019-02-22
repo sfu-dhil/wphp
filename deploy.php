@@ -120,6 +120,25 @@ task('dhil:db:backup', function() {
     set('become', $become);
 })->desc('Backup the mysql database.');
 
+task('dhil:db:fetch-nines', function(){
+    $user = get('user');
+    $become = get('become');
+    $app = get('application');
+
+    $opt = implode(' ', get('nines_tables'));
+
+    set('become', $user); // prevent sudo -u from failing.
+    $date = date('Y-m-d');
+    $current = get('release_name');
+    $file = "/home/{$user}/{$app}-nines-{$date}-r{$current}.sql";
+    run("sudo mysqldump {$app} -r {$file} {$opt}");
+    run("sudo chown {$user} {$file}");
+    set('become', $become);
+
+    download($file, basename($file));
+    writeln("Nines tables downloaded to " . basename($file));
+})->desc('Backup the mysql database.');
+
 task('dhil:db:fetch', function() {
     $user = get('user');
     $become = get('become');

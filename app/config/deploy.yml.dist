@@ -21,4 +21,5 @@
         - var/sessions
         - var/cache
     composer_options: 'install --no-progress --optimize-autoloader --no-interaction'
-    site_path: /~
+    site_path: ~
+    nines_tables: ~
