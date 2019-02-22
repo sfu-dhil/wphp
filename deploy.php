@@ -14,7 +14,12 @@ foreach ($settings['.settings'] as $key => $value) {
     set($key, $value);
 }
 
-task('dhil:precheck', function() {
+$app = get('application');
+if(file_exists("deploy.{$app}.php")) {
+    require "deploy.{$app}.php";
+}
+
+task('dhil:precheck', function(){
     $out = runLocally('git cherry -v');
     if ($out !== '') {
         $commits = count(explode("\n", $out));
