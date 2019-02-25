@@ -3,5 +3,7 @@
         Female
     {% elseif person.gender == constant('AppBundle\\Entity\\Person::MALE') %}
         Male
+    {% else %}
+        Unknown
     {% endif %}
 {% endspaceless %}

@@ -7,6 +7,7 @@ use AppBundle\Entity\Genre;
 use AppBundle\Entity\Geonames;
 use AppBundle\Entity\Source;
 use AppBundle\Entity\Title;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -149,7 +150,6 @@ class TitleType extends AbstractType {
             'remote_route' => 'geonames_typeahead',
             'class' => Geonames::class,
             'primary_key' => 'geonameid',
-            'text_property' => 'name',
             'page_limit' => 10,
             'allow_clear' => true,
             'delay' => 250,
@@ -199,16 +199,15 @@ class TitleType extends AbstractType {
                 'help_block' => 'Portion of the price of the work in pence',
             ),
         ));
-        $builder->add('genre', Select2EntityType::class, array(
-            'multiple' => false,
-            'remote_route' => 'genre_typeahead',
+        $builder->add('genre', EntityType::class, array(
             'class' => Genre::class,
-            'primary_key' => 'id',
-            'text_property' => 'name',
-            'page_limit' => 10,
-            'allow_clear' => true,
-            'delay' => 250,
-            'language' => 'en',
+            'choice_label' => 'name',
+            'expanded' => false,
+            'multiple' => false,
+            'query_builder' => function(EntityRepository $er) {
+                return $er->createQueryBuilder('e')
+                    ->orderBy('e.name', 'ASC');
+            },
             'attr' => array(
                 'help_block' => 'Category of the work',
             ),

@@ -76,7 +76,7 @@
                         </tr>
                         <tr>
                             <th data-toggle="popover"  data-content="Indicates if the title was published by the author">Self published</th>
-                            <td>{% if title.selfpublished %}Yes{% else %}No{% endif %}</td>
+                            <td>{% if title.selfpublished is null %}Unknown{% elseif title.selfpublished %}Yes{% else %}No{% endif %}</td>
                         </tr>
                         <tr>
                             <th data-toggle="popover"  data-content="Number of volumes of the edition, using arabic numerals">Volumes</th>

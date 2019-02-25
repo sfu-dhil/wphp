@@ -2,7 +2,11 @@
     <a href="{{ path('source_show', {'id': source.id}) }}">{{ source.name }}</a>
     {% if sourceId and is_granted('ROLE_USER') %}
         {% set url=linker.url(source, sourceId) %}
-        {% if url %} (#<a href="{{ url }}">{{ sourceId }}</a>){% endif %}
+        {% if url %}
+            (#<a href="{{ url }}">{{ sourceId }}</a>)
+        {% elseif sourceId %}
+            {{sourceId}}
+        {% endif %}
     {% endif %}
     <br/>
 {% endif %}

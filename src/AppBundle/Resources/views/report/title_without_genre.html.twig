@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block pageheader %}
+    <h1>Titles to Final Check</h1>
+    {% if titles|length > 0 %}
+        Displaying {{ titles|length }} titles of {{ titles.getTotalItemCount }} total,
+        where a source is missing even though there is a source identifier.
+    {% else %}
+        No titles to display.
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+
+    {% if titles|length > 0 %}
+        <div class="navigation">
+            {{ knp_pagination_render(titles) }}
+        </div>
+
+        <table class="table table-bordered table-condensed table-hover table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for title in titles %}
+                    <tr>
+                        <td>
+                            <a href="{{ path('title_show', { 'id': title.id }) }}">
+                                {{ title.id }}
+                            </a>
+                        </td>
+                        <td>
+                            <a href="{{ path('title_show', { 'id': title.id }) }}">
+                                {{ title.title }}
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="navigation">
+            {{ knp_pagination_render(titles) }}
+        </div>
+    {% endif %}
+
+{% endblock %}

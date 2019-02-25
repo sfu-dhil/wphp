@@ -92,13 +92,13 @@ class ReportController extends Controller implements PaginatorAwareInterface {
             'persons' => $persons,
         );
     }
-    
+
     /**
-     * 
+     *
      * @param Request $request
      * @param EntityManagerInterface $em
      * @return Title[]|Collection
-     * 
+     *
      * @Route("/title_source_id_null", name="report_title_source_id_null")
      * @Method("GET")
      * @Template()
@@ -117,11 +117,11 @@ class ReportController extends Controller implements PaginatorAwareInterface {
     }
 
     /**
-     * 
+     *
      * @param Request $request
      * @param EntityManagerInterface $em
      * @return Title[]|Collection
-     * 
+     *
      * @Route("/title_source_null", name="report_title_source_null")
      * @Method("GET")
      * @Template()
@@ -133,6 +133,27 @@ class ReportController extends Controller implements PaginatorAwareInterface {
         $qb->orWhere('e.source2 is null and e.source2Id is not null');
         $qb->orWhere('e.source3 is null and e.source3Id is not null');
         $titles = $this->paginator->paginate($qb, $request->query->getInt('page', 1), 25);
+
+        return array(
+            'titles' => $titles,
+        );
+    }
+
+    /**
+     *
+     * @param Request $request
+     * @param EntityManagerInterface $em
+     * @return Title[]|Collection
+     *
+     * @Route("/title_without_genre", name="report_title_without_genre")
+     * @Method("GET")
+     * @Template()
+     */
+    public function titleWithoutGenre(Request $request, EntityManagerInterface $em) {
+        $qb = $em->createQueryBuilder();
+        $qb->select('e')->from('AppBundle:Title', 'e');
+        $qb->where('e.genre is null');
+        $titles = $this->paginator->paginate($qb->getQuery()->execute(), $request->query->getInt('page', 1), 25);
 
         return array(
             'titles' => $titles,

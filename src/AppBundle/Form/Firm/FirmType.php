@@ -37,7 +37,6 @@ class FirmType extends AbstractType {
             'remote_route' => 'geonames_typeahead',
             'class' => Geonames::class,
             'primary_key' => 'geonameid',
-            'text_property' => 'name',
             'page_limit' => 10,
             'allow_clear' => true,
             'delay' => 250,

@@ -165,15 +165,15 @@ class Builder implements ContainerAwareInterface
                 'role' => 'separator',
                 'class' => 'divider',
             ));
-            
+
             $search->addChild('Admin Reports', array(
                 'uri' => '#',
             ));
-            
+
             $search->addChild('First Pub Dates', array(
                 'route' => 'report_first_pub_date',
             ));
-            
+
             $search->addChild('Titles to Check', array(
                 'route' => 'report_titles_check',
             ));
@@ -188,6 +188,9 @@ class Builder implements ContainerAwareInterface
             ));
             $search->addChild('Titles with Missing Source IDs', array(
                 'route' => 'report_title_source_null'
+            ));
+            $search->addChild('Titles without Genre', array(
+                'route' => 'report_title_without_genre'
             ));
         }
         return $menu;

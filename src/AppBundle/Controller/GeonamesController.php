@@ -58,7 +58,7 @@ class GeonamesController extends Controller  implements PaginatorAwareInterface 
         foreach($repo->typeaheadQuery($q) as $result) {
             $data[] = [
                 'id' => $result->getGeonameid(),
-                'text' => $result->getName(),
+                'text' => $result->getName() . ' (' . $result->getCountry() . ')',
             ];
         }
 
