@@ -11,8 +11,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="source")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\SourceRepository")
  *
- * @todo The Title entity refers to this one in two different ways, and may
- * do so in a third in future. Until that decision is made, there will not be
+ * @todo The Title entity refers to this one in three different ways, and may
+ * do so in a fourth in future. Until that decision is made, there will not be
  * any back-references from Source to Title. The references will likely become
  * a many-to-many relationship.
  */
@@ -58,7 +58,7 @@ class Source
     public function __toString() {
         return $this->name;
     }
-    
+
     /**
      * Get id
      *

@@ -30,7 +30,7 @@ class TitleFirmrole {
      *
      * @ORM\ManyToOne(targetEntity="Title", inversedBy="titleFirmroles")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="title_id", referencedColumnName="id", nullable=false)
+     *   @ORM\JoinColumn(name="title_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      * })
      */
     private $title;
@@ -40,7 +40,7 @@ class TitleFirmrole {
      *
      * @ORM\ManyToOne(targetEntity="Firm", inversedBy="titleFirmroles")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="firm_id", referencedColumnName="id", nullable=false)
+     *   @ORM\JoinColumn(name="firm_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      * })
      */
     private $firm;

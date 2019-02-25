@@ -9,8 +9,6 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * This table requires a manually-created index.
  *
- * ALTER TABLE `estc_fields` ADD INDEX `estcmarc_data_idx` (`field_data`(24) ASC);
- *
  * The field_data column is text, but Doctrine isn't able to manage a non-fulltext
  * index on a text column. So create it manually.
  *
