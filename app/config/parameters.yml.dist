@@ -39,6 +39,9 @@ parameters:
     wphp.homepage_entries: 5
     wphp.title_index_authors: 3
 
+    # menu builder
+    wphp.spotlight_menu: [ title, person, firm ]
+
     # tracking configuration
     # true or false
     dhil.piwik_enabled: false

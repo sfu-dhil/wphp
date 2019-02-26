@@ -21,6 +21,8 @@ class Builder implements ContainerAwareInterface
     // U+25BE, black down-pointing small triangle.
     const CARET = ' ▾';
 
+    private $spotlightMenuItems;
+
     /**
      * @var EntityManagerInterface
      */
@@ -44,14 +46,17 @@ class Builder implements ContainerAwareInterface
     /**
      * Build the menu builder.
      */
-    public function __construct(EntityManagerInterface $em, FactoryInterface $factory, AuthorizationCheckerInterface $authChecker, TokenStorageInterface $tokenStorage) {
+    public function __construct($spotlightMenuItems, EntityManagerInterface $em, FactoryInterface $factory, AuthorizationCheckerInterface $authChecker, TokenStorageInterface $tokenStorage)
+    {
+        $this->spotlightMenuItems = $spotlightMenuItems;
         $this->em = $em;
         $this->factory = $factory;
         $this->authChecker = $authChecker;
         $this->tokenStorage = $tokenStorage;
     }
 
-    private function hasRole($role) {
+    private function hasRole($role)
+    {
         if (!$this->tokenStorage->getToken()) {
             return false;
         }
@@ -65,7 +70,8 @@ class Builder implements ContainerAwareInterface
      * @param array $options
      * @return ItemInterface
      */
-    public function mainMenu(array $options) {
+    public function mainMenu(array $options)
+    {
         $menu = $this->factory->createItem('root');
         $menu->setChildrenAttributes(array(
             'class' => 'nav navbar-nav',
@@ -141,7 +147,8 @@ class Builder implements ContainerAwareInterface
      * @param array $options
      * @return ItemInterface
      */
-    public function searchMenu(array $options) {
+    public function searchMenu(array $options)
+    {
         $menu = $this->factory->createItem('root');
         $menu->setChildrenAttributes(array(
             'class' => 'nav navbar-nav',
@@ -203,7 +210,7 @@ class Builder implements ContainerAwareInterface
         }
         return $menu;
     }
-    
+
     /**
      * Build the spotlight menu and return it.
      *
@@ -211,7 +218,8 @@ class Builder implements ContainerAwareInterface
      * @param array $options
      * @return ItemInterface
      */
-    public function spotlightMenu(array $options) {
+    public function spotlightMenu(array $options)
+    {
         $menu = $this->factory->createItem('root');
         $menu->setChildrenAttributes(array(
             'class' => 'nav navbar-nav',
@@ -226,30 +234,21 @@ class Builder implements ContainerAwareInterface
         $spotlight->setLinkAttribute('data-toggle', 'dropdown');
         $spotlight->setChildrenAttribute('class', 'dropdown-menu');
 
-        $spotlight->addChild('Title Spotlights', array(
-            'route' => 'post_category_show',
-            'routeParameters' => array(
-                'id' => $this->em->getRepository(PostCategory::class)->findOneBy(array(
-                    'name' => 'title',
-                ))->getId()
-            )
-        ));
-        $spotlight->addChild('Person Spotlights', array(
-            'route' => 'post_category_show',
-            'routeParameters' => array(
-                'id' => $this->em->getRepository(PostCategory::class)->findOneBy(array(
-                    'name' => 'person',
-                ))->getId()
-            )
-        ));
-        $spotlight->addChild('Firm Spotlights', array(
-            'route' => 'post_category_show',
-            'routeParameters' => array(
-                'id' => $this->em->getRepository(PostCategory::class)->findOneBy(array(
-                    'name' => 'firm',
-                ))->getId()
-            )
-        ));
+        $repo = $this->em->getRepository(PostCategory::class);
+        foreach ($this->spotlightMenuItems as $item) {
+            $category = $repo->findOneBy(array(
+                'name' => $item,
+            ));
+            if (!$category) {
+                continue;
+            }
+            $spotlight->addChild($category->getLabel(), array(
+                'route' => 'post_category_show',
+                'routeParameters' => array(
+                    'id' => $category->getId(),
+                )
+            ));
+        }
         return $menu;
     }
 }
