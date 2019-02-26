@@ -2,8 +2,10 @@
 
 namespace AppBundle\Menu;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
+use Nines\BlogBundle\Entity\PostCategory;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -18,6 +20,11 @@ class Builder implements ContainerAwareInterface
 
     // U+25BE, black down-pointing small triangle.
     const CARET = ' ▾';
+
+    /**
+     * @var EntityManagerInterface
+     */
+    private $em;
 
     /**
      * @var FactoryInterface
@@ -37,7 +44,8 @@ class Builder implements ContainerAwareInterface
     /**
      * Build the menu builder.
      */
-    public function __construct(FactoryInterface $factory, AuthorizationCheckerInterface $authChecker, TokenStorageInterface $tokenStorage) {
+    public function __construct(EntityManagerInterface $em, FactoryInterface $factory, AuthorizationCheckerInterface $authChecker, TokenStorageInterface $tokenStorage) {
+        $this->em = $em;
         $this->factory = $factory;
         $this->authChecker = $authChecker;
         $this->tokenStorage = $tokenStorage;
@@ -219,13 +227,28 @@ class Builder implements ContainerAwareInterface
         $spotlight->setChildrenAttribute('class', 'dropdown-menu');
 
         $spotlight->addChild('Title Spotlights', array(
-            'route' => 'title_search',
+            'route' => 'post_category_show',
+            'routeParameters' => array(
+                'id' => $this->em->getRepository(PostCategory::class)->findOneBy(array(
+                    'name' => 'title',
+                ))->getId()
+            )
         ));
         $spotlight->addChild('Person Spotlights', array(
-            'route' => 'person_search',
+            'route' => 'post_category_show',
+            'routeParameters' => array(
+                'id' => $this->em->getRepository(PostCategory::class)->findOneBy(array(
+                    'name' => 'person',
+                ))->getId()
+            )
         ));
         $spotlight->addChild('Firm Spotlights', array(
-            'route' => 'firm_search',
+            'route' => 'post_category_show',
+            'routeParameters' => array(
+                'id' => $this->em->getRepository(PostCategory::class)->findOneBy(array(
+                    'name' => 'firm',
+                ))->getId()
+            )
         ));
         return $menu;
     }
