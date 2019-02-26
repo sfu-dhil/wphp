@@ -106,6 +106,11 @@ class SourceLinker {
         return null;
     }
 
+    public function ecco($data){
+        $id = substr_replace($data, "0", 2, 0);
+        return "http://link.galegroup.com/apps/doc/{$id}/ECCO?sid=WomenPrintHistProject";
+    }
+
     public function url(Source $source, $data) {
         if (preg_match("/https?:/", $data)) {
             return $data;
@@ -122,6 +127,8 @@ class SourceLinker {
                 return $this->en($data);
             case "Osborne Collection of Early Children's Books":
                 return $this->osborne($data);
+            case 'ECCO':
+                return $this->ecco($data);
             default:
                 return null;
         }
