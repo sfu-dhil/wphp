@@ -16,6 +16,8 @@ use AppBundle\Entity\OsborneMarc;
 use AppBundle\Entity\Source;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
  * Description of SourceLinker
@@ -34,12 +36,35 @@ class SourceLinker {
      */
     private $generator;
 
-    public function __construct(EntityManagerInterface $em, UrlGeneratorInterface $generator) {
+    /**
+     * @var AuthorizationCheckerInterface
+     */
+    private $authChecker;
+
+    /**
+     * @var TokenStorageInterface
+     */
+    private $tokenStorage;
+
+
+    public function __construct(EntityManagerInterface $em, UrlGeneratorInterface $generator, AuthorizationCheckerInterface $authChecker, TokenStorageInterface $tokenStorage) {
         $this->em = $em;
         $this->generator = $generator;
+        $this->authChecker = $authChecker;
+        $this->tokenStorage = $tokenStorage;
+    }
+
+    private function hasRole($role) {
+        if (!$this->tokenStorage->getToken()) {
+            return false;
+        }
+        return $this->authChecker->isGranted($role);
     }
 
     public function estc($data) {
+        if( ! $this->hasRole('ROLE_USER')) {
+            return null;
+        }
         $repo = $this->em->getRepository(EstcMarc::class);
         $record = $repo->findOneBy(array(
             'fieldData' => $data,
@@ -54,6 +79,9 @@ class SourceLinker {
     }
 
     public function orlando($data) {
+        if( ! $this->hasRole('ROLE_USER')) {
+            return null;
+        }
         $repo = $this->em->getRepository(OrlandoBiblio::class);
         $record = $repo->findOneBy(array(
             'orlandoId' => $data,
@@ -67,6 +95,9 @@ class SourceLinker {
     }
 
     public function jackson($data) {
+        if( ! $this->hasRole('ROLE_USER')) {
+            return null;
+        }
         $repo = $this->em->getRepository(Jackson::class);
         $record = $repo->findOneBy(array(
             'jbid' => $data,
@@ -80,6 +111,9 @@ class SourceLinker {
     }
 
     public function en($data) {
+        if( ! $this->hasRole('ROLE_USER')) {
+            return null;
+        }
         $repo = $this->em->getRepository(En::class);
         $record = $repo->findOneBy(array(
             'enId' => $data,
@@ -93,6 +127,9 @@ class SourceLinker {
     }
 
     public function osborne($data) {
+        if( ! $this->hasRole('ROLE_USER')) {
+            return null;
+        }
         $repo = $this->em->getRepository(OsborneMarc::class);
         $record = $repo->findOneBy(array(
             'fieldData' => $data,
@@ -107,6 +144,7 @@ class SourceLinker {
     }
 
     public function ecco($data){
+        // No role checking for this one.
         $id = substr_replace($data, "0", 2, 0);
         return "http://link.galegroup.com/apps/doc/{$id}/ECCO?sid=WomenPrintHistProject";
     }
