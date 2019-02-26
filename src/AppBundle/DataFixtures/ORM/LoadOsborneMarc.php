@@ -2,13 +2,13 @@
 
 namespace AppBundle\DataFixtures\ORM;
 
-
 use AppBundle\Entity\OsborneMarc;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class LoadOsborneMarc extends Fixture implements DependentFixtureInterface
+class LoadOsborneMarc extends Fixture implements DependentFixtureInterface, FixtureGroupInterface
 {
 // INSERT INTO `osborne_fields` (`cid`, `fid`, `field`, `ind1`, `ind2`, `subfield`, `field_data`, `id`) VALUES (196740,15,'533','\\','\\','n','Access limited by licensing agreements.',7158756)
     public function load(ObjectManager $manager) {
@@ -48,4 +48,7 @@ class LoadOsborneMarc extends Fixture implements DependentFixtureInterface
         ];
     }
 
+    public static function getGroups(): array {
+        return array('test');
+    }
 }

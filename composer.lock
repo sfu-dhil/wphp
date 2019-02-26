@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2b55b7f1f5d3be0523c8bfcacc6c6d47",
+    "content-hash": "96e57b49b5984002a6261847749aefcf",
     "packages": [
         {
             "name": "beberlei/DoctrineExtensions",
@@ -3631,6 +3631,52 @@
                 "standards"
             ],
             "time": "2018-09-21T14:22:49+00:00"
+        },
+        {
+            "name": "joshtronic/php-loremipsum",
+            "version": "1.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/joshtronic/php-loremipsum.git",
+                "reference": "e41f4f76303b09b66448100d45a1bfdf695192bd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/joshtronic/php-loremipsum/zipball/e41f4f76303b09b66448100d45a1bfdf695192bd",
+                "reference": "e41f4f76303b09b66448100d45a1bfdf695192bd",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "satooshi/php-coveralls": "~1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "joshtronic\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Josh Sherman",
+                    "email": "hello@joshtronic.com",
+                    "homepage": "https://joshtronic.com"
+                }
+            ],
+            "description": "Lorem ipsum generator in PHP without dependencies",
+            "homepage": "https://github.com/joshtronic/php-loremipsum",
+            "keywords": [
+                "generator",
+                "ipsum",
+                "lorem"
+            ],
+            "time": "2019-01-03T06:21:50+00:00"
         },
         {
             "name": "liip/functional-test-bundle",

@@ -4,12 +4,13 @@ namespace AppBundle\DataFixtures\ORM;
 
 use AppBundle\Entity\Firmrole;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
 /**
  * LoadFirmrole form.
  */
-class LoadFirmrole extends Fixture {
+class LoadFirmrole extends Fixture implements FixtureGroupInterface {
 
     /**
      * {@inheritDoc}
@@ -26,4 +27,7 @@ class LoadFirmrole extends Fixture {
         $em->flush();
     }
 
+    public static function getGroups(): array {
+        return array('test');
+    }
 }

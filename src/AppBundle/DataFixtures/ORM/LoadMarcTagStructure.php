@@ -4,9 +4,10 @@ namespace AppBundle\DataFixtures\ORM;
 
 use AppBundle\Entity\MarcTagStructure;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class LoadMarcTagStructure extends Fixture
+class LoadMarcTagStructure extends Fixture implements FixtureGroupInterface 
 {
 
     public function load(ObjectManager $em)
@@ -19,5 +20,9 @@ class LoadMarcTagStructure extends Fixture
             $this->setReference('marctag.' . $i, $fixture);
         }
         $em->flush();
+    }
+    
+    public static function getGroups(): array {
+        return array('test');
     }
 }

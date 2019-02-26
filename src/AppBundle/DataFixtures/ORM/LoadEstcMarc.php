@@ -2,15 +2,15 @@
 
 namespace AppBundle\DataFixtures\ORM;
 
-
 use AppBundle\Entity\EstcMarc;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class LoadEstcMarc extends Fixture implements DependentFixtureInterface
+class LoadEstcMarc extends Fixture implements DependentFixtureInterface, FixtureGroupInterface
 {
-// INSERT INTO `estc_fields` (`cid`, `fid`, `field`, `ind1`, `ind2`, `subfield`, `field_data`, `id`) VALUES (196740,15,'533','\\','\\','n','Access limited by licensing agreements.',7158756)
+
     public function load(ObjectManager $manager) {
         for($n = 0; $n < 4; $n++) {
             $ldr = new EstcMarc();
@@ -48,4 +48,7 @@ class LoadEstcMarc extends Fixture implements DependentFixtureInterface
         ];
     }
 
+    public static function getGroups(): array {
+        return array('test');
+    }
 }

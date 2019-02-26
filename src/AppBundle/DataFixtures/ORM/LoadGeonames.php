@@ -5,12 +5,13 @@ namespace AppBundle\DataFixtures\ORM;
 use AppBundle\Entity\Geonames;
 use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
 /**
  * LoadGeonames form.
  */
-class LoadGeonames extends Fixture {
+class LoadGeonames extends Fixture implements FixtureGroupInterface {
 
     /**
      * {@inheritDoc}
@@ -45,4 +46,7 @@ class LoadGeonames extends Fixture {
         $em->flush();
     }
 
+    public static function getGroups(): array {
+        return array('test');
+    }
 }

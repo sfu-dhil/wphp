@@ -10,6 +10,7 @@ namespace AppBundle\DataFixtures\ORM;
 
 use AppBundle\Entity\En;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
 /**
@@ -17,7 +18,7 @@ use Doctrine\Common\Persistence\ObjectManager;
  *
  * @author michael
  */
-class LoadEn extends Fixture {
+class LoadEn extends Fixture implements FixtureGroupInterface {
     public function load(ObjectManager $em)
     {
         for($i = 0; $i < 4; $i++) {
@@ -43,4 +44,9 @@ class LoadEn extends Fixture {
         }
         $em->flush();
     }
+
+    public static function getGroups(): array {
+        return array('test');
+    }
+
 }

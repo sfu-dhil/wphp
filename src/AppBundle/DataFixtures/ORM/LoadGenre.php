@@ -4,12 +4,13 @@ namespace AppBundle\DataFixtures\ORM;
 
 use AppBundle\Entity\Genre;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
 /**
  * LoadGenre form.
  */
-class LoadGenre extends Fixture {
+class LoadGenre extends Fixture implements FixtureGroupInterface {
 
     /**
      * {@inheritDoc}
@@ -26,4 +27,7 @@ class LoadGenre extends Fixture {
         $em->flush();
     }
 
+    public static function getGroups(): array {
+        return array('test');
+    }
 }

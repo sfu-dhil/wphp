@@ -195,4 +195,38 @@ class Builder implements ContainerAwareInterface
         }
         return $menu;
     }
+    
+    /**
+     * Build the spotlight menu and return it.
+     *
+     * @param FactoryInterface $factory
+     * @param array $options
+     * @return ItemInterface
+     */
+    public function spotlightMenu(array $options) {
+        $menu = $this->factory->createItem('root');
+        $menu->setChildrenAttributes(array(
+            'class' => 'nav navbar-nav',
+        ));
+
+        $spotlight = $menu->addChild('spotlight', array(
+            'uri' => '#',
+            'label' => 'Spotlight ' . self::CARET,
+        ));
+        $spotlight->setAttribute('dropdown', true);
+        $spotlight->setLinkAttribute('class', 'dropdown-toggle');
+        $spotlight->setLinkAttribute('data-toggle', 'dropdown');
+        $spotlight->setChildrenAttribute('class', 'dropdown-menu');
+
+        $spotlight->addChild('Title Spotlights', array(
+            'route' => 'title_search',
+        ));
+        $spotlight->addChild('Person Spotlights', array(
+            'route' => 'person_search',
+        ));
+        $spotlight->addChild('Firm Spotlights', array(
+            'route' => 'firm_search',
+        ));
+        return $menu;
+    }
 }

@@ -4,12 +4,13 @@ namespace AppBundle\DataFixtures\ORM;
 
 use AppBundle\Entity\Format;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
 /**
  * LoadFormat form.
  */
-class LoadFormat extends Fixture {
+class LoadFormat extends Fixture implements FixtureGroupInterface {
 
     /**
      * {@inheritDoc}
@@ -30,4 +31,7 @@ class LoadFormat extends Fixture {
         $em->flush();
     }
 
+    public static function getGroups(): array {
+        return array('test');
+    }
 }

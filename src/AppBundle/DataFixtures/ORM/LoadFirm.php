@@ -3,15 +3,15 @@
 namespace AppBundle\DataFixtures\ORM;
 
 use AppBundle\Entity\Firm;
-use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
 /**
  * LoadFirm form.
  */
-class LoadFirm extends Fixture implements DependentFixtureInterface {
+class LoadFirm extends Fixture implements DependentFixtureInterface, FixtureGroupInterface {
 
     /**
      * {@inheritDoc}
@@ -44,4 +44,7 @@ class LoadFirm extends Fixture implements DependentFixtureInterface {
         ];
     }
 
+    public static function getGroups(): array {
+        return array('test');
+    }
 }

@@ -32,6 +32,7 @@
                     {{ knp_menu_render('pages') }}
                     {{ knp_menu_render('main') }}
                     {{ knp_menu_render('search') }}
+                    {{ knp_menu_render('spotlight') }}
                     {% set postMenu = knp_menu_get('posts', [], {'title': 'News & Events'}) %}
                     {{ knp_menu_render(postMenu) }}
                     {% if is_granted('ROLE_COMMENT_ADMIN') %}

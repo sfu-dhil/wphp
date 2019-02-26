@@ -2,16 +2,16 @@
 
 namespace AppBundle\DataFixtures\ORM;
 
-use AppBundle\Entity\Firmrole;
 use AppBundle\Entity\TitleFirmrole;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
 /**
  * LoadFirmrole form.
  */
-class LoadTitleFirmrole extends Fixture implements DependentFixtureInterface {
+class LoadTitleFirmrole extends Fixture implements DependentFixtureInterface, FixtureGroupInterface {
 
     /**
      * {@inheritDoc}
@@ -38,4 +38,7 @@ class LoadTitleFirmrole extends Fixture implements DependentFixtureInterface {
         );
     }
 
+    public static function getGroups(): array {
+        return array('test');
+    }
 }

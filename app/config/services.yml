@@ -38,3 +38,4 @@ services:
         tags:
         - { name: knp_menu.menu_builder, method: mainMenu, alias: main}
         - { name: knp_menu.menu_builder, method: searchMenu, alias: search}
+        - { name: knp_menu.menu_builder, method: spotlightMenu, alias: spotlight}
