@@ -32,3 +32,4 @@ app/config/deploy.yml
 etc
 web/editor
 web/js
+app/Resources/views/jquery.collection.html.twig
