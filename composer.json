@@ -25,6 +25,7 @@
     "require": {
         "php": ">=7.2.0",
         "beberlei/doctrineextensions": "^1.0",
+        "ckfinder/ckfinder-symfony-bundle": "^3.4",
         "doctrine/doctrine-bundle": "^1.8",
         "doctrine/orm": "^2.6",
         "friendsofsymfony/ckeditor-bundle": "^2.0",

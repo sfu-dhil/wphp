@@ -3,6 +3,7 @@ imports:
     - { resource: security.yml }
     - { resource: services.yml }
     - { resource: "../../vendor/beberlei/DoctrineExtensions/config/mysql.yml" }
+    - { resource: "../../vendor/ckfinder/ckfinder-symfony-bundle/Resources/config/ckfinder_config.php" }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
@@ -122,6 +123,18 @@ fos_ck_editor:
         wphp_config:
             entities: false
             toolbar: standard
+
+ckfinder:
+    connector:
+        authenticationClass: AppBundle\Services\CKFinderAuthenticator
+        hideFolders: ['.*', 'CSV', '.svn', '.git', '__thumbs']
+        disallowUnsafeCharacters: true
+        debug: true
+        backends:
+            default:
+                baseUrl: '%router.request_context.base_url%/editor/uploads/'
+                root: '%kernel.project_dir%/web/editor/uploads'
+        defaultResourceTypes: Images
 
 knp_menu:
     twig:

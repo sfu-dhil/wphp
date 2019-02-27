@@ -6,6 +6,7 @@ use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -48,5 +49,18 @@ class DefaultController extends Controller implements PaginatorAwareInterface {
      */
     public function privacyAction(Request $request) {
 
+    }
+
+    /**
+     * @param Request $request
+     * @param string $path
+     * @Route("/editor/uploads/{path}", name="editor_image", requirements={"path"=".+"})
+     */
+    public function editorUpload(Request $request, $path) {
+        $root = $this->getParameter('wphp.ckfinder_root', null);
+        if( ! $root || !file_exists("{$root}/{$path}")) {
+            return null;
+        }
+        return new BinaryFileResponse("{$root}/{$path}");
     }
 }

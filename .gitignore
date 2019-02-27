@@ -30,3 +30,5 @@ phpunit.xml
 app/config/deploy.yml
 .idea
 etc
+web/editor
+web/js
