@@ -58,6 +58,9 @@ class DefaultController extends Controller implements PaginatorAwareInterface {
      */
     public function editorUpload(Request $request, $path) {
         $root = $this->getParameter('wphp.ckfinder_root', null);
+        if(strstr($path, '..')) {
+            return null;
+        }
         if( ! $root || !file_exists("{$root}/{$path}")) {
             return null;
         }
