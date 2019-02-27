@@ -47,12 +47,13 @@ twig:
         - 'bootstrap_3_horizontal_layout.html.twig'
         - 'NinesUtilBundle:form:fields.html.twig'
         - 'TetranzSelect2EntityBundle:Form:fields.html.twig'
-        - '::jquery.collection.html.twig'
+        - 'jquery.collection.html.twig'
         - '@FOSCKEditor/Form/ckeditor_widget.html.twig'
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
     paths:
         '%kernel.root_dir%/../src/Nines/UtilBundle/Resources/views': NinesUtilBundle
+        '%kernel.project_dir%/vendor/ninsuo/symfony-collection': NinsuoSymfonyCollection
     globals:
         comment_service: '@Nines\FeedbackBundle\Services\CommentService'
         text_service: '@Nines\UtilBundle\Services\Text'

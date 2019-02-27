@@ -52,6 +52,8 @@ class JacksonController extends Controller  implements PaginatorAwareInterface {
      * something appropriate, and adjust the generated search.html.twig
      * template.
      *
+     * @return array
+     *
      * <code><pre>
      *    public function searchQuery($q) {
      *       $qb = $this->createQueryBuilder('e');

@@ -22,7 +22,14 @@ security:
                 provider: fos_userbundle
                 csrf_token_generator: security.csrf.token_manager
             logout_on_user_change: true
-            
+
+            remember_me:
+                secret: '%secret%'
+                lifetime: 2419200 # 28 days in seconds.
+                path: '%router.request_context.base_url%'
+                domain: '%router.request_context.host%'
+                secure: '%secure_cookies%'
+
             logout:       true
             anonymous:    true
 
