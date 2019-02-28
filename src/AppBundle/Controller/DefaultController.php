@@ -2,17 +2,21 @@
 
 namespace AppBundle\Controller;
 
+use GuzzleHttp\Exception\BadResponseException;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
+use League\Flysystem\FileNotFoundException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * Default controller for the home page.
  */
-class DefaultController extends Controller implements PaginatorAwareInterface {
+class DefaultController extends Controller implements PaginatorAwareInterface
+{
 
     use PaginatorTrait;
 
@@ -24,7 +28,8 @@ class DefaultController extends Controller implements PaginatorAwareInterface {
      *
      * @return array
      */
-    public function indexAction() {
+    public function indexAction()
+    {
         $em = $this->getDoctrine()->getManager();
         $postQuery = $em->getRepository('NinesBlogBundle:Post')->recentQuery(
             false,
@@ -47,7 +52,8 @@ class DefaultController extends Controller implements PaginatorAwareInterface {
      * @Route("/privacy", name="privacy")
      * @Template()
      */
-    public function privacyAction(Request $request) {
+    public function privacyAction(Request $request)
+    {
 
     }
 
@@ -56,14 +62,14 @@ class DefaultController extends Controller implements PaginatorAwareInterface {
      * @param string $path
      * @Route("/editor/uploads/{path}", name="editor_image", requirements={"path"=".+"})
      */
-    public function editorUpload(Request $request, $path) {
-        $root = $this->getParameter('wphp.ckfinder_root', null);
-        if(strstr($path, '..')) {
-            return null;
+    public function editorUpload(Request $request, $path)
+    {
+        $base = $this->getParameter('kernel.project_dir');
+        $root = $base . '/' . $this->getParameter('wphp.ckfinder_root');
+        $file = realpath($root . '/' . $path);
+        if(substr($file, 0, strlen($root)) !== $root) {
+            throw new FileNotFoundException("The requested file was not found.");
         }
-        if( ! $root || !file_exists("{$root}/{$path}")) {
-            return null;
-        }
-        return new BinaryFileResponse("{$root}/{$path}");
+        return new BinaryFileResponse($file);
     }
 }
