@@ -29,6 +29,7 @@ task('dhil:precheck', function(){
 
 task('dhil:deploy:quick', function() {
     writeln(run('cd {{ current_path }} && git pull origin master'));
+    writeln(run('cd {{ current_path }} && git submodule foreach git pull origin master'));
     writeln(run('{{bin/php}} {{bin/console}} cache:clear --env=prod'));
 });
 
