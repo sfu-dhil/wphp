@@ -34,11 +34,11 @@ parameters:
     nines_feedback.sender: ~
     nines_feedback.recipient: ~
     nines_feedback.subject: New feedback received
+    nines_text.trim_length: 50
 
     # home page stuff.
     wphp.homepage_entries: 5
     wphp.title_index_authors: 3
-    nines_text.trim_length: 50
 
     # menu builder
     wphp.spotlight_menu: [ title, person, firm ]
