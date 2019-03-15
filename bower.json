@@ -17,7 +17,8 @@
     "select2": "^4.0.4",
     "select2-bootstrap-css": "^1.4.6",
     "symfony-collection": "^2.1.18",
-    "jQuery.fn.autoResize": "*"
+    "jQuery.fn.autoResize": "*",
+    "lato-font": "^3.0.0"
   },
   "resolutions": {
     "select2": "^4.0.4"
