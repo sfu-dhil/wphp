@@ -21,6 +21,7 @@
 /web/docs/*
 !/web/docs/.gitkeep
 /web/bower
+/web/npm
 app/cache
 /nbproject
 /coverage
