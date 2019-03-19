@@ -43,9 +43,6 @@ parameters:
     # menu builder
     wphp.spotlight_menu: [ title, person, firm ]
 
-    # where does ckfinder upload images?
-    wphp.ckfinder_root: editor/uploads
-
     # tracking configuration
     # true or false
     dhil.piwik_enabled: false
