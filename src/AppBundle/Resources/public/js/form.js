@@ -1,32 +1,6 @@
 (function ($, window, tinymce, editorUploadPath) {
 
-    const mceSettings = {
-        selector: '.tinymce',
-        plugins: 'image',
-        relative_urls: false,
-        convert_urls: false,
-
-        image_caption: true,
-        images_upload_url: editorUploadPath,
-        images_upload_credentials: true,
-        image_advtab: true,
-        image_title: true,
-
-        style_formats_merge: true,
-        style_formats: [{
-            title: 'Image Left', selector: 'img, figure', styles: {
-                'float': 'left',
-                'margin': '0 10px 0 10px'
-            }
-        }, {
-            title: 'Image Right', selector: 'img, figure', styles: {
-                'float': 'right',
-                'margin': '0 10px 0 10px'
-            }
-        }]
-    };
-
-    var hostname = window.location.hostname.replace('www.', '');
+    const hostname = window.location.hostname.replace('www.', '');
 
     function confirm() {
         var $this = $(this);
@@ -100,25 +74,6 @@
             },
         });
     }
-
-    function tinyMceSetup() {
-        tinymce.on('AddEditor', function (e) {
-            let $editor = tinymce.get(e.editor.id);
-            $editor.on("change", function (e) {
-                $editor.save();
-            });
-        });
-        // $('form').submit(function () {
-        //     tinymce.activeEditor.uploadImages(function (success) {
-        //         $.post('ajax/post.php', tinymce.activeEditor.getContent()).done(function () {
-        //             console.log("Uploaded images and posted content as an ajax request.");
-        //         });
-        //     });
-        // });
-
-        tinymce.init(mceSettings);
-    }
-
     $(document).ready(function () {
         $(window).bind('beforeunload', windowBeforeUnload);
         $('form').each(formDirty);
@@ -134,7 +89,6 @@
             simpleCollection();
             complexCollection();
         }
-        tinyMceSetup();
     });
 
-})(jQuery, window, tinymce, editorUploadPath);
+})(jQuery, window);

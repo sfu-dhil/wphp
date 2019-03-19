@@ -12,9 +12,6 @@
         <link rel="stylesheet" href="{{ asset('bundles/app/css/base.css') }}">
         {% block htmlhead %}{% endblock %}
         <script src="{{ asset('bower/jquery/dist/jquery.min.js') }}"></script>
-        <script>
-            const editorUploadPath = "{{ path('editor_upload') }}";
-        </script>
         {% block styles %}{% endblock -%}
     </head>
     <body>
@@ -81,7 +78,6 @@
 
 
         <script src="{{ asset('bower/bootstrap/dist/js/bootstrap.min.js') }}"></script>
-        <script src="{{ asset('bower/tinymce/tinymce.min.js') }}"></script>
         <script src="{{ asset('bundles/app/js/form.js') }}"></script>
         {% block javascripts %}
         {% endblock %}

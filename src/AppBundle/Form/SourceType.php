@@ -22,7 +22,7 @@ class SourceType extends AbstractType {
                 'help_block' => '',
             ),
         ));
-        $builder->add('description', TextAreaType::class, array(
+        $builder->add('description', TextareaType::class, array(
             'label' => 'Description',
             'required' => false,
             'attr' => array(
@@ -30,7 +30,7 @@ class SourceType extends AbstractType {
                 'class' => 'tinymce',
             ),
         ));
-        $builder->add('citation', TextAreaType::class, array(
+        $builder->add('citation', TextareaType::class, array(
             'label' => 'Citation',
             'required' => false,
             'attr' => array(

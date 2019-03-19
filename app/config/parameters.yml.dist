@@ -60,3 +60,6 @@ parameters:
     # Where the application lives
     # eg. "*.example.com/application"
     dhil.piwik_domain: ~
+
+    # image upload in text editors
+    nines.editor.upload_dir: web/tinymce

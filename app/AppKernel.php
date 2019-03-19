@@ -21,11 +21,12 @@ class AppKernel extends Kernel {
             new Tetranz\Select2EntityBundle\TetranzSelect2EntityBundle(),
             
             new AppBundle\AppBundle(),
-            
-            new Nines\UserBundle\NinesUserBundle(),
-            new Nines\FeedbackBundle\NinesFeedbackBundle(),
-            new Nines\DublinCoreBundle\NinesDublinCoreBundle(),
+
             new Nines\BlogBundle\NinesBlogBundle(),
+            new Nines\DublinCoreBundle\NinesDublinCoreBundle(),
+            new Nines\EditorBundle\NinesEditorBundle(),
+            new Nines\FeedbackBundle\NinesFeedbackBundle(),
+            new Nines\UserBundle\NinesUserBundle(),
             new Nines\UtilBundle\NinesUtilBundle(),
         ];
 

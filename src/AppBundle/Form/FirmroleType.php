@@ -15,7 +15,7 @@ class FirmroleType extends AbstractType {
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
-        $builder->add('name', null, array(
+        $builder->add('name', TextType::class, array(
             'label' => 'Name',
             'required' => false,
             'attr' => array(

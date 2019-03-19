@@ -50,7 +50,7 @@ class FormatType extends AbstractType {
                 'help_block' => '',
             ),
         ));
-        $builder->add('description', TextAreaType::class, array(
+        $builder->add('description', TextareaType::class, array(
             'label' => 'Description',
             'required' => false,
             'attr' => array(
