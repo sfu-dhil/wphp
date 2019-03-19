@@ -2,8 +2,9 @@
 
 namespace AppBundle\Form;
 
-use FOS\CKEditorBundle\Form\Type\CKEditorType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -21,7 +22,7 @@ class FirmroleType extends AbstractType {
                 'help_block' => '',
             ),
         ));
-        $builder->add('description', CKEditorType::class, array(
+        $builder->add('description', TextType::class, array(
             'label' => 'Description',
             'required' => false,
             'attr' => array(

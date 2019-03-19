@@ -12,6 +12,9 @@
         <link rel="stylesheet" href="{{ asset('bundles/app/css/base.css') }}">
         {% block htmlhead %}{% endblock %}
         <script src="{{ asset('bower/jquery/dist/jquery.min.js') }}"></script>
+        <script>
+            const editorUploadPath = "{{ path('editor_upload') }}";
+        </script>
         {% block styles %}{% endblock -%}
     </head>
     <body>

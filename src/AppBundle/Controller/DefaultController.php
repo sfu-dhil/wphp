@@ -72,4 +72,40 @@ class DefaultController extends Controller implements PaginatorAwareInterface
         }
         return new BinaryFileResponse($file);
     }
+
+    /**
+     * @param Request $request
+     * @Route("/upload/image", name="editor_upload")
+     */
+    public function editorUploadAction(Request $request) {
+        if($request->files->count() != 1) {
+            throw new BadRequestHttpException("Expected one file parameter. Got " . $request->files->count() . " instead.");
+        }
+
+        $uploadDir = $this->getParameter('kernel.project_dir') . '/web/tinymce';
+        $uploadFile = $request->files->get('file');
+
+        $clientName = preg_replace("/[^a-z0-9 _-]/i", '', $uploadFile->getClientOriginalName());
+        $name = uniqid($clientName . '_') . '.' . $uploadFile->guessExtension();
+        $uploadFile->move($uploadDir, $name);
+
+        return new JsonResponse(array('location' => $this->generateUrl('editor_image', array('filename' => $name), UrlGeneratorInterface::ABSOLUTE_PATH)));
+    }
+
+    /**
+     * @param Request $request
+     * @Route("/upload/image/{filename}", name="editor_image")
+     */
+    public function editorImageAction(Request $request, $filename) {
+        if( ! preg_match('/^[a-z0-9 ._-]*$/i', $filename)) {
+            throw new BadRequestHttpException('Invalid file name: ' . $filename);
+        }
+        $uploadDir = $this->getParameter('kernel.project_dir') . '/web/tinymce';
+        $path = $uploadDir . '/' . $filename;
+        if( ! file_exists($path)) {
+            throw new FileNotFoundException('Cannot find image file at ' . $path);
+        }
+        return new BinaryFileResponse($path);
+    }
+
 }
