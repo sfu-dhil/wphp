@@ -2,9 +2,9 @@
 
 namespace AppBundle\Form;
 
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -22,11 +22,12 @@ class FirmroleType extends AbstractType {
                 'help_block' => '',
             ),
         ));
-        $builder->add('description', TextType::class, array(
+        $builder->add('description', TextareaType::class, array(
             'label' => 'Description',
             'required' => false,
             'attr' => array(
                 'help_block' => 'Provide a short description of the source.',
+                'class' => 'tinymce',
             ),
         ));
     }

@@ -117,6 +117,7 @@
         // });
 
         tinymce.init(mceSettings);
+    }
 
     $(document).ready(function () {
         $(window).bind('beforeunload', windowBeforeUnload);

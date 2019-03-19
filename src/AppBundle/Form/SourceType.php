@@ -2,6 +2,7 @@
 
 namespace AppBundle\Form;
 
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -21,18 +22,20 @@ class SourceType extends AbstractType {
                 'help_block' => '',
             ),
         ));
-        $builder->add('description', TextType::class, array(
+        $builder->add('description', TextAreaType::class, array(
             'label' => 'Description',
             'required' => false,
             'attr' => array(
                 'help_block' => 'Provide a short description of the source.',
+                'class' => 'tinymce',
             ),
         ));
-        $builder->add('citation', TextType::class, array(
+        $builder->add('citation', TextAreaType::class, array(
             'label' => 'Citation',
             'required' => false,
             'attr' => array(
                 'help_block' => 'Provide citation for the source.',
+                'class' => 'tinymce',
             ),
         ));
     }
