@@ -19,8 +19,3 @@ nines_feedback:
 
 fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/all.xml"
-
-ckfinder_connector:
-    resource: "@CKSourceCKFinderBundle/Resources/config/routing.yml"
-    prefix:   /
-
