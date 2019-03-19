@@ -18,8 +18,6 @@ class AppKernel extends Kernel {
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
             new FOS\UserBundle\FOSUserBundle(),
-            new FOS\CKEditorBundle\FOSCKEditorBundle(),
-            new CKSource\Bundle\CKFinderBundle\CKSourceCKFinderBundle(),
             new Tetranz\Select2EntityBundle\TetranzSelect2EntityBundle(),
             
             new AppBundle\AppBundle(),
