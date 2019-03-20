@@ -1,6 +1,6 @@
-(function ($, window) {
+(function ($, window, tinymce, editorUploadPath) {
 
-    var hostname = window.location.hostname.replace('www.', '');
+    const hostname = window.location.hostname.replace('www.', '');
 
     function confirm() {
         var $this = $(this);
@@ -74,7 +74,6 @@
             },
         });
     }
-
     $(document).ready(function () {
         $(window).bind('beforeunload', windowBeforeUnload);
         $('form').each(formDirty);

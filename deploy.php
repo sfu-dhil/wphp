@@ -65,6 +65,10 @@ after('dhil:test', 'deploy:unlock');
 task('dhil:bower', function() {
     $output = run('cd {{ release_path }} && bower -q install');
     writeln($output);
+    if(file_exists('package.json')) {
+        $output = run('cd {{ release_path }} && npm -q install --prefix web/npm');
+        writeln($output);
+    }
 })->desc('Install bower dependencies.');
 
 task('dhil:sphinx', function() {
