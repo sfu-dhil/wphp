@@ -91,7 +91,9 @@ class MarcManager {
             }
         } else {
             $repo = $this->em->getRepository(MarcTagStructure::class);
-            $tag = $repo->findOneBy(array('tagField' => $field));
+            $tag = $repo->findOneBy(array(
+                'tagField' => $field->getField()
+            ));
             if($tag) {
                 return $tag->getName();
             } else {
