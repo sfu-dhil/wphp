@@ -2,10 +2,13 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\EstcMarc;
+use AppBundle\Entity\OsborneMarc;
 use AppBundle\Entity\Title;
 use AppBundle\Form\Title\TitleSearchType;
 use AppBundle\Form\Title\TitleType;
 use AppBundle\Repository\TitleRepository;
+use AppBundle\Services\MarcImporter;
 use AppBundle\Services\SourceLinker;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
@@ -19,6 +22,7 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * Title controller.
@@ -260,6 +264,24 @@ class TitleController extends Controller implements PaginatorAwareInterface {
             return $this->redirectToRoute('title_show', array('id' => $title->getId()));
         }
 
+        return array(
+            'title' => $title,
+            'form' => $form->createView(),
+        );
+    }
+
+    /**
+     * Build a new title form prepopulated with data from a MARC record.
+     *
+     * @param Request $request
+     * @Route("/import/{type}/{id}", name="title_marc_import")
+     * @Security("has_role('ROLE_CONTENT_ADMIN')")
+     * @Template("AppBundle:Title:new.html.twig")
+     * @Method("GET")
+     */
+    public function importMarcAction(Request $request, MarcImporter $importer, $type, $id) {
+        $title = $importer->import($type, $id);
+        $form = $this->createForm(TitleType::class, $title);
         return array(
             'title' => $title,
             'form' => $form->createView(),
