@@ -19,7 +19,7 @@
         <tbody>
             {% for field in data %}
                 <tr>
-                    <th>{{ manager.getFieldName(field) }}</th>
+                    <th>{{ manager.getFieldName(field) }} ({{ field }})</th>
                     <td>{{ field.getFieldData() }}</td>
                 </tr>
             {% endfor %}
