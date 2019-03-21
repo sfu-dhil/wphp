@@ -1,15 +1,12 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 namespace AppBundle\Services;
 
 use AppBundle\Entity\MarcSubfieldStructure;
 use AppBundle\Entity\MarcTagStructure;
+use AppBundle\Entity\OsborneMarc;
+use AppBundle\Repository\EstcMarcRepository;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 
 /**
@@ -25,6 +22,12 @@ class MarcManager {
         $this->em = $em;
     }
 
+    /**
+     * Get the title of a MARC record.
+     *
+     * @param EstcMarc | OsborneMarc $object
+     * @return string
+     */
     public function getTitle($object) {
         $repo = $this->em->getRepository(get_class($object));
         $rows = $repo->findBy(array(
@@ -36,6 +39,12 @@ class MarcManager {
         return implode("\n", array_map(function($row){return $row->getFieldData();}, $rows));
     }
 
+    /**
+     * Get the author of a MARC record.
+     *
+     * @param EstcMarc | OsborneMarc $object
+     * @return string
+     */
     public function getAuthor($object) {
         $repo = $this->em->getRepository(get_class($object));
         $rows = $repo->findBy(array(
@@ -50,12 +59,24 @@ class MarcManager {
         return null;
     }
 
+    /**
+     * Get the rows of a MARC record.
+     *
+     * @param EstcMarc | OsborneMarc $object
+     * @return Collection|EstcMarc[]|OsborneMarc[]
+     */
     public function getData($object) {
         $repo = $this->em->getRepository(get_class($object));
         $rows = $repo->findBy(array('titleId' => $object->getTitleId()), array('field' => 'ASC', 'subfield' => 'ASC'));
         return $rows;
     }
 
+    /**
+     * Find the name of a MARC field.
+     *
+     * @param EstcMarc|OsborneMarc $field
+     * @return string
+     */
     public function getFieldName($field) {
         if($field->getSubfield()) {
             $repo = $this->em->getRepository(MarcSubfieldStructure::class);
@@ -70,7 +91,9 @@ class MarcManager {
             }
         } else {
             $repo = $this->em->getRepository(MarcTagStructure::class);
-            $tag = $repo->findOneBy(array('tagField' => $field));
+            $tag = $repo->findOneBy(array(
+                'tagField' => $field->getField()
+            ));
             if($tag) {
                 return $tag->getName();
             } else {

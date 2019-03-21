@@ -19,6 +19,12 @@ class LoadOsborneMarc extends Fixture implements DependentFixtureInterface, Fixt
             $ldr->setFieldData('osborne-leader-' . $n);
             $manager->persist($ldr);
 
+            $id = new OsborneMarc();
+            $id->setTitleId(1 + $n);
+            $id->setField('001');
+            $id->setFieldData('abc-' . $n);
+            $manager->persist($id);
+
             $title = new OsborneMarc();
             $title->setTitleId(1 + $n);
             $title->setField('245');
