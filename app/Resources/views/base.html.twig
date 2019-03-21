@@ -14,7 +14,7 @@
         <script src="{{ asset('bower/jquery/dist/jquery.min.js') }}"></script>
         {% block styles %}{% endblock -%}
     </head>
-    <body>
+    <body class="page_{{ app.request.pathinfo|replace({'/': '_'}) }}">
         <!-- <nav class="navbar navbar-default navbar-fixed-top"> -->
         <nav class="navbar navbar-default">
             <div class="container">
