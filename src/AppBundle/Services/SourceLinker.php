@@ -1,11 +1,5 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 namespace AppBundle\Services;
 
 use AppBundle\Entity\En;
@@ -16,8 +10,6 @@ use AppBundle\Entity\OsborneMarc;
 use AppBundle\Entity\Source;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
  * Description of SourceLinker
@@ -37,32 +29,22 @@ class SourceLinker {
     private $generator;
 
     /**
-     * @var AuthorizationCheckerInterface
+     * @var RoleChecker
      */
-    private $authChecker;
+    private $checker;
 
-    /**
-     * @var TokenStorageInterface
-     */
-    private $tokenStorage;
-
-
-    public function __construct(EntityManagerInterface $em, UrlGeneratorInterface $generator, AuthorizationCheckerInterface $authChecker, TokenStorageInterface $tokenStorage) {
+    public function __construct(EntityManagerInterface $em, UrlGeneratorInterface $generator, RoleChecker $checker) {
         $this->em = $em;
         $this->generator = $generator;
-        $this->authChecker = $authChecker;
-        $this->tokenStorage = $tokenStorage;
+        $this->checker = $checker;
     }
 
-    private function hasRole($role) {
-        if (!$this->tokenStorage->getToken()) {
-            return false;
-        }
-        return $this->authChecker->isGranted($role);
+    public function setRoleChecker(RoleChecker $checker) {
+        $this->checker = $checker;
     }
 
     public function estc($data) {
-        if( ! $this->hasRole('ROLE_USER')) {
+        if (!$this->checker->hasRole('ROLE_USER')) {
             return null;
         }
         $repo = $this->em->getRepository(EstcMarc::class);
@@ -72,14 +54,14 @@ class SourceLinker {
         ));
         if ($record) {
             return $this->generator->generate('resource_estc_show', array(
-                        'id' => $record->getTitleId(),
+                'id' => $record->getTitleId(),
             ));
         }
         return null;
     }
 
     public function orlando($data) {
-        if( ! $this->hasRole('ROLE_USER')) {
+        if (!$this->checker->hasRole('ROLE_USER')) {
             return null;
         }
         $repo = $this->em->getRepository(OrlandoBiblio::class);
@@ -88,14 +70,14 @@ class SourceLinker {
         ));
         if ($record) {
             return $this->generator->generate('resource_orlando_biblio_show', array(
-                        'id' => $record->getId(),
+                'id' => $record->getId(),
             ));
         }
         return null;
     }
 
     public function jackson($data) {
-        if( ! $this->hasRole('ROLE_USER')) {
+        if (!$this->checker->hasRole('ROLE_USER')) {
             return null;
         }
         $repo = $this->em->getRepository(Jackson::class);
@@ -104,14 +86,14 @@ class SourceLinker {
         ));
         if ($record) {
             return $this->generator->generate('resource_jackson_show', array(
-                        'id' => $record->getId(),
+                'id' => $record->getId(),
             ));
         }
         return null;
     }
 
     public function en($data) {
-        if( ! $this->hasRole('ROLE_USER')) {
+        if (!$this->checker->hasRole('ROLE_USER')) {
             return null;
         }
         $repo = $this->em->getRepository(En::class);
@@ -120,14 +102,14 @@ class SourceLinker {
         ));
         if ($record) {
             return $this->generator->generate('resource_en_show', array(
-                        'id' => $record->getId(),
+                'id' => $record->getId(),
             ));
         }
         return null;
     }
 
     public function osborne($data) {
-        if( ! $this->hasRole('ROLE_USER')) {
+        if (!$this->checker->hasRole('ROLE_USER')) {
             return null;
         }
         $repo = $this->em->getRepository(OsborneMarc::class);
@@ -137,13 +119,13 @@ class SourceLinker {
         ));
         if ($record) {
             return $this->generator->generate('resource_osborne_show', array(
-                        'id' => $record->getTitleId(),
+                'id' => $record->getTitleId(),
             ));
         }
         return null;
     }
 
-    public function ecco($data){
+    public function ecco($data) {
         // No role checking for this one.
         $id = substr_replace($data, "0", 2, 0);
         return "http://link.galegroup.com/apps/doc/{$id}/ECCO?sid=WomenPrintHistProject";
