@@ -41,6 +41,12 @@ strong {
   font-family: $cormorant_garamond;
 }
 
+.container table p,
+.container .panel p {
+  font-size: 1em;
+  font-family: $lato;
+}
+
 
 
 /* Footer */
@@ -132,6 +138,33 @@ label.required::after {
 
 
 /* tables */
+table thead th {
+  color: $color_white;
+  background:$color_brown;
+  border: $color_brown;
+  font-weight: normal;
+}
+
+.table-striped > tbody > tr:nth-of-type(2n+1) {
+  background: $color_beige;
+  // &:hover {
+  //   background: $color_white;
+  // }
+}
+.table-hover > tbody > tr:hover {
+  background: $color_beige_light;
+}
+
+// .table > tbody > tr > th {
+//   // flex-shrink: 1;
+//   // width: 10%;
+//   white-space: normal;
+// }
+// .table > tbody > tr > td {
+//   // flex-grow: 2;
+//   // width: 100%;
+// }
+
 table.tablesorter thead tr {
     white-space: nowrap;
 }
@@ -250,6 +283,7 @@ span.select2 {
 p.help-block {
   font-size: 16px;
   font-family: $lato;
+  color: $color_brown;
 }
 
 label {
@@ -257,9 +291,19 @@ label {
 }
 
 
+// when there isn't a page title.
+.container > .panel:first-child {
+  margin-top: 80px;
+}
+
+.container > .alert:first-child {
+  margin-top: 20px;
+}
+
 
 
 /* Start panels and tables */
+
 .panel-body {
   background: #E1D8B7;
   font-size: 16px;

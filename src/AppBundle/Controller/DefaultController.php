@@ -8,9 +8,12 @@ use League\Flysystem\FileNotFoundException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Asset\Packages;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * Default controller for the home page.
@@ -57,19 +60,4 @@ class DefaultController extends Controller implements PaginatorAwareInterface
 
     }
 
-    /**
-     * @param Request $request
-     * @param string $path
-     * @Route("/editor/uploads/{path}", name="editor_image", requirements={"path"=".+"})
-     */
-    public function editorUpload(Request $request, $path)
-    {
-        $base = $this->getParameter('kernel.project_dir');
-        $root = $base . '/' . $this->getParameter('wphp.ckfinder_root');
-        $file = realpath($root . '/' . $path);
-        if(substr($file, 0, strlen($root)) !== $root) {
-            throw new FileNotFoundException("The requested file was not found.");
-        }
-        return new BinaryFileResponse($file);
-    }
 }

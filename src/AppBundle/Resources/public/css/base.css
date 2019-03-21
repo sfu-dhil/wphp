@@ -111,6 +111,12 @@ strong {
   font-family: "CormorantGaramond-SemiBold", serif;
 }
 
+.container table p,
+.container .panel p {
+  font-size: 1em;
+  font-family: "LatoLatinWeb", sans-serif;
+}
+
 /* Footer */
 .footer {
   height: 60px;
@@ -179,6 +185,21 @@ label.required::after {
 }
 
 /* tables */
+table thead th {
+  color: #fff;
+  background: #302316;
+  border: #302316;
+  font-weight: normal;
+}
+
+.table-striped > tbody > tr:nth-of-type(2n+1) {
+  background: #e1d8b7;
+}
+
+.table-hover > tbody > tr:hover {
+  background: #f3efe2;
+}
+
 table.tablesorter thead tr {
   white-space: nowrap;
 }
@@ -298,6 +319,15 @@ span.select2 {
 p.help-block {
   font-size: 16px;
   font-family: "LatoLatinWeb", sans-serif;
+  color: #302316;
+}
+
+.container > .panel:first-child {
+  margin-top: 80px;
+}
+
+.container > .alert:first-child {
+  margin-top: 20px;
 }
 
 /* Start panels and tables */

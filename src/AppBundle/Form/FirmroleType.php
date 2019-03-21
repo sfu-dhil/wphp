@@ -2,7 +2,8 @@
 
 namespace AppBundle\Form;
 
-use FOS\CKEditorBundle\Form\Type\CKEditorType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -14,18 +15,19 @@ class FirmroleType extends AbstractType {
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
-        $builder->add('name', null, array(
+        $builder->add('name', TextType::class, array(
             'label' => 'Name',
             'required' => false,
             'attr' => array(
                 'help_block' => '',
             ),
         ));
-        $builder->add('description', CKEditorType::class, array(
+        $builder->add('description', TextareaType::class, array(
             'label' => 'Description',
             'required' => false,
             'attr' => array(
                 'help_block' => 'Provide a short description of the source.',
+                'class' => 'tinymce',
             ),
         ));
     }
