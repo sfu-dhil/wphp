@@ -2,7 +2,7 @@
 /* Webfont: LatoLatin-Black */
 @font-face {
   font-family: "LatoLatinWebBlack";
-  src: url("/wphp/web/bower/lato-font/fonts/lato-black/lato-black.woff2") format("woff2"), url("/wphp/web/bower/lato-font/fonts/lato-black/lato-black.woff") format("woff");
+  src: url("/assets/node_modules/lato-font/fonts/lato-black/lato-black.woff2") format("woff2"), url("/assets/node_modules/lato-font/fonts/lato-black/lato-black.woff") format("woff");
   /* Modern Browsers */
   font-style: normal;
   font-weight: normal;
@@ -11,13 +11,12 @@
 /* Webfont: LatoLatin-Regular */
 @font-face {
   font-family: "LatoLatinWeb";
-  src: url("/wphp/web/bower/lato-font/fonts/lato-normal/lato-normal.woff2") format("woff2"), url("/wphp/web/bower/lato-font/fonts/lato-normal/lato-normal.woff") format("woff");
+  src: url("/assets/node_modules/lato-font/fonts/lato-normal/lato-normal.woff2") format("woff2"), url("/assets/node_modules/lato-font/fonts/lato-normal/lato-normal.woff") format("woff");
   /* Modern Browsers */
   font-style: normal;
   font-weight: normal;
   text-rendering: optimizeLegibility;
 }
-/* Webfont: LatoLatin-Black */
 /* Webfont: Cormorant Garamond SemiBold */
 /* cormorant-garamond-600normal - latin */
 @font-face {
@@ -25,7 +24,7 @@
   font-style: normal;
   font-display: swap;
   font-weight: normal;
-  src: local("Cormorant Garamond SemiBold "), local("Cormorant Garamond-SemiBold"), url("/wphp/web/npm/node_modules/typeface-cormorant-garamond/files/cormorant-garamond-latin-600.woff2") format("woff2"), url("/wphp/web/npm/node_modules/typeface-cormorant-garamond/cormorant-garamond-latin-600.woff") format("woff");
+  src: local("Cormorant Garamond SemiBold "), local("Cormorant Garamond-SemiBold"), url("/assets/node_modules/typeface-cormorant-garamond/files/cormorant-garamond-latin-600.woff2") format("woff2"), url("/assets/node_modules/typeface-cormorant-garamond/cormorant-garamond-latin-600.woff") format("woff");
   /* Modern Browsers */
 }
 /* cormorant-garamond-700normal - latin */
@@ -34,13 +33,13 @@
   font-style: normal;
   font-display: swap;
   font-weight: normal;
-  src: local("Cormorant Garamond Bold "), local("Cormorant Garamond-Bold"), url("/wphp/web/npm/node_modules/typeface-cormorant-garamond/cormorant-garamond-latin-700.woff2") format("woff2"), url("/wphp/web/npm/node_modules/typeface-cormorant-garamond/cormorant-garamond-latin-700.woff") format("woff");
+  src: local("Cormorant Garamond Bold "), local("Cormorant Garamond-Bold"), url("/assets/node_modules/typeface-cormorant-garamond/cormorant-garamond-latin-700.woff2") format("woff2"), url("/assets/node_modules/typeface-cormorant-garamond/cormorant-garamond-latin-700.woff") format("woff");
   /* Modern Browsers */
 }
 /* Webfont: LatoLatin-Black */
 @font-face {
   font-family: "LatoLatinWebBlack";
-  src: url("/wphp/web/bower/lato-font/fonts/lato-black/lato-black.woff2") format("woff2"), url("/wphp/web/bower/lato-font/fonts/lato-black/lato-black.woff") format("woff");
+  src: url("/assets/node_modules/lato-font/fonts/lato-black/lato-black.woff2") format("woff2"), url("/assets/node_modules/lato-font/fonts/lato-black/lato-black.woff") format("woff");
   /* Modern Browsers */
   font-style: normal;
   font-weight: normal;
@@ -49,13 +48,12 @@
 /* Webfont: LatoLatin-Regular */
 @font-face {
   font-family: "LatoLatinWeb";
-  src: url("/wphp/web/bower/lato-font/fonts/lato-normal/lato-normal.woff2") format("woff2"), url("/wphp/web/bower/lato-font/fonts/lato-normal/lato-normal.woff") format("woff");
+  src: url("/assets/node_modules/lato-font/fonts/lato-normal/lato-normal.woff2") format("woff2"), url("/assets/node_modules/lato-font/fonts/lato-normal/lato-normal.woff") format("woff");
   /* Modern Browsers */
   font-style: normal;
   font-weight: normal;
   text-rendering: optimizeLegibility;
 }
-/* Webfont: LatoLatin-Black */
 /* Webfont: Cormorant Garamond SemiBold */
 /* cormorant-garamond-600normal - latin */
 @font-face {
@@ -63,7 +61,7 @@
   font-style: normal;
   font-display: swap;
   font-weight: normal;
-  src: local("Cormorant Garamond SemiBold "), local("Cormorant Garamond-SemiBold"), url("/wphp/web/npm/node_modules/typeface-cormorant-garamond/files/cormorant-garamond-latin-600.woff2") format("woff2"), url("/wphp/web/npm/node_modules/typeface-cormorant-garamond/cormorant-garamond-latin-600.woff") format("woff");
+  src: local("Cormorant Garamond SemiBold "), local("Cormorant Garamond-SemiBold"), url("/assets/node_modules/typeface-cormorant-garamond/files/cormorant-garamond-latin-600.woff2") format("woff2"), url("/assets/node_modules/typeface-cormorant-garamond/cormorant-garamond-latin-600.woff") format("woff");
   /* Modern Browsers */
 }
 /* cormorant-garamond-700normal - latin */
@@ -72,7 +70,7 @@
   font-style: normal;
   font-display: swap;
   font-weight: normal;
-  src: local("Cormorant Garamond Bold "), local("Cormorant Garamond-Bold"), url("/wphp/web/npm/node_modules/typeface-cormorant-garamond/cormorant-garamond-latin-700.woff2") format("woff2"), url("/wphp/web/npm/node_modules/typeface-cormorant-garamond/cormorant-garamond-latin-700.woff") format("woff");
+  src: local("Cormorant Garamond Bold "), local("Cormorant Garamond-Bold"), url("/assets/node_modules/typeface-cormorant-garamond/cormorant-garamond-latin-700.woff2") format("woff2"), url("/assets/node_modules/typeface-cormorant-garamond/cormorant-garamond-latin-700.woff") format("woff");
   /* Modern Browsers */
 }
 html {
@@ -82,15 +80,14 @@ html {
 
 body {
   background: #f3efe2;
-  font-family: "LatoLatinWeb", sans-serif;
+  font: "LatoLatinWeb", sans-serif;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
   margin-bottom: 0;
+  font-family: "LatoLatinWeb", sans-serif;
 }
 body > .container {
-  /* Move the content down, to make room for the nav bar. */
-  padding-top: 70px;
   flex: 1;
   flex-grow: 2;
   margin-bottom: 60px;
@@ -104,19 +101,20 @@ h5 {
   font-family: "CormorantGaramond-SemiBold", serif;
 }
 
-a {
-  color: #623637;
-}
-a:link, a:visited {
-  color: #623637;
-}
-a:active, a:focus, a:hover {
-  color: #a62e3f;
-}
-
 em,
 strong {
-  font-family: "LatoLatinWebBlack", sans-serif;
+  font: "LatoLatinWebBlack", sans-serif;
+}
+
+.container p {
+  font-size: 1.5em;
+  font-family: "CormorantGaramond-SemiBold", serif;
+}
+
+.container table p,
+.container .panel p {
+  font-size: 1em;
+  font-family: "LatoLatinWeb", sans-serif;
 }
 
 /* Footer */
@@ -145,6 +143,38 @@ strong {
 }
 .footer p {
   margin: 0;
+  font-family: "LatoLatinWeb", sans-serif;
+  font-size: 1em;
+}
+
+.nav-tabs > li > a {
+  margin-right: 2px;
+  line-height: 1.42857143;
+  border: 1px solid transparent;
+  border-top-color: transparent;
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+  border-radius: 4px 4px 0 0;
+  background-color: #623637;
+  color: #fff;
+}
+.nav-tabs > li > a:active, .nav-tabs > li > a:focus, .nav-tabs > li > a:hover {
+  border-color: #eee #eee #ddd;
+  text-decoration: none;
+  background-color: #a62e3f;
+  color: #fff;
+}
+
+.nav-tabs > li.active > a {
+  text-decoration: none;
+  background-color: #a62e3f;
+  color: #fff;
+}
+.nav-tabs > li.active > a:active, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover {
+  text-decoration: none;
+  background-color: #a62e3f;
+  color: #fff;
 }
 
 /* Custom app styles */
@@ -155,6 +185,21 @@ label.required::after {
 }
 
 /* tables */
+table thead th {
+  color: #fff;
+  background: #302316;
+  border: #302316;
+  font-weight: normal;
+}
+
+.table-striped > tbody > tr:nth-of-type(2n+1) {
+  background: #e1d8b7;
+}
+
+.table-hover > tbody > tr:hover {
+  background: #f3efe2;
+}
+
 table.tablesorter thead tr {
   white-space: nowrap;
 }
@@ -181,6 +226,10 @@ th.sorted.desc:after, a.desc:after {
 
 div.tab-content {
   min-height: 200px;
+}
+div.tab-content p {
+  font-size: 14px;
+  font-family: "LatoLatinWeb", sans-serif;
 }
 
 ul.columnated {
@@ -267,9 +316,25 @@ span.select2 {
   width: 100% !important;
 }
 
+p.help-block {
+  font-size: 16px;
+  font-family: "LatoLatinWeb", sans-serif;
+  color: #302316;
+}
+
+.container > .panel:first-child {
+  margin-top: 80px;
+}
+
+.container > .alert:first-child {
+  margin-top: 20px;
+}
+
 /* Start panels and tables */
 .panel-body {
   background: #E1D8B7;
+  font-size: 16px;
+  font-family: "LatoLatinWeb", sans-serif;
 }
 
 .panel-default > .panel-heading {
@@ -281,14 +346,6 @@ span.select2 {
   background: #E6DFC6;
 }
 
-.btn-toolbar {
-  margin-bottom: 1em;
-}
-
-/*.btn-group {
-  box-shadow: 0 0 1px rgba(0, 0, 0, 0.5)
-      border-radius: 4px;
-}*/
 .page-header {
   margin-bottom: 0;
 }
@@ -305,26 +362,6 @@ span.select2 {
 thead > tr > th {
   text-align: left;
   white-space: nowrap;
-}
-
-.btn-default {
-  /* Rectangle 10: */
-  background: #A62E3F;
-  border: 1px solid #EAA89A;
-  /* Submit button exampl: */
-  font-family: "LatoLatinWebBlack", sans-serif;
-  font-weight: 500;
-  font-size: 14px;
-  text-shadow: none;
-  color: #FFFFFF;
-  text-align: left;
-  border-radius: 4px;
-  box-shadow: none;
-}
-
-.btn-group .btn-default:first-child {
-  background-color: #EAA89A;
-  color: black;
 }
 
 th {
@@ -355,6 +392,71 @@ th {
 }
 
 /* End tables and panels */
+.btn-toolbar {
+  margin-bottom: 1em;
+}
+.btn-toolbar > .btn,
+.btn-toolbar > .btn-group,
+.btn-toolbar > .input-group {
+  margin-left: 0;
+}
+
+/*.btn-group {
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.5)
+      border-radius: 4px;
+}*/
+a.btn-default,
+a.btn-primary {
+  /* Rectangle 10: */
+  background: #a62e3f;
+  border: 1px solid #302316;
+  /* Submit button exampl: */
+  font-family: "LatoLatinWeb", sans-serif;
+  font-size: 14px;
+  text-shadow: none;
+  color: #fff;
+  text-align: left;
+  border-radius: 4px;
+  box-shadow: none;
+  padding-top: 8px;
+  transition: 0.125s ease-in-out all;
+}
+a.btn-default:link, a.btn-default:visited,
+a.btn-primary:link,
+a.btn-primary:visited {
+  color: #fff;
+}
+a.btn-default:first-child, a.btn-default:active, a.btn-default:focus, a.btn-default:hover,
+a.btn-primary:first-child,
+a.btn-primary:active,
+a.btn-primary:focus,
+a.btn-primary:hover {
+  background-color: #eaa89a;
+  color: #fff;
+  border-color: #a62e3f;
+}
+a.btn-default:first-child,
+a.btn-primary:first-child {
+  color: #302316;
+}
+a.btn-default:first-child:active, a.btn-default:first-child:focus, a.btn-default:first-child:hover,
+a.btn-primary:first-child:active,
+a.btn-primary:first-child:focus,
+a.btn-primary:first-child:hover {
+  color: #fff;
+}
+
+a {
+  color: #a62e3f;
+}
+a:link, a:visited {
+  color: #a62e3f;
+}
+a:active, a:focus, a:hover {
+  color: #a62e3f;
+  text-decoration: underline;
+}
+
 /* Start navbar */
 #navbar {
   display: flex;
@@ -428,6 +530,29 @@ th {
 .navbar-default .navbar-nav:first-child > li > a:focus,
 .navbar-default .navbar-nav:first-child > li > a:hover {
   background-color: transparent;
+}
+
+.dropdown-menu {
+  background-color: #623637;
+  border: 0;
+  border-radius: 0;
+  font-family: "LatoLatinWeb", sans-serif;
+}
+.dropdown-menu > li a {
+  color: #fff;
+}
+.dropdown-menu > li a:link, .dropdown-menu > li a:visited {
+  color: #fff;
+}
+.dropdown-menu > li a:active, .dropdown-menu > li a:focus, .dropdown-menu > li a:hover {
+  color: #fff;
+}
+.dropdown-menu > li.divider {
+  background-color: #fff;
+}
+.dropdown-menu > li a:active, .dropdown-menu > li a:focus, .dropdown-menu > li a:hover {
+  background-image: none;
+  background-color: #a62e3f;
 }
 
 /* End navbar */
