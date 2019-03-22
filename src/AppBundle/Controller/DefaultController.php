@@ -34,21 +34,8 @@ class DefaultController extends Controller implements PaginatorAwareInterface
      *
      * @return array
      */
-    public function indexAction(TitleRepository $titleRepo, PersonRepository $personRepo, FirmRepository $firmRepo)
+    public function indexAction()
     {
-        $em = $this->getDoctrine()->getManager();
-        $postQuery = $em->getRepository('NinesBlogBundle:Post')->recentQuery(
-            false,
-            $this->getParameter('nines_blog.homepage_posts')
-        );
-        $blocksize = $this->getParameter('wphp.homepage_entries');
-
-        return [
-            'posts' => $postQuery->execute(),
-            'titles' => $titleRepo->random($blocksize),
-            'persons' => $personRepo->random($blocksize),
-            'firms' => $firmRepo->random($blocksize),
-        ];
     }
 
     /**
@@ -57,7 +44,6 @@ class DefaultController extends Controller implements PaginatorAwareInterface
      */
     public function privacyAction(Request $request)
     {
-
     }
 
 }
