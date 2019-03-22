@@ -35,9 +35,9 @@ class LoadEstcMarc extends Fixture implements DependentFixtureInterface, Fixture
             for($j = 0; $j < 20; $j++) {
                 for ($i = 0; $i < 10; $i++) {
                     $fixture = new EstcMarc();
+                    $fixture->setTitleId(1 + $n);
                     $fixture->setField(100 + $j);
                     $fixture->setSubfield('abcdefghijklmnop'[$i]);
-                    $fixture->setTitleId(1 + $n);
                     $fixture->setFieldData("Estc Field Data $n " . (100 + $j) . 'abcdefghijklmnop'[$i]);
                     $manager->persist($fixture);
                     $this->setReference("estc.$n.$j.$i", $fixture);

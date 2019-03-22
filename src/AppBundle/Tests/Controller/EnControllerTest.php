@@ -104,7 +104,6 @@ class EnControllerTest extends BaseTestCase
         $form = $formCrawler->selectButton('Search')->form([
             'q' => 'adventures',
         ]);
-        $client->getContainer()->set(EnRepository::class, $repo);
 
         $responseCrawler = $client->submit($form);
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
@@ -123,7 +122,6 @@ class EnControllerTest extends BaseTestCase
         $form = $formCrawler->selectButton('Search')->form([
             'q' => 'adventures',
         ]);
-        $client->getContainer()->set(EnRepository::class, $repo);
 
         $responseCrawler = $client->submit($form);
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
