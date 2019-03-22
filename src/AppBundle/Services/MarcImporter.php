@@ -39,7 +39,6 @@ class MarcImporter {
     public function import($type, $id) {
         $repo = $this->getRepository($type, $id);
         $data = $repo->findBy(array('titleId' => $id));
-        dump($data[0]);
         $title = new Title();
         $title->setTitle(implode(" ", $this->manager->getFieldValues($data[0], '245')));
 
