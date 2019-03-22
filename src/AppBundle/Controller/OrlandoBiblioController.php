@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\OrlandoBiblio;
+use AppBundle\Repository\OrlandoBiblioRepository;
 use AppBundle\Services\OrlandoManager;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -55,9 +56,7 @@ class OrlandoBiblioController extends Controller implements PaginatorAwareInterf
      * @Method("GET")
      * @Template()
      */
-    public function searchAction(Request $request,  OrlandoManager $manager) {
-        $em = $this->getDoctrine()->getManager();
-        $repo = $em->getRepository('AppBundle:OrlandoBiblio');
+    public function searchAction(Request $request,  OrlandoManager $manager, OrlandoBiblioRepository $repo) {
         $q = $request->query->get('q');
         if ($q) {
             $query = $repo->searchQuery($q);

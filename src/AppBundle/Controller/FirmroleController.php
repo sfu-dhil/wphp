@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Firmrole;
 use AppBundle\Form\FirmroleType;
+use AppBundle\Repository\FirmroleRepository;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -30,7 +31,7 @@ class FirmroleController extends Controller  implements PaginatorAwareInterface 
      * @Template()
      * @param Request $request
      */
-    public function indexAction(Request $request) {
+    public function indexAction(Request $request, FirmroleRepository $repo) {
         $em = $this->getDoctrine()->getManager();
         $dql = 'SELECT e FROM AppBundle:Firmrole e';
         $query = $em->createQuery($dql);
@@ -41,7 +42,7 @@ class FirmroleController extends Controller  implements PaginatorAwareInterface 
 
         return array(
             'firmroles' => $firmroles,
-            'repo' => $em->getRepository(Firmrole::class),
+            'repo' => $repo,
         );
     }
 
@@ -52,13 +53,11 @@ class FirmroleController extends Controller  implements PaginatorAwareInterface 
      * @Method("GET")
      * @return JsonResponse
      */
-    public function typeaheadAction(Request $request) {
+    public function typeaheadAction(Request $request, FirmroleRepository $repo) {
         $q = $request->query->get('q');
         if( ! $q) {
             return new JsonResponse([]);
         }
-        $em = $this->getDoctrine()->getManager();
-        $repo = $em->getRepository(Firmrole::class);
         $data = [];
         foreach($repo->typeaheadQuery($q) as $result) {
             $data[] = [

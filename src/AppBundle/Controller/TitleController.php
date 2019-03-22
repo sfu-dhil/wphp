@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Title;
 use AppBundle\Form\Title\TitleSearchType;
 use AppBundle\Form\Title\TitleType;
+use AppBundle\Repository\TitleRepository;
 use AppBundle\Services\SourceLinker;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
@@ -64,13 +65,11 @@ class TitleController extends Controller implements PaginatorAwareInterface {
      * @Method("GET")
      * @return JsonResponse
      */
-    public function typeaheadAction(Request $request) {
+    public function typeaheadAction(Request $request, TitleRepository $repo) {
         $q = $request->query->get('q');
         if (!$q) {
             return new JsonResponse([]);
         }
-        $em = $this->getDoctrine()->getManager();
-        $repo = $em->getRepository(Title::class);
         $data = [];
         foreach ($repo->typeaheadQuery($q) as $result) {
             $data[] = [
@@ -180,7 +179,7 @@ class TitleController extends Controller implements PaginatorAwareInterface {
      * @param Request $request
      * @return array
      */
-    public function searchAction(Request $request) {
+    public function searchAction(Request $request, TitleRepository $repo) {
         $em = $this->getDoctrine()->getManager();
         $form = $this->createForm(TitleSearchType::class, null, array('entity_manager' => $em));
         $form->handleRequest($request);
@@ -191,7 +190,6 @@ class TitleController extends Controller implements PaginatorAwareInterface {
             $data = array_filter($form->getData());
             if (count($data) > 2) {
                 $submitted = true;
-                $repo = $em->getRepository(Title::class);
                 $query = $repo->buildSearchQuery($data);
                 $titles = $this->paginator->paginate($query->execute(), $request->query->getInt('page', 1), 25);
             }
@@ -212,14 +210,13 @@ class TitleController extends Controller implements PaginatorAwareInterface {
      * @param Request $request
      * @return array
      */
-    public function searchExportAction(Request $request) {
+    public function searchExportAction(Request $request, TitleRepository $repo) {
         $em = $this->getDoctrine()->getManager();
         $form = $this->createForm(TitleSearchType::class, null, array('entity_manager' => $em));
         $form->handleRequest($request);
         $titles = array();
 
         if ($form->isValid()) {
-            $repo = $em->getRepository(Title::class);
             $query = $repo->buildSearchQuery($form->getData());
             $titles = $query->execute();
         }

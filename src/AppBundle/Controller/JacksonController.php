@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Jackson;
+use AppBundle\Repository\JacksonRepository;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -70,13 +71,11 @@ class JacksonController extends Controller  implements PaginatorAwareInterface {
      * @Method("GET")
      * @Template()
      */
-    public function searchAction(Request $request) {
-        $em = $this->getDoctrine()->getManager();
-        $repo = $em->getRepository('AppBundle:Jackson');
+    public function searchAction(Request $request, JacksonRepository $repo) {
         $q = $request->query->get('q');
         if ($q) {
             $query = $repo->searchQuery($q);
-                $jacksons = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
+            $jacksons = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
         } else {
             $jacksons = array();
         }

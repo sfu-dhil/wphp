@@ -2,6 +2,9 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Repository\FirmRepository;
+use AppBundle\Repository\PersonRepository;
+use AppBundle\Repository\TitleRepository;
 use GuzzleHttp\Exception\BadResponseException;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use League\Flysystem\FileNotFoundException;
@@ -31,7 +34,7 @@ class DefaultController extends Controller implements PaginatorAwareInterface
      *
      * @return array
      */
-    public function indexAction()
+    public function indexAction(TitleRepository $titleRepo, PersonRepository $personRepo, FirmRepository $firmRepo)
     {
         $em = $this->getDoctrine()->getManager();
         $postQuery = $em->getRepository('NinesBlogBundle:Post')->recentQuery(
@@ -39,15 +42,12 @@ class DefaultController extends Controller implements PaginatorAwareInterface
             $this->getParameter('nines_blog.homepage_posts')
         );
         $blocksize = $this->getParameter('wphp.homepage_entries');
-        $titles = $em->getRepository('AppBundle:Title')->random($blocksize);
-        $persons = $em->getRepository('AppBundle:Person')->random($blocksize);
-        $firms = $em->getRepository('AppBundle:Firm')->random($blocksize);
 
         return [
             'posts' => $postQuery->execute(),
-            'titles' => $titles,
-            'persons' => $persons,
-            'firms' => $firms,
+            'titles' => $titleRepo->random($blocksize),
+            'persons' => $personRepo->random($blocksize),
+            'firms' => $firmRepo->random($blocksize),
         ];
     }
 

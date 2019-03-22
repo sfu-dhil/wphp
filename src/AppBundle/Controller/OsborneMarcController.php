@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\OsborneMarc;
+use AppBundle\Repository\OsborneMarcRepository;
 use AppBundle\Services\MarcManager;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -34,9 +35,7 @@ class OsborneMarcController extends Controller  implements PaginatorAwareInterfa
      * @Method("GET")
      * @Template()
      */
-    public function indexAction(Request $request, MarcManager $manager) {
-        $em = $this->getDoctrine()->getManager();
-        $repo = $em->getRepository(OsborneMarc::class);
+    public function indexAction(Request $request, MarcManager $manager, OsborneMarcRepository $repo) {
         $query = $repo->indexQuery();
         $osborneMarcs = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
 
@@ -55,9 +54,7 @@ class OsborneMarcController extends Controller  implements PaginatorAwareInterfa
      * @Method("GET")
      * @Template()
      */
-    public function searchAction(Request $request, MarcManager $manager) {
-        $em = $this->getDoctrine()->getManager();
-        $repo = $em->getRepository('AppBundle:OsborneMarc');
+    public function searchAction(Request $request, MarcManager $manager, OsborneMarcRepository $repo) {
         $q = $request->query->get('q');
         if ($q) {
             $result = $repo->searchQuery($q);

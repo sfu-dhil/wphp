@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Geonames;
+use AppBundle\Repository\GeonamesRepository;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -47,13 +48,11 @@ class GeonamesController extends Controller  implements PaginatorAwareInterface 
      * @Method("GET")
      * @return JsonResponse
      */
-    public function typeaheadAction(Request $request) {
+    public function typeaheadAction(Request $request, GeonamesRepository $repo) {
         $q = $request->query->get('q');
         if( ! $q) {
             return new JsonResponse([]);
         }
-        $em = $this->getDoctrine()->getManager();
-        $repo = $em->getRepository(Geonames::class);
         $data = [];
         foreach($repo->typeaheadQuery($q) as $result) {
             $data[] = [
