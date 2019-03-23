@@ -8,7 +8,7 @@ use AppBundle\Entity\Title;
 use AppBundle\Form\Title\TitleSearchType;
 use AppBundle\Form\Title\TitleType;
 use AppBundle\Repository\TitleRepository;
-use AppBundle\Services\MarcImporter;
+use AppBundle\Services\EstcMarcImporter;
 use AppBundle\Services\SourceLinker;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
@@ -279,7 +279,7 @@ class TitleController extends Controller implements PaginatorAwareInterface {
      * @Template("AppBundle:Title:new.html.twig")
      * @Method("GET")
      */
-    public function importMarcAction(Request $request, MarcImporter $importer, $type, $id) {
+    public function importMarcAction(Request $request, EstcMarcImporter $importer, $type, $id) {
         $title = $importer->import($type, $id);
         $form = $this->createForm(TitleType::class, $title);
         return array(
