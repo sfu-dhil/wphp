@@ -35,7 +35,7 @@
     <div class="container">
         <div class="row">
 
-            <div class="col-sm-6">
+            <div class="col-sm-7">
                 <table class="table table-bordered table-condensed table-hover table-striped">
                     <tbody>
                          <tr>
@@ -122,6 +122,13 @@
                                 </td>
                             {% endif %}
                         </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col-sm-5">
+                <table class="table table-bordered table-condensed table-hover table-striped">
+                    <tbody>
                         <tr>
                             <th data-toggle="popover"  data-content="The way that sheets have been folded and gathered into pages">Format</th>
                             <td>
@@ -140,13 +147,6 @@
                             <th data-toggle="popover"  data-content="Width measured in cm">Width (cm)</th>
                             <td>{{ title.sizeW }}</td>
                         </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="col-sm-6">
-                <table class="table table-bordered table-condensed table-hover table-striped">
-                    <tbody>
                         <tr>
                             <th data-toggle="popover"  data-content="Portion of the price of the work in pounds">Price (pound)</th>
                             <td>{{ title.pricePound }}</td>
