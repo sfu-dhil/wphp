@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Role;
 use AppBundle\Form\RoleType;
+use AppBundle\Repository\RoleRepository;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -31,7 +32,7 @@ class RoleController extends Controller  implements PaginatorAwareInterface {
      * @Template()
      * @param Request $request
      */
-    public function indexAction(Request $request) {
+    public function indexAction(Request $request, RoleRepository $repo) {
         $em = $this->getDoctrine()->getManager();
         $dql = 'SELECT e FROM AppBundle:Role e ORDER BY e.id';
         $query = $em->createQuery($dql);
@@ -39,7 +40,7 @@ class RoleController extends Controller  implements PaginatorAwareInterface {
 
         return array(
             'roles' => $roles,
-            'repo' => $em->getRepository(Role::class),
+            'repo' => $repo,
         );
     }
 
@@ -50,13 +51,11 @@ class RoleController extends Controller  implements PaginatorAwareInterface {
      * @Method("GET")
      * @return JsonResponse
      */
-    public function typeaheadAction(Request $request) {
+    public function typeaheadAction(Request $request, RoleRepository $repo) {
         $q = $request->query->get('q');
         if( ! $q) {
             return new JsonResponse([]);
         }
-        $em = $this->getDoctrine()->getManager();
-        $repo = $em->getRepository(role::class);
         $data = [];
         foreach($repo->typeaheadQuery($q) as $result) {
             $data[] = [

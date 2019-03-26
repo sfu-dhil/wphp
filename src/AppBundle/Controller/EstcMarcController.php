@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\EstcMarc;
+use AppBundle\Repository\EstcMarcRepository;
 use AppBundle\Services\MarcManager;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -35,9 +36,7 @@ class EstcMarcController extends Controller  implements PaginatorAwareInterface 
      * @Method("GET")
      * @Template()
      */
-    public function indexAction(Request $request, MarcManager $manager) {
-        $em = $this->getDoctrine()->getManager();
-        $repo = $em->getRepository(EstcMarc::class);
+    public function indexAction(Request $request, MarcManager $manager, EstcMarcRepository $repo) {
         $query = $repo->indexQuery();
         $estcMarcs = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
 
@@ -56,13 +55,43 @@ class EstcMarcController extends Controller  implements PaginatorAwareInterface 
      * @Method("GET")
      * @Template()
      */
-    public function searchAction(Request $request, MarcManager $manager) {
-        $em = $this->getDoctrine()->getManager();
-        $repo = $em->getRepository('AppBundle:EstcMarc');
+    public function searchAction(Request $request, MarcManager $manager, EstcMarcRepository $repo) {
         $q = $request->query->get('q');
         if ($q) {
             $result = $repo->searchQuery($q);
                 $titleIds = $this->paginator->paginate($result, $request->query->getInt('page', 1), 25);
+        } else {
+            $titleIds = array();
+        }
+        $estcMarcs = array();
+        foreach($titleIds as $titleId) {
+            $estcMarcs[] = $repo->findOneBy(array(
+                'titleId' => $titleId,
+                'field' => 'ldr',
+            ));
+        }
+        return array(
+            'titleIds' => $titleIds,
+            'estcMarcs' => $estcMarcs,
+            'q' => $q,
+            'manager' => $manager,
+        );
+    }
+
+    /**
+     * Search for EstcMarc entities.
+     *
+     * @param Request $request
+     *
+     * @Route("/imprint_search", name="resource_estc_search_imprint")
+     * @Method("GET")
+     * @Template()
+     */
+    public function imprintSearchAction(Request $request, MarcManager $manager, EstcMarcRepository $repo) {
+        $q = $request->query->get('q');
+        if ($q) {
+            $result = $repo->imprintSearchQuery($q);
+            $titleIds = $this->paginator->paginate($result, $request->query->getInt('page', 1), 25);
         } else {
             $titleIds = array();
         }

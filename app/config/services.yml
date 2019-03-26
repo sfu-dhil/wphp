@@ -41,3 +41,89 @@ services:
         - { name: knp_menu.menu_builder, method: mainMenu, alias: main}
         - { name: knp_menu.menu_builder, method: searchMenu, alias: search}
         - { name: knp_menu.menu_builder, method: spotlightMenu, alias: spotlight}
+
+    AppBundle\Repository\EnRepository:
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - AppBundle\Entity\En
+
+    AppBundle\Repository\EstcMarcRepository:
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - AppBundle\Entity\EstcMarc
+
+    AppBundle\Repository\FeedbackRepository:
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - AppBundle\Entity\Feedback
+
+    AppBundle\Repository\FirmRepository:
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - AppBundle\Entity\Firm
+
+    AppBundle\Repository\FirmroleRepository:
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - AppBundle\Entity\Firmrole
+
+    AppBundle\Repository\FormatRepository:
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - AppBundle\Entity\Format
+
+    AppBundle\Repository\GenreRepository:
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - AppBundle\Entity\Genre
+
+    AppBundle\Repository\GeonamesRepository:
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - AppBundle\Entity\Geonames
+
+    AppBundle\Repository\JacksonRepository:
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - AppBundle\Entity\Jackson
+
+    AppBundle\Repository\MarcSubfieldStructureRepository:
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - AppBundle\Entity\MarcSubfieldStructure
+
+    AppBundle\Repository\MarcTagStructureRepository:
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - AppBundle\Entity\MarcTagStructure
+
+    AppBundle\Repository\OrlandoBiblioRepository:
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - AppBundle\Entity\OrlandoBiblio
+
+    AppBundle\Repository\OsborneMarcRepository:
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - AppBundle\Entity\OsborneMarc
+
+    AppBundle\Repository\PersonRepository:
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - AppBundle\Entity\Person
+
+    AppBundle\Repository\RoleRepository:
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - AppBundle\Entity\Role
+
+    AppBundle\Repository\SourceRepository:
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - AppBundle\Entity\Source
+
+    AppBundle\Repository\TitleRepository:
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - AppBundle\Entity\Title
+

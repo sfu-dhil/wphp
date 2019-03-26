@@ -1,6 +1,7 @@
 imports:
     - { resource: config_dev.yml }
     - { resource: services_test.yml }
+    - { resource: "../../vendor/beberlei/DoctrineExtensions/config/sqlite.yml" }
 
 liip_functional_test:
     cache_db:

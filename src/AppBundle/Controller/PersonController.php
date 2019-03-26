@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Person;
 use AppBundle\Form\Person\PersonSearchType;
 use AppBundle\Form\Person\PersonType;
+use AppBundle\Repository\PersonRepository;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -58,13 +59,11 @@ class PersonController extends Controller implements PaginatorAwareInterface {
      * @Method("GET")
      * @return JsonResponse
      */
-    public function typeaheadAction(Request $request) {
+    public function typeaheadAction(Request $request, PersonRepository $repo) {
         $q = $request->query->get('q');
         if (!$q) {
             return new JsonResponse([]);
         }
-        $em = $this->getDoctrine()->getManager();
-        $repo = $em->getRepository(Person::class);
         $data = [];
         foreach ($repo->typeaheadQuery($q) as $result) {
             $data[] = [
@@ -85,7 +84,7 @@ class PersonController extends Controller implements PaginatorAwareInterface {
      * @param Request $request
      * @return array
      */
-    public function searchAction(Request $request) {
+    public function searchAction(Request $request, PersonRepository $repo) {
         $em = $this->getDoctrine()->getManager();
         $form = $this->createForm(PersonSearchType::class, null, array('entity_manager' => $em));
         $form->handleRequest($request);
@@ -94,7 +93,6 @@ class PersonController extends Controller implements PaginatorAwareInterface {
 
         if ($form->isSubmitted()) {
             $submitted = true;
-            $repo = $em->getRepository(Person::class);
             $query = $repo->buildSearchQuery($form->getData());
             $persons = $this->paginator->paginate($query->execute(), $request->query->getInt('page', 1), 25);
         }

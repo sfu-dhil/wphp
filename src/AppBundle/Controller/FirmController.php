@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Firm;
 use AppBundle\Form\Firm\FirmSearchType;
 use AppBundle\Form\Firm\FirmType;
+use AppBundle\Repository\FirmRepository;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -63,13 +64,11 @@ class FirmController extends Controller implements PaginatorAwareInterface {
      * @Method("GET")
      * @return JsonResponse
      */
-    public function typeaheadAction(Request $request) {
+    public function typeaheadAction(Request $request, FirmRepository $repo) {
         $q = $request->query->get('q');
         if (!$q) {
             return new JsonResponse([]);
         }
-        $em = $this->getDoctrine()->getManager();
-        $repo = $em->getRepository(Firm::class);
         $data = [];
         foreach ($repo->typeaheadQuery($q) as $result) {
             $data[] = [
@@ -90,8 +89,7 @@ class FirmController extends Controller implements PaginatorAwareInterface {
      * @param Request $request
      * @return array
      */
-    public function searchAction(Request $request) {
-        $em = $this->getDoctrine()->getManager();
+    public function searchAction(Request $request, FirmRepository $repo) {
         $form = $this->createForm(FirmSearchType::class);
         $form->handleRequest($request);
         $firms = array();
@@ -99,7 +97,6 @@ class FirmController extends Controller implements PaginatorAwareInterface {
 
         if ($form->isSubmitted() && $form->isValid()) {
             $submitted = true;
-            $repo = $em->getRepository(Firm::class);
             $query = $repo->buildSearchQuery($form->getData());
             $firms = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
         }
@@ -118,15 +115,12 @@ class FirmController extends Controller implements PaginatorAwareInterface {
      * @param Request $request
      * @return array
      */
-    public function searchExportAction(Request $request) {
-        $em = $this->getDoctrine()->getManager();
+    public function searchExportAction(Request $request, FirmRepository $repo) {
         $form = $this->createForm(FirmSearchType::class);
         $form->handleRequest($request);
-        $submitted = false;
 
         if ($form->isSubmitted() && $form->isValid()) {
             $submitted = true;
-            $repo = $em->getRepository(Firm::class);
             $query = $repo->buildSearchQuery($form->getData());
 
             $iterator = $query->iterate();

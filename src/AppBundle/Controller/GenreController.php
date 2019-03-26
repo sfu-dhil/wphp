@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Genre;
 use AppBundle\Form\GenreType;
+use AppBundle\Repository\GenreRepository;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -30,7 +31,7 @@ class GenreController extends Controller implements PaginatorAwareInterface {
      * @Template()
      * @param Request $request
      */
-    public function indexAction(Request $request) {
+    public function indexAction(Request $request, GenreRepository $repo) {
         $em = $this->getDoctrine()->getManager();
         $dql = 'SELECT e FROM AppBundle:Genre e ORDER BY e.id';
         $query = $em->createQuery($dql);
@@ -38,7 +39,7 @@ class GenreController extends Controller implements PaginatorAwareInterface {
 
         return array(
             'genres' => $genres,
-            'repo' => $em->getRepository(Genre::class),
+            'repo' => $repo,
         );
     }
 
@@ -49,13 +50,11 @@ class GenreController extends Controller implements PaginatorAwareInterface {
      * @Method("GET")
      * @return JsonResponse
      */
-    public function typeaheadAction(Request $request) {
+    public function typeaheadAction(Request $request, GenreRepository $repo) {
         $q = $request->query->get('q');
         if( ! $q) {
             return new JsonResponse([]);
         }
-        $em = $this->getDoctrine()->getManager();
-        $repo = $em->getRepository(Genre::class);
         $data = [];
         foreach($repo->typeaheadQuery($q) as $result) {
             $data[] = [

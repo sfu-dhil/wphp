@@ -13,7 +13,7 @@
 
 {% block body %}
 
-    <form method="get" class="form-horizontal" action="{{ path('resource_estc_search') }}">
+    <form method="get" class="form-horizontal">
         <fieldset>
             <legend>Search the ESTC Marc records</legend>
             <div class="form-group">
@@ -27,7 +27,7 @@
                         </button>
                     </span>
                 </div>
-                <p class="help-block col-sm-offset-2">Search the records by title or author.</p>
+                <p class="help-block col-sm-offset-2">Search the records by imprint.</p>
             </div>
         </fieldset>
     </form>
@@ -37,8 +37,8 @@
             <thead>
                 <tr>
                     <th>Id</th>
-                    <th>Author</th>
                     <th>Title</th>
+                    <th>Imprint</th>
                 </tr>
             </thead>
             <tbody>
@@ -49,8 +49,8 @@
                             {{ estcMarc.titleId }}
                         </a>
                     </td>
-                    <td>{{ manager.getAuthor(estcMarc) }}</td>
                     <td>{{ manager.getTitle(estcMarc) }}</td>
+                    <td>{{ manager.getFieldValues(estcMarc, '260')|join(" ") }}</td>
                 </tr>
             {% endfor %}
             </tbody>

@@ -23,11 +23,12 @@ class FirmTest extends TestCase {
     * @dataProvider getStartDateData
     */
     public function testGetStartDate($expected, $date) {
-        
+
         $firm = new Firm();
         $firm->setStartDate($date);
         $this->AssertEquals($expected, $firm->getStartDate());
     }
+
     public function getStartDateData() {
         
         return array(
@@ -35,12 +36,10 @@ class FirmTest extends TestCase {
             [null, '0000-00-00'],
             ['1982-11-06', '1982-11-06'],
             [null, null]
-        
-            
+
         );
     }
-    
-    
+
     /**
     * @dataProvider getEndDateData
     */    

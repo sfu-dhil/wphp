@@ -61,7 +61,9 @@ class EstcMarc
      */
     private $fieldData;
 
-
+    public function __toString() {
+        return $this->field . $this->subfield;
+    }
 
     /**
      * Get id
