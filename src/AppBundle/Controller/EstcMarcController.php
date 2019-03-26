@@ -79,6 +79,38 @@ class EstcMarcController extends Controller  implements PaginatorAwareInterface 
     }
 
     /**
+     * Search for EstcMarc entities.
+     *
+     * @param Request $request
+     *
+     * @Route("/imprint_search", name="resource_estc_search_imprint")
+     * @Method("GET")
+     * @Template()
+     */
+    public function imprintSearchAction(Request $request, MarcManager $manager, EstcMarcRepository $repo) {
+        $q = $request->query->get('q');
+        if ($q) {
+            $result = $repo->imprintSearchQuery($q);
+            $titleIds = $this->paginator->paginate($result, $request->query->getInt('page', 1), 25);
+        } else {
+            $titleIds = array();
+        }
+        $estcMarcs = array();
+        foreach($titleIds as $titleId) {
+            $estcMarcs[] = $repo->findOneBy(array(
+                'titleId' => $titleId,
+                'field' => 'ldr',
+            ));
+        }
+        return array(
+            'titleIds' => $titleIds,
+            'estcMarcs' => $estcMarcs,
+            'q' => $q,
+            'manager' => $manager,
+        );
+    }
+
+    /**
      * Finds and displays a EstcMarc entity.
      *
      * @param EstcMarc $estcMarc

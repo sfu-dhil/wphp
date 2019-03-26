@@ -274,14 +274,21 @@ class TitleController extends Controller implements PaginatorAwareInterface {
      * Build a new title form prepopulated with data from a MARC record.
      *
      * @param Request $request
-     * @Route("/import/{type}/{id}", name="title_marc_import")
+     * @Route("/import/{id}", name="title_marc_import")
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
      * @Template("AppBundle:Title:new.html.twig")
      * @Method("GET")
      */
-    public function importMarcAction(Request $request, EstcMarcImporter $importer, $type, $id) {
-        $title = $importer->import($type, $id);
-        $form = $this->createForm(TitleType::class, $title);
+    public function importMarcAction(Request $request, EstcMarcImporter $importer, $id) {
+        $title = $importer->import($id);
+        foreach($importer->getMessages() as $message) {
+            $this->addFlash('warning', $message);
+        }
+        $importer->resetMessages();
+
+        $form = $this->createForm(TitleType::class, $title, array(
+            'action' => $this->generateUrl('title_new'),
+        ));
         return array(
             'title' => $title,
             'form' => $form->createView(),
