@@ -24,6 +24,10 @@ class LoadRole extends Fixture implements FixtureGroupInterface {
             $this->setReference('role.' . $i, $fixture);
         }
 
+        $fixture = new Role();
+        $fixture->setName('Author');
+        $em->persist($fixture);
+
         $em->flush();
     }
 

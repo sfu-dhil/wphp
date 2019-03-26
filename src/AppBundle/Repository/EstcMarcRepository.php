@@ -29,4 +29,16 @@ ENDSQL;
         $query->setParameter('q', $q);
         return $query->execute();
     }
+
+    public function imprintSearchQuery($q) {
+        $dql = <<<"ENDSQL"
+SELECT e.titleId, max(MATCH (e.fieldData) AGAINST (:q BOOLEAN)) as HIDDEN score
+FROM AppBundle:EstcMarc e
+WHERE MATCH (e.fieldData) AGAINST (:q BOOLEAN) > 0 AND e.field = '260' and e.subfield = 'b'
+group by e.titleId order by score desc
+ENDSQL;
+        $query = $this->_em->createQuery($dql);
+        $query->setParameter('q', $q);
+        return $query->execute();
+    }
 }

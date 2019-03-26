@@ -955,7 +955,7 @@ class Title
      *
      * @param string $roleName
      *
-     * @return Collection
+     * @return Collection|TitleRole[]
      */
     public function getTitleRoles($roleName = null) {
         if ($roleName === null) {
