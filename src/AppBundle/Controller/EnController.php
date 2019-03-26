@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\En;
+use AppBundle\Repository\EnRepository;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -53,13 +54,11 @@ class EnController extends Controller  implements PaginatorAwareInterface {
      * @Method("GET")
      * @Template()
      */
-    public function searchAction(Request $request) {
-        $em = $this->getDoctrine()->getManager();
-        $repo = $em->getRepository('AppBundle:En');
+    public function searchAction(Request $request, EnRepository $repo) {
         $q = $request->query->get('q');
         if ($q) {
             $query = $repo->searchQuery($q);
-                $ens = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
+            $ens = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
         } else {
             $ens = array();
         }

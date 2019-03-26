@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Source;
 use AppBundle\Form\SourceType;
+use AppBundle\Repository\SourceRepository;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -30,7 +31,7 @@ class SourceController extends Controller implements PaginatorAwareInterface {
      * @Template()
      * @param Request $request
      */
-    public function indexAction(Request $request) {
+    public function indexAction(Request $request, SourceRepository $repo) {
         $em = $this->getDoctrine()->getManager();
         $dql = 'SELECT e FROM AppBundle:Source e ORDER BY e.id';
         $query = $em->createQuery($dql);
@@ -38,7 +39,7 @@ class SourceController extends Controller implements PaginatorAwareInterface {
 
         return array(
             'sources' => $sources,
-            'repo' => $em->getRepository(Source::class),
+            'repo' => $repo,
         );
     }
 
@@ -49,13 +50,11 @@ class SourceController extends Controller implements PaginatorAwareInterface {
      * @Method("GET")
      * @return JsonResponse
      */
-    public function typeaheadAction(Request $request) {
+    public function typeaheadAction(Request $request, SourceRepository $repo) {
         $q = $request->query->get('q');
         if( ! $q) {
             return new JsonResponse([]);
         }
-        $em = $this->getDoctrine()->getManager();
-        $repo = $em->getRepository(Source::class);
         $data = [];
         foreach($repo->typeaheadQuery($q) as $result) {
             $data[] = [

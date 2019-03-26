@@ -59,6 +59,19 @@ class MarcManager {
         return null;
     }
 
+    public function getFieldValues($object, $field) {
+        $repo = $this->em->getRepository(get_class($object));
+        $rows = $repo->findBy(array(
+            'titleId' => $object->getTitleId(),
+            'field' => $field,
+        ), array(
+            'field' => 'ASC', 'subfield' => 'ASC'
+        ));
+        return array_map(function($row){
+            return $row->getFieldData();
+        }, $rows);
+    }
+
     /**
      * Get the rows of a MARC record.
      *

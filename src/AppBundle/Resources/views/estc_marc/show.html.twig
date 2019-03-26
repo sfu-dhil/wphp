@@ -12,6 +12,9 @@
             <a href="{{ path('resource_estc_index') }}" class="btn btn-default">
                 <span class="glyphicon glyphicon-arrow-left"></span> Back
             </a>
+            <a href="{{ path('title_marc_import', {'id': estcMarc.titleId}) }}" class="btn btn-default" target="_blank">
+                <span class="glyphicon glyphicon-save"></span> Import
+            </a>
         </div>
     </div>
     <table class="table table-bordered table-condensed table-hover table-striped">
@@ -19,7 +22,7 @@
         <tbody>
             {% for field in data %}
                 <tr>
-                    <th>{{ manager.getFieldName(field) }}</th>
+                    <th>{{ manager.getFieldName(field) }} ({{ field }})</th>
                     <td>{{ field.getFieldData() }}</td>
                 </tr>
             {% endfor %}

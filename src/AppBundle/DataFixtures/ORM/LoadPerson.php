@@ -23,8 +23,8 @@ class LoadPerson extends Fixture implements DependentFixtureInterface, FixtureGr
             $fixture->setFirstName('FirstName ' . $i);
             $fixture->setTitle('TitleName ' . $i);
             $fixture->setGender('F');
-            $fixture->setDob(1750 + $i);
-            $fixture->setDod(1800 + $i);
+            $fixture->setDob((1750 + $i) . '-01-02');
+            $fixture->setDod((1800 + $i) . '-03-05');
             $fixture->setChecked($i % 2 === 0);
             $fixture->setFinalcheck($i % 2 === 0);
             $fixture->setCityofbirth($this->getReference('geonames.1'));
@@ -41,8 +41,6 @@ class LoadPerson extends Fixture implements DependentFixtureInterface, FixtureGr
      * {@inheritdoc}
      */
     public function getDependencies() {
-        // add dependencies here, or remove this 
-        // function and "implements DependentFixtureInterface" above
         return [
             LoadGeonames::class,
         ];

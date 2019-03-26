@@ -22,6 +22,24 @@ class PersonRepository extends EntityRepository {
         return $qb->getQuery()->execute();
     }
 
+    public function findByNameDates($firstName, $lastName, $dob, $dod) {
+        $qb = $this->createQueryBuilder('e');
+        $qb->andWhere('e.lastName = :last');
+        $qb->setParameter('last', $lastName);
+        $qb->andWhere('e.firstName = :first');
+        $qb->setParameter('first', $firstName);
+
+        if($dob) {
+            $qb->andWhere('YEAR(e.dob) = :dob');
+            $qb->setParameter('dob', $dob);
+        }
+        if($dod) {
+            $qb->andWhere('YEAR(e.dod) = :dod');
+            $qb->setParameter('dod', $dod);
+        }
+        return $qb->getQuery()->execute();
+    }
+
     /**
      * Build and return a complex search query from a search form.
      *

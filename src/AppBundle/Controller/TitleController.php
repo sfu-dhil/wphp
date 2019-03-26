@@ -2,9 +2,13 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\EstcMarc;
+use AppBundle\Entity\OsborneMarc;
 use AppBundle\Entity\Title;
 use AppBundle\Form\Title\TitleSearchType;
 use AppBundle\Form\Title\TitleType;
+use AppBundle\Repository\TitleRepository;
+use AppBundle\Services\EstcMarcImporter;
 use AppBundle\Services\SourceLinker;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
@@ -18,6 +22,7 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * Title controller.
@@ -64,13 +69,11 @@ class TitleController extends Controller implements PaginatorAwareInterface {
      * @Method("GET")
      * @return JsonResponse
      */
-    public function typeaheadAction(Request $request) {
+    public function typeaheadAction(Request $request, TitleRepository $repo) {
         $q = $request->query->get('q');
         if (!$q) {
             return new JsonResponse([]);
         }
-        $em = $this->getDoctrine()->getManager();
-        $repo = $em->getRepository(Title::class);
         $data = [];
         foreach ($repo->typeaheadQuery($q) as $result) {
             $data[] = [
@@ -180,7 +183,7 @@ class TitleController extends Controller implements PaginatorAwareInterface {
      * @param Request $request
      * @return array
      */
-    public function searchAction(Request $request) {
+    public function searchAction(Request $request, TitleRepository $repo) {
         $em = $this->getDoctrine()->getManager();
         $form = $this->createForm(TitleSearchType::class, null, array('entity_manager' => $em));
         $form->handleRequest($request);
@@ -191,7 +194,6 @@ class TitleController extends Controller implements PaginatorAwareInterface {
             $data = array_filter($form->getData());
             if (count($data) > 2) {
                 $submitted = true;
-                $repo = $em->getRepository(Title::class);
                 $query = $repo->buildSearchQuery($data);
                 $titles = $this->paginator->paginate($query->execute(), $request->query->getInt('page', 1), 25);
             }
@@ -212,14 +214,13 @@ class TitleController extends Controller implements PaginatorAwareInterface {
      * @param Request $request
      * @return array
      */
-    public function searchExportAction(Request $request) {
+    public function searchExportAction(Request $request, TitleRepository $repo) {
         $em = $this->getDoctrine()->getManager();
         $form = $this->createForm(TitleSearchType::class, null, array('entity_manager' => $em));
         $form->handleRequest($request);
         $titles = array();
 
         if ($form->isValid()) {
-            $repo = $em->getRepository(Title::class);
             $query = $repo->buildSearchQuery($form->getData());
             $titles = $query->execute();
         }
@@ -263,6 +264,31 @@ class TitleController extends Controller implements PaginatorAwareInterface {
             return $this->redirectToRoute('title_show', array('id' => $title->getId()));
         }
 
+        return array(
+            'title' => $title,
+            'form' => $form->createView(),
+        );
+    }
+
+    /**
+     * Build a new title form prepopulated with data from a MARC record.
+     *
+     * @param Request $request
+     * @Route("/import/{id}", name="title_marc_import")
+     * @Security("has_role('ROLE_CONTENT_ADMIN')")
+     * @Template("AppBundle:Title:new.html.twig")
+     * @Method("GET")
+     */
+    public function importMarcAction(Request $request, EstcMarcImporter $importer, $id) {
+        $title = $importer->import($id);
+        foreach($importer->getMessages() as $message) {
+            $this->addFlash('warning', $message);
+        }
+        $importer->resetMessages();
+
+        $form = $this->createForm(TitleType::class, $title, array(
+            'action' => $this->generateUrl('title_new'),
+        ));
         return array(
             'title' => $title,
             'form' => $form->createView(),

@@ -160,7 +160,12 @@ class TitleType extends AbstractType {
         ));
         $builder->add('format', EntityType::class, array(
             'class' => Format::class,
-            'choice_label' => 'name',
+            'query_builder' => function(EntityRepository $repo) {
+                return $repo->createQueryBuilder('u')->orderBy('u.name', 'ASC');
+            },
+            'choice_label' => function(Format $format) {
+                return "{$format->getName()} ({$format->getAbbrevTwo()})";
+            },
             'multiple' => false,
             'expanded' => false,
         ));

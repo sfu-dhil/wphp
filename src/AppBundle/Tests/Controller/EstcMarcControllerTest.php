@@ -4,6 +4,7 @@ namespace AppBundle\Tests\Controller;
 
 use AppBundle\Entity\EstcMarc;
 use AppBundle\DataFixtures\ORM\LoadEstcMarc;
+use AppBundle\Repository\EstcMarcRepository;
 use Nines\UserBundle\DataFixtures\ORM\LoadUser;
 use Nines\UtilBundle\Tests\Util\BaseTestCase;
 
@@ -77,4 +78,50 @@ class EstcMarcControllerTest extends BaseTestCase
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
 
+
+    public function testAnonSearch() {
+        $client = $this->makeClient();
+
+        $crawler = $client->request('GET', '/resource/estc/search');
+        $this->assertEquals(302, $client->getResponse()->getStatusCode());
+        $this->assertEquals(0, $crawler->selectLink('Search')->count());
+    }
+
+    public function testUserSearch() {
+        $repo = $this->createMock(EstcMarcRepository::class);
+        $repo->method('searchQuery')->willReturn(array($this->getReference('estc.0.0.2')));
+        $repo->method('findOneBy')->willReturn($this->getReference('estc.0.0.0'));
+        $client = $this->makeClient(LoadUser::ADMIN);
+        $client->getContainer()->set(EstcMarcRepository::class, $repo);
+
+        $formCrawler = $client->request('GET', '/resource/estc/search');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $form = $formCrawler->selectButton('Search')->form([
+            'q' => 'adventures',
+        ]);
+
+        $responseCrawler = $client->submit($form);
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals(1, $responseCrawler->filter('td:contains("Estc Field Data 0 100a")')->count());
+    }
+
+    public function testAdminSearch() {
+        $repo = $this->createMock(EstcMarcRepository::class);
+        $repo->method('searchQuery')->willReturn(array($this->getReference('estc.0.0.2')));
+        $repo->method('findOneBy')->willReturn($this->getReference('estc.0.0.0'));
+        $client = $this->makeClient(LoadUser::ADMIN);
+        $client->getContainer()->set(EstcMarcRepository::class, $repo);
+
+        $formCrawler = $client->request('GET', '/resource/estc/search');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $form = $formCrawler->selectButton('Search')->form([
+            'q' => 'adventures',
+        ]);
+
+        $responseCrawler = $client->submit($form);
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals(1, $responseCrawler->filter('td:contains("Estc Field Data 0 100a")')->count());
+    }
+    
+    
 }

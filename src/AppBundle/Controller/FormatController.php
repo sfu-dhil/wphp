@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Format;
 use AppBundle\Form\FormatType;
+use AppBundle\Repository\FormatRepository;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -31,7 +32,7 @@ class FormatController extends Controller  implements PaginatorAwareInterface {
      * @Template()
      * @param Request $request
      */
-    public function indexAction(Request $request) {
+    public function indexAction(Request $request, FormatRepository $repo) {
         $em = $this->getDoctrine()->getManager();
         $dql = 'SELECT e FROM AppBundle:Format e ORDER BY e.id';
         $query = $em->createQuery($dql);
@@ -39,7 +40,7 @@ class FormatController extends Controller  implements PaginatorAwareInterface {
 
         return array(
             'formats' => $formats,
-            'repo' => $em->getRepository(Format::class),
+            'repo' => $repo,
         );
     }
 
@@ -50,13 +51,11 @@ class FormatController extends Controller  implements PaginatorAwareInterface {
      * @Method("GET")
      * @return JsonResponse
      */
-    public function typeaheadAction(Request $request) {
+    public function typeaheadAction(Request $request, FormatRepository $repo) {
         $q = $request->query->get('q');
         if (!$q) {
             return new JsonResponse([]);
         }
-        $em = $this->getDoctrine()->getManager();
-        $repo = $em->getRepository(Format::class);
         $data = [];
         foreach ($repo->typeaheadQuery($q) as $result) {
             $data[] = [
