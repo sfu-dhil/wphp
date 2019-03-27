@@ -195,7 +195,7 @@ class TitleController extends Controller implements PaginatorAwareInterface {
             if (count($data) > 2) {
                 $submitted = true;
                 $query = $repo->buildSearchQuery($data);
-                $titles = $this->paginator->paginate($query->execute(), $request->query->getInt('page', 1), 25);
+                $titles = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
             }
         }
         return array(
