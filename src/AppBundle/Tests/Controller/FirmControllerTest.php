@@ -4,6 +4,8 @@ namespace AppBundle\Tests\Controller;
 
 use AppBundle\Entity\Firm;
 use AppBundle\DataFixtures\ORM\LoadFirm;
+use AppBundle\Repository\EnRepository;
+use AppBundle\Repository\FirmRepository;
 use Nines\UtilBundle\Tests\Util\BaseTestCase;
 use Nines\UserBundle\DataFixtures\ORM\LoadUser;
 
@@ -208,5 +210,50 @@ class FirmControllerTest extends BaseTestCase
         $postCount = count($em->getRepository(Firm::class)->findAll());
         $this->assertEquals($preCount - 1, $postCount);
     }
+
+    public function testAnonSearch() {
+        $client = $this->makeClient();
+
+        $crawler = $client->request('GET', '/firm/search');
+        $this->assertEquals(302, $client->getResponse()->getStatusCode());
+        $this->assertEquals(0, $crawler->selectLink('Search')->count());
+    }
+
+    public function testUserSearch() {
+        $repo = $this->createMock(FirmRepository::class);
+        $repo->method('buildSearchQuery')->willReturn(array($this->getReference('firm.1')));
+        $client = $this->makeClient(LoadUser::USER);
+        $client->disableReboot();
+        $client->getContainer()->set(FirmRepository::class, $repo);
+
+        $formCrawler = $client->request('GET', '/firm/search');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $form = $formCrawler->selectButton('Search')->form([
+            'firm_search[name]' => 'adventures',
+        ]);
+
+        $responseCrawler = $client->submit($form);
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals(1, $responseCrawler->filter('td:contains("StreetAddress 1")')->count());
+    }
+
+    public function testAdminSearch() {
+        $repo = $this->createMock(FirmRepository::class);
+        $repo->method('buildSearchQuery')->willReturn(array($this->getReference('firm.1')));
+        $client = $this->makeClient(LoadUser::ADMIN);
+        $client->disableReboot();
+        $client->getContainer()->set(FirmRepository::class, $repo);
+
+        $formCrawler = $client->request('GET', '/firm/search');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $form = $formCrawler->selectButton('Search')->form([
+            'firm_search[name]' => 'adventures',
+        ]);
+
+        $responseCrawler = $client->submit($form);
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals(1, $responseCrawler->filter('td:contains("StreetAddress 1")')->count());
+    }
+
 
 }
