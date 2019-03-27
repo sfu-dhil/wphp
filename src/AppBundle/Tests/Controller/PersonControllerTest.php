@@ -231,45 +231,45 @@ class PersonControllerTest extends BaseTestCase
     public function testAnonSearch() {
         $client = $this->makeClient();
 
-        $crawler = $client->request('GET', '/firm/search');
+        $crawler = $client->request('GET', '/person/search');
         $this->assertEquals(302, $client->getResponse()->getStatusCode());
         $this->assertEquals(0, $crawler->selectLink('Search')->count());
     }
 
     public function testUserSearch() {
         $repo = $this->createMock(PersonRepository::class);
-        $repo->method('buildSearchQuery')->willReturn(array($this->getReference('firm.1')));
+        $repo->method('buildSearchQuery')->willReturn(array($this->getReference('person.1')));
         $client = $this->makeClient(LoadUser::USER);
         $client->disableReboot();
         $client->getContainer()->set(PersonRepository::class, $repo);
 
-        $formCrawler = $client->request('GET', '/firm/search');
+        $formCrawler = $client->request('GET', '/person/search');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $form = $formCrawler->selectButton('Search')->form([
-            'firm_search[last_name]' => 'adventures',
+            'person_search[name]' => 'adventures',
         ]);
 
         $responseCrawler = $client->submit($form);
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertEquals(1, $responseCrawler->filter('td:contains("StreetAddress 1")')->count());
+        $this->assertEquals(1, $responseCrawler->filter('td:contains("LastName 1")')->count());
     }
 
     public function testAdminSearch() {
         $repo = $this->createMock(PersonRepository::class);
-        $repo->method('buildSearchQuery')->willReturn(array($this->getReference('firm.1')));
+        $repo->method('buildSearchQuery')->willReturn(array($this->getReference('person.1')));
         $client = $this->makeClient(LoadUser::ADMIN);
         $client->disableReboot();
         $client->getContainer()->set(PersonRepository::class, $repo);
 
-        $formCrawler = $client->request('GET', '/firm/search');
+        $formCrawler = $client->request('GET', '/person/search');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $form = $formCrawler->selectButton('Search')->form([
-            'firm_search[last_name]' => 'adventures',
+            'person_search[name]' => 'adventures',
         ]);
 
         $responseCrawler = $client->submit($form);
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertEquals(1, $responseCrawler->filter('td:contains("StreetAddress 1")')->count());
+        $this->assertEquals(1, $responseCrawler->filter('td:contains("LastName 1")')->count());
     }
 
 

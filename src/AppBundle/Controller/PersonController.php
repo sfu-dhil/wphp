@@ -94,7 +94,7 @@ class PersonController extends Controller implements PaginatorAwareInterface {
         if ($form->isSubmitted()) {
             $submitted = true;
             $query = $repo->buildSearchQuery($form->getData());
-            $persons = $this->paginator->paginate($query->execute(), $request->query->getInt('page', 1), 25);
+            $persons = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
         }
         return array(
             'search_form' => $form->createView(),
