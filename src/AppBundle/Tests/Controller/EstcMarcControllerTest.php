@@ -91,7 +91,7 @@ class EstcMarcControllerTest extends BaseTestCase
         $repo = $this->createMock(EstcMarcRepository::class);
         $repo->method('searchQuery')->willReturn(array($this->getReference('estc.0.0.2')));
         $repo->method('findOneBy')->willReturn($this->getReference('estc.0.0.0'));
-        $client = $this->makeClient(LoadUser::ADMIN);
+        $client = $this->makeClient(LoadUser::USER);
         $client->getContainer()->set(EstcMarcRepository::class, $repo);
 
         $formCrawler = $client->request('GET', '/resource/estc/search');

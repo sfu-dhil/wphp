@@ -95,7 +95,7 @@ class EnControllerTest extends BaseTestCase
     public function testUserSearch() {
         $repo = $this->createMock(EnRepository::class);
         $repo->method('searchQuery')->willReturn(array($this->getReference('en.1')));
-        $client = $this->makeClient(LoadUser::ADMIN);
+        $client = $this->makeClient(LoadUser::USER);
         $client->disableReboot();
         $client->getContainer()->set(EnRepository::class, $repo);
 
