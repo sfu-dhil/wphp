@@ -27,7 +27,7 @@ class FeedbackController extends Controller  implements PaginatorAwareInterface 
      * @Route("/", name="feedback_index")
      * @Method("GET")
      * @Template()
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_COMMENT_ADMIN')")
      * @param Request $request
      */
     public function indexAction(Request $request) {
@@ -76,15 +76,10 @@ class FeedbackController extends Controller  implements PaginatorAwareInterface 
      * @Route("/{id}", name="feedback_show")
      * @Method("GET")
      * @Template()
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_COMMENT_ADMIN')")
      * @param Feedback $feedback
      */
     public function showAction(Feedback $feedback) {
-        if (!$this->isGranted('ROLE_ADMIN')) {
-            $this->addFlash('danger', "You must login to access this page.");
-            return $this->redirect($this->generateUrl('fos_user_security_login'));
-        }
-
         return array(
             'feedback' => $feedback,
         );

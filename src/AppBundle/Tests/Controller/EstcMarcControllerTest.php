@@ -78,7 +78,6 @@ class EstcMarcControllerTest extends BaseTestCase
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
 
-
     public function testAnonSearch() {
         $client = $this->makeClient();
 
@@ -122,6 +121,49 @@ class EstcMarcControllerTest extends BaseTestCase
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertEquals(1, $responseCrawler->filter('td:contains("Estc Field Data 0 100a")')->count());
     }
-    
-    
+
+    public function testAnonImprintSearch() {
+        $client = $this->makeClient();
+
+        $crawler = $client->request('GET', '/resource/estc/imprint_search');
+        $this->assertEquals(302, $client->getResponse()->getStatusCode());
+        $this->assertEquals(0, $crawler->selectLink('Search')->count());
+    }
+
+    public function testUserImprintSearch() {
+        $repo = $this->createMock(EstcMarcRepository::class);
+        $repo->method('imprintSearchQuery')->willReturn(array($this->getReference('estc.0.0.2')));
+        $repo->method('findOneBy')->willReturn($this->getReference('estc.0.0.0'));
+        $client = $this->makeClient(LoadUser::USER);
+        $client->getContainer()->set(EstcMarcRepository::class, $repo);
+
+        $formCrawler = $client->request('GET', '/resource/estc/imprint_search');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $form = $formCrawler->selectButton('Search')->form([
+            'q' => 'adventures',
+        ]);
+
+        $responseCrawler = $client->submit($form);
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals(1, $responseCrawler->filter('td:contains("ESTC Title 0")')->count());
+    }
+
+    public function testAdminImprintSearch() {
+        $repo = $this->createMock(EstcMarcRepository::class);
+        $repo->method('imprintSearchQuery')->willReturn(array($this->getReference('estc.0.0.2')));
+        $repo->method('findOneBy')->willReturn($this->getReference('estc.0.0.0'));
+        $client = $this->makeClient(LoadUser::ADMIN);
+        $client->getContainer()->set(EstcMarcRepository::class, $repo);
+
+        $formCrawler = $client->request('GET', '/resource/estc/imprint_search');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $form = $formCrawler->selectButton('Search')->form([
+            'q' => 'adventures',
+        ]);
+
+        $responseCrawler = $client->submit($form);
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals(1, $responseCrawler->filter('td:contains("ESTC Title 0")')->count());
+    }
+
 }
