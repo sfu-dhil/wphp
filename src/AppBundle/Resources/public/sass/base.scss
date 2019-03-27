@@ -45,8 +45,11 @@ strong {
 .container .panel p {
   font-size: 1em;
   font-family: $lato;
-}
 
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
 
 
 /* Footer */
@@ -345,23 +348,23 @@ th {
  text-align: right;
 }
 
-.col-sm-6 {
-  width: auto;
-}
-.col-sm-6:first-child {
-  /* width: 800px; */
-  /* white-space: nowrap; */
-  width: 110%;
-}
-
-.col-sm-6:first-child td:last-child {
-  padding-right: 1em;
-}
-
-.col-sm-6:last-child {
-  /* width: 300px; */
-  flex-grow: 4;
-}
+// .col-sm-6 {
+//   width: auto;
+// }
+// .col-sm-6:first-child {
+//   /* width: 800px; */
+//   /* white-space: nowrap; */
+//   width: 110%;
+// }
+//
+// .col-sm-6:first-child td:last-child {
+//   padding-right: 1em;
+// }
+//
+// .col-sm-6:last-child {
+//   /* width: 300px; */
+//   flex-grow: 4;
+// }
 
 .row {
   display: flex;
@@ -386,6 +389,8 @@ th {
       border-radius: 4px;
 }*/
 
+input.btn-default,
+input.btn-primary,
 a.btn-default,
 a.btn-primary {
   /* Rectangle 10: */
@@ -393,6 +398,7 @@ a.btn-primary {
   border: 1px solid $color_brown;
   /* Submit button exampl: */
   font-family: $lato;
+  line-height: 1em;
   // font-weight: 500;
   font-size: 14px;
   text-shadow: none;
@@ -401,6 +407,7 @@ a.btn-primary {
   border-radius: 4px;
   box-shadow: none;
   padding-top: 8px;
+  padding-bottom: 8px;
   transition: 0.125s ease-in-out all;
 
   &:link,
@@ -540,3 +547,58 @@ a.btn-primary {
   }
 }
 /* End navbar */
+
+
+
+.pagination > li {
+  > a,
+  > span {
+    position: relative;
+    float: left;
+    padding: 6px 12px;
+    margin-left: -1px;
+    line-height: 1.42857143;
+    // color: #337ab7;
+    text-decoration: none;
+    // background-color: #fff;
+    // border: 1px solid #ddd;
+    height: 35px;
+    background: $color_red;
+    border: 1px solid $color_brown;
+    color: $color_white;
+
+    &:active,
+    &:focus,
+    &:hover {
+      background: $color_salmon;
+      border: $color_brown 1px solid;
+      color: $color_brown;
+    }
+  }
+
+  &.disabled {
+    span {
+      background-color: $color_brown;
+      color: $color_white;
+      border: 0;
+
+      &:focus,
+      &:hover {
+        background: $color_brown;
+        // border: $color_brown 1px solid;
+        color: $color_white;
+      }
+    }
+  }
+}
+
+.pagination > .active > a,
+.pagination > .active > a:focus,
+.pagination > .active > a:hover,
+.pagination > .active > span,
+.pagination > .active > span:focus,
+.pagination > .active > span:hover {
+  background: $color_salmon;
+  border: $color_brown 1px solid;
+  color: $color_brown;
+}
