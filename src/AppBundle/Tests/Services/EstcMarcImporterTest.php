@@ -12,6 +12,7 @@ use AppBundle\Entity\Title;
 use AppBundle\Repository\EstcMarcRepository;
 use AppBundle\Repository\PersonRepository;
 use AppBundle\Repository\TitleRepository;
+use AppBundle\Repository\TitleSourceRepository;
 use Nines\UtilBundle\Tests\Util\BaseTestCase;
 use PHPUnit\Framework\TestCase;
 
@@ -57,8 +58,17 @@ class EstcMarcImporterTest extends BaseTestCase {
         $repo = $this->createMock(TitleRepository::class);
         $repo->method('findBy')->willReturn(array('a', 'b'));
         $this->importer->setTitleRepo($repo);
+        $this->importer->checkTitle('fooo', 'abc123');
 
-        $this->assertEquals(2, $this->importer->checkTitle('fooo'));
+        $this->assertCount(1, $this->importer->getMessages());
+    }
+
+    public function testCheckTitleId() {
+        $repo = $this->createMock(TitleSourceRepository::class);
+        $repo->method('findBy')->willReturn(array('a', 'b'));
+        $this->importer->setTitleSourceRepo($repo);
+        $this->importer->checkTitle('fooo', 'abc123');
+
         $this->assertCount(1, $this->importer->getMessages());
     }
 

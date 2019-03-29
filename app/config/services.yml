@@ -127,3 +127,7 @@ services:
         arguments:
             - AppBundle\Entity\Title
 
+    AppBundle\Repository\TitleSourceRepository:
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - AppBundle\Entity\TitleSource
