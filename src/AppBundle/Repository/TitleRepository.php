@@ -191,6 +191,15 @@ class TitleRepository extends EntityRepository
             $qb->andWhere("MATCH (e.notes) AGAINST (:notes BOOLEAN) > 0");
             $qb->setParameter('notes', $data['notes']);
         }
+        if(isset($data['source_id']) && $data['source_id']) {
+            $qb->andWhere(
+                $qb->expr()->orX(
+                    $qb->expr()->eq('e.sourceId', ':sourceId'),
+                    $qb->expr()->eq('e.source2Id', ':sourceId'),
+                    $qb->expr()->eq('e.source3Id', ':sourceId')
+            ));
+            $qb->setParameter('sourceId', $data['source_id']);
+        }
 
         // only add the title filter query parts if the subform has data.
         if (isset($data['person_filter']) && count(array_filter($data['person_filter']))) {

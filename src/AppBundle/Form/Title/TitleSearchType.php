@@ -197,6 +197,10 @@ class TitleSearchType extends AbstractType {
             'label' => 'Shelfmark',
             'required' => false,
         ));
+        $builder->add('source_id', null, array(
+            'label' => 'Source ID',
+            'required' => false,
+        ));
         $builder->add('notes', null, array(
             'label' => 'Notes',
             'required' => false,
