@@ -34,6 +34,7 @@ class TitleFirmType extends AbstractType {
             'choice_label' => 'name',
             'multiple' => false,
             'expanded' => false,
+            'placeholder' => 'Select a firm role',
         ));
     }
 

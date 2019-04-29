@@ -345,18 +345,18 @@ class TitleController extends Controller implements PaginatorAwareInterface {
                 }
             }
 
-            // check for deleted titleRoles and remove them.
-            foreach ($titleRoles as $tfr) {
-                if (!$title->getTitleroles()->contains($tr)) {
-                    $em->remove($tr);
-                }
-            }
-
             // check for new titleFirmRoles and persist them.
             foreach ($title->getTitleFirmroles() as $tfr) {
                 if (!$titleFirmRoles->contains($tfr)) {
                     $tfr->setTitle($title);
                     $em->persist($tfr);
+                }
+            }
+
+            // check for deleted titleRoles and remove them.
+            foreach ($titleRoles as $tr) {
+                if (!$title->getTitleroles()->contains($tr)) {
+                    $em->remove($tr);
                 }
             }
 
