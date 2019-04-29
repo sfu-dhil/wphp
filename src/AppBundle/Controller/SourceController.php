@@ -33,7 +33,7 @@ class SourceController extends Controller implements PaginatorAwareInterface {
      */
     public function indexAction(Request $request, SourceRepository $repo) {
         $em = $this->getDoctrine()->getManager();
-        $dql = 'SELECT e FROM AppBundle:Source e ORDER BY e.id';
+        $dql = 'SELECT e FROM AppBundle:Source e ORDER BY e.name';
         $query = $em->createQuery($dql);
         $sources = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
 
