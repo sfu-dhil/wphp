@@ -70,7 +70,7 @@ class TitleType extends AbstractType {
             'entry_options' => array(
                 'label' => false,
             ),
-            'by_reference' => false,
+            'by_reference' => true,
             'attr' => array(
                 'class' => 'collection collection-complex',
                 'help_block' => 'Names of all printers, publishers, and booksellers listed in the imprint and their role in the work’s production',
