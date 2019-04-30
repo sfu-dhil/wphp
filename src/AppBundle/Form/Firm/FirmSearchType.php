@@ -58,6 +58,23 @@ class FirmSearchType extends AbstractType {
             )
         ));
 
+        $builder->add('gender', ChoiceType::class, array(
+            'label' => 'Gender',
+            'choices' => array(
+                'Female' => 'F',
+                'Male' => 'M',
+                '(unknown)' => 'U',
+            ),
+            'attr' => array(
+                'help_block' => 'Leave this field blank to include all genders'
+            ),
+            'required' => false,
+            'expanded' => true,
+            'multiple' => true,
+            'empty_data' => null,
+            'data' => null,
+        ));
+
         $builder->add('address', TextType::class, array(
             'label' => 'Address',
             'required' => false,
