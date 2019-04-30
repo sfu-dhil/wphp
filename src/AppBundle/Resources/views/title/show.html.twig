@@ -205,12 +205,12 @@
                             <td>{% if title.checked %}Yes{% else %}No{% endif %}</td>
                         </tr>
                         <tr>
-                            <th data-toggle="popover"  data-content="Indicates that either two sources have been consulted or the text has been hand-checked">Verified</th>
-                            <td>{% if title.finalcheck %}Yes{% else %}No{% endif %}</td>
-                        </tr>
-                        <tr>
                             <th data-toggle="popover"  data-content="An unsuccessful attempt has been made to find two independent sources to verify the title">Attempted Verification</th>
                             <td>{% if title.finalattempt %}Yes{% else %}No{% endif %}</td>
+                        </tr>
+                        <tr>
+                            <th data-toggle="popover"  data-content="Indicates that either two sources have been consulted or the text has been hand-checked">Verified</th>
+                            <td>{% if title.finalcheck %}Yes{% else %}No{% endif %}</td>
                         </tr>
                     </tbody>
                 </table>
