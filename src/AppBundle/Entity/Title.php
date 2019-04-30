@@ -986,6 +986,9 @@ class Title
      * @param TitleFirmrole $titleFirmrole
      */
     public function removeTitleFirmrole(TitleFirmrole $titleFirmrole) {
+        $titleFirmrole->setTitle(null);
+        $titleFirmrole->setFirm(null);
+        $titleFirmrole->setFirmrole(null);
         $this->titleFirmroles->removeElement($titleFirmrole);
     }
 
