@@ -83,6 +83,20 @@ class FirmRepository extends EntityRepository
             $qb->andWhere('e.id = :id');
             $qb->setParameter('id', $data['id']);
         }
+        if (isset($data['gender']) && $data['gender']) {
+            $genders = [];
+            if (in_array('M', $data['gender'])) {
+                $genders[] = 'M';
+            }
+            if (in_array('F', $data['gender'])) {
+                $genders[] = 'F';
+            }
+            $qb->andWhere('e.gender in (:genders)');
+            $qb->setParameter('genders', $genders);
+            if (in_array('U', $data['gender'])) {
+                $genders[] = 'null';
+            }
+        }
         if(isset($data['address']) && $data['address']) {
             $qb->andWhere("MATCH (e.streetAddress) AGAINST(:address BOOLEAN) > 0");
             $qb->setParameter('address', $data['address']);
