@@ -36,8 +36,6 @@ class LoadTitle extends Fixture implements DependentFixtureInterface, FixtureGro
             $fixture->setPricePound($i + 1);
             $fixture->setPriceShilling($i);
             $fixture->setPricePence($i);
-            $fixture->setSourceId('SourceId ' . $i);
-            $fixture->setSource2Id('Source2Id ' . $i);
             $fixture->setShelfmark('Shelfmark ' . $i);
             $fixture->setChecked($i % 2 === 0);
             $fixture->setFinalcheck($i % 2 === 0);
@@ -45,8 +43,6 @@ class LoadTitle extends Fixture implements DependentFixtureInterface, FixtureGro
             $fixture->setLocationofprinting($this->getReference('geonames.1'));
             $fixture->setFormat($this->getReference('format.1'));
             $fixture->setGenre($this->getReference('genre.1'));
-            $fixture->setSource($this->getReference('source.1'));
-            $fixture->setSource2($this->getReference('source.2'));
 
             $em->persist($fixture);
             $this->setReference('title.' . $i, $fixture);

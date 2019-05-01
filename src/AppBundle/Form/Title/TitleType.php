@@ -5,7 +5,6 @@ namespace AppBundle\Form\Title;
 use AppBundle\Entity\Format;
 use AppBundle\Entity\Genre;
 use AppBundle\Entity\Geonames;
-use AppBundle\Entity\Source;
 use AppBundle\Entity\Title;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -40,7 +39,7 @@ class TitleType extends AbstractType {
             'entry_options' => array(
                 'label' => false,
             ),
-            'by_reference' => false,
+            'by_reference' => true,
             'attr' => array(
                 'class' => 'collection collection-complex',
                 'help_block' => 'Names of all women who have contributed to the work and their role in the work’s production',
@@ -224,68 +223,20 @@ class TitleType extends AbstractType {
                 'help_block' => 'Call numbers for location in various libraries',
             ),
         ));
-        $builder->add('source', Select2EntityType::class, array(
-            'multiple' => false,
-            'remote_route' => 'source_typeahead',
-            'class' => Source::class,
-            'primary_key' => 'id',
-            'text_property' => 'name',
-            'page_limit' => 10,
-            'allow_clear' => true,
-            'delay' => 250,
-            'language' => 'en',
-            'attr' => array(
-                'help_block' => 'First source consulted to populate the entry fields',
-            ),
-        ));
-
-        $builder->add('sourceId', null, array(
-            'label' => 'Source1 Id',
+        $builder->add('titleSources', CollectionType::class, array(
+            'label' => 'Title Sources',
             'required' => false,
-            'attr' => array(
-                'help_block' => 'Unique numeric source identifier if available',
+            'allow_add' => true,
+            'allow_delete' => true,
+            'delete_empty' => true,
+            'entry_type' => TitleSourceType::class,
+            'entry_options' => array(
+                'label' => false,
             ),
-        ));
-        $builder->add('source2', Select2EntityType::class, array(
-            'multiple' => false,
-            'remote_route' => 'source_typeahead',
-            'class' => Source::class,
-            'primary_key' => 'id',
-            'text_property' => 'name',
-            'page_limit' => 10,
-            'allow_clear' => true,
-            'delay' => 250,
-            'language' => 'en',
+            'by_reference' => false,
             'attr' => array(
-                'help_block' => 'Second source consulted to populate the entry fields',
-            ),
-        ));
-        $builder->add('source2Id', null, array(
-            'label' => 'Source2 Id',
-            'required' => false,
-            'attr' => array(
-                'help_block' => 'Unique numeric source identifier if available',
-            ),
-        ));
-        $builder->add('source3', Select2EntityType::class, array(
-            'multiple' => false,
-            'remote_route' => 'source_typeahead',
-            'class' => Source::class,
-            'primary_key' => 'id',
-            'text_property' => 'name',
-            'page_limit' => 10,
-            'allow_clear' => true,
-            'delay' => 250,
-            'language' => 'en',
-            'attr' => array(
-                'help_block' => 'Second source consulted to populate the entry fields',
-            ),
-        ));
-        $builder->add('source3Id', null, array(
-            'label' => 'Source3 Id',
-            'required' => false,
-            'attr' => array(
-                'help_block' => 'Unique numeric source identifier if available',
+                'class' => 'collection collection-complex',
+                'help_block' => 'Names of sources consulted and the identifiers or URLs they use',
             ),
         ));
         $builder->add('notes', null, array(

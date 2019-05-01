@@ -180,12 +180,10 @@
                         <tr>
                             <th data-toggle="popover"  data-content="Sources consulted to populate the entry fields">Sources</th>
                             <td>
-                                {% include "AppBundle:title:partials/source-link.html.twig"
-                                    with {'source': title.source, 'sourceId': title.sourceId} %}
-                                {% include "AppBundle:title:partials/source-link.html.twig"
-                                    with {'source': title.source2, 'sourceId': title.source2Id} %}
-                                {% include "AppBundle:title:partials/source-link.html.twig"
-                                    with {'source': title.source3, 'sourceId': title.source3Id} %}
+                                {% for titleSource in title.titleSources %}
+                                    {% include "AppBundle:title:partials/source-link.html.twig"
+                                        with {'source': titleSource.source, 'sourceId': titleSource.identifier} %}
+                                {% endfor %}
                             </td>
                         </tr>
                         <tr>
