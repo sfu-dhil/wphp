@@ -104,7 +104,7 @@ class SourceController extends Controller implements PaginatorAwareInterface {
      */
     public function showAction(Request $request, Source $source) {
         $em = $this->getDoctrine()->getManager();
-        $dql = 'SELECT t FROM AppBundle:Title t WHERE t.source = :source OR t.source2 = :source ORDER BY t.title';
+        $dql = 'SELECT t FROM AppBundle:Title t INNER JOIN t.titleSources ts WHERE ts.source = :source ORDER BY t.title';
         $query = $em->createQuery($dql);
         $query->setParameter('source', $source);
         $titles = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);

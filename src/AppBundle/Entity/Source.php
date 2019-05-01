@@ -2,6 +2,8 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -10,11 +12,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="source")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\SourceRepository")
- *
- * @todo The Title entity refers to this one in three different ways, and may
- * do so in a fourth in future. Until that decision is made, there will not be
- * any back-references from Source to Title. The references will likely become
- * a many-to-many relationship.
  */
 class Source
 {
@@ -55,8 +52,19 @@ class Source
      */
     private $onlineSource;
 
+    /**
+     * @var Collection|TitleSource[]
+     * @ORM\OneToMany(targetEntity="TitleSource", mappedBy="source")
+     */
+    private $titleSources;
+
     public function __toString() {
         return $this->name;
+    }
+
+    public function __construct()
+    {
+        $this->titleSources = new ArrayCollection();
     }
 
     /**
@@ -161,5 +169,41 @@ class Source
     public function getOnlineSource()
     {
         return $this->onlineSource;
+    }
+
+    /**
+     * Add titleSource.
+     *
+     * @param \AppBundle\Entity\TitleSource $titleSource
+     *
+     * @return Source
+     */
+    public function addTitleSource(\AppBundle\Entity\TitleSource $titleSource)
+    {
+        $this->titleSources[] = $titleSource;
+
+        return $this;
+    }
+
+    /**
+     * Remove titleSource.
+     *
+     * @param \AppBundle\Entity\TitleSource $titleSource
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeTitleSource(\AppBundle\Entity\TitleSource $titleSource)
+    {
+        return $this->titleSources->removeElement($titleSource);
+    }
+
+    /**
+     * Get titleSources.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTitleSources()
+    {
+        return $this->titleSources;
     }
 }

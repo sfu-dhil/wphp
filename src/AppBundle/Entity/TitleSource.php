@@ -7,8 +7,11 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * TitleSource
  *
- * @ORM\Table(name="title_source")
- * @ORM\Entity(readOnly=true, repositoryClass="AppBundle\Repository\TitleSourceRepository")
+ * @ORM\Table(name="title_source",
+ *  indexes={
+ *      @ORM\Index(name="title_source_identifier_idx", columns={"identifier"})
+ * })
+ * @ORM\Entity
  */
 class TitleSource {
 
@@ -22,31 +25,45 @@ class TitleSource {
     private $id;
 
     /**
+     * @var string
+     * @ORM\Column(type="string", length=300, nullable=true)
+     */
+    private $identifier;
+
+    /**
      * @var Title
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Title")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Title", inversedBy="titleSources")
      */
     private $title;
 
     /**
      * @var Source
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Source")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Source", inversedBy="titleSources")
      */
     private $source;
-
-    /**
-     * @var string
-     * @ORM\Column(type="string")
-     */
-    private $identifier;
-
 
     /**
      * Get id.
      *
      * @return int
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
+    }
+
+    /**
+     * Set identifier.
+     *
+     * @param string $identifier
+     *
+     * @return TitleSource
+     */
+    public function setIdentifier($identifier)
+    {
+        $this->identifier = $identifier;
+
+        return $this;
     }
 
     /**
@@ -54,8 +71,23 @@ class TitleSource {
      *
      * @return string
      */
-    public function getIdentifier() {
+    public function getIdentifier()
+    {
         return $this->identifier;
+    }
+
+    /**
+     * Set title.
+     *
+     * @param \AppBundle\Entity\Title|null $title
+     *
+     * @return TitleSource
+     */
+    public function setTitle(\AppBundle\Entity\Title $title = null)
+    {
+        $this->title = $title;
+
+        return $this;
     }
 
     /**
@@ -63,8 +95,23 @@ class TitleSource {
      *
      * @return \AppBundle\Entity\Title|null
      */
-    public function getTitle() {
+    public function getTitle()
+    {
         return $this->title;
+    }
+
+    /**
+     * Set source.
+     *
+     * @param \AppBundle\Entity\Source|null $source
+     *
+     * @return TitleSource
+     */
+    public function setSource(\AppBundle\Entity\Source $source = null)
+    {
+        $this->source = $source;
+
+        return $this;
     }
 
     /**
@@ -72,7 +119,8 @@ class TitleSource {
      *
      * @return \AppBundle\Entity\Source|null
      */
-    public function getSource() {
+    public function getSource()
+    {
         return $this->source;
     }
 }

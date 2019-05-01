@@ -2,8 +2,6 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\EstcMarc;
-use AppBundle\Entity\OsborneMarc;
 use AppBundle\Entity\Title;
 use AppBundle\Form\Title\TitleSearchType;
 use AppBundle\Form\Title\TitleType;
@@ -22,14 +20,14 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * Title controller.
  *
  * @Route("/title")
  */
-class TitleController extends Controller implements PaginatorAwareInterface {
+class TitleController extends Controller implements PaginatorAwareInterface
+{
 
     use PaginatorTrait;
 
@@ -42,7 +40,8 @@ class TitleController extends Controller implements PaginatorAwareInterface {
      * @param Request $request
      * @return array
      */
-    public function indexAction(Request $request) {
+    public function indexAction(Request $request)
+    {
         $em = $this->getDoctrine()->getManager();
         $dql = 'SELECT e FROM AppBundle:Title e';
         $query = $em->createQuery($dql);
@@ -69,7 +68,8 @@ class TitleController extends Controller implements PaginatorAwareInterface {
      * @Method("GET")
      * @return JsonResponse
      */
-    public function typeaheadAction(Request $request, TitleRepository $repo) {
+    public function typeaheadAction(Request $request, TitleRepository $repo)
+    {
         $q = $request->query->get('q');
         if (!$q) {
             return new JsonResponse([]);
@@ -92,7 +92,8 @@ class TitleController extends Controller implements PaginatorAwareInterface {
      * @Method("GET")
      * @return BinaryFileResponse
      */
-    public function exportAction() {
+    public function exportAction()
+    {
         $em = $this->getDoctrine()->getManager();
         $dql = 'SELECT e FROM AppBundle:Title e ORDER BY e.id';
         $query = $em->createQuery($dql);
@@ -165,7 +166,8 @@ class TitleController extends Controller implements PaginatorAwareInterface {
      * @Template()
      * @param Request $request
      */
-    public function jumpAction(Request $request) {
+    public function jumpAction(Request $request)
+    {
         $q = $request->query->get('q');
         if ($q) {
             return $this->redirect($this->generateUrl('title_show', array('id' => $q)));
@@ -183,7 +185,8 @@ class TitleController extends Controller implements PaginatorAwareInterface {
      * @param Request $request
      * @return array
      */
-    public function searchAction(Request $request, TitleRepository $repo) {
+    public function searchAction(Request $request, TitleRepository $repo)
+    {
         $em = $this->getDoctrine()->getManager();
         $form = $this->createForm(TitleSearchType::class, null, array('entity_manager' => $em));
         $form->handleRequest($request);
@@ -214,7 +217,8 @@ class TitleController extends Controller implements PaginatorAwareInterface {
      * @param Request $request
      * @return array
      */
-    public function searchExportAction(Request $request, TitleRepository $repo) {
+    public function searchExportAction(Request $request, TitleRepository $repo)
+    {
         $em = $this->getDoctrine()->getManager();
         $form = $this->createForm(TitleSearchType::class, null, array('entity_manager' => $em));
         $form->handleRequest($request);
@@ -239,7 +243,8 @@ class TitleController extends Controller implements PaginatorAwareInterface {
      * @Template()
      * @param Request $request
      */
-    public function newAction(Request $request, EntityManagerInterface $em) {
+    public function newAction(Request $request, EntityManagerInterface $em)
+    {
         $title = new Title();
         $form = $this->createForm(TitleType::class, $title);
         $form->handleRequest($request);
@@ -255,6 +260,10 @@ class TitleController extends Controller implements PaginatorAwareInterface {
             foreach ($title->getTitleroles() as $tr) {
                 $tr->setTitle($title);
                 $em->persist($tr);
+            }
+            foreach ($title->getTitleSources() as $ts) {
+                $ts->setTitle($title);
+                $em->persist($ts);
             }
             $em = $this->getDoctrine()->getManager();
             $em->persist($title);
@@ -279,9 +288,10 @@ class TitleController extends Controller implements PaginatorAwareInterface {
      * @Template("AppBundle:title:new.html.twig")
      * @Method("GET")
      */
-    public function importMarcAction(Request $request, EstcMarcImporter $importer, $id) {
+    public function importMarcAction(Request $request, EstcMarcImporter $importer, $id)
+    {
         $title = $importer->import($id);
-        foreach($importer->getMessages() as $message) {
+        foreach ($importer->getMessages() as $message) {
             $this->addFlash('warning', $message);
         }
         $importer->resetMessages();
@@ -304,7 +314,8 @@ class TitleController extends Controller implements PaginatorAwareInterface {
      * @param Title $title
      * @return array
      */
-    public function showAction(Title $title, SourceLinker $linker) {
+    public function showAction(Title $title, SourceLinker $linker)
+    {
         return array(
             'title' => $title,
             'linker' => $linker,
@@ -321,7 +332,8 @@ class TitleController extends Controller implements PaginatorAwareInterface {
      * @param Request $request
      * @param Title $title
      */
-    public function editAction(Request $request, Title $title, EntityManagerInterface $em) {
+    public function editAction(Request $request, Title $title, EntityManagerInterface $em)
+    {
         // collect the titleFirmRole objects before modification.
         $titleFirmRoles = new ArrayCollection();
         foreach ($title->getTitleFirmroles() as $tfr) {
@@ -331,6 +343,10 @@ class TitleController extends Controller implements PaginatorAwareInterface {
         $titleRoles = new ArrayCollection();
         foreach ($title->getTitleroles() as $tr) {
             $titleRoles->add($tr);
+        }
+        $titleSources = new ArrayCollection();
+        foreach ($title->getTitleSources() as $ts) {
+            $titleSources->add($ts);
         }
 
         $editForm = $this->createForm(TitleType::class, $title);
@@ -352,6 +368,12 @@ class TitleController extends Controller implements PaginatorAwareInterface {
                 }
             }
 
+            foreach ($titleSources as $ts) {
+                if (!$title->getTitleSources()->contains($ts)) {
+                    $em->remove($ts);
+                }
+            }
+
             // check for new titleFirmRoles and persist them.
             foreach ($title->getTitleroles() as $tr) {
                 if (!$titleRoles->contains($tr)) {
@@ -365,6 +387,13 @@ class TitleController extends Controller implements PaginatorAwareInterface {
                 if (!$titleFirmRoles->contains($tfr)) {
                     $tfr->setTitle($title);
                     $em->persist($tfr);
+                }
+            }
+
+            foreach ($title->getTitleSources() as $ts) {
+                if (!$titleSources->contains($ts)) {
+                    $ts->setTitle($title);
+                    $em->persist($ts);
                 }
             }
 
@@ -389,7 +418,8 @@ class TitleController extends Controller implements PaginatorAwareInterface {
      * @param Request $request
      * @param Title $title
      */
-    public function copyAction(Request $request, Title $title, EntityManagerInterface $em) {
+    public function copyAction(Request $request, Title $title, EntityManagerInterface $em)
+    {
         $form = $this->createForm(TitleType::class, $title, array(
             'action' => $this->generateUrl('title_new'),
         ));
@@ -409,8 +439,18 @@ class TitleController extends Controller implements PaginatorAwareInterface {
      * @param Request $request
      * @param Title $title
      */
-    public function deleteAction(Request $request, Title $title) {
+    public function deleteAction(Request $request, Title $title)
+    {
         $em = $this->getDoctrine()->getManager();
+        foreach($title->getTitleFirmroles() as $tfr) {
+            $em->remove($tfr);
+        }
+        foreach($title->getTitleRoles() as $tr) {
+            $em->remove($tr);
+        }
+        foreach($title->getTitleSources() as $ts) {
+            $em->remove($ts);
+        }
         $em->remove($title);
         $em->flush();
         $this->addFlash('success', 'The title was deleted.');

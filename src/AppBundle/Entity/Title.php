@@ -163,27 +163,6 @@ class Title
     /**
      * @var string
      *
-     * @ORM\Column(name="source_id", type="string", length=300, nullable=true)
-     */
-    private $sourceId;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="source2_id", type="string", length=300, nullable=true)
-     */
-    private $source2Id;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="source3_id", type="string", length=300, nullable=true)
-     */
-    private $source3Id;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="shelfmark", type="text", nullable=true)
      */
     private $shelfmark;
@@ -247,36 +226,6 @@ class Title
     private $genre;
 
     /**
-     * @var Source
-     *
-     * @ORM\ManyToOne(targetEntity="Source")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="source", referencedColumnName="id")
-     * })
-     */
-    private $source;
-
-    /**
-     * @var Source
-     *
-     * @ORM\ManyToOne(targetEntity="Source")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="source2", referencedColumnName="id")
-     * })
-     */
-    private $source2;
-
-    /**
-     * @var Source
-     *
-     * @ORM\ManyToOne(targetEntity="Source")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="source3", referencedColumnName="id")
-     * })
-     */
-    private $source3;
-
-    /**
      * @var Collection|TitleRole[]
      * @ORM\OneToMany(targetEntity="TitleRole", mappedBy="title")
      */
@@ -289,12 +238,19 @@ class Title
     private $titleFirmroles;
 
     /**
+     * @var Collection|TitleRole[]
+     * @ORM\OneToMany(targetEntity="TitleSource", mappedBy="title")
+     */
+    private $titleSources;
+
+    /**
      * Constructor
      */
     public function __construct() {
         $this->totalPrice = 0;
         $this->titleRoles = new ArrayCollection();
         $this->titleFirmroles = new ArrayCollection();
+        $this->titleSources = new ArrayCollection();
     }
 
     /**
@@ -687,50 +643,6 @@ class Title
     }
 
     /**
-     * Set sourceId
-     *
-     * @param string $sourceId
-     *
-     * @return Title
-     */
-    public function setSourceId($sourceId) {
-        $this->sourceId = $sourceId;
-
-        return $this;
-    }
-
-    /**
-     * Get sourceId
-     *
-     * @return string
-     */
-    public function getSourceId() {
-        return $this->sourceId;
-    }
-
-    /**
-     * Set source2Id
-     *
-     * @param string $source2Id
-     *
-     * @return Title
-     */
-    public function setSource2Id($source2Id) {
-        $this->source2Id = $source2Id;
-
-        return $this;
-    }
-
-    /**
-     * Get source2Id
-     *
-     * @return string
-     */
-    public function getSource2Id() {
-        return $this->source2Id;
-    }
-
-    /**
      * Set shelfmark
      *
      * @param string $shelfmark
@@ -885,50 +797,6 @@ class Title
     }
 
     /**
-     * Set source
-     *
-     * @param Source $source
-     *
-     * @return Title
-     */
-    public function setSource(Source $source = null) {
-        $this->source = $source;
-
-        return $this;
-    }
-
-    /**
-     * Get source
-     *
-     * @return Source
-     */
-    public function getSource() {
-        return $this->source;
-    }
-
-    /**
-     * Set source2
-     *
-     * @param Source $source2
-     *
-     * @return Title
-     */
-    public function setSource2(Source $source2 = null) {
-        $this->source2 = $source2;
-
-        return $this;
-    }
-
-    /**
-     * Get source2
-     *
-     * @return Source
-     */
-    public function getSource2() {
-        return $this->source2;
-    }
-
-    /**
      * Add titleRole
      *
      * @param TitleRole $titleRole
@@ -1042,30 +910,6 @@ class Title
     }
 
     /**
-     * Set source3Id
-     *
-     * @param string $source3Id
-     *
-     * @return Title
-     */
-    public function setSource3Id($source3Id)
-    {
-        $this->source3Id = $source3Id;
-
-        return $this;
-    }
-
-    /**
-     * Get source3Id
-     *
-     * @return string
-     */
-    public function getSource3Id()
-    {
-        return $this->source3Id;
-    }
-
-    /**
      * Set finalattempt
      *
      * @param boolean $finalattempt
@@ -1090,30 +934,6 @@ class Title
     }
 
     /**
-     * Set source3
-     *
-     * @param \AppBundle\Entity\Source $source3
-     *
-     * @return Title
-     */
-    public function setSource3(\AppBundle\Entity\Source $source3 = null)
-    {
-        $this->source3 = $source3;
-
-        return $this;
-    }
-
-    /**
-     * Get source3
-     *
-     * @return \AppBundle\Entity\Source
-     */
-    public function getSource3()
-    {
-        return $this->source3;
-    }
-
-    /**
      * Set colophon.
      *
      * @param string|null $colophon
@@ -1135,5 +955,45 @@ class Title
     public function getColophon()
     {
         return $this->colophon;
+    }
+
+    public function setTitleSources($titleSources) {
+        $this->titleSources = $titleSources;
+    }
+
+    /**
+     * Add titleSource.
+     *
+     * @param \AppBundle\Entity\TitleSource $titleSource
+     *
+     * @return Title
+     */
+    public function addTitleSource(\AppBundle\Entity\TitleSource $titleSource)
+    {
+        $this->titleSources[] = $titleSource;
+
+        return $this;
+    }
+
+    /**
+     * Remove titleSource.
+     *
+     * @param \AppBundle\Entity\TitleSource $titleSource
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeTitleSource(\AppBundle\Entity\TitleSource $titleSource)
+    {
+        return $this->titleSources->removeElement($titleSource);
+    }
+
+    /**
+     * Get titleSources.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTitleSources()
+    {
+        return $this->titleSources;
     }
 }
