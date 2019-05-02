@@ -198,17 +198,11 @@ class EstcMarcImporterTest extends BaseTestCase {
 
     public function guessFormatData() {
         return array(
-            ['octavo', '8°'],
-            ['octavo', '8⁰'],
             ['octavo', '8vo'],
 
             // real data. again.
             ['octavo', '16 cm. (8vo)'],
             ['quarto', '(4to and 8vo)'],
-            ['octavo', '1/8°'],
-            ['octavo', '1/8⁰'],
-            ['octavo', '1/8vo'],
-            ['folio', '2⁰ .'],
         );
     }
 

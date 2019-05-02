@@ -169,21 +169,9 @@ class EstcMarcImporter {
         $data = $fields['300c']->getFieldData();
         $matches = array();
         $format = null;
-        if (preg_match('/(\d+\x{00b0})/u', $data, $matches)) {
-            // degree sign
-            $format = $this->formatRepo->findOneBy(array(
-                'abbrevTwo' => $matches[1],
-            ));
-        }
-        if (preg_match('/(\d+\x{2070})/u', $data, $matches)) {
-            // superscript zero
-            $format = $this->formatRepo->findOneBy(array(
-                'abbrevFour' => $matches[1],
-            ));
-        }
         if (preg_match('/(\d+[mtv]o)/', $data, $matches)) {
             $format = $this->formatRepo->findOneBy(array(
-                'abbrevOne' => $matches[1],
+                'abbreviation' => $matches[1],
             ));
         }
         if (!$format) {
@@ -290,7 +278,7 @@ class EstcMarcImporter {
     }
 
     /**
-     * @param TitleRepository $titleRepo
+     * @param TitleSourceRepository $titleSourceRepo
      */
     public function setTitleSourceRepo(TitleSourceRepository $titleSourceRepo): void {
         $this->titleSourceRepository = $titleSourceRepo;
