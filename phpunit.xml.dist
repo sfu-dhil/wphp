@@ -6,7 +6,7 @@
          backupGlobals="true"
          backupStaticAttributes="false"
          cacheTokens="false"
-         processIsolation="false"
+         processIsolation="true"
          colors="false"
          defaultTestSuite="app"
          bootstrap="var/bootstrap.php.cache">
