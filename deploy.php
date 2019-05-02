@@ -82,35 +82,6 @@ task('dhil:sphinx', function() {
     }
 })->desc('Build sphinx docs locally and upload to server.');
 
-task('dhil:download:images', function() {
-    $user = get('user');
-    $host = get('hostname');
-    $become = get('become');
-
-    runLocally("rsync -av -e 'ssh' --rsync-path='sudo -u $become rsync' $user@$host:/home/btd/uploads/ ./app/data/uploads", ['timeout' => null]);
-})->desc('Download clipping images from server.');
-
-task('dhil:upload:images', function() {
-    $user = get('user');
-    $host = get('hostname');
-    $become = get('become');
-
-    runLocally("rsync -av -e 'ssh' --rsync-path='sudo -u $become rsync' ./web/images/clippings/ $user@$host:{{release_path}}/web/images/clippings", ['timeout' => null]);
-})->desc('Upload clipping images to server.');
-
-option('update-db', null, InputOption::VALUE_NONE, 'Force the action to run');
-task('dhil:db:update', function() {
-    $update = run('{{bin/php}} {{bin/console}} doctrine:schema:update --dump-sql');
-    writeln($update);
-    if (input()->getOption('update-db')) {
-        writeln("Updating database.");
-        $result = run('{{bin/php}} {{bin/console}} doctrine:schema:update --force');
-        writeln($result);
-    } else {
-        writeln("Database updates are not automatically applied. Use dhil:db:update --update-db to apply.");
-    }
-})->desc('Run a docctrine:schema:update.');
-
 task('dhil:db:backup', function() {
     $user = get('user');
     $become = get('become');
@@ -125,24 +96,10 @@ task('dhil:db:backup', function() {
     set('become', $become);
 })->desc('Backup the mysql database.');
 
-task('dhil:db:fetch-nines', function(){
-    $user = get('user');
-    $become = get('become');
-    $app = get('application');
-
-    $opt = implode(' ', get('nines_tables'));
-
-    set('become', $user); // prevent sudo -u from failing.
-    $date = date('Y-m-d');
-    $current = get('release_name');
-    $file = "/home/{$user}/{$app}-nines-{$date}-r{$current}.sql";
-    run("sudo mysqldump {$app} -r {$file} {$opt}");
-    run("sudo chown {$user} {$file}");
-    set('become', $become);
-
-    download($file, basename($file));
-    writeln("Nines tables downloaded to " . basename($file));
-})->desc('Backup the mysql database.');
+task('dhil:db:migrate', function(){
+    $output = run('{{bin/php}} {{bin/console}} doctrine:migrations:migrate --no-interaction');
+    writeln($output);
+});
 
 task('dhil:db:fetch', function() {
     $user = get('user');
@@ -190,7 +147,7 @@ task('deploy', [
     'deploy:cache:clear',
     'deploy:writable',
     'dhil:db:backup',
-    'dhil:db:update',
+    'dhil:db:migrate',
     'dhil:sphinx',
     'dhil:bower',
     'deploy:symlink',
