@@ -26,6 +26,7 @@
         "php": ">=7.2.0",
         "beberlei/doctrineextensions": "^1.0",
         "doctrine/doctrine-bundle": "^1.8",
+        "doctrine/doctrine-migrations-bundle": "^1.0",
         "doctrine/orm": "^2.6",
         "friendsofsymfony/user-bundle": "^2.0",
         "incenteev/composer-parameter-handler": "^2.0",
