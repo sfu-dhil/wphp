@@ -46,7 +46,7 @@ class Firm
     /**
      * @var string
      *
-     * @ORM\Column(name="gender", type="string", length=1, nullable=true)
+     * @ORM\Column(name="gender", type="string", length=1, nullable=false, options={"default"="U"})
      */
     private $gender;
 

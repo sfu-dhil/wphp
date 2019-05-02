@@ -3,7 +3,9 @@
         Female
     {% elseif firm.gender == constant('AppBundle\\Entity\\Person::MALE') %}
         Male
-    {% else %}
+    {% elseif firm.gender == constant('AppBundle\\Entity\\Person::UNKNOWN')%}
         Unknown
+    {% else %}
+        Unknown ({{ firm.gender }})
     {% endif %}
 {% endspaceless %}
