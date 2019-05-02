@@ -28,20 +28,12 @@
                 <td>{{ format.name }}</td>
             </tr>
             <tr>
-                <th data-toggle="popover" data-content="Binding format abbreviated alphanumerically">Abbreviation 1</th>
-                <td>{{ format.abbrevOne }}</td>
+                <th data-toggle="popover" data-content="Binding format abbreviated alphanumerically">Abbreviation</th>
+                <td>{{ format.abbreviation }}</td>
             </tr>
             <tr>
-                <th data-toggle="popover" data-content="Binding format abbreviated numerically with symbol">Abbreviation 2</th>
-                <td>{{ format.abbrevTwo }}</td>
-            </tr>
-            <tr>
-                <th data-toggle="popover" data-content="Binding format abbreviated numerically with symbol">Abbreviation 3</th>
-                <td>{{ format.abbrevThree }}</td>
-            </tr>
-            <tr>
-                <th data-toggle="popover" data-content="Binding format abbreviated numerically with symbol">Abbreviation 4</th>
-                <td>{{ format.abbrevFour }}</td>
+                <th data-toggle="popover" data-content="Binding format description">Description</th>
+                <td>{{ format.description|raw }}</td>
             </tr>
         </tbody>
     </table>

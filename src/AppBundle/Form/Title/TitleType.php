@@ -163,7 +163,7 @@ class TitleType extends AbstractType {
                 return $repo->createQueryBuilder('u')->orderBy('u.name', 'ASC');
             },
             'choice_label' => function(Format $format) {
-                return "{$format->getName()} ({$format->getAbbrevTwo()})";
+                return "{$format->getName()} ({$format->getAbbreviation()})";
             },
             'multiple' => false,
             'expanded' => false,

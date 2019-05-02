@@ -33,30 +33,9 @@ class Format {
     /**
      * @var string
      *
-     * @ORM\Column(name="abbrev1", type="string", length=10, nullable=true)
+     * @ORM\Column(name="abbreviation", type="string", length=10, nullable=true)
      */
-    private $abbrevOne;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="abbrev2", type="string", length=10, nullable=true)
-     */
-    private $abbrevTwo;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="abbrev3", type="string", length=10, nullable=true)
-     */
-    private $abbrevThree;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="abbrev4", type="string", length=10, nullable=true)
-     */
-    private $abbrevFour;
+    private $abbreviation;
 
     /**
      * @var string
@@ -111,89 +90,23 @@ class Format {
     /**
      * Set abbrevOne
      *
-     * @param string $abbrevOne
+     * @param string $abbreviation
      *
      * @return Format
      */
-    public function setAbbrevOne($abbrevOne) {
-        $this->abbrevOne = $abbrevOne;
+    public function setAbbreviation($abbreviation) {
+        $this->abbreviation = $abbreviation;
 
         return $this;
     }
 
     /**
-     * Get abbrevOne
+     * Get abbreviation
      *
      * @return string
      */
-    public function getAbbrevOne() {
-        return $this->abbrevOne;
-    }
-
-    /**
-     * Set abbrevTwo
-     *
-     * @param string $abbrevTwo
-     *
-     * @return Format
-     */
-    public function setAbbrevTwo($abbrevTwo) {
-        $this->abbrevTwo = $abbrevTwo;
-
-        return $this;
-    }
-
-    /**
-     * Get abbrevTwo
-     *
-     * @return string
-     */
-    public function getAbbrevTwo() {
-        return $this->abbrevTwo;
-    }
-
-    /**
-     * Set abbrevThree
-     *
-     * @param string $abbrevThree
-     *
-     * @return Format
-     */
-    public function setAbbrevThree($abbrevThree) {
-        $this->abbrevThree = $abbrevThree;
-
-        return $this;
-    }
-
-    /**
-     * Get abbrevThree
-     *
-     * @return string
-     */
-    public function getAbbrevThree() {
-        return $this->abbrevThree;
-    }
-
-    /**
-     * Set abbrevFour
-     *
-     * @param string $abbrevFour
-     *
-     * @return Format
-     */
-    public function setAbbrevFour($abbrevFour) {
-        $this->abbrevFour = $abbrevFour;
-
-        return $this;
-    }
-
-    /**
-     * Get abbrevFour
-     *
-     * @return string
-     */
-    public function getAbbrevFour() {
-        return $this->abbrevFour;
+    public function getAbbreviation() {
+        return $this->abbreviation;
     }
 
     /**
