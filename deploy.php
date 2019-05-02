@@ -97,7 +97,7 @@ task('dhil:db:backup', function() {
 })->desc('Backup the mysql database.');
 
 task('dhil:db:migrate', function(){
-    $output = run('{{bin/php}} {{bin/console}} doctrine:migrations:migrate --no-interaction');
+    $output = run('cd {{ release_path }} && ./bin/console doctrine:migrations:migrate --no-interaction');
     writeln($output);
 });
 
