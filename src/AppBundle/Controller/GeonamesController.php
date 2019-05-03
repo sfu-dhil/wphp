@@ -4,6 +4,8 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Geonames;
 use AppBundle\Repository\GeonamesRepository;
+use DateTime;
+use Doctrine\ORM\EntityManagerInterface;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -11,7 +13,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+
+use GeoNames\Client as GeoNamesClient;
 
 /**
  * Geonames controller.
@@ -44,16 +49,6 @@ class GeonamesController extends Controller  implements PaginatorAwareInterface 
     /**
      * @param Request $request
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
-     * @Route("/import", name="geonames_import")
-     * @Method({"GET", "POST"})
-     */
-    public function importAction(Request $request) {
-
-    }
-
-    /**
-     * @param Request $request
-     * @Security("has_role('ROLE_CONTENT_ADMIN')")
      * @Route("/typeahead", name="geonames_typeahead")
      * @Method("GET")
      * @return JsonResponse
@@ -72,6 +67,94 @@ class GeonamesController extends Controller  implements PaginatorAwareInterface 
         }
 
         return new JsonResponse($data);
+    }
+
+    /**
+     * Search for geonames entities.
+     * @param Request $request
+     * @Route("/search", name="geonames_search")
+     * @Method("GET")
+     * @Template()
+     */
+    public function searchAction(Request $request, GeonamesRepository $repo) {
+        $q = $request->query->get('q');
+        if ($q) {
+            $query = $repo->searchQuery($q);
+            $geonames = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
+        } else {
+            $geonames = array();
+        }
+
+        return array(
+            'geonames' => $geonames,
+            'q' => $q,
+        );
+    }
+
+    /**
+     * @param Request $request
+     * @Security("has_role('ROLE_CONTENT_ADMIN')")
+     * @Route("/import", name="geonames_import")
+     * @Method("GET")
+     * @Template
+     */
+    public function importSearchAction(Request $request) {
+        $q = $request->query->get('q');
+        $results = array();
+        if($q) {
+            $user = $this->getParameter('wphp.geonames_user');
+            $client = new GeoNamesClient($user);
+            $results = $client->search(array(
+                'name' => $q,
+                'fcl' => array('A', 'P'),
+                'lang' => 'en',
+            ));
+        }
+        return [
+            'q' => $q,
+            'results' => $results,
+        ];
+    }
+
+    /**
+     * @param Request $request
+     * @Security("has_role('ROLE_CONTENT_ADMIN')")
+     * @Route("/import", name="geonames_import_save")
+     * @Method("POST")
+     */
+    public function importSaveAction(Request $request, EntityManagerInterface $em) {
+        $user = $this->getParameter('wphp.geonames_user');
+        $client = new GeoNamesClient($user);
+        foreach($request->request->get('geonameid') as $geonameid) {
+            $data = $client->get(array(
+                'geonameId' => $geonameid,
+                'lang' => 'en',
+            ));
+            $geoname = new Geonames();
+            $geoname->setGeonameid($data->geonameId);
+            $geoname->setName($data->name);
+            $geoname->setAsciiname($data->asciiName);
+            $alternateNames = array();
+            foreach($data->alternateNames as $name) {
+                if(isset($name->lang) && $name->lang != 'en') {
+                    continue;
+                }
+                $alternateNames[] = $name->name;
+            }
+            $geoname->setAlternatenames(implode(", ", $alternateNames));
+            $geoname->setLatitude($data->lat);
+            $geoname->setLongitude($data->lng);
+            $geoname->setFclass($data->fcl);
+            $geoname->setFcode($data->fcode);
+            $geoname->setCountry($data->countryCode);
+            $geoname->setPopulation($data->population);
+            $geoname->setTimezone($data->timezone->timeZoneId);
+            $geoname->setModdate(new DateTime());
+            $em->persist($geoname);
+        }
+        $em->flush();
+        $this->addFlash("success", "The selected geonames have been imported.");
+        return $this->redirectToRoute('geonames_import', array($request->query->get('q')));
     }
 
 

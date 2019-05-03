@@ -1,24 +1,40 @@
 {% extends 'base.html.twig' %}
 
 {% block pageheader %} 
-    <h1>Geonames List</h1>
+    <h1>Geonames Search</h1>
+    {% if q %}
     <p class="count">
         Displaying {{ geonames|length }} geonames of {{ geonames.getTotalItemCount }} total.
     </p>
+    {% endif %}
 {% endblock %} 
 
 {% block body %}
 
-    <div class='btn-toolbar pull-right'>
-        <div class='btn-group'>
-            <a href="{{ path('geonames_search') }}" class="btn btn-default">
-                <span class="glyphicon glyphicon-search"></span> Search
-            </a>
-            <a href="{{ path('geonames_import') }}" class="btn btn-default">
-                <span class="glyphicon glyphicon-search"></span> Import
-            </a>
-        </div>
+    <form method="get" class="form-horizontal" action="{{ path('geonames_search') }}">
+        <fieldset>
+            <legend>Search the Jackson Bibliography records</legend>
+            <div class="form-group">
+                <label class='col-sm-2 control-label' for='q'>Search term</label>
+                <div class='input-group'>
+                    <input type='text' name='q' id='q' class='form-control' value='{{ q }}'>
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary" type="submit">
+                            <span class='glyphicon glyphicon-search'></span>
+                            Search
+                        </button>
+                    </span>
+                </div>
+                <p class="help-block col-sm-offset-2">Search the records by name.</p>
+            </div>
+        </fieldset>
+    </form>
+
+    {% if q %}
+    <div class="navigation">
+        {{ knp_pagination_render(geonames) }}
     </div>
+
     <table class="table table-bordered table-condensed table-hover table-striped">
         <thead>
             <tr>
@@ -47,5 +63,7 @@
     <div class="navigation">
         {{ knp_pagination_render(geonames) }}
     </div>
+
+    {% endif %}
 
 {% endblock %}

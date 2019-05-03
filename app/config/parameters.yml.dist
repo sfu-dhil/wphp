@@ -43,6 +43,8 @@ parameters:
     # menu builder
     wphp.spotlight_menu: [ title, person, firm ]
 
+    wphp.geonames_user: ~
+
     # tracking configuration
     # true or false
     dhil.piwik_enabled: false

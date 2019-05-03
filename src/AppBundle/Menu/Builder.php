@@ -120,6 +120,9 @@ class Builder implements ContainerAwareInterface
                 'role' => 'separator',
                 'class' => 'divider',
             ));
+            $browse->addChild('Geonames', array(
+                'route' => 'geonames_index',
+            ));
             $browse->addChild('English Novel', array(
                 'route' => 'resource_en_index',
             ));
