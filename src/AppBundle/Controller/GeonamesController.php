@@ -44,6 +44,16 @@ class GeonamesController extends Controller  implements PaginatorAwareInterface 
     /**
      * @param Request $request
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
+     * @Route("/import", name="geonames_import")
+     * @Method({"GET", "POST"})
+     */
+    public function importAction(Request $request) {
+
+    }
+
+    /**
+     * @param Request $request
+     * @Security("has_role('ROLE_CONTENT_ADMIN')")
      * @Route("/typeahead", name="geonames_typeahead")
      * @Method("GET")
      * @return JsonResponse

@@ -4,6 +4,7 @@ namespace AppBundle\Form\Title;
 
 use AppBundle\Entity\Format;
 use AppBundle\Entity\Genre;
+use AppBundle\Entity\Source;
 use AppBundle\Form\Firm\FirmFilterType;
 use AppBundle\Form\Person\PersonFilterType;
 use Symfony\Component\Form\AbstractType;
@@ -70,7 +71,6 @@ class TitleSearchType extends AbstractType {
                 'help_block' => 'Find this exact title ID.',
             )
         ));
-
         $builder->add('person_filter', PersonFilterType::class, array(
             'label' => 'Filter by Person',
             'required' => false,
@@ -197,10 +197,14 @@ class TitleSearchType extends AbstractType {
             'label' => 'Shelfmark',
             'required' => false,
         ));
-        $builder->add('source_id', null, array(
-            'label' => 'Source ID',
+        $builder->add('titlesource_filter', TitleSourceFilterType::class, array(
+            'label' => 'Filter by Source',
             'required' => false,
+            'attr' => array(
+                'class' => 'embedded-form'
+            ),
         ));
+
         $builder->add('notes', null, array(
             'label' => 'Notes',
             'required' => false,
