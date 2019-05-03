@@ -21,7 +21,7 @@ class LoadEstcMarc extends Fixture implements DependentFixtureInterface, Fixture
 
             $id = new EstcMarc();
             $id->setTitleId(1 + $n);
-            $id->setField('009');
+            $id->setField('001');
             $id->setFieldData('abc-' . $n);
             $manager->persist($id);
 

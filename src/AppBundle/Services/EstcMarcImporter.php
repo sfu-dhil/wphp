@@ -208,7 +208,7 @@ class EstcMarcImporter {
         if (isset($fields['245b'])) {
             $fullTitle .= " " . $fields['245b']->getFieldData();
         }
-        $this->checkTitle($fullTitle, $fields['009']->getFieldData());
+        $this->checkTitle($fullTitle, $fields['001']->getFieldData());
 
         $title = new Title();
         $title->setTitle($fullTitle);
@@ -230,7 +230,7 @@ class EstcMarcImporter {
 
         $source = $this->sourceRepo->findOneBy(array('name' => 'ESTC'));
         $title->setSource($source);
-        $title->setSourceId($fields['009']->getFieldData());
+        $title->setSourceId($fields['001']->getFieldData());
 
         $format = $this->guessFormat($fields);
         $title->setFormat($format);

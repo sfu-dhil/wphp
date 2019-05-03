@@ -27,6 +27,8 @@ class Firm
 
     const FEMALE = 'F';
 
+    const UNKNOWN = 'U';
+
     /**
      * @var integer
      *
@@ -98,6 +100,7 @@ class Firm
      * Construct a new firm.
      */
     public function __construct() {
+        $this->gender = self::UNKNOWN;
         $this->titleFirmroles = new ArrayCollection();
     }
 

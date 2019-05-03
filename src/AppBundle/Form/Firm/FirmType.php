@@ -31,7 +31,7 @@ class FirmType extends AbstractType {
             'choices' => array(
                 'Female' => Firm::FEMALE,
                 'Male' => Firm::MALE,
-                'Unknown' => null,
+                'Unknown' => Firm::UNKNOWN,
             ),
         ));
         $builder->add('streetAddress', null, array(

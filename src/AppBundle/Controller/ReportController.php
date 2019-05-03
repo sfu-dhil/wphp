@@ -2,6 +2,9 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\EstcMarc;
+use AppBundle\Entity\Source;
+use AppBundle\Entity\TitleSource;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -13,23 +16,24 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Reports controller.
- *
  * @Route("/report")
  * @Security("has_role('ROLE_CONTENT_ADMIN')")
  */
-class ReportController extends Controller implements PaginatorAwareInterface {
+class ReportController extends Controller implements PaginatorAwareInterface
+{
 
     use PaginatorTrait;
 
     /**
      * List bad dates of publication
-     *
      * @Route("/first_pub_date", name="report_first_pub_date")
      * @Method("GET")
      * @Template()
+     *
      * @param Request $request
      */
-    public function firstPubDateAction(Request $request, EntityManagerInterface $em) {
+    public function firstPubDateAction(Request $request, EntityManagerInterface $em)
+    {
         $dql = 'SELECT e FROM AppBundle:Title e WHERE REGEXP(e.dateOfFirstPublication, \'^[0-9]{4}$\')=0 ORDER BY e.id';
         $query = $em->createQuery($dql);
         $titles = $this->paginator->paginate($query->execute(), $request->query->getInt('page', 1), 25);
@@ -41,13 +45,14 @@ class ReportController extends Controller implements PaginatorAwareInterface {
 
     /**
      * List bad dates of publication
-     *
      * @Route("/titles_fc", name="report_titles_check")
      * @Method("GET")
      * @Template()
+     *
      * @param Request $request
      */
-    public function titlesFinalCheckAction(Request $request, EntityManagerInterface $em) {
+    public function titlesFinalCheckAction(Request $request, EntityManagerInterface $em)
+    {
         $dql = 'SELECT e FROM AppBundle:Title e WHERE e.finalcheck = 0 AND e.finalattempt = 0 AND e.pubdate <= 1800 ORDER BY e.id';
         $query = $em->createQuery($dql);
         $titles = $this->paginator->paginate($query->execute(), $request->query->getInt('page', 1), 25);
@@ -59,13 +64,14 @@ class ReportController extends Controller implements PaginatorAwareInterface {
 
     /**
      * List bad dates of publication
-     *
      * @Route("/firms_fc", name="report_firms_check")
      * @Method("GET")
      * @Template()
+     *
      * @param Request $request
      */
-    public function firmsFinalCheckAction(Request $request, EntityManagerInterface $em) {
+    public function firmsFinalCheckAction(Request $request, EntityManagerInterface $em)
+    {
         $dql = 'SELECT e FROM AppBundle:Firm e WHERE e.finalcheck = 0 ORDER BY e.id';
         $query = $em->createQuery($dql);
         $firms = $this->paginator->paginate($query->execute(), $request->query->getInt('page', 1), 25);
@@ -77,13 +83,14 @@ class ReportController extends Controller implements PaginatorAwareInterface {
 
     /**
      * List bad dates of publication
-     *
      * @Route("/persons_fc", name="report_person_check")
      * @Method("GET")
      * @Template()
+     *
      * @param Request $request
      */
-    public function personsFinalCheckAction(Request $request, EntityManagerInterface $em) {
+    public function personsFinalCheckAction(Request $request, EntityManagerInterface $em)
+    {
         $dql = 'SELECT e FROM AppBundle:Person e WHERE e.finalcheck = 0 ORDER BY e.id';
         $query = $em->createQuery($dql);
         $persons = $this->paginator->paginate($query->execute(), $request->query->getInt('page', 1), 25);
@@ -94,16 +101,16 @@ class ReportController extends Controller implements PaginatorAwareInterface {
     }
 
     /**
-     *
      * @param Request $request
      * @param EntityManagerInterface $em
-     * @return Title[]|Collection
      *
+     * @return Title[]|Collection
      * @Route("/title_source_id_null", name="report_title_source_id_null")
      * @Method("GET")
      * @Template()
      */
-    public function titleSourceIdNull(Request $request, EntityManagerInterface $em) {
+    public function titleSourceIdNull(Request $request, EntityManagerInterface $em)
+    {
         $qb = $em->createQueryBuilder();
         $qb->select('e')->from('AppBundle:Title', 'e');
         $qb->orWhere('e.source is not null and e.sourceId is null');
@@ -117,16 +124,16 @@ class ReportController extends Controller implements PaginatorAwareInterface {
     }
 
     /**
-     *
      * @param Request $request
      * @param EntityManagerInterface $em
-     * @return Title[]|Collection
      *
+     * @return Title[]|Collection
      * @Route("/title_source_null", name="report_title_source_null")
      * @Method("GET")
      * @Template()
      */
-    public function titleSourceNull(Request $request, EntityManagerInterface $em) {
+    public function titleSourceNull(Request $request, EntityManagerInterface $em)
+    {
         $qb = $em->createQueryBuilder();
         $qb->select('e')->from('AppBundle:Title', 'e');
         $qb->orWhere('e.source is null and e.sourceId is not null');
@@ -140,16 +147,16 @@ class ReportController extends Controller implements PaginatorAwareInterface {
     }
 
     /**
-     *
      * @param Request $request
      * @param EntityManagerInterface $em
-     * @return Title[]|Collection
      *
+     * @return Title[]|Collection
      * @Route("/title_without_genre", name="report_title_without_genre")
      * @Method("GET")
      * @Template()
      */
-    public function titleWithoutGenre(Request $request, EntityManagerInterface $em) {
+    public function titleWithoutGenre(Request $request, EntityManagerInterface $em)
+    {
         $qb = $em->createQueryBuilder();
         $qb->select('e')->from('AppBundle:Title', 'e');
         $qb->where('e.genre is null');
@@ -158,5 +165,39 @@ class ReportController extends Controller implements PaginatorAwareInterface {
         return array(
             'titles' => $titles,
         );
+    }
+
+    /**
+     * Titles with ESTC IDs that don't match anything in the ESTC MARC data.
+     *
+     * @param Request $request
+     * @param EntityManagerInterface $em
+     *
+     * @return TitleSource[]|Collection
+     * @Route("/title_bad_estc", name="report_title_bad_estc")
+     * @Method("GET")
+     * @Template()
+     */
+    public function titleBadEstc(Request $request, EntityManagerInterface $em)
+    {
+        $source = $em->find(Source::class, 2);
+
+        $subq = $em->createQueryBuilder();
+        $subq->select('e.fieldData');
+        $subq->from(EstcMarc::class, 'e');
+        $subq->where("e.field = '001'");
+
+        $qb = $em->createQueryBuilder();
+        $qb->select('ts');
+        $qb->from(TitleSource::class, 'ts');
+        $qb->where('ts.source = :source');
+        $qb->andWhere($qb->expr()->notIn("ts.identifier", $subq->getDQL()));
+        $qb->orderBy('ts.title');
+        $qb->setParameter('source', $source);
+
+        $titleSources = $this->paginator->paginate($qb->getQuery(), $request->query->getInt('page', 1), 25);
+        return [
+            'titleSources' => $titleSources,
+        ];
     }
 }

@@ -124,6 +124,7 @@ class FirmControllerTest extends BaseTestCase
             'firm[name]' => 'Cheese.',
             'firm[streetAddress]' => '123 Cheese St.',
             'firm[city]' => '',
+            'firm[gender]' => 'U',
             'firm[startDate]' => '1972',
             'firm[endDate]' => '1999',
             'firm[finalcheck]' => 1
@@ -164,6 +165,7 @@ class FirmControllerTest extends BaseTestCase
             'firm[name]' => 'Cheese.',
             'firm[streetAddress]' => '123 Cheese St.',
             'firm[city]' => '',
+            'firm[gender]' => 'U',
             'firm[startDate]' => '1972',
             'firm[endDate]' => '1999',
             'firm[finalcheck]' => 1
