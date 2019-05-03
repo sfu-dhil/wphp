@@ -20,4 +20,11 @@ class GeonamesRepository extends EntityRepository {
         return $qb->getQuery()->execute();
     }
 
+    public function searchQuery($q) {
+        $qb = $this->createQueryBuilder('e');
+        $qb->andWhere("e.name LIKE :q");
+        $qb->orderBy('e.name');
+        $qb->setParameter('q', "%{$q}%");
+        return $qb->getQuery()->execute();
+    }
 }
