@@ -2,6 +2,7 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\TitleSource;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
@@ -191,15 +192,6 @@ class TitleRepository extends EntityRepository
             $qb->andWhere("MATCH (e.notes) AGAINST (:notes BOOLEAN) > 0");
             $qb->setParameter('notes', $data['notes']);
         }
-        if(isset($data['source_id']) && $data['source_id']) {
-            $qb->andWhere(
-                $qb->expr()->orX(
-                    $qb->expr()->eq('e.sourceId', ':sourceId'),
-                    $qb->expr()->eq('e.source2Id', ':sourceId'),
-                    $qb->expr()->eq('e.source3Id', ':sourceId')
-            ));
-            $qb->setParameter('sourceId', $data['source_id']);
-        }
 
         // only add the title filter query parts if the subform has data.
         if (isset($data['person_filter']) && count(array_filter($data['person_filter']))) {
@@ -251,6 +243,20 @@ class TitleRepository extends EntityRepository
             if(isset($filter['firm_address']) && $filter['firm_address']) {
                 $qb->andWhere("MATCH({$fAlias}.streetAddress) AGAINST(:{$fAlias}_address BOOLEAN) > 0");
                 $qb->setParameter("{$fAlias}_address", $filter['firm_address']);
+            }
+        }
+
+        if(isset($data['titlesource_filter']) && $data['titlesource_filter']) {
+            /** @var TitleSource $filter */
+            $filter = $data['titlesource_filter'];
+            $qb->innerJoin('e.titleSources', 'ts');
+            if($filter->getSource()) {
+                $qb->andWhere('ts.source = :source');
+                $qb->setParameter('source', $filter->getSource());
+            }
+            if($filter->getIdentifier()) {
+                $qb->andWhere("MATCH(ts.identifier) AGAINST(:identifier BOOLEAN) > 0");
+                $qb->setParameter("identifier", $filter->getIdentifier());
             }
         }
 

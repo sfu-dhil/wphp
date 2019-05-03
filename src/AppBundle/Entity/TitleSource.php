@@ -9,7 +9,8 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="title_source",
  *  indexes={
- *      @ORM\Index(name="title_source_identifier_idx", columns={"identifier"})
+ *      @ORM\Index(name="title_source_identifier_idx", columns={"identifier"}),
+ *      @ORM\Index(name="title_source_identifier_ft", columns={"identifier"}, flags={"fulltext"})
  * })
  * @ORM\Entity
  */
