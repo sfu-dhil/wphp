@@ -147,6 +147,7 @@ class Person
      * Construct the person entity.
      */
     public function __construct() {
+        $this->gender = self::UNKNOWN;
         $this->titleRoles = new ArrayCollection();
     }
 

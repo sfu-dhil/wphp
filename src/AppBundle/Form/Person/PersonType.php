@@ -45,7 +45,7 @@ class PersonType extends AbstractType {
             'choices' => array(
                 'Female' => Person::FEMALE,
                 'Male' => Person::MALE,
-                'Unknown' => null,
+                'Unknown' => Person::UNKNOWN,
             ),
         ));
         $builder->add('dob', null, array(

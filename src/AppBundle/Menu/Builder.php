@@ -188,7 +188,9 @@ class Builder implements ContainerAwareInterface
             $search->addChild('First Pub Dates', array(
                 'route' => 'report_first_pub_date',
             ));
-
+            $search->addChild('Titles with Bad ESTC IDs', array(
+                'route' => 'report_title_bad_estc',
+            ));
             $search->addChild('Titles to Check', array(
                 'route' => 'report_titles_check',
             ));

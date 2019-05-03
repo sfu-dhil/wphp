@@ -50,7 +50,7 @@ class SourceLinker {
         $repo = $this->em->getRepository(EstcMarc::class);
         $record = $repo->findOneBy(array(
             'fieldData' => $data,
-            'field' => '009',
+            'field' => '001',
         ));
         if ($record) {
             return $this->generator->generate('resource_estc_show', array(
