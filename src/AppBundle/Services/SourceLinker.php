@@ -45,13 +45,14 @@ class SourceLinker {
 
     public function estc($data) {
         if (!$this->checker->hasRole('ROLE_USER')) {
-            return null;
+            return 'http://estc.bl.uk/' . $data;
         }
         $repo = $this->em->getRepository(EstcMarc::class);
         $record = $repo->findOneBy(array(
             'fieldData' => $data,
             'field' => '001',
         ));
+
         if ($record) {
             return $this->generator->generate('resource_estc_show', array(
                 'id' => $record->getTitleId(),
