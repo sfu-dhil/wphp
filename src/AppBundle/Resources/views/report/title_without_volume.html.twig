@@ -3,8 +3,8 @@
 {% block pageheader %}
     <h1>Titles to Final Check</h1>
     {% if titles|length > 0 %}
-        Displaying {{ titles|length }} titles of {{ titles.getTotalItemCount }} total, 
-        where a source is missing even though there is a source identifier.
+        Displaying {{ titles|length }} titles of {{ titles.getTotalItemCount }} total,
+        where the title was published on or before 1800 and the volume information is missing.
     {% else %}
         No titles to display.
     {% endif %}
@@ -22,7 +22,6 @@
                 <tr>
                     <th>ID</th>
                     <th>Title</th>
-                    <th>Sources</th>
                 </tr>
             </thead>
             <tbody>
@@ -37,14 +36,6 @@
                             <a href="{{ path('title_show', { 'id': title.id }) }}">
                                 {{ title.title }}
                             </a>
-                        </td>
-                        <td>
-                            {% for titleSource in title.titleSources if titleSource.identifier is null%}
-                                {{ titleSource.source }}<br/>
-                            {% endfor %}
-                            {% for titleSource in title.titleSources if titleSource.identifier is not null%}
-                                {{ titleSource.source }} - {{ titleSource.identifier }}<br/>
-                            {% endfor %}
                         </td>
                     </tr>
                 {% endfor %}

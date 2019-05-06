@@ -203,14 +203,20 @@ class Builder implements ContainerAwareInterface
             $search->addChild('Persons to Check', array(
                 'route' => 'report_person_check',
             ));
-            $search->addChild('Titles with missing Sources', array(
-                'route' => 'report_title_source_id_null'
-            ));
             $search->addChild('Titles with Missing Source IDs', array(
-                'route' => 'report_title_source_null'
+                'route' => 'report_title_source_id_null'
             ));
             $search->addChild('Titles without Genre', array(
                 'route' => 'report_title_without_genre'
+            ));
+            $search->addChild('Titles without Volumes', array(
+                'route' => 'report_title_without_volume'
+            ));
+            $search->addChild('Titles without Firms', array(
+                'route' => 'report_title_without_firm'
+            ));
+            $search->addChild('Titles without Sources', array(
+                'route' => 'report_title_without_source'
             ));
         }
         return $menu;

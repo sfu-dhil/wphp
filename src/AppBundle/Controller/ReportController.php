@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\EstcMarc;
 use AppBundle\Entity\Source;
+use AppBundle\Entity\TitleFirmrole;
 use AppBundle\Entity\TitleSource;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
@@ -113,9 +114,8 @@ class ReportController extends Controller implements PaginatorAwareInterface
     {
         $qb = $em->createQueryBuilder();
         $qb->select('e')->from('AppBundle:Title', 'e');
-        $qb->orWhere('e.source is not null and e.sourceId is null');
-        $qb->orWhere('e.source2 is not null and e.source2Id is null');
-        $qb->orWhere('e.source3 is not null and e.source3Id is null');
+        $qb->innerJoin('e.titleSources', 'ts');
+        $qb->where('ts.identifier is null');
         $titles = $this->paginator->paginate($qb, $request->query->getInt('page', 1), 25);
 
         return array(
@@ -128,18 +128,20 @@ class ReportController extends Controller implements PaginatorAwareInterface
      * @param EntityManagerInterface $em
      *
      * @return Title[]|Collection
-     * @Route("/title_source_null", name="report_title_source_null")
+     * @Route("/title_without_source", name="report_title_without_source")
      * @Method("GET")
      * @Template()
      */
-    public function titleSourceNull(Request $request, EntityManagerInterface $em)
+    public function titleWithoutSource(Request $request, EntityManagerInterface $em)
     {
         $qb = $em->createQueryBuilder();
         $qb->select('e')->from('AppBundle:Title', 'e');
-        $qb->orWhere('e.source is null and e.sourceId is not null');
-        $qb->orWhere('e.source2 is null and e.source2Id is not null');
-        $qb->orWhere('e.source3 is null and e.source3Id is not null');
-        $titles = $this->paginator->paginate($qb, $request->query->getInt('page', 1), 25);
+        $qb->addSelect('COUNT(ts) AS HIDDEN titleSources');
+        $qb->leftJoin('e.titleSources', 'ts');
+        $qb->groupBy('e');
+        $qb->having('titleSources = 0');
+
+        $titles = $this->paginator->paginate($qb->getQuery()->execute(), $request->query->getInt('page', 1), 25);
 
         return array(
             'titles' => $titles,
@@ -160,6 +162,54 @@ class ReportController extends Controller implements PaginatorAwareInterface
         $qb = $em->createQueryBuilder();
         $qb->select('e')->from('AppBundle:Title', 'e');
         $qb->where('e.genre is null');
+        $titles = $this->paginator->paginate($qb->getQuery()->execute(), $request->query->getInt('page', 1), 25);
+
+        return array(
+            'titles' => $titles,
+        );
+    }
+
+    /**
+     * @param Request $request
+     * @param EntityManagerInterface $em
+     *
+     * @return Title[]|Collection
+     * @Route("/title_without_volume", name="report_title_without_volume")
+     * @Method("GET")
+     * @Template()
+     */
+    public function titleWithoutVolume(Request $request, EntityManagerInterface $em)
+    {
+        $qb = $em->createQueryBuilder();
+        $qb->select('e')->from('AppBundle:Title', 'e');
+        $qb->where('e.volumes is null');
+        $qb->andWhere('e.pubdate <= 1800');
+        $titles = $this->paginator->paginate($qb->getQuery()->execute(), $request->query->getInt('page', 1), 25);
+
+        return array(
+            'titles' => $titles,
+        );
+    }
+
+    /**
+     * @param Request $request
+     * @param EntityManagerInterface $em
+     *
+     * @return Title[]|Collection
+     * @Route("/title_without_firm", name="report_title_without_firm")
+     * @Method("GET")
+     * @Template()
+     */
+    public function titleWithoutFirm(Request $request, EntityManagerInterface $em)
+    {
+        $qb = $em->createQueryBuilder();
+        $qb->select('t')->from('AppBundle:Title', 't');
+        $qb->addSelect('COUNT(tfr) as HIDDEN firmroles');
+        $qb->leftJoin('t.titleFirmroles', 'tfr');
+        $qb->where('t.pubdate <= 1800');
+        $qb->groupBy('t');
+        $qb->having('firmroles = 0');
+
         $titles = $this->paginator->paginate($qb->getQuery()->execute(), $request->query->getInt('page', 1), 25);
 
         return array(
