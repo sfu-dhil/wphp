@@ -70,12 +70,13 @@ class UpdateEstcCommand extends ContainerAwareCommand
             $titleSource = $row[0];
             $estcMarc = $this->em->getRepository(EstcMarc::class)->findOneBy(array(
                 'field' => '009',
-                'fieldData' => $titleSource->getIdentifier()
+                'fieldData' => $titleSource->getIdentifier() . '\\',
             ));
             if (!$estcMarc) {
                 continue;
             }
             $newId = $this->manager->getFieldValues($estcMarc, '001');
+
             $titleSource->setIdentifier($newId[0]);
             if ($iterator->key() % self::BATCH_SIZE === 0) {
                 $this->em->flush();
