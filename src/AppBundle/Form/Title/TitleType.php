@@ -76,7 +76,7 @@ class TitleType extends AbstractType {
             ),
         ));
         $builder->add('selfpublished', ChoiceType::class, array(
-            'label' => 'Selfpublished',
+            'label' => 'Self published',
             'expanded' => true,
             'multiple' => false,
             'choices' => array(
@@ -105,7 +105,7 @@ class TitleType extends AbstractType {
             ),
         ));
         $builder->add('pubdate', null, array(
-            'label' => 'Pubdate',
+            'label' => 'Publication date',
             'required' => false,
             'attr' => array(
                 'help_block' => 'Date (year) as it appears in the imprint',

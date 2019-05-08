@@ -192,6 +192,20 @@ class TitleRepository extends EntityRepository
             $qb->andWhere("MATCH (e.notes) AGAINST (:notes BOOLEAN) > 0");
             $qb->setParameter('notes', $data['notes']);
         }
+        if(isset($data['self_published']) && $data['self_published']) {
+            dump($data['self_published']);
+            switch($data['self_published']) {
+                case 'Y':
+                    $qb->andWhere('e.selfpublished = 1');
+                    break;
+                case 'N':
+                    $qb->andWhere('e.selfpublished = 0');
+                    break;
+                case 'U':
+                    $qb->andWhere('e.selfpublished is null');
+                    break;
+            }
+        }
 
         // only add the title filter query parts if the subform has data.
         if (isset($data['person_filter']) && count(array_filter($data['person_filter']))) {

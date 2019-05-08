@@ -99,6 +99,24 @@ class TitleSearchType extends AbstractType {
                 'class' => 'embedded-form'
             ),
         ));
+
+        $builder->add('self_published', ChoiceType::class, array(
+            'label' => 'Self Published',
+            'choices' => array(
+                'Yes' => 'Y',
+                'No' => 'N',
+                'Unknown' => 'U',
+            ),
+            'attr' => array(
+                'help_block' => 'Limit results to those that have been self-published or not.'
+            ),
+            'required' => false,
+            'expanded' => true,
+            'multiple' => false,
+            'empty_data' => null,
+            'data' => null,
+        ));
+
         $builder->add('volumes', TextType::class, array(
             'label' => 'Volumes',
             'required' => false,
