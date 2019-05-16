@@ -7,7 +7,9 @@ html {
 }
 
 body {
-  background: $color_beige_light;
+  // background: $color_body;
+  background-image: linear-gradient(0deg, $color_body_background_start 0%, $color_body_background_end 100%);
+
   font: $body_font;
   display: flex;
   flex-direction: column;
@@ -28,6 +30,7 @@ h3,
 h4,
 h5 {
   font-family: $heading_font;
+  color: $heading_color;
 }
 
 em,
@@ -54,9 +57,10 @@ strong {
 
 /* Footer */
 .footer {
-  height: 60px;
-  background-color: $color_brown;
-  color: $color_white;
+  // height: 60px;
+  padding: 20px;
+  background-color: $footer_background;
+  color: $footer_color;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -67,12 +71,18 @@ strong {
     padding-left: 15px;
   }
 
-  @include link_underline($color_salmon, $color_white);
+  @include link_underline($footer_link, $footer_link_hover);
 
   p {
     margin: 0;
     font-family: $lato;
     font-size: 1em;
+  }
+
+  strong {
+    font-family: $cormorant_garamond_bold;
+    font-weight: normal;
+    font-size: 20px;
   }
 }
 
@@ -117,6 +127,8 @@ strong {
 
 
 
+
+
 // collapsable form
 h3.panel-title > a {
 
@@ -129,10 +141,18 @@ h3.panel-title > a {
 
 
 /* Custom app styles */
-label.required::after {
-  content: ' *';
-  color: red;
-  font-weight: bold;
+label {
+  font-weight: normal;
+  color: $color_label;
+  &.required::after {
+    content: ' *';
+    color: red;
+    font-weight: bold;
+  }
+}
+
+.well {
+  background-image: linear-gradient(to bottom,$well_color_start 0,$well_color_end 100%);
 }
 
 
@@ -142,51 +162,54 @@ label.required::after {
 
 /* tables */
 table thead th {
-  color: $color_white;
-  background:$color_brown;
-  border: $color_brown;
+  color: $table_head_color;
+  background: $table_head_background_color;
+  border: $table_head_border_color;
   font-weight: normal;
+
+  a {
+    color: $table_head_color !important;
+  }
 }
 
-.table-striped > tbody > tr:nth-of-type(2n+1) {
-  background: $color_beige;
-  // &:hover {
-  //   background: $color_white;
-  // }
-}
-.table-hover > tbody > tr:hover {
-  background: $color_beige_light;
-}
+.table-striped > tbody > tr {
+  background: $color_table_background_odd;
 
-// .table > tbody > tr > th {
-//   // flex-shrink: 1;
-//   // width: 10%;
-//   white-space: normal;
-// }
-// .table > tbody > tr > td {
-//   // flex-grow: 2;
-//   // width: 100%;
-// }
+  &:hover,
+  &:focus {
+    background: $color_table_background_hover_odd;
+  }
+  &:nth-of-type(2n+1) {
+    background: $color_table_background_even;
+    &:hover,
+    &:focus {
+      background: $color_table_background_hover_even;
+    }
+    a {
+      color: $color_2_darker_brown;
+    }
+  }
+}
 
 table.tablesorter thead tr {
-    white-space: nowrap;
+  white-space: nowrap;
 }
 table.tablesorter thead tr .header:after {
-    content: '↕';
+  content: '↕';
 }
 table.tablesorter thead tr .headerSortUp:after {
-    content: '↑';
+  content: '↑';
 }
 table.tablesorter thead tr .headerSortDown:after {
-    content: '↓';
+  content: '↓';
 }
 
 th.sorted.asc:after, a.asc:after {
-    content: '↓';
+  content: '↓';
 }
 
 th.sorted.desc:after, a.desc:after {
-    content: '↑';
+  content: '↑';
 }
 
 div.tab-content {
@@ -202,54 +225,53 @@ ul.columnated {
 }
 
 ul.columnated li {
-    -webkit-column-break-inside: avoid; /* Chrome, Safari, Opera */
-    page-break-inside: avoid; /* Firefox */
-    break-inside: avoid; /* IE 10+ */
-    position: relative;
-    margin-left: 1em;
+  -webkit-column-break-inside: avoid; /* Chrome, Safari, Opera */
+  page-break-inside: avoid; /* Firefox */
+  break-inside: avoid; /* IE 10+ */
+  position: relative;
+  margin-left: 1em;
 }
 
 ul.columnated li:before {
-    content: '•';
-    position: absolute;
-    left: -1em;
+  content: '•';
+  position: absolute;
+  left: -1em;
 }
 
 @media (max-width: 480px) {
-    ul.columnated {
-        -moz-column-count: 1;
-        -webkit-column-count: 1;
-        column-count: 1;
-    }
+  ul.columnated {
+    -moz-column-count: 1;
+    -webkit-column-count: 1;
+    column-count: 1;
+  }
 }
 
 /* Small devices (tablets, 768px and up) */
 @media (min-width: 481px) and (max-width: 768px) {
-    ul.columnated {
-        -moz-column-count: 2;
-        -webkit-column-count: 2;
-        column-count: 2;
-    }
+  ul.columnated {
+    -moz-column-count: 2;
+    -webkit-column-count: 2;
+    column-count: 2;
+  }
 }
 
 /* Medium devices (desktops, 992px and up) */
 @media (min-width: 769px) and (max-width: 992px) {
-    ul.columnated {
-        list-style: none;
-        -moz-column-count: 3;
-        -webkit-column-count: 3;
-        column-count: 3;
-    }
-
+  ul.columnated {
+    list-style: none;
+    -moz-column-count: 3;
+    -webkit-column-count: 3;
+    column-count: 3;
+  }
 }
 
 /* Large devices (large desktops, 1200px and up) */
 @media (min-width: 993px) {
-    ul.columnated {
-        -moz-column-count: 4;
-        -webkit-column-count: 4;
-        column-count: 4;
-    }
+  ul.columnated {
+    -moz-column-count: 4;
+    -webkit-column-count: 4;
+    column-count: 4;
+  }
 }
 
 div.homepage {
@@ -286,11 +308,11 @@ span.select2 {
 p.help-block {
   font-size: 16px;
   font-family: $lato;
-  color: $color_brown;
-}
+  // color: $color_;
 
-label {
-
+  a {
+    text-decoration: underline;
+  }
 }
 
 
@@ -306,25 +328,30 @@ label {
 
 
 /* Start panels and tables */
+.panel-default {
+  border: 5px $color_2_green !important;;
+  > .panel-heading {
+    background: $panel_header_background;
+    color: $panel_header_color;
+    font-family: $panel_heading_font;
+    font-size: $panel_heading_font_size;
 
-.panel-body {
-  background: #E1D8B7;
-  font-size: 16px;
-  font-family: $lato;
+    &:focus,
+    &:hover {
+      background: $panel_header_background_hover;
+    }
+  }
 }
-
-.panel-default > .panel-heading {
-  background: #A62E3F;
-  color: #ffffff;
-}
-
-.table-striped > tbody > tr:nth-of-type(2n+1) {
-  background: #E6DFC6;
-}
-
 
 .page-header {
   margin-bottom: 0;
+  border-bottom: 0;
+}
+
+.panel-body {
+  background: $panel_background;
+  font-size: 16px;
+  font-family: $lato;
 }
 
 .table-bordered > tbody > tr > td,
@@ -333,7 +360,7 @@ label {
 .table-bordered > tfoot > tr > th,
 .table-bordered > thead > tr > td,
 .table-bordered > thead > tr > th {
-  border: 1px solid #E1D8B7 !important;
+  border: 1px solid $table_body_border_color !important;
 }
 
 thead > tr > th {
@@ -341,6 +368,9 @@ thead > tr > th {
   white-space: nowrap;
 }
 
+.table-bordered > tbody > tr > td {
+  @include link($table_body_link_color, $table_body_link_color_hover);
+}
 
 
 
@@ -425,7 +455,7 @@ a.btn-primary {
   }
 
   &:first-child {
-    color: $color_brown;
+    color: $color_white;
     &:active,
     &:focus,
     &:hover {
@@ -435,19 +465,26 @@ a.btn-primary {
 }
 // buttons end
 
-@include link_underline($color_red, $color_red);
+@include link($color_link, $color_link_hover);
 
 
-/* Start navbar */
+/* Start navbar (header) */
+
+// @media (max-width: 480px) {
+//   .navbar-toggle {
+//     display: none;
+//   }
+// }
+
 #navbar {
   display: flex;
   align-items: center;
   justify-content: center;
 }
+
 .navbar-default {
-  background: #623637;
-  color: $color_white;
-  /* border-color: #A62E3F; */
+  background: $header_background;
+  color: header_color;
   border: 0;
   font-family: $cormorant_garamond;
   font-weight: 300;
@@ -455,6 +492,20 @@ a.btn-primary {
   box-shadow: 0 2px 4px 0 $color_grey_translucent;
   margin: 0;
   border-radius: 0;
+
+  .navbar-toggle {
+    &:active,
+    &:hover,
+    &:focus {
+      background-color: $header_color;
+      .icon-bar {
+        background-color: $color_red_dark !important;
+      }
+    }
+    .icon-bar {
+      background-color: $header_color;
+    }
+  }
 }
 
 .navbar-nav > li {
@@ -471,12 +522,12 @@ a.btn-primary {
   }
 }
 .navbar-default .navbar-nav > li > a {
-  color: $color_white;
+  color: $header_link_color;
   height: 75px;
 }
 
 .navbar-default a {
-  color: $color_white;
+  color: $header_link_color;
 }
 
 // .navbar-default .navbar-nav {
@@ -486,19 +537,24 @@ a.btn-primary {
 //
 // }
 
+// Header menu items that are active or hover.
 .navbar-default .navbar-nav > li > a:active,
 .navbar-default .navbar-nav > li > a:focus,
 .navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > .open > a,
 .navbar-default .navbar-nav > .open > a:focus,
 .navbar-default .navbar-nav > .open > a:hover {
-  background: #A62E3F;
-  color: white;
+  background: $header_link_background_hover;
+  color: $header_link_color_hover;
 }
 
 .navbar-brand, .navbar-nav > li > a {
   text-shadow: none;
   font-size: 18px;
+
+  @media (max-width: 1000px) {
+    font-size: 15px;
+  }
 }
 
 .navbar-default .navbar-collapse {
@@ -509,7 +565,9 @@ a.btn-primary {
   padding: 10px 20px 10px 0;
   > img {
     max-width: 220px;
-    // background:blue;
+    @media (max-width: 1000px) {
+      max-width: 180px;
+    }
   }
 }
 
@@ -521,13 +579,13 @@ a.btn-primary {
 
 
 .dropdown-menu {
-  background-color: $color_red_dark;
+  background-color: $color_dropdown_background;
   border: 0;
   border-radius: 0;
   font-family: $lato;
 
   > li {
-    @include link($color_white, $color_white);
+    @include link($color_dropdown_link, $color_dropdown_link_hover);
 
     &.divider {
       // height: 1px;
@@ -541,8 +599,24 @@ a.btn-primary {
       &:focus,
       &:hover {
         background-image: none;
-        background-color: $color_red;
+        background-color: $color_dropdown_background_hover;
       }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  #navbar {
+    display: block;
+  }
+  .navbar-default .navbar-nav {
+    float: none;
+    width: 100%;
+    // padding: 0;
+
+    > li > a {
+      padding: 0 !important;
+      height: auto;
     }
   }
 }
@@ -566,13 +640,12 @@ a.btn-primary {
     background: $color_red;
     border: 1px solid $color_brown;
     color: $color_white;
-
     &:active,
     &:focus,
     &:hover {
       background: $color_salmon;
       border: $color_brown 1px solid;
-      color: $color_brown;
+      color: $color_white;
     }
   }
 
@@ -600,5 +673,27 @@ a.btn-primary {
 .pagination > .active > span:hover {
   background: $color_salmon;
   border: $color_brown 1px solid;
-  color: $color_brown;
+  color: $color_white;
+}
+
+// Banner on home page
+.splash_image img {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: grayscale(25%);
+}
+// front-page blog-1
+.panel-image {
+  height: 150px;
+  background-size: cover;
+}
+.blog-1 .panel-image {
+  background-image: url("../images/hardcoded_blog_1.jpg");
+}
+.blog-2 .panel-image {
+  background-image: url("../images/hardcoded_blog_2.png");
+}
+.blog-3 .panel-image {
+  background-image: url("../images/hardcoded_blog_3.png");
 }

@@ -7,30 +7,6 @@ $prod_or_dev_path: $dev_path;
 // }
 
 
-$color_red: rgb(166, 46, 63);
-$color_red_dark: rgb(98, 54, 55);
-$color_white: #fff;
-$color_brown: rgb(48, 35, 22);
-$color_salmon: rgb(234, 168, 154);
-$color_beige: rgb(225, 216, 183);
-$color_beige_light: rgb(243, 239, 226);
-$color_grey_translucent: rgba(0,0,0,0.50);
-
-
-$color_link: $color_red;
-
-
-$footer_color: $color_white;
-$footer_background: $color_brown;
-$footer_link: $color_salmon;
-$footer_link_hover: $color_white;
-
-$header_color: $color_white;
-
-
-
-
-
 $lato: 'LatoLatinWeb', sans-serif;
 $lato_black: 'LatoLatinWebBlack', sans-serif;
 $cormorant_garamond: 'CormorantGaramond-SemiBold', serif;
@@ -83,29 +59,96 @@ $cormorant_garamond_bold: 'CormorantGaramond-SemiBold', serif;
     url('/assets/node_modules/typeface-cormorant-garamond/cormorant-garamond-latin-700.woff') format('woff'); /* Modern Browsers */
 }
 
-// @font-face {
-//   font-family: 'CormorantGaramond-SemiBold';
-//   src: url('fonts/CormorantGaramond-SemiBold.eot'); /* IE9 Compat Modes */
-//   src: url('fonts/CormorantGaramond-SemiBold.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-//        url('fonts/CormorantGaramond-SemiBold.woff2') format('woff2'), /* Modern Browsers */
-//        url('fonts/CormorantGaramond-SemiBold.woff') format('woff'); /* Modern Browsers */
-//   font-style: normal;
-//   font-weight: normal;
-//   text-rendering: optimizeLegibility;
-// }
-//
-// /* Webfont: Cormorant Garamond Bold */
-// @font-face {
-//   font-family: 'CormorantGaramond-Bold';
-//   src: url('fonts/CormorantGaramond-Bold.eot'); /* IE9 Compat Modes */
-//   src: url('fonts/CormorantGaramond-Bold.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-//        url('fonts/CormorantGaramond-Bold.woff2') format('woff2'), /* Modern Browsers */
-//        url('fonts/CormorantGaramond-Bold.woff') format('woff'); /* Modern Browsers */
-//   font-style: normal;
-//   font-weight: normal;
-//   text-rendering: optimizeLegibility;
-// }
 
+
+// First set of colors
+$color_red: rgb(166, 46, 63);
+$color_red_dark: rgb(98, 54, 55);
+$color_white: #fff;
+$color_brown: rgb(48, 35, 22);
+$color_salmon: rgb(234, 168, 154);
+$color_beige: rgb(225, 216, 183);
+$color_beige_light: rgb(243, 239, 226);
+$color_grey_translucent: rgba(0,0,0,0.50);
+
+
+// Second set of colors
+$color_2_brown: #73685B;
+$color_2_darker_brown: #5c5349;
+$color_2_tan: #CCB9A4;
+$color_2_green: #D9DDCC;
+$color_2_green_light: #EEF2E1;
+$color_2_green_lighter: mix($color_2_green, $color_2_green_light, 50%);
+$color_2_salmon: rgb(234, 168, 154);
+
+
+
+// override settings from first set of colors.
+$color_red: $color_2_brown;
+$color_red_dark: $color_2_brown;
+// $color_salmon: $color_2_darker_brown;
+$color_beige: $color_2_tan;
+
+
+
+$color_text: 4color_2_darker_brown;
+$color_body: $color_2_green_light;
+$color_body_background_start: $color_2_green_light;
+$color_body_background_end: $color_2_green_light;
+
+$color_link: $color_2_darker_brown;
+$color_link_hover: $color_2_darker_brown;
+$footer_color: $color_white;
+$footer_background: $color_2_darker_brown;
+$footer_link: $color_white;
+$footer_link_hover: $color_white;
+
+$header_background: $color_2_darker_brown;
+$header_color: $color_white;
+$header_link_color: $color_white;
+$header_link_background: transparent;
+
+$header_link_color_hover: $color_2_darker_brown;
+$header_link_background_hover: $color_salmon;
+
+$heading_color: $color_2_darker_brown;
+
+$panel_heading_font: $cormorant_garamond;
+$panel_heading_font_size: 20px;
+$panel_header_color: darken($color_2_brown, 50);
+$panel_header_background: $color_2_green;
+
+$panel_header_background_hover: $color_salmon;
+
+$panel_background: $color_2_green_lighter;
+$panel_color: $color_2_darker_brown;
+$panel_link_color: $color_2_brown;
+
+
+$color_label: $color_2_darker_brown;
+$well_color_start: $color_2_green;
+$well_color_end: $color_2_green_light;
+
+// dropdowns
+$color_dropdown_background: $color_2_brown;
+$color_dropdown_link: $color_white;
+
+$color_dropdown_link_hover: $color_2_darker_brown;
+$color_dropdown_background_hover: $color_2_salmon;
+
+// tables
+$table_head_color: $color_white;
+$table_head_background_color: $color_2_darker_brown;
+$table_head_border_color: $color_2_darker_brown;
+$table_body_border_color: $color_2_green;
+
+$table_body_link_color: #A9695B;
+$table_body_link_color_hover: $color_2_darker_brown;
+
+$color_table_background_odd: $color_2_green_lighter;
+$color_table_background_even: $color_2_green_light;
+$color_table_background_hover_odd: $color_table_background_odd;
+$color_table_background_hover_even: $color_table_background_even;
 
 $heading_font: $cormorant_garamond;
 $body_font: $lato;

@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="google" content="notranslate" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}WPHP{% endblock %}</title>
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
         <link rel="stylesheet" href="{{ asset('bower/bootstrap/dist/css/bootstrap.min.css') }}">
         <link rel="stylesheet" href="{{ asset('bower/bootstrap/dist/css/bootstrap-theme.min.css') }}">
@@ -28,7 +28,7 @@
                 </div>
                 <div id="navbar" class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
-                        <li><a href="{{ path('homepage') }}"><img src="{{ asset('bundles/app/images/logo.svg')}}" title="home" /></a></li>
+                        <li><a href="{{ path('homepage') }}"><img src="{{ asset('bundles/app/images/logo_white.svg')}}" title="Home page" /></a></li>
                     </ul>
                     {{ knp_menu_render('pages') }}
                     {{ knp_menu_render('main') }}
@@ -66,8 +66,8 @@
         <footer class="footer">
             <div class="container">
                 <div class='col-md-12'>
-                    <p><b>Women's Print History Project</b><br>
-                        <a href="{{ path('feedback_new') }}">Feedback</a> |
+                    <p><strong>The Women's Print History Project</strong><br>
+                        <!-- <a href="{{ path('feedback_new') }}">Feedback</a> | -->
                         <a href="{{ asset('docs/sphinx/index.html') }}">Documentation</a> |
                         <a href="{{ path('privacy') }}">Privacy</a> |
                         <a href="https://github.com/sfu-dhil/wphp">GitHub</a>

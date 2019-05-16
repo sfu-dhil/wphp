@@ -21,9 +21,11 @@
 @mixin link_underline ($color, $hover_color) {
   a {
     color: $color;
+    text-decoration: underline;
     &:link,
     &:visited {
       color: $color;
+      text-decoration: underline;
     }
 
     &:active,
