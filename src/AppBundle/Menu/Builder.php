@@ -262,4 +262,85 @@ class Builder implements ContainerAwareInterface
         }
         return $menu;
     }
+
+    private function getUser() {
+        if( ! $this->hasRole('ROLE_USER')) {
+            return null;
+        }
+        return $this->tokenStorage->getToken()->getUser();
+    }
+
+    /**
+     * Build a user menu.
+     *
+     * @param array $options
+     * @return ItemInterface
+     */
+    public function userNavMenu(array $options) {
+        $name = 'Login';
+        if(isset($options['name'])) {
+            $name = $options['name'];
+        }
+        $menu = $this->factory->createItem('root');
+        $menu->setChildrenAttributes(array(
+            'class' => 'nav navbar-nav navbar-right',
+        ));
+        $menu->setAttribute('dropdown', true);
+        $user = $this->getUser();
+        if (!$this->hasRole('ROLE_USER')) {
+            $menu->addChild($name, array(
+                'route' => 'fos_user_security_login'
+            ));
+            return $menu;
+        }
+
+        $userMenu = $menu->addChild('user', array(
+            'uri' => '#',
+            'label' => $user->getUsername() . self::CARET,
+        ));
+        $userMenu->setAttribute('dropdown', true);
+        $userMenu->setLinkAttribute('class', 'dropdown-toggle');
+        $userMenu->setLinkAttribute('data-toggle', 'dropdown');
+        $userMenu->setChildrenAttribute('class', 'dropdown-menu');
+        $userMenu->addChild('Profile', array('route' => 'fos_user_profile_show'));
+        $userMenu->addChild('Change password', array('route' => 'fos_user_change_password'));
+        $userMenu->addChild('Logout', array('route' => 'fos_user_security_logout'));
+
+        if ($this->hasRole('ROLE_ADMIN')) {
+            $userMenu->addChild('divider', array(
+                'label' => '',
+            ));
+            $userMenu['divider']->setAttributes(array(
+                'role' => 'separator',
+                'class' => 'divider',
+            ));
+
+            $userMenu->addChild('users', array(
+                'label' => 'Users',
+                'route' => 'user',
+            ));
+        }
+
+        if ($this->hasRole('ROLE_COMMENT_ADMIN')) {
+            $userMenu->addChild('comment_divider', array(
+                'label' => '',
+            ));
+            $userMenu['comment_divider']->setAttributes(array(
+                'role' => 'separator',
+                'class' => 'divider',
+            ));
+
+            $userMenu->addChild('Comments', array(
+                'route' => 'admin_comment_index',
+            ));
+            $userMenu->addChild('Comment Notes', array(
+                'route' => 'admin_comment_note_index',
+            ));
+            $userMenu->addChild('Comment States', array(
+                'route' => 'admin_comment_status_index',
+            ));
+        }
+
+        return $menu;
+    }
 }

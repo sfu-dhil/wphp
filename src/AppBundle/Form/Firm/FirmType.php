@@ -33,6 +33,7 @@ class FirmType extends AbstractType {
                 'Male' => Firm::MALE,
                 'Unknown' => Firm::UNKNOWN,
             ),
+            'empty_data' => Firm::UNKNOWN,
         ));
         $builder->add('streetAddress', null, array(
             'label' => 'Street Address',

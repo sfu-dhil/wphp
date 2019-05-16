@@ -114,7 +114,7 @@ task('dhil:db:fetch', function() {
     $file = "/home/{$user}/{$app}-{$date}-{$stage}-r{$current}.sql";
     run("sudo mysqldump {$app} -r {$file}");
     run("sudo chown {$user} {$file}");
-    set('become', $become);
+    // set('become', $become);
 
     download($file, basename($file));
     writeln("Downloaded database dump to " . basename($file));
