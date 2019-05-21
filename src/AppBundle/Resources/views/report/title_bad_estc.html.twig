@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block pageheader %}
+    <h1>Titles with Bad ESTC IDs</h1>
+    {% if titleSources|length > 0 %}
+        Displaying {{ titleSources|length }} titles of {{ titleSources.getTotalItemCount }} total,
+        where the ESTC ID for the title doesn't exist.
+    {% else %}
+        No titles to display.
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+
+    {% if titleSources|length > 0 %}
+        <div class="navigation">
+            {{ knp_pagination_render(titleSources) }}
+        </div>
+
+        <table class="table table-bordered table-condensed table-hover table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>ESTC ID</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for titleSource in titleSources %}
+                    <tr>
+                        <td>
+                            <a href="{{ path('title_show', { 'id': titleSource.title.id }) }}">
+                                {{ titleSource.title.id }}
+                            </a>
+                        </td>
+                        <td>
+                            <a href="{{ path('title_show', { 'id': titleSource.title.id }) }}">
+                                {{ titleSource.title.title }}
+                            </a>
+                        </td>
+                        <td>{{ titleSource.identifier }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="navigation">
+            {{ knp_pagination_render(titleSources) }}
+        </div>
+    {% endif %}
+
+{% endblock %}

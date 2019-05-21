@@ -9,6 +9,16 @@
 
 {% block body %}
 
+    <div class='btn-toolbar pull-right'>
+        <div class='btn-group'>
+            <a href="{{ path('geonames_search') }}" class="btn btn-default">
+                <span class="glyphicon glyphicon-search"></span> Search
+            </a>
+            <a href="{{ path('geonames_import') }}" class="btn btn-default">
+                <span class="glyphicon glyphicon-search"></span> Import
+            </a>
+        </div>
+    </div>
     <table class="table table-bordered table-condensed table-hover table-striped">
         <thead>
             <tr>

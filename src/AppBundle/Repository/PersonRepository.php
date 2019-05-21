@@ -124,7 +124,7 @@ class PersonRepository extends EntityRepository {
                 $genders[] = 'F';
             }
             if (in_array('U', $data['gender'])) {
-                $genders[] = '';
+                $genders[] = 'U';
             }
             $qb->andWhere('e.gender in (:genders)');
             $qb->setParameter('genders', $genders);

@@ -26,6 +26,8 @@ class Person
 
     const FEMALE = 'F';
 
+    const UNKNOWN = 'U';
+
     /**
      * @var integer
      *
@@ -59,7 +61,7 @@ class Person
     /**
      * @var string
      *
-     * @ORM\Column(name="gender", type="string", length=1, nullable=true)
+     * @ORM\Column(name="gender", type="string", length=1, nullable=false, options={"default"="U"})
      */
     private $gender;
 
@@ -145,6 +147,7 @@ class Person
      * Construct the person entity.
      */
     public function __construct() {
+        $this->gender = self::UNKNOWN;
         $this->titleRoles = new ArrayCollection();
     }
 

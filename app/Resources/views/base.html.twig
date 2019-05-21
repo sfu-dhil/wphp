@@ -36,10 +36,7 @@
                     {{ knp_menu_render('spotlight') }}
                     {% set postMenu = knp_menu_get('posts', [], {'title': 'News & Events'}) %}
                     {{ knp_menu_render(postMenu) }}
-                    {% if is_granted('ROLE_COMMENT_ADMIN') %}
-                        {{ knp_menu_render('feedback') }}
-                    {% endif %}
-                    {{ knp_menu_render('user') }}
+                    {{ knp_menu_render('wphp_user') }}
                 </div>
             </div>
         </nav>

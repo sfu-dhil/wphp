@@ -32,6 +32,10 @@
                 <td>{{ firm.name }}</td>
             </tr>
             <tr>
+                <th data-toggle="popover" data-content="Most complete name of the firm known">Gender</th>
+                <td>{% include 'AppBundle:firm/partials:gender.html.twig' %}</td>
+            </tr>
+            <tr>
                 <th data-toggle="popover" data-content="Street address of the firm as geotagged">Street address</th>
                 <td>{{ firm.streetAddress }}</td>
             </tr>

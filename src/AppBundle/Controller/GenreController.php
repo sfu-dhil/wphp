@@ -33,7 +33,7 @@ class GenreController extends Controller implements PaginatorAwareInterface {
      */
     public function indexAction(Request $request, GenreRepository $repo) {
         $em = $this->getDoctrine()->getManager();
-        $dql = 'SELECT e FROM AppBundle:Genre e ORDER BY e.id';
+        $dql = 'SELECT e FROM AppBundle:Genre e ORDER BY e.name';
         $query = $em->createQuery($dql);
         $genres = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
 

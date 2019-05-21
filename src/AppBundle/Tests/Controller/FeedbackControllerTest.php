@@ -67,15 +67,26 @@ class FeedbackControllerTest extends BaseTestCase
         $crawler = $client->request('GET', '/feedback/1');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertEquals(1, $crawler->filter('h1:contains("Feedback")')->count());
-
     }
     
     public function testAnonNew() {
         
         $client = $this->makeClient();
-        $crawler = $client->request('GET', '/feedback/new');
+        $formCrawler = $client->request('GET', '/feedback/new');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertGreaterThan(0, $formCrawler->filter('h1:contains("Feedback Creation")')->count());
+
+        $form = $formCrawler->selectButton('Create')->form([
+            'feedback[name]' => 'Bob Terwilliger',
+            'feedback[email]' => 'bob@example.com',
+            'feedback[content]' => 'This is a test.',
+        ]);
+        $client->submit($form);
         $this->assertEquals(302, $client->getResponse()->getStatusCode());
-        //$this->assertGreaterThan(0, $crawler->filter('h1:contains("Feedback Creation")')->count());
+        $responseCrawler = $client->followRedirect();
+        $responseCrawler = $client->followRedirect();
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals(1, $responseCrawler->filter('div.alert:contains("The new feedback was created.")')->count());
     }
     
     public function testUserNew() {

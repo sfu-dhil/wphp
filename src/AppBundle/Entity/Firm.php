@@ -23,6 +23,12 @@ use Doctrine\ORM\Mapping as ORM;
 class Firm
 {
 
+    const MALE = 'M';
+
+    const FEMALE = 'F';
+
+    const UNKNOWN = 'U';
+
     /**
      * @var integer
      *
@@ -38,6 +44,13 @@ class Firm
      * @ORM\Column(name="name", type="string", length=255, nullable=true)
      */
     private $name;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="gender", type="string", length=1, nullable=false, options={"default"="U"})
+     */
+    private $gender;
 
     /**
      * @var string
@@ -87,6 +100,7 @@ class Firm
      * Construct a new firm.
      */
     public function __construct() {
+        $this->gender = self::UNKNOWN;
         $this->titleFirmroles = new ArrayCollection();
     }
 
@@ -285,5 +299,29 @@ class Firm
      */
     public function __toString() {
         return $this->name;
+    }
+
+    /**
+     * Set gender.
+     *
+     * @param string|null $gender
+     *
+     * @return Firm
+     */
+    public function setGender($gender = null)
+    {
+        $this->gender = $gender;
+
+        return $this;
+    }
+
+    /**
+     * Get gender.
+     *
+     * @return string|null
+     */
+    public function getGender()
+    {
+        return $this->gender;
     }
 }
