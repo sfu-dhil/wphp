@@ -62,14 +62,14 @@ class Firm
     /**
      * @var string
      *
-     * @ORM\Column(name="start_date", type="string", length=20, nullable=true)
+     * @ORM\Column(name="start_date", type="string", length=4, nullable=true)
      */
     private $startDate;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="end_date", type="string", length=20, nullable=true)
+     * @ORM\Column(name="end_date", type="string", length=4, nullable=true)
      */
     private $endDate;
 
