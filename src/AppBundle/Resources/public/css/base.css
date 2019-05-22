@@ -380,14 +380,22 @@ p.help-block a {
   font-size: 20px;
 }
 
-.blog-panel .panel-default > .panel-heading {
+.blog-panel a {
+  display: block;
+  width: 100%;
+}
+.blog-panel a .panel-default {
+  background: #e4e8d7;
+}
+.blog-panel a .panel-heading {
   background: #D9DDCC;
   color: black;
   font-family: "CormorantGaramond-SemiBold", serif;
   font-size: 20px;
 }
-.blog-panel .panel-default > .panel-heading:focus, .blog-panel .panel-default > .panel-heading:hover {
+.blog-panel a:active .panel-heading, .blog-panel a:focus .panel-heading, .blog-panel a:hover .panel-heading {
   background: #eaa89a;
+  color: black;
 }
 
 .page-header {

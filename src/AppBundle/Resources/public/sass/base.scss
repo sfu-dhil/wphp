@@ -348,16 +348,27 @@ p.help-block {
 }
 
 .blog-panel {
-  .panel-default {
-    > .panel-heading {
+  a {
+    display: block;
+    width: 100%;
+    
+    .panel-default {
+      background: $panel_image_background;
+    }
+
+    .panel-heading {
       background: $panel_header_background;
       color: $panel_header_color;
       font-family: $panel_heading_font;
       font-size: $panel_heading_font_size;
+    }
 
-      &:focus,
-      &:hover {
+    &:active,
+    &:focus,
+    &:hover {
+      .panel-heading {
         background: $panel_header_background_hover;
+        color: black;
       }
     }
   }
