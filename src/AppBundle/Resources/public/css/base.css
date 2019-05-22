@@ -231,6 +231,12 @@ table thead th a {
   color: #5c5349;
 }
 
+th:first-child,
+td:first-child {
+  width: 0.1%;
+  white-space: nowrap;
+}
+
 table.tablesorter thead tr {
   white-space: nowrap;
 }
@@ -373,7 +379,14 @@ p.help-block a {
   font-family: "CormorantGaramond-SemiBold", serif;
   font-size: 20px;
 }
-.panel-default > .panel-heading:focus, .panel-default > .panel-heading:hover {
+
+.blog-panel .panel-default > .panel-heading {
+  background: #D9DDCC;
+  color: black;
+  font-family: "CormorantGaramond-SemiBold", serif;
+  font-size: 20px;
+}
+.blog-panel .panel-default > .panel-heading:focus, .blog-panel .panel-default > .panel-heading:hover {
   background: #eaa89a;
 }
 
@@ -450,7 +463,7 @@ a.btn-primary {
   text-align: left;
   border-radius: 4px;
   box-shadow: none;
-  padding-top: 8px;
+  padding-top: 10px;
   padding-bottom: 8px;
   transition: 0.125s ease-in-out all;
 }
@@ -477,14 +490,14 @@ a.btn-primary:active,
 a.btn-primary:focus,
 a.btn-primary:hover {
   background-color: #eaa89a;
-  color: #fff;
+  color: black;
   border-color: #73685B;
 }
 input.btn-default:first-child,
 input.btn-primary:first-child,
 a.btn-default:first-child,
 a.btn-primary:first-child {
-  color: #fff;
+  color: black;
 }
 input.btn-default:first-child:active, input.btn-default:first-child:focus, input.btn-default:first-child:hover,
 input.btn-primary:first-child:active,
@@ -644,31 +657,32 @@ a:active, a:focus, a:hover {
 .pagination > li > span {
   position: relative;
   float: left;
-  padding: 6px 12px;
+  padding: 8px 12px 6px;
   margin-left: -1px;
   line-height: 1.42857143;
   text-decoration: none;
   height: 35px;
-  background: #73685B;
-  border: 1px solid #302316;
-  color: #fff;
+  background: #CCB9A4;
+  border: 1px solid #5c5349;
+  color: black;
 }
 .pagination > li > a:active, .pagination > li > a:focus, .pagination > li > a:hover,
 .pagination > li > span:active,
 .pagination > li > span:focus,
 .pagination > li > span:hover {
   background: #eaa89a;
-  border: #302316 1px solid;
+  border: #5c5349 1px solid;
   color: #fff;
 }
 .pagination > li.disabled span {
-  background-color: #302316;
-  color: #fff;
-  border: 0;
+  background-color: #5c5349;
+  color: #CCB9A4;
+  border: 1px solid #73685B;
 }
 .pagination > li.disabled span:focus, .pagination > li.disabled span:hover {
-  background: #302316;
-  color: #fff;
+  background-color: #5c5349;
+  color: #CCB9A4;
+  border: 1px solid #73685B;
 }
 
 .pagination > .active > a,
@@ -678,20 +692,21 @@ a:active, a:focus, a:hover {
 .pagination > .active > span:focus,
 .pagination > .active > span:hover {
   background: #eaa89a;
-  border: #302316 1px solid;
-  color: #fff;
+  border: #73685B 1px solid;
+  color: black;
 }
 
 .splash_image img {
   width: 100%;
   height: auto;
   display: block;
-  filter: grayscale(25%);
+  filter: grayscale(50%);
 }
 
 .panel-image {
   height: 150px;
   background-size: cover;
+  mix-blend-mode: multiply;
 }
 
 .blog-1 .panel-image {
@@ -704,6 +719,21 @@ a:active, a:focus, a:hover {
 
 .blog-3 .panel-image {
   background-image: url("../images/hardcoded_blog_3.png");
+}
+
+.blog-1 > .panel-default,
+.blog-2 > .panel-default,
+.blog-3 > .panel-default {
+  background-color: #e4e8d7;
+}
+.blog-1 a:active, .blog-1 a:focus, .blog-1 a:hover,
+.blog-2 a:active,
+.blog-2 a:focus,
+.blog-2 a:hover,
+.blog-3 a:active,
+.blog-3 a:focus,
+.blog-3 a:hover {
+  text-decoration: none;
 }
 
 /*# sourceMappingURL=base.css.map */

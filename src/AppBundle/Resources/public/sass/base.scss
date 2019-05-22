@@ -191,6 +191,14 @@ table thead th {
   }
 }
 
+th,
+td {
+  &:first-child {
+    width:0.1%;
+    white-space: nowrap;
+  }
+}
+
 table.tablesorter thead tr {
   white-space: nowrap;
 }
@@ -330,15 +338,27 @@ p.help-block {
 /* Start panels and tables */
 .panel-default {
   border: 5px $color_2_green !important;;
+
   > .panel-heading {
     background: $panel_header_background;
     color: $panel_header_color;
     font-family: $panel_heading_font;
     font-size: $panel_heading_font_size;
+  }
+}
 
-    &:focus,
-    &:hover {
-      background: $panel_header_background_hover;
+.blog-panel {
+  .panel-default {
+    > .panel-heading {
+      background: $panel_header_background;
+      color: $panel_header_color;
+      font-family: $panel_heading_font;
+      font-size: $panel_heading_font_size;
+
+      &:focus,
+      &:hover {
+        background: $panel_header_background_hover;
+      }
     }
   }
 }
@@ -436,7 +456,7 @@ a.btn-primary {
   text-align: left;
   border-radius: 4px;
   box-shadow: none;
-  padding-top: 8px;
+  padding-top: 10px;
   padding-bottom: 8px;
   transition: 0.125s ease-in-out all;
 
@@ -450,12 +470,12 @@ a.btn-primary {
   &:focus,
   &:hover {
     background-color: $color_salmon;
-    color: $color_white;
+    color: black;
     border-color: $color_red;
   }
 
   &:first-child {
-    color: $color_white;
+    color: black;
     &:active,
     &:focus,
     &:hover {
@@ -629,7 +649,7 @@ a.btn-primary {
   > span {
     position: relative;
     float: left;
-    padding: 6px 12px;
+    padding: 8px 12px 6px;
     margin-left: -1px;
     line-height: 1.42857143;
     // color: #337ab7;
@@ -637,29 +657,29 @@ a.btn-primary {
     // background-color: #fff;
     // border: 1px solid #ddd;
     height: 35px;
-    background: $color_red;
-    border: 1px solid $color_brown;
-    color: $color_white;
+    background: $color_2_tan;
+    border: 1px solid $color_2_darker_brown;
+    color: black;
     &:active,
     &:focus,
     &:hover {
-      background: $color_salmon;
-      border: $color_brown 1px solid;
+      background: $color_2_salmon;
+      border: $color_2_darker_brown 1px solid;
       color: $color_white;
     }
   }
 
   &.disabled {
     span {
-      background-color: $color_brown;
-      color: $color_white;
-      border: 0;
+      background-color: $color_2_darker_brown;
+      color: $color_2_tan;
+      border: 1px solid $color_2_brown;
 
       &:focus,
       &:hover {
-        background: $color_brown;
-        // border: $color_brown 1px solid;
-        color: $color_white;
+        background-color: $color_2_darker_brown;
+        color: $color_2_tan;
+        border: 1px solid $color_2_brown;
       }
     }
   }
@@ -671,9 +691,9 @@ a.btn-primary {
 .pagination > .active > span,
 .pagination > .active > span:focus,
 .pagination > .active > span:hover {
-  background: $color_salmon;
-  border: $color_brown 1px solid;
-  color: $color_white;
+  background: $color_2_salmon;
+  border: $color_2_brown 1px solid;
+  color: black;
 }
 
 // Banner on home page
@@ -681,12 +701,13 @@ a.btn-primary {
   width: 100%;
   height: auto;
   display: block;
-  filter: grayscale(25%);
+  filter: grayscale(50%);
 }
 // front-page blog-1
 .panel-image {
   height: 150px;
   background-size: cover;
+  mix-blend-mode: multiply;
 }
 .blog-1 .panel-image {
   background-image: url("../images/hardcoded_blog_1.jpg");
@@ -696,4 +717,21 @@ a.btn-primary {
 }
 .blog-3 .panel-image {
   background-image: url("../images/hardcoded_blog_3.png");
+}
+
+.blog-1,
+.blog-2,
+.blog-3 {
+  > .panel-default {
+    background-color: $color_2_green_lighter;
+  }
+
+  a {
+    &:active,
+    &:focus,
+    &:hover {
+      text-decoration: none;
+    }
+  }
+  // @include link($color_white, black);
 }
