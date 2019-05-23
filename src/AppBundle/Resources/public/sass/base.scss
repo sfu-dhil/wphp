@@ -191,6 +191,7 @@ table thead th {
   }
 }
 
+// This collapses the leftmost fields as much as possible.
 th,
 td {
   &:first-child {
@@ -351,7 +352,7 @@ p.help-block {
   a {
     display: block;
     width: 100%;
-    
+
     .panel-default {
       background: $panel_image_background;
     }
