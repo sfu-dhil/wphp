@@ -25,6 +25,16 @@ class FirmType extends AbstractType {
                 'help_block' => 'Most complete name of the firm known',
             ),
         ));
+        $builder->add('gender', ChoiceType::class, array(
+            'expanded' => true,
+            'multiple' => false,
+            'choices' => array(
+                'Female' => Firm::FEMALE,
+                'Male' => Firm::MALE,
+                'Unknown' => Firm::UNKNOWN,
+            ),
+            'empty_data' => Firm::UNKNOWN,
+        ));
         $builder->add('streetAddress', null, array(
             'label' => 'Street Address',
             'required' => false,

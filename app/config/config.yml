@@ -9,6 +9,13 @@ imports:
 parameters:
     locale: en
 
+doctrine_migrations:
+    dir_name: "%kernel.project_dir%/src/AppBundle/Migrations"
+    namespace: AppBundle\Migrations
+    table_name: migration_versions
+    name: Application Migrations
+    organize_migrations: BY_YEAR_AND_MONTH
+
 framework:
     #esi:             ~
     translator:

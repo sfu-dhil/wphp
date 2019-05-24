@@ -4,6 +4,7 @@ namespace AppBundle\Form\Title;
 
 use AppBundle\Entity\Format;
 use AppBundle\Entity\Genre;
+use AppBundle\Entity\Source;
 use AppBundle\Form\Firm\FirmFilterType;
 use AppBundle\Form\Person\PersonFilterType;
 use Symfony\Component\Form\AbstractType;
@@ -70,7 +71,6 @@ class TitleSearchType extends AbstractType {
                 'help_block' => 'Find this exact title ID.',
             )
         ));
-
         $builder->add('person_filter', PersonFilterType::class, array(
             'label' => 'Filter by Person',
             'required' => false,
@@ -99,6 +99,24 @@ class TitleSearchType extends AbstractType {
                 'class' => 'embedded-form'
             ),
         ));
+
+        $builder->add('self_published', ChoiceType::class, array(
+            'label' => 'Self Published',
+            'choices' => array(
+                'Yes' => 'Y',
+                'No' => 'N',
+                'Unknown' => 'U',
+            ),
+            'attr' => array(
+                'help_block' => 'Limit results to those that have been self-published or not.'
+            ),
+            'required' => false,
+            'expanded' => true,
+            'multiple' => false,
+            'empty_data' => null,
+            'data' => null,
+        ));
+
         $builder->add('volumes', TextType::class, array(
             'label' => 'Volumes',
             'required' => false,
@@ -197,6 +215,14 @@ class TitleSearchType extends AbstractType {
             'label' => 'Shelfmark',
             'required' => false,
         ));
+        $builder->add('titlesource_filter', TitleSourceFilterType::class, array(
+            'label' => 'Filter by Source',
+            'required' => false,
+            'attr' => array(
+                'class' => 'embedded-form'
+            ),
+        ));
+
         $builder->add('notes', null, array(
             'label' => 'Notes',
             'required' => false,

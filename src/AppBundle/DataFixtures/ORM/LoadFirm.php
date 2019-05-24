@@ -24,6 +24,7 @@ class LoadFirm extends Fixture implements DependentFixtureInterface, FixtureGrou
             $fixture->setStartDate(1800 - $i * 10);
             $fixture->setEndDate(1820 + $i * 15);
             $fixture->setFinalcheck($i % 2 === 0);
+            $fixture->setGender('U');
             $fixture->setCity($this->getReference('geonames.1'));
 
             $em->persist($fixture);

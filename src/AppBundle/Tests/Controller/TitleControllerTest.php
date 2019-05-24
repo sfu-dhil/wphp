@@ -4,6 +4,7 @@ namespace AppBundle\Tests\Controller;
 
 use AppBundle\Entity\Title;
 use AppBundle\DataFixtures\ORM\LoadTitle;
+use AppBundle\Repository\TitleRepository;
 use Nines\UtilBundle\Tests\Util\BaseTestCase;
 use Nines\UserBundle\DataFixtures\ORM\LoadUser;
 
@@ -131,8 +132,6 @@ class TitleControllerTest extends BaseTestCase
             'title[title]' => 'The Book of Cheese.',
             'title[editionNumber]' => 1,
             'title[signedAuthor]' => 'Testy McAuthor',
-            // 'title[titleRoles]' => 1,
-            // 'title[titleFirmroles]' => 0,
             'title[pseudonym]' => 'Author',
             'title[imprint]' => 'Cheese Publishers',
             'title[selfpublished]' => 0,
@@ -149,10 +148,6 @@ class TitleControllerTest extends BaseTestCase
             'title[pricePound]' => 2,
             'title[priceShilling]' => 3,
             'title[pricePence]' => 2,
-            'title[source]' => 0,
-            'title[sourceId]' => 'ID',
-            'title[source2]' => 0,
-            'title[source2Id]' => 'ID2',
             'title[shelfmark]' => '',
             'title[checked]' => 1,
             'title[finalcheck]' => 1,
@@ -194,8 +189,6 @@ class TitleControllerTest extends BaseTestCase
             'title[title]' => 'The Book of Cheese.',
             'title[editionNumber]' => 1,
             'title[signedAuthor]' => 'Testy McAuthor',
-            // 'title[titleRoles]' => 1,
-            // 'title[titleFirmroles]' => 0,
             'title[pseudonym]' => 'Author',
             'title[imprint]' => 'Cheese Publishers',
             'title[selfpublished]' => 0,
@@ -212,10 +205,6 @@ class TitleControllerTest extends BaseTestCase
             'title[pricePound]' => 2,
             'title[priceShilling]' => 3,
             'title[pricePence]' => 2,
-            'title[source]' => 0,
-            'title[sourceId]' => 'ID',
-            'title[source2]' => 0,
-            'title[source2Id]' => 'ID2',
             'title[shelfmark]' => '',
             'title[checked]' => 1,
             'title[finalcheck]' => 1,
@@ -263,5 +252,51 @@ class TitleControllerTest extends BaseTestCase
         $postCount = count($em->getRepository(Title::class)->findAll());
         $this->assertEquals($preCount - 1, $postCount);
     }
+
+
+    public function testAnonSearch() {
+        $client = $this->makeClient();
+
+        $crawler = $client->request('GET', '/title/search');
+        $this->assertEquals(302, $client->getResponse()->getStatusCode());
+        $this->assertEquals(0, $crawler->selectLink('Search')->count());
+    }
+
+    public function testUserSearch() {
+        $repo = $this->createMock(TitleRepository::class);
+        $repo->method('buildSearchQuery')->willReturn(array($this->getReference('title.1')));
+        $client = $this->makeClient(LoadUser::USER);
+        $client->disableReboot();
+        $client->getContainer()->set(TitleRepository::class, $repo);
+
+        $formCrawler = $client->request('GET', '/title/search');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $form = $formCrawler->selectButton('Search')->form([
+            'title_search[title]' => 'adventures',
+        ]);
+
+        $responseCrawler = $client->submit($form);
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals(1, $responseCrawler->filter('td:contains("Title 1")')->count());
+    }
+
+    public function testAdminSearch() {
+        $repo = $this->createMock(TitleRepository::class);
+        $repo->method('buildSearchQuery')->willReturn(array($this->getReference('title.1')));
+        $client = $this->makeClient(LoadUser::ADMIN);
+        $client->disableReboot();
+        $client->getContainer()->set(TitleRepository::class, $repo);
+
+        $formCrawler = $client->request('GET', '/title/search');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $form = $formCrawler->selectButton('Search')->form([
+            'title_search[title]' => 'adventures',
+        ]);
+
+        $responseCrawler = $client->submit($form);
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals(1, $responseCrawler->filter('td:contains("Title 1")')->count());
+    }
+
 
 }

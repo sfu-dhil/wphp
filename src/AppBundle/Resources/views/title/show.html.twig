@@ -134,7 +134,7 @@
                             <td>
                                 {% if title.format %}
                                     <a href="{{ path('format_show', {'id': title.format.id}) }}">
-                                        {{ title.format.name }} ({{ title.format.abbrevOne }})
+                                        {{ title.format.name }} ({{ title.format.abbreviation }})
                                     </a>
                                 {% endif %}
                             </td>
@@ -180,12 +180,10 @@
                         <tr>
                             <th data-toggle="popover"  data-content="Sources consulted to populate the entry fields">Sources</th>
                             <td>
-                                {% include "AppBundle:title:partials/source-link.html.twig"
-                                    with {'source': title.source, 'sourceId': title.sourceId} %}
-                                {% include "AppBundle:title:partials/source-link.html.twig"
-                                    with {'source': title.source2, 'sourceId': title.source2Id} %}
-                                {% include "AppBundle:title:partials/source-link.html.twig"
-                                    with {'source': title.source3, 'sourceId': title.source3Id} %}
+                                {% for titleSource in title.titleSources %}
+                                    {% include "AppBundle:title:partials/source-link.html.twig"
+                                        with {'source': titleSource.source, 'sourceId': titleSource.identifier} %}
+                                {% endfor %}
                             </td>
                         </tr>
                         <tr>
@@ -205,12 +203,12 @@
                             <td>{% if title.checked %}Yes{% else %}No{% endif %}</td>
                         </tr>
                         <tr>
-                            <th data-toggle="popover"  data-content="Indicates that either two sources have been consulted or the text has been hand-checked">Verified</th>
-                            <td>{% if title.finalcheck %}Yes{% else %}No{% endif %}</td>
-                        </tr>
-                        <tr>
                             <th data-toggle="popover"  data-content="An unsuccessful attempt has been made to find two independent sources to verify the title">Attempted Verification</th>
                             <td>{% if title.finalattempt %}Yes{% else %}No{% endif %}</td>
+                        </tr>
+                        <tr>
+                            <th data-toggle="popover"  data-content="Indicates that either two sources have been consulted or the text has been hand-checked">Verified</th>
+                            <td>{% if title.finalcheck %}Yes{% else %}No{% endif %}</td>
                         </tr>
                     </tbody>
                 </table>

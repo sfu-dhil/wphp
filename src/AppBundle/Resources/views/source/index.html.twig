@@ -37,7 +37,7 @@
                     <td>{{ source.description | raw }}</td>
                     <td>
                         <a href="{{ path('source_show', { 'id': source.id }) }}">
-                            {{ repo.countTitles(source) }}
+                            {{ source.titleSources|length }}
                         </a>
                     </td>
                 </tr>

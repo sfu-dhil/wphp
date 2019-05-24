@@ -3,7 +3,6 @@
 namespace AppBundle\Form;
 
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -22,29 +21,8 @@ class FormatType extends AbstractType {
                 'help_block' => '',
             ),
         ));
-        $builder->add('abbrevOne', null, array(
-            'label' => 'Abbrev One',
-            'required' => false,
-            'attr' => array(
-                'help_block' => '',
-            ),
-        ));
-        $builder->add('abbrevTwo', null, array(
-            'label' => 'Abbrev Two',
-            'required' => false,
-            'attr' => array(
-                'help_block' => '',
-            ),
-        ));
-        $builder->add('abbrevThree', null, array(
-            'label' => 'Abbrev Three',
-            'required' => false,
-            'attr' => array(
-                'help_block' => '',
-            ),
-        ));
-        $builder->add('abbrevFour', null, array(
-            'label' => 'Abbrev Four',
+        $builder->add('abbreviation', null, array(
+            'label' => 'Abbreviation',
             'required' => false,
             'attr' => array(
                 'help_block' => '',

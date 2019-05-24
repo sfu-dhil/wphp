@@ -9,12 +9,14 @@ use AppBundle\Entity\Role;
 use AppBundle\Entity\Source;
 use AppBundle\Entity\Title;
 use AppBundle\Entity\TitleRole;
+use AppBundle\Entity\TitleSource;
 use AppBundle\Repository\EstcMarcRepository;
 use AppBundle\Repository\FormatRepository;
 use AppBundle\Repository\PersonRepository;
 use AppBundle\Repository\RoleRepository;
 use AppBundle\Repository\SourceRepository;
 use AppBundle\Repository\TitleRepository;
+use AppBundle\Repository\TitleSourceRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
 class EstcMarcImporter {
@@ -55,6 +57,11 @@ class EstcMarcImporter {
     private $formatRepo;
 
     /**
+     * @var TitleSourceRepository
+     */
+    private $titleSourceRepository;
+
+    /**
      * @var array
      */
     private $messages;
@@ -67,6 +74,7 @@ class EstcMarcImporter {
         $this->roleRepo = $this->em->getRepository(Role::class);
         $this->sourceRepo = $this->em->getRepository(Source::class);
         $this->formatRepo = $this->em->getRepository(Format::class);
+        $this->titleSourceRepository = $this->em->getRepository(TitleSource::class);
         $this->messages = array();
     }
 
@@ -80,12 +88,17 @@ class EstcMarcImporter {
         return $fields;
     }
 
-    public function checkTitle($fullTitle) {
-        $count = count($this->titleRepo->findBy(array('title' => $fullTitle)));
-        if ($count > 0) {
+    public function checkTitle($fullTitle, $id) {
+        if (count($this->titleRepo->findBy(array('title' => $fullTitle)))) {
             $this->messages[] = 'This title may already exist in the database. Please check for it before saving the form.';
         }
-        return $count;
+
+        if(count($this->titleSourceRepository->findBy(array(
+            'source' => $this->sourceRepo->findOneBy(array('name' => 'ESTC')),
+            'identifier' => $id,
+        )))) {
+            $this->messages[] = 'This ESTC ID already exists in the database. Please check that you are not duplicating data.';
+        }
     }
 
     public function getDates($fields) {
@@ -156,21 +169,9 @@ class EstcMarcImporter {
         $data = $fields['300c']->getFieldData();
         $matches = array();
         $format = null;
-        if (preg_match('/(\d+\x{00b0})/u', $data, $matches)) {
-            // degree sign
-            $format = $this->formatRepo->findOneBy(array(
-                'abbrevTwo' => $matches[1],
-            ));
-        }
-        if (preg_match('/(\d+\x{2070})/u', $data, $matches)) {
-            // superscript zero
-            $format = $this->formatRepo->findOneBy(array(
-                'abbrevFour' => $matches[1],
-            ));
-        }
         if (preg_match('/(\d+[mtv]o)/', $data, $matches)) {
             $format = $this->formatRepo->findOneBy(array(
-                'abbrevOne' => $matches[1],
+                'abbreviation' => $matches[1],
             ));
         }
         if (!$format) {
@@ -207,7 +208,7 @@ class EstcMarcImporter {
         if (isset($fields['245b'])) {
             $fullTitle .= " " . $fields['245b']->getFieldData();
         }
-        $this->checkTitle($fullTitle);
+        $this->checkTitle($fullTitle, $fields['001']->getFieldData());
 
         $title = new Title();
         $title->setTitle($fullTitle);
@@ -219,8 +220,7 @@ class EstcMarcImporter {
             $title->setImprint($fields['260b']->getFieldData());
         }
         if (isset($fields['260c'])) {
-            $title->setPubdate($fields['260c']->getFieldData());
-            $title->setDateOfFirstPublication($fields['260c']->getFieldData());
+            $title->setPubdate(preg_replace("/\.$/", '', $fields['260c']->getFieldData()));
         }
 
         if(isset($fields['100a'])) {
@@ -275,6 +275,13 @@ class EstcMarcImporter {
      */
     public function setTitleRepo(TitleRepository $titleRepo): void {
         $this->titleRepo = $titleRepo;
+    }
+
+    /**
+     * @param TitleSourceRepository $titleSourceRepo
+     */
+    public function setTitleSourceRepo(TitleSourceRepository $titleSourceRepo): void {
+        $this->titleSourceRepository = $titleSourceRepo;
     }
 
     /**

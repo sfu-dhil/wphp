@@ -120,6 +120,9 @@ class Builder implements ContainerAwareInterface
                 'role' => 'separator',
                 'class' => 'divider',
             ));
+            $browse->addChild('Geonames', array(
+                'route' => 'geonames_index',
+            ));
             $browse->addChild('English Novel', array(
                 'route' => 'resource_en_index',
             ));
@@ -188,7 +191,9 @@ class Builder implements ContainerAwareInterface
             $search->addChild('First Pub Dates', array(
                 'route' => 'report_first_pub_date',
             ));
-
+            $search->addChild('Titles with Bad ESTC IDs', array(
+                'route' => 'report_title_bad_estc',
+            ));
             $search->addChild('Titles to Check', array(
                 'route' => 'report_titles_check',
             ));
@@ -198,14 +203,20 @@ class Builder implements ContainerAwareInterface
             $search->addChild('Persons to Check', array(
                 'route' => 'report_person_check',
             ));
-            $search->addChild('Titles with missing Sources', array(
-                'route' => 'report_title_source_id_null'
-            ));
             $search->addChild('Titles with Missing Source IDs', array(
-                'route' => 'report_title_source_null'
+                'route' => 'report_title_source_id_null'
             ));
             $search->addChild('Titles without Genre', array(
                 'route' => 'report_title_without_genre'
+            ));
+            $search->addChild('Titles without Volumes', array(
+                'route' => 'report_title_without_volume'
+            ));
+            $search->addChild('Titles without Firms', array(
+                'route' => 'report_title_without_firm'
+            ));
+            $search->addChild('Titles without Sources', array(
+                'route' => 'report_title_without_source'
             ));
         }
         return $menu;
@@ -249,6 +260,87 @@ class Builder implements ContainerAwareInterface
                 )
             ));
         }
+        return $menu;
+    }
+
+    private function getUser() {
+        if( ! $this->hasRole('ROLE_USER')) {
+            return null;
+        }
+        return $this->tokenStorage->getToken()->getUser();
+    }
+
+    /**
+     * Build a user menu.
+     *
+     * @param array $options
+     * @return ItemInterface
+     */
+    public function userNavMenu(array $options) {
+        $name = 'Login';
+        if(isset($options['name'])) {
+            $name = $options['name'];
+        }
+        $menu = $this->factory->createItem('root');
+        $menu->setChildrenAttributes(array(
+            'class' => 'nav navbar-nav navbar-right',
+        ));
+        $menu->setAttribute('dropdown', true);
+        $user = $this->getUser();
+        if (!$this->hasRole('ROLE_USER')) {
+            $menu->addChild($name, array(
+                'route' => 'fos_user_security_login'
+            ));
+            return $menu;
+        }
+
+        $userMenu = $menu->addChild('user', array(
+            'uri' => '#',
+            'label' => $user->getUsername() . self::CARET,
+        ));
+        $userMenu->setAttribute('dropdown', true);
+        $userMenu->setLinkAttribute('class', 'dropdown-toggle');
+        $userMenu->setLinkAttribute('data-toggle', 'dropdown');
+        $userMenu->setChildrenAttribute('class', 'dropdown-menu');
+        $userMenu->addChild('Profile', array('route' => 'fos_user_profile_show'));
+        $userMenu->addChild('Change password', array('route' => 'fos_user_change_password'));
+        $userMenu->addChild('Logout', array('route' => 'fos_user_security_logout'));
+
+        if ($this->hasRole('ROLE_ADMIN')) {
+            $userMenu->addChild('divider', array(
+                'label' => '',
+            ));
+            $userMenu['divider']->setAttributes(array(
+                'role' => 'separator',
+                'class' => 'divider',
+            ));
+
+            $userMenu->addChild('users', array(
+                'label' => 'Users',
+                'route' => 'user',
+            ));
+        }
+
+        if ($this->hasRole('ROLE_COMMENT_ADMIN')) {
+            $userMenu->addChild('comment_divider', array(
+                'label' => '',
+            ));
+            $userMenu['comment_divider']->setAttributes(array(
+                'role' => 'separator',
+                'class' => 'divider',
+            ));
+
+            $userMenu->addChild('Comments', array(
+                'route' => 'admin_comment_index',
+            ));
+            $userMenu->addChild('Comment Notes', array(
+                'route' => 'admin_comment_note_index',
+            ));
+            $userMenu->addChild('Comment States', array(
+                'route' => 'admin_comment_status_index',
+            ));
+        }
+
         return $menu;
     }
 }

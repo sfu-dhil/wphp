@@ -33,7 +33,7 @@ class FirmroleController extends Controller  implements PaginatorAwareInterface 
      */
     public function indexAction(Request $request, FirmroleRepository $repo) {
         $em = $this->getDoctrine()->getManager();
-        $dql = 'SELECT e FROM AppBundle:Firmrole e';
+        $dql = 'SELECT e FROM AppBundle:Firmrole e ORDER BY e.name';
         $query = $em->createQuery($dql);
         $firmroles = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25, array(
             'defaultSortFieldName' => 'e.name',

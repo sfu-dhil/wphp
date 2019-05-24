@@ -57,7 +57,7 @@ class PersonSearchType extends AbstractType {
         ));
 
         $builder->add('id', TextType::class, array(
-            'label' => 'Firm ID',
+            'label' => 'Person ID',
             'required' => false,
             'attr' => array(
                 'help_block' => 'Find this exact person ID.',

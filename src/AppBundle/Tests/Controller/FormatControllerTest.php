@@ -129,10 +129,7 @@ class FormatControllerTest extends BaseTestCase
       
         $form = $formCrawler->selectButton('Update')->form([
             'format[name]' => 'Cheese.',
-            'format[abbrevOne]' => 'Cheese',
-            'format[abbrevTwo]' => 'Chs',
-            'format[abbrevThree]' => 'Ch',
-            'format[abbrevFour]' => 'C'
+            'format[abbreviation]' => 'Cheese',
         ]);
         
         $client->submit($form);
@@ -168,10 +165,7 @@ class FormatControllerTest extends BaseTestCase
             
         $form = $formCrawler->selectButton('Create')->form([
             'format[name]' => 'Cheese.',
-            'format[abbrevOne]' => 'Cheese',
-            'format[abbrevTwo]' => 'Chs',
-            'format[abbrevThree]' => 'Ch',
-            'format[abbrevFour]' => 'C'
+            'format[abbreviation]' => 'Cheese',
         ]);
         
         $client->submit($form);
