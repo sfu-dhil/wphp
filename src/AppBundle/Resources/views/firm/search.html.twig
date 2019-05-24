@@ -1,7 +1,10 @@
 {% extends 'base.html.twig' %}
 
 {% block pageheader %}
-    <h1>Search Firms List</h1>
+    <h1>Search Firms</h1>
+    {%  if firms|length > 0 %}
+        Displaying {{ firms|length }} firms of {{ firms.getTotalItemCount }} total.
+    {% endif %}
 {% endblock %}
 
 {% block body %}
