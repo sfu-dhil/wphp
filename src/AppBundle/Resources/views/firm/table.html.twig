@@ -40,8 +40,8 @@
                 </td>
                 <td>{{ firm.streetAddress }}</td>    
                 <td>{{ firm.city }}</td>
-                <td>{% if firm.startDate %}{{ firm.startDate|date('Y') }}{% endif %}</td>
-                <td>{% if firm.endDate %}{{ firm.endDate|date('Y') }}{% endif %}</td>
+                <td>{{ firm.startDate }}</td>
+                <td>{{ firm.endDate }}</td>
             </tr>
         {% endfor %}
     </tbody>
