@@ -9,10 +9,10 @@
         <schema:address>{{ firm.streetAddress }}</schema:address>
         <schema:location rdf:resource="http://sws.geonames.org/{{ firm.city.geonameid }}/about.rdf"/>
         {% if firm.startDate %}
-            <schema:foundingDate>{{ firm.startDate|date('Y') }}</schema:foundingDate>
+            <schema:foundingDate>{{ firm.startDate }}</schema:foundingDate>
             {% endif %}
             {% if firm.endDate %}
-            <schema:dissolutionDate>{{ firm.endDate|date('Y') }}</schema:dissolutionDate>
+            <schema:dissolutionDate>{{ firm.endDate }}</schema:dissolutionDate>
             {% endif %}
         <wphp:Contributions>
             <rdf:Bag>

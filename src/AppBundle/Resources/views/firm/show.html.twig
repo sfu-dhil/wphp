@@ -51,11 +51,11 @@
             </tr>
             <tr>
                 <th data-toggle="popover" data-content="YYYY-MM-DD">Start date</th>
-                <td>{% if firm.startDate %}{{ firm.startDate|date('Y') }}{% endif %}</td>
+                <td>{{ firm.startDate }}</td>
             </tr>
             <tr>
                 <th data-toggle="popover" data-content="YYYY-MM-DD">End date</th>
-                <td>{% if firm.endDate %}{{ firm.endDate|date('Y') }}{% endif %}</td>
+                <td>{{ firm.endDate }}</td>
             </tr>
         </tbody>
     </table>
