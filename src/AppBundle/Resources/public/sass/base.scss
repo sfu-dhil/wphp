@@ -7,8 +7,9 @@ html {
 }
 
 body {
-  // background: $color_body;
+  // background: $color_body_background;
   background-image: linear-gradient(0deg, $color_body_background_start 0%, $color_body_background_end 100%);
+  color: $color_text;
 
   font: $body_font;
   display: flex;
@@ -32,6 +33,8 @@ h5 {
   font-family: $heading_font;
   color: $heading_color;
 }
+
+@include link($color_link, $color_link_hover);
 
 em,
 strong {
@@ -161,6 +164,9 @@ label {
 
 
 /* tables */
+table {
+  color: $color_black;
+}
 table thead th {
   color: $table_head_color;
   background: $table_head_background_color;
@@ -222,7 +228,7 @@ th.sorted.desc:after, a.desc:after {
 }
 
 div.tab-content {
-  min-height: 200px;
+  // min-height: 200px;
   p {
     font-size: 14px;
     font-family: $lato;
@@ -497,7 +503,7 @@ a.btn-primary {
 }
 // buttons end
 
-@include link($color_link, $color_link_hover);
+
 
 
 /* Start navbar (header) */
@@ -762,4 +768,13 @@ a.btn-primary {
     }
   }
   // @include link($color_white, black);
+}
+
+
+
+// Comments panels
+.comments-expand {
+  .btn {
+    white-space: normal;
+  }
 }
