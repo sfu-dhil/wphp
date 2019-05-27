@@ -80,6 +80,7 @@ html {
 
 body {
   background-image: linear-gradient(0deg, #EEF2E1 0%, #EEF2E1 100%);
+  color: #5c5349;
   font: "LatoLatinWeb", sans-serif;
   display: flex;
   flex-direction: column;
@@ -100,6 +101,16 @@ h4,
 h5 {
   font-family: "CormorantGaramond-SemiBold", serif;
   color: #5c5349;
+}
+
+a {
+  color: #A9695B;
+}
+a:link, a:visited {
+  color: #A9695B;
+}
+a:active, a:focus, a:hover {
+  color: #A9695B;
 }
 
 em,
@@ -205,6 +216,10 @@ label.required::after {
 }
 
 /* tables */
+table {
+  color: black;
+}
+
 table thead th {
   color: #fff;
   background: #5c5349;
@@ -261,9 +276,6 @@ th.sorted.desc:after, a.desc:after {
   content: "↑";
 }
 
-div.tab-content {
-  min-height: 200px;
-}
 div.tab-content p {
   font-size: 14px;
   font-family: "LatoLatinWeb", sans-serif;
@@ -520,16 +532,6 @@ a.btn-primary:first-child:hover {
   color: #fff;
 }
 
-a {
-  color: #5c5349;
-}
-a:link, a:visited {
-  color: #5c5349;
-}
-a:active, a:focus, a:hover {
-  color: #5c5349;
-}
-
 /* Start navbar (header) */
 @media (min-width: 970px) {
   #navbar {
@@ -747,6 +749,10 @@ a:active, a:focus, a:hover {
 .blog-3 a:focus,
 .blog-3 a:hover {
   text-decoration: none;
+}
+
+.comments-expand .btn {
+  white-space: normal;
 }
 
 /*# sourceMappingURL=base.css.map */

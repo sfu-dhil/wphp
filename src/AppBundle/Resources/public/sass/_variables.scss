@@ -80,7 +80,7 @@ $color_2_green: #D9DDCC;
 $color_2_green_light: #EEF2E1;
 $color_2_green_lighter: mix($color_2_green, $color_2_green_light, 50%);
 $color_2_salmon: rgb(234, 168, 154);
-
+$color_black: black;
 
 
 // override settings from first set of colors.
@@ -91,13 +91,14 @@ $color_beige: $color_2_tan;
 
 
 
-$color_text: 4color_2_darker_brown;
-$color_body: $color_2_green_light;
+$color_text: $color_2_darker_brown;
+$color_body_background: $color_2_green_light;
 $color_body_background_start: $color_2_green_light;
 $color_body_background_end: $color_2_green_light;
+$color_body_link: #A9695B;
 
-$color_link: $color_2_darker_brown;
-$color_link_hover: $color_2_darker_brown;
+$color_link: #A9695B;
+$color_link_hover: #A9695B;
 $footer_color: $color_white;
 $footer_background: $color_2_darker_brown;
 $footer_link: $color_white;
