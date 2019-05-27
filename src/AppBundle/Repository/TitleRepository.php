@@ -258,6 +258,21 @@ class TitleRepository extends EntityRepository
                 $qb->andWhere("MATCH({$fAlias}.streetAddress) AGAINST(:{$fAlias}_address BOOLEAN) > 0");
                 $qb->setParameter("{$fAlias}_address", $filter['firm_address']);
             }
+            if (isset($filter['firm_gender']) && $filter['firm_gender']) {
+                $genders = [];
+                if (in_array('M', $filter['firm_gender'])) {
+                    $genders[] = 'M';
+                }
+                if (in_array('F', $filter['firm_gender'])) {
+                    $genders[] = 'F';
+                }
+                if (in_array('U', $filter['firm_gender'])) {
+                    $genders[] = 'U';
+                }
+                $qb->andWhere("{$fAlias}.gender in (:genders)");
+                $qb->setParameter('genders', $genders);
+            }
+
         }
 
         if(isset($data['titlesource_filter']) && $data['titlesource_filter']) {
