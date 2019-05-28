@@ -25,7 +25,7 @@ class PersonSearchType extends AbstractType {
         $builder->setMethod('get');
 
         $builder->add('name', TextType::class, array(
-            'label' => 'Search People by Name',
+            'label' => 'Search Persons by Name',
             'required' => false,
             'attr' => array(
                 'help_block' => 'Enter all or part of a personal name'
