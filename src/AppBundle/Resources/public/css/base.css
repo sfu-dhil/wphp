@@ -725,7 +725,8 @@ a.btn-primary:first-child:hover {
 }
 
 .blog-1 .panel-image {
-  background-image: url("../images/hardcoded_blog_1.jpg");
+  background-image: url("../images/Mother-Shipton.jpg");
+  background-position: center;
 }
 
 .blog-2 .panel-image {
@@ -734,6 +735,8 @@ a.btn-primary:first-child:hover {
 
 .blog-3 .panel-image {
   background-image: url("../images/hardcoded_blog_3.png");
+  background-position-x: center;
+  background-position-y: 38%;
 }
 
 .blog-1 > .panel-default,
