@@ -53,7 +53,7 @@ class PersonFilterType extends AbstractType
             'choices' => array(
                 'Female' => 'F',
                 'Male' => 'M',
-                '(unknown)' => 'U',
+                'Unknown' => 'U',
             ),
             'attr' => array(
                 'help_block' => 'Leave this field blank to include all genders'

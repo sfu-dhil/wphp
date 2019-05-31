@@ -45,12 +45,12 @@ class FirmFilterType extends AbstractType {
             'label' => 'Firm Name',
             'required' => false,
         ));
-        $builder->add('gender', ChoiceType::class, array(
+        $builder->add('firm_gender', ChoiceType::class, array(
             'label' => 'Gender',
             'choices' => array(
                 'Female' => 'F',
                 'Male' => 'M',
-                '(unknown)' => 'U',
+                'Unknown' => 'U',
             ),
             'attr' => array(
                 'help_block' => 'Leave this field blank to include all genders'

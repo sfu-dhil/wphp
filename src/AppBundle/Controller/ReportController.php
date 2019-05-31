@@ -162,6 +162,7 @@ class ReportController extends Controller implements PaginatorAwareInterface
         $qb = $em->createQueryBuilder();
         $qb->select('e')->from('AppBundle:Title', 'e');
         $qb->where('e.genre is null');
+        $qb->andWhere('e.pubdate <= 1800');
         $titles = $this->paginator->paginate($qb->getQuery()->execute(), $request->query->getInt('page', 1), 25);
 
         return array(

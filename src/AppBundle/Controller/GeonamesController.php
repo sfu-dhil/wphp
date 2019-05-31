@@ -125,11 +125,16 @@ class GeonamesController extends Controller  implements PaginatorAwareInterface 
     public function importSaveAction(Request $request, EntityManagerInterface $em) {
         $user = $this->getParameter('wphp.geonames_user');
         $client = new GeoNamesClient($user);
+        $repo = $em->getRepository(Geonames::class);
         foreach($request->request->get('geonameid') as $geonameid) {
             $data = $client->get(array(
                 'geonameId' => $geonameid,
                 'lang' => 'en',
             ));
+            if($repo->find($geonameid)) {
+                $this->addFlash('warning', "Geoname #{$geonameid} ({$data->asciiName}) is already in the database.");
+                continue;
+            }
             $geoname = new Geonames();
             $geoname->setGeonameid($data->geonameId);
             $geoname->setName($data->name);
