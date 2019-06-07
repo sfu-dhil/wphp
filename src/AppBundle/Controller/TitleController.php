@@ -12,7 +12,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -34,8 +34,8 @@ class TitleController extends Controller implements PaginatorAwareInterface
     /**
      * Lists all Title entities.
      *
-     * @Route("/", name="title_index")
-     * @Method("GET")
+     * @Route("/", name="title_index", methods={"GET"})
+
      * @Template()
      * @param Request $request
      * @return array
@@ -64,8 +64,8 @@ class TitleController extends Controller implements PaginatorAwareInterface
     /**
      * @param Request $request
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
-     * @Route("/typeahead", name="title_typeahead")
-     * @Method("GET")
+     * @Route("/typeahead", name="title_typeahead", methods={"GET"})
+
      * @return JsonResponse
      */
     public function typeaheadAction(Request $request, TitleRepository $repo)
@@ -88,8 +88,8 @@ class TitleController extends Controller implements PaginatorAwareInterface
     /**
      * Export a CSV with the titles.
      *
-     * @Route("/export", name="title_export")
-     * @Method("GET")
+     * @Route("/export", name="title_export", methods={"GET"})
+
      * @return BinaryFileResponse
      */
     public function exportAction()
@@ -161,8 +161,8 @@ class TitleController extends Controller implements PaginatorAwareInterface
     /**
      * Search for Title entities.
      *
-     * @Route("/jump", name="title_jump")
-     * @Method("GET")
+     * @Route("/jump", name="title_jump", methods={"GET"})
+
      * @Template()
      * @param Request $request
      */
@@ -179,8 +179,7 @@ class TitleController extends Controller implements PaginatorAwareInterface
     /**
      * Full text search for Title entities.
      *
-     * @Route("/search", name="title_search")
-     * @Method({"GET"})
+     * @Route("/search", name="title_search", methods={"GET"})
      * @Template()
      * @param Request $request
      * @return array
@@ -211,8 +210,7 @@ class TitleController extends Controller implements PaginatorAwareInterface
     /**
      * Full text search for Title entities.
      *
-     * @Route("/search/export", name="title_search_export")
-     * @Method({"GET"})
+     * @Route("/search/export", name="title_search_export", methods={"GET"})
      * @Template()
      * @param Request $request
      * @return array
@@ -237,8 +235,8 @@ class TitleController extends Controller implements PaginatorAwareInterface
     /**
      * Creates a new Title entity.
      *
-     * @Route("/new", name="title_new")
-     * @Method({"GET", "POST"})
+     * @Route("/new", name="title_new", methods={"GET","POST"})
+
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
      * @Template()
      * @param Request $request
@@ -283,10 +281,10 @@ class TitleController extends Controller implements PaginatorAwareInterface
      * Build a new title form prepopulated with data from a MARC record.
      *
      * @param Request $request
-     * @Route("/import/{id}", name="title_marc_import")
+     * @Route("/import/{id}", name="title_marc_import", methods={"GET"})
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
      * @Template("AppBundle:title:new.html.twig")
-     * @Method("GET")
+
      */
     public function importMarcAction(Request $request, EstcMarcImporter $importer, $id)
     {
@@ -308,8 +306,8 @@ class TitleController extends Controller implements PaginatorAwareInterface
     /**
      * Finds and displays a Title entity.
      *
-     * @Route("/{id}.{_format}", name="title_show", defaults={"_format": "html"})
-     * @Method("GET")
+     * @Route("/{id}.{_format}", name="title_show", defaults={"_format": "html"}, methods={"GET"})
+
      * @Template()
      * @param Title $title
      * @return array
@@ -325,8 +323,8 @@ class TitleController extends Controller implements PaginatorAwareInterface
     /**
      * Displays a form to edit an existing Title entity.
      *
-     * @Route("/{id}/edit", name="title_edit")
-     * @Method({"GET", "POST"})
+     * @Route("/{id}/edit", name="title_edit", methods={"GET","POST"})
+
      * @Template()
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
      * @param Request $request
@@ -411,8 +409,8 @@ class TitleController extends Controller implements PaginatorAwareInterface
     /**
      * Displays a form to edit an existing Title entity.
      *
-     * @Route("/{id}/copy", name="title_copy")
-     * @Method({"GET", "POST"})
+     * @Route("/{id}/copy", name="title_copy", methods={"GET","POST"})
+
      * @Template()
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
      * @param Request $request
@@ -433,8 +431,8 @@ class TitleController extends Controller implements PaginatorAwareInterface
     /**
      * Deletes a Title entity.
      *
-     * @Route("/{id}/delete", name="title_delete")
-     * @Method("GET")
+     * @Route("/{id}/delete", name="title_delete", methods={"GET"})
+
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
      * @param Request $request
      * @param Title $title

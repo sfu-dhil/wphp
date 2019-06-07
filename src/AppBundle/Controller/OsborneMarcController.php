@@ -8,7 +8,7 @@ use AppBundle\Services\MarcManager;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -31,8 +31,8 @@ class OsborneMarcController extends Controller  implements PaginatorAwareInterfa
      *
      * @return array
      *
-     * @Route("/", name="resource_osborne_index")
-     * @Method("GET")
+     * @Route("/", name="resource_osborne_index", methods={"GET"})
+
      * @Template()
      */
     public function indexAction(Request $request, MarcManager $manager, OsborneMarcRepository $repo) {
@@ -50,8 +50,8 @@ class OsborneMarcController extends Controller  implements PaginatorAwareInterfa
      *
      * @param Request $request
      *
-     * @Route("/search", name="resource_osborne_search")
-     * @Method("GET")
+     * @Route("/search", name="resource_osborne_search", methods={"GET"})
+
      * @Template()
      */
     public function searchAction(Request $request, MarcManager $manager, OsborneMarcRepository $repo) {
@@ -84,8 +84,8 @@ class OsborneMarcController extends Controller  implements PaginatorAwareInterfa
      *
      * @return array
      *
-     * @Route("/{id}", name="resource_osborne_show")
-     * @Method("GET")
+     * @Route("/{id}", name="resource_osborne_show", methods={"GET"})
+
      * @ParamConverter("osborneMarc", options={"mapping": {"id": "titleId"}})
      * @Template()
      */

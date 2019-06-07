@@ -7,7 +7,7 @@ use AppBundle\Form\GenreType;
 use AppBundle\Repository\GenreRepository;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -26,8 +26,8 @@ class GenreController extends Controller implements PaginatorAwareInterface {
     /**
      * Lists all Genre entities.
      *
-     * @Route("/", name="genre_index")
-     * @Method("GET")
+     * @Route("/", name="genre_index", methods={"GET"})
+
      * @Template()
      * @param Request $request
      */
@@ -46,8 +46,8 @@ class GenreController extends Controller implements PaginatorAwareInterface {
     /**
      * @param Request $request
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
-     * @Route("/typeahead", name="genre_typeahead")
-     * @Method("GET")
+     * @Route("/typeahead", name="genre_typeahead", methods={"GET"})
+
      * @return JsonResponse
      */
     public function typeaheadAction(Request $request, GenreRepository $repo) {
@@ -69,8 +69,8 @@ class GenreController extends Controller implements PaginatorAwareInterface {
     /**
      * Creates a new Genre entity.
      *
-     * @Route("/new", name="genre_new")
-     * @Method({"GET", "POST"})
+     * @Route("/new", name="genre_new", methods={"GET", "POST"})
+
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
      * @Template()
      * @param Request $request
@@ -98,8 +98,8 @@ class GenreController extends Controller implements PaginatorAwareInterface {
     /**
      * Finds and displays a Genre entity.
      *
-     * @Route("/{id}", name="genre_show")
-     * @Method("GET")
+     * @Route("/{id}", name="genre_show", methods={"GET"})
+
      * @Template()
      * @param Genre $genre
      */
@@ -119,8 +119,8 @@ class GenreController extends Controller implements PaginatorAwareInterface {
     /**
      * Displays a form to edit an existing Genre entity.
      *
-     * @Route("/{id}/edit", name="genre_edit")
-     * @Method({"GET", "POST"})
+     * @Route("/{id}/edit", name="genre_edit", methods={"GET","POST"})
+
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
      * @Template()
      * @param Request $request
@@ -146,8 +146,8 @@ class GenreController extends Controller implements PaginatorAwareInterface {
     /**
      * Deletes a Genre entity.
      *
-     * @Route("/{id}/delete", name="genre_delete")
-     * @Method("GET")
+     * @Route("/{id}/delete", name="genre_delete", methods={"GET"})
+
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
      * @param Request $request
      * @param Genre $genre

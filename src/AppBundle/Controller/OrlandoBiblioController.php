@@ -7,7 +7,7 @@ use AppBundle\Repository\OrlandoBiblioRepository;
 use AppBundle\Services\OrlandoManager;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -30,8 +30,8 @@ class OrlandoBiblioController extends Controller implements PaginatorAwareInterf
      *
      * @return array
      *
-     * @Route("/", name="resource_orlando_biblio_index")
-     * @Method("GET")
+     * @Route("/", name="resource_orlando_biblio_index", methods={"GET"})
+
      * @Template()
      */
     public function indexAction(Request $request, OrlandoManager $manager) {
@@ -52,8 +52,8 @@ class OrlandoBiblioController extends Controller implements PaginatorAwareInterf
      *
      * @param Request $request
      *
-     * @Route("/search", name="resource_orlando_biblio_search")
-     * @Method("GET")
+     * @Route("/search", name="resource_orlando_biblio_search", methods={"GET"})
+
      * @Template()
      */
     public function searchAction(Request $request,  OrlandoManager $manager, OrlandoBiblioRepository $repo) {
@@ -79,8 +79,8 @@ class OrlandoBiblioController extends Controller implements PaginatorAwareInterf
      *
      * @return array
      *
-     * @Route("/{id}", name="resource_orlando_biblio_show")
-     * @Method("GET")
+     * @Route("/{id}", name="resource_orlando_biblio_show", methods={"GET"})
+
      * @Template()
      */
     public function showAction(OrlandoBiblio $orlandoBiblio, OrlandoManager $manager) {

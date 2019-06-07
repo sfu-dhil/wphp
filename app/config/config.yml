@@ -47,6 +47,10 @@ framework:
     php_errors:
         log: true
 
+sensio_framework_extra:
+    router:
+        annotations: false
+
 # Twig Configuration
 twig:
     form_themes:

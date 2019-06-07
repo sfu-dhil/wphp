@@ -9,7 +9,7 @@ use AppBundle\Entity\TitleSource;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -27,8 +27,8 @@ class ReportController extends Controller implements PaginatorAwareInterface
 
     /**
      * List bad dates of publication
-     * @Route("/first_pub_date", name="report_first_pub_date")
-     * @Method("GET")
+     * @Route("/first_pub_date", name="report_first_pub_date", methods={"GET"})
+
      * @Template()
      *
      * @param Request $request
@@ -46,8 +46,8 @@ class ReportController extends Controller implements PaginatorAwareInterface
 
     /**
      * List bad dates of publication
-     * @Route("/titles_fc", name="report_titles_check")
-     * @Method("GET")
+     * @Route("/titles_fc", name="report_titles_check", methods={"GET"})
+
      * @Template()
      *
      * @param Request $request
@@ -65,8 +65,8 @@ class ReportController extends Controller implements PaginatorAwareInterface
 
     /**
      * List bad dates of publication
-     * @Route("/firms_fc", name="report_firms_check")
-     * @Method("GET")
+     * @Route("/firms_fc", name="report_firms_check", methods={"GET"})
+
      * @Template()
      *
      * @param Request $request
@@ -84,8 +84,8 @@ class ReportController extends Controller implements PaginatorAwareInterface
 
     /**
      * List bad dates of publication
-     * @Route("/persons_fc", name="report_person_check")
-     * @Method("GET")
+     * @Route("/persons_fc", name="report_person_check", methods={"GET"})
+
      * @Template()
      *
      * @param Request $request
@@ -106,8 +106,8 @@ class ReportController extends Controller implements PaginatorAwareInterface
      * @param EntityManagerInterface $em
      *
      * @return Title[]|Collection
-     * @Route("/title_source_id_null", name="report_title_source_id_null")
-     * @Method("GET")
+     * @Route("/title_source_id_null", name="report_title_source_id_null", methods={"GET"})
+
      * @Template()
      */
     public function titleSourceIdNull(Request $request, EntityManagerInterface $em)
@@ -128,8 +128,8 @@ class ReportController extends Controller implements PaginatorAwareInterface
      * @param EntityManagerInterface $em
      *
      * @return Title[]|Collection
-     * @Route("/title_without_source", name="report_title_without_source")
-     * @Method("GET")
+     * @Route("/title_without_source", name="report_title_without_source", methods={"GET"})
+
      * @Template()
      */
     public function titleWithoutSource(Request $request, EntityManagerInterface $em)
@@ -153,8 +153,8 @@ class ReportController extends Controller implements PaginatorAwareInterface
      * @param EntityManagerInterface $em
      *
      * @return Title[]|Collection
-     * @Route("/title_without_genre", name="report_title_without_genre")
-     * @Method("GET")
+     * @Route("/title_without_genre", name="report_title_without_genre", methods={"GET"})
+
      * @Template()
      */
     public function titleWithoutGenre(Request $request, EntityManagerInterface $em)
@@ -175,8 +175,8 @@ class ReportController extends Controller implements PaginatorAwareInterface
      * @param EntityManagerInterface $em
      *
      * @return Title[]|Collection
-     * @Route("/title_without_volume", name="report_title_without_volume")
-     * @Method("GET")
+     * @Route("/title_without_volume", name="report_title_without_volume", methods={"GET"})
+
      * @Template()
      */
     public function titleWithoutVolume(Request $request, EntityManagerInterface $em)
@@ -197,8 +197,8 @@ class ReportController extends Controller implements PaginatorAwareInterface
      * @param EntityManagerInterface $em
      *
      * @return Title[]|Collection
-     * @Route("/title_without_firm", name="report_title_without_firm")
-     * @Method("GET")
+     * @Route("/title_without_firm", name="report_title_without_firm", methods={"GET"})
+
      * @Template()
      */
     public function titleWithoutFirm(Request $request, EntityManagerInterface $em)
@@ -225,8 +225,8 @@ class ReportController extends Controller implements PaginatorAwareInterface
      * @param EntityManagerInterface $em
      *
      * @return TitleSource[]|Collection
-     * @Route("/title_bad_estc", name="report_title_bad_estc")
-     * @Method("GET")
+     * @Route("/title_bad_estc", name="report_title_bad_estc", methods={"GET"})
+
      * @Template()
      */
     public function titleBadEstc(Request $request, EntityManagerInterface $em)

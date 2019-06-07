@@ -7,7 +7,7 @@ use AppBundle\Form\FirmroleType;
 use AppBundle\Repository\FirmroleRepository;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -26,8 +26,8 @@ class FirmroleController extends Controller  implements PaginatorAwareInterface 
     /**
      * Lists all Firmrole entities.
      *
-     * @Route("/", name="firmrole_index")
-     * @Method("GET")
+     * @Route("/", name="firmrole_index", methods={"GET"})
+
      * @Template()
      * @param Request $request
      */
@@ -49,8 +49,8 @@ class FirmroleController extends Controller  implements PaginatorAwareInterface 
     /**
      * @param Request $request
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
-     * @Route("/typeahead", name="firmrole_typeahead")
-     * @Method("GET")
+     * @Route("/typeahead", name="firmrole_typeahead", methods={"GET"})
+
      * @return JsonResponse
      */
     public function typeaheadAction(Request $request, FirmroleRepository $repo) {
@@ -72,8 +72,8 @@ class FirmroleController extends Controller  implements PaginatorAwareInterface 
     /**
      * Creates a new Firmrole entity.
      *
-     * @Route("/new", name="firmrole_new")
-     * @Method({"GET", "POST"})
+     * @Route("/new", name="firmrole_new", methods={"GET", "POST"})
+
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
      * @Template()
      * @param Request $request
@@ -101,8 +101,8 @@ class FirmroleController extends Controller  implements PaginatorAwareInterface 
     /**
      * Finds and displays a Firmrole entity.
      *
-     * @Route("/{id}", name="firmrole_show")
-     * @Method("GET")
+     * @Route("/{id}", name="firmrole_show", methods={"GET"})
+
      * @Template()
      * @param Firmrole $firmrole
      */
@@ -122,8 +122,8 @@ class FirmroleController extends Controller  implements PaginatorAwareInterface 
     /**
      * Displays a form to edit an existing Firmrole entity.
      *
-     * @Route("/{id}/edit", name="firmrole_edit")
-     * @Method({"GET", "POST"})
+     * @Route("/{id}/edit", name="firmrole_edit", methods={"GET", "POST"})
+
      * @Template()
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
      * @param Request $request
@@ -149,8 +149,8 @@ class FirmroleController extends Controller  implements PaginatorAwareInterface 
     /**
      * Deletes a Firmrole entity.
      *
-     * @Route("/{id}/delete", name="firmrole_delete")
-     * @Method("GET")
+     * @Route("/{id}/delete", name="firmrole_delete", methods={"GET"})
+
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
      * @param Request $request
      * @param Firmrole $firmrole

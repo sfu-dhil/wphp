@@ -8,7 +8,7 @@ use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -30,8 +30,8 @@ class GeonamesController extends Controller  implements PaginatorAwareInterface 
     /**
      * Lists all Geonames entities.
      *
-     * @Route("/", name="geonames_index")
-     * @Method("GET")
+     * @Route("/", name="geonames_index", methods={"GET"})
+
      * @Template()
      * @param Request $request
      */
@@ -49,8 +49,8 @@ class GeonamesController extends Controller  implements PaginatorAwareInterface 
     /**
      * @param Request $request
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
-     * @Route("/typeahead", name="geonames_typeahead")
-     * @Method("GET")
+     * @Route("/typeahead", name="geonames_typeahead", methods={"GET"})
+
      * @return JsonResponse
      */
     public function typeaheadAction(Request $request, GeonamesRepository $repo) {
@@ -72,8 +72,8 @@ class GeonamesController extends Controller  implements PaginatorAwareInterface 
     /**
      * Search for geonames entities.
      * @param Request $request
-     * @Route("/search", name="geonames_search")
-     * @Method("GET")
+     * @Route("/search", name="geonames_search", methods={"GET"})
+
      * @Template()
      */
     public function searchAction(Request $request, GeonamesRepository $repo) {
@@ -94,8 +94,8 @@ class GeonamesController extends Controller  implements PaginatorAwareInterface 
     /**
      * @param Request $request
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
-     * @Route("/import", name="geonames_import")
-     * @Method("GET")
+     * @Route("/import", name="geonames_import", methods={"GET"})
+
      * @Template
      */
     public function importSearchAction(Request $request) {
@@ -119,8 +119,8 @@ class GeonamesController extends Controller  implements PaginatorAwareInterface 
     /**
      * @param Request $request
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
-     * @Route("/import", name="geonames_import_save")
-     * @Method("POST")
+     * @Route("/import", name="geonames_import_save", methods={"POST"})
+
      */
     public function importSaveAction(Request $request, EntityManagerInterface $em) {
         $user = $this->getParameter('wphp.geonames_user');
@@ -166,8 +166,8 @@ class GeonamesController extends Controller  implements PaginatorAwareInterface 
     /**
      * Finds and displays a Geonames entity.
      *
-     * @Route("/{id}", name="geonames_show")
-     * @Method("GET")
+     * @Route("/{id}", name="geonames_show", methods={"GET"})
+
      * @Template()
      * @param Geonames $geoname
      */
@@ -187,8 +187,8 @@ class GeonamesController extends Controller  implements PaginatorAwareInterface 
     /**
      * Finds and displays a Geonames entity.
      *
-     * @Route("/{id}/titles", name="geonames_titles")
-     * @Method("GET")
+     * @Route("/{id}/titles", name="geonames_titles", methods={"GET"})
+
      * @Template()
      * @param Geonames $geoname
      */
@@ -208,8 +208,8 @@ class GeonamesController extends Controller  implements PaginatorAwareInterface 
         /**
      * Finds and displays a Geonames entity.
      *
-     * @Route("/{id}/firms", name="geonames_firms")
-     * @Method("GET")
+     * @Route("/{id}/firms", name="geonames_firms", methods={"GET"})
+
      * @Template()
      * @param Geonames $geoname
      */
@@ -229,8 +229,8 @@ class GeonamesController extends Controller  implements PaginatorAwareInterface 
     /**
      * Finds and displays a Geonames entity.
      *
-     * @Route("/{id}/people", name="geonames_people")
-     * @Method("GET")
+     * @Route("/{id}/people", name="geonames_people", methods={"GET"})
+
      * @Template()
      * @param Geonames $geoname
      */

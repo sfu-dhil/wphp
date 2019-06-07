@@ -5,7 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Feedback;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -24,8 +24,8 @@ class FeedbackController extends Controller  implements PaginatorAwareInterface 
     /**
      * Lists all Feedback entities.
      *
-     * @Route("/", name="feedback_index")
-     * @Method("GET")
+     * @Route("/", name="feedback_index", methods={"GET"})
+
      * @Template()
      * @Security("has_role('ROLE_COMMENT_ADMIN')")
      * @param Request $request
@@ -44,8 +44,8 @@ class FeedbackController extends Controller  implements PaginatorAwareInterface 
     /**
      * Creates a new Feedback entity.
      *
-     * @Route("/new", name="feedback_new")
-     * @Method({"GET", "POST"})
+     * @Route("/new", name="feedback_new", methods={"GET","POST"})
+
      * @Template()
      * @Security("not (has_role('ROLE_USER'))")
      * @param Request $request
@@ -73,8 +73,8 @@ class FeedbackController extends Controller  implements PaginatorAwareInterface 
     /**
      * Finds and displays a Feedback entity.
      *
-     * @Route("/{id}", name="feedback_show")
-     * @Method("GET")
+     * @Route("/{id}", name="feedback_show", methods={"GET"})
+
      * @Template()
      * @Security("has_role('ROLE_COMMENT_ADMIN')")
      * @param Feedback $feedback

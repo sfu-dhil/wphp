@@ -8,7 +8,7 @@ use AppBundle\Repository\TitleRepository;
 use GuzzleHttp\Exception\BadResponseException;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use League\Flysystem\FileNotFoundException;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Asset\Packages;
