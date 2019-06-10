@@ -23,7 +23,7 @@ class EstcMarcImporterTest extends BaseTestCase {
      */
     private $importer;
 
-    protected function setUp() {
+    protected function setUp() : void {
         parent::setUp();
         $this->importer = $this->getContainer()->get(EstcMarcImporter::class);
     }

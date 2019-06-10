@@ -20,7 +20,6 @@ class FeedbackController extends Controller  implements PaginatorAwareInterface 
 
     use PaginatorTrait;
 
-
     /**
      * Lists all Feedback entities.
      *

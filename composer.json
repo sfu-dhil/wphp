@@ -31,7 +31,7 @@
         "doctrine/orm": "^2.6",
         "friendsofsymfony/user-bundle": "^2.0",
         "incenteev/composer-parameter-handler": "^2.0",
-        "knplabs/knp-menu-bundle": "^2.3",
+        "knplabs/knp-menu-bundle": "^2.2",
         "knplabs/knp-paginator-bundle": "^3.0",
         "ninsuo/symfony-collection": "^2.1",
         "ocramius/proxy-manager": "^2.2",
@@ -44,17 +44,17 @@
         "symfony/templating": "^3.4",
         "tetranz/select2entity-bundle": "^2.9",
         "twig/extensions": "^1.5",
-        "twig/twig": "^2.5"
+        "twig/twig": "^2.11"
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.0",
         "drupal/coder": "^8.2",
         "joshtronic/php-loremipsum": "^1.0",
         "liip/functional-test-bundle": "~2.0@alpha",
-        "phpunit/phpunit": "^7.3",
+        "phpunit/phpunit": "^8.2",
         "sensio/generator-bundle": "^3.0",
         "squizlabs/php_codesniffer": "^3.3",
-        "symfony/phpunit-bridge": "^4.1"
+        "symfony/phpunit-bridge": "^4.3"
     },
     "scripts": {
         "symfony-scripts": [

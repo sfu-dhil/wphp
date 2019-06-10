@@ -49,7 +49,7 @@ class GenreControllerTest extends BaseTestCase
         $crawler = $client->request('GET', '/genre/typeahead?q=name');
         $this->assertEquals(302, $client->getResponse()->getStatusCode());
         $this->assertEquals('text/html; charset=UTF-8', $client->getResponse()->headers->get('Content-Type'));
-        $this->assertContains('Redirecting', $client->getResponse()->getContent());
+        $this->assertStringContainsStringIgnoringCase('Redirecting', $client->getResponse()->getContent());
     }
     
     public function testUserTypeahead() {
@@ -59,7 +59,7 @@ class GenreControllerTest extends BaseTestCase
         ]);
         $crawler = $client->request('GET', '/genre/typeahead?q=name');
         $this->assertEquals(403, $client->getResponse()->getStatusCode());
-        $this->assertContains('Access denied.', $client->getResponse()->getContent());
+        $this->assertStringContainsStringIgnoringCase('Access denied.', $client->getResponse()->getContent());
     }
     
     public function testAdminTypeahead() {

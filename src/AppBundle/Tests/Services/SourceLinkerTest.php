@@ -36,7 +36,7 @@ class SourceLinkerTest extends BaseTestCase
         );
     }
 
-    protected function setUp()
+    protected function setUp() : void
     {
         parent::setUp();
         $this->checker = $this->createMock(RoleChecker::class);
