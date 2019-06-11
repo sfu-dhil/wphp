@@ -50,8 +50,10 @@ class JacksonController extends Controller  implements PaginatorAwareInterface {
      *
      * @param Request $request
      *
+     * @param JacksonRepository $repo
+     *
+     * @return array
      * @Route("/search", name="resource_jackson_search", methods={"GET"})
-
      * @Template()
      */
     public function searchAction(Request $request, JacksonRepository $repo) {

@@ -8,6 +8,7 @@ use AppBundle\Form\Person\PersonType;
 use AppBundle\Repository\PersonRepository;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -53,11 +54,14 @@ class PersonController extends Controller implements PaginatorAwareInterface {
     }
 
     /**
+     * Search for persons and return a JSON response for a typeahead widget.
+     *
      * @param Request $request
+     * @param PersonRepository $repo
+     *
+     * @return JsonResponse
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
      * @Route("/typeahead", name="person_typeahead", methods={"GET"})
-
-     * @return JsonResponse
      */
     public function typeaheadAction(Request $request, PersonRepository $repo) {
         $q = $request->query->get('q');
@@ -79,9 +83,10 @@ class PersonController extends Controller implements PaginatorAwareInterface {
      * Full text search for Person entities.
      *
      * @Route("/search", name="person_search", methods={"GET"})
-
      * @Template()
      * @param Request $request
+     * @param PersonRepository $repo
+     *
      * @return array
      */
     public function searchAction(Request $request, PersonRepository $repo) {
@@ -173,7 +178,9 @@ class PersonController extends Controller implements PaginatorAwareInterface {
      *
      * @Route("/{id}.{_format}", name="person_show", defaults={"_format": "html"}, methods={"GET"})
      * @Template()
+     * @param Request $request
      * @param Person $person
+     *
      * @return array
      */
     public function showAction(Request $request, Person $person) {
@@ -195,6 +202,8 @@ class PersonController extends Controller implements PaginatorAwareInterface {
      * @Template()
      * @param Request $request
      * @param Person $person
+     *
+     * @return array
      */
     public function editAction(Request $request, Person $person) {
         $editForm = $this->createForm(PersonType::class, $person);
@@ -221,6 +230,8 @@ class PersonController extends Controller implements PaginatorAwareInterface {
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
      * @param Request $request
      * @param Person $person
+     *
+     * @return RedirectResponse
      */
     public function deleteAction(Request $request, Person $person) {
         $em = $this->getDoctrine()->getManager();

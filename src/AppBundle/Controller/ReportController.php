@@ -27,11 +27,14 @@ class ReportController extends Controller implements PaginatorAwareInterface
 
     /**
      * List bad dates of publication
+     *
      * @Route("/first_pub_date", name="report_first_pub_date", methods={"GET"})
-
      * @Template()
      *
      * @param Request $request
+     * @param EntityManagerInterface $em
+     *
+     * @return array
      */
     public function firstPubDateAction(Request $request, EntityManagerInterface $em)
     {
@@ -46,11 +49,14 @@ class ReportController extends Controller implements PaginatorAwareInterface
 
     /**
      * List bad dates of publication
+     *
      * @Route("/titles_fc", name="report_titles_check", methods={"GET"})
-
      * @Template()
      *
      * @param Request $request
+     * @param EntityManagerInterface $em
+     *
+     * @return array
      */
     public function titlesFinalCheckAction(Request $request, EntityManagerInterface $em)
     {
@@ -65,11 +71,14 @@ class ReportController extends Controller implements PaginatorAwareInterface
 
     /**
      * List bad dates of publication
+     *
      * @Route("/firms_fc", name="report_firms_check", methods={"GET"})
-
      * @Template()
      *
      * @param Request $request
+     * @param EntityManagerInterface $em
+     *
+     * @return array
      */
     public function firmsFinalCheckAction(Request $request, EntityManagerInterface $em)
     {
@@ -84,11 +93,14 @@ class ReportController extends Controller implements PaginatorAwareInterface
 
     /**
      * List bad dates of publication
+     *
      * @Route("/persons_fc", name="report_person_check", methods={"GET"})
-
      * @Template()
      *
      * @param Request $request
+     * @param EntityManagerInterface $em
+     *
+     * @return array
      */
     public function personsFinalCheckAction(Request $request, EntityManagerInterface $em)
     {
@@ -102,13 +114,15 @@ class ReportController extends Controller implements PaginatorAwareInterface
     }
 
     /**
+     * List titles that are missing source identifiers.
+     *
+     * @Route("/title_source_id_null", name="report_title_source_id_null", methods={"GET"})
+     * @Template()
+     *
      * @param Request $request
      * @param EntityManagerInterface $em
      *
-     * @return Title[]|Collection
-     * @Route("/title_source_id_null", name="report_title_source_id_null", methods={"GET"})
-
-     * @Template()
+     * @return array
      */
     public function titleSourceIdNull(Request $request, EntityManagerInterface $em)
     {
@@ -124,13 +138,15 @@ class ReportController extends Controller implements PaginatorAwareInterface
     }
 
     /**
+     * List titles that do not have sources.
+     *
+     * @Route("/title_without_source", name="report_title_without_source", methods={"GET"})
+     * @Template()
+     *
      * @param Request $request
      * @param EntityManagerInterface $em
      *
-     * @return Title[]|Collection
-     * @Route("/title_without_source", name="report_title_without_source", methods={"GET"})
-
-     * @Template()
+     * @return array
      */
     public function titleWithoutSource(Request $request, EntityManagerInterface $em)
     {
@@ -149,13 +165,15 @@ class ReportController extends Controller implements PaginatorAwareInterface
     }
 
     /**
+     * List titles before 1800 that do not have a genre.
+     *
+     * @Route("/title_without_genre", name="report_title_without_genre", methods={"GET"})
+     * @Template()
+     *
      * @param Request $request
      * @param EntityManagerInterface $em
      *
-     * @return Title[]|Collection
-     * @Route("/title_without_genre", name="report_title_without_genre", methods={"GET"})
-
-     * @Template()
+     * @return array
      */
     public function titleWithoutGenre(Request $request, EntityManagerInterface $em)
     {
@@ -171,13 +189,15 @@ class ReportController extends Controller implements PaginatorAwareInterface
     }
 
     /**
+     * List titles before 1800 that do not have a volume.
+     *
+     * @Route("/title_without_volume", name="report_title_without_volume", methods={"GET"})
+     * @Template()
+     *
      * @param Request $request
      * @param EntityManagerInterface $em
      *
-     * @return Title[]|Collection
-     * @Route("/title_without_volume", name="report_title_without_volume", methods={"GET"})
-
-     * @Template()
+     * @return array
      */
     public function titleWithoutVolume(Request $request, EntityManagerInterface $em)
     {
@@ -193,13 +213,15 @@ class ReportController extends Controller implements PaginatorAwareInterface
     }
 
     /**
+     * List titles before 1800 that do not have a firm associated with them.
+     *
+     * @Route("/title_without_firm", name="report_title_without_firm", methods={"GET"})
+     * @Template()
+     *
      * @param Request $request
      * @param EntityManagerInterface $em
      *
-     * @return Title[]|Collection
-     * @Route("/title_without_firm", name="report_title_without_firm", methods={"GET"})
-
-     * @Template()
+     * @return array
      */
     public function titleWithoutFirm(Request $request, EntityManagerInterface $em)
     {
@@ -221,13 +243,13 @@ class ReportController extends Controller implements PaginatorAwareInterface
     /**
      * Titles with ESTC IDs that don't match anything in the ESTC MARC data.
      *
+     * @Route("/title_bad_estc", name="report_title_bad_estc", methods={"GET"})
+     * @Template()
+     *
      * @param Request $request
      * @param EntityManagerInterface $em
      *
-     * @return TitleSource[]|Collection
-     * @Route("/title_bad_estc", name="report_title_bad_estc", methods={"GET"})
-
-     * @Template()
+     * @return array
      */
     public function titleBadEstc(Request $request, EntityManagerInterface $em)
     {

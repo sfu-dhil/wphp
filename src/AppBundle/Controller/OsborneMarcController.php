@@ -28,6 +28,8 @@ class OsborneMarcController extends Controller  implements PaginatorAwareInterfa
      * Lists all OsborneMarc entities.
      *
      * @param Request $request
+     * @param MarcManager $manager
+     * @param OsborneMarcRepository $repo
      *
      * @return array
      *
@@ -49,6 +51,8 @@ class OsborneMarcController extends Controller  implements PaginatorAwareInterfa
      * Search for OsborneMarc entities.
      *
      * @param Request $request
+     * @param MarcManager $manager
+     * @param OsborneMarcRepository $repo
      *
      * @Route("/search", name="resource_osborne_search", methods={"GET"})
 
@@ -81,6 +85,7 @@ class OsborneMarcController extends Controller  implements PaginatorAwareInterfa
      * Finds and displays a OsborneMarc entity.
      *
      * @param OsborneMarc $osborneMarc
+     * @param MarcManager $manager
      *
      * @return array
      *
