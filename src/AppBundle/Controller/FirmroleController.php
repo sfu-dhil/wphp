@@ -6,7 +6,6 @@ use AppBundle\Entity\Firmrole;
 use AppBundle\Form\FirmroleType;
 use AppBundle\Repository\FirmroleRepository;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
