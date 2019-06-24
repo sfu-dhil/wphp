@@ -21,7 +21,7 @@ use Nines\BlogBundle\Entity\PostStatus;
 /**
  * Description of LoadSpotlightCategories
  *
- * @author mjoyce
+ *
  */
 class LoadSpotlights extends Fixture implements DependentFixtureInterface, FixtureGroupInterface {
 

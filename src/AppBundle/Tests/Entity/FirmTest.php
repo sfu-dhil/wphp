@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * Description of FirmTest
  *
- * @author dogan
+ *
  */
 class FirmTest extends TestCase {
     

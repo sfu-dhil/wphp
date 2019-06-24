@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 /**
  * Description of SourceLinker
  *
- * @author mjoyce
+ *
  */
 class SourceLinker {
 

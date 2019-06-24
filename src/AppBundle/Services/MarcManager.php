@@ -12,7 +12,7 @@ use Doctrine\ORM\EntityManagerInterface;
 /**
  * Description of MarcManager
  *
- * @author michael
+ *
  */
 class MarcManager {
 

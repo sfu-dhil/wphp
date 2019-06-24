@@ -16,7 +16,7 @@ use Nines\BlogBundle\Entity\PostCategory;
 /**
  * Description of LoadSpotlightCategories
  *
- * @author mjoyce
+ *
  */
 class LoadSpotlightCategories extends Fixture implements FixtureGroupInterface {
 

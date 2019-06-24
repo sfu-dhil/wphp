@@ -16,7 +16,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 /**
  * Description of Pricetype
  *
- * @author michael
+ *
  */
 class PriceType extends AbstractType {
 

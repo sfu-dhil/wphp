@@ -5,7 +5,7 @@ namespace AppBundle\Services;
 /**
  * Description of OrlandoManager
  *
- * @author michael
+ *
  */
 class OrlandoManager {
 

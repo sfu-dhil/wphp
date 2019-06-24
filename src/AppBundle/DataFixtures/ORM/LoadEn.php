@@ -16,7 +16,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 /**
  * Description of LoadEn
  *
- * @author michael
+ *
  */
 class LoadEn extends Fixture implements FixtureGroupInterface {
     public function load(ObjectManager $em)
