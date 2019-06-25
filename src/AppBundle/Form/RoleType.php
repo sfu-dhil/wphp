@@ -8,6 +8,9 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * Form definition for the role class.
+ */
 class RoleType extends AbstractType {
 
     /**

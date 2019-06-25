@@ -21,6 +21,11 @@ class Builder implements ContainerAwareInterface
     // U+25BE, black down-pointing small triangle.
     const CARET = ' ▾';
 
+    /**
+     * List of spotlight menu items.
+     *
+     * @var array
+     */
     private $spotlightMenuItems;
 
     /**
@@ -45,6 +50,12 @@ class Builder implements ContainerAwareInterface
 
     /**
      * Build the menu builder.
+     *
+     * @param array $spotlightMenuItems
+     * @param EntityManagerInterface $em
+     * @param FactoryInterface $factory
+     * @param AuthorizationCheckerInterface $authChecker
+     * @param TokenStorageInterface $tokenStorage
      */
     public function __construct($spotlightMenuItems, EntityManagerInterface $em, FactoryInterface $factory, AuthorizationCheckerInterface $authChecker, TokenStorageInterface $tokenStorage)
     {
@@ -55,6 +66,13 @@ class Builder implements ContainerAwareInterface
         $this->tokenStorage = $tokenStorage;
     }
 
+    /**
+     * Check if the current user is both logged in and granted a role.
+     *
+     * @param string $role
+     *
+     * @return bool
+     */
     private function hasRole($role)
     {
         if (!$this->tokenStorage->getToken()) {
@@ -66,7 +84,6 @@ class Builder implements ContainerAwareInterface
     /**
      * Build the navigation menu and return it.
      *
-     * @param FactoryInterface $factory
      * @param array $options
      * @return ItemInterface
      */
@@ -146,7 +163,6 @@ class Builder implements ContainerAwareInterface
     /**
      * Build the search menu and return it.
      *
-     * @param FactoryInterface $factory
      * @param array $options
      * @return ItemInterface
      */
@@ -225,8 +241,8 @@ class Builder implements ContainerAwareInterface
     /**
      * Build the spotlight menu and return it.
      *
-     * @param FactoryInterface $factory
      * @param array $options
+     *
      * @return ItemInterface
      */
     public function spotlightMenu(array $options)
@@ -263,6 +279,11 @@ class Builder implements ContainerAwareInterface
         return $menu;
     }
 
+    /**
+     * Get the currently logged in user.
+     *
+     * @return object|string|null
+     */
     private function getUser() {
         if( ! $this->hasRole('ROLE_USER')) {
             return null;

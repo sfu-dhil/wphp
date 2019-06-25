@@ -6,10 +6,19 @@ use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
 
 /**
- * Auto-generated Migration: Please modify to your needs!
+ * Creates the fulltext on title_source identifiers.
  */
 final class Version20190503213746 extends AbstractMigration
 {
+
+    /**
+     * Apply the migration.
+     *
+     * @param Schema $schema
+     *
+     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Migrations\AbortMigrationException
+     */
     public function up(Schema $schema) : void
     {
         // this up() migration is auto-generated, please modify it to your needs
@@ -17,6 +26,14 @@ final class Version20190503213746 extends AbstractMigration
         $this->addSql('CREATE FULLTEXT INDEX title_source_identifier_ft ON title_source (identifier)');
     }
 
+    /**
+     * Undo the migration.
+     *
+     * @param Schema $schema
+     *
+     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Migrations\AbortMigrationException
+     */
     public function down(Schema $schema) : void
     {
         // this down() migration is auto-generated, please modify it to your needs

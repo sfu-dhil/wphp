@@ -54,8 +54,8 @@ class OsborneMarcController extends Controller  implements PaginatorAwareInterfa
      * @param OsborneMarcRepository $repo
      *
      * @Route("/search", name="resource_osborne_search", methods={"GET"})
-
      * @Template()
+     * @return array
      */
     public function searchAction(Request $request, MarcManager $manager, OsborneMarcRepository $repo) {
         $q = $request->query->get('q');

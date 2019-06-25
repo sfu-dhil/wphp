@@ -29,7 +29,6 @@ class EnController extends Controller  implements PaginatorAwareInterface {
      * @return array
      *
      * @Route("/", name="resource_en_index", methods={"GET"})
-
      * @Template()
      */
     public function indexAction(Request $request) {
@@ -49,8 +48,10 @@ class EnController extends Controller  implements PaginatorAwareInterface {
      *
      * @param Request $request
      *
+     * @param EnRepository $repo
+     *
+     * @return array
      * @Route("/search", name="resource_en_search", methods={"GET"})
-
      * @Template()
      */
     public function searchAction(Request $request, EnRepository $repo) {

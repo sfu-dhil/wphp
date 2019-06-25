@@ -14,6 +14,13 @@ use Doctrine\ORM\Query\Expr\Join;
  */
 class PersonRepository extends EntityRepository {
 
+    /**
+     * Do a name search for a typeahead query.
+     *
+     * @param string $q
+     *
+     * @return mixed
+     */
     public function typeaheadQuery($q) {
         $qb = $this->createQueryBuilder('e');
         $qb->andWhere("CONCAT(e.lastName, ' ', e.firstName) LIKE :q");
@@ -22,6 +29,16 @@ class PersonRepository extends EntityRepository {
         return $qb->getQuery()->execute();
     }
 
+    /**
+     * Find people by name and year.
+     *
+     * @param string $firstName
+     * @param string $lastName
+     * @param string $dob
+     * @param string $dod
+     *
+     * @return mixed
+     */
     public function findByNameDates($firstName, $lastName, $dob, $dod) {
         $qb = $this->createQueryBuilder('e');
         $qb->andWhere('e.lastName = :last');
@@ -44,7 +61,8 @@ class PersonRepository extends EntityRepository {
      * Build and return a complex search query from a search form.
      *
      * @param array $data
-     * @return query
+     *
+     * @return \Doctrine\ORM\Query
      */
     public function buildSearchQuery($data) {
         $qb = $this->createQueryBuilder('e');

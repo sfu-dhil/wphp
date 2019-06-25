@@ -11,6 +11,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Tetranz\Select2EntityBundle\Form\Type\Select2EntityType;
 
+/**
+ * Form definition for the person class.
+ */
 class PersonType extends AbstractType {
 
     /**

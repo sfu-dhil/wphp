@@ -12,13 +12,24 @@ use Doctrine\ORM\EntityRepository;
  */
 class OsborneMarcRepository extends EntityRepository {
 
+    /**
+     * Generate a query for the index page.
+     *
+     * @return \Doctrine\ORM\Query
+     */
     public function indexQuery() {
         $qb = $this->createQueryBuilder('m');
         $qb->where("m.field = 'ldr'");
         return $qb->getQuery();
     }
 
-
+    /**
+     * Do a name search for a typeahead query.
+     *
+     * @param string $q
+     *
+     * @return mixed
+     */
     public function searchQuery($q) {
         $dql = <<<"ENDSQL"
 SELECT e.titleId, max(MATCH (e.fieldData) AGAINST (:q BOOLEAN)) as HIDDEN score

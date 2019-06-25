@@ -147,10 +147,11 @@ class PersonController extends Controller implements PaginatorAwareInterface {
      * Creates a new Person entity.
      *
      * @Route("/new", name="person_new", methods={"GET","POST"})
-
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
      * @Template()
      * @param Request $request
+     *
+     * @return array|RedirectResponse
      */
     public function newAction(Request $request) {
         $person = new Person();

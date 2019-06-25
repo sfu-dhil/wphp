@@ -13,6 +13,8 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * Feedback controller.
  *
+ * This one is unusual. The new action is public, but the show and index actions are restricted.
+ *
  * @Route("/feedback")
  */
 class FeedbackController extends Controller  implements PaginatorAwareInterface {
@@ -23,10 +25,11 @@ class FeedbackController extends Controller  implements PaginatorAwareInterface 
      * Lists all Feedback entities.
      *
      * @Route("/", name="feedback_index", methods={"GET"})
-
      * @Template()
      * @Security("has_role('ROLE_COMMENT_ADMIN')")
      * @param Request $request
+     *
+     * @return array
      */
     public function indexAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
@@ -47,6 +50,8 @@ class FeedbackController extends Controller  implements PaginatorAwareInterface 
      * @Template()
      * @Security("not (has_role('ROLE_USER'))")
      * @param Request $request
+     *
+     * @return array
      */
     public function newAction(Request $request) {
         $feedback = new Feedback();
@@ -72,10 +77,11 @@ class FeedbackController extends Controller  implements PaginatorAwareInterface 
      * Finds and displays a Feedback entity.
      *
      * @Route("/{id}", name="feedback_show", methods={"GET"})
-
      * @Template()
      * @Security("has_role('ROLE_COMMENT_ADMIN')")
      * @param Feedback $feedback
+     *
+     * @return array
      */
     public function showAction(Feedback $feedback) {
         return array(

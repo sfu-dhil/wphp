@@ -35,6 +35,9 @@ class DefaultController extends Controller implements PaginatorAwareInterface
      *
      * @Route("/privacy", name="privacy")
      * @Template()
+     *
+     * @param Request $request
+     *
      * @return array
      */
     public function privacyAction(Request $request)

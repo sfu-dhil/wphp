@@ -34,6 +34,11 @@ class Role {
      */
     private $description;
 
+    /**
+     * Return the name of this role.
+     *
+     * @return string
+     */
     public function __toString() {
         return $this->name;
     }

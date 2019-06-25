@@ -6,13 +6,21 @@ use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
 
 /**
- * Auto-generated Migration: Please modify to your needs!
+ * Move title sources from the title table to their own title_source table.
  */
 final class Version20190502192819 extends AbstractMigration
 {
+
+    /**
+     * Apply the migration.
+     *
+     * @param Schema $schema
+     *
+     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Migrations\AbortMigrationException
+     */
     public function up(Schema $schema) : void
     {
-        // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
         $this->addSql('CREATE TABLE title_source (id INT AUTO_INCREMENT NOT NULL, title_id INT DEFAULT NULL, source_id INT DEFAULT NULL, identifier VARCHAR(300) DEFAULT NULL, INDEX IDX_912B6A5AA9F87BD (title_id), INDEX IDX_912B6A5A953C1C61 (source_id), INDEX title_source_identifier_idx (identifier), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
@@ -37,6 +45,13 @@ final class Version20190502192819 extends AbstractMigration
         $this->addSql('ALTER TABLE format RENAME COLUMN abbrev1 TO abbreviation, DROP abbrev2, DROP abbrev3, DROP abbrev4');
     }
 
+    /**
+     * This migration cannot be undone.
+     *
+     * @param Schema $schema
+     *
+     * @throws \Doctrine\DBAL\Migrations\IrreversibleMigrationException
+     */
     public function down(Schema $schema) : void
     {
         $this->throwIrreversibleMigrationException();

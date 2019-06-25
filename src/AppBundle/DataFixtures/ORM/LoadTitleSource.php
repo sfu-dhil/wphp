@@ -2,7 +2,6 @@
 
 namespace AppBundle\DataFixtures\ORM;
 
-use AppBundle\Entity\Title;
 use AppBundle\Entity\TitleSource;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;

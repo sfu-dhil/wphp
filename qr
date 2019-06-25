@@ -1,0 +1,7 @@
+#!/bin/sh
+
+path=$(pwd)
+
+./vendor/bin/phpcs -s phpcs.xml src/AppBundle/ --ignore=src/AppBundle/Tests --report-xml=quality.xml
+saxon -xsl:phpcs.xsl -s:quality.xml -o:web/docs/quality.html path=$path/
+

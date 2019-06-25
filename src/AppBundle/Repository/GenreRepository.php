@@ -12,6 +12,13 @@ use Doctrine\ORM\EntityRepository;
  */
 class GenreRepository extends EntityRepository {
 
+    /**
+     * Execute a name search for a typeahead widget.
+     *
+     * @param string $q
+     *
+     * @return mixed
+     */
     public function typeaheadQuery($q) {
         $qb = $this->createQueryBuilder('e');
         $qb->andWhere("e.name LIKE :q");
@@ -20,6 +27,14 @@ class GenreRepository extends EntityRepository {
         return $qb->getQuery()->execute();
     }
 
+    /**
+     * Count the titles in a genre.
+     *
+     * @param Genre $genre
+     *
+     * @return mixed
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
     public function countTitles(Genre $genre) {
         $qb = $this->_em->createQueryBuilder();
         $qb->select('count(title.id)');

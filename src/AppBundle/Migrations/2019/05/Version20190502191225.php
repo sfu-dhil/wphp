@@ -10,6 +10,15 @@ use Doctrine\Migrations\AbstractMigration;
  */
 final class Version20190502191225 extends AbstractMigration
 {
+
+    /**
+     * Apply the migration.
+     *
+     * @param Schema $schema
+     *
+     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Migrations\AbortMigrationException
+     */
     public function up(Schema $schema) : void
     {
         // this up() migration is auto-generated, please modify it to your needs
@@ -41,6 +50,13 @@ final class Version20190502191225 extends AbstractMigration
         $this->addSql('CREATE INDEX geonames_search_idx ON geonames (name, geonameid, country)');
     }
 
+    /**
+     * This migration cannot be undone.
+     *
+     * @param Schema $schema
+     *
+     * @throws \Doctrine\DBAL\Migrations\IrreversibleMigrationException
+     */
     public function down(Schema $schema) : void
     {
         $this->throwIrreversibleMigrationException();

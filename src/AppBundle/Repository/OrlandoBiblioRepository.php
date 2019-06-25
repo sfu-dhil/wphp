@@ -10,6 +10,14 @@ namespace AppBundle\Repository;
  */
 class OrlandoBiblioRepository extends \Doctrine\ORM\EntityRepository
 {
+
+    /**
+     * Do a name search on author and title.
+     *
+     * @param string $q
+     *
+     * @return mixed
+     */
     public function searchQuery($q) {
         $qb = $this->createQueryBuilder('e');
         $qb->addSelect("MATCH (e.author, e.monographicStandardTitle) AGAINST(:q BOOLEAN) as HIDDEN score");

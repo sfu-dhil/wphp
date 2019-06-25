@@ -14,16 +14,13 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * WphpUpdateEstcCommand command.
+ * Check each title and update the ESTC source ID attribute if applicable.
  */
 class UpdateEstcCommand extends ContainerAwareCommand
 {
-
     const BATCH_SIZE = 100;
 
     const ESTC_ID = 2;
-
-    const URL_PFX = 'https://dhil.lib.sfu.ca/wphp/title/';
 
     /**
      * @var EntityManagerInterface
@@ -35,6 +32,12 @@ class UpdateEstcCommand extends ContainerAwareCommand
      */
     private $manager;
 
+    /**
+     * UpdateEstcCommand constructor.
+     *
+     * @param EntityManagerInterface $em
+     * @param MarcManager $manager
+     */
     public function __construct(EntityManagerInterface $em, MarcManager $manager)
     {
         parent::__construct();

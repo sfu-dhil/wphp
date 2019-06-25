@@ -46,6 +46,8 @@ class SourceController extends Controller implements PaginatorAwareInterface {
     }
 
     /**
+     * Typeahead action for editor widgets.
+     *
      * @param Request $request
      * @param SourceRepository $repo
      *

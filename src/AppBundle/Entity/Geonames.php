@@ -188,6 +188,11 @@ class Geonames
         $this->peopleDied = new ArrayCollection();
     }
 
+    /**
+     * Return the name and country of this place.
+     *
+     * @return string
+     */
     public function __toString() {
         return $this->name . ' (' . $this->country . ')';
     }

@@ -249,7 +249,7 @@ class TitleController extends Controller implements PaginatorAwareInterface
      * @param Request $request
      * @param EntityManagerInterface $em
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|RedirectResponse
      */
     public function newAction(Request $request, EntityManagerInterface $em)
     {
@@ -292,7 +292,7 @@ class TitleController extends Controller implements PaginatorAwareInterface
      *
      * @param Request $request
      * @param EstcMarcImporter $importer
-     * @param $id
+     * @param string $id
      *
      * @return array
      * @Route("/import/{id}", name="title_marc_import", methods={"GET"})

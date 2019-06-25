@@ -27,10 +27,11 @@ class OrlandoBiblioController extends Controller implements PaginatorAwareInterf
      *
      * @param Request $request
      *
+     * @param OrlandoManager $manager
+     *
      * @return array
      *
      * @Route("/", name="resource_orlando_biblio_index", methods={"GET"})
-
      * @Template()
      */
     public function indexAction(Request $request, OrlandoManager $manager) {
@@ -51,11 +52,14 @@ class OrlandoBiblioController extends Controller implements PaginatorAwareInterf
      *
      * @param Request $request
      *
+     * @param OrlandoManager $manager
+     * @param OrlandoBiblioRepository $repo
+     *
+     * @return array
      * @Route("/search", name="resource_orlando_biblio_search", methods={"GET"})
-
      * @Template()
      */
-    public function searchAction(Request $request,  OrlandoManager $manager, OrlandoBiblioRepository $repo) {
+    public function searchAction(Request $request, OrlandoManager $manager, OrlandoBiblioRepository $repo) {
         $q = $request->query->get('q');
         if ($q) {
             $query = $repo->searchQuery($q);
@@ -76,10 +80,11 @@ class OrlandoBiblioController extends Controller implements PaginatorAwareInterf
      *
      * @param OrlandoBiblio $orlandoBiblio
      *
+     * @param OrlandoManager $manager
+     *
      * @return array
      *
      * @Route("/{id}", name="resource_orlando_biblio_show", methods={"GET"})
-
      * @Template()
      */
     public function showAction(OrlandoBiblio $orlandoBiblio, OrlandoManager $manager) {

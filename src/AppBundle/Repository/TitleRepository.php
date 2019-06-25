@@ -15,6 +15,13 @@ use Doctrine\ORM\Query;
  */
 class TitleRepository extends EntityRepository
 {
+    /**
+     * Do a name search for a typeahead query.
+     *
+     * @param string $q
+     *
+     * @return mixed
+     */
     public function typeaheadQuery($q) {
         $qb = $this->createQueryBuilder('e');
         $qb->andWhere("e.title LIKE :q");
@@ -156,7 +163,7 @@ class TitleRepository extends EntityRepository
                 case "lt":
                     $operator = '<';
                     break;
-                case "gt";
+                case "gt":
                     $operator = '>';
                     break;
             }

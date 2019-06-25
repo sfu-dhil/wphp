@@ -19,6 +19,9 @@ use AppBundle\Repository\TitleRepository;
 use AppBundle\Repository\TitleSourceRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
+/**
+ * Import MARC records from ESTC.
+ */
 class EstcMarcImporter {
 
     /**
@@ -66,6 +69,11 @@ class EstcMarcImporter {
      */
     private $messages;
 
+    /**
+     * EstcMarcImporter constructor.
+     *
+     * @param EntityManagerInterface $em
+     */
     public function __construct(EntityManagerInterface $em) {
         $this->em = $em;
         $this->estcRepo = $this->em->getRepository(EstcMarc::class);
@@ -78,6 +86,13 @@ class EstcMarcImporter {
         $this->messages = array();
     }
 
+    /**
+     * Find the MARC fields for an ID.
+     *
+     * @param string $id
+     *
+     * @return array
+     */
     public function getFields($id) {
         $data = $this->estcRepo->findBy(array('titleId' => $id));
         $fields = array();
@@ -88,6 +103,12 @@ class EstcMarcImporter {
         return $fields;
     }
 
+    /**
+     * Check if the title has already been imported.
+     *
+     * @param string $fullTitle
+     * @param string $id
+     */
     public function checkTitle($fullTitle, $id) {
         if (count($this->titleRepo->findBy(array('title' => $fullTitle)))) {
             $this->messages[] = 'This title may already exist in the database. Please check for it before saving the form.';
@@ -101,6 +122,13 @@ class EstcMarcImporter {
         }
     }
 
+    /**
+     * Get the dates of a publication. Dates are not entered consistently in the ESTC, so success will vary.
+     *
+     * @param array $fields
+     *
+     * @return array
+     */
     public function getDates($fields) {
         if (!isset($fields['100d']) || $fields['100d']->getFieldData() === null) {
             return array(null, null);
@@ -125,6 +153,13 @@ class EstcMarcImporter {
         return array(null, null);
     }
 
+    /**
+     * Attempt to fetch a person record based on a MARC record.
+     *
+     * @param array $fields
+     *
+     * @return Person
+     */
     public function getPerson($fields) {
         $fullName = preg_replace('/[^a-zA-Z0-9]*$/', '', $fields['100a']->getFieldData());
         list($last, $first) = explode(', ', $fullName);
@@ -149,6 +184,12 @@ class EstcMarcImporter {
         return $people[0];
     }
 
+    /**
+     * Add the person to a title as an author.
+     *
+     * @param Title $title
+     * @param Person $person
+     */
     public function addAuthor(Title $title, Person $person) {
         if (!$person) {
             return;
@@ -162,6 +203,13 @@ class EstcMarcImporter {
         $this->em->persist($titleRole);
     }
 
+    /**
+     * Guess the format of a title.
+     *
+     * @param $fields
+     *
+     * @return object|null
+     */
     public function guessFormat($fields) {
         if (!isset($fields['300c']) || $fields['300c']->getFieldData() === null) {
             return null;
@@ -183,6 +231,13 @@ class EstcMarcImporter {
         return $format;
     }
 
+    /**
+     * Guess the dimensions of a title.
+     *
+     * @param $fields
+     *
+     * @return array
+     */
     public function guessDimensions($fields) {
         if (!isset($fields['300c']) || $fields['300c']->getFieldData() === null) {
             return array(null, null);
@@ -201,6 +256,13 @@ class EstcMarcImporter {
         return array(null, null);
     }
 
+    /**
+     * Import one title. Does not persist the title.
+     *
+     * @param $id
+     *
+     * @return Title
+     */
     public function import($id) {
         $fields = $this->getFields($id);
 
@@ -243,6 +305,8 @@ class EstcMarcImporter {
     }
 
     /**
+     * Get the list of messages generated during the import.
+     *
      * @return mixed
      */
     public function getMessages() {

@@ -13,6 +13,13 @@ use Doctrine\ORM\EntityRepository;
 class RoleRepository extends EntityRepository
 {
 
+    /**
+     * Do a name search for a typeahead query.
+     *
+     * @param string $q
+     *
+     * @return mixed
+     */
     public function typeaheadQuery($q) {
         $qb = $this->createQueryBuilder('e');
         $qb->andWhere("e.name LIKE :q");
@@ -21,6 +28,14 @@ class RoleRepository extends EntityRepository
         return $qb->getQuery()->execute();
     }
 
+    /**
+     * Count the titles in a given role.
+     *
+     * @param Role $role
+     *
+     * @return mixed
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
     public function countTitles(Role $role) {
         $qb = $this->_em->createQueryBuilder();
         $qb->select('count(1)');

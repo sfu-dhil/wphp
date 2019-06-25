@@ -6,10 +6,19 @@ use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
 
 /**
- * Auto-generated Migration: Please modify to your needs!
+ * Fix some bad dates and selfpublished attributes.
  */
 final class Version20190521182540 extends AbstractMigration
 {
+
+    /**
+     * Apply the migration.
+     *
+     * @param Schema $schema
+     *
+     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Migrations\AbortMigrationException
+     */
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
@@ -27,6 +36,13 @@ final class Version20190521182540 extends AbstractMigration
         $this->addSql('commit');
     }
 
+    /**
+     * Undo the migration.
+     *
+     * @param Schema $schema
+     *
+     * @throws \Doctrine\DBAL\Migrations\IrreversibleMigrationException
+     */
     public function down(Schema $schema): void
     {
         $this->throwIrreversibleMigrationException();
