@@ -19,6 +19,8 @@ class LoadSpotlights extends Fixture implements DependentFixtureInterface, Fixtu
 
     /**
      * {@inheritdoc}
+     *
+     * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager) {
         $lipsum = new LoremIpsum();

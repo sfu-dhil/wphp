@@ -16,6 +16,8 @@ class LoadEstcMarc extends Fixture implements DependentFixtureInterface, Fixture
 
     /**
      * {@inheritdoc}
+     *
+     * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager) {
         for($n = 0; $n < 4; $n++) {

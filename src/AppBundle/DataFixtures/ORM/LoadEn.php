@@ -14,6 +14,8 @@ class LoadEn extends Fixture implements FixtureGroupInterface {
 
     /**
      * {@inheritdoc}
+     *
+     * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager) {
         for ($i = 0; $i < 4; $i++) {

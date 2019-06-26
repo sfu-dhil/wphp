@@ -14,6 +14,8 @@ class LoadRole extends Fixture implements FixtureGroupInterface {
 
     /**
      * {@inheritDoc}
+     *
+     * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager) {
         for ($i = 0; $i < 4; $i++) {

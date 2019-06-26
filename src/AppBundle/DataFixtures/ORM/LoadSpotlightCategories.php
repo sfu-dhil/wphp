@@ -29,6 +29,8 @@ class LoadSpotlightCategories extends Fixture implements FixtureGroupInterface {
 
     /**
      * {@inheritdoc}
+     *
+     * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager) {
         foreach (self::DATA as $data) {

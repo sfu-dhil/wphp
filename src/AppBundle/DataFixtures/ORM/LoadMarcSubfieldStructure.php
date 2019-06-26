@@ -14,6 +14,8 @@ class LoadMarcSubfieldStructure extends Fixture implements FixtureGroupInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager) {
         for ($j = 0; $j < 20; $j++) {

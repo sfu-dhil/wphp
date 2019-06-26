@@ -14,6 +14,8 @@ class LoadFeedback extends Fixture implements FixtureGroupInterface
 {
     /**
      * {@inheritDoc}
+     *
+     * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager)
     {

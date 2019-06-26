@@ -16,6 +16,8 @@ class LoadOsborneMarc extends Fixture implements DependentFixtureInterface, Fixt
 
     /**
      * {@inheritdoc}
+     *
+     * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager) {
         for($n = 0; $n < 4; $n++) {

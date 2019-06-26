@@ -15,6 +15,8 @@ class LoadTitleSource extends Fixture implements DependentFixtureInterface, Fixt
 
     /**
      * {@inheritDoc}
+     *
+     * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager) {
         for ($i = 0; $i < 4; $i++) {
