@@ -86,7 +86,8 @@ class SourceLinker {
      * @param string $data
      *
      * @return string|null
-     */    public function orlando($data) {
+     */
+    public function orlando($data) {
         if (!$this->checker->hasRole('ROLE_USER')) {
             return null;
         }
@@ -108,7 +109,8 @@ class SourceLinker {
      * @param string $data
      *
      * @return string|null
-     */    public function jackson($data) {
+     */
+    public function jackson($data) {
         if (!$this->checker->hasRole('ROLE_USER')) {
             return null;
         }

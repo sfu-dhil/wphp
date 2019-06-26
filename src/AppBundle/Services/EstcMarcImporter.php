@@ -206,7 +206,7 @@ class EstcMarcImporter {
     /**
      * Guess the format of a title.
      *
-     * @param $fields
+     * @param array $fields
      *
      * @return object|null
      */
@@ -234,7 +234,7 @@ class EstcMarcImporter {
     /**
      * Guess the dimensions of a title.
      *
-     * @param $fields
+     * @param array $fields
      *
      * @return array
      */
@@ -259,7 +259,7 @@ class EstcMarcImporter {
     /**
      * Import one title. Does not persist the title.
      *
-     * @param $id
+     * @param string $id
      *
      * @return Title
      */
