@@ -9,14 +9,14 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
 /**
- * LoadFirm form.
+ * Load some test firms.
  */
 class LoadFirm extends Fixture implements DependentFixtureInterface, FixtureGroupInterface {
 
     /**
      * {@inheritDoc}
      */
-    public function load(ObjectManager $em) {
+    public function load(ObjectManager $manager) {
         for ($i = 0; $i < 4; $i++) {
             $fixture = new Firm();
             $fixture->setName('Name ' . $i);
@@ -27,24 +27,25 @@ class LoadFirm extends Fixture implements DependentFixtureInterface, FixtureGrou
             $fixture->setGender('U');
             $fixture->setCity($this->getReference('geonames.1'));
 
-            $em->persist($fixture);
+            $manager->persist($fixture);
             $this->setReference('firm.' . $i, $fixture);
         }
 
-        $em->flush();
+        $manager->flush();
     }
 
     /**
      * {@inheritdoc}
      */
     public function getDependencies() {
-        // add dependencies here, or remove this
-        // function and "implements DependentFixtureInterface" above
         return [
             LoadGeonames::class,
         ];
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public static function getGroups(): array {
         return array('test');
     }

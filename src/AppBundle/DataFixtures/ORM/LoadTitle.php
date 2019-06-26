@@ -9,14 +9,14 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
 /**
- * LoadTitle form.
+ * Load some test titles.
  */
 class LoadTitle extends Fixture implements DependentFixtureInterface, FixtureGroupInterface {
 
     /**
      * {@inheritDoc}
      */
-    public function load(ObjectManager $em) {
+    public function load(ObjectManager $manager) {
         for ($i = 0; $i < 4; $i++) {
             $fixture = new Title();
             $fixture->setTitle('Title ' . $i);
@@ -44,11 +44,11 @@ class LoadTitle extends Fixture implements DependentFixtureInterface, FixtureGro
             $fixture->setFormat($this->getReference('format.1'));
             $fixture->setGenre($this->getReference('genre.1'));
 
-            $em->persist($fixture);
+            $manager->persist($fixture);
             $this->setReference('title.' . $i, $fixture);
         }
 
-        $em->flush();
+        $manager->flush();
     }
 
     /**
@@ -68,6 +68,9 @@ class LoadTitle extends Fixture implements DependentFixtureInterface, FixtureGro
         ];
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public static function getGroups(): array {
         return array('test');
     }

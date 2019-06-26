@@ -8,9 +8,15 @@ use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
+/**
+ * Load some test Osborne MARC data.
+ */
 class LoadOsborneMarc extends Fixture implements DependentFixtureInterface, FixtureGroupInterface
 {
-// INSERT INTO `osborne_fields` (`cid`, `fid`, `field`, `ind1`, `ind2`, `subfield`, `field_data`, `id`) VALUES (196740,15,'533','\\','\\','n','Access limited by licensing agreements.',7158756)
+
+    /**
+     * {@inheritdoc}
+     */
     public function load(ObjectManager $manager) {
         for($n = 0; $n < 4; $n++) {
             $ldr = new OsborneMarc();
@@ -47,6 +53,9 @@ class LoadOsborneMarc extends Fixture implements DependentFixtureInterface, Fixt
         $manager->flush();
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getDependencies() {
         return [
             LoadMarcTagStructure::class,
@@ -54,6 +63,9 @@ class LoadOsborneMarc extends Fixture implements DependentFixtureInterface, Fixt
         ];
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public static function getGroups(): array {
         return array('test');
     }

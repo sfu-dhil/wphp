@@ -7,9 +7,15 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
+/**
+ * Load some test Orlando data.
+ */
 class LoadOrlandoBiblio extends Fixture implements FixtureGroupInterface
 {
 
+    /**
+     * {@inheritdoc}
+     */
     public function load(ObjectManager $manager)
     {
         for($i = 0; $i < 4; $i++) {
@@ -25,7 +31,10 @@ class LoadOrlandoBiblio extends Fixture implements FixtureGroupInterface
         }
         $manager->flush();
     }
-    
+
+    /**
+     * {@inheritdoc}
+     */
     public static function getGroups(): array {
         return array('test');
     }

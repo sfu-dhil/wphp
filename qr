@@ -1,7 +1,27 @@
-#!/bin/sh
+#!/bin/bash
 
-path=$(pwd)
+#  ------------------------------------- 
 
-./vendor/bin/phpcs -s phpcs.xml src/AppBundle/ --ignore=src/AppBundle/Tests --report-xml=quality.xml
-saxon -xsl:phpcs.xsl -s:quality.xml -o:web/docs/quality.html path=$path/
+path=${1:-"src/AppBundle"}
+
+#  ------------------------------------- 
+
+pwd=$(pwd)
+phpcs=./vendor/bin/phpcs
+outdir=web/docs
+outxml=$outdir/quality.xml
+outfile=$outdir/quality.html
+
+#  ------------------------------------- 
+
+mkdir -p $outdir
+
+$phpcs -n \
+       --standard=phpcs.xml \
+       --ignore=src/AppBundle/Tests \
+       --ignore=src/Nines/*/Tests \
+       --report-xml=$outxml \
+       --basepath=$pwd \
+       $path
+saxon -xsl:phpcs.xsl -s:$outxml -o:$outfile
 

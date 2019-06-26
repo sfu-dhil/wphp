@@ -19,12 +19,13 @@ use Nines\BlogBundle\Entity\PostCategory;
 use Nines\BlogBundle\Entity\PostStatus;
 
 /**
- * Description of LoadSpotlightCategories
- *
- *
+ * Load some test spotlights.
  */
 class LoadSpotlights extends Fixture implements DependentFixtureInterface, FixtureGroupInterface {
 
+    /**
+     * {@inheritdoc}
+     */
     public function load(ObjectManager $manager) {
         $lipsum = new LoremIpsum();
         $status = $manager->getRepository(PostStatus::class)->findOneBy(array(
@@ -49,10 +50,16 @@ class LoadSpotlights extends Fixture implements DependentFixtureInterface, Fixtu
         $manager->flush();
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public static function getGroups(): array {
         return array('setup');
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getDependencies(): array {
         return array(
             LoadSpotlightCategories::class,

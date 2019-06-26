@@ -8,29 +8,32 @@ use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
 /**
- * LoadRole form.
+ * Load some test role data.
  */
 class LoadRole extends Fixture implements FixtureGroupInterface {
 
     /**
      * {@inheritDoc}
      */
-    public function load(ObjectManager $em) {
+    public function load(ObjectManager $manager) {
         for ($i = 0; $i < 4; $i++) {
             $fixture = new Role();
             $fixture->setName('Name ' . $i);
 
-            $em->persist($fixture);
+            $manager->persist($fixture);
             $this->setReference('role.' . $i, $fixture);
         }
 
         $fixture = new Role();
         $fixture->setName('Author');
-        $em->persist($fixture);
+        $manager->persist($fixture);
 
-        $em->flush();
+        $manager->flush();
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public static function getGroups(): array {
         return array('test');
     }

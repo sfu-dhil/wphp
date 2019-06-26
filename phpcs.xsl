@@ -16,17 +16,21 @@
       <body>
         <div class="container">
           <div class="row">
-            <div class="col-md-7">
-              <h3>Details</h3>
+            <h1>Code Quality</h1>
+          </div>
+          <div class="row">
+            <div class="col-xs-8">
               <xsl:apply-templates select="file" mode="detail">
                 <xsl:sort select="@name"></xsl:sort>
               </xsl:apply-templates>
             </div>
-            <div class="col-md-5">
-              <h3>Overview</h3>
-              <ul>
-                <xsl:apply-templates select="/phpcs" mode="summary" />
-              </ul>
+            <div class="col-xs-4">
+              <div class="panel panel-default">
+                <div class="panel-heading">Overview</div>
+                <ul class="list-group">
+                  <xsl:apply-templates select="/phpcs" mode="summary" />
+                </ul>
+              </div>
             </div>
           </div>
         </div>
@@ -34,16 +38,28 @@
     </html>
   </xsl:template>
 
-  <xsl:template match="phpcs" mode="summary">    
-    Errors: <xsl:value-of select="count(//error)"/> (<xsl:value-of select="count(//error[@fixable=1])"/>)<br/>
-    Warnings: <xsl:value-of select="count(//warning)"/> (<xsl:value-of select="count(//warning[@fixable=1])"/>)<br/>
-    Fixable: <xsl:value-of select="count(//*[@fixable=1])"/>
+  <xsl:template match="phpcs" mode="summary">
+    <li class="list-group-item">
+      <span class="badge">
+        <xsl:value-of select="count(//error[@fixable=0])"/>/<xsl:value-of select="count(//error[@fixable=1])"/>
+      </span> Errors
+    </li>
+    <li class="list-group-item">
+      <span class="badge">
+        <xsl:value-of select="count(//warning[@fixable=0])"/>/<xsl:value-of select="count(//warning[@fixable=1])"/>
+      </span> Warnings
+    </li>
+    <li class="list-group-item">
+      <span class="badge">
+        <xsl:value-of select="count(//*[@fixable=0])"/>
+      </span> Fixable
+    </li>
   </xsl:template>
 
   <xsl:template match="file" mode="detail">
     <div class='panel panel-default'>
       <div class='panel-heading'>
-        <xsl:value-of select="substring-after(@name, $path)"/>
+        <xsl:value-of select="@name"/>
       </div>
       <div class="panel-body">
         <p>Errors: <xsl:value-of select="count(error)"/> (<xsl:value-of select="count(error[@fixable=1])"/>) | 
@@ -53,8 +69,8 @@
       </div>
       
       <ul class="list-group">
-        <xsl:apply-templates select="error[@fixable!=1]" mode="detail"/>
-        <xsl:apply-templates select="warning[@fixable!=1]" mode="detail"/>
+        <xsl:apply-templates select="error[@fixable=0]" mode="detail"/>
+        <xsl:apply-templates select="warning[@fixable=0]" mode="detail"/>
       </ul>
     </div>
   </xsl:template>
@@ -62,12 +78,12 @@
   <xsl:template match="error|warning" mode="detail">
     <xsl:variable name="class">
       <xsl:choose>
-        <xsl:when test="@fixable=1">disabled</xsl:when>
+        <xsl:when test="@fixable=1">disabled fixable</xsl:when>
         <xsl:otherwise></xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
     
-    <li class="list-group-item {$class}">
+    <li class="list-group-item {$class} {local-name()}">
       <h4 class="list-group-item-heading"><xsl:value-of select="."/></h4>
       <p><xsl:value-of select="@line"/>:<xsl:value-of select="@column"/>:<xsl:value-of select="@source"/></p>
     </li>

@@ -9,27 +9,30 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
 /**
- * LoadFirmrole form.
+ * Load some test firm roles.
  */
 class LoadTitleFirmrole extends Fixture implements DependentFixtureInterface, FixtureGroupInterface {
 
     /**
      * {@inheritDoc}
      */
-    public function load(ObjectManager $em) {
+    public function load(ObjectManager $manager) {
         for ($i = 0; $i < 4; $i++) {
             $tfr = new TitleFirmrole();
             $tfr->setFirm($this->getReference('firm.' . $i));
             $tfr->setTitle($this->getReference('title.' . $i));
             $tfr->setFirmrole($this->getReference('firmrole.' . $i));
 
-            $em->persist($tfr);
+            $manager->persist($tfr);
             $this->setReference('tfr.' . $i, $tfr);
         }
 
-        $em->flush();
+        $manager->flush();
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getDependencies() {
         return array(
             LoadTitle::class,
@@ -38,6 +41,9 @@ class LoadTitleFirmrole extends Fixture implements DependentFixtureInterface, Fi
         );
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public static function getGroups(): array {
         return array('test');
     }

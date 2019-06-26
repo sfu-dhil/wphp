@@ -7,8 +7,14 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
+/**
+ * Load some test MARC subfield data for testing.
+ */
 class LoadMarcSubfieldStructure extends Fixture implements FixtureGroupInterface {
 
+    /**
+     * {@inheritdoc}
+     */
     public function load(ObjectManager $manager) {
         for ($j = 0; $j < 20; $j++) {
             for ($i = 0; $i < 10; $i++) {
@@ -25,6 +31,9 @@ class LoadMarcSubfieldStructure extends Fixture implements FixtureGroupInterface
         $manager->flush();
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public static function getGroups(): array {
         return array('test');
     }

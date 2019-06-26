@@ -8,9 +8,15 @@ use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
+/**
+ * Load some test ESTC MARC data.
+ */
 class LoadEstcMarc extends Fixture implements DependentFixtureInterface, FixtureGroupInterface
 {
 
+    /**
+     * {@inheritdoc}
+     */
     public function load(ObjectManager $manager) {
         for($n = 0; $n < 4; $n++) {
             $ldr = new EstcMarc();
@@ -47,6 +53,9 @@ class LoadEstcMarc extends Fixture implements DependentFixtureInterface, Fixture
         $manager->flush();
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getDependencies() {
         return [
             LoadMarcTagStructure::class,
@@ -54,6 +63,9 @@ class LoadEstcMarc extends Fixture implements DependentFixtureInterface, Fixture
         ];
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public static function getGroups(): array {
         return array('test');
     }

@@ -7,6 +7,9 @@ use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Nines\BlogBundle\Entity\PostCategory;
 
+/**
+ * Load some test spotlight categories.
+ */
 class LoadSpotlightCategories extends Fixture implements FixtureGroupInterface {
 
     const DATA = array(
@@ -24,6 +27,9 @@ class LoadSpotlightCategories extends Fixture implements FixtureGroupInterface {
         ],
     );
 
+    /**
+     * {@inheritdoc}
+     */
     public function load(ObjectManager $manager) {
         foreach (self::DATA as $data) {
             $category = $manager->getRepository(PostCategory::class)->findOneBy(array(
@@ -39,6 +45,9 @@ class LoadSpotlightCategories extends Fixture implements FixtureGroupInterface {
         $manager->flush();
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public static function getGroups(): array {
         return array('setup');
     }

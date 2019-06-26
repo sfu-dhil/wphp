@@ -7,8 +7,14 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
+/**
+ * Load some test Jackson Bibliography data.
+ */
 class LoadJackson extends Fixture implements FixtureGroupInterface {
 
+    /**
+     * {@inheritdoc}
+     */
     public function load(ObjectManager $manager) {
         for ($i = 0; $i < 4; $i++) {
             $fixture = new Jackson();
@@ -23,6 +29,9 @@ class LoadJackson extends Fixture implements FixtureGroupInterface {
         $manager->flush();
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public static function getGroups(): array {
         return array('test');
     }

@@ -8,7 +8,7 @@ use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
 /**
- * LoadFormat form.
+ * Load some test format data.
  */
 class LoadFormat extends Fixture implements FixtureGroupInterface {
 
@@ -30,13 +30,13 @@ class LoadFormat extends Fixture implements FixtureGroupInterface {
     /**
      * {@inheritDoc}
      */
-    public function load(ObjectManager $em) {
+    public function load(ObjectManager $manager) {
         for ($i = 0; $i < 4; $i++) {
             $fixture = new Format();
             $fixture->setName('Name ' . $i);
             $fixture->setAbbreviation('A' . $i);
 
-            $em->persist($fixture);
+            $manager->persist($fixture);
             $this->setReference('format.' . $i, $fixture);
         }
 
@@ -44,12 +44,15 @@ class LoadFormat extends Fixture implements FixtureGroupInterface {
             $fixture = new Format();
             $fixture->setName($row[0]);
             $fixture->setAbbreviation($row[1]);
-            $em->persist($fixture);
+            $manager->persist($fixture);
         }
 
-        $em->flush();
+        $manager->flush();
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public static function getGroups(): array {
         return array('test');
     }
