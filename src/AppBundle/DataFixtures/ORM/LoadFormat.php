@@ -10,7 +10,8 @@ use Doctrine\Common\Persistence\ObjectManager;
 /**
  * Load some test format data.
  */
-class LoadFormat extends Fixture implements FixtureGroupInterface {
+class LoadFormat extends Fixture implements FixtureGroupInterface
+{
 
     const DATA = array(
         ["folio","fo"],
@@ -32,7 +33,8 @@ class LoadFormat extends Fixture implements FixtureGroupInterface {
      *
      * @param ObjectManager $manager
      */
-    public function load(ObjectManager $manager) {
+    public function load(ObjectManager $manager)
+    {
         for ($i = 0; $i < 4; $i++) {
             $fixture = new Format();
             $fixture->setName('Name ' . $i);
@@ -42,7 +44,7 @@ class LoadFormat extends Fixture implements FixtureGroupInterface {
             $this->setReference('format.' . $i, $fixture);
         }
 
-        foreach(self::DATA as $row) {
+        foreach (self::DATA as $row) {
             $fixture = new Format();
             $fixture->setName($row[0]);
             $fixture->setAbbreviation($row[1]);
@@ -55,7 +57,8 @@ class LoadFormat extends Fixture implements FixtureGroupInterface {
     /**
      * {@inheritdoc}
      */
-    public static function getGroups(): array {
+    public static function getGroups(): array
+    {
         return array('test');
     }
 }

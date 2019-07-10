@@ -19,8 +19,9 @@ class LoadOsborneMarc extends Fixture implements DependentFixtureInterface, Fixt
      *
      * @param ObjectManager $manager
      */
-    public function load(ObjectManager $manager) {
-        for($n = 0; $n < 4; $n++) {
+    public function load(ObjectManager $manager)
+    {
+        for ($n = 0; $n < 4; $n++) {
             $ldr = new OsborneMarc();
             $ldr->setTitleId(1 + $n);
             $ldr->setField('ldr');
@@ -40,7 +41,7 @@ class LoadOsborneMarc extends Fixture implements DependentFixtureInterface, Fixt
             $title->setFieldData('OSBORNE Title ' . $n);
             $manager->persist($title);
 
-            for($j = 0; $j < 20; $j++) {
+            for ($j = 0; $j < 20; $j++) {
                 for ($i = 0; $i < 10; $i++) {
                     $fixture = new OsborneMarc();
                     $fixture->setField(100 + $j);
@@ -58,7 +59,8 @@ class LoadOsborneMarc extends Fixture implements DependentFixtureInterface, Fixt
     /**
      * {@inheritdoc}
      */
-    public function getDependencies() {
+    public function getDependencies()
+    {
         return [
             LoadMarcTagStructure::class,
             LoadMarcSubfieldStructure::class,
@@ -68,7 +70,8 @@ class LoadOsborneMarc extends Fixture implements DependentFixtureInterface, Fixt
     /**
      * {@inheritdoc}
      */
-    public static function getGroups(): array {
+    public static function getGroups(): array
+    {
         return array('test');
     }
 }

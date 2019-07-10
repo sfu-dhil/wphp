@@ -11,18 +11,20 @@ use Doctrine\Common\Persistence\ObjectManager;
 /**
  * Load some test titles.
  */
-class LoadTitle extends Fixture implements DependentFixtureInterface, FixtureGroupInterface {
+class LoadTitle extends Fixture implements DependentFixtureInterface, FixtureGroupInterface
+{
 
     /**
      * {@inheritDoc}
      *
      * @param ObjectManager $manager
      */
-    public function load(ObjectManager $manager) {
+    public function load(ObjectManager $manager)
+    {
         for ($i = 0; $i < 4; $i++) {
             $fixture = new Title();
             $fixture->setTitle('Title ' . $i);
-            $fixture->setEditionNumber($i+1);
+            $fixture->setEditionNumber($i + 1);
             $fixture->setSignedAuthor('SignedAuthor ' . $i);
             $fixture->setSurrogate('Surrogate ' . $i);
             $fixture->setPseudonym('Pseudonym ' . $i);
@@ -33,7 +35,7 @@ class LoadTitle extends Fixture implements DependentFixtureInterface, FixtureGro
             $fixture->setSizeL($i + 10);
             $fixture->setSizeW($i + 6);
             $fixture->setEdition('Edition ' . $i);
-            $fixture->setVolumes($i+1);
+            $fixture->setVolumes($i + 1);
             $fixture->setPagination('Pagination ' . $i);
             $fixture->setPricePound($i + 1);
             $fixture->setPriceShilling($i);
@@ -56,8 +58,9 @@ class LoadTitle extends Fixture implements DependentFixtureInterface, FixtureGro
     /**
      * {@inheritdoc}
      */
-    public function getDependencies() {
-        // add dependencies here, or remove this 
+    public function getDependencies()
+    {
+        // add dependencies here, or remove this
         // function and "implements DependentFixtureInterface" above
         return [
             LoadFirm::class,
@@ -66,14 +69,15 @@ class LoadTitle extends Fixture implements DependentFixtureInterface, FixtureGro
             LoadGeonames::class,
             LoadPerson::class,
             LoadRole::class,
-            LoadSource::class,            
+            LoadSource::class,
         ];
     }
 
     /**
      * {@inheritdoc}
      */
-    public static function getGroups(): array {
+    public static function getGroups(): array
+    {
         return array('test');
     }
 }

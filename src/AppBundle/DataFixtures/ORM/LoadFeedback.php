@@ -19,7 +19,7 @@ class LoadFeedback extends Fixture implements FixtureGroupInterface
      */
     public function load(ObjectManager $manager)
     {
-        for($i = 0; $i < 4; $i++) {
+        for ($i = 0; $i < 4; $i++) {
             $fixture = new Feedback();
             $fixture->setName('Name ' . $i);
             $fixture->setEmail('Email ' . $i);
@@ -30,13 +30,13 @@ class LoadFeedback extends Fixture implements FixtureGroupInterface
         }
         
         $manager->flush();
-        
     }
 
     /**
      * {@inheritdoc}
      */
-    public static function getGroups(): array {
+    public static function getGroups(): array
+    {
         return array('test');
     }
 }

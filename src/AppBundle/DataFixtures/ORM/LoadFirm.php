@@ -11,14 +11,16 @@ use Doctrine\Common\Persistence\ObjectManager;
 /**
  * Load some test firms.
  */
-class LoadFirm extends Fixture implements DependentFixtureInterface, FixtureGroupInterface {
+class LoadFirm extends Fixture implements DependentFixtureInterface, FixtureGroupInterface
+{
 
     /**
      * {@inheritDoc}
      *
      * @param ObjectManager $manager
      */
-    public function load(ObjectManager $manager) {
+    public function load(ObjectManager $manager)
+    {
         for ($i = 0; $i < 4; $i++) {
             $fixture = new Firm();
             $fixture->setName('Name ' . $i);
@@ -39,7 +41,8 @@ class LoadFirm extends Fixture implements DependentFixtureInterface, FixtureGrou
     /**
      * {@inheritdoc}
      */
-    public function getDependencies() {
+    public function getDependencies()
+    {
         return [
             LoadGeonames::class,
         ];
@@ -48,7 +51,8 @@ class LoadFirm extends Fixture implements DependentFixtureInterface, FixtureGrou
     /**
      * {@inheritdoc}
      */
-    public static function getGroups(): array {
+    public static function getGroups(): array
+    {
         return array('test');
     }
 }

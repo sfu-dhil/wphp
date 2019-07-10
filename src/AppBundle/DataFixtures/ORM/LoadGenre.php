@@ -10,14 +10,16 @@ use Doctrine\Common\Persistence\ObjectManager;
 /**
  * Load some test genres.
  */
-class LoadGenre extends Fixture implements FixtureGroupInterface {
+class LoadGenre extends Fixture implements FixtureGroupInterface
+{
 
     /**
      * {@inheritDoc}
      *
      * @param ObjectManager $manager
      */
-    public function load(ObjectManager $manager) {
+    public function load(ObjectManager $manager)
+    {
         for ($i = 0; $i < 4; $i++) {
             $fixture = new Genre();
             $fixture->setName('Name ' . $i);
@@ -32,7 +34,8 @@ class LoadGenre extends Fixture implements FixtureGroupInterface {
     /**
      * {@inheritdoc}
      */
-    public static function getGroups(): array {
+    public static function getGroups(): array
+    {
         return array('test');
     }
 }

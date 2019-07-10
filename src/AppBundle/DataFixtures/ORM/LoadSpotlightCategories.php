@@ -10,7 +10,8 @@ use Nines\BlogBundle\Entity\PostCategory;
 /**
  * Load some test spotlight categories.
  */
-class LoadSpotlightCategories extends Fixture implements FixtureGroupInterface {
+class LoadSpotlightCategories extends Fixture implements FixtureGroupInterface
+{
 
     const DATA = array(
         [
@@ -32,7 +33,8 @@ class LoadSpotlightCategories extends Fixture implements FixtureGroupInterface {
      *
      * @param ObjectManager $manager
      */
-    public function load(ObjectManager $manager) {
+    public function load(ObjectManager $manager)
+    {
         foreach (self::DATA as $data) {
             $category = $manager->getRepository(PostCategory::class)->findOneBy(array(
                 'name' => $data['name'],
@@ -50,8 +52,8 @@ class LoadSpotlightCategories extends Fixture implements FixtureGroupInterface {
     /**
      * {@inheritdoc}
      */
-    public static function getGroups(): array {
+    public static function getGroups(): array
+    {
         return array('setup');
     }
-
 }

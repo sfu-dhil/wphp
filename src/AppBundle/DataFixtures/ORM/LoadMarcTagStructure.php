@@ -20,10 +20,10 @@ class LoadMarcTagStructure extends Fixture implements FixtureGroupInterface
      */
     public function load(ObjectManager $manager)
     {
-        for($i = 0; $i < 20; $i++) {
+        for ($i = 0; $i < 20; $i++) {
             $fixture = new MarcTagStructure();
             $fixture->setName('Tag ' . $i);
-            $fixture->setTagField(100+$i);
+            $fixture->setTagField(100 + $i);
             $manager->persist($fixture);
             $this->setReference('marctag.' . $i, $fixture);
         }
@@ -33,7 +33,8 @@ class LoadMarcTagStructure extends Fixture implements FixtureGroupInterface
     /**
      * {@inheritdoc}
      */
-    public static function getGroups(): array {
+    public static function getGroups(): array
+    {
         return array('test');
     }
 }

@@ -15,14 +15,16 @@ use Nines\BlogBundle\Entity\PostStatus;
 /**
  * Load some test spotlights.
  */
-class LoadSpotlights extends Fixture implements DependentFixtureInterface, FixtureGroupInterface {
+class LoadSpotlights extends Fixture implements DependentFixtureInterface, FixtureGroupInterface
+{
 
     /**
      * {@inheritdoc}
      *
      * @param ObjectManager $manager
      */
-    public function load(ObjectManager $manager) {
+    public function load(ObjectManager $manager)
+    {
         $lipsum = new LoremIpsum();
         $status = $manager->getRepository(PostStatus::class)->findOneBy(array(
             'name' => 'published',
@@ -49,18 +51,19 @@ class LoadSpotlights extends Fixture implements DependentFixtureInterface, Fixtu
     /**
      * {@inheritdoc}
      */
-    public static function getGroups(): array {
+    public static function getGroups(): array
+    {
         return array('setup');
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getDependencies(): array {
+    public function getDependencies(): array
+    {
         return array(
             LoadSpotlightCategories::class,
             LoadPostStatus::class,
         );
     }
-
 }

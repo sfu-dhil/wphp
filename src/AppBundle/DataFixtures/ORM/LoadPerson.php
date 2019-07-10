@@ -11,14 +11,16 @@ use Doctrine\Common\Persistence\ObjectManager;
 /**
  * Load some test persons.
  */
-class LoadPerson extends Fixture implements DependentFixtureInterface, FixtureGroupInterface {
+class LoadPerson extends Fixture implements DependentFixtureInterface, FixtureGroupInterface
+{
 
     /**
      * {@inheritDoc}
      *
      * @param ObjectManager $manager
      */
-    public function load(ObjectManager $manager) {
+    public function load(ObjectManager $manager)
+    {
         for ($i = 0; $i < 4; $i++) {
             $fixture = new Person();
             $fixture->setLastName('LastName ' . $i);
@@ -42,7 +44,8 @@ class LoadPerson extends Fixture implements DependentFixtureInterface, FixtureGr
     /**
      * {@inheritdoc}
      */
-    public function getDependencies() {
+    public function getDependencies()
+    {
         return [
             LoadGeonames::class,
         ];
@@ -51,7 +54,8 @@ class LoadPerson extends Fixture implements DependentFixtureInterface, FixtureGr
     /**
      * {@inheritdoc}
      */
-    public static function getGroups(): array {
+    public static function getGroups(): array
+    {
         return array('test');
     }
 }
