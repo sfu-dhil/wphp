@@ -4,7 +4,7 @@
     "type": "project",
     "autoload": {
         "psr-4": {
-            "": "src/"
+            "AppBundle\\": "src/AppBundle"
         },
         "exclude-from-classmap": [
             "/Tests/"
@@ -22,6 +22,12 @@
             "vendor/symfony/symfony/src/Symfony/Component/VarDumper/Resources/functions/dump.php"
         ]
     },
+    "repositories": [
+        {
+            "type": "github",
+            "url": "https://github.com/ubermichael/nines-bundles.git"
+        }
+    ],
     "require": {
         "php": ">=7.2.0",
         "aternus/geonames-client": "^1.0",
@@ -32,7 +38,7 @@
         "friendsofsymfony/user-bundle": "^2.0",
         "incenteev/composer-parameter-handler": "^2.0",
         "knplabs/knp-menu-bundle": "^2.2",
-        "knplabs/knp-paginator-bundle": "^3.0",
+        "knplabs/knp-paginator-bundle": "^4.0",
         "ninsuo/symfony-collection": "^2.1",
         "ocramius/proxy-manager": "^2.2",
         "sensio/distribution-bundle": "^5.0.19",
@@ -44,7 +50,8 @@
         "symfony/templating": "^3.4",
         "tetranz/select2entity-bundle": "^2.9",
         "twig/extensions": "^1.5",
-        "twig/twig": "^2.11"
+        "twig/twig": "^2.11",
+        "ubermichael/nines": "2.x-dev"
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.0",

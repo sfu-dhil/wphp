@@ -2,7 +2,7 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
     - { resource: services.yml }
-    - { resource: "../../vendor/beberlei/DoctrineExtensions/config/mysql.yml" }
+    - { resource: "../../vendor/beberlei/doctrineextensions/config/mysql.yml" }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
@@ -61,7 +61,7 @@ twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
     paths:
-        '%kernel.root_dir%/../src/Nines/UtilBundle/Resources/views': NinesUtilBundle
+        '%kernel.project_dir%/vendor/ubermichael/nines/UtilBundle/Resources/views': NinesUtilBundle
         '%kernel.project_dir%/vendor/ninsuo/symfony-collection': NinsuoSymfonyCollection
     globals:
         comment_service: '@Nines\FeedbackBundle\Services\CommentService'
