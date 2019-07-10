@@ -6,7 +6,7 @@
             {% set fieldQ = field %}
         {% endif %}
         <th>
-            {{ knp_pagination_sortable(pagination, header, field) }}
+            {{ knp_pagination_sortable(pagination, header, fieldQ) }}
         </th>
     {% else %}
         <th>{{ header }}</th>
