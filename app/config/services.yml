@@ -42,6 +42,7 @@ services:
         - { name: knp_menu.menu_builder, method: searchMenu, alias: search}
         - { name: knp_menu.menu_builder, method: spotlightMenu, alias: spotlight}
         - { name: knp_menu.menu_builder, method: userNavMenu, alias: wphp_user }
+        - { name: knp_menu.menu_builder, method: postNavMenu, alias: wphp_post }
 
     AppBundle\Repository\EnRepository:
         factory: ['@doctrine.orm.default_entity_manager', getRepository]

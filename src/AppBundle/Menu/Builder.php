@@ -5,6 +5,7 @@ namespace AppBundle\Menu;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
+use Nines\BlogBundle\Entity\Post;
 use Nines\BlogBundle\Entity\PostCategory;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
@@ -364,4 +365,91 @@ class Builder implements ContainerAwareInterface
 
         return $menu;
     }
+
+
+    /**
+     * Build a menu for blog posts.
+     *
+     * @param array $options
+     * @return ItemInterface
+     */
+    public function postNavMenu(array $options) {
+        $menu = $this->factory->createItem('root');
+        $menu->setChildrenAttributes(array(
+            'class' => 'nav navbar-nav',
+        ));
+        $menu->setAttribute('dropdown', true);
+
+        $title = 'Announcements';
+        if(isset($options['title'])) {
+            $title = $options['title'];
+        }
+
+        $menu->addChild('announcements', array(
+            'uri' => '#',
+            'label' => $title . self::CARET
+        ));
+        $menu['announcements']->setAttribute('dropdown', true);
+        $menu['announcements']->setLinkAttribute('class', 'dropdown-toggle');
+        $menu['announcements']->setLinkAttribute('data-toggle', 'dropdown');
+        $menu['announcements']->setChildrenAttribute('class', 'dropdown-menu');
+
+        $status = $this->em->getRepository('NinesBlogBundle:PostStatus')->findOneBy(array(
+            'public' => true,
+        ));
+        $qb = $this->em->createQueryBuilder();
+        $qb->select('p')
+            ->from(Post::class, 'p')
+            ->innerJoin(PostCategory::class, 'pc')
+            ->where('pc.label NOT IN (:spotlightCategories)')
+            ->orderBy('p.created', 'DESC')
+            ->setMaxResults(10)
+            ->setParameter(':spotlightCategories', $this->spotlightMenuItems);
+
+        $posts = $qb->getQuery()->execute();
+        foreach ($posts as $post) {
+            if(in_array($post->getCategory()->getName(), $this->spotlightMenuItems)) {
+                continue;
+            }
+            $menu['announcements']->addChild($post->getTitle(), array(
+                'route' => 'post_show',
+                'routeParameters' => array(
+                    'id' => $post->getId(),
+                )
+            ));
+        }
+        $menu['announcements']->addChild('divider', array(
+            'label' => '',
+        ));
+        $menu['announcements']['divider']->setAttributes(array(
+            'role' => 'separator',
+            'class' => 'divider',
+        ));
+
+        $menu['announcements']->addChild('All Announcements', array(
+            'route' => 'post_index',
+        ));
+
+        if ($this->hasRole('ROLE_BLOG_ADMIN')) {
+            $menu['announcements']->addChild('divider', array(
+                'label' => '',
+            ));
+            $menu['announcements']['divider']->setAttributes(array(
+                'role' => 'separator',
+                'class' => 'divider',
+            ));
+
+            $menu['announcements']->addChild('post_category', array(
+                'label' => 'Post Categories',
+                'route' => 'post_category_index',
+            ));
+            $menu['announcements']->addChild('post_status', array(
+                'label' => 'Post Statuses',
+                'route' => 'post_status_index',
+            ));
+        }
+
+        return $menu;
+    }
+
 }
