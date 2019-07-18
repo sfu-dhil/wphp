@@ -84,7 +84,7 @@ class FeedbackControllerTest extends BaseTestCase
         $client->submit($form);
         $this->assertEquals(302, $client->getResponse()->getStatusCode());
         $responseCrawler = $client->followRedirect();
-        $responseCrawler = $client->followRedirect();
+//        $responseCrawler = $client->followRedirect();
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertEquals(1, $responseCrawler->filter('div.alert:contains("The new feedback was created.")')->count());
     }
