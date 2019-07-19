@@ -290,9 +290,11 @@ class EstcMarcImporter {
             $this->addAuthor($title, $person);
         }
 
-        $source = $this->sourceRepo->findOneBy(array('name' => 'ESTC'));
-        $title->setSource($source);
-        $title->setSourceId($fields['001']->getFieldData());
+        $titleSource = new TitleSource();
+        $titleSource->setSource($this->sourceRepo->findOneBy(array('name' => 'ESTC')));
+        $titleSource->setTitle($title);
+        $titleSource->setIdentifier($fields['001']->getFieldData());
+        $title->addTitleSource($titleSource);
 
         $format = $this->guessFormat($fields);
         $title->setFormat($format);

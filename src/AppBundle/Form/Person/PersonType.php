@@ -114,20 +114,6 @@ class PersonType extends AbstractType {
                 'help_block' => 'Enter the URL for an image for this person. Make sure the licensing on the image is permissive.'
             ),
         ));
-        $builder->add('checked', ChoiceType::class, array(
-            'label' => 'Checked',
-            'expanded' => true,
-            'multiple' => false,
-            'choices' => array(
-                'Yes' => true,
-                'No' => false,
-            ),
-            'required' => true,
-            'placeholder' => false,
-            'attr' => array(
-                'help_block' => 'Indicates an attempt to find person’s information',
-            ),
-        ));
         $builder->add('finalcheck', ChoiceType::class, array(
             'label' => 'Verified',
             'expanded' => true,
