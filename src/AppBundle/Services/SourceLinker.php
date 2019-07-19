@@ -111,19 +111,14 @@ class SourceLinker {
      * @return string|null
      */
     public function jackson($data) {
-        if (!$this->checker->hasRole('ROLE_USER')) {
-            return null;
+        if ($this->checker->hasRole('ROLE_USER')) {
+            $repo = $this->em->getRepository(Jackson::class);
+            $record = $repo->findOneBy(array('jbid' => $data,));
+            if ($record) {
+                return $this->generator->generate('resource_jackson_show', array('id' => $record->getId(),));
+            }
         }
-        $repo = $this->em->getRepository(Jackson::class);
-        $record = $repo->findOneBy(array(
-            'jbid' => $data,
-        ));
-        if ($record) {
-            return $this->generator->generate('resource_jackson_show', array(
-                'id' => $record->getId(),
-            ));
-        }
-        return null;
+        return "https://jacksonbibliography.library.utoronto.ca/search/details/{$data}";
     }
 
     /**
