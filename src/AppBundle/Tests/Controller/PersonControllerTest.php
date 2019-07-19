@@ -137,7 +137,6 @@ class PersonControllerTest extends BaseTestCase
             'person[cityOfBirth]' => 0,
             'person[dod]' => '1999',
             'person[cityOfDeath]' => 0,
-            'person[checked]' => 1,
             'person[finalcheck]' => 1
         ]);
         
@@ -181,7 +180,6 @@ class PersonControllerTest extends BaseTestCase
             'person[cityOfBirth]' => 0,
             'person[dod]' => '1999',
             'person[cityOfDeath]' => 0,
-            'person[checked]' => 1,
             'person[finalcheck]' => 1
         ]);
         

@@ -29,7 +29,6 @@ class LoadPerson extends Fixture implements DependentFixtureInterface, FixtureGr
             $fixture->setGender('F');
             $fixture->setDob((1750 + $i) . '-01-02');
             $fixture->setDod((1800 + $i) . '-03-05');
-            $fixture->setChecked($i % 2 === 0);
             $fixture->setFinalcheck($i % 2 === 0);
             $fixture->setCityofbirth($this->getReference('geonames.1'));
             $fixture->setCityofdeath($this->getReference('geonames.1'));
