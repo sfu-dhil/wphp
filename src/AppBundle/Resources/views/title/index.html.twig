@@ -3,7 +3,9 @@
 {% block pageheader %}
     <h1>Explore Titles</h1>
     {% if titles|length > 0 %}
-        Displaying {{ titles|length }} titles of {{ titles.getTotalItemCount }} total.
+        <p class="count">
+            Displaying {{ titles|length }} titles of {{ titles.getTotalItemCount }} total.
+        </p>
     {% endif %}
 {% endblock %}
 
