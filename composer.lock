@@ -65,23 +65,23 @@
         },
         {
             "name": "beberlei/doctrineextensions",
-            "version": "v1.2.2",
+            "version": "v1.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/beberlei/DoctrineExtensions.git",
-                "reference": "53da6deefe33cff09737bdcc73ac6dbb4423691f"
+                "reference": "a8747a2aef34f602c365cf2efd1abc94c5ae7e0a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/beberlei/DoctrineExtensions/zipball/53da6deefe33cff09737bdcc73ac6dbb4423691f",
-                "reference": "53da6deefe33cff09737bdcc73ac6dbb4423691f",
+                "url": "https://api.github.com/repos/beberlei/DoctrineExtensions/zipball/a8747a2aef34f602c365cf2efd1abc94c5ae7e0a",
+                "reference": "a8747a2aef34f602c365cf2efd1abc94c5ae7e0a",
                 "shasum": ""
             },
             "require": {
+                "doctrine/orm": "^2.6",
                 "php": "^7.1"
             },
             "require-dev": {
-                "doctrine/orm": "^2.6",
                 "friendsofphp/php-cs-fixer": "^2.14",
                 "nesbot/carbon": "*",
                 "phpunit/phpunit": "^7.0 || ^8.0",
@@ -115,7 +115,7 @@
                 "doctrine",
                 "orm"
             ],
-            "time": "2019-06-24T06:58:56+00:00"
+            "time": "2019-07-25T15:08:53+00:00"
         },
         {
             "name": "doctrine/annotations",
@@ -1937,27 +1937,30 @@
         },
         {
             "name": "knplabs/knp-menu",
-            "version": "2.3.0",
+            "version": "2.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/KnpLabs/KnpMenu.git",
-                "reference": "655630a1db0b72108262d1a844de3b1ba0885be5"
+                "reference": "bda9826d188409f275d24404b5072421f99ae55f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/KnpLabs/KnpMenu/zipball/655630a1db0b72108262d1a844de3b1ba0885be5",
-                "reference": "655630a1db0b72108262d1a844de3b1ba0885be5",
+                "url": "https://api.github.com/repos/KnpLabs/KnpMenu/zipball/bda9826d188409f275d24404b5072421f99ae55f",
+                "reference": "bda9826d188409f275d24404b5072421f99ae55f",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.6.0"
+            },
+            "conflict": {
+                "twig/twig": "<1.40|>=2,<2.9"
             },
             "require-dev": {
                 "psr/container": "^1.0",
                 "symfony/http-foundation": "~2.4|~3.0|^4.0",
                 "symfony/phpunit-bridge": "~3.3|^4.0",
                 "symfony/routing": "~2.3|~3.0|^4.0",
-                "twig/twig": "~1.16|~2.0"
+                "twig/twig": "^1.40|^2.9"
             },
             "suggest": {
                 "twig/twig": "for the TwigRenderer and the integration with your templates"
@@ -1965,7 +1968,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.3-dev"
+                    "dev-master": "2.4-dev"
                 }
             },
             "autoload": {
@@ -1979,16 +1982,16 @@
             ],
             "authors": [
                 {
+                    "name": "KnpLabs",
+                    "homepage": "https://knplabs.com"
+                },
+                {
                     "name": "Christophe Coevoet",
                     "email": "stof@notk.org"
                 },
                 {
                     "name": "Symfony Community",
                     "homepage": "https://github.com/KnpLabs/KnpMenu/contributors"
-                },
-                {
-                    "name": "KnpLabs",
-                    "homepage": "https://knplabs.com"
                 }
             ],
             "description": "An object oriented menu library",
@@ -1997,7 +2000,7 @@
                 "menu",
                 "tree"
             ],
-            "time": "2017-11-18T20:49:26+00:00"
+            "time": "2019-07-29T10:12:04+00:00"
         },
         {
             "name": "knplabs/knp-menu-bundle",
@@ -2967,16 +2970,16 @@
         },
         {
             "name": "symfony/http-client",
-            "version": "v4.3.2",
+            "version": "v4.3.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/http-client.git",
-                "reference": "e903ab079c99eab322fc5c71eb63fc467cd19a2a"
+                "reference": "7759fabfbdf7f57a1d29655550b49c4ff04891a5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-client/zipball/e903ab079c99eab322fc5c71eb63fc467cd19a2a",
-                "reference": "e903ab079c99eab322fc5c71eb63fc467cd19a2a",
+                "url": "https://api.github.com/repos/symfony/http-client/zipball/7759fabfbdf7f57a1d29655550b49c4ff04891a5",
+                "reference": "7759fabfbdf7f57a1d29655550b49c4ff04891a5",
                 "shasum": ""
             },
             "require": {
@@ -3025,7 +3028,7 @@
             ],
             "description": "Symfony HttpClient component",
             "homepage": "https://symfony.com",
-            "time": "2019-06-26T07:29:23+00:00"
+            "time": "2019-07-24T10:16:23+00:00"
         },
         {
             "name": "symfony/http-client-contracts",
@@ -3086,16 +3089,16 @@
         },
         {
             "name": "symfony/mime",
-            "version": "v4.3.2",
+            "version": "v4.3.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/mime.git",
-                "reference": "ec2c5565de60e03f33d4296a655e3273f0ad1f8b"
+                "reference": "6b7148029b1dd5eda1502064f06d01357b7b2d8b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/mime/zipball/ec2c5565de60e03f33d4296a655e3273f0ad1f8b",
-                "reference": "ec2c5565de60e03f33d4296a655e3273f0ad1f8b",
+                "url": "https://api.github.com/repos/symfony/mime/zipball/6b7148029b1dd5eda1502064f06d01357b7b2d8b",
+                "reference": "6b7148029b1dd5eda1502064f06d01357b7b2d8b",
                 "shasum": ""
             },
             "require": {
@@ -3141,7 +3144,7 @@
                 "mime",
                 "mime-type"
             ],
-            "time": "2019-06-04T09:22:54+00:00"
+            "time": "2019-07-19T16:21:19+00:00"
         },
         {
             "name": "symfony/monolog-bundle",
@@ -3905,16 +3908,16 @@
         },
         {
             "name": "symfony/symfony",
-            "version": "v3.4.29",
+            "version": "v3.4.30",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "4c9b6d7d898457ae2189efdfaca58712269fc994"
+                "reference": "4d911e98e1f70538edcca4576c65395ef0fbfa84"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/4c9b6d7d898457ae2189efdfaca58712269fc994",
-                "reference": "4c9b6d7d898457ae2189efdfaca58712269fc994",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/4d911e98e1f70538edcca4576c65395ef0fbfa84",
+                "reference": "4d911e98e1f70538edcca4576c65395ef0fbfa84",
                 "shasum": ""
             },
             "require": {
@@ -4012,7 +4015,7 @@
                 "ocramius/proxy-manager": "~0.4|~1.0|~2.0",
                 "phpdocumentor/reflection-docblock": "^3.0|^4.0",
                 "predis/predis": "~1.0",
-                "symfony/phpunit-bridge": "~3.4|~4.0|~5.0",
+                "symfony/phpunit-bridge": "^3.4.19|^4.1.8|~5.0",
                 "symfony/security-acl": "~2.8|~3.0"
             },
             "type": "library",
@@ -4056,7 +4059,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2019-06-26T13:56:55+00:00"
+            "time": "2019-07-27T17:14:21+00:00"
         },
         {
             "name": "tetranz/select2entity-bundle",
@@ -4233,12 +4236,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ubermichael/nines-bundles.git",
-                "reference": "2fa486368be56dcf3bc95d030a1cc042fd91c7a5"
+                "reference": "081301aeefcbf056780f9f3770571f8fc2c5b1c3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ubermichael/nines-bundles/zipball/2fa486368be56dcf3bc95d030a1cc042fd91c7a5",
-                "reference": "2fa486368be56dcf3bc95d030a1cc042fd91c7a5",
+                "url": "https://api.github.com/repos/ubermichael/nines-bundles/zipball/081301aeefcbf056780f9f3770571f8fc2c5b1c3",
+                "reference": "081301aeefcbf056780f9f3770571f8fc2c5b1c3",
                 "shasum": ""
             },
             "require": {
@@ -4273,7 +4276,7 @@
                 "source": "https://github.com/ubermichael/nines-bundles/tree/2.x",
                 "issues": "https://github.com/ubermichael/nines-bundles/issues"
             },
-            "time": "2019-07-11T23:51:00+00:00"
+            "time": "2019-07-24T19:50:07+00:00"
         },
         {
             "name": "zendframework/zend-code",
@@ -5035,16 +5038,16 @@
         },
         {
             "name": "phpunit/php-code-coverage",
-            "version": "7.0.6",
+            "version": "7.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "d471d0d2b529a67c6a722dd446c4ec90881ac315"
+                "reference": "7743bbcfff2a907e9ee4a25be13d0f8ec5e73800"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/d471d0d2b529a67c6a722dd446c4ec90881ac315",
-                "reference": "d471d0d2b529a67c6a722dd446c4ec90881ac315",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/7743bbcfff2a907e9ee4a25be13d0f8ec5e73800",
+                "reference": "7743bbcfff2a907e9ee4a25be13d0f8ec5e73800",
                 "shasum": ""
             },
             "require": {
@@ -5053,7 +5056,7 @@
                 "php": "^7.2",
                 "phpunit/php-file-iterator": "^2.0.2",
                 "phpunit/php-text-template": "^1.2.1",
-                "phpunit/php-token-stream": "^3.0.2",
+                "phpunit/php-token-stream": "^3.1.0",
                 "sebastian/code-unit-reverse-lookup": "^1.0.1",
                 "sebastian/environment": "^4.2.2",
                 "sebastian/version": "^2.0.1",
@@ -5083,8 +5086,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "email": "sebastian@phpunit.de",
-                    "role": "lead"
+                    "role": "lead",
+                    "email": "sebastian@phpunit.de"
                 }
             ],
             "description": "Library that provides collection, processing, and rendering functionality for PHP code coverage information.",
@@ -5094,7 +5097,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2019-07-08T05:29:42+00:00"
+            "time": "2019-07-25T05:31:54+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -5238,16 +5241,16 @@
         },
         {
             "name": "phpunit/php-token-stream",
-            "version": "3.0.2",
+            "version": "3.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-token-stream.git",
-                "reference": "c4a66b97f040e3e20b3aa2a243230a1c3a9f7c8c"
+                "reference": "e899757bb3df5ff6e95089132f32cd59aac2220a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-token-stream/zipball/c4a66b97f040e3e20b3aa2a243230a1c3a9f7c8c",
-                "reference": "c4a66b97f040e3e20b3aa2a243230a1c3a9f7c8c",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-token-stream/zipball/e899757bb3df5ff6e95089132f32cd59aac2220a",
+                "reference": "e899757bb3df5ff6e95089132f32cd59aac2220a",
                 "shasum": ""
             },
             "require": {
@@ -5260,7 +5263,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.0-dev"
+                    "dev-master": "3.1-dev"
                 }
             },
             "autoload": {
@@ -5283,7 +5286,7 @@
             "keywords": [
                 "tokenizer"
             ],
-            "time": "2019-07-08T05:24:54+00:00"
+            "time": "2019-07-25T05:29:42+00:00"
         },
         {
             "name": "phpunit/phpunit",
@@ -6090,16 +6093,16 @@
         },
         {
             "name": "symfony/phpunit-bridge",
-            "version": "v4.3.2",
+            "version": "v4.3.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/phpunit-bridge.git",
-                "reference": "573b5c4a36a171b94cf031d8dc6cc568082190f1"
+                "reference": "5a7b67f3c407ad8199cedb10f71a36ab5ccd44ac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/phpunit-bridge/zipball/573b5c4a36a171b94cf031d8dc6cc568082190f1",
-                "reference": "573b5c4a36a171b94cf031d8dc6cc568082190f1",
+                "url": "https://api.github.com/repos/symfony/phpunit-bridge/zipball/5a7b67f3c407ad8199cedb10f71a36ab5ccd44ac",
+                "reference": "5a7b67f3c407ad8199cedb10f71a36ab5ccd44ac",
                 "shasum": ""
             },
             "require": {
@@ -6151,7 +6154,7 @@
             ],
             "description": "Symfony PHPUnit Bridge",
             "homepage": "https://symfony.com",
-            "time": "2019-06-26T12:14:14+00:00"
+            "time": "2019-07-18T13:23:37+00:00"
         },
         {
             "name": "theseer/tokenizer",
