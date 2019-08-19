@@ -44,6 +44,12 @@ services:
         - { name: knp_menu.menu_builder, method: userNavMenu, alias: wphp_user }
         - { name: knp_menu.menu_builder, method: postNavMenu, alias: wphp_post }
 
+    AppBundle\EventListener\RequestListener:
+        arguments:
+            $allowLogins: '%dhil.allow_logins%'
+        tags:
+            - { name: kernel.event_listener, event: kernel.request }
+
     AppBundle\Repository\EnRepository:
         factory: ['@doctrine.orm.default_entity_manager', getRepository]
         arguments:
