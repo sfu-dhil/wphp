@@ -302,7 +302,7 @@ class EstcMarcImporter {
         list($width, $height) = $this->guessDimensions($fields);
         $title->setSizeL($width);
         $title->setSizeW($height);
-
+        $title->setChecked(false);
         return $title;
     }
 
