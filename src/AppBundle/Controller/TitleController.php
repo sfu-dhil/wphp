@@ -44,6 +44,9 @@ class TitleController extends Controller implements PaginatorAwareInterface
     {
         $em = $this->getDoctrine()->getManager();
         $dql = 'SELECT e FROM AppBundle:Title e';
+        if($this->getUser() === null) {
+            $dql .= ' WHERE (e.finalcheck = 1 OR e.finalattempt = 1)';
+        }
         $query = $em->createQuery($dql);
 
         $form = $this->createForm(TitleSearchType::class, null, array(

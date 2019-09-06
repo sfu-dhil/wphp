@@ -3,7 +3,8 @@
 {% block pageheader %}
     <h1>Titles to Final Check</h1>
     {% if titles|length > 0 %}
-        Displaying {{ titles|length }} titles of {{ titles.getTotalItemCount }} total, published on or before 1800 where Verified and Attempted Verification are unchecked.
+        Displaying {{ titles|length }} titles of {{ titles.getTotalItemCount }} total
+        where Verified and Attempted Verification are unchecked.
     {% else %}
         No titles to display.
     {% endif %}
@@ -21,6 +22,8 @@
                 <tr>
                     <th>ID</th>
                     <th>Title</th>
+                    <th>Attempted Verification</th>
+                    <th>Verified</th>
                     <th>Pub Date</th>
                     <th>First Pub Date</th>
                 </tr>
@@ -38,6 +41,8 @@
                                 {{ title.title }}
                             </a>
                         </td>
+                        <td>{% if title.finalattempt %}Yes{% else %}No{% endif %}</td>
+                        <td>{% if title.finalcheck %}Yes{% else %}No{% endif %}</td>
                         <td>{{ title.pubdate }}</td>
                         <td>{{ title.dateOfFirstPublication }}</td>
                     </tr>

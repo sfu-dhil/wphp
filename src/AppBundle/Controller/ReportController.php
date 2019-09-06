@@ -59,7 +59,7 @@ class ReportController extends Controller implements PaginatorAwareInterface
      */
     public function titlesFinalCheckAction(Request $request, EntityManagerInterface $em)
     {
-        $dql = 'SELECT e FROM AppBundle:Title e WHERE e.finalcheck = 0 AND e.finalattempt = 0 AND e.pubdate <= 1800 ORDER BY e.id';
+        $dql = 'SELECT e FROM AppBundle:Title e WHERE e.finalcheck = 0 AND e.finalattempt = 0 ORDER BY e.id';
         $query = $em->createQuery($dql);
         $titles = $this->paginator->paginate($query->execute(), $request->query->getInt('page', 1), 25);
 
