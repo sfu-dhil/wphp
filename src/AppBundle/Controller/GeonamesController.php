@@ -190,14 +190,18 @@ class GeonamesController extends Controller  implements PaginatorAwareInterface 
      */
     public function showAction(Request $request, Geonames $geoname) {
         $em = $this->getDoctrine()->getManager();
-        $dql = 'SELECT t FROM AppBundle:Title t WHERE t.locationOfPrinting = :geoname ORDER BY t.title';
+        $dql = 'SELECT count(t.id) FROM AppBundle:Title t WHERE t.locationOfPrinting = :geoname';
+        if($this->getUser() === null) {
+            $dql .= ' AND (t.finalcheck = 1 OR t.finalattempt = 1)';
+        }
+        $dql .= ' ORDER BY t.title';
         $query = $em->createQuery($dql);
         $query->setParameter('geoname', $geoname);
-        $titles = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
+        $count = $query->getSingleScalarResult();
 
         return array(
             'geoname' => $geoname,
-            'titles' => $titles,
+            'count' => $count,
         );
     }
 
@@ -213,7 +217,11 @@ class GeonamesController extends Controller  implements PaginatorAwareInterface 
      */
     public function titlesAction(Request $request, Geonames $geoname) {
         $em = $this->getDoctrine()->getManager();
-        $dql = 'SELECT t FROM AppBundle:Title t WHERE t.locationOfPrinting = :geoname ORDER BY t.title';
+        $dql = 'SELECT t FROM AppBundle:Title t WHERE t.locationOfPrinting = :geoname';
+        if($this->getUser() === null) {
+            $dql .= ' AND (t.finalcheck = 1 OR t.finalattempt = 1)';
+        }
+        $dql .= ' ORDER BY t.title';
         $query = $em->createQuery($dql);
         $query->setParameter('geoname', $geoname);
         $titles = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);

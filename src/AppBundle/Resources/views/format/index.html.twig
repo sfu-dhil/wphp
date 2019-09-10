@@ -40,7 +40,7 @@
                     <td>{{ format.description|raw }}</td>
                     <td>
                         <a href="{{ path('format_show', { 'id': format.id }) }}">
-                            {{ repo.countTitles(format) }}
+                            {{ repo.countTitles(format, app.user) }}
                         </a>
                     </td>
                 </tr>

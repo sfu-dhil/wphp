@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Firm;
+use AppBundle\Entity\TitleFirmrole;
 use AppBundle\Form\Firm\FirmSearchType;
 use AppBundle\Form\Firm\FirmType;
 use AppBundle\Repository\FirmRepository;
@@ -212,8 +213,13 @@ class FirmController extends Controller implements PaginatorAwareInterface {
      * @return array
      */
     public function showAction(Request $request, Firm $firm) {
-        $em = $this->getDoctrine()->getManager();
         $firmRoles = $firm->getTitleFirmroles(true);
+        if(! $this->getUser()) {
+            $firmRoles = $firmRoles->filter(function (TitleFirmrole $tfr) {
+                $title = $tfr->getTitle();
+                return ($title->getFinalattempt() || $title->getFinalcheck());
+            });
+        }
         $pagination = $this->paginator->paginate($firmRoles, $request->query->getInt('page', 1), 25);
         return array(
             'firm' => $firm,

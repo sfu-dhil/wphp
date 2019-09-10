@@ -5,9 +5,9 @@
 {% endblock %} 
 
 {% block body %}
-    <p>There are {{ person.titleRoles|length }} titles associated with this person.<p>
+    <p>There are {{ titles|length }} titles associated with this person.<p>
     <ul class="list-group">
-        {% for tr in person.titleRoles %}
+        {% for tr in titles %}
             {% set title = tr.title %}
             <li class="list-group-item">{{ include('AppBundle:title:' ~ format ~ '.html.twig', {'title': title}) }}</li>            
             {% endfor %}

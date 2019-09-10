@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Person;
+use AppBundle\Entity\TitleRole;
 use AppBundle\Form\Person\PersonSearchType;
 use AppBundle\Form\Person\PersonType;
 use AppBundle\Repository\PersonRepository;
@@ -135,10 +136,16 @@ class PersonController extends Controller implements PaginatorAwareInterface {
      * @return array
      */
     public function exportAction(Request $request, Person $person) {
-        $titles = $person->getTitleRoles();
+        $titleRoles = $person->getTitleRoles();
+        if(! $this->getUser()) {
+            $titleRoles = $titleRoles->filter(function (TitleRole $tr){
+                $title = $tr->getTitle();
+                return ($title->getFinalattempt() || $title->getFinalcheck());
+            });
+        }
         return array(
             'person' => $person,
-            'titles' => $titles,
+            'titles' => $titleRoles,
             'format' => $request->query->get('format', 'mla'),
         );
     }
@@ -185,6 +192,12 @@ class PersonController extends Controller implements PaginatorAwareInterface {
      */
     public function showAction(Request $request, Person $person) {
         $titleRoles = $person->getTitleRoles();
+        if(! $this->getUser()) {
+            $titleRoles = $titleRoles->filter(function (TitleRole $tr){
+                $title = $tr->getTitle();
+                return ($title->getFinalattempt() || $title->getFinalcheck());
+            });
+        }
         $pagination = $this->paginator->paginate($titleRoles, $request->query->getInt('page', 1), 25);
 
         return array(

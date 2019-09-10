@@ -114,7 +114,11 @@ class GenreController extends Controller implements PaginatorAwareInterface {
      */
     public function showAction(Request $request, Genre $genre) {
         $em = $this->getDoctrine()->getManager();
-        $dql = 'SELECT t FROM AppBundle:Title t WHERE t.genre = :genre ORDER BY t.title';
+        $dql = 'SELECT t FROM AppBundle:Title t WHERE t.genre = :genre';
+        if($this->getUser() === null) {
+            $dql .= ' AND (t.finalcheck = 1 OR t.finalattempt = 1)';
+        }
+        $dql .= ' ORDER BY t.title';
         $query = $em->createQuery($dql);
         $query->setParameter('genre', $genre);
         $titles = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);

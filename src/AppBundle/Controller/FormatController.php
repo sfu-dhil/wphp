@@ -114,7 +114,12 @@ class FormatController extends Controller  implements PaginatorAwareInterface {
      */
     public function showAction(Request $request, Format $format) {
         $em = $this->getDoctrine()->getManager();
-        $dql = 'SELECT t FROM AppBundle:Title t WHERE t.format = :format ORDER BY t.title';
+        $dql = 'SELECT t FROM AppBundle:Title t WHERE t.format = :format';
+        if($this->getUser() === null) {
+            $dql .= ' AND (t.finalcheck = 1 OR t.finalattempt = 1)';
+        }
+        $dql .= ' ORDER BY t.title';
+
         $query = $em->createQuery($dql);
         $query->setParameter('format', $format);
         $titles = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);

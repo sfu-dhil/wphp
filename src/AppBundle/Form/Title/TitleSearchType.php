@@ -27,6 +27,8 @@ class TitleSearchType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder->setMethod('get');
         $em = $options['entity_manager'];
+        $user = $options['user'];
+
         $formats = $em->getRepository(Format::class)->findAll(array(
             'name' => 'ASC',
         ));
@@ -228,53 +230,55 @@ class TitleSearchType extends AbstractType {
             'required' => false,
         ));
 
-        $builder->add('checked', ChoiceType::class, array(
-            'label' => 'Hand-Verified',
-            'choices' => array(
-                'Yes' => 'Y',
-                'No' => 'N',
-            ),
-            'attr' => array(
-                'help_block' => 'Limit results to those that have been checked or not checked'
-            ),
-            'required' => false,
-            'expanded' => true,
-            'multiple' => false,
-            'empty_data' => null,
-            'data' => null,
-        ));
+        if($user) {
+            $builder->add('checked', ChoiceType::class, array(
+                'label'      => 'Hand-Verified',
+                'choices'    => array(
+                    'Yes' => 'Y',
+                    'No'  => 'N',
+                ),
+                'attr'       => array(
+                    'help_block' => 'Limit results to those that have been checked or not checked'
+                ),
+                'required'   => false,
+                'expanded'   => true,
+                'multiple'   => false,
+                'empty_data' => null,
+                'data'       => null,
+            ));
 
-        $builder->add('finalcheck', ChoiceType::class, array(
-            'label' => 'Verified',
-            'choices' => array(
-                'Yes' => 'Y',
-                'No' => 'N',
-            ),
-            'attr' => array(
-                'help_block' => 'Limit results to those that have been double checked or not checked'
-            ),
-            'required' => false,
-            'expanded' => true,
-            'multiple' => false,
-            'empty_data' => null,
-            'data' => null,
-        ));
+            $builder->add('finalcheck', ChoiceType::class, array(
+                'label'      => 'Verified',
+                'choices'    => array(
+                    'Yes' => 'Y',
+                    'No'  => 'N',
+                ),
+                'attr'       => array(
+                    'help_block' => 'Limit results to those that have been double checked or not checked'
+                ),
+                'required'   => false,
+                'expanded'   => true,
+                'multiple'   => false,
+                'empty_data' => null,
+                'data'       => null,
+            ));
 
-        $builder->add('finalattempt', ChoiceType::class, array(
-            'label' => 'Attempted Verification',
-            'choices' => array(
-                'Yes' => 'Y',
-                'No' => 'N',
-            ),
-            'attr' => array(
-                'help_block' => 'Limit results to those that someone has attempted to verify'
-            ),
-            'required' => false,
-            'expanded' => true,
-            'multiple' => false,
-            'empty_data' => null,
-            'data' => null,
-        ));
+            $builder->add('finalattempt', ChoiceType::class, array(
+                'label'      => 'Attempted Verification',
+                'choices'    => array(
+                    'Yes' => 'Y',
+                    'No'  => 'N',
+                ),
+                'attr'       => array(
+                    'help_block' => 'Limit results to those that someone has attempted to verify'
+                ),
+                'required'   => false,
+                'expanded'   => true,
+                'multiple'   => false,
+                'empty_data' => null,
+                'data'       => null,
+            ));
+        }
     }
 
     /**
@@ -284,7 +288,7 @@ class TitleSearchType extends AbstractType {
      */
     public function configureOptions(OptionsResolver $resolver) {
         parent::configureOptions($resolver);
-        $resolver->setRequired(array('entity_manager'));
+        $resolver->setRequired(array('entity_manager', 'user'));
     }
 
 }

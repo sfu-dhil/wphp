@@ -36,7 +36,7 @@ class TitleRepository extends EntityRepository
      * @param array $data
      * @return Query
      */
-    public function buildSearchQuery($data = array()) {
+    public function buildSearchQuery($data = array(), $user = null) {
         $qb = $this->createQueryBuilder('e');
         $qb->orderBy('e.pubdate');
         $qb->addOrderBy('e.title');
@@ -102,17 +102,21 @@ class TitleRepository extends EntityRepository
             $qb->andWhere('e.sizeL = :sizeL');
             $qb->setParameter('sizeL', $data['sizeL']);
         }
-        if(isset($data['checked'])) {
-            $qb->andWhere('e.checked = :checked');
-            $qb->setParameter('checked', $data['checked'] == 'Y');
-        }
-        if(isset($data['finalcheck'])) {
-            $qb->andWhere('e.finalcheck = :finalcheck');
-            $qb->setParameter('finalcheck', $data['finalcheck'] == 'Y');
-        }
-        if(isset($data['finalattempt'])) {
-            $qb->andWhere('e.finalattempt = :finalattempt');
-            $qb->setParameter('finalattempt', $data['finalattempt'] == 'Y');
+        if($user) {
+            if (isset($data['checked'])) {
+                $qb->andWhere('e.checked = :checked');
+                $qb->setParameter('checked', $data['checked'] == 'Y');
+            }
+            if (isset($data['finalcheck'])) {
+                $qb->andWhere('e.finalcheck = :finalcheck');
+                $qb->setParameter('finalcheck', $data['finalcheck'] == 'Y');
+            }
+            if (isset($data['finalattempt'])) {
+                $qb->andWhere('e.finalattempt = :finalattempt');
+                $qb->setParameter('finalattempt', $data['finalattempt'] == 'Y');
+            }
+        } else {
+            $qb->andWhere('e.finalcheck = 1 OR e.finalattempt = 1');
         }
         if (isset($data['pubdate']) && $data['pubdate']) {
             $m = array();

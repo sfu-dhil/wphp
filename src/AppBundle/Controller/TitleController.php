@@ -12,6 +12,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -51,7 +52,8 @@ class TitleController extends Controller implements PaginatorAwareInterface
 
         $form = $this->createForm(TitleSearchType::class, null, array(
             'action' => $this->generateUrl('title_search'),
-            'entity_manager' => $em
+            'entity_manager' => $em,
+            'user' => $this->getUser(),
         ));
         $titles = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25, array(
             'defaultSortFieldName' => ['e.title', 'e.pubdate'],
@@ -102,6 +104,9 @@ class TitleController extends Controller implements PaginatorAwareInterface
     {
         $em = $this->getDoctrine()->getManager();
         $dql = 'SELECT e FROM AppBundle:Title e ORDER BY e.id';
+        if($this->getUser() === null) {
+            $dql .= ' WHERE (e.finalcheck = 1 OR e.finalattempt = 1)';
+        }
         $query = $em->createQuery($dql);
         $iterator = $query->iterate();
         $tmpPath = tempnam(sys_get_temp_dir(), 'wphp-export-');
@@ -165,25 +170,6 @@ class TitleController extends Controller implements PaginatorAwareInterface
     }
 
     /**
-     * Search for Title entities.
-     *
-     * @Route("/jump", name="title_jump", methods={"GET"})
-     * @Template()
-     * @param Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function jumpAction(Request $request)
-    {
-        $q = $request->query->get('q');
-        if ($q) {
-            return $this->redirect($this->generateUrl('title_show', array('id' => $q)));
-        } else {
-            return $this->redirect($this->generateUrl('title_index', array('id' => $q)));
-        }
-    }
-
-    /**
      * Full text search for Title entities.
      *
      * @Route("/search", name="title_search", methods={"GET"})
@@ -196,7 +182,7 @@ class TitleController extends Controller implements PaginatorAwareInterface
     public function searchAction(Request $request, TitleRepository $repo)
     {
         $em = $this->getDoctrine()->getManager();
-        $form = $this->createForm(TitleSearchType::class, null, array('entity_manager' => $em));
+        $form = $this->createForm(TitleSearchType::class, null, array('entity_manager' => $em, 'user' => $this->getUser()));
         $form->handleRequest($request);
         $titles = array();
         $submitted = false;
@@ -205,7 +191,7 @@ class TitleController extends Controller implements PaginatorAwareInterface
             $data = array_filter($form->getData());
             if (count($data) > 2) {
                 $submitted = true;
-                $query = $repo->buildSearchQuery($data);
+                $query = $repo->buildSearchQuery($data, $this->getUser());
                 $titles = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
             }
         }
@@ -234,7 +220,7 @@ class TitleController extends Controller implements PaginatorAwareInterface
         $titles = array();
 
         if ($form->isValid()) {
-            $query = $repo->buildSearchQuery($form->getData());
+            $query = $repo->buildSearchQuery($form->getData(), $this->getUser());
             $titles = $query->execute();
         }
         return array(
@@ -332,8 +318,12 @@ class TitleController extends Controller implements PaginatorAwareInterface
      */
     public function showAction(Title $title, SourceLinker $linker)
     {
+
+        if( ! $this->getUser() && ! $title->getFinalattempt() && ! $title->getFinalcheck()) {
+            throw new AccessDeniedHttpException("This title has not been verified and is not available to the public.");
+        }
         return array(
-            'title' => $title,
+            'title'  => $title,
             'linker' => $linker,
         );
     }
