@@ -9,7 +9,7 @@
     <ul class="list-group">
         {% for tr in titles %}
             {% set title = tr.title %}
-            <li class="list-group-item">{{ include('AppBundle:title:' ~ format ~ '.html.twig', {'title': title}) }}</li>            
+            <li class="list-group-item">{{ include('AppBundle:partials/citation:' ~ format ~ '.html.twig', {'title': title}) }}</li>
             {% endfor %}
     </ul>
 {% endblock %}

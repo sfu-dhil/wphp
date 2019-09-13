@@ -52,14 +52,14 @@ class PersonType extends AbstractType {
             ),
         ));
         $builder->add('dob', null, array(
-            'label' => 'Birth Date',
+            'label' => 'Date of Birth',
             'required' => false,
             'attr' => array(
                 'help_block' => 'Person’s date of birth as YYYY-MM-DD',
             ),
         ));
         $builder->add('cityOfBirth', Select2EntityType::class, array(
-            'label' => 'Birth Place',
+            'label' => 'Place of Birth',
             'multiple' => false,
             'remote_route' => 'geonames_typeahead',
             'class' => Geonames::class,
@@ -80,7 +80,7 @@ class PersonType extends AbstractType {
             ),
         ));
         $builder->add('cityOfDeath', Select2EntityType::class, array(
-            'label' => 'Death Place',
+            'label' => 'Place of Death',
             'multiple' => false,
             'remote_route' => 'geonames_typeahead',
             'class' => Geonames::class,

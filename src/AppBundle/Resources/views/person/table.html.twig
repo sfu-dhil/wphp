@@ -3,7 +3,7 @@
         <tr>
             {% include 'AppBundle:partials:sortable.html.twig' with {
                 'pagination': people,
-                'header': 'Id',
+                'header': 'ID',
                 'field': 'e.id',
             } %}
             {% include 'AppBundle:partials:sortable.html.twig' with {
@@ -23,12 +23,12 @@
             } %}
             {% include 'AppBundle:partials:sortable.html.twig' with {
                 'pagination': people,
-                'header': 'Date of birth',
+                'header': 'Date of Birth',
                 'field': ['e.dob', 'e.lastName', 'e.firstName'],
             } %}
             {% include 'AppBundle:partials:sortable.html.twig' with {
                 'pagination': people,
-                'header': 'Date of death',
+                'header': 'Date of Death',
                 'field': ['e.dod', 'e.lastName', 'e.firstName'],
             } %}
         </tr>

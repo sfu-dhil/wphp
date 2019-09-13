@@ -37,8 +37,8 @@ class PersonSearchType extends AbstractType {
             'choices' => array(
                 'Last Name (A to Z)' => 'lastname_asc',
                 'Last Name (Z to A)' => 'lastname_desc',
-                'First name (A to Z)' => 'firstname_asc',
-                'First name (Z to A)' => 'firstname_desc',
+                'First Name (A to Z)' => 'firstname_asc',
+                'First Name (Z to A)' => 'firstname_desc',
                 'Gender (Unknown, Female, Male)' => 'gender_asc',
                 'Gender (Male, Female, Unknown)' => 'gender_desc',
                 'Birth Date (Oldest First)' => 'birth_asc',
@@ -82,7 +82,7 @@ class PersonSearchType extends AbstractType {
         ));
 
         $builder->add('dob', TextType::class, array(
-            'label' => 'Birth Year',
+            'label' => 'Date of Birth',
             'required' => false,
             'attr' => array(
                 'help_block' => 'Enter a year (eg <kbd>1795</kbd>) or range of years (<kbd>1790-1800</kbd>) or a partial range of years (<kbd>*-1800</kbd>)',
@@ -90,7 +90,7 @@ class PersonSearchType extends AbstractType {
         ));
 
         $builder->add('dod', TextType::class, array(
-            'label' => 'Death Year',
+            'label' => 'Date of Death',
             'required' => false,
             'attr' => array(
                 'help_block' => 'Enter a year (eg <kbd>1795</kbd>) or range of years (<kbd>1790-1800</kbd>) or a partial range of years (<kbd>*-1800</kbd>)',
@@ -98,13 +98,13 @@ class PersonSearchType extends AbstractType {
         ));
 
         $builder->add('birthplace', TextType::class, array(
-            'label' => 'Birth Place',
+            'label' => 'Place of Birth',
             'required' => false,
 
         ));
 
         $builder->add('deathplace', TextType::class, array(
-            'label' => 'Death Place',
+            'label' => 'Place of Death',
             'required' => false,
 
         ));
@@ -124,7 +124,7 @@ class PersonSearchType extends AbstractType {
             ),
         ));
         $builder->add('imageUrl', TextType::class, array(
-            'label' => 'Death Place',
+            'label' => 'Image URL',
             'required' => false,
             'attr' => array(
                 'help_block' => 'Enter an image URL to check if we have a corresponding record. Enter <kbd>blank</kbd> to find records which do not have image URLs.',

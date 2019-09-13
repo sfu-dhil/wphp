@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Firm;
 use AppBundle\Entity\TitleFirmrole;
+use AppBundle\Entity\Person;
 use AppBundle\Form\Firm\FirmSearchType;
 use AppBundle\Form\Firm\FirmType;
 use AppBundle\Repository\FirmRepository;
@@ -224,6 +225,30 @@ class FirmController extends Controller implements PaginatorAwareInterface {
         return array(
             'firm' => $firm,
             'pagination' => $pagination,
+        );
+    }
+
+    /**
+     * Exports a firm's titles in a format.
+     *
+     * @Route("/{id}/export", name="firm_export", methods={"GET","POST"})
+     * @Template()
+     * @param Request $request
+     * @param Firm $firm
+     * @return array
+     */
+    public function exportAction(Request $request, Firm $firm) {
+        $firmRoles = $firm->getTitleFirmroles(true);
+        if(! $this->getUser()) {
+            $firmRoles = $firmRoles->filter(function (TitleFirmrole $tfr) {
+                $title = $tfr->getTitle();
+                return ($title->getFinalattempt() || $title->getFinalcheck());
+            });
+        }
+        return array(
+            'firm' => $firm,
+            'firmRoles' => $firmRoles,
+            'format' => $request->query->get('format', 'mla'),
         );
     }
 

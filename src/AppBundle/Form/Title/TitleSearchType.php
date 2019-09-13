@@ -81,7 +81,7 @@ class TitleSearchType extends AbstractType {
             ),
         ));
         $builder->add('signed_author', TextType::class, array(
-            'label' => 'Signed author',
+            'label' => 'Signed Author',
             'required' => false,
             'attr' => array(
                 'help_block' => 'Author attribution as it appears on the title page or at the end of the preface (Ex. “By a lady,” “By the author of“)'
@@ -103,7 +103,7 @@ class TitleSearchType extends AbstractType {
         ));
 
         $builder->add('self_published', ChoiceType::class, array(
-            'label' => 'Self Published',
+            'label' => 'Self-Published',
             'choices' => array(
                 'Yes' => 'Y',
                 'No' => 'N',
@@ -127,14 +127,14 @@ class TitleSearchType extends AbstractType {
             ),
         ));
         $builder->add('pubdate', TextType::class, array(
-            'label' => 'Publication Year',
+            'label' => 'Date of Publication',
             'required' => false,
             'attr' => array(
                 'help_block' => 'Enter a year (eg <kbd>1795</kbd>) or range of years (<kbd>1790-1800</kbd>) or a partial range of years (<kbd>*-1800</kbd>)',
             ),
         ));
         $builder->add('date_of_first_publication', TextType::class, array(
-            'label' => 'Date Of First Publication',
+            'label' => 'Date of First Publication',
             'required' => false,
             'attr' => array(
                 'help_block' => 'Enter a year (eg <kbd>1795</kbd>) or range of years (<kbd>1790-1800</kbd>) or a partial range of years (<kbd>*-1800</kbd>)',
@@ -159,7 +159,7 @@ class TitleSearchType extends AbstractType {
             'required' => false,
         ));
         $builder->add('location', TextType::class, array(
-            'label' => 'Printing Location',
+            'label' => 'Location of Printing',
             'required' => false,
             'attr' => array(
                 'help_block' => 'Geotagged location as indicated by the imprint'
