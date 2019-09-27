@@ -36,7 +36,7 @@ class SourceLinkerTest extends BaseTestCase
         );
     }
 
-    protected function setUp()
+    protected function setUp() : void
     {
         parent::setUp();
         $this->checker = $this->createMock(RoleChecker::class);
@@ -78,7 +78,7 @@ class SourceLinkerTest extends BaseTestCase
 
     public function testJacksonAnon() {
         $this->checker->method('hasRole')->willReturn(false);
-        $this->assertNull($this->linker->jackson('abc'));
+        $this->assertStringEndsWith('details/abc', $this->linker->jackson('abc'));
     }
 
     public function testJacksonUser() {
@@ -86,7 +86,7 @@ class SourceLinkerTest extends BaseTestCase
     }
 
     public function testJacksonNotFound() {
-        $this->assertNull($this->linker->jackson('abc-123456'));
+        $this->assertStringEndsWith('details/abc123', $this->linker->jackson('abc123'));
     }
 
     public function testEnAnon() {
@@ -145,7 +145,7 @@ class SourceLinkerTest extends BaseTestCase
             [null, 'Orlando', 'abcdef'],
 
             ['{resource/jackson/1$}', 'Jackson Bibliography', '1234'],
-            [null, 'Jackson Bibliography', 'abcdef'],
+            ['{details/abcdef$}', 'Jackson Bibliography', 'abcdef'],
 
             ['{resource/en/1$}', 'The English Novel 1770-1829', 'en-0'],
             [null, 'The English Novel 1770-1829', 'abcdef'],

@@ -10,14 +10,20 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 
 /**
- * Description of MarcManager
- *
- * @author michael
+ * Manage MARC records.
  */
 class MarcManager {
 
+    /**
+     * @var EntityManagerInterface
+     */
     private $em;
 
+    /**
+     * MarcManager constructor.
+     *
+     * @param EntityManagerInterface $em
+     */
     public function __construct(EntityManagerInterface $em) {
         $this->em = $em;
     }
@@ -59,6 +65,14 @@ class MarcManager {
         return null;
     }
 
+    /**
+     * Get a field value for a record.
+     *
+     * @param EstcMarc|OsborneMarc $object
+     * @param string $field
+     *
+     * @return array
+     */
     public function getFieldValues($object, $field) {
         $repo = $this->em->getRepository(get_class($object));
         $rows = $repo->findBy(array(

@@ -39,7 +39,7 @@
                 <table class="table table-bordered table-condensed table-hover table-striped">
                     <tbody>
                          <tr>
-                            <th data-toggle="popover" data-content="WPHP database ID of the title">Id</th>
+                            <th data-toggle="popover" data-content="WPHP database ID of the title">ID</th>
                             <td>{{ title.id }}</td>
                         </tr>
                         <tr>
@@ -57,7 +57,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <th data-toggle="popover"  data-content="Author attribution from the title page or the end of the preface">Signed author</th>
+                            <th data-toggle="popover"  data-content="Author attribution from the title page or the end of the preface">Signed Author</th>
                             <td>{{ title.signedAuthor }}</td>
                         </tr>
                          <tr>
@@ -75,7 +75,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <th data-toggle="popover"  data-content="Indicates if the title was published by the author">Self published</th>
+                            <th data-toggle="popover"  data-content="Indicates if the title was published by the author">Self-published</th>
                             <td>{% if title.selfpublished is null %}Unknown{% elseif title.selfpublished %}Yes{% else %}No{% endif %}</td>
                         </tr>
                         <tr>
@@ -101,7 +101,7 @@
                             </tr>
                         {% endif %}
                         <tr>
-                            <th data-toggle="popover"  data-content="Date (year) that the work was first published">Date of first publication</th>
+                            <th data-toggle="popover"  data-content="Date (year) that the work was first published">Date of First Publication</th>
                             <td>{{ title.dateOfFirstPublication }}</td>
                         </tr>
                         <tr>
@@ -113,7 +113,7 @@
                             <td>{{ title.colophon }}</td>
                         </tr>
                         <tr>
-                            <th data-toggle="popover"  data-content="Geotagged location as indicated by the imprint">Location of printing</th>
+                            <th data-toggle="popover"  data-content="Geotagged location as indicated by the imprint">Location of Printing</th>
                             <td>
                                 {% if title.locationOfPrinting %}
                                     <a href="{{ path('geonames_show', {'id': title.locationOfPrinting.geonameid}) }}">
@@ -160,7 +160,7 @@
                             <td>{{ title.pricePence }}</td>
                         </tr>
                         <tr>
-                            <th data-toggle="popover">Total price (in pence)</th>
+                            <th data-toggle="popover">Total Price (in pence)</th>
                             <td>
                                 {% if title.totalPrice > 0 %}
                                     {{ title.totalPrice }}
@@ -187,7 +187,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <th data-toggle="popover"  data-content="Call numbers for location in various libraries">Shelf marks</th>
+                            <th data-toggle="popover"  data-content="Call numbers for location in various libraries">Shelfmarks</th>
                             <td>
                                 {% for mark in title.shelfmark|split(';') %}
                                     {{ mark }}<br/>
@@ -199,7 +199,7 @@
                             <td>{{ title.notes }}</td>
                         </tr>
                         <tr>
-                            <th data-toggle="popover"  data-content="Indicates that a physical copy of the text has been consulted">Hand-verified</th>
+                            <th data-toggle="popover"  data-content="Indicates that a physical copy of the text has been consulted">Hand-Verified</th>
                             <td>{% if title.checked %}Yes{% else %}No{% endif %}</td>
                         </tr>
                         <tr>
@@ -229,22 +229,22 @@
         <div class="tab-content">
             <div id="mla" class="tab-pane fade in active">
                 <div class="well">
-                    <p>{% include "AppBundle:title:mla.html.twig" with {'title': title} %}</p>
+                    <p>{% include "AppBundle:partials/citation:mla.html.twig" with {'title': title} %}</p>
                 </div>
             </div>
             <div id="apa" class="tab-pane fade">
                 <div class="well">
-                    <p>{% include "AppBundle:title:apa.html.twig" with {'title': title} %}</p>
+                    <p>{% include "AppBundle:partials/citation:apa.html.twig" with {'title': title} %}</p>
                 </div>
             </div>
             <div id="chicago" class="tab-pane fade">
                 <div class="well">
-                    <p>{% include "AppBundle:title:chicago.html.twig" with {'title': title} %}</p>
+                    <p>{% include "AppBundle:partials/citation:chicago.html.twig" with {'title': title} %}</p>
                 </div>
             </div>
             <div id="bibtex" class="tab-pane fade">
                 <div class="well">
-                    <pre>{% include "AppBundle:title:bibtex.html.twig" with {'title': title} %}</pre>
+                    <pre>{% include "AppBundle:partials/citation:bibtex.html.twig" with {'title': title} %}</pre>
                 </div>
             </div>
         </div>

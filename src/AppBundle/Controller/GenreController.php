@@ -6,8 +6,8 @@ use AppBundle\Entity\Genre;
 use AppBundle\Form\GenreType;
 use AppBundle\Repository\GenreRepository;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -26,10 +26,13 @@ class GenreController extends Controller implements PaginatorAwareInterface {
     /**
      * Lists all Genre entities.
      *
-     * @Route("/", name="genre_index")
-     * @Method("GET")
+     * @Route("/", name="genre_index", methods={"GET"})
      * @Template()
      * @param Request $request
+     *
+     * @param GenreRepository $repo
+     *
+     * @return array
      */
     public function indexAction(Request $request, GenreRepository $repo) {
         $em = $this->getDoctrine()->getManager();
@@ -44,11 +47,14 @@ class GenreController extends Controller implements PaginatorAwareInterface {
     }
 
     /**
+     * Typeahead action for an editor widget.
+     *
      * @param Request $request
-     * @Security("has_role('ROLE_CONTENT_ADMIN')")
-     * @Route("/typeahead", name="genre_typeahead")
-     * @Method("GET")
+     * @param GenreRepository $repo
+     *
      * @return JsonResponse
+     * @Security("has_role('ROLE_CONTENT_ADMIN')")
+     * @Route("/typeahead", name="genre_typeahead", methods={"GET"})
      */
     public function typeaheadAction(Request $request, GenreRepository $repo) {
         $q = $request->query->get('q');
@@ -69,11 +75,12 @@ class GenreController extends Controller implements PaginatorAwareInterface {
     /**
      * Creates a new Genre entity.
      *
-     * @Route("/new", name="genre_new")
-     * @Method({"GET", "POST"})
+     * @Route("/new", name="genre_new", methods={"GET", "POST"})
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
      * @Template()
      * @param Request $request
+     *
+     * @return array|RedirectResponse
      */
     public function newAction(Request $request) {
         $genre = new Genre();
@@ -98,14 +105,20 @@ class GenreController extends Controller implements PaginatorAwareInterface {
     /**
      * Finds and displays a Genre entity.
      *
-     * @Route("/{id}", name="genre_show")
-     * @Method("GET")
+     * @Route("/{id}", name="genre_show", methods={"GET"})
      * @Template()
+     * @param Request $request
      * @param Genre $genre
+     *
+     * @return array
      */
     public function showAction(Request $request, Genre $genre) {
         $em = $this->getDoctrine()->getManager();
-        $dql = 'SELECT t FROM AppBundle:Title t WHERE t.genre = :genre ORDER BY t.title';
+        $dql = 'SELECT t FROM AppBundle:Title t WHERE t.genre = :genre';
+        if($this->getUser() === null) {
+            $dql .= ' AND (t.finalcheck = 1 OR t.finalattempt = 1)';
+        }
+        $dql .= ' ORDER BY t.title';
         $query = $em->createQuery($dql);
         $query->setParameter('genre', $genre);
         $titles = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
@@ -119,12 +132,13 @@ class GenreController extends Controller implements PaginatorAwareInterface {
     /**
      * Displays a form to edit an existing Genre entity.
      *
-     * @Route("/{id}/edit", name="genre_edit")
-     * @Method({"GET", "POST"})
+     * @Route("/{id}/edit", name="genre_edit", methods={"GET","POST"})
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
      * @Template()
      * @param Request $request
      * @param Genre $genre
+     *
+     * @return array|RedirectResponse
      */
     public function editAction(Request $request, Genre $genre) {
         $editForm = $this->createForm(GenreType::class, $genre);
@@ -146,11 +160,12 @@ class GenreController extends Controller implements PaginatorAwareInterface {
     /**
      * Deletes a Genre entity.
      *
-     * @Route("/{id}/delete", name="genre_delete")
-     * @Method("GET")
+     * @Route("/{id}/delete", name="genre_delete", methods={"GET"})
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
      * @param Request $request
      * @param Genre $genre
+     *
+     * @return RedirectResponse
      */
     public function deleteAction(Request $request, Genre $genre) {
         $em = $this->getDoctrine()->getManager();

@@ -5,6 +5,7 @@ namespace AppBundle\Menu;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
+use Nines\BlogBundle\Entity\Post;
 use Nines\BlogBundle\Entity\PostCategory;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
@@ -21,6 +22,11 @@ class Builder implements ContainerAwareInterface
     // U+25BE, black down-pointing small triangle.
     const CARET = ' ▾';
 
+    /**
+     * List of spotlight menu items.
+     *
+     * @var array
+     */
     private $spotlightMenuItems;
 
     /**
@@ -45,6 +51,12 @@ class Builder implements ContainerAwareInterface
 
     /**
      * Build the menu builder.
+     *
+     * @param array $spotlightMenuItems
+     * @param EntityManagerInterface $em
+     * @param FactoryInterface $factory
+     * @param AuthorizationCheckerInterface $authChecker
+     * @param TokenStorageInterface $tokenStorage
      */
     public function __construct($spotlightMenuItems, EntityManagerInterface $em, FactoryInterface $factory, AuthorizationCheckerInterface $authChecker, TokenStorageInterface $tokenStorage)
     {
@@ -55,6 +67,13 @@ class Builder implements ContainerAwareInterface
         $this->tokenStorage = $tokenStorage;
     }
 
+    /**
+     * Check if the current user is both logged in and granted a role.
+     *
+     * @param string $role
+     *
+     * @return bool
+     */
     private function hasRole($role)
     {
         if (!$this->tokenStorage->getToken()) {
@@ -66,7 +85,6 @@ class Builder implements ContainerAwareInterface
     /**
      * Build the navigation menu and return it.
      *
-     * @param FactoryInterface $factory
      * @param array $options
      * @return ItemInterface
      */
@@ -146,7 +164,6 @@ class Builder implements ContainerAwareInterface
     /**
      * Build the search menu and return it.
      *
-     * @param FactoryInterface $factory
      * @param array $options
      * @return ItemInterface
      */
@@ -188,35 +205,8 @@ class Builder implements ContainerAwareInterface
                 'uri' => '#',
             ));
 
-            $search->addChild('First Pub Dates', array(
-                'route' => 'report_first_pub_date',
-            ));
-            $search->addChild('Titles with Bad ESTC IDs', array(
-                'route' => 'report_title_bad_estc',
-            ));
             $search->addChild('Titles to Check', array(
                 'route' => 'report_titles_check',
-            ));
-            $search->addChild('Firms to Check', array(
-                'route' => 'report_firms_check',
-            ));
-            $search->addChild('Persons to Check', array(
-                'route' => 'report_person_check',
-            ));
-            $search->addChild('Titles with Missing Source IDs', array(
-                'route' => 'report_title_source_id_null'
-            ));
-            $search->addChild('Titles without Genre', array(
-                'route' => 'report_title_without_genre'
-            ));
-            $search->addChild('Titles without Volumes', array(
-                'route' => 'report_title_without_volume'
-            ));
-            $search->addChild('Titles without Firms', array(
-                'route' => 'report_title_without_firm'
-            ));
-            $search->addChild('Titles without Sources', array(
-                'route' => 'report_title_without_source'
             ));
         }
         return $menu;
@@ -225,8 +215,8 @@ class Builder implements ContainerAwareInterface
     /**
      * Build the spotlight menu and return it.
      *
-     * @param FactoryInterface $factory
      * @param array $options
+     *
      * @return ItemInterface
      */
     public function spotlightMenu(array $options)
@@ -263,6 +253,11 @@ class Builder implements ContainerAwareInterface
         return $menu;
     }
 
+    /**
+     * Get the currently logged in user.
+     *
+     * @return object|string|null
+     */
     private function getUser() {
         if( ! $this->hasRole('ROLE_USER')) {
             return null;
@@ -343,4 +338,91 @@ class Builder implements ContainerAwareInterface
 
         return $menu;
     }
+
+
+    /**
+     * Build a menu for blog posts.
+     *
+     * @param array $options
+     * @return ItemInterface
+     */
+    public function postNavMenu(array $options) {
+        $menu = $this->factory->createItem('root');
+        $menu->setChildrenAttributes(array(
+            'class' => 'nav navbar-nav',
+        ));
+        $menu->setAttribute('dropdown', true);
+
+        $title = 'Announcements';
+        if(isset($options['title'])) {
+            $title = $options['title'];
+        }
+
+        $menu->addChild('announcements', array(
+            'uri' => '#',
+            'label' => $title . self::CARET
+        ));
+        $menu['announcements']->setAttribute('dropdown', true);
+        $menu['announcements']->setLinkAttribute('class', 'dropdown-toggle');
+        $menu['announcements']->setLinkAttribute('data-toggle', 'dropdown');
+        $menu['announcements']->setChildrenAttribute('class', 'dropdown-menu');
+
+        $status = $this->em->getRepository('NinesBlogBundle:PostStatus')->findOneBy(array(
+            'public' => true,
+        ));
+        $qb = $this->em->createQueryBuilder();
+        $qb->select('p')
+            ->from(Post::class, 'p')
+            ->innerJoin(PostCategory::class, 'pc')
+            ->where('pc.label NOT IN (:spotlightCategories)')
+            ->orderBy('p.created', 'DESC')
+            ->setMaxResults(10)
+            ->setParameter(':spotlightCategories', $this->spotlightMenuItems);
+
+        $posts = $qb->getQuery()->execute();
+        foreach ($posts as $post) {
+            if(in_array($post->getCategory()->getName(), $this->spotlightMenuItems)) {
+                continue;
+            }
+            $menu['announcements']->addChild($post->getTitle(), array(
+                'route' => 'post_show',
+                'routeParameters' => array(
+                    'id' => $post->getId(),
+                )
+            ));
+        }
+        $menu['announcements']->addChild('divider', array(
+            'label' => '',
+        ));
+        $menu['announcements']['divider']->setAttributes(array(
+            'role' => 'separator',
+            'class' => 'divider',
+        ));
+
+        $menu['announcements']->addChild('All Announcements', array(
+            'route' => 'post_index',
+        ));
+
+        if ($this->hasRole('ROLE_BLOG_ADMIN')) {
+            $menu['announcements']->addChild('divider', array(
+                'label' => '',
+            ));
+            $menu['announcements']['divider']->setAttributes(array(
+                'role' => 'separator',
+                'class' => 'divider',
+            ));
+
+            $menu['announcements']->addChild('post_category', array(
+                'label' => 'Post Categories',
+                'route' => 'post_category_index',
+            ));
+            $menu['announcements']->addChild('post_status', array(
+                'label' => 'Post Statuses',
+                'route' => 'post_status_index',
+            ));
+        }
+
+        return $menu;
+    }
+
 }

@@ -8,30 +8,35 @@ use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
 /**
- * LoadFeedback form.
+ * Load some test feedback data.
  */
 class LoadFeedback extends Fixture implements FixtureGroupInterface
 {
     /**
      * {@inheritDoc}
+     *
+     * @param ObjectManager $manager
      */
-    public function load(ObjectManager $em)
+    public function load(ObjectManager $manager)
     {
-        for($i = 0; $i < 4; $i++) {
+        for ($i = 0; $i < 4; $i++) {
             $fixture = new Feedback();
             $fixture->setName('Name ' . $i);
             $fixture->setEmail('Email ' . $i);
             $fixture->setContent('Content ' . $i);
             
-            $em->persist($fixture);
+            $manager->persist($fixture);
             $this->setReference('feedback.' . $i, $fixture);
         }
         
-        $em->flush();
-        
+        $manager->flush();
     }
-        
-    public static function getGroups(): array {
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function getGroups(): array
+    {
         return array('test');
     }
 }

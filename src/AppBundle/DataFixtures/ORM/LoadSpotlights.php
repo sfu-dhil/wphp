@@ -1,11 +1,5 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 namespace AppBundle\DataFixtures\ORM;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -19,13 +13,18 @@ use Nines\BlogBundle\Entity\PostCategory;
 use Nines\BlogBundle\Entity\PostStatus;
 
 /**
- * Description of LoadSpotlightCategories
- *
- * @author mjoyce
+ * Load some test spotlights.
  */
-class LoadSpotlights extends Fixture implements DependentFixtureInterface, FixtureGroupInterface {
+class LoadSpotlights extends Fixture implements DependentFixtureInterface, FixtureGroupInterface
+{
 
-    public function load(ObjectManager $manager) {
+    /**
+     * {@inheritdoc}
+     *
+     * @param ObjectManager $manager
+     */
+    public function load(ObjectManager $manager)
+    {
         $lipsum = new LoremIpsum();
         $status = $manager->getRepository(PostStatus::class)->findOneBy(array(
             'name' => 'published',
@@ -49,15 +48,22 @@ class LoadSpotlights extends Fixture implements DependentFixtureInterface, Fixtu
         $manager->flush();
     }
 
-    public static function getGroups(): array {
+    /**
+     * {@inheritdoc}
+     */
+    public static function getGroups(): array
+    {
         return array('setup');
     }
 
-    public function getDependencies(): array {
+    /**
+     * {@inheritdoc}
+     */
+    public function getDependencies(): array
+    {
         return array(
             LoadSpotlightCategories::class,
             LoadPostStatus::class,
         );
     }
-
 }

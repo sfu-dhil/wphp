@@ -12,12 +12,25 @@ use Doctrine\ORM\EntityRepository;
  */
 class EstcMarcRepository extends EntityRepository
 {
+
+    /**
+     * Create a query to return records for the index page.
+     *
+     * @return \Doctrine\ORM\Query
+     */
     public function indexQuery() {
         $qb = $this->createQueryBuilder('m');
         $qb->where("m.field = 'ldr'");
         return $qb->getQuery();
     }
 
+    /**
+     * Execute a search query over the 245 and 100 fields.
+     *
+     * @param string $q
+     *
+     * @return mixed
+     */
     public function searchQuery($q) {
         $dql = <<<"ENDSQL"
 SELECT e.titleId, max(MATCH (e.fieldData) AGAINST (:q BOOLEAN)) as HIDDEN score
@@ -30,6 +43,13 @@ ENDSQL;
         return $query->execute();
     }
 
+    /**
+     * Run a search query over the 260 field (imprint).
+     *
+     * @param string $q
+     *
+     * @return mixed
+     */
     public function imprintSearchQuery($q) {
         $dql = <<<"ENDSQL"
 SELECT e.titleId, max(MATCH (e.fieldData) AGAINST (:q BOOLEAN)) as HIDDEN score

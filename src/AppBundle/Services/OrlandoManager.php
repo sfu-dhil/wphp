@@ -3,14 +3,20 @@
 namespace AppBundle\Services;
 
 /**
- * Description of OrlandoManager
- *
- * @author michael
+ * Manage Orlando records.
  */
 class OrlandoManager {
 
     const DELIM = ' || ';
 
+    /**
+     * Get the named field for the Orlando data.
+     *
+     * @param string $data
+     * @param string $name
+     *
+     * @return array
+     */
     public function getField($data, $name = 'standard') {
         $name = strtolower($name);
         $fields = [];

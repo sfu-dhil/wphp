@@ -1,11 +1,5 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 namespace AppBundle\DataFixtures\ORM;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -14,11 +8,10 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Nines\BlogBundle\Entity\PostCategory;
 
 /**
- * Description of LoadSpotlightCategories
- *
- * @author mjoyce
+ * Load some test spotlight categories.
  */
-class LoadSpotlightCategories extends Fixture implements FixtureGroupInterface {
+class LoadSpotlightCategories extends Fixture implements FixtureGroupInterface
+{
 
     const DATA = array(
         [
@@ -35,7 +28,13 @@ class LoadSpotlightCategories extends Fixture implements FixtureGroupInterface {
         ],
     );
 
-    public function load(ObjectManager $manager) {
+    /**
+     * {@inheritdoc}
+     *
+     * @param ObjectManager $manager
+     */
+    public function load(ObjectManager $manager)
+    {
         foreach (self::DATA as $data) {
             $category = $manager->getRepository(PostCategory::class)->findOneBy(array(
                 'name' => $data['name'],
@@ -50,8 +49,11 @@ class LoadSpotlightCategories extends Fixture implements FixtureGroupInterface {
         $manager->flush();
     }
 
-    public static function getGroups(): array {
+    /**
+     * {@inheritdoc}
+     */
+    public static function getGroups(): array
+    {
         return array('setup');
     }
-
 }

@@ -21,7 +21,7 @@ class TitleControllerTest extends BaseTestCase
     public function testAnonIndex() {
         $client = $this->makeClient();
         $crawler = $client->request('GET', '/title/');
-        $this->assertEquals(302, $client->getResponse()->getStatusCode());
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertEquals(0, $crawler->selectLink('New')->count());
     }
 
@@ -50,7 +50,7 @@ class TitleControllerTest extends BaseTestCase
         $crawler = $client->request('GET', '/title/typeahead?q=title');
         $this->assertEquals(302, $client->getResponse()->getStatusCode());
         $this->assertEquals('text/html; charset=UTF-8', $client->getResponse()->headers->get('Content-Type'));
-        $this->assertContains('Redirecting', $client->getResponse()->getContent());
+        $this->assertStringContainsStringIgnoringCase('Redirecting', $client->getResponse()->getContent());
     }
 
     public function testUserTypeahead() {
@@ -60,7 +60,7 @@ class TitleControllerTest extends BaseTestCase
         ]);
         $crawler = $client->request('GET', '/title/typeahead?q=title');
         $this->assertEquals(403, $client->getResponse()->getStatusCode());
-        $this->assertContains('Access denied.', $client->getResponse()->getContent());
+        $this->assertStringContainsStringIgnoringCase('Access denied.', $client->getResponse()->getContent());
     }
 
     public function testAdminTypeahead() {
@@ -78,7 +78,7 @@ class TitleControllerTest extends BaseTestCase
     public function testAnonShow() {
         $client = $this->makeClient();
         $crawler = $client->request('GET', '/title/1');
-        $this->assertEquals(302, $client->getResponse()->getStatusCode());
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertEquals(0, $crawler->selectLink('Edit')->count());
         $this->assertEquals(0, $crawler->selectLink('Delete')->count());
     }
@@ -255,11 +255,21 @@ class TitleControllerTest extends BaseTestCase
 
 
     public function testAnonSearch() {
+        $repo = $this->createMock(TitleRepository::class);
+        $repo->method('buildSearchQuery')->willReturn(array($this->getReference('title.1')));
         $client = $this->makeClient();
+        $client->disableReboot();
+        $client->getContainer()->set(TitleRepository::class, $repo);
 
-        $crawler = $client->request('GET', '/title/search');
-        $this->assertEquals(302, $client->getResponse()->getStatusCode());
-        $this->assertEquals(0, $crawler->selectLink('Search')->count());
+        $formCrawler = $client->request('GET', '/title/search');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $form = $formCrawler->selectButton('Search')->form([
+            'title_search[title]' => 'adventures',
+        ]);
+
+        $responseCrawler = $client->submit($form);
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals(1, $responseCrawler->filter('td:contains("Title 1")')->count());
     }
 
     public function testUserSearch() {

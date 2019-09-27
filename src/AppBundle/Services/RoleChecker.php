@@ -5,6 +5,9 @@ namespace AppBundle\Services;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
+/**
+ * Service to check the current user's roles.
+ */
 class RoleChecker {
 
     /**
@@ -40,6 +43,5 @@ class RoleChecker {
         }
         return $this->authChecker->isGranted($role);
     }
-
 
 }

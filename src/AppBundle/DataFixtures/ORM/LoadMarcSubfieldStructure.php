@@ -7,9 +7,19 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class LoadMarcSubfieldStructure extends Fixture implements FixtureGroupInterface {
+/**
+ * Load some test MARC subfield data for testing.
+ */
+class LoadMarcSubfieldStructure extends Fixture implements FixtureGroupInterface
+{
 
-    public function load(ObjectManager $manager) {
+    /**
+     * {@inheritdoc}
+     *
+     * @param ObjectManager $manager
+     */
+    public function load(ObjectManager $manager)
+    {
         for ($j = 0; $j < 20; $j++) {
             for ($i = 0; $i < 10; $i++) {
                 $subfield = 'abcdefghijklmnop'[$i];
@@ -25,8 +35,11 @@ class LoadMarcSubfieldStructure extends Fixture implements FixtureGroupInterface
         $manager->flush();
     }
 
-    public static function getGroups(): array {
+    /**
+     * {@inheritdoc}
+     */
+    public static function getGroups(): array
+    {
         return array('test');
     }
-
 }

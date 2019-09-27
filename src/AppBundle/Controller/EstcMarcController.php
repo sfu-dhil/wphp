@@ -6,9 +6,8 @@ use AppBundle\Entity\EstcMarc;
 use AppBundle\Repository\EstcMarcRepository;
 use AppBundle\Services\MarcManager;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -24,16 +23,17 @@ class EstcMarcController extends Controller  implements PaginatorAwareInterface 
 
     use PaginatorTrait;
 
-
     /**
      * Lists all EstcMarc entities.
      *
      * @param Request $request
      *
+     * @param MarcManager $manager
+     * @param EstcMarcRepository $repo
+     *
      * @return array
      *
-     * @Route("/", name="resource_estc_index")
-     * @Method("GET")
+     * @Route("/", name="resource_estc_index", methods={"GET"})
      * @Template()
      */
     public function indexAction(Request $request, MarcManager $manager, EstcMarcRepository $repo) {
@@ -51,8 +51,11 @@ class EstcMarcController extends Controller  implements PaginatorAwareInterface 
      *
      * @param Request $request
      *
-     * @Route("/search", name="resource_estc_search")
-     * @Method("GET")
+     * @param MarcManager $manager
+     * @param EstcMarcRepository $repo
+     *
+     * @return array
+     * @Route("/search", name="resource_estc_search", methods={"GET"})
      * @Template()
      */
     public function searchAction(Request $request, MarcManager $manager, EstcMarcRepository $repo) {
@@ -83,8 +86,11 @@ class EstcMarcController extends Controller  implements PaginatorAwareInterface 
      *
      * @param Request $request
      *
-     * @Route("/imprint_search", name="resource_estc_search_imprint")
-     * @Method("GET")
+     * @param MarcManager $manager
+     * @param EstcMarcRepository $repo
+     *
+     * @return array
+     * @Route("/imprint_search", name="resource_estc_search_imprint", methods={"GET"})
      * @Template()
      */
     public function imprintSearchAction(Request $request, MarcManager $manager, EstcMarcRepository $repo) {
@@ -115,10 +121,11 @@ class EstcMarcController extends Controller  implements PaginatorAwareInterface 
      *
      * @param EstcMarc $estcMarc
      *
+     * @param MarcManager $manager
+     *
      * @return array
      *
-     * @Route("/{id}", name="resource_estc_show")
-     * @Method("GET")
+     * @Route("/{id}", name="resource_estc_show", methods={"GET"})
      * @ParamConverter("estcMarc", options={"mapping": {"id": "titleId"}})
      * @Template()
      */

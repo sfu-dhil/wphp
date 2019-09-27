@@ -8,26 +8,34 @@ use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
 /**
- * LoadGenre form.
+ * Load some test genres.
  */
-class LoadGenre extends Fixture implements FixtureGroupInterface {
+class LoadGenre extends Fixture implements FixtureGroupInterface
+{
 
     /**
      * {@inheritDoc}
+     *
+     * @param ObjectManager $manager
      */
-    public function load(ObjectManager $em) {
+    public function load(ObjectManager $manager)
+    {
         for ($i = 0; $i < 4; $i++) {
             $fixture = new Genre();
             $fixture->setName('Name ' . $i);
 
-            $em->persist($fixture);
+            $manager->persist($fixture);
             $this->setReference('genre.' . $i, $fixture);
         }
 
-        $em->flush();
+        $manager->flush();
     }
 
-    public static function getGroups(): array {
+    /**
+     * {@inheritdoc}
+     */
+    public static function getGroups(): array
+    {
         return array('test');
     }
 }

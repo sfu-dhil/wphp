@@ -11,6 +11,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Tetranz\Select2EntityBundle\Form\Type\Select2EntityType;
 
+/**
+ * Form definition for the person class.
+ */
 class PersonType extends AbstractType {
 
     /**
@@ -49,14 +52,14 @@ class PersonType extends AbstractType {
             ),
         ));
         $builder->add('dob', null, array(
-            'label' => 'Birth Date',
+            'label' => 'Date of Birth',
             'required' => false,
             'attr' => array(
                 'help_block' => 'Person’s date of birth as YYYY-MM-DD',
             ),
         ));
         $builder->add('cityOfBirth', Select2EntityType::class, array(
-            'label' => 'Birth Place',
+            'label' => 'Place of Birth',
             'multiple' => false,
             'remote_route' => 'geonames_typeahead',
             'class' => Geonames::class,
@@ -77,7 +80,7 @@ class PersonType extends AbstractType {
             ),
         ));
         $builder->add('cityOfDeath', Select2EntityType::class, array(
-            'label' => 'Death Place',
+            'label' => 'Place of Death',
             'multiple' => false,
             'remote_route' => 'geonames_typeahead',
             'class' => Geonames::class,
@@ -109,20 +112,6 @@ class PersonType extends AbstractType {
             'required' => false,
             'attr' => array(
                 'help_block' => 'Enter the URL for an image for this person. Make sure the licensing on the image is permissive.'
-            ),
-        ));
-        $builder->add('checked', ChoiceType::class, array(
-            'label' => 'Checked',
-            'expanded' => true,
-            'multiple' => false,
-            'choices' => array(
-                'Yes' => true,
-                'No' => false,
-            ),
-            'required' => true,
-            'placeholder' => false,
-            'attr' => array(
-                'help_block' => 'Indicates an attempt to find person’s information',
             ),
         ));
         $builder->add('finalcheck', ChoiceType::class, array(

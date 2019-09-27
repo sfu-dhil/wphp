@@ -27,7 +27,7 @@
                 <th data-toggle="popover" data-content="Number of titles associated with the location">Titles</th>
                 <td>
                     <a href="{{ path('geonames_titles', {'id': geoname.geonameid}) }}">
-                        {{ geoname.titles | length }}
+                        {{ count }}
                     </a>
                 </td>
             </tr>

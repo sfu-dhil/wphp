@@ -58,10 +58,18 @@ class Source
      */
     private $titleSources;
 
+    /**
+     * Return the name of this source.
+     *
+     * @return string
+     */
     public function __toString() {
         return $this->name;
     }
 
+    /**
+     * Source constructor.
+     */
     public function __construct()
     {
         $this->titleSources = new ArrayCollection();

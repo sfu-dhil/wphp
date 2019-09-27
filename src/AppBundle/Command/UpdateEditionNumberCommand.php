@@ -20,6 +20,11 @@ class UpdateEditionNumberCommand extends ContainerAwareCommand
      */
     private $em;
 
+    /**
+     * UpdateEditionNumberCommand constructor.
+     *
+     * @param EntityManagerInterface $em
+     */
     public function __construct(EntityManagerInterface $em) {
         parent::__construct();
         $this->em = $em;

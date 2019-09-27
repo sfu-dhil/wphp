@@ -7,9 +7,19 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class LoadJackson extends Fixture implements FixtureGroupInterface {
+/**
+ * Load some test Jackson Bibliography data.
+ */
+class LoadJackson extends Fixture implements FixtureGroupInterface
+{
 
-    public function load(ObjectManager $manager) {
+    /**
+     * {@inheritdoc}
+     *
+     * @param ObjectManager $manager
+     */
+    public function load(ObjectManager $manager)
+    {
         for ($i = 0; $i < 4; $i++) {
             $fixture = new Jackson();
             $fixture->setJbid(1234 + $i);
@@ -23,7 +33,11 @@ class LoadJackson extends Fixture implements FixtureGroupInterface {
         $manager->flush();
     }
 
-    public static function getGroups(): array {
+    /**
+     * {@inheritdoc}
+     */
+    public static function getGroups(): array
+    {
         return array('test');
     }
 }

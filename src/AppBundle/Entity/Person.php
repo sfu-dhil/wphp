@@ -111,13 +111,6 @@ class Person
     private $finalcheck = '0';
 
     /**
-     * @var boolean
-     *
-     * @ORM\Column(name="checked", type="boolean", nullable=false)
-     */
-    private $checked = '0';
-
-    /**
      * @var Geonames
      *
      * @ORM\ManyToOne(targetEntity="Geonames", inversedBy="peopleBorn")
@@ -476,27 +469,4 @@ class Person
         return $this->imageUrl;
     }
 
-    /**
-     * Set checked.
-     *
-     * @param bool $checked
-     *
-     * @return Person
-     */
-    public function setChecked($checked)
-    {
-        $this->checked = $checked;
-
-        return $this;
-    }
-
-    /**
-     * Get checked.
-     *
-     * @return bool
-     */
-    public function getChecked()
-    {
-        return $this->checked;
-    }
 }

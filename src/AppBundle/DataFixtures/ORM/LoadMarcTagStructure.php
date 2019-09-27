@@ -7,22 +7,34 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class LoadMarcTagStructure extends Fixture implements FixtureGroupInterface 
+/**
+ * Load some MARC tag definitions for testing.
+ */
+class LoadMarcTagStructure extends Fixture implements FixtureGroupInterface
 {
 
-    public function load(ObjectManager $em)
+    /**
+     * {@inheritdoc}
+     *
+     * @param ObjectManager $manager
+     */
+    public function load(ObjectManager $manager)
     {
-        for($i = 0; $i < 20; $i++) {
+        for ($i = 0; $i < 20; $i++) {
             $fixture = new MarcTagStructure();
             $fixture->setName('Tag ' . $i);
-            $fixture->setTagField(100+$i);
-            $em->persist($fixture);
+            $fixture->setTagField(100 + $i);
+            $manager->persist($fixture);
             $this->setReference('marctag.' . $i, $fixture);
         }
-        $em->flush();
+        $manager->flush();
     }
-    
-    public static function getGroups(): array {
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function getGroups(): array
+    {
         return array('test');
     }
 }

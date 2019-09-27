@@ -6,8 +6,8 @@ use AppBundle\Entity\Role;
 use AppBundle\Form\RoleType;
 use AppBundle\Repository\RoleRepository;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -23,14 +23,15 @@ class RoleController extends Controller  implements PaginatorAwareInterface {
 
     use PaginatorTrait;
 
-
     /**
      * Lists all Role entities.
      *
-     * @Route("/", name="role_index")
-     * @Method("GET")
+     * @Route("/", name="role_index", methods={"GET"})
      * @Template()
      * @param Request $request
+     * @param RoleRepository $repo
+     *
+     * @return array
      */
     public function indexAction(Request $request, RoleRepository $repo) {
         $em = $this->getDoctrine()->getManager();
@@ -46,9 +47,10 @@ class RoleController extends Controller  implements PaginatorAwareInterface {
 
     /**
      * @param Request $request
+     * @param RoleRepository $repo
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
-     * @Route("/typeahead", name="role_typeahead")
-     * @Method("GET")
+     * @Route("/typeahead", name="role_typeahead", methods={"GET"})
+
      * @return JsonResponse
      */
     public function typeaheadAction(Request $request, RoleRepository $repo) {
@@ -69,11 +71,12 @@ class RoleController extends Controller  implements PaginatorAwareInterface {
     /**
      * Creates a new Role entity.
      *
-     * @Route("/new", name="role_new")
-     * @Method({"GET", "POST"})
+     * @Route("/new", name="role_new", methods={"GET","POST"})
+
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
      * @Template()
      * @param Request $request
+     * @return array
      */
     public function newAction(Request $request) {
         $role = new Role();
@@ -98,10 +101,12 @@ class RoleController extends Controller  implements PaginatorAwareInterface {
     /**
      * Finds and displays a Role entity.
      *
-     * @Route("/{id}", name="role_show")
-     * @Method("GET")
+     * @Route("/{id}", name="role_show", methods={"GET"})
      * @Template()
+     * @param Request $request
      * @param Role $role
+     *
+     * @return array
      */
     public function showAction(Request $request, Role $role) {
         $em = $this->getDoctrine()->getManager();
@@ -119,12 +124,13 @@ class RoleController extends Controller  implements PaginatorAwareInterface {
     /**
      * Displays a form to edit an existing Role entity.
      *
-     * @Route("/{id}/edit", name="role_edit")
-     * @Method({"GET", "POST"})
+     * @Route("/{id}/edit", name="role_edit", methods={"GET","POST"})
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
      * @Template()
      * @param Request $request
      * @param Role $role
+     *
+     * @return array|RedirectResponse
      */
     public function editAction(Request $request, Role $role) {
         $editForm = $this->createForm(RoleType::class, $role);
@@ -146,11 +152,12 @@ class RoleController extends Controller  implements PaginatorAwareInterface {
     /**
      * Deletes a Role entity.
      *
-     * @Route("/{id}/delete", name="role_delete")
-     * @Method("GET")
+     * @Route("/{id}/delete", name="role_delete", methods={"GET"})
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
      * @param Request $request
      * @param Role $role
+     *
+     * @return RedirectResponse
      */
     public function deleteAction(Request $request, Role $role) {
         $em = $this->getDoctrine()->getManager();

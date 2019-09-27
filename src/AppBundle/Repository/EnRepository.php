@@ -12,6 +12,11 @@ use Doctrine\ORM\EntityRepository;
  */
 class EnRepository extends EntityRepository {
 
+    /**
+     * @param string $q
+     *
+     * @return \Doctrine\ORM\Query
+     */
     public function searchQuery($q) {
         $qb = $this->createQueryBuilder('e');
         $qb->andWhere("MATCH (e.author, e.title) AGAINST(:q BOOLEAN) > 0");

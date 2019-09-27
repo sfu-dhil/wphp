@@ -24,7 +24,7 @@
     <table class="table table-bordered table-condensed table-hover table-striped">
         <tbody>
             <tr>
-                <th data-toggle="popover" data-content="Unique ID number for this entry">Id</th>
+                <th data-toggle="popover" data-content="Unique ID number for this entry">ID</th>
                 <td>{{ firm.id }}</td>
             </tr>
             <tr>
@@ -36,7 +36,7 @@
                 <td>{% include 'AppBundle:firm/partials:gender.html.twig' %}</td>
             </tr>
             <tr>
-                <th data-toggle="popover" data-content="Street address of the firm as geotagged">Street address</th>
+                <th data-toggle="popover" data-content="Street address of the firm as geotagged">Street Address</th>
                 <td>{{ firm.streetAddress }}</td>
             </tr>
             <tr>
@@ -50,7 +50,7 @@
                 </td>
             </tr>
             <tr>
-                <th data-toggle="popover" data-content="YYYY-MM-DD">Start date</th>
+                <th data-toggle="popover" data-content="YYYY-MM-DD">Start Date</th>
                 <td>{{ firm.startDate }}</td>
             </tr>
             <tr>
@@ -87,10 +87,25 @@
             {% endfor %}
         </tbody>
     </table>
+    <div class='btn-toolbar pull-right'>
+        <div class="title">
+            <h4>Export citation list</h4>
+        </div>
+        <div class='btn-group'>
+            <a class='btn btn-default' href="{{ path('firm_export', {'id': firm.id, 'format': 'mla'}) }}">MLA</a>
+            <a class='btn btn-default' href="{{ path('firm_export', {'id': firm.id, 'format': 'apa'}) }}">APA</a>
+            <a class='btn btn-default' href="{{ path('firm_export', {'id': firm.id, 'format': 'chicago'}) }}">Chicago</a>
+            <a class='btn btn-default' href="{{ path('firm_export', {'id': firm.id, 'format': 'bibtex'}) }}">BibTex</a>
+        </div>
+    </div>
+
+    <div class="clearfix"></div>
 
     <div class="navigation">
         {{ knp_pagination_render(pagination) }}
     </div>
+
+    <div class="clearfix"></div>
 
     {% include 'NinesFeedbackBundle:comment:comment-interface.html.twig' with { 'entity': firm } %}
 

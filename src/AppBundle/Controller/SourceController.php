@@ -6,8 +6,8 @@ use AppBundle\Entity\Source;
 use AppBundle\Form\SourceType;
 use AppBundle\Repository\SourceRepository;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -26,10 +26,12 @@ class SourceController extends Controller implements PaginatorAwareInterface {
     /**
      * Lists all Source entities.
      *
-     * @Route("/", name="source_index")
-     * @Method("GET")
+     * @Route("/", name="source_index", methods={"GET"})
      * @Template()
      * @param Request $request
+     * @param SourceRepository $repo
+     *
+     * @return array
      */
     public function indexAction(Request $request, SourceRepository $repo) {
         $em = $this->getDoctrine()->getManager();
@@ -44,11 +46,14 @@ class SourceController extends Controller implements PaginatorAwareInterface {
     }
 
     /**
+     * Typeahead action for editor widgets.
+     *
      * @param Request $request
-     * @Security("has_role('ROLE_CONTENT_ADMIN')")
-     * @Route("/typeahead", name="source_typeahead")
-     * @Method("GET")
+     * @param SourceRepository $repo
+     *
      * @return JsonResponse
+     * @Security("has_role('ROLE_CONTENT_ADMIN')")
+     * @Route("/typeahead", name="source_typeahead", methods={"GET"})
      */
     public function typeaheadAction(Request $request, SourceRepository $repo) {
         $q = $request->query->get('q');
@@ -65,14 +70,16 @@ class SourceController extends Controller implements PaginatorAwareInterface {
 
         return new JsonResponse($data);
     }
+
     /**
      * Creates a new Source entity.
      *
-     * @Route("/new", name="source_new")
-     * @Method({"GET", "POST"})
+     * @Route("/new", name="source_new", methods={"GET","POST"})
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
      * @Template()
      * @param Request $request
+     *
+     * @return array|RedirectResponse
      */
     public function newAction(Request $request) {
         $source = new Source();
@@ -97,10 +104,12 @@ class SourceController extends Controller implements PaginatorAwareInterface {
     /**
      * Finds and displays a Source entity.
      *
-     * @Route("/{id}", name="source_show")
-     * @Method("GET")
+     * @Route("/{id}", name="source_show", methods={"GET"})
      * @Template()
+     * @param Request $request
      * @param Source $source
+     *
+     * @return array
      */
     public function showAction(Request $request, Source $source) {
         $em = $this->getDoctrine()->getManager();
@@ -118,12 +127,13 @@ class SourceController extends Controller implements PaginatorAwareInterface {
     /**
      * Displays a form to edit an existing Source entity.
      *
-     * @Route("/{id}/edit", name="source_edit")
-     * @Method({"GET", "POST"})
+     * @Route("/{id}/edit", name="source_edit", methods={"GET","POST"})
      * @Template()
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
      * @param Request $request
      * @param Source $source
+     *
+     * @return array|RedirectResponse
      */
     public function editAction(Request $request, Source $source) {
         $editForm = $this->createForm(SourceType::class, $source);
@@ -145,11 +155,12 @@ class SourceController extends Controller implements PaginatorAwareInterface {
     /**
      * Deletes a Source entity.
      *
-     * @Route("/{id}/delete", name="source_delete")
-     * @Method("GET")
+     * @Route("/{id}/delete", name="source_delete", methods={"GET"})
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
      * @param Request $request
      * @param Source $source
+     *
+     * @return RedirectResponse
      */
     public function deleteAction(Request $request, Source $source) {
         $em = $this->getDoctrine()->getManager();

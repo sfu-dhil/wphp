@@ -12,6 +12,13 @@ use Doctrine\ORM\EntityRepository;
  */
 class JacksonRepository extends EntityRepository
 {
+    /**
+     * Do a name search on author and title for a typeahead query.
+     *
+     * @param string $q
+     *
+     * @return mixed
+     */
     public function searchQuery($q) {
         $qb = $this->createQueryBuilder('e');
         $qb->addSelect("MATCH (e.author, e.title) AGAINST(:q BOOLEAN) as HIDDEN score");

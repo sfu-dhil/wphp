@@ -3,12 +3,14 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Firm;
+use AppBundle\Entity\TitleFirmrole;
+use AppBundle\Entity\Person;
 use AppBundle\Form\Firm\FirmSearchType;
 use AppBundle\Form\Firm\FirmType;
 use AppBundle\Repository\FirmRepository;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -29,8 +31,8 @@ class FirmController extends Controller implements PaginatorAwareInterface {
     /**
      * Lists all Firm entities.
      *
-     * @Route("/", name="firm_index")
-     * @Method("GET")
+     * @Route("/", name="firm_index", methods={"GET"})
+
      * @Template()
      *
      * @param Request $request
@@ -58,11 +60,14 @@ class FirmController extends Controller implements PaginatorAwareInterface {
     }
 
     /**
+     * Search for firms and return a JSON repsonse for a typeahead widget.
+     *
      * @param Request $request
-     * @Security("has_role('ROLE_CONTENT_ADMIN')")
-     * @Route("/typeahead", name="firm_typeahead")
-     * @Method("GET")
+     * @param FirmRepository $repo
+     *
      * @return JsonResponse
+     * @Security("has_role('ROLE_CONTENT_ADMIN')")
+     * @Route("/typeahead", name="firm_typeahead", methods={"GET"})
      */
     public function typeaheadAction(Request $request, FirmRepository $repo) {
         $q = $request->query->get('q');
@@ -83,10 +88,11 @@ class FirmController extends Controller implements PaginatorAwareInterface {
     /**
      * Full text search for Firm entities.
      *
-     * @Route("/search", name="firm_search")
-     * @Method("GET")
+     * @Route("/search", name="firm_search", methods={"GET"})
      * @Template()
      * @param Request $request
+     * @param FirmRepository $repo
+     *
      * @return array
      */
     public function searchAction(Request $request, FirmRepository $repo) {
@@ -110,10 +116,11 @@ class FirmController extends Controller implements PaginatorAwareInterface {
     /**
      * Full text search export for Title entities.
      *
-     * @Route("/search/export", name="firm_search_export")
-     * @Method({"GET"})
+     * @Route("/search/export", name="firm_search_export", methods={"GET"})
      * @param Request $request
-     * @return array
+     * @param FirmRepository $repo
+     *
+     * @return BinaryFileResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function searchExportAction(Request $request, FirmRepository $repo) {
         $form = $this->createForm(FirmSearchType::class);
@@ -151,10 +158,11 @@ class FirmController extends Controller implements PaginatorAwareInterface {
     /**
      * Search for Title entities.
      *
-     * @Route("/jump", name="firm_jump")
-     * @Method("GET")
+     * @Route("/jump", name="firm_jump", methods={"GET"})
      * @Template()
      * @param Request $request
+     *
+     * @return RedirectResponse
      */
     public function jumpAction(Request $request) {
         $q = $request->query->get('q');
@@ -168,11 +176,12 @@ class FirmController extends Controller implements PaginatorAwareInterface {
     /**
      * Creates a new Firm entity.
      *
-     * @Route("/new", name="firm_new")
-     * @Method({"GET", "POST"})
+     * @Route("/new", name="firm_new", methods={"GET","POST"})
      * @Template()
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
      * @param Request $request
+     *
+     * @return array|RedirectResponse
      */
     public function newAction(Request $request) {
         $firm = new Firm();
@@ -197,15 +206,21 @@ class FirmController extends Controller implements PaginatorAwareInterface {
     /**
      * Finds and displays a Firm entity.
      *
-     * @Route("/{id}.{_format}", name="firm_show", defaults={"_format": "html"})
-     * @Method({"GET","POST"})
+     * @Route("/{id}.{_format}", name="firm_show", defaults={"_format": "html"}, methods={"GET"})
      * @Template()
+     * @param Request $request
      * @param Firm $firm
+     *
      * @return array
      */
     public function showAction(Request $request, Firm $firm) {
-        $em = $this->getDoctrine()->getManager();
         $firmRoles = $firm->getTitleFirmroles(true);
+        if(! $this->getUser()) {
+            $firmRoles = $firmRoles->filter(function (TitleFirmrole $tfr) {
+                $title = $tfr->getTitle();
+                return ($title->getFinalattempt() || $title->getFinalcheck());
+            });
+        }
         $pagination = $this->paginator->paginate($firmRoles, $request->query->getInt('page', 1), 25);
         return array(
             'firm' => $firm,
@@ -214,14 +229,39 @@ class FirmController extends Controller implements PaginatorAwareInterface {
     }
 
     /**
+     * Exports a firm's titles in a format.
+     *
+     * @Route("/{id}/export", name="firm_export", methods={"GET","POST"})
+     * @Template()
+     * @param Request $request
+     * @param Firm $firm
+     * @return array
+     */
+    public function exportAction(Request $request, Firm $firm) {
+        $firmRoles = $firm->getTitleFirmroles(true);
+        if(! $this->getUser()) {
+            $firmRoles = $firmRoles->filter(function (TitleFirmrole $tfr) {
+                $title = $tfr->getTitle();
+                return ($title->getFinalattempt() || $title->getFinalcheck());
+            });
+        }
+        return array(
+            'firm' => $firm,
+            'firmRoles' => $firmRoles,
+            'format' => $request->query->get('format', 'mla'),
+        );
+    }
+
+    /**
      * Displays a form to edit an existing Firm entity.
      *
-     * @Route("/{id}/edit", name="firm_edit")
-     * @Method({"GET", "POST"})
+     * @Route("/{id}/edit", name="firm_edit", methods={"GET","POST"})
      * @Template()
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
      * @param Request $request
      * @param Firm $firm
+     *
+     * @return array|RedirectResponse
      */
     public function editAction(Request $request, Firm $firm) {
         $editForm = $this->createForm(FirmType::class, $firm);
@@ -243,11 +283,12 @@ class FirmController extends Controller implements PaginatorAwareInterface {
     /**
      * Deletes a Firm entity.
      *
-     * @Route("/{id}/delete", name="firm_delete")
-     * @Method("GET")
+     * @Route("/{id}/delete", name="firm_delete", methods={"GET"})
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
      * @param Request $request
      * @param Firm $firm
+     *
+     * @return RedirectResponse
      */
     public function deleteAction(Request $request, Firm $firm) {
         $em = $this->getDoctrine()->getManager();

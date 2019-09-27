@@ -91,7 +91,7 @@ class FirmSearchType extends AbstractType {
             ),
         ));
         $builder->add('start', TextType::class, array(
-            'label' => 'Start date',
+            'label' => 'Start Date',
             'required' => false,
             'attr' => array(
                 'help_block' => 'Enter a year (eg <kbd>1795</kbd>) or range of years (<kbd>1790-1800</kbd>) or a partial range of years (<kbd>*-1800</kbd>)',

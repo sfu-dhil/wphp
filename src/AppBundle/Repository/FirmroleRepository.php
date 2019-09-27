@@ -14,6 +14,13 @@ use Doctrine\ORM\EntityRepository;
  */
 class FirmroleRepository extends EntityRepository {
 
+    /**
+     * Do a name search for a typeahead query.
+     *
+     * @param string $q
+     *
+     * @return mixed
+     */
     public function typeaheadQuery($q) {
         $qb = $this->createQueryBuilder('e');
         $qb->andWhere("e.name LIKE :q");
@@ -22,6 +29,14 @@ class FirmroleRepository extends EntityRepository {
         return $qb->getQuery()->execute();
     }
 
+    /**
+     * Count the firms in a given role.
+     *
+     * @param Firmrole $firmrole
+     *
+     * @return mixed
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
     public function countFirms(Firmrole $firmrole) {
         $qb = $this->_em->createQueryBuilder();
         $qb->select('count(1)');

@@ -28,15 +28,15 @@
     <table class="table table-bordered table-condensed table-hover table-striped">
         <tbody>
             <tr>
-                <th data-toggle="popover" data-content="Unique ID number for this entry">Id</th>
+                <th data-toggle="popover" data-content="Unique ID number for this entry">ID</th>
                 <td>{{ person.id }}</td>
             </tr>
             <tr>
-                <th data-toggle="popover" data-content="Person’s last name by which he or she is most commonly known">Last name</th>
+                <th data-toggle="popover" data-content="Person’s last name by which he or she is most commonly known">Last Name</th>
                 <td>{{ person.lastName }}</td>
             </tr>
             <tr>
-                <th data-toggle="popover" data-content="Person’s first name and where appropriate, full aristocratic title">First name</th>
+                <th data-toggle="popover" data-content="Person’s first name and where appropriate, full aristocratic title">First Name</th>
                 <td>{{ person.firstName }}</td>
             </tr>
             <tr>
@@ -48,11 +48,11 @@
                 <td>{% include 'AppBundle:person:gender.html.twig' %}</td>
             </tr>
             <tr>
-                <th data-toggle="popover" data-content="YYYY-MM-DD">Date of birth</th>
+                <th data-toggle="popover" data-content="YYYY-MM-DD">Date of Birth</th>
                 <td>{% if person.dob %}{{ person.dob|replace({'-00': ''}) }}{% endif %}</td>
             </tr>
             <tr>
-                <th data-toggle="popover" data-content="Place of birth as geotagged">Place of birth</th>
+                <th data-toggle="popover" data-content="Place of birth as geotagged">Place of Birth</th>
                 <td>
                     {% if person.cityOfBirth %}
                         <a href="{{path('geonames_show', {'id': person.cityOfBirth.geonameid}) }}">
@@ -62,7 +62,7 @@
                 </td>
             </tr>
             <tr>
-                <th data-toggle="popover" data-content="YYYY-MM-DD">Date of death</th>
+                <th data-toggle="popover" data-content="YYYY-MM-DD">Date of Death</th>
                 <td>{% if person.dod %}{{ person.dod|replace({'-00': ''}) }}{% endif %}</td>
             </tr>
             <tr>
@@ -99,10 +99,6 @@
                             <a href="{{person.imageUrl }}">{{ person.imageUrl }}</a>
                         {% endif %}
                     </td>
-                </tr>
-                <tr>
-                    <th>Checked</th>
-                    <td>{% if person.checked %}Yes{% else %}No{% endif %}</td>
                 </tr>
                 <tr>
                     <th>Final Check</th>

@@ -12,6 +12,13 @@ use Doctrine\ORM\EntityRepository;
  */
 class GeonamesRepository extends EntityRepository {
 
+    /**
+     * Do a name search for a typeahead query.
+     *
+     * @param string $q
+     *
+     * @return mixed
+     */
     public function typeaheadQuery($q) {
         $qb = $this->createQueryBuilder('e');
         $qb->andWhere("e.name LIKE :q");
@@ -20,6 +27,13 @@ class GeonamesRepository extends EntityRepository {
         return $qb->getQuery()->execute();
     }
 
+    /**
+     * Run a title search.
+     *
+     * @param string $q
+     *
+     * @return mixed
+     */
     public function searchQuery($q) {
         $qb = $this->createQueryBuilder('e');
         $qb->andWhere("e.name LIKE :q");

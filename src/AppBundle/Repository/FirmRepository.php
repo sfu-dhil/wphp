@@ -15,7 +15,13 @@ use Doctrine\ORM\Query;
 class FirmRepository extends EntityRepository
 {
 
-
+    /**
+     * Do a name search for a typeahead widget.
+     *
+     * @param string $q
+     *
+     * @return mixed
+     */
     public function typeaheadQuery($q) {
         $qb = $this->createQueryBuilder('e');
         $qb->andWhere("e.name LIKE :q");

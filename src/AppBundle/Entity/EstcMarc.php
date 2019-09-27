@@ -61,6 +61,11 @@ class EstcMarc
      */
     private $fieldData;
 
+    /**
+     * Return the field and subfield for this MARC record.
+     *
+     * @return string
+     */
     public function __toString() {
         return $this->field . $this->subfield;
     }

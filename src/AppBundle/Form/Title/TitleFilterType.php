@@ -71,7 +71,7 @@ class TitleFilterType extends AbstractType {
         ));
 
         $builder->add('pubdate', TextType::class, array(
-            'label' => 'Publication Year',
+            'label' => 'Date of First Publication',
             'required' => false,
             'attr' => array(
                 'help_block' => 'Enter a year (eg <kbd>1795</kbd>) or range of years (<kbd>1790-1800</kbd>) or a partial range of years (<kbd>*-1800</kbd>)',
@@ -93,7 +93,7 @@ class TitleFilterType extends AbstractType {
         ));
 
         $builder->add('location', TextType::class, array(
-            'label' => 'Printing Location',
+            'label' => 'Location of Printing',
             'required' => false,
         ));
     }

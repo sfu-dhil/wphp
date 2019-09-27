@@ -15,6 +15,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Tetranz\Select2EntityBundle\Form\Type\Select2EntityType;
 
+/**
+ * Form definition for the title type.
+ */
 class TitleType extends AbstractType {
 
     /**
@@ -76,7 +79,7 @@ class TitleType extends AbstractType {
             ),
         ));
         $builder->add('selfpublished', ChoiceType::class, array(
-            'label' => 'Self published',
+            'label' => 'Self-Published',
             'expanded' => true,
             'multiple' => false,
             'choices' => array(
@@ -105,7 +108,7 @@ class TitleType extends AbstractType {
             ),
         ));
         $builder->add('pubdate', null, array(
-            'label' => 'Publication date',
+            'label' => 'Publication Date',
             'required' => false,
             'attr' => array(
                 'help_block' => 'Date (year) as it appears in the imprint',
@@ -126,7 +129,7 @@ class TitleType extends AbstractType {
             ),
         ));
         $builder->add('dateOfFirstPublication', null, array(
-            'label' => 'Date Of First Publication',
+            'label' => 'Date of First Publication',
             'required' => false,
             'attr' => array(
                 'help_block' => 'Date (year) that the work was first published',
@@ -247,7 +250,7 @@ class TitleType extends AbstractType {
             ),
         ));
         $builder->add('checked', ChoiceType::class, array(
-            'label' => 'Hand-verified',
+            'label' => 'Hand-Verified',
             'expanded' => true,
             'multiple' => false,
             'choices' => array(

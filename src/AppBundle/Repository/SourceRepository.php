@@ -13,6 +13,13 @@ use Doctrine\ORM\EntityRepository;
 class SourceRepository extends EntityRepository
 {
 
+    /**
+     * Execute a name search for a typeahead widget.
+     *
+     * @param string $q
+     *
+     * @return mixed
+     */
     public function typeaheadQuery($q) {
         $qb = $this->createQueryBuilder('e');
         $qb->andWhere("e.name LIKE :q");
@@ -21,6 +28,16 @@ class SourceRepository extends EntityRepository
         return $qb->getQuery()->execute();
     }
 
+    /**
+     * Count the titles in a source.
+     *
+     * @todo this code is out of date. Titles no longer have source2, source3 etc fields.
+     *
+     * @param Source $source
+     *
+     * @return mixed
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
     public function countTitles(Source $source) {
         $qb = $this->_em->createQueryBuilder();
         $qb->select('count(title.id)');

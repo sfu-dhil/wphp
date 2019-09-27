@@ -21,7 +21,7 @@ class FirmroleControllerTest extends BaseTestCase {
     public function testAnonIndex() {
         $client = $this->makeClient();
         $crawler = $client->request('GET', '/firmrole/');
-        $this->assertEquals(302, $client->getResponse()->getStatusCode());
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertEquals(0, $crawler->selectLink('New')->count());
     }
 
@@ -50,7 +50,7 @@ class FirmroleControllerTest extends BaseTestCase {
         $crawler = $client->request('GET', '/firmrole/typeahead?q=name');
         $this->assertEquals(302, $client->getResponse()->getStatusCode());
         $this->assertEquals('text/html; charset=UTF-8', $client->getResponse()->headers->get('Content-Type'));
-        $this->assertContains('Redirecting', $client->getResponse()->getContent());
+        $this->assertStringContainsStringIgnoringCase('Redirecting', $client->getResponse()->getContent());
     }
 
     public function testUserTypeahead() {
@@ -60,7 +60,7 @@ class FirmroleControllerTest extends BaseTestCase {
         ]);
         $crawler = $client->request('GET', '/firmrole/typeahead?q=name');
         $this->assertEquals(403, $client->getResponse()->getStatusCode());
-        $this->assertContains('Access denied.', $client->getResponse()->getContent());
+        $this->assertStringContainsStringIgnoringCase('Access denied.', $client->getResponse()->getContent());
     }
 
     public function testAdminTypeahead() {
@@ -78,7 +78,7 @@ class FirmroleControllerTest extends BaseTestCase {
     public function testAnonShow() {
         $client = $this->makeClient();
         $crawler = $client->request('GET', '/firmrole/1');
-        $this->assertEquals(302, $client->getResponse()->getStatusCode());
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertEquals(0, $crawler->selectLink('Edit')->count());
         $this->assertEquals(0, $crawler->selectLink('Delete')->count());
     }

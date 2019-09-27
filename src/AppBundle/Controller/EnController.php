@@ -5,8 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\En;
 use AppBundle\Repository\EnRepository;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -29,8 +28,7 @@ class EnController extends Controller  implements PaginatorAwareInterface {
      *
      * @return array
      *
-     * @Route("/", name="resource_en_index")
-     * @Method("GET")
+     * @Route("/", name="resource_en_index", methods={"GET"})
      * @Template()
      */
     public function indexAction(Request $request) {
@@ -50,8 +48,10 @@ class EnController extends Controller  implements PaginatorAwareInterface {
      *
      * @param Request $request
      *
-     * @Route("/search", name="resource_en_search")
-     * @Method("GET")
+     * @param EnRepository $repo
+     *
+     * @return array
+     * @Route("/search", name="resource_en_search", methods={"GET"})
      * @Template()
      */
     public function searchAction(Request $request, EnRepository $repo) {
@@ -76,8 +76,8 @@ class EnController extends Controller  implements PaginatorAwareInterface {
      *
      * @return array
      *
-     * @Route("/{id}", name="resource_en_show")
-     * @Method("GET")
+     * @Route("/{id}", name="resource_en_show", methods={"GET"})
+
      * @Template()
      */
     public function showAction(En $en) {

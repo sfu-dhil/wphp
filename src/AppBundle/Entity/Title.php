@@ -957,6 +957,11 @@ class Title
         return $this->colophon;
     }
 
+    /**
+     * Set the sources for this title.
+     *
+     * @param array|Collection|TitleSource[] $titleSources
+     */
     public function setTitleSources($titleSources) {
         $this->titleSources = $titleSources;
     }
@@ -964,11 +969,11 @@ class Title
     /**
      * Add titleSource.
      *
-     * @param \AppBundle\Entity\TitleSource $titleSource
+     * @param TitleSource $titleSource
      *
      * @return Title
      */
-    public function addTitleSource(\AppBundle\Entity\TitleSource $titleSource)
+    public function addTitleSource(TitleSource $titleSource)
     {
         $this->titleSources[] = $titleSource;
 
@@ -978,11 +983,11 @@ class Title
     /**
      * Remove titleSource.
      *
-     * @param \AppBundle\Entity\TitleSource $titleSource
+     * @param TitleSource $titleSource
      *
      * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
      */
-    public function removeTitleSource(\AppBundle\Entity\TitleSource $titleSource)
+    public function removeTitleSource(TitleSource $titleSource)
     {
         return $this->titleSources->removeElement($titleSource);
     }
@@ -990,7 +995,7 @@ class Title
     /**
      * Get titleSources.
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return array|Collection|TitleSource[]
      */
     public function getTitleSources()
     {

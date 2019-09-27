@@ -3,7 +3,7 @@
         <tr>
             {% include 'AppBundle:partials:sortable.html.twig' with {
                 'pagination': firms,
-                'header': 'Id',
+                'header': 'ID',
                 'field': 'e.id',
             } %}
             {% include 'AppBundle:partials:sortable.html.twig' with {
@@ -11,7 +11,7 @@
                 'header': 'Name',
                 'field': ['e.name', 'e.startDate'],
             } %}
-            <th>Street address</th>
+            <th>Street Address</th>
             {% include 'AppBundle:partials:sortable.html.twig' with {
                 'pagination': firms,
                 'header': 'City',
@@ -19,7 +19,7 @@
             } %}
             {% include 'AppBundle:partials:sortable.html.twig' with {
                 'pagination': firms,
-                'header': 'Start date',
+                'header': 'Start Date',
                 'field': ['e.startDate', 'e.name'],
             } %}
             {% include 'AppBundle:partials:sortable.html.twig' with {

@@ -8,9 +8,10 @@ use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
 /**
- * LoadFormat form.
+ * Load some test format data.
  */
-class LoadFormat extends Fixture implements FixtureGroupInterface {
+class LoadFormat extends Fixture implements FixtureGroupInterface
+{
 
     const DATA = array(
         ["folio","fo"],
@@ -29,28 +30,35 @@ class LoadFormat extends Fixture implements FixtureGroupInterface {
 
     /**
      * {@inheritDoc}
+     *
+     * @param ObjectManager $manager
      */
-    public function load(ObjectManager $em) {
+    public function load(ObjectManager $manager)
+    {
         for ($i = 0; $i < 4; $i++) {
             $fixture = new Format();
             $fixture->setName('Name ' . $i);
             $fixture->setAbbreviation('A' . $i);
 
-            $em->persist($fixture);
+            $manager->persist($fixture);
             $this->setReference('format.' . $i, $fixture);
         }
 
-        foreach(self::DATA as $row) {
+        foreach (self::DATA as $row) {
             $fixture = new Format();
             $fixture->setName($row[0]);
             $fixture->setAbbreviation($row[1]);
-            $em->persist($fixture);
+            $manager->persist($fixture);
         }
 
-        $em->flush();
+        $manager->flush();
     }
 
-    public static function getGroups(): array {
+    /**
+     * {@inheritdoc}
+     */
+    public static function getGroups(): array
+    {
         return array('test');
     }
 }

@@ -7,12 +7,20 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
+/**
+ * Load some test Orlando data.
+ */
 class LoadOrlandoBiblio extends Fixture implements FixtureGroupInterface
 {
 
+    /**
+     * {@inheritdoc}
+     *
+     * @param ObjectManager $manager
+     */
     public function load(ObjectManager $manager)
     {
-        for($i = 0; $i < 4; $i++) {
+        for ($i = 0; $i < 4; $i++) {
             $fixture = new OrlandoBiblio();
             $fixture->setOrlandoId($i + 100);
             $fixture->setWorkform('work form ' . $i);
@@ -25,8 +33,12 @@ class LoadOrlandoBiblio extends Fixture implements FixtureGroupInterface
         }
         $manager->flush();
     }
-    
-    public static function getGroups(): array {
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function getGroups(): array
+    {
         return array('test');
     }
 }

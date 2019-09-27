@@ -12,9 +12,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
- * Description of SourceLinker
- *
- * @author mjoyce
+ * Construct links to various sources.
  */
 class SourceLinker {
 
@@ -33,16 +31,36 @@ class SourceLinker {
      */
     private $checker;
 
+    /**
+     * SourceLinker constructor.
+     *
+     * @param EntityManagerInterface $em
+     * @param UrlGeneratorInterface $generator
+     * @param RoleChecker $checker
+     */
     public function __construct(EntityManagerInterface $em, UrlGeneratorInterface $generator, RoleChecker $checker) {
         $this->em = $em;
         $this->generator = $generator;
         $this->checker = $checker;
     }
 
+    /**
+     * Set the role checker.
+     *
+     * @param RoleChecker $checker
+     */
     public function setRoleChecker(RoleChecker $checker) {
         $this->checker = $checker;
     }
 
+    /**
+     * Generate an ESTC link. The link will be internal if the user is logged in or to the ESTC website
+     * otherwise.
+     *
+     * @param string $data
+     *
+     * @return string|null
+     */
     public function estc($data) {
         if (!$this->checker->hasRole('ROLE_USER')) {
             return 'http://estc.bl.uk/' . $data;
@@ -61,6 +79,14 @@ class SourceLinker {
         return null;
     }
 
+    /**
+     * Generate an Orlando link. The link will be internal if the user is logged in or to the Orlando website
+     * otherwise.
+     *
+     * @param string $data
+     *
+     * @return string|null
+     */
     public function orlando($data) {
         if (!$this->checker->hasRole('ROLE_USER')) {
             return null;
@@ -77,22 +103,31 @@ class SourceLinker {
         return null;
     }
 
+    /**
+     * Generate a Jackson link. The link will be internal if the user is logged in or null otherwise.
+     *
+     * @param string $data
+     *
+     * @return string|null
+     */
     public function jackson($data) {
-        if (!$this->checker->hasRole('ROLE_USER')) {
-            return null;
+        if ($this->checker->hasRole('ROLE_USER')) {
+            $repo = $this->em->getRepository(Jackson::class);
+            $record = $repo->findOneBy(array('jbid' => $data,));
+            if ($record) {
+                return $this->generator->generate('resource_jackson_show', array('id' => $record->getId(),));
+            }
         }
-        $repo = $this->em->getRepository(Jackson::class);
-        $record = $repo->findOneBy(array(
-            'jbid' => $data,
-        ));
-        if ($record) {
-            return $this->generator->generate('resource_jackson_show', array(
-                'id' => $record->getId(),
-            ));
-        }
-        return null;
+        return "https://jacksonbibliography.library.utoronto.ca/search/details/{$data}";
     }
 
+    /**
+     * Generate a English Novel link. The link will be internal if the user is logged in or null otherwise.
+     *
+     * @param string $data
+     *
+     * @return string|null
+     */
     public function en($data) {
         if (!$this->checker->hasRole('ROLE_USER')) {
             return null;
@@ -109,6 +144,13 @@ class SourceLinker {
         return null;
     }
 
+    /**
+     * Generate an Osborne link. The link will be internal if the user is logged in or null otherwise.
+     *
+     * @param string $data
+     *
+     * @return string|null
+     */
     public function osborne($data) {
         if (!$this->checker->hasRole('ROLE_USER')) {
             return null;
@@ -126,12 +168,27 @@ class SourceLinker {
         return null;
     }
 
+    /**
+     * Generate a link to the ECCO website for all users.
+     *
+     * @param string $data
+     *
+     * @return string
+     */
     public function ecco($data) {
         // No role checking for this one.
         $id = substr_replace($data, "0", 2, 0);
         return "http://link.galegroup.com/apps/doc/{$id}/ECCO?sid=WomenPrintHistProject";
     }
 
+    /**
+     * If the data matches https? it will be returned as is. Otherwise generate a URL based on the source.
+     *
+     * @param Source $source
+     * @param string $data
+     *
+     * @return string|null
+     */
     public function url(Source $source, $data) {
         if (preg_match("/https?:/", $data)) {
             return $data;
