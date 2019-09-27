@@ -205,35 +205,8 @@ class Builder implements ContainerAwareInterface
                 'uri' => '#',
             ));
 
-            $search->addChild('First Pub Dates', array(
-                'route' => 'report_first_pub_date',
-            ));
-            $search->addChild('Titles with Bad ESTC IDs', array(
-                'route' => 'report_title_bad_estc',
-            ));
             $search->addChild('Titles to Check', array(
                 'route' => 'report_titles_check',
-            ));
-            $search->addChild('Firms to Check', array(
-                'route' => 'report_firms_check',
-            ));
-            $search->addChild('Persons to Check', array(
-                'route' => 'report_person_check',
-            ));
-            $search->addChild('Titles with Missing Source IDs', array(
-                'route' => 'report_title_source_id_null'
-            ));
-            $search->addChild('Titles without Genre', array(
-                'route' => 'report_title_without_genre'
-            ));
-            $search->addChild('Titles without Volumes', array(
-                'route' => 'report_title_without_volume'
-            ));
-            $search->addChild('Titles without Firms', array(
-                'route' => 'report_title_without_firm'
-            ));
-            $search->addChild('Titles without Sources', array(
-                'route' => 'report_title_without_source'
             ));
         }
         return $menu;
