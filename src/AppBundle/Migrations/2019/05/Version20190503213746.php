@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace AppBundle\Migrations;
 
@@ -8,9 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Creates the fulltext on title_source identifiers.
  */
-final class Version20190503213746 extends AbstractMigration
-{
-
+final class Version20190503213746 extends AbstractMigration {
     /**
      * Apply the migration.
      *
@@ -19,10 +19,9 @@ final class Version20190503213746 extends AbstractMigration
      * @throws \Doctrine\DBAL\DBALException
      * @throws \Doctrine\DBAL\Migrations\AbortMigrationException
      */
-    public function up(Schema $schema) : void
-    {
+    public function up(Schema $schema) : void {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
+        $this->abortIf('mysql' !== $this->connection->getDatabasePlatform()->getName(), 'Migration can only be executed safely on \'mysql\'.');
         $this->addSql('CREATE FULLTEXT INDEX title_source_identifier_ft ON title_source (identifier)');
     }
 
@@ -34,10 +33,9 @@ final class Version20190503213746 extends AbstractMigration
      * @throws \Doctrine\DBAL\DBALException
      * @throws \Doctrine\DBAL\Migrations\AbortMigrationException
      */
-    public function down(Schema $schema) : void
-    {
+    public function down(Schema $schema) : void {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
+        $this->abortIf('mysql' !== $this->connection->getDatabasePlatform()->getName(), 'Migration can only be executed safely on \'mysql\'.');
         $this->addSql('DROP INDEX title_source_identifier_ft ON title_source');
     }
 }

@@ -8,16 +8,14 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Source
+ * Source.
  *
  * @ORM\Table(name="source")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\SourceRepository")
  */
-class Source
-{
-
+class Source {
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
@@ -60,6 +58,13 @@ class Source
     private $titleSources;
 
     /**
+     * Source constructor.
+     */
+    public function __construct() {
+        $this->titleSources = new ArrayCollection();
+    }
+
+    /**
      * Return the name of this source.
      *
      * @return string
@@ -69,24 +74,16 @@ class Source
     }
 
     /**
-     * Source constructor.
-     */
-    public function __construct()
-    {
-        $this->titleSources = new ArrayCollection();
-    }
-
-    /**
-     * Get id
+     * Get id.
      *
-     * @return boolean
+     * @return bool
      */
     public function getId() {
         return $this->id;
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
      *
@@ -99,7 +96,7 @@ class Source
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
@@ -107,76 +104,69 @@ class Source
         return $this->name;
     }
 
-
     /**
-     * Set description
+     * Set description.
      *
      * @param string $description
      *
      * @return Source
      */
-    public function setDescription($description)
-    {
+    public function setDescription($description) {
         $this->description = $description;
 
         return $this;
     }
 
     /**
-     * Get description
+     * Get description.
      *
      * @return string
      */
-    public function getDescription()
-    {
+    public function getDescription() {
         return $this->description;
     }
 
     /**
-     * Set citation
+     * Set citation.
      *
      * @param string $citation
      *
      * @return Source
      */
-    public function setCitation($citation)
-    {
+    public function setCitation($citation) {
         $this->citation = $citation;
 
         return $this;
     }
 
     /**
-     * Get citation
+     * Get citation.
      *
      * @return string
      */
-    public function getCitation()
-    {
+    public function getCitation() {
         return $this->citation;
     }
 
     /**
-     * Set onlineSource
+     * Set onlineSource.
      *
      * @param string $onlineSource
      *
      * @return Source
      */
-    public function setOnlineSource($onlineSource)
-    {
+    public function setOnlineSource($onlineSource) {
         $this->onlineSource = $onlineSource;
 
         return $this;
     }
 
     /**
-     * Get onlineSource
+     * Get onlineSource.
      *
      * @return string
      */
-    public function getOnlineSource()
-    {
+    public function getOnlineSource() {
         return $this->onlineSource;
     }
 
@@ -187,8 +177,7 @@ class Source
      *
      * @return Source
      */
-    public function addTitleSource(\AppBundle\Entity\TitleSource $titleSource)
-    {
+    public function addTitleSource(TitleSource $titleSource) {
         $this->titleSources[] = $titleSource;
 
         return $this;
@@ -199,10 +188,9 @@ class Source
      *
      * @param \AppBundle\Entity\TitleSource $titleSource
      *
-     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     * @return bool TRUE if this collection contained the specified element, FALSE otherwise.
      */
-    public function removeTitleSource(\AppBundle\Entity\TitleSource $titleSource)
-    {
+    public function removeTitleSource(TitleSource $titleSource) {
         return $this->titleSources->removeElement($titleSource);
     }
 
@@ -211,8 +199,7 @@ class Source
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getTitleSources()
-    {
+    public function getTitleSources() {
         return $this->titleSources;
     }
 }

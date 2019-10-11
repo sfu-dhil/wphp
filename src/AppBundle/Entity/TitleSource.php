@@ -5,7 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * TitleSource
+ * TitleSource.
  *
  * @ORM\Table(name="title_source",
  *  indexes={
@@ -15,7 +15,6 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  */
 class TitleSource {
-
     /**
      * @var int
      *
@@ -48,8 +47,7 @@ class TitleSource {
      *
      * @return int
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -60,8 +58,7 @@ class TitleSource {
      *
      * @return TitleSource
      */
-    public function setIdentifier($identifier)
-    {
+    public function setIdentifier($identifier) {
         $this->identifier = $identifier;
 
         return $this;
@@ -72,20 +69,18 @@ class TitleSource {
      *
      * @return string
      */
-    public function getIdentifier()
-    {
+    public function getIdentifier() {
         return $this->identifier;
     }
 
     /**
      * Set title.
      *
-     * @param \AppBundle\Entity\Title|null $title
+     * @param null|\AppBundle\Entity\Title $title
      *
      * @return TitleSource
      */
-    public function setTitle(\AppBundle\Entity\Title $title = null)
-    {
+    public function setTitle(Title $title = null) {
         $this->title = $title;
 
         return $this;
@@ -94,22 +89,20 @@ class TitleSource {
     /**
      * Get title.
      *
-     * @return \AppBundle\Entity\Title|null
+     * @return null|\AppBundle\Entity\Title
      */
-    public function getTitle()
-    {
+    public function getTitle() {
         return $this->title;
     }
 
     /**
      * Set source.
      *
-     * @param \AppBundle\Entity\Source|null $source
+     * @param null|\AppBundle\Entity\Source $source
      *
      * @return TitleSource
      */
-    public function setSource(\AppBundle\Entity\Source $source = null)
-    {
+    public function setSource(Source $source = null) {
         $this->source = $source;
 
         return $this;
@@ -118,10 +111,9 @@ class TitleSource {
     /**
      * Get source.
      *
-     * @return \AppBundle\Entity\Source|null
+     * @return null|\AppBundle\Entity\Source
      */
-    public function getSource()
-    {
+    public function getSource() {
         return $this->source;
     }
 }

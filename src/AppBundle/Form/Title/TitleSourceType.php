@@ -13,7 +13,6 @@ use Tetranz\Select2EntityBundle\Form\Type\Select2EntityType;
  * Subform definition for assigning sources to titles.
  */
 class TitleSourceType extends AbstractType {
-
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
@@ -38,8 +37,7 @@ class TitleSourceType extends AbstractType {
      */
     public function configureOptions(OptionsResolver $resolver) {
         $resolver->setDefaults(array(
-            'data_class' => TitleSource::class
+            'data_class' => TitleSource::class,
         ));
     }
-
 }

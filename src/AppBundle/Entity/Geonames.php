@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Geonames
+ * Geonames.
  *
  * @ORM\Table(name="geonames",
  *  indexes={
@@ -17,10 +17,9 @@ use Doctrine\ORM\Mapping as ORM;
  * })
  * @ORM\Entity(repositoryClass="AppBundle\Repository\GeonamesRepository")
  */
-class Geonames
-{
+class Geonames {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="geonameid", type="integer", nullable=false)
      * @ORM\Id
@@ -119,21 +118,21 @@ class Geonames
     private $admin4;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="population", type="integer", nullable=true)
      */
     private $population;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="elevation", type="integer", nullable=true)
      */
     private $elevation;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="gtopo30", type="integer", nullable=true)
      */
@@ -178,10 +177,9 @@ class Geonames
     private $peopleDied;
 
     /**
-     * Constructor
+     * Constructor.
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->titles = new ArrayCollection();
         $this->firms = new ArrayCollection();
         $this->peopleBorn = new ArrayCollection();
@@ -198,7 +196,7 @@ class Geonames
     }
 
     /**
-     * Set geonameid
+     * Set geonameid.
      *
      * @param string $geonameid
      *
@@ -211,16 +209,16 @@ class Geonames
     }
 
     /**
-     * Get geonameid
+     * Get geonameid.
      *
-     * @return integer
+     * @return int
      */
     public function getGeonameid() {
         return $this->geonameid;
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
      *
@@ -233,7 +231,7 @@ class Geonames
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
@@ -242,7 +240,7 @@ class Geonames
     }
 
     /**
-     * Set asciiname
+     * Set asciiname.
      *
      * @param string $asciiname
      *
@@ -255,7 +253,7 @@ class Geonames
     }
 
     /**
-     * Get asciiname
+     * Get asciiname.
      *
      * @return string
      */
@@ -264,7 +262,7 @@ class Geonames
     }
 
     /**
-     * Set alternatenames
+     * Set alternatenames.
      *
      * @param string $alternatenames
      *
@@ -277,7 +275,7 @@ class Geonames
     }
 
     /**
-     * Get alternatenames
+     * Get alternatenames.
      *
      * @return string
      */
@@ -286,7 +284,7 @@ class Geonames
     }
 
     /**
-     * Set latitude
+     * Set latitude.
      *
      * @param string $latitude
      *
@@ -299,7 +297,7 @@ class Geonames
     }
 
     /**
-     * Get latitude
+     * Get latitude.
      *
      * @return string
      */
@@ -308,7 +306,7 @@ class Geonames
     }
 
     /**
-     * Set longitude
+     * Set longitude.
      *
      * @param string $longitude
      *
@@ -321,7 +319,7 @@ class Geonames
     }
 
     /**
-     * Get longitude
+     * Get longitude.
      *
      * @return string
      */
@@ -330,7 +328,7 @@ class Geonames
     }
 
     /**
-     * Set fclass
+     * Set fclass.
      *
      * @param string $fclass
      *
@@ -343,7 +341,7 @@ class Geonames
     }
 
     /**
-     * Get fclass
+     * Get fclass.
      *
      * @return string
      */
@@ -352,7 +350,7 @@ class Geonames
     }
 
     /**
-     * Set fcode
+     * Set fcode.
      *
      * @param string $fcode
      *
@@ -365,7 +363,7 @@ class Geonames
     }
 
     /**
-     * Get fcode
+     * Get fcode.
      *
      * @return string
      */
@@ -374,7 +372,7 @@ class Geonames
     }
 
     /**
-     * Set country
+     * Set country.
      *
      * @param string $country
      *
@@ -387,7 +385,7 @@ class Geonames
     }
 
     /**
-     * Get country
+     * Get country.
      *
      * @return string
      */
@@ -396,7 +394,7 @@ class Geonames
     }
 
     /**
-     * Set cc2
+     * Set cc2.
      *
      * @param string $cc2
      *
@@ -409,7 +407,7 @@ class Geonames
     }
 
     /**
-     * Get cc2
+     * Get cc2.
      *
      * @return string
      */
@@ -418,7 +416,7 @@ class Geonames
     }
 
     /**
-     * Set admin1
+     * Set admin1.
      *
      * @param string $admin1
      *
@@ -431,7 +429,7 @@ class Geonames
     }
 
     /**
-     * Get admin1
+     * Get admin1.
      *
      * @return string
      */
@@ -440,7 +438,7 @@ class Geonames
     }
 
     /**
-     * Set admin2
+     * Set admin2.
      *
      * @param string $admin2
      *
@@ -453,7 +451,7 @@ class Geonames
     }
 
     /**
-     * Get admin2
+     * Get admin2.
      *
      * @return string
      */
@@ -462,7 +460,7 @@ class Geonames
     }
 
     /**
-     * Set admin3
+     * Set admin3.
      *
      * @param string $admin3
      *
@@ -475,7 +473,7 @@ class Geonames
     }
 
     /**
-     * Get admin3
+     * Get admin3.
      *
      * @return string
      */
@@ -484,7 +482,7 @@ class Geonames
     }
 
     /**
-     * Set admin4
+     * Set admin4.
      *
      * @param string $admin4
      *
@@ -497,7 +495,7 @@ class Geonames
     }
 
     /**
-     * Get admin4
+     * Get admin4.
      *
      * @return string
      */
@@ -506,9 +504,9 @@ class Geonames
     }
 
     /**
-     * Set population
+     * Set population.
      *
-     * @param integer $population
+     * @param int $population
      *
      * @return Geonames
      */
@@ -519,18 +517,18 @@ class Geonames
     }
 
     /**
-     * Get population
+     * Get population.
      *
-     * @return integer
+     * @return int
      */
     public function getPopulation() {
         return $this->population;
     }
 
     /**
-     * Set elevation
+     * Set elevation.
      *
-     * @param integer $elevation
+     * @param int $elevation
      *
      * @return Geonames
      */
@@ -541,18 +539,18 @@ class Geonames
     }
 
     /**
-     * Get elevation
+     * Get elevation.
      *
-     * @return integer
+     * @return int
      */
     public function getElevation() {
         return $this->elevation;
     }
 
     /**
-     * Set gtopo30
+     * Set gtopo30.
      *
-     * @param integer $gtopo30
+     * @param int $gtopo30
      *
      * @return Geonames
      */
@@ -563,16 +561,16 @@ class Geonames
     }
 
     /**
-     * Get gtopo30
+     * Get gtopo30.
      *
-     * @return integer
+     * @return int
      */
     public function getGtopo30() {
         return $this->gtopo30;
     }
 
     /**
-     * Set timezone
+     * Set timezone.
      *
      * @param string $timezone
      *
@@ -585,7 +583,7 @@ class Geonames
     }
 
     /**
-     * Get timezone
+     * Get timezone.
      *
      * @return string
      */
@@ -594,7 +592,7 @@ class Geonames
     }
 
     /**
-     * Set moddate
+     * Set moddate.
      *
      * @param DateTime $moddate
      *
@@ -607,7 +605,7 @@ class Geonames
     }
 
     /**
-     * Get moddate
+     * Get moddate.
      *
      * @return DateTime
      */
@@ -616,138 +614,126 @@ class Geonames
     }
 
     /**
-     * Add title
+     * Add title.
      *
      * @param Title $title
      *
      * @return Geonames
      */
-    public function addTitle(Title $title)
-    {
+    public function addTitle(Title $title) {
         $this->titles[] = $title;
 
         return $this;
     }
 
     /**
-     * Remove title
+     * Remove title.
      *
      * @param Title $title
      */
-    public function removeTitle(Title $title)
-    {
+    public function removeTitle(Title $title) {
         $this->titles->removeElement($title);
     }
 
     /**
-     * Get titles
+     * Get titles.
      *
      * @return Collection
      */
-    public function getTitles()
-    {
+    public function getTitles() {
         return $this->titles;
     }
 
     /**
-     * Add firm
+     * Add firm.
      *
      * @param Firm $firm
      *
      * @return Geonames
      */
-    public function addFirm(Firm $firm)
-    {
+    public function addFirm(Firm $firm) {
         $this->firms[] = $firm;
 
         return $this;
     }
 
     /**
-     * Remove firm
+     * Remove firm.
      *
      * @param Firm $firm
      */
-    public function removeFirm(Firm $firm)
-    {
+    public function removeFirm(Firm $firm) {
         $this->firms->removeElement($firm);
     }
 
     /**
-     * Get firms
+     * Get firms.
      *
      * @return Collection
      */
-    public function getFirms()
-    {
+    public function getFirms() {
         return $this->firms;
     }
 
     /**
-     * Add peopleBorn
+     * Add peopleBorn.
      *
      * @param Person $peopleBorn
      *
      * @return Geonames
      */
-    public function addPeopleBorn(Person $peopleBorn)
-    {
+    public function addPeopleBorn(Person $peopleBorn) {
         $this->peopleBorn[] = $peopleBorn;
 
         return $this;
     }
 
     /**
-     * Remove peopleBorn
+     * Remove peopleBorn.
      *
      * @param Person $peopleBorn
      */
-    public function removePeopleBorn(Person $peopleBorn)
-    {
+    public function removePeopleBorn(Person $peopleBorn) {
         $this->peopleBorn->removeElement($peopleBorn);
     }
 
     /**
-     * Get peopleBorn
+     * Get peopleBorn.
      *
      * @return Collection
      */
-    public function getPeopleBorn()
-    {
+    public function getPeopleBorn() {
         return $this->peopleBorn;
     }
 
     /**
-     * Add peopleDied
+     * Add peopleDied.
      *
      * @param Firm $peopleDied
      *
      * @return Geonames
      */
-    public function addPeopleDied(Firm $peopleDied)
-    {
+    public function addPeopleDied(Firm $peopleDied) {
         $this->peopleDied[] = $peopleDied;
 
         return $this;
     }
 
     /**
-     * Remove peopleDied
+     * Remove peopleDied.
      *
      * @param Firm $peopleDied
      */
-    public function removePeopleDied(Firm $peopleDied)
-    {
+    public function removePeopleDied(Firm $peopleDied) {
         $this->peopleDied->removeElement($peopleDied);
     }
 
     /**
-     * Get peopleDied
+     * Get peopleDied.
      *
      * @return Collection
      */
-    public function getPeopleDied()
-    {
+    public function getPeopleDied() {
         return $this->peopleDied;
     }
 }

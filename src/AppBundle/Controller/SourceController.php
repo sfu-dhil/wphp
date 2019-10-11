@@ -6,13 +6,13 @@ use AppBundle\Entity\Source;
 use AppBundle\Form\SourceType;
 use AppBundle\Repository\SourceRepository;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Source controller.
@@ -20,7 +20,6 @@ use Symfony\Component\HttpFoundation\Request;
  * @Route("/source")
  */
 class SourceController extends Controller implements PaginatorAwareInterface {
-
     use PaginatorTrait;
 
     /**
@@ -28,6 +27,7 @@ class SourceController extends Controller implements PaginatorAwareInterface {
      *
      * @Route("/", name="source_index", methods={"GET"})
      * @Template()
+     *
      * @param Request $request
      * @param SourceRepository $repo
      *
@@ -57,15 +57,15 @@ class SourceController extends Controller implements PaginatorAwareInterface {
      */
     public function typeaheadAction(Request $request, SourceRepository $repo) {
         $q = $request->query->get('q');
-        if( ! $q) {
-            return new JsonResponse([]);
+        if ( ! $q) {
+            return new JsonResponse(array());
         }
-        $data = [];
-        foreach($repo->typeaheadQuery($q) as $result) {
-            $data[] = [
+        $data = array();
+        foreach ($repo->typeaheadQuery($q) as $result) {
+            $data[] = array(
                 'id' => $result->getId(),
                 'text' => $result->getName(),
-            ];
+            );
         }
 
         return new JsonResponse($data);
@@ -77,6 +77,7 @@ class SourceController extends Controller implements PaginatorAwareInterface {
      * @Route("/new", name="source_new", methods={"GET","POST"})
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
      * @Template()
+     *
      * @param Request $request
      *
      * @return array|RedirectResponse
@@ -92,6 +93,7 @@ class SourceController extends Controller implements PaginatorAwareInterface {
             $em->flush();
 
             $this->addFlash('success', 'The new source was created.');
+
             return $this->redirectToRoute('source_show', array('id' => $source->getId()));
         }
 
@@ -106,6 +108,7 @@ class SourceController extends Controller implements PaginatorAwareInterface {
      *
      * @Route("/{id}", name="source_show", methods={"GET"})
      * @Template()
+     *
      * @param Request $request
      * @param Source $source
      *
@@ -130,6 +133,7 @@ class SourceController extends Controller implements PaginatorAwareInterface {
      * @Route("/{id}/edit", name="source_edit", methods={"GET","POST"})
      * @Template()
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
+     *
      * @param Request $request
      * @param Source $source
      *
@@ -143,6 +147,7 @@ class SourceController extends Controller implements PaginatorAwareInterface {
             $em = $this->getDoctrine()->getManager();
             $em->flush();
             $this->addFlash('success', 'The source has been updated.');
+
             return $this->redirectToRoute('source_show', array('id' => $source->getId()));
         }
 
@@ -157,6 +162,7 @@ class SourceController extends Controller implements PaginatorAwareInterface {
      *
      * @Route("/{id}/delete", name="source_delete", methods={"GET"})
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
+     *
      * @param Request $request
      * @param Source $source
      *
@@ -170,6 +176,4 @@ class SourceController extends Controller implements PaginatorAwareInterface {
 
         return $this->redirectToRoute('source_index');
     }
-
-
-    }
+}

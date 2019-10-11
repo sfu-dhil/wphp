@@ -11,8 +11,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * UpdateEditionNumberCommand command.
  */
-class UpdateEditionNumberCommand extends ContainerAwareCommand
-{
+class UpdateEditionNumberCommand extends ContainerAwareCommand {
     const BATCH_SIZE = 100;
 
     /**
@@ -33,36 +32,35 @@ class UpdateEditionNumberCommand extends ContainerAwareCommand
     /**
      * Configure the command.
      */
-    protected function configure()
-    {
+    protected function configure() {
         $this
             ->setName('wphp:update:editions')
-            ->setDescription('Update title edition number from edition text.');
+            ->setDescription('Update title edition number from edition text.')
+        ;
     }
 
     /**
      * Execute the command.
      *
      * @param InputInterface $input
-     *   Command input, as defined in the configure() method.
+     *                              Command input, as defined in the configure() method.
      * @param OutputInterface $output
-     *   Output destination.
+     *                                Output destination.
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
-    {
+    protected function execute(InputInterface $input, OutputInterface $output) {
         $qb = $this->em->createQueryBuilder();
         $qb->select('e')->from(Title::class, 'e')->where('e.edition is not null');
         $iterator = $qb->getQuery()->iterate();
         $matches = array();
-        while($row = $iterator->next()) {
+        while ($row = $iterator->next()) {
             $title = $row[0];
-            if($title->getEditionNumber()) {
+            if ($title->getEditionNumber()) {
                 continue;
             }
-            if(preg_match('/^(\d+)/', $title->getEdition(), $matches)) {
+            if (preg_match('/^(\d+)/', $title->getEdition(), $matches)) {
                 $title->setEditionNumber($matches[1]);
             }
-            if($iterator->key() % self::BATCH_SIZE === 0) {
+            if (0 === $iterator->key() % self::BATCH_SIZE) {
                 $this->em->flush();
                 $this->em->clear();
                 $output->write("\r" . $iterator->key());
@@ -72,5 +70,4 @@ class UpdateEditionNumberCommand extends ContainerAwareCommand
         $this->em->clear();
         $output->writeln("\rfinished.");
     }
-
 }

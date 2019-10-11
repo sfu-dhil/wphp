@@ -5,7 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * OrlandoBiblio
+ * OrlandoBiblio.
  *
  * @ORM\Table(name="orlando_biblio",
  *  indexes={
@@ -15,10 +15,9 @@ use Doctrine\ORM\Mapping as ORM;
  * )
  * @ORM\Entity(repositoryClass="AppBundle\Repository\OrlandoBiblioRepository")
  */
-class OrlandoBiblio
-{
+class OrlandoBiblio {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -27,7 +26,7 @@ class OrlandoBiblio
     private $id;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="BI_ID", type="integer", nullable=false)
      */
@@ -236,735 +235,672 @@ class OrlandoBiblio
      */
     private $researchnotes;
 
-
-
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
     /**
-     * Set orlandoId
+     * Set orlandoId.
      *
-     * @param integer $orlandoId
+     * @param int $orlandoId
      *
      * @return OrlandoBiblio
      */
-    public function setOrlandoId($orlandoId)
-    {
+    public function setOrlandoId($orlandoId) {
         $this->orlandoId = $orlandoId;
 
         return $this;
     }
 
     /**
-     * Get orlandoId
+     * Get orlandoId.
      *
-     * @return integer
+     * @return int
      */
-    public function getOrlandoId()
-    {
+    public function getOrlandoId() {
         return $this->orlandoId;
     }
 
     /**
-     * Set workform
+     * Set workform.
      *
      * @param string $workform
      *
      * @return OrlandoBiblio
      */
-    public function setWorkform($workform)
-    {
+    public function setWorkform($workform) {
         $this->workform = $workform;
 
         return $this;
     }
 
     /**
-     * Get workform
+     * Get workform.
      *
      * @return string
      */
-    public function getWorkform()
-    {
+    public function getWorkform() {
         return $this->workform;
     }
 
     /**
-     * Set author
+     * Set author.
      *
      * @param string $author
      *
      * @return OrlandoBiblio
      */
-    public function setAuthor($author)
-    {
+    public function setAuthor($author) {
         $this->author = $author;
 
         return $this;
     }
 
     /**
-     * Get author
+     * Get author.
      *
      * @return string
      */
-    public function getAuthor()
-    {
+    public function getAuthor() {
         return $this->author;
     }
 
     /**
-     * Set editor
+     * Set editor.
      *
      * @param string $editor
      *
      * @return OrlandoBiblio
      */
-    public function setEditor($editor)
-    {
+    public function setEditor($editor) {
         $this->editor = $editor;
 
         return $this;
     }
 
     /**
-     * Get editor
+     * Get editor.
      *
      * @return string
      */
-    public function getEditor()
-    {
+    public function getEditor() {
         return $this->editor;
     }
 
     /**
-     * Set introduction
+     * Set introduction.
      *
      * @param string $introduction
      *
      * @return OrlandoBiblio
      */
-    public function setIntroduction($introduction)
-    {
+    public function setIntroduction($introduction) {
         $this->introduction = $introduction;
 
         return $this;
     }
 
     /**
-     * Get introduction
+     * Get introduction.
      *
      * @return string
      */
-    public function getIntroduction()
-    {
+    public function getIntroduction() {
         return $this->introduction;
     }
 
     /**
-     * Set translator
+     * Set translator.
      *
      * @param string $translator
      *
      * @return OrlandoBiblio
      */
-    public function setTranslator($translator)
-    {
+    public function setTranslator($translator) {
         $this->translator = $translator;
 
         return $this;
     }
 
     /**
-     * Get translator
+     * Get translator.
      *
      * @return string
      */
-    public function getTranslator()
-    {
+    public function getTranslator() {
         return $this->translator;
     }
 
     /**
-     * Set illustrator
+     * Set illustrator.
      *
      * @param string $illustrator
      *
      * @return OrlandoBiblio
      */
-    public function setIllustrator($illustrator)
-    {
+    public function setIllustrator($illustrator) {
         $this->illustrator = $illustrator;
 
         return $this;
     }
 
     /**
-     * Get illustrator
+     * Get illustrator.
      *
      * @return string
      */
-    public function getIllustrator()
-    {
+    public function getIllustrator() {
         return $this->illustrator;
     }
 
     /**
-     * Set compiler
+     * Set compiler.
      *
      * @param string $compiler
      *
      * @return OrlandoBiblio
      */
-    public function setCompiler($compiler)
-    {
+    public function setCompiler($compiler) {
         $this->compiler = $compiler;
 
         return $this;
     }
 
     /**
-     * Get compiler
+     * Get compiler.
      *
      * @return string
      */
-    public function getCompiler()
-    {
+    public function getCompiler() {
         return $this->compiler;
     }
 
     /**
-     * Set analyticStandardTitle
+     * Set analyticStandardTitle.
      *
      * @param string $analyticStandardTitle
      *
      * @return OrlandoBiblio
      */
-    public function setAnalyticStandardTitle($analyticStandardTitle)
-    {
+    public function setAnalyticStandardTitle($analyticStandardTitle) {
         $this->analyticStandardTitle = $analyticStandardTitle;
 
         return $this;
     }
 
     /**
-     * Get analyticStandardTitle
+     * Get analyticStandardTitle.
      *
      * @return string
      */
-    public function getAnalyticStandardTitle()
-    {
+    public function getAnalyticStandardTitle() {
         return $this->analyticStandardTitle;
     }
 
     /**
-     * Set analyticAlternateTitle
+     * Set analyticAlternateTitle.
      *
      * @param string $analyticAlternateTitle
      *
      * @return OrlandoBiblio
      */
-    public function setAnalyticAlternateTitle($analyticAlternateTitle)
-    {
+    public function setAnalyticAlternateTitle($analyticAlternateTitle) {
         $this->analyticAlternateTitle = $analyticAlternateTitle;
 
         return $this;
     }
 
     /**
-     * Get analyticAlternateTitle
+     * Get analyticAlternateTitle.
      *
      * @return string
      */
-    public function getAnalyticAlternateTitle()
-    {
+    public function getAnalyticAlternateTitle() {
         return $this->analyticAlternateTitle;
     }
 
     /**
-     * Set monographicStandardTitle
+     * Set monographicStandardTitle.
      *
      * @param string $monographicStandardTitle
      *
      * @return OrlandoBiblio
      */
-    public function setMonographicStandardTitle($monographicStandardTitle)
-    {
+    public function setMonographicStandardTitle($monographicStandardTitle) {
         $this->monographicStandardTitle = $monographicStandardTitle;
 
         return $this;
     }
 
     /**
-     * Get monographicStandardTitle
+     * Get monographicStandardTitle.
      *
      * @return string
      */
-    public function getMonographicStandardTitle()
-    {
+    public function getMonographicStandardTitle() {
         return $this->monographicStandardTitle;
     }
 
     /**
-     * Set monographicAlternateTitle
+     * Set monographicAlternateTitle.
      *
      * @param string $monographicAlternateTitle
      *
      * @return OrlandoBiblio
      */
-    public function setMonographicAlternateTitle($monographicAlternateTitle)
-    {
+    public function setMonographicAlternateTitle($monographicAlternateTitle) {
         $this->monographicAlternateTitle = $monographicAlternateTitle;
 
         return $this;
     }
 
     /**
-     * Get monographicAlternateTitle
+     * Get monographicAlternateTitle.
      *
      * @return string
      */
-    public function getMonographicAlternateTitle()
-    {
+    public function getMonographicAlternateTitle() {
         return $this->monographicAlternateTitle;
     }
 
     /**
-     * Set imprintDateOfPublication
+     * Set imprintDateOfPublication.
      *
      * @param string $imprintDateOfPublication
      *
      * @return OrlandoBiblio
      */
-    public function setImprintDateOfPublication($imprintDateOfPublication)
-    {
+    public function setImprintDateOfPublication($imprintDateOfPublication) {
         $this->imprintDateOfPublication = $imprintDateOfPublication;
 
         return $this;
     }
 
     /**
-     * Get imprintDateOfPublication
+     * Get imprintDateOfPublication.
      *
      * @return string
      */
-    public function getImprintDateOfPublication()
-    {
+    public function getImprintDateOfPublication() {
         return $this->imprintDateOfPublication;
     }
 
     /**
-     * Set imprintDateOfOriginalPublication
+     * Set imprintDateOfOriginalPublication.
      *
      * @param string $imprintDateOfOriginalPublication
      *
      * @return OrlandoBiblio
      */
-    public function setImprintDateOfOriginalPublication($imprintDateOfOriginalPublication)
-    {
+    public function setImprintDateOfOriginalPublication($imprintDateOfOriginalPublication) {
         $this->imprintDateOfOriginalPublication = $imprintDateOfOriginalPublication;
 
         return $this;
     }
 
     /**
-     * Get imprintDateOfOriginalPublication
+     * Get imprintDateOfOriginalPublication.
      *
      * @return string
      */
-    public function getImprintDateOfOriginalPublication()
-    {
+    public function getImprintDateOfOriginalPublication() {
         return $this->imprintDateOfOriginalPublication;
     }
 
     /**
-     * Set imprintPublisher
+     * Set imprintPublisher.
      *
      * @param string $imprintPublisher
      *
      * @return OrlandoBiblio
      */
-    public function setImprintPublisher($imprintPublisher)
-    {
+    public function setImprintPublisher($imprintPublisher) {
         $this->imprintPublisher = $imprintPublisher;
 
         return $this;
     }
 
     /**
-     * Get imprintPublisher
+     * Get imprintPublisher.
      *
      * @return string
      */
-    public function getImprintPublisher()
-    {
+    public function getImprintPublisher() {
         return $this->imprintPublisher;
     }
 
     /**
-     * Set imprintPlaceOfPublication
+     * Set imprintPlaceOfPublication.
      *
      * @param string $imprintPlaceOfPublication
      *
      * @return OrlandoBiblio
      */
-    public function setImprintPlaceOfPublication($imprintPlaceOfPublication)
-    {
+    public function setImprintPlaceOfPublication($imprintPlaceOfPublication) {
         $this->imprintPlaceOfPublication = $imprintPlaceOfPublication;
 
         return $this;
     }
 
     /**
-     * Get imprintPlaceOfPublication
+     * Get imprintPlaceOfPublication.
      *
      * @return string
      */
-    public function getImprintPlaceOfPublication()
-    {
+    public function getImprintPlaceOfPublication() {
         return $this->imprintPlaceOfPublication;
     }
 
     /**
-     * Set imprintCoverTitle
+     * Set imprintCoverTitle.
      *
      * @param string $imprintCoverTitle
      *
      * @return OrlandoBiblio
      */
-    public function setImprintCoverTitle($imprintCoverTitle)
-    {
+    public function setImprintCoverTitle($imprintCoverTitle) {
         $this->imprintCoverTitle = $imprintCoverTitle;
 
         return $this;
     }
 
     /**
-     * Get imprintCoverTitle
+     * Get imprintCoverTitle.
      *
      * @return string
      */
-    public function getImprintCoverTitle()
-    {
+    public function getImprintCoverTitle() {
         return $this->imprintCoverTitle;
     }
 
     /**
-     * Set imprintEdition
+     * Set imprintEdition.
      *
      * @param string $imprintEdition
      *
      * @return OrlandoBiblio
      */
-    public function setImprintEdition($imprintEdition)
-    {
+    public function setImprintEdition($imprintEdition) {
         $this->imprintEdition = $imprintEdition;
 
         return $this;
     }
 
     /**
-     * Get imprintEdition
+     * Get imprintEdition.
      *
      * @return string
      */
-    public function getImprintEdition()
-    {
+    public function getImprintEdition() {
         return $this->imprintEdition;
     }
 
     /**
-     * Set imprintDateOfAccess
+     * Set imprintDateOfAccess.
      *
      * @param string $imprintDateOfAccess
      *
      * @return OrlandoBiblio
      */
-    public function setImprintDateOfAccess($imprintDateOfAccess)
-    {
+    public function setImprintDateOfAccess($imprintDateOfAccess) {
         $this->imprintDateOfAccess = $imprintDateOfAccess;
 
         return $this;
     }
 
     /**
-     * Get imprintDateOfAccess
+     * Get imprintDateOfAccess.
      *
      * @return string
      */
-    public function getImprintDateOfAccess()
-    {
+    public function getImprintDateOfAccess() {
         return $this->imprintDateOfAccess;
     }
 
     /**
-     * Set seriesStandardTitle
+     * Set seriesStandardTitle.
      *
      * @param string $seriesStandardTitle
      *
      * @return OrlandoBiblio
      */
-    public function setSeriesStandardTitle($seriesStandardTitle)
-    {
+    public function setSeriesStandardTitle($seriesStandardTitle) {
         $this->seriesStandardTitle = $seriesStandardTitle;
 
         return $this;
     }
 
     /**
-     * Get seriesStandardTitle
+     * Get seriesStandardTitle.
      *
      * @return string
      */
-    public function getSeriesStandardTitle()
-    {
+    public function getSeriesStandardTitle() {
         return $this->seriesStandardTitle;
     }
 
     /**
-     * Set seriesAlternateTitle
+     * Set seriesAlternateTitle.
      *
      * @param string $seriesAlternateTitle
      *
      * @return OrlandoBiblio
      */
-    public function setSeriesAlternateTitle($seriesAlternateTitle)
-    {
+    public function setSeriesAlternateTitle($seriesAlternateTitle) {
         $this->seriesAlternateTitle = $seriesAlternateTitle;
 
         return $this;
     }
 
     /**
-     * Get seriesAlternateTitle
+     * Get seriesAlternateTitle.
      *
      * @return string
      */
-    public function getSeriesAlternateTitle()
-    {
+    public function getSeriesAlternateTitle() {
         return $this->seriesAlternateTitle;
     }
 
     /**
-     * Set seriesVolumeId
+     * Set seriesVolumeId.
      *
      * @param string $seriesVolumeId
      *
      * @return OrlandoBiblio
      */
-    public function setSeriesVolumeId($seriesVolumeId)
-    {
+    public function setSeriesVolumeId($seriesVolumeId) {
         $this->seriesVolumeId = $seriesVolumeId;
 
         return $this;
     }
 
     /**
-     * Get seriesVolumeId
+     * Get seriesVolumeId.
      *
      * @return string
      */
-    public function getSeriesVolumeId()
-    {
+    public function getSeriesVolumeId() {
         return $this->seriesVolumeId;
     }
 
     /**
-     * Set scopeMedium
+     * Set scopeMedium.
      *
      * @param string $scopeMedium
      *
      * @return OrlandoBiblio
      */
-    public function setScopeMedium($scopeMedium)
-    {
+    public function setScopeMedium($scopeMedium) {
         $this->scopeMedium = $scopeMedium;
 
         return $this;
     }
 
     /**
-     * Get scopeMedium
+     * Get scopeMedium.
      *
      * @return string
      */
-    public function getScopeMedium()
-    {
+    public function getScopeMedium() {
         return $this->scopeMedium;
     }
 
     /**
-     * Set scopeIssueId
+     * Set scopeIssueId.
      *
      * @param string $scopeIssueId
      *
      * @return OrlandoBiblio
      */
-    public function setScopeIssueId($scopeIssueId)
-    {
+    public function setScopeIssueId($scopeIssueId) {
         $this->scopeIssueId = $scopeIssueId;
 
         return $this;
     }
 
     /**
-     * Get scopeIssueId
+     * Get scopeIssueId.
      *
      * @return string
      */
-    public function getScopeIssueId()
-    {
+    public function getScopeIssueId() {
         return $this->scopeIssueId;
     }
 
     /**
-     * Set scopePages
+     * Set scopePages.
      *
      * @param string $scopePages
      *
      * @return OrlandoBiblio
      */
-    public function setScopePages($scopePages)
-    {
+    public function setScopePages($scopePages) {
         $this->scopePages = $scopePages;
 
         return $this;
     }
 
     /**
-     * Get scopePages
+     * Get scopePages.
      *
      * @return string
      */
-    public function getScopePages()
-    {
+    public function getScopePages() {
         return $this->scopePages;
     }
 
     /**
-     * Set scopeVolumeCount
+     * Set scopeVolumeCount.
      *
      * @param string $scopeVolumeCount
      *
      * @return OrlandoBiblio
      */
-    public function setScopeVolumeCount($scopeVolumeCount)
-    {
+    public function setScopeVolumeCount($scopeVolumeCount) {
         $this->scopeVolumeCount = $scopeVolumeCount;
 
         return $this;
     }
 
     /**
-     * Get scopeVolumeCount
+     * Get scopeVolumeCount.
      *
      * @return string
      */
-    public function getScopeVolumeCount()
-    {
+    public function getScopeVolumeCount() {
         return $this->scopeVolumeCount;
     }
 
     /**
-     * Set locationUrn
+     * Set locationUrn.
      *
      * @param string $locationUrn
      *
      * @return OrlandoBiblio
      */
-    public function setLocationUrn($locationUrn)
-    {
+    public function setLocationUrn($locationUrn) {
         $this->locationUrn = $locationUrn;
 
         return $this;
     }
 
     /**
-     * Get locationUrn
+     * Get locationUrn.
      *
      * @return string
      */
-    public function getLocationUrn()
-    {
+    public function getLocationUrn() {
         return $this->locationUrn;
     }
 
     /**
-     * Set locationCallNo
+     * Set locationCallNo.
      *
      * @param string $locationCallNo
      *
      * @return OrlandoBiblio
      */
-    public function setLocationCallNo($locationCallNo)
-    {
+    public function setLocationCallNo($locationCallNo) {
         $this->locationCallNo = $locationCallNo;
 
         return $this;
     }
 
     /**
-     * Get locationCallNo
+     * Get locationCallNo.
      *
      * @return string
      */
-    public function getLocationCallNo()
-    {
+    public function getLocationCallNo() {
         return $this->locationCallNo;
     }
 
     /**
-     * Set scholarnotes
+     * Set scholarnotes.
      *
      * @param string $scholarnotes
      *
      * @return OrlandoBiblio
      */
-    public function setScholarnotes($scholarnotes)
-    {
+    public function setScholarnotes($scholarnotes) {
         $this->scholarnotes = $scholarnotes;
 
         return $this;
     }
 
     /**
-     * Get scholarnotes
+     * Get scholarnotes.
      *
      * @return string
      */
-    public function getScholarnotes()
-    {
+    public function getScholarnotes() {
         return $this->scholarnotes;
     }
 
     /**
-     * Set researchnotes
+     * Set researchnotes.
      *
      * @param string $researchnotes
      *
      * @return OrlandoBiblio
      */
-    public function setResearchnotes($researchnotes)
-    {
+    public function setResearchnotes($researchnotes) {
         $this->researchnotes = $researchnotes;
 
         return $this;
     }
 
     /**
-     * Get researchnotes
+     * Get researchnotes.
      *
      * @return string
      */
-    public function getResearchnotes()
-    {
+    public function getResearchnotes() {
         return $this->researchnotes;
     }
 }

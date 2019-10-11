@@ -14,7 +14,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * Search form for person entities.
  */
 class PersonSearchType extends AbstractType {
-
     /**
      * Build the form.
      *
@@ -28,7 +27,7 @@ class PersonSearchType extends AbstractType {
             'label' => 'Search Persons by Name',
             'required' => false,
             'attr' => array(
-                'help_block' => 'Enter all or part of a personal name'
+                'help_block' => 'Enter all or part of a personal name',
             ),
         ));
 
@@ -47,7 +46,7 @@ class PersonSearchType extends AbstractType {
                 'Death Date (Most Recent First)' => 'death_desc',
             ),
             'attr' => array(
-                'help_block' => 'Choose a sort method for the results'
+                'help_block' => 'Choose a sort method for the results',
             ),
             'required' => false,
             'expanded' => false,
@@ -61,7 +60,7 @@ class PersonSearchType extends AbstractType {
             'required' => false,
             'attr' => array(
                 'help_block' => 'Find this exact person ID.',
-            )
+            ),
         ));
 
         $builder->add('gender', ChoiceType::class, array(
@@ -72,7 +71,7 @@ class PersonSearchType extends AbstractType {
                 'Unknown' => 'U',
             ),
             'attr' => array(
-                'help_block' => 'Leave this field blank to include all genders'
+                'help_block' => 'Leave this field blank to include all genders',
             ),
             'required' => false,
             'expanded' => true,
@@ -100,13 +99,11 @@ class PersonSearchType extends AbstractType {
         $builder->add('birthplace', TextType::class, array(
             'label' => 'Place of Birth',
             'required' => false,
-
         ));
 
         $builder->add('deathplace', TextType::class, array(
             'label' => 'Place of Death',
             'required' => false,
-
         ));
 
         $builder->add('viafUrl', TextType::class, array(
@@ -135,7 +132,7 @@ class PersonSearchType extends AbstractType {
             'label' => 'Filter by Title',
             'required' => false,
             'attr' => array(
-                'class' => 'embedded-form'
+                'class' => 'embedded-form',
             ),
         ));
 
@@ -143,7 +140,7 @@ class PersonSearchType extends AbstractType {
             'label' => 'Filter by Firm',
             'required' => false,
             'attr' => array(
-                'class' => 'embedded-form'
+                'class' => 'embedded-form',
             ),
         ));
     }
@@ -157,5 +154,4 @@ class PersonSearchType extends AbstractType {
         parent::configureOptions($resolver);
         $resolver->setRequired(array('entity_manager'));
     }
-
 }

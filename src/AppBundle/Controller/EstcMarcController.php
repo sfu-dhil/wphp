@@ -7,11 +7,11 @@ use AppBundle\Repository\EstcMarcRepository;
 use AppBundle\Services\MarcManager;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * EstcMarc controller.
@@ -19,15 +19,13 @@ use Symfony\Component\HttpFoundation\Request;
  * @Security("has_role('ROLE_USER')")
  * @Route("/resource/estc")
  */
-class EstcMarcController extends Controller  implements PaginatorAwareInterface {
-
+class EstcMarcController extends Controller implements PaginatorAwareInterface {
     use PaginatorTrait;
 
     /**
      * Lists all EstcMarc entities.
      *
      * @param Request $request
-     *
      * @param MarcManager $manager
      * @param EstcMarcRepository $repo
      *
@@ -50,7 +48,6 @@ class EstcMarcController extends Controller  implements PaginatorAwareInterface 
      * Search for EstcMarc entities.
      *
      * @param Request $request
-     *
      * @param MarcManager $manager
      * @param EstcMarcRepository $repo
      *
@@ -62,17 +59,18 @@ class EstcMarcController extends Controller  implements PaginatorAwareInterface 
         $q = $request->query->get('q');
         if ($q) {
             $result = $repo->searchQuery($q);
-                $titleIds = $this->paginator->paginate($result, $request->query->getInt('page', 1), 25);
+            $titleIds = $this->paginator->paginate($result, $request->query->getInt('page', 1), 25);
         } else {
             $titleIds = array();
         }
         $estcMarcs = array();
-        foreach($titleIds as $titleId) {
+        foreach ($titleIds as $titleId) {
             $estcMarcs[] = $repo->findOneBy(array(
                 'titleId' => $titleId,
                 'field' => 'ldr',
             ));
         }
+
         return array(
             'titleIds' => $titleIds,
             'estcMarcs' => $estcMarcs,
@@ -85,7 +83,6 @@ class EstcMarcController extends Controller  implements PaginatorAwareInterface 
      * Search for EstcMarc entities.
      *
      * @param Request $request
-     *
      * @param MarcManager $manager
      * @param EstcMarcRepository $repo
      *
@@ -102,12 +99,13 @@ class EstcMarcController extends Controller  implements PaginatorAwareInterface 
             $titleIds = array();
         }
         $estcMarcs = array();
-        foreach($titleIds as $titleId) {
+        foreach ($titleIds as $titleId) {
             $estcMarcs[] = $repo->findOneBy(array(
                 'titleId' => $titleId,
                 'field' => 'ldr',
             ));
         }
+
         return array(
             'titleIds' => $titleIds,
             'estcMarcs' => $estcMarcs,
@@ -120,7 +118,6 @@ class EstcMarcController extends Controller  implements PaginatorAwareInterface 
      * Finds and displays a EstcMarc entity.
      *
      * @param EstcMarc $estcMarc
-     *
      * @param MarcManager $manager
      *
      * @return array
@@ -130,11 +127,9 @@ class EstcMarcController extends Controller  implements PaginatorAwareInterface 
      * @Template()
      */
     public function showAction(EstcMarc $estcMarc, MarcManager $manager) {
-
         return array(
             'estcMarc' => $estcMarc,
             'manager' => $manager,
         );
     }
-
 }

@@ -5,7 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * MarcSubfieldStructure
+ * MarcSubfieldStructure.
  *
  * @ORM\Table(name="marc_subfield_structure",
  *  indexes={
@@ -14,11 +14,9 @@ use Doctrine\ORM\Mapping as ORM;
  * )
  * @ORM\Entity(repositoryClass="AppBundle\Repository\MarcSubfieldStructureRepository")
  */
-class MarcSubfieldStructure
-{
-
+class MarcSubfieldStructure {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -48,146 +46,135 @@ class MarcSubfieldStructure
     private $name;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="isurl", type="boolean", nullable=true)
      */
     private $isUrl;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="hidden", type="integer", nullable=true)
      */
     private $hidden;
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
     /**
-     * Set tagField
+     * Set tagField.
      *
      * @param string $tagField
      *
      * @return MarcSubfieldStructure
      */
-    public function setTagField($tagField)
-    {
+    public function setTagField($tagField) {
         $this->tagField = $tagField;
 
         return $this;
     }
 
     /**
-     * Get tagField
+     * Get tagField.
      *
      * @return string
      */
-    public function getTagField()
-    {
+    public function getTagField() {
         return $this->tagField;
     }
 
     /**
-     * Set tagSubfield
+     * Set tagSubfield.
      *
      * @param string $tagSubfield
      *
      * @return MarcSubfieldStructure
      */
-    public function setTagSubfield($tagSubfield)
-    {
+    public function setTagSubfield($tagSubfield) {
         $this->tagSubfield = $tagSubfield;
 
         return $this;
     }
 
     /**
-     * Get tagSubfield
+     * Get tagSubfield.
      *
      * @return string
      */
-    public function getTagSubfield()
-    {
+    public function getTagSubfield() {
         return $this->tagSubfield;
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
      *
      * @return MarcSubfieldStructure
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
     /**
-     * Set isUrl
+     * Set isUrl.
      *
-     * @param boolean $isUrl
+     * @param bool $isUrl
      *
      * @return MarcSubfieldStructure
      */
-    public function setIsUrl($isUrl)
-    {
+    public function setIsUrl($isUrl) {
         $this->isUrl = $isUrl;
 
         return $this;
     }
 
     /**
-     * Get isUrl
+     * Get isUrl.
      *
-     * @return boolean
+     * @return bool
      */
-    public function getIsUrl()
-    {
+    public function getIsUrl() {
         return $this->isUrl;
     }
 
     /**
-     * Set hidden
+     * Set hidden.
      *
-     * @param integer $hidden
+     * @param int $hidden
      *
      * @return MarcSubfieldStructure
      */
-    public function setHidden($hidden)
-    {
+    public function setHidden($hidden) {
         $this->hidden = $hidden;
 
         return $this;
     }
 
     /**
-     * Get hidden
+     * Get hidden.
      *
-     * @return integer
+     * @return int
      */
-    public function getHidden()
-    {
+    public function getHidden() {
         return $this->hidden;
     }
 }

@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace AppBundle\Migrations;
 
@@ -8,16 +10,13 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Fix some defaults by setting gender to Gender::UNKNOWN where it is null. Search forms wouldn't work without this.
  */
-final class Version20190502231256 extends AbstractMigration
-{
-
+final class Version20190502231256 extends AbstractMigration {
     /**
      * Apply the migration.
      *
      * @param Schema $schema
      */
-    public function up(Schema $schema) : void
-    {
+    public function up(Schema $schema) : void {
         $this->addSql('UPDATE person SET gender = \'U\' WHERE gender is null');
         $this->addSql('UPDATE firm SET gender = \'U\' WHERE gender is null');
 
@@ -30,7 +29,6 @@ final class Version20190502231256 extends AbstractMigration
      *
      * @param Schema $schema
      */
-    public function down(Schema $schema) : void
-    {
+    public function down(Schema $schema) : void {
     }
 }

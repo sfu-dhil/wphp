@@ -2,20 +2,18 @@
 
 namespace AppBundle\Tests\Controller;
 
-use AppBundle\Entity\Title;
 use AppBundle\DataFixtures\ORM\LoadTitle;
+use AppBundle\Entity\Title;
 use AppBundle\Repository\TitleRepository;
-use Nines\UtilBundle\Tests\Util\BaseTestCase;
 use Nines\UserBundle\DataFixtures\ORM\LoadUser;
+use Nines\UtilBundle\Tests\Util\BaseTestCase;
 
-class TitleControllerTest extends BaseTestCase
-{
-
+class TitleControllerTest extends BaseTestCase {
     protected function getFixtures() {
-        return [
+        return array(
             LoadUser::class,
-            LoadTitle::class
-        ];
+            LoadTitle::class,
+        );
     }
 
     public function testAnonIndex() {
@@ -26,20 +24,20 @@ class TitleControllerTest extends BaseTestCase
     }
 
     public function testUserIndex() {
-        $client = $this->makeClient([
+        $client = $this->makeClient(array(
             'username' => 'user@example.com',
             'password' => 'secret',
-        ]);
+        ));
         $crawler = $client->request('GET', '/title/');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertEquals(0, $crawler->selectLink('New')->count());
     }
 
     public function testAdminIndex() {
-        $client = $this->makeClient([
+        $client = $this->makeClient(array(
             'username' => 'admin@example.com',
             'password' => 'supersecret',
-        ]);
+        ));
         $crawler = $client->request('GET', '/title/');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertEquals(1, $crawler->selectLink('New')->count());
@@ -54,20 +52,20 @@ class TitleControllerTest extends BaseTestCase
     }
 
     public function testUserTypeahead() {
-        $client = $this->makeClient([
+        $client = $this->makeClient(array(
             'username' => 'user@example.com',
             'password' => 'secret',
-        ]);
+        ));
         $crawler = $client->request('GET', '/title/typeahead?q=title');
         $this->assertEquals(403, $client->getResponse()->getStatusCode());
         $this->assertStringContainsStringIgnoringCase('Access denied.', $client->getResponse()->getContent());
     }
 
     public function testAdminTypeahead() {
-        $client = $this->makeClient([
+        $client = $this->makeClient(array(
             'username' => 'admin@example.com',
             'password' => 'supersecret',
-        ]);
+        ));
         $crawler = $client->request('GET', '/title/typeahead?q=title');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertEquals('application/json', $client->getResponse()->headers->get('Content-Type'));
@@ -84,10 +82,10 @@ class TitleControllerTest extends BaseTestCase
     }
 
     public function testUserShow() {
-        $client = $this->makeClient([
+        $client = $this->makeClient(array(
             'username' => 'user@example.com',
             'password' => 'secret',
-        ]);
+        ));
         $crawler = $client->request('GET', '/title/1');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertEquals(0, $crawler->selectLink('Edit')->count());
@@ -95,15 +93,16 @@ class TitleControllerTest extends BaseTestCase
     }
 
     public function testAdminShow() {
-        $client = $this->makeClient([
+        $client = $this->makeClient(array(
             'username' => 'admin@example.com',
             'password' => 'supersecret',
-        ]);
+        ));
         $crawler = $client->request('GET', '/title/1');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertEquals(1, $crawler->selectLink('Edit')->count());
         $this->assertEquals(1, $crawler->selectLink('Delete')->count());
     }
+
     public function testAnonEdit() {
         $client = $this->makeClient();
         $crawler = $client->request('GET', '/title/1/edit');
@@ -112,23 +111,23 @@ class TitleControllerTest extends BaseTestCase
     }
 
     public function testUserEdit() {
-        $client = $this->makeClient([
+        $client = $this->makeClient(array(
             'username' => 'user@example.com',
             'password' => 'secret',
-        ]);
+        ));
         $crawler = $client->request('GET', '/title/1/edit');
         $this->assertEquals(403, $client->getResponse()->getStatusCode());
     }
 
     public function testAdminEdit() {
-        $client = $this->makeClient([
+        $client = $this->makeClient(array(
             'username' => 'admin@example.com',
             'password' => 'supersecret',
-        ]);
+        ));
         $formCrawler = $client->request('GET', '/title/1/edit');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
-        $form = $formCrawler->selectButton('Update')->form([
+        $form = $formCrawler->selectButton('Update')->form(array(
             'title[title]' => 'The Book of Cheese.',
             'title[editionNumber]' => 1,
             'title[signedAuthor]' => 'Testy McAuthor',
@@ -151,8 +150,8 @@ class TitleControllerTest extends BaseTestCase
             'title[shelfmark]' => '',
             'title[checked]' => 1,
             'title[finalcheck]' => 1,
-            'title[notes]' => 'It is about cheese.'
-        ]);
+            'title[notes]' => 'It is about cheese.',
+        ));
 
         $client->submit($form);
         $this->assertTrue($client->getResponse()->isRedirect('/title/1'));
@@ -169,23 +168,23 @@ class TitleControllerTest extends BaseTestCase
     }
 
     public function testUserNew() {
-        $client = $this->makeClient([
+        $client = $this->makeClient(array(
             'username' => 'user@example.com',
             'password' => 'secret',
-        ]);
+        ));
         $crawler = $client->request('GET', '/title/new');
         $this->assertEquals(403, $client->getResponse()->getStatusCode());
     }
 
     public function testAdminNew() {
-        $client = $this->makeClient([
+        $client = $this->makeClient(array(
             'username' => 'admin@example.com',
             'password' => 'supersecret',
-        ]);
+        ));
         $formCrawler = $client->request('GET', '/title/new');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
-        $form = $formCrawler->selectButton('Create')->form([
+        $form = $formCrawler->selectButton('Create')->form(array(
             'title[title]' => 'The Book of Cheese.',
             'title[editionNumber]' => 1,
             'title[signedAuthor]' => 'Testy McAuthor',
@@ -208,8 +207,8 @@ class TitleControllerTest extends BaseTestCase
             'title[shelfmark]' => '',
             'title[checked]' => 1,
             'title[finalcheck]' => 1,
-            'title[notes]' => 'It is about cheese.'
-        ]);
+            'title[notes]' => 'It is about cheese.',
+        ));
 
         $client->submit($form);
         $this->assertTrue($client->getResponse()->isRedirect());
@@ -226,10 +225,10 @@ class TitleControllerTest extends BaseTestCase
     }
 
     public function testUserDelete() {
-        $client = $this->makeClient([
+        $client = $this->makeClient(array(
             'username' => 'user@example.com',
             'password' => 'secret',
-        ]);
+        ));
         $crawler = $client->request('GET', '/title/1/delete');
         $this->assertEquals(403, $client->getResponse()->getStatusCode());
     }
@@ -238,10 +237,10 @@ class TitleControllerTest extends BaseTestCase
         self::bootKernel();
         $em = static::$kernel->getContainer()->get('doctrine')->getManager();
         $preCount = count($em->getRepository(Title::class)->findAll());
-        $client = $this->makeClient([
+        $client = $this->makeClient(array(
             'username' => 'admin@example.com',
             'password' => 'supersecret',
-        ]);
+        ));
         $crawler = $client->request('GET', '/title/1/delete');
         $this->assertEquals(302, $client->getResponse()->getStatusCode());
         $this->assertTrue($client->getResponse()->isRedirect());
@@ -253,7 +252,6 @@ class TitleControllerTest extends BaseTestCase
         $this->assertEquals($preCount - 1, $postCount);
     }
 
-
     public function testAnonSearch() {
         $repo = $this->createMock(TitleRepository::class);
         $repo->method('buildSearchQuery')->willReturn(array($this->getReference('title.1')));
@@ -263,9 +261,9 @@ class TitleControllerTest extends BaseTestCase
 
         $formCrawler = $client->request('GET', '/title/search');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $form = $formCrawler->selectButton('Search')->form([
+        $form = $formCrawler->selectButton('Search')->form(array(
             'title_search[title]' => 'adventures',
-        ]);
+        ));
 
         $responseCrawler = $client->submit($form);
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
@@ -281,9 +279,9 @@ class TitleControllerTest extends BaseTestCase
 
         $formCrawler = $client->request('GET', '/title/search');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $form = $formCrawler->selectButton('Search')->form([
+        $form = $formCrawler->selectButton('Search')->form(array(
             'title_search[title]' => 'adventures',
-        ]);
+        ));
 
         $responseCrawler = $client->submit($form);
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
@@ -299,14 +297,12 @@ class TitleControllerTest extends BaseTestCase
 
         $formCrawler = $client->request('GET', '/title/search');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $form = $formCrawler->selectButton('Search')->form([
+        $form = $formCrawler->selectButton('Search')->form(array(
             'title_search[title]' => 'adventures',
-        ]);
+        ));
 
         $responseCrawler = $client->submit($form);
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertEquals(1, $responseCrawler->filter('td:contains("Title 1")')->count());
     }
-
-
 }

@@ -5,15 +5,14 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Firmrole
+ * Firmrole.
  *
  * @ORM\Table(name="firmrole")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\FirmroleRepository")
  */
 class Firmrole {
-
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
@@ -44,16 +43,16 @@ class Firmrole {
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return boolean
+     * @return bool
      */
     public function getId() {
         return $this->id;
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
      *
@@ -66,7 +65,7 @@ class Firmrole {
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
@@ -77,7 +76,7 @@ class Firmrole {
     /**
      * Set description.
      *
-     * @param string|null $description
+     * @param null|string $description
      *
      * @return Format
      */
@@ -90,10 +89,9 @@ class Firmrole {
     /**
      * Get description.
      *
-     * @return string|null
+     * @return null|string
      */
     public function getDescription() {
         return $this->description;
     }
-
 }

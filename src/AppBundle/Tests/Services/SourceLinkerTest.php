@@ -2,23 +2,17 @@
 
 namespace AppBundle\Tests\Services;
 
-
 use AppBundle\DataFixtures\ORM\LoadEn;
 use AppBundle\DataFixtures\ORM\LoadEstcMarc;
 use AppBundle\DataFixtures\ORM\LoadJackson;
 use AppBundle\DataFixtures\ORM\LoadOrlandoBiblio;
 use AppBundle\DataFixtures\ORM\LoadOsborneMarc;
 use AppBundle\Entity\Source;
-use AppBundle\Repository\EstcMarcRepository;
 use AppBundle\Services\RoleChecker;
 use AppBundle\Services\SourceLinker;
-use Doctrine\ORM\EntityManager;
 use Nines\UtilBundle\Tests\Util\BaseTestCase;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class SourceLinkerTest extends BaseTestCase
-{
-
+class SourceLinkerTest extends BaseTestCase {
     /**
      * @var SourceLinker
      */
@@ -36,17 +30,7 @@ class SourceLinkerTest extends BaseTestCase
         );
     }
 
-    protected function setUp() : void
-    {
-        parent::setUp();
-        $this->checker = $this->createMock(RoleChecker::class);
-        $this->checker->method('hasRole')->willReturn(true);
-        $this->linker = $this->getContainer()->get(SourceLinker::class);
-        $this->linker->setRoleChecker($this->checker);
-    }
-
-    public function testSanity()
-    {
+    public function testSanity() {
         $this->assertInstanceOf(SourceLinker::class, $this->linker);
     }
 
@@ -121,12 +105,16 @@ class SourceLinkerTest extends BaseTestCase
 
     /**
      * @dataProvider urlData
+     *
+     * @param mixed $expected
+     * @param mixed $name
+     * @param mixed $data
      */
     public function testUrl($expected, $name, $data) {
         $source = $this->createMock(Source::class);
         $source->method('getName')->willReturn($name);
         $actual = $this->linker->url($source, $data);
-        if($expected) {
+        if ($expected) {
             $this->assertRegExp($expected, $actual);
         } else {
             $this->assertNull($actual);
@@ -134,33 +122,39 @@ class SourceLinkerTest extends BaseTestCase
     }
 
     public function urlData() {
-        return [
-            ['/^https\:\/\/example.com/', 'ESTC', 'https://example.com/foo/bar'],
-            ['/^https\:\/\/example.com/', 'cheesery', 'https://example.com/foo/bar'],
+        return array(
+            array('/^https\:\/\/example.com/', 'ESTC', 'https://example.com/foo/bar'),
+            array('/^https\:\/\/example.com/', 'cheesery', 'https://example.com/foo/bar'),
 
-            ['{resource/estc/1$}', 'ESTC', 'abc-0'],
-            [null, 'ESTC', 'abcdef'],
+            array('{resource/estc/1$}', 'ESTC', 'abc-0'),
+            array(null, 'ESTC', 'abcdef'),
 
-            ['{resource/orlando_biblio/1$}', 'Orlando', '100'],
-            [null, 'Orlando', 'abcdef'],
+            array('{resource/orlando_biblio/1$}', 'Orlando', '100'),
+            array(null, 'Orlando', 'abcdef'),
 
-            ['{resource/jackson/1$}', 'Jackson Bibliography', '1234'],
-            ['{details/abcdef$}', 'Jackson Bibliography', 'abcdef'],
+            array('{resource/jackson/1$}', 'Jackson Bibliography', '1234'),
+            array('{details/abcdef$}', 'Jackson Bibliography', 'abcdef'),
 
-            ['{resource/en/1$}', 'The English Novel 1770-1829', 'en-0'],
-            [null, 'The English Novel 1770-1829', 'abcdef'],
-            ['{resource/en/1$}', 'The English Novel 1830-1836', 'en-0'],
-            [null, 'The English Novel 1830-1836', 'abcdef'],
+            array('{resource/en/1$}', 'The English Novel 1770-1829', 'en-0'),
+            array(null, 'The English Novel 1770-1829', 'abcdef'),
+            array('{resource/en/1$}', 'The English Novel 1830-1836', 'en-0'),
+            array(null, 'The English Novel 1830-1836', 'abcdef'),
 
-            ['{resource/osborne/1$}', 'Osborne Collection of Early Children\'s Books', 'abc-0'],
-            [null, 'Osborne Collection of Early Children\'s Books', 'abcdef'],
+            array('{resource/osborne/1$}', 'Osborne Collection of Early Children\'s Books', 'abc-0'),
+            array(null, 'Osborne Collection of Early Children\'s Books', 'abcdef'),
 
-            ['{ab0cdef}', 'ECCO', 'abcdef'],
+            array('{ab0cdef}', 'ECCO', 'abcdef'),
 
             //            ['/^https\:\/\/example.com/', 'ESTC', 'https://example.com/foo/bar'],
-//            ['/^https\:\/\/example.com/', 'ESTC', 'https://example.com/foo/bar'],
-        ];
+            //            ['/^https\:\/\/example.com/', 'ESTC', 'https://example.com/foo/bar'],
+        );
     }
 
-
+    protected function setUp() : void {
+        parent::setUp();
+        $this->checker = $this->createMock(RoleChecker::class);
+        $this->checker->method('hasRole')->willReturn(true);
+        $this->linker = $this->getContainer()->get(SourceLinker::class);
+        $this->linker->setRoleChecker($this->checker);
+    }
 }

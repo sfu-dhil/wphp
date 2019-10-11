@@ -8,16 +8,13 @@ use AppBundle\Entity\TitleSource;
 use AppBundle\Services\MarcManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Check each title and update the ESTC source ID attribute if applicable.
  */
-class UpdateEstcCommand extends ContainerAwareCommand
-{
+class UpdateEstcCommand extends ContainerAwareCommand {
     const BATCH_SIZE = 100;
 
     const ESTC_ID = 2;
@@ -38,8 +35,7 @@ class UpdateEstcCommand extends ContainerAwareCommand
      * @param EntityManagerInterface $em
      * @param MarcManager $manager
      */
-    public function __construct(EntityManagerInterface $em, MarcManager $manager)
-    {
+    public function __construct(EntityManagerInterface $em, MarcManager $manager) {
         parent::__construct();
         $this->em = $em;
         $this->manager = $manager;
@@ -48,8 +44,7 @@ class UpdateEstcCommand extends ContainerAwareCommand
     /**
      * Configure the command.
      */
-    protected function configure()
-    {
+    protected function configure() {
         $this->setName('wphp:update:estc');
         $this->setDescription('Change the ESTC Identifiers from 009 to 001');
     }
@@ -58,12 +53,11 @@ class UpdateEstcCommand extends ContainerAwareCommand
      * Execute the command.
      *
      * @param InputInterface $input
-     *   Command input, as defined in the configure() method.
+     *                              Command input, as defined in the configure() method.
      * @param OutputInterface $output
-     *   Output destination.
+     *                                Output destination.
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
-    {
+    protected function execute(InputInterface $input, OutputInterface $output) {
         $qb = $this->em->createQueryBuilder();
         $source = $this->em->find(Source::class, self::ESTC_ID);
         $qb->select('ts')->from(TitleSource::class, 'ts')->where('ts.source = :source')->setParameter('source', $source);
@@ -75,13 +69,13 @@ class UpdateEstcCommand extends ContainerAwareCommand
                 'field' => '009',
                 'fieldData' => $titleSource->getIdentifier() . '\\',
             ));
-            if (!$estcMarc) {
+            if ( ! $estcMarc) {
                 continue;
             }
             $newId = $this->manager->getFieldValues($estcMarc, '001');
 
             $titleSource->setIdentifier($newId[0]);
-            if ($iterator->key() % self::BATCH_SIZE === 0) {
+            if (0 === $iterator->key() % self::BATCH_SIZE) {
                 $this->em->flush();
                 $this->em->clear();
                 $output->write("\r" . $iterator->key());

@@ -6,13 +6,13 @@ use AppBundle\Entity\Genre;
 use AppBundle\Form\GenreType;
 use AppBundle\Repository\GenreRepository;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Genre controller.
@@ -20,7 +20,6 @@ use Symfony\Component\HttpFoundation\Request;
  * @Route("/genre")
  */
 class GenreController extends Controller implements PaginatorAwareInterface {
-
     use PaginatorTrait;
 
     /**
@@ -28,8 +27,8 @@ class GenreController extends Controller implements PaginatorAwareInterface {
      *
      * @Route("/", name="genre_index", methods={"GET"})
      * @Template()
-     * @param Request $request
      *
+     * @param Request $request
      * @param GenreRepository $repo
      *
      * @return array
@@ -58,15 +57,15 @@ class GenreController extends Controller implements PaginatorAwareInterface {
      */
     public function typeaheadAction(Request $request, GenreRepository $repo) {
         $q = $request->query->get('q');
-        if( ! $q) {
-            return new JsonResponse([]);
+        if ( ! $q) {
+            return new JsonResponse(array());
         }
-        $data = [];
-        foreach($repo->typeaheadQuery($q) as $result) {
-            $data[] = [
+        $data = array();
+        foreach ($repo->typeaheadQuery($q) as $result) {
+            $data[] = array(
                 'id' => $result->getId(),
                 'text' => $result->getName(),
-            ];
+            );
         }
 
         return new JsonResponse($data);
@@ -78,6 +77,7 @@ class GenreController extends Controller implements PaginatorAwareInterface {
      * @Route("/new", name="genre_new", methods={"GET", "POST"})
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
      * @Template()
+     *
      * @param Request $request
      *
      * @return array|RedirectResponse
@@ -93,6 +93,7 @@ class GenreController extends Controller implements PaginatorAwareInterface {
             $em->flush();
 
             $this->addFlash('success', 'The new genre was created.');
+
             return $this->redirectToRoute('genre_show', array('id' => $genre->getId()));
         }
 
@@ -107,6 +108,7 @@ class GenreController extends Controller implements PaginatorAwareInterface {
      *
      * @Route("/{id}", name="genre_show", methods={"GET"})
      * @Template()
+     *
      * @param Request $request
      * @param Genre $genre
      *
@@ -115,7 +117,7 @@ class GenreController extends Controller implements PaginatorAwareInterface {
     public function showAction(Request $request, Genre $genre) {
         $em = $this->getDoctrine()->getManager();
         $dql = 'SELECT t FROM AppBundle:Title t WHERE t.genre = :genre';
-        if($this->getUser() === null) {
+        if (null === $this->getUser()) {
             $dql .= ' AND (t.finalcheck = 1 OR t.finalattempt = 1)';
         }
         $dql .= ' ORDER BY t.title';
@@ -135,6 +137,7 @@ class GenreController extends Controller implements PaginatorAwareInterface {
      * @Route("/{id}/edit", name="genre_edit", methods={"GET","POST"})
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
      * @Template()
+     *
      * @param Request $request
      * @param Genre $genre
      *
@@ -148,6 +151,7 @@ class GenreController extends Controller implements PaginatorAwareInterface {
             $em = $this->getDoctrine()->getManager();
             $em->flush();
             $this->addFlash('success', 'The genre has been updated.');
+
             return $this->redirectToRoute('genre_show', array('id' => $genre->getId()));
         }
 
@@ -162,6 +166,7 @@ class GenreController extends Controller implements PaginatorAwareInterface {
      *
      * @Route("/{id}/delete", name="genre_delete", methods={"GET"})
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
+     *
      * @param Request $request
      * @param Genre $genre
      *
@@ -175,5 +180,4 @@ class GenreController extends Controller implements PaginatorAwareInterface {
 
         return $this->redirectToRoute('genre_index');
     }
-
 }

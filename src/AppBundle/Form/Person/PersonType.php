@@ -15,7 +15,6 @@ use Tetranz\Select2EntityBundle\Form\Type\Select2EntityType;
  * Form definition for the person class.
  */
 class PersonType extends AbstractType {
-
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
@@ -69,7 +68,7 @@ class PersonType extends AbstractType {
             'delay' => 250,
             'language' => 'en',
             'attr' => array(
-                'help_block' => 'Geotagged location of person’s birth'
+                'help_block' => 'Geotagged location of person’s birth',
             ),
         ));
         $builder->add('dod', null, array(
@@ -90,28 +89,28 @@ class PersonType extends AbstractType {
             'delay' => 250,
             'language' => 'en',
             'attr' => array(
-                'help_block' => 'Geotagged location of person’s death'
+                'help_block' => 'Geotagged location of person’s death',
             ),
         ));
         $builder->add('viafUrl', UrlType::class, array(
             'label' => 'VIAF URL',
             'required' => false,
             'attr' => array(
-                'help_block' => 'Enter a VIAF URL for this person'
+                'help_block' => 'Enter a VIAF URL for this person',
             ),
         ));
         $builder->add('wikipediaUrl', UrlType::class, array(
             'label' => 'Wikipedia URL',
             'required' => false,
             'attr' => array(
-                'help_block' => 'Enter a Wikipedia URL for this person'
+                'help_block' => 'Enter a Wikipedia URL for this person',
             ),
         ));
         $builder->add('imageUrl', UrlType::class, array(
             'label' => 'Image URL',
             'required' => false,
             'attr' => array(
-                'help_block' => 'Enter the URL for an image for this person. Make sure the licensing on the image is permissive.'
+                'help_block' => 'Enter the URL for an image for this person. Make sure the licensing on the image is permissive.',
             ),
         ));
         $builder->add('finalcheck', ChoiceType::class, array(
@@ -135,8 +134,7 @@ class PersonType extends AbstractType {
      */
     public function configureOptions(OptionsResolver $resolver) {
         $resolver->setDefaults(array(
-            'data_class' => Person::class
+            'data_class' => Person::class,
         ));
     }
-
 }

@@ -2,14 +2,11 @@
 
 namespace AppBundle\Tests\Services;
 
-
 use AppBundle\DataFixtures\ORM\LoadOrlandoBiblio;
 use AppBundle\Services\OrlandoManager;
 use Nines\UtilBundle\Tests\Util\BaseTestCase;
 
-class OrlandoManagerTest extends BaseTestCase
-{
-
+class OrlandoManagerTest extends BaseTestCase {
     const DATA = 'A_ID = 20384 || STANDARD = Author 2 || ROLE = EDITOR %%% A_ID = 19884 || STANDARD = Other Author 2 || ROLE = AUTHOR';
 
     private $manager;
@@ -18,12 +15,6 @@ class OrlandoManagerTest extends BaseTestCase
         return array(
             LoadOrlandoBiblio::class,
         );
-    }
-
-    protected function setUp() : void
-    {
-        parent::setUp();
-        $this->manager = $this->getContainer()->get(OrlandoManager::class);
     }
 
     public function testSanity() {
@@ -35,17 +26,19 @@ class OrlandoManagerTest extends BaseTestCase
     }
 
     public function testGetField() {
-        $this->assertEquals(['Author 2', 'Other Author 2'], $this->manager->getField(self::DATA));
+        $this->assertEquals(array('Author 2', 'Other Author 2'), $this->manager->getField(self::DATA));
     }
 
     public function testGetEmptyField() {
-        $this->assertEquals([], $this->manager->getField(self::DATA, 'cheese'));
+        $this->assertEquals(array(), $this->manager->getField(self::DATA, 'cheese'));
     }
 
     public function testGetNamedField() {
-        $this->assertEquals(['EDITOR', 'AUTHOR'], $this->manager->getField(self::DATA, 'role'));
+        $this->assertEquals(array('EDITOR', 'AUTHOR'), $this->manager->getField(self::DATA, 'role'));
     }
 
-
-
+    protected function setUp() : void {
+        parent::setUp();
+        $this->manager = $this->getContainer()->get(OrlandoManager::class);
+    }
 }

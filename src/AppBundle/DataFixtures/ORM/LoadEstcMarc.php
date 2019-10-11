@@ -11,16 +11,20 @@ use Doctrine\Common\Persistence\ObjectManager;
 /**
  * Load some test ESTC MARC data.
  */
-class LoadEstcMarc extends Fixture implements DependentFixtureInterface, FixtureGroupInterface
-{
+class LoadEstcMarc extends Fixture implements DependentFixtureInterface, FixtureGroupInterface {
+    /**
+     * {@inheritdoc}
+     */
+    public static function getGroups() : array {
+        return array('test');
+    }
 
     /**
      * {@inheritdoc}
      *
      * @param ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
-    {
+    public function load(ObjectManager $manager) {
         for ($n = 0; $n < 4; $n++) {
             $ldr = new EstcMarc();
             $ldr->setTitleId(1 + $n);
@@ -47,9 +51,9 @@ class LoadEstcMarc extends Fixture implements DependentFixtureInterface, Fixture
                     $fixture->setTitleId(1 + $n);
                     $fixture->setField(100 + $j);
                     $fixture->setSubfield('abcdefghijklmnop'[$i]);
-                    $fixture->setFieldData("Estc Field Data $n " . (100 + $j) . 'abcdefghijklmnop'[$i]);
+                    $fixture->setFieldData("Estc Field Data {$n} " . (100 + $j) . 'abcdefghijklmnop'[$i]);
                     $manager->persist($fixture);
-                    $this->setReference("estc.$n.$j.$i", $fixture);
+                    $this->setReference("estc.{$n}.{$j}.{$i}", $fixture);
                 }
             }
         }
@@ -59,19 +63,10 @@ class LoadEstcMarc extends Fixture implements DependentFixtureInterface, Fixture
     /**
      * {@inheritdoc}
      */
-    public function getDependencies()
-    {
-        return [
+    public function getDependencies() {
+        return array(
             LoadMarcTagStructure::class,
             LoadMarcSubfieldStructure::class,
-        ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public static function getGroups(): array
-    {
-        return array('test');
+        );
     }
 }

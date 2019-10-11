@@ -10,19 +10,23 @@ use Doctrine\Common\Persistence\ObjectManager;
 /**
  * Load some English Novel test data.
  */
-class LoadEn extends Fixture implements FixtureGroupInterface
-{
+class LoadEn extends Fixture implements FixtureGroupInterface {
+    /**
+     * {@inheritdoc}
+     */
+    public static function getGroups() : array {
+        return array('test');
+    }
 
     /**
      * {@inheritdoc}
      *
      * @param ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
-    {
+    public function load(ObjectManager $manager) {
         for ($i = 0; $i < 4; $i++) {
             $fixture = new En();
-            $fixture->setEnId("en-" . $i);
+            $fixture->setEnId('en-' . $i);
             $fixture->setYear((int) (1800 + $i));
             $fixture->setAuthor('Author ' . $i);
             $fixture->setEditor('Editor ' . $i);
@@ -42,13 +46,5 @@ class LoadEn extends Fixture implements FixtureGroupInterface
             $this->setReference('en.' . $i, $fixture);
         }
         $manager->flush();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public static function getGroups() : array
-    {
-        return array('test');
     }
 }

@@ -7,7 +7,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Title
+ * Title.
  *
  * @ORM\Table(name="title",
  *  indexes={
@@ -23,11 +23,9 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="AppBundle\Repository\TitleRepository")
  * @ORM\HasLifecycleCallbacks()
  */
-class Title
-{
-
+class Title {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
@@ -70,7 +68,7 @@ class Title
     private $imprint;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="selfpublished", type="boolean", nullable=true)
      */
@@ -91,14 +89,14 @@ class Title
     private $dateOfFirstPublication;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="size_l", type="integer", nullable=true)
      */
     private $sizeL;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="size_w", type="integer", nullable=true)
      */
@@ -119,7 +117,7 @@ class Title
     private $colophon;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="volumes", type="integer", nullable=true)
      */
@@ -133,21 +131,21 @@ class Title
     private $pagination;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="price_total", type="integer", nullable=false)
      */
     private $totalPrice;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="price_pound", type="integer", nullable=true)
      */
     private $pricePound;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="price_shilling", type="integer", nullable=true)
      */
@@ -168,21 +166,21 @@ class Title
     private $shelfmark;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="checked", type="boolean", nullable=false)
      */
     private $checked = '0';
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="finalcheck", type="boolean", nullable=false)
      */
     private $finalcheck = '0';
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="finalattempt", type="boolean", nullable=false)
      */
@@ -244,7 +242,7 @@ class Title
     private $titleSources;
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct() {
         $this->totalPrice = 0;
@@ -254,16 +252,25 @@ class Title
     }
 
     /**
-     * Get id
+     * Return the title's title.
      *
-     * @return integer
+     * @return string
+     */
+    public function __toString() {
+        return $this->title;
+    }
+
+    /**
+     * Get id.
+     *
+     * @return int
      */
     public function getId() {
         return $this->id;
     }
 
     /**
-     * Set title
+     * Set title.
      *
      * @param string $title
      *
@@ -276,7 +283,7 @@ class Title
     }
 
     /**
-     * Get title
+     * Get title.
      *
      * @return string
      */
@@ -285,7 +292,7 @@ class Title
     }
 
     /**
-     * Set signedAuthor
+     * Set signedAuthor.
      *
      * @param string $signedAuthor
      *
@@ -298,7 +305,7 @@ class Title
     }
 
     /**
-     * Get signedAuthor
+     * Get signedAuthor.
      *
      * @return string
      */
@@ -307,7 +314,7 @@ class Title
     }
 
     /**
-     * Set surrogate
+     * Set surrogate.
      *
      * @param string $surrogate
      *
@@ -320,7 +327,7 @@ class Title
     }
 
     /**
-     * Get surrogate
+     * Get surrogate.
      *
      * @return string
      */
@@ -329,7 +336,7 @@ class Title
     }
 
     /**
-     * Set pseudonym
+     * Set pseudonym.
      *
      * @param string $pseudonym
      *
@@ -342,7 +349,7 @@ class Title
     }
 
     /**
-     * Get pseudonym
+     * Get pseudonym.
      *
      * @return string
      */
@@ -351,7 +358,7 @@ class Title
     }
 
     /**
-     * Set imprint
+     * Set imprint.
      *
      * @param string $imprint
      *
@@ -364,7 +371,7 @@ class Title
     }
 
     /**
-     * Get imprint
+     * Get imprint.
      *
      * @return string
      */
@@ -373,9 +380,9 @@ class Title
     }
 
     /**
-     * Set selfpublished
+     * Set selfpublished.
      *
-     * @param boolean $selfpublished
+     * @param bool $selfpublished
      *
      * @return Title
      */
@@ -386,16 +393,16 @@ class Title
     }
 
     /**
-     * Get selfpublished
+     * Get selfpublished.
      *
-     * @return boolean
+     * @return bool
      */
     public function getSelfpublished() {
         return $this->selfpublished;
     }
 
     /**
-     * Set pubdate
+     * Set pubdate.
      *
      * @param string $pubdate
      *
@@ -408,7 +415,7 @@ class Title
     }
 
     /**
-     * Get pubdate
+     * Get pubdate.
      *
      * @return string
      */
@@ -417,7 +424,7 @@ class Title
     }
 
     /**
-     * Set dateOfFirstPublication
+     * Set dateOfFirstPublication.
      *
      * @param string $dateOfFirstPublication
      *
@@ -430,7 +437,7 @@ class Title
     }
 
     /**
-     * Get dateOfFirstPublication
+     * Get dateOfFirstPublication.
      *
      * @return string
      */
@@ -439,9 +446,9 @@ class Title
     }
 
     /**
-     * Set sizeL
+     * Set sizeL.
      *
-     * @param boolean $sizeL
+     * @param bool $sizeL
      *
      * @return Title
      */
@@ -452,18 +459,18 @@ class Title
     }
 
     /**
-     * Get sizeL
+     * Get sizeL.
      *
-     * @return boolean
+     * @return bool
      */
     public function getSizeL() {
         return $this->sizeL;
     }
 
     /**
-     * Set sizeW
+     * Set sizeW.
      *
-     * @param boolean $sizeW
+     * @param bool $sizeW
      *
      * @return Title
      */
@@ -474,16 +481,16 @@ class Title
     }
 
     /**
-     * Get sizeW
+     * Get sizeW.
      *
-     * @return boolean
+     * @return bool
      */
     public function getSizeW() {
         return $this->sizeW;
     }
 
     /**
-     * Set edition
+     * Set edition.
      *
      * @param string $edition
      *
@@ -496,7 +503,7 @@ class Title
     }
 
     /**
-     * Get edition
+     * Get edition.
      *
      * @return string
      */
@@ -505,9 +512,9 @@ class Title
     }
 
     /**
-     * Set volumes
+     * Set volumes.
      *
-     * @param boolean $volumes
+     * @param bool $volumes
      *
      * @return Title
      */
@@ -518,16 +525,16 @@ class Title
     }
 
     /**
-     * Get volumes
+     * Get volumes.
      *
-     * @return boolean
+     * @return bool
      */
     public function getVolumes() {
         return $this->volumes;
     }
 
     /**
-     * Set pagination
+     * Set pagination.
      *
      * @param string $pagination
      *
@@ -540,7 +547,7 @@ class Title
     }
 
     /**
-     * Get pagination
+     * Get pagination.
      *
      * @return string
      */
@@ -549,9 +556,9 @@ class Title
     }
 
     /**
-     * Set pricePound
+     * Set pricePound.
      *
-     * @param integer $pricePound
+     * @param int $pricePound
      *
      * @return Title
      */
@@ -562,18 +569,18 @@ class Title
     }
 
     /**
-     * Get pricePound
+     * Get pricePound.
      *
-     * @return integer
+     * @return int
      */
     public function getPricePound() {
         return $this->pricePound;
     }
 
     /**
-     * Set priceShilling
+     * Set priceShilling.
      *
-     * @param integer $priceShilling
+     * @param int $priceShilling
      *
      * @return Title
      */
@@ -584,16 +591,16 @@ class Title
     }
 
     /**
-     * Get priceShilling
+     * Get priceShilling.
      *
-     * @return integer
+     * @return int
      */
     public function getPriceShilling() {
         return $this->priceShilling;
     }
 
     /**
-     * Set pricePence
+     * Set pricePence.
      *
      * @param string $pricePence
      *
@@ -606,7 +613,7 @@ class Title
     }
 
     /**
-     * Get pricePence
+     * Get pricePence.
      *
      * @return string
      */
@@ -635,15 +642,16 @@ class Title
     /**
      * Get the totalPrice in pence.
      *
-     * @return integer
+     * @return int
      */
     public function getTotalPrice() {
         $this->setTotalPrice();
+
         return $this->totalPrice;
     }
 
     /**
-     * Set shelfmark
+     * Set shelfmark.
      *
      * @param string $shelfmark
      *
@@ -656,7 +664,7 @@ class Title
     }
 
     /**
-     * Get shelfmark
+     * Get shelfmark.
      *
      * @return string
      */
@@ -665,9 +673,9 @@ class Title
     }
 
     /**
-     * Set checked
+     * Set checked.
      *
-     * @param boolean $checked
+     * @param bool $checked
      *
      * @return Title
      */
@@ -678,18 +686,18 @@ class Title
     }
 
     /**
-     * Get checked
+     * Get checked.
      *
-     * @return boolean
+     * @return bool
      */
     public function getChecked() {
         return $this->checked;
     }
 
     /**
-     * Set finalcheck
+     * Set finalcheck.
      *
-     * @param boolean $finalcheck
+     * @param bool $finalcheck
      *
      * @return Title
      */
@@ -700,16 +708,16 @@ class Title
     }
 
     /**
-     * Get finalcheck
+     * Get finalcheck.
      *
-     * @return boolean
+     * @return bool
      */
     public function getFinalcheck() {
         return $this->finalcheck;
     }
 
     /**
-     * Set notes
+     * Set notes.
      *
      * @param string $notes
      *
@@ -722,7 +730,7 @@ class Title
     }
 
     /**
-     * Get notes
+     * Get notes.
      *
      * @return string
      */
@@ -731,7 +739,7 @@ class Title
     }
 
     /**
-     * Set locationOfPrinting
+     * Set locationOfPrinting.
      *
      * @param Geonames $locationOfPrinting
      *
@@ -744,7 +752,7 @@ class Title
     }
 
     /**
-     * Get locationOfPrinting
+     * Get locationOfPrinting.
      *
      * @return Geonames
      */
@@ -753,7 +761,7 @@ class Title
     }
 
     /**
-     * Set format
+     * Set format.
      *
      * @param Format $format
      *
@@ -766,7 +774,7 @@ class Title
     }
 
     /**
-     * Get format
+     * Get format.
      *
      * @return Format
      */
@@ -775,7 +783,7 @@ class Title
     }
 
     /**
-     * Set genre
+     * Set genre.
      *
      * @param Genre $genre
      *
@@ -788,7 +796,7 @@ class Title
     }
 
     /**
-     * Get genre
+     * Get genre.
      *
      * @return Genre
      */
@@ -797,7 +805,7 @@ class Title
     }
 
     /**
-     * Add titleRole
+     * Add titleRole.
      *
      * @param TitleRole $titleRole
      *
@@ -810,7 +818,7 @@ class Title
     }
 
     /**
-     * Remove titleRole
+     * Remove titleRole.
      *
      * @param TitleRole $titleRole
      */
@@ -826,17 +834,18 @@ class Title
      * @return Collection|TitleRole[]
      */
     public function getTitleRoles($roleName = null) {
-        if ($roleName === null) {
+        if (null === $roleName) {
             return $this->titleRoles;
         }
-        $roles = $this->titleRoles->filter(function(TitleRole $titleRole) use ($roleName) {
-                    return $titleRole->getRole()->getName() === $roleName;
+        $roles = $this->titleRoles->filter(function (TitleRole $titleRole) use ($roleName) {
+            return $titleRole->getRole()->getName() === $roleName;
         });
+
         return $roles->getValues();
     }
 
     /**
-     * Add titleFirmrole
+     * Add titleFirmrole.
      *
      * @param TitleFirmrole $titleFirmrole
      *
@@ -849,7 +858,7 @@ class Title
     }
 
     /**
-     * Remove titleFirmrole
+     * Remove titleFirmrole.
      *
      * @param TitleFirmrole $titleFirmrole
      */
@@ -868,80 +877,67 @@ class Title
      * @return Collection
      */
     public function getTitleFirmroles($roleName = null) {
-        if ($roleName === null) {
+        if (null === $roleName) {
             return $this->titleFirmroles;
         }
-        return $this->titleFirmroles->filter(function(TitleFirmrole $titleFirmrole) use ($roleName) {
-                    return $titleFirmrole->getFirmrole()->getName() === $roleName;
+
+        return $this->titleFirmroles->filter(function (TitleFirmrole $titleFirmrole) use ($roleName) {
+            return $titleFirmrole->getFirmrole()->getName() === $roleName;
         });
     }
 
     /**
-     * Return the title's title.
+     * Set editionNumber.
      *
-     * @return string
-     */
-    public function __toString() {
-        return $this->title;
-    }
-
-    /**
-     * Set editionNumber
-     *
-     * @param integer $editionNumber
+     * @param int $editionNumber
      *
      * @return Title
      */
-    public function setEditionNumber($editionNumber)
-    {
+    public function setEditionNumber($editionNumber) {
         $this->editionNumber = $editionNumber;
 
         return $this;
     }
 
     /**
-     * Get editionNumber
+     * Get editionNumber.
      *
-     * @return integer
+     * @return int
      */
-    public function getEditionNumber()
-    {
+    public function getEditionNumber() {
         return $this->editionNumber;
     }
 
     /**
-     * Set finalattempt
+     * Set finalattempt.
      *
-     * @param boolean $finalattempt
+     * @param bool $finalattempt
      *
      * @return Title
      */
-    public function setFinalattempt($finalattempt)
-    {
+    public function setFinalattempt($finalattempt) {
         $this->finalattempt = $finalattempt;
 
         return $this;
     }
 
     /**
-     * Get finalattempt
+     * Get finalattempt.
      *
-     * @return boolean
+     * @return bool
      */
-    public function getFinalattempt()
-    {
+    public function getFinalattempt() {
         return $this->finalattempt;
     }
 
     /**
      * Set colophon.
      *
-     * @param string|null $colophon
+     * @param null|string $colophon
      *
      * @return Title
      */
-    public function setColophon($colophon = null)
-    {
+    public function setColophon($colophon = null) {
         $this->colophon = $colophon;
 
         return $this;
@@ -950,10 +946,9 @@ class Title
     /**
      * Get colophon.
      *
-     * @return string|null
+     * @return null|string
      */
-    public function getColophon()
-    {
+    public function getColophon() {
         return $this->colophon;
     }
 
@@ -973,8 +968,7 @@ class Title
      *
      * @return Title
      */
-    public function addTitleSource(TitleSource $titleSource)
-    {
+    public function addTitleSource(TitleSource $titleSource) {
         $this->titleSources[] = $titleSource;
 
         return $this;
@@ -985,10 +979,9 @@ class Title
      *
      * @param TitleSource $titleSource
      *
-     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     * @return bool TRUE if this collection contained the specified element, FALSE otherwise.
      */
-    public function removeTitleSource(TitleSource $titleSource)
-    {
+    public function removeTitleSource(TitleSource $titleSource) {
         return $this->titleSources->removeElement($titleSource);
     }
 
@@ -997,8 +990,7 @@ class Title
      *
      * @return array|Collection|TitleSource[]
      */
-    public function getTitleSources()
-    {
+    public function getTitleSources() {
         return $this->titleSources;
     }
 }

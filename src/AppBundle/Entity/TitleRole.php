@@ -5,7 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * TitleRole
+ * TitleRole.
  *
  * @todo clean the data, then add this constraint:
  * uniqueConstraints={
@@ -19,10 +19,9 @@ use Doctrine\ORM\Mapping as ORM;
  * )
  * @ORM\Entity
  */
-class TitleRole
-{
+class TitleRole {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
@@ -60,32 +59,30 @@ class TitleRole
      */
     private $role;
 
-
-
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId() {
         return $this->id;
     }
 
     /**
-     * Set title
+     * Set title.
      *
      * @param \AppBundle\Entity\Title $title
      *
      * @return TitleRole
      */
-    public function setTitle(\AppBundle\Entity\Title $title = null) {
+    public function setTitle(Title $title = null) {
         $this->title = $title;
 
         return $this;
     }
 
     /**
-     * Get title
+     * Get title.
      *
      * @return \AppBundle\Entity\Title
      */
@@ -94,20 +91,20 @@ class TitleRole
     }
 
     /**
-     * Set person
+     * Set person.
      *
      * @param \AppBundle\Entity\Person $person
      *
      * @return TitleRole
      */
-    public function setPerson(\AppBundle\Entity\Person $person = null) {
+    public function setPerson(Person $person = null) {
         $this->person = $person;
 
         return $this;
     }
 
     /**
-     * Get person
+     * Get person.
      *
      * @return \AppBundle\Entity\Person
      */
@@ -116,20 +113,20 @@ class TitleRole
     }
 
     /**
-     * Set role
+     * Set role.
      *
      * @param \AppBundle\Entity\Role $role
      *
      * @return TitleRole
      */
-    public function setRole(\AppBundle\Entity\Role $role = null) {
+    public function setRole(Role $role = null) {
         $this->role = $role;
 
         return $this;
     }
 
     /**
-     * Get role
+     * Get role.
      *
      * @return \AppBundle\Entity\Role
      */

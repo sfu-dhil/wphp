@@ -11,14 +11,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Feedback form definition.
  */
-class FeedbackType extends AbstractType
-{
+class FeedbackType extends AbstractType {
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
+    public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder->add('name');
         $builder->add('email', EmailType::class);
         $builder->add('content', TextareaType::class, array(
@@ -34,10 +32,9 @@ class FeedbackType extends AbstractType
     /**
      * @param OptionsResolver $resolver
      */
-    public function configureOptions(OptionsResolver $resolver)
-    {
+    public function configureOptions(OptionsResolver $resolver) {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Feedback'
+            'data_class' => 'AppBundle\Entity\Feedback',
         ));
     }
 }

@@ -6,21 +6,20 @@ use AppBundle\Entity\Format;
 use AppBundle\Form\FormatType;
 use AppBundle\Repository\FormatRepository;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Format controller.
  *
  * @Route("/format")
  */
-class FormatController extends Controller  implements PaginatorAwareInterface {
-
+class FormatController extends Controller implements PaginatorAwareInterface {
     use PaginatorTrait;
 
     /**
@@ -28,8 +27,8 @@ class FormatController extends Controller  implements PaginatorAwareInterface {
      *
      * @Route("/", name="format_index", methods={"GET"})
      * @Template()
-     * @param Request $request
      *
+     * @param Request $request
      * @param FormatRepository $repo
      *
      * @return array
@@ -58,15 +57,15 @@ class FormatController extends Controller  implements PaginatorAwareInterface {
      */
     public function typeaheadAction(Request $request, FormatRepository $repo) {
         $q = $request->query->get('q');
-        if (!$q) {
-            return new JsonResponse([]);
+        if ( ! $q) {
+            return new JsonResponse(array());
         }
-        $data = [];
+        $data = array();
         foreach ($repo->typeaheadQuery($q) as $result) {
-            $data[] = [
+            $data[] = array(
                 'id' => $result->getId(),
                 'text' => $result->getName(),
-            ];
+            );
         }
 
         return new JsonResponse($data);
@@ -78,6 +77,7 @@ class FormatController extends Controller  implements PaginatorAwareInterface {
      * @Route("/new", name="format_new", methods={"GET", "POST"})
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
      * @Template()
+     *
      * @param Request $request
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
@@ -93,6 +93,7 @@ class FormatController extends Controller  implements PaginatorAwareInterface {
             $em->flush();
 
             $this->addFlash('success', 'The new format was created.');
+
             return $this->redirectToRoute('format_show', array('id' => $format->getId()));
         }
 
@@ -107,6 +108,7 @@ class FormatController extends Controller  implements PaginatorAwareInterface {
      *
      * @Route("/{id}", name="format_show", methods={"GET"})
      * @Template()
+     *
      * @param Request $request
      * @param Format $format
      *
@@ -115,7 +117,7 @@ class FormatController extends Controller  implements PaginatorAwareInterface {
     public function showAction(Request $request, Format $format) {
         $em = $this->getDoctrine()->getManager();
         $dql = 'SELECT t FROM AppBundle:Title t WHERE t.format = :format';
-        if($this->getUser() === null) {
+        if (null === $this->getUser()) {
             $dql .= ' AND (t.finalcheck = 1 OR t.finalattempt = 1)';
         }
         $dql .= ' ORDER BY t.title';
@@ -136,6 +138,7 @@ class FormatController extends Controller  implements PaginatorAwareInterface {
      * @Route("/{id}/edit", name="format_edit", methods={"GET","POST"})
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
      * @Template()
+     *
      * @param Request $request
      * @param Format $format
      *
@@ -149,6 +152,7 @@ class FormatController extends Controller  implements PaginatorAwareInterface {
             $em = $this->getDoctrine()->getManager();
             $em->flush();
             $this->addFlash('success', 'The format has been updated.');
+
             return $this->redirectToRoute('format_show', array('id' => $format->getId()));
         }
 
@@ -163,6 +167,7 @@ class FormatController extends Controller  implements PaginatorAwareInterface {
      *
      * @Route("/{id}/delete", name="format_delete", methods={"GET"})
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
+     *
      * @param Request $request
      * @param Format $format
      *
@@ -176,5 +181,4 @@ class FormatController extends Controller  implements PaginatorAwareInterface {
 
         return $this->redirectToRoute('format_index');
     }
-
 }

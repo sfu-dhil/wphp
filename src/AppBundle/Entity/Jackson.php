@@ -5,7 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Jackson
+ * Jackson.
  *
  * @ORM\Table(name="jackson_biblio",
  *  indexes={
@@ -15,8 +15,7 @@ use Doctrine\ORM\Mapping as ORM;
  * )
  * @ORM\Entity(repositoryClass="AppBundle\Repository\JacksonRepository")
  */
-class Jackson
-{
+class Jackson {
     /**
      * @var int
      *
@@ -130,420 +129,385 @@ class Jackson
     private $examnote;
 
     /**
-     * Get id
+     * Get id.
      *
      * @return int
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
     /**
-     * Set jbid
+     * Set jbid.
      *
-     * @param integer $jbid
+     * @param int $jbid
      *
      * @return Jackson
      */
-    public function setJbid($jbid)
-    {
+    public function setJbid($jbid) {
         $this->jbid = $jbid;
 
         return $this;
     }
 
     /**
-     * Get jbid
+     * Get jbid.
      *
-     * @return integer
+     * @return int
      */
-    public function getJbid()
-    {
+    public function getJbid() {
         return $this->jbid;
     }
 
     /**
-     * Set detailedEntry
+     * Set detailedEntry.
      *
      * @param string $detailedEntry
      *
      * @return Jackson
      */
-    public function setDetailedEntry($detailedEntry)
-    {
+    public function setDetailedEntry($detailedEntry) {
         $this->detailedEntry = $detailedEntry;
 
         return $this;
     }
 
     /**
-     * Get detailedEntry
+     * Get detailedEntry.
      *
      * @return string
      */
-    public function getDetailedEntry()
-    {
+    public function getDetailedEntry() {
         return $this->detailedEntry;
     }
 
     /**
-     * Set author
+     * Set author.
      *
      * @param string $author
      *
      * @return Jackson
      */
-    public function setAuthor($author)
-    {
+    public function setAuthor($author) {
         $this->author = $author;
 
         return $this;
     }
 
     /**
-     * Get author
+     * Get author.
      *
      * @return string
      */
-    public function getAuthor()
-    {
+    public function getAuthor() {
         return $this->author;
     }
 
     /**
-     * Set title
+     * Set title.
      *
      * @param string $title
      *
      * @return Jackson
      */
-    public function setTitle($title)
-    {
+    public function setTitle($title) {
         $this->title = $title;
 
         return $this;
     }
 
     /**
-     * Get title
+     * Get title.
      *
      * @return string
      */
-    public function getTitle()
-    {
+    public function getTitle() {
         return $this->title;
     }
 
     /**
-     * Set editor
+     * Set editor.
      *
      * @param string $editor
      *
      * @return Jackson
      */
-    public function setEditor($editor)
-    {
+    public function setEditor($editor) {
         $this->editor = $editor;
 
         return $this;
     }
 
     /**
-     * Get editor
+     * Get editor.
      *
      * @return string
      */
-    public function getEditor()
-    {
+    public function getEditor() {
         return $this->editor;
     }
 
     /**
-     * Set pubplace
+     * Set pubplace.
      *
      * @param string $pubplace
      *
      * @return Jackson
      */
-    public function setPubplace($pubplace)
-    {
+    public function setPubplace($pubplace) {
         $this->pubplace = $pubplace;
 
         return $this;
     }
 
     /**
-     * Get pubplace
+     * Get pubplace.
      *
      * @return string
      */
-    public function getPubplace()
-    {
+    public function getPubplace() {
         return $this->pubplace;
     }
 
     /**
-     * Set publisher
+     * Set publisher.
      *
      * @param string $publisher
      *
      * @return Jackson
      */
-    public function setPublisher($publisher)
-    {
+    public function setPublisher($publisher) {
         $this->publisher = $publisher;
 
         return $this;
     }
 
     /**
-     * Get publisher
+     * Get publisher.
      *
      * @return string
      */
-    public function getPublisher()
-    {
+    public function getPublisher() {
         return $this->publisher;
     }
 
     /**
-     * Set pubdate
+     * Set pubdate.
      *
      * @param string $pubdate
      *
      * @return Jackson
      */
-    public function setPubdate($pubdate)
-    {
+    public function setPubdate($pubdate) {
         $this->pubdate = $pubdate;
 
         return $this;
     }
 
     /**
-     * Get pubdate
+     * Get pubdate.
      *
      * @return string
      */
-    public function getPubdate()
-    {
+    public function getPubdate() {
         return $this->pubdate;
     }
 
     /**
-     * Set edition
+     * Set edition.
      *
      * @param string $edition
      *
      * @return Jackson
      */
-    public function setEdition($edition)
-    {
+    public function setEdition($edition) {
         $this->edition = $edition;
 
         return $this;
     }
 
     /**
-     * Get edition
+     * Get edition.
      *
      * @return string
      */
-    public function getEdition()
-    {
+    public function getEdition() {
         return $this->edition;
     }
 
     /**
-     * Set format
+     * Set format.
      *
      * @param string $format
      *
      * @return Jackson
      */
-    public function setFormat($format)
-    {
+    public function setFormat($format) {
         $this->format = $format;
 
         return $this;
     }
 
     /**
-     * Get format
+     * Get format.
      *
      * @return string
      */
-    public function getFormat()
-    {
+    public function getFormat() {
         return $this->format;
     }
 
     /**
-     * Set pagination
+     * Set pagination.
      *
      * @param string $pagination
      *
      * @return Jackson
      */
-    public function setPagination($pagination)
-    {
+    public function setPagination($pagination) {
         $this->pagination = $pagination;
 
         return $this;
     }
 
     /**
-     * Get pagination
+     * Get pagination.
      *
      * @return string
      */
-    public function getPagination()
-    {
+    public function getPagination() {
         return $this->pagination;
     }
 
     /**
-     * Set price
+     * Set price.
      *
      * @param string $price
      *
      * @return Jackson
      */
-    public function setPrice($price)
-    {
+    public function setPrice($price) {
         $this->price = $price;
 
         return $this;
     }
 
     /**
-     * Get price
+     * Get price.
      *
      * @return string
      */
-    public function getPrice()
-    {
+    public function getPrice() {
         return $this->price;
     }
 
     /**
-     * Set reference
+     * Set reference.
      *
      * @param string $reference
      *
      * @return Jackson
      */
-    public function setReference($reference)
-    {
+    public function setReference($reference) {
         $this->reference = $reference;
 
         return $this;
     }
 
     /**
-     * Get reference
+     * Get reference.
      *
      * @return string
      */
-    public function getReference()
-    {
+    public function getReference() {
         return $this->reference;
     }
 
     /**
-     * Set library
+     * Set library.
      *
      * @param string $library
      *
      * @return Jackson
      */
-    public function setLibrary($library)
-    {
+    public function setLibrary($library) {
         $this->library = $library;
 
         return $this;
     }
 
     /**
-     * Get library
+     * Get library.
      *
      * @return string
      */
-    public function getLibrary()
-    {
+    public function getLibrary() {
         return $this->library;
     }
 
     /**
-     * Set shelfmark
+     * Set shelfmark.
      *
      * @param string $shelfmark
      *
      * @return Jackson
      */
-    public function setShelfmark($shelfmark)
-    {
+    public function setShelfmark($shelfmark) {
         $this->shelfmark = $shelfmark;
 
         return $this;
     }
 
     /**
-     * Get shelfmark
+     * Get shelfmark.
      *
      * @return string
      */
-    public function getShelfmark()
-    {
+    public function getShelfmark() {
         return $this->shelfmark;
     }
 
     /**
-     * Set comment
+     * Set comment.
      *
      * @param string $comment
      *
      * @return Jackson
      */
-    public function setComment($comment)
-    {
+    public function setComment($comment) {
         $this->comment = $comment;
 
         return $this;
     }
 
     /**
-     * Get comment
+     * Get comment.
      *
      * @return string
      */
-    public function getComment()
-    {
+    public function getComment() {
         return $this->comment;
     }
 
     /**
-     * Set examnote
+     * Set examnote.
      *
      * @param string $examnote
      *
      * @return Jackson
      */
-    public function setExamnote($examnote)
-    {
+    public function setExamnote($examnote) {
         $this->examnote = $examnote;
 
         return $this;
     }
 
     /**
-     * Get examnote
+     * Get examnote.
      *
      * @return string
      */
-    public function getExamnote()
-    {
+    public function getExamnote() {
         return $this->examnote;
     }
 }

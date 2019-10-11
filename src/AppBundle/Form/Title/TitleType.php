@@ -19,7 +19,6 @@ use Tetranz\Select2EntityBundle\Form\Type\Select2EntityType;
  * Form definition for the title type.
  */
 class TitleType extends AbstractType {
-
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
@@ -157,15 +156,15 @@ class TitleType extends AbstractType {
             'delay' => 250,
             'language' => 'en',
             'attr' => array(
-                'help_block' => 'Geotagged location as indicated by the imprint'
+                'help_block' => 'Geotagged location as indicated by the imprint',
             ),
         ));
         $builder->add('format', EntityType::class, array(
             'class' => Format::class,
-            'query_builder' => function(EntityRepository $repo) {
+            'query_builder' => function (EntityRepository $repo) {
                 return $repo->createQueryBuilder('u')->orderBy('u.name', 'ASC');
             },
-            'choice_label' => function(Format $format) {
+            'choice_label' => function (Format $format) {
                 return "{$format->getName()} ({$format->getAbbreviation()})";
             },
             'multiple' => false,
@@ -211,9 +210,10 @@ class TitleType extends AbstractType {
             'choice_label' => 'name',
             'expanded' => false,
             'multiple' => false,
-            'query_builder' => function(EntityRepository $er) {
+            'query_builder' => function (EntityRepository $er) {
                 return $er->createQueryBuilder('e')
-                    ->orderBy('e.name', 'ASC');
+                    ->orderBy('e.name', 'ASC')
+                ;
             },
             'attr' => array(
                 'help_block' => 'Category of the work',
@@ -298,8 +298,7 @@ class TitleType extends AbstractType {
      */
     public function configureOptions(OptionsResolver $resolver) {
         $resolver->setDefaults(array(
-            'data_class' => Title::class
+            'data_class' => Title::class,
         ));
     }
-
 }

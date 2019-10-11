@@ -7,7 +7,6 @@ use AppBundle\Entity\TitleSource;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -15,7 +14,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * Search form for person entities.
  */
 class TitleSourceFilterType extends AbstractType {
-
     /**
      * Build the form.
      *
@@ -25,7 +23,7 @@ class TitleSourceFilterType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder->add('source', EntityType::class, array(
             'class' => Source::class,
-            'query_builder' => function(EntityRepository $er) {
+            'query_builder' => function (EntityRepository $er) {
                 return $er->createQueryBuilder('ts')->orderBy('ts.name', 'ASC');
             },
             'label' => 'Source',
@@ -51,5 +49,4 @@ class TitleSourceFilterType extends AbstractType {
             'data_class' => TitleSource::class,
         ));
     }
-
 }

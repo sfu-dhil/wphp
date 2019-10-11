@@ -10,33 +10,30 @@ use Doctrine\Common\Persistence\ObjectManager;
 /**
  * Load some test feedback data.
  */
-class LoadFeedback extends Fixture implements FixtureGroupInterface
-{
+class LoadFeedback extends Fixture implements FixtureGroupInterface {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
+     */
+    public static function getGroups() : array {
+        return array('test');
+    }
+
+    /**
+     * {@inheritdoc}
      *
      * @param ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
-    {
+    public function load(ObjectManager $manager) {
         for ($i = 0; $i < 4; $i++) {
             $fixture = new Feedback();
             $fixture->setName('Name ' . $i);
             $fixture->setEmail('Email ' . $i);
             $fixture->setContent('Content ' . $i);
-            
+
             $manager->persist($fixture);
             $this->setReference('feedback.' . $i, $fixture);
         }
-        
-        $manager->flush();
-    }
 
-    /**
-     * {@inheritdoc}
-     */
-    public static function getGroups(): array
-    {
-        return array('test');
+        $manager->flush();
     }
 }

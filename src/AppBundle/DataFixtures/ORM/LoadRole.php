@@ -10,16 +10,20 @@ use Doctrine\Common\Persistence\ObjectManager;
 /**
  * Load some test role data.
  */
-class LoadRole extends Fixture implements FixtureGroupInterface
-{
+class LoadRole extends Fixture implements FixtureGroupInterface {
+    /**
+     * {@inheritdoc}
+     */
+    public static function getGroups() : array {
+        return array('test');
+    }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      *
      * @param ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
-    {
+    public function load(ObjectManager $manager) {
         for ($i = 0; $i < 4; $i++) {
             $fixture = new Role();
             $fixture->setName('Name ' . $i);
@@ -33,13 +37,5 @@ class LoadRole extends Fixture implements FixtureGroupInterface
         $manager->persist($fixture);
 
         $manager->flush();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public static function getGroups(): array
-    {
-        return array('test');
     }
 }

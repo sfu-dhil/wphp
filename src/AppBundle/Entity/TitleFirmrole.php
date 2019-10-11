@@ -5,15 +5,14 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * TitleFirmrole
+ * TitleFirmrole.
  *
  * @ORM\Table(name="title_firmrole")
  * @ORM\Entity
  */
 class TitleFirmrole {
-
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
@@ -52,16 +51,16 @@ class TitleFirmrole {
     private $firmrole;
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId() {
         return $this->id;
     }
 
     /**
-     * Set title
+     * Set title.
      *
      * @param Title $title
      *
@@ -74,7 +73,7 @@ class TitleFirmrole {
     }
 
     /**
-     * Get title
+     * Get title.
      *
      * @return Title
      */
@@ -83,7 +82,7 @@ class TitleFirmrole {
     }
 
     /**
-     * Set firm
+     * Set firm.
      *
      * @param Firm $firm
      *
@@ -96,7 +95,7 @@ class TitleFirmrole {
     }
 
     /**
-     * Get firm
+     * Get firm.
      *
      * @return Firm
      */
@@ -105,7 +104,7 @@ class TitleFirmrole {
     }
 
     /**
-     * Set firmrole
+     * Set firmrole.
      *
      * @param Firmrole $firmrole
      *
@@ -118,12 +117,11 @@ class TitleFirmrole {
     }
 
     /**
-     * Get firmrole
+     * Get firmrole.
      *
      * @return Firmrole
      */
     public function getFirmrole() {
         return $this->firmrole;
     }
-
 }

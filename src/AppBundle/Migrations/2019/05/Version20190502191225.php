@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace AppBundle\Migrations;
 
@@ -8,9 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Clean up a bunch of tables.
  */
-final class Version20190502191225 extends AbstractMigration
-{
-
+final class Version20190502191225 extends AbstractMigration {
     /**
      * Apply the migration.
      *
@@ -19,10 +19,9 @@ final class Version20190502191225 extends AbstractMigration
      * @throws \Doctrine\DBAL\DBALException
      * @throws \Doctrine\DBAL\Migrations\AbortMigrationException
      */
-    public function up(Schema $schema) : void
-    {
+    public function up(Schema $schema) : void {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
+        $this->abortIf('mysql' !== $this->connection->getDatabasePlatform()->getName(), 'Migration can only be executed safely on \'mysql\'.');
 
         $this->addSql('ALTER TABLE flag_entity DROP FOREIGN KEY FK_E37C49B9919FE4E5');
         $this->addSql('DROP TABLE flag');
@@ -57,8 +56,7 @@ final class Version20190502191225 extends AbstractMigration
      *
      * @throws \Doctrine\DBAL\Migrations\IrreversibleMigrationException
      */
-    public function down(Schema $schema) : void
-    {
+    public function down(Schema $schema) : void {
         $this->throwIrreversibleMigrationException();
     }
 }

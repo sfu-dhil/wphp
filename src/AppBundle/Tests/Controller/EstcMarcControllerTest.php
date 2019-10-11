@@ -2,22 +2,19 @@
 
 namespace AppBundle\Tests\Controller;
 
-use AppBundle\Entity\EstcMarc;
 use AppBundle\DataFixtures\ORM\LoadEstcMarc;
 use AppBundle\Repository\EstcMarcRepository;
 use Nines\UserBundle\DataFixtures\ORM\LoadUser;
 use Nines\UtilBundle\Tests\Util\BaseTestCase;
 
-class EstcMarcControllerTest extends BaseTestCase
-{
-
+class EstcMarcControllerTest extends BaseTestCase {
     protected function getFixtures() {
-        return [
+        return array(
             LoadUser::class,
-            LoadEstcMarc::class
-        ];
+            LoadEstcMarc::class,
+        );
     }
-    
+
     /**
      * @group anon
      * @group index
@@ -27,7 +24,7 @@ class EstcMarcControllerTest extends BaseTestCase
         $crawler = $client->request('GET', '/resource/estc/');
         $this->assertEquals(302, $client->getResponse()->getStatusCode());
     }
-    
+
     /**
      * @group user
      * @group index
@@ -36,8 +33,8 @@ class EstcMarcControllerTest extends BaseTestCase
         $client = $this->makeClient(LoadUser::USER);
         $crawler = $client->request('GET', '/resource/estc/');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-   }
-    
+    }
+
     /**
      * @group admin
      * @group index
@@ -47,7 +44,7 @@ class EstcMarcControllerTest extends BaseTestCase
         $crawler = $client->request('GET', '/resource/estc/');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
-    
+
     /**
      * @group anon
      * @group show
@@ -57,7 +54,7 @@ class EstcMarcControllerTest extends BaseTestCase
         $crawler = $client->request('GET', '/resource/estc/1');
         $this->assertEquals(302, $client->getResponse()->getStatusCode());
     }
-    
+
     /**
      * @group user
      * @group show
@@ -67,7 +64,7 @@ class EstcMarcControllerTest extends BaseTestCase
         $crawler = $client->request('GET', '/resource/estc/1');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
-    
+
     /**
      * @group admin
      * @group show
@@ -95,9 +92,9 @@ class EstcMarcControllerTest extends BaseTestCase
 
         $formCrawler = $client->request('GET', '/resource/estc/search');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $form = $formCrawler->selectButton('Search')->form([
+        $form = $formCrawler->selectButton('Search')->form(array(
             'q' => 'adventures',
-        ]);
+        ));
 
         $responseCrawler = $client->submit($form);
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
@@ -113,9 +110,9 @@ class EstcMarcControllerTest extends BaseTestCase
 
         $formCrawler = $client->request('GET', '/resource/estc/search');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $form = $formCrawler->selectButton('Search')->form([
+        $form = $formCrawler->selectButton('Search')->form(array(
             'q' => 'adventures',
-        ]);
+        ));
 
         $responseCrawler = $client->submit($form);
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
@@ -139,9 +136,9 @@ class EstcMarcControllerTest extends BaseTestCase
 
         $formCrawler = $client->request('GET', '/resource/estc/imprint_search');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $form = $formCrawler->selectButton('Search')->form([
+        $form = $formCrawler->selectButton('Search')->form(array(
             'q' => 'adventures',
-        ]);
+        ));
 
         $responseCrawler = $client->submit($form);
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
@@ -157,13 +154,12 @@ class EstcMarcControllerTest extends BaseTestCase
 
         $formCrawler = $client->request('GET', '/resource/estc/imprint_search');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $form = $formCrawler->selectButton('Search')->form([
+        $form = $formCrawler->selectButton('Search')->form(array(
             'q' => 'adventures',
-        ]);
+        ));
 
         $responseCrawler = $client->submit($form);
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertEquals(1, $responseCrawler->filter('td:contains("ESTC Title 0")')->count());
     }
-
 }

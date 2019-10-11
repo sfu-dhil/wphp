@@ -8,7 +8,6 @@ use Knp\Component\Pager\Paginator;
  * Convienence trait for the use of paginators.
  */
 trait PaginatorTrait {
-
     /**
      * @var Paginator
      */
@@ -22,5 +21,4 @@ trait PaginatorTrait {
     public function setPaginator(Paginator $paginator) {
         $this->paginator = $paginator;
     }
-
 }

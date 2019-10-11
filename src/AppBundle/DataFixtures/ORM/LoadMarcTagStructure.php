@@ -10,16 +10,20 @@ use Doctrine\Common\Persistence\ObjectManager;
 /**
  * Load some MARC tag definitions for testing.
  */
-class LoadMarcTagStructure extends Fixture implements FixtureGroupInterface
-{
+class LoadMarcTagStructure extends Fixture implements FixtureGroupInterface {
+    /**
+     * {@inheritdoc}
+     */
+    public static function getGroups() : array {
+        return array('test');
+    }
 
     /**
      * {@inheritdoc}
      *
      * @param ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
-    {
+    public function load(ObjectManager $manager) {
         for ($i = 0; $i < 20; $i++) {
             $fixture = new MarcTagStructure();
             $fixture->setName('Tag ' . $i);
@@ -28,13 +32,5 @@ class LoadMarcTagStructure extends Fixture implements FixtureGroupInterface
             $this->setReference('marctag.' . $i, $fixture);
         }
         $manager->flush();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public static function getGroups(): array
-    {
-        return array('test');
     }
 }

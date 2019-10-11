@@ -5,11 +5,11 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Jackson;
 use AppBundle\Repository\JacksonRepository;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
-use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Jackson controller.
@@ -17,8 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @Security("has_role('ROLE_USER')")
  * @Route("/resource/jackson")
  */
-class JacksonController extends Controller  implements PaginatorAwareInterface {
-
+class JacksonController extends Controller implements PaginatorAwareInterface {
     use PaginatorTrait;
 
     /**
@@ -29,7 +28,7 @@ class JacksonController extends Controller  implements PaginatorAwareInterface {
      * @return array
      *
      * @Route("/", name="resource_jackson_index", methods={"GET"})
-
+     *
      * @Template()
      */
     public function indexAction(Request $request) {
@@ -48,7 +47,6 @@ class JacksonController extends Controller  implements PaginatorAwareInterface {
      * Search for Jackson entities.
      *
      * @param Request $request
-     *
      * @param JacksonRepository $repo
      *
      * @return array
@@ -78,14 +76,12 @@ class JacksonController extends Controller  implements PaginatorAwareInterface {
      * @return array
      *
      * @Route("/{id}", name="resource_jackson_show", methods={"GET"})
-
+     *
      * @Template()
      */
     public function showAction(Jackson $jackson) {
-
         return array(
             'jackson' => $jackson,
         );
     }
-
 }

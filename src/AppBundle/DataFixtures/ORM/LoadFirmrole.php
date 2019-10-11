@@ -10,16 +10,20 @@ use Doctrine\Common\Persistence\ObjectManager;
 /**
  * Load some test firm roles.
  */
-class LoadFirmrole extends Fixture implements FixtureGroupInterface
-{
+class LoadFirmrole extends Fixture implements FixtureGroupInterface {
+    /**
+     * {@inheritdoc}
+     */
+    public static function getGroups() : array {
+        return array('test');
+    }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      *
      * @param ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
-    {
+    public function load(ObjectManager $manager) {
         for ($i = 0; $i < 4; $i++) {
             $fixture = new Firmrole();
             $fixture->setName('Name ' . $i);
@@ -29,13 +33,5 @@ class LoadFirmrole extends Fixture implements FixtureGroupInterface
         }
 
         $manager->flush();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public static function getGroups(): array
-    {
-        return array('test');
     }
 }
