@@ -8,13 +8,13 @@ use AppBundle\Form\Person\PersonSearchType;
 use AppBundle\Form\Person\PersonType;
 use AppBundle\Repository\PersonRepository;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Person controller.
@@ -22,30 +22,32 @@ use Symfony\Component\HttpFoundation\Request;
  * @Route("/person")
  */
 class PersonController extends Controller implements PaginatorAwareInterface {
-
     use PaginatorTrait;
 
     /**
      * Lists all Person entities.
      *
      * @Route("/", name="person_index", methods={"GET"})
-
+     *
      * @Template()
+     *
      * @param Request $request
+     *
      * @return array
      */
     public function indexAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
         $form = $this->createForm(PersonSearchType::class, null, array(
             'action' => $this->generateUrl('person_search'),
-            'entity_manager' => $em
+            'entity_manager' => $em,
         ));
         $dql = 'SELECT e FROM AppBundle:Person e';
         $query = $em->createQuery($dql);
         $people = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25, array(
-            'defaultSortFieldName' => ['e.lastName', 'e.firstName', 'e.dob'],
+            'defaultSortFieldName' => array('e.lastName', 'e.firstName', 'e.dob'),
             'defaultSortDirection' => 'asc',
         ));
+
         return array(
             'search_form' => $form->createView(),
             'people' => $people,
@@ -65,15 +67,15 @@ class PersonController extends Controller implements PaginatorAwareInterface {
      */
     public function typeaheadAction(Request $request, PersonRepository $repo) {
         $q = $request->query->get('q');
-        if (!$q) {
-            return new JsonResponse([]);
+        if ( ! $q) {
+            return new JsonResponse(array());
         }
-        $data = [];
+        $data = array();
         foreach ($repo->typeaheadQuery($q) as $result) {
-            $data[] = [
+            $data[] = array(
                 'id' => $result->getId(),
                 'text' => $result->getLastname() . ', ' . $result->getFirstname(),
-            ];
+            );
         }
 
         return new JsonResponse($data);
@@ -84,6 +86,7 @@ class PersonController extends Controller implements PaginatorAwareInterface {
      *
      * @Route("/search", name="person_search", methods={"GET"})
      * @Template()
+     *
      * @param Request $request
      * @param PersonRepository $repo
      *
@@ -101,6 +104,7 @@ class PersonController extends Controller implements PaginatorAwareInterface {
             $query = $repo->buildSearchQuery($form->getData());
             $persons = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
         }
+
         return array(
             'search_form' => $form->createView(),
             'people' => $persons,
@@ -112,18 +116,20 @@ class PersonController extends Controller implements PaginatorAwareInterface {
      * Search for Title entities.
      *
      * @Route("/jump", name="person_jump", methods={"GET"})
-
+     *
      * @Template()
+     *
      * @param Request $request
+     *
      * @return array
      */
     public function jumpAction(Request $request) {
         $q = $request->query->getInt('q');
         if ($q) {
             return $this->redirect($this->generateUrl('person_show', array('id' => $q)));
-        } else {
-            return $this->redirect($this->generateUrl('person_index', array('id' => $q)));
         }
+
+        return $this->redirect($this->generateUrl('person_index', array('id' => $q)));
     }
 
     /**
@@ -131,18 +137,22 @@ class PersonController extends Controller implements PaginatorAwareInterface {
      *
      * @Route("/{id}/export", name="person_export", methods={"GET","POST"})
      * @Template()
+     *
      * @param Request $request
      * @param Person $person
+     *
      * @return array
      */
     public function exportAction(Request $request, Person $person) {
         $titleRoles = $person->getTitleRoles();
-        if(! $this->getUser()) {
-            $titleRoles = $titleRoles->filter(function (TitleRole $tr){
+        if ( ! $this->getUser()) {
+            $titleRoles = $titleRoles->filter(function (TitleRole $tr) {
                 $title = $tr->getTitle();
-                return ($title->getFinalattempt() || $title->getFinalcheck());
+
+                return $title->getFinalattempt() || $title->getFinalcheck();
             });
         }
+
         return array(
             'person' => $person,
             'titles' => $titleRoles,
@@ -156,6 +166,7 @@ class PersonController extends Controller implements PaginatorAwareInterface {
      * @Route("/new", name="person_new", methods={"GET","POST"})
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
      * @Template()
+     *
      * @param Request $request
      *
      * @return array|RedirectResponse
@@ -171,6 +182,7 @@ class PersonController extends Controller implements PaginatorAwareInterface {
             $em->flush();
 
             $this->addFlash('success', 'The new person was created.');
+
             return $this->redirectToRoute('person_show', array('id' => $person->getId()));
         }
 
@@ -185,6 +197,7 @@ class PersonController extends Controller implements PaginatorAwareInterface {
      *
      * @Route("/{id}.{_format}", name="person_show", defaults={"_format": "html"}, methods={"GET"})
      * @Template()
+     *
      * @param Request $request
      * @param Person $person
      *
@@ -192,10 +205,11 @@ class PersonController extends Controller implements PaginatorAwareInterface {
      */
     public function showAction(Request $request, Person $person) {
         $titleRoles = $person->getTitleRoles();
-        if(! $this->getUser()) {
-            $titleRoles = $titleRoles->filter(function (TitleRole $tr){
+        if ( ! $this->getUser()) {
+            $titleRoles = $titleRoles->filter(function (TitleRole $tr) {
                 $title = $tr->getTitle();
-                return ($title->getFinalattempt() || $title->getFinalcheck());
+
+                return $title->getFinalattempt() || $title->getFinalcheck();
             });
         }
         $pagination = $this->paginator->paginate($titleRoles, $request->query->getInt('page', 1), 25);
@@ -210,9 +224,10 @@ class PersonController extends Controller implements PaginatorAwareInterface {
      * Displays a form to edit an existing Person entity.
      *
      * @Route("/{id}/edit", name="person_edit", methods={"GET","POST"})
-
+     *
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
      * @Template()
+     *
      * @param Request $request
      * @param Person $person
      *
@@ -226,6 +241,7 @@ class PersonController extends Controller implements PaginatorAwareInterface {
             $em = $this->getDoctrine()->getManager();
             $em->flush();
             $this->addFlash('success', 'The person has been updated.');
+
             return $this->redirectToRoute('person_show', array('id' => $person->getId()));
         }
 
@@ -239,8 +255,9 @@ class PersonController extends Controller implements PaginatorAwareInterface {
      * Deletes a Person entity.
      *
      * @Route("/{id}/delete", name="person_delete", methods={"GET"})
-
+     *
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
+     *
      * @param Request $request
      * @param Person $person
      *
@@ -254,5 +271,4 @@ class PersonController extends Controller implements PaginatorAwareInterface {
 
         return $this->redirectToRoute('person_index');
     }
-
 }

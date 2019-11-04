@@ -28,6 +28,14 @@
                 <td>{{ source.name }}</td>
             </tr>
             <tr>
+                <th>Online Source</th>
+                <td>
+                    {% if source.onlineSource %}
+                        <a href="{{ source.onlineSource }}">{{ source.onlineSource }}</a>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
                 <th>Description</th>
                 <td>{{ source.description|raw }}</td>
             </tr>

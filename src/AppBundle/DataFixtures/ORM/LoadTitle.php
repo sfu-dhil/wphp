@@ -11,16 +11,20 @@ use Doctrine\Common\Persistence\ObjectManager;
 /**
  * Load some test titles.
  */
-class LoadTitle extends Fixture implements DependentFixtureInterface, FixtureGroupInterface
-{
+class LoadTitle extends Fixture implements DependentFixtureInterface, FixtureGroupInterface {
+    /**
+     * {@inheritdoc}
+     */
+    public static function getGroups() : array {
+        return array('test');
+    }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      *
      * @param ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
-    {
+    public function load(ObjectManager $manager) {
         for ($i = 0; $i < 4; $i++) {
             $fixture = new Title();
             $fixture->setTitle('Title ' . $i);
@@ -29,7 +33,7 @@ class LoadTitle extends Fixture implements DependentFixtureInterface, FixtureGro
             $fixture->setSurrogate('Surrogate ' . $i);
             $fixture->setPseudonym('Pseudonym ' . $i);
             $fixture->setImprint('Imprint ' . $i);
-            $fixture->setSelfpublished($i % 2 === 0);
+            $fixture->setSelfpublished(0 === $i % 2);
             $fixture->setPubdate(1775 + $i);
             $fixture->setDateOfFirstPublication(1770 + $i);
             $fixture->setSizeL($i + 10);
@@ -41,8 +45,8 @@ class LoadTitle extends Fixture implements DependentFixtureInterface, FixtureGro
             $fixture->setPriceShilling($i);
             $fixture->setPricePence($i);
             $fixture->setShelfmark('Shelfmark ' . $i);
-            $fixture->setChecked($i % 2 === 0);
-            $fixture->setFinalcheck($i % 2 === 0);
+            $fixture->setChecked(0 === $i % 2);
+            $fixture->setFinalcheck(0 === $i % 2);
             $fixture->setNotes('Notes ' . $i);
             $fixture->setLocationofprinting($this->getReference('geonames.1'));
             $fixture->setFormat($this->getReference('format.1'));
@@ -58,11 +62,10 @@ class LoadTitle extends Fixture implements DependentFixtureInterface, FixtureGro
     /**
      * {@inheritdoc}
      */
-    public function getDependencies()
-    {
+    public function getDependencies() {
         // add dependencies here, or remove this
         // function and "implements DependentFixtureInterface" above
-        return [
+        return array(
             LoadFirm::class,
             LoadFormat::class,
             LoadGenre::class,
@@ -70,14 +73,6 @@ class LoadTitle extends Fixture implements DependentFixtureInterface, FixtureGro
             LoadPerson::class,
             LoadRole::class,
             LoadSource::class,
-        ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public static function getGroups(): array
-    {
-        return array('test');
+        );
     }
 }

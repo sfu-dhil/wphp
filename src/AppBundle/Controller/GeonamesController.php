@@ -6,24 +6,22 @@ use AppBundle\Entity\Geonames;
 use AppBundle\Repository\GeonamesRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use GeoNames\Client as GeoNamesClient;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
-use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-
-use GeoNames\Client as GeoNamesClient;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Geonames controller.
  *
  * @Route("/geonames")
  */
-class GeonamesController extends Controller  implements PaginatorAwareInterface {
-
+class GeonamesController extends Controller implements PaginatorAwareInterface {
     use PaginatorTrait;
 
     /**
@@ -31,6 +29,7 @@ class GeonamesController extends Controller  implements PaginatorAwareInterface 
      *
      * @Route("/", name="geonames_index", methods={"GET"})
      * @Template()
+     *
      * @param Request $request
      *
      * @return array
@@ -58,15 +57,15 @@ class GeonamesController extends Controller  implements PaginatorAwareInterface 
      */
     public function typeaheadAction(Request $request, GeonamesRepository $repo) {
         $q = $request->query->get('q');
-        if( ! $q) {
-            return new JsonResponse([]);
+        if ( ! $q) {
+            return new JsonResponse(array());
         }
-        $data = [];
-        foreach($repo->typeaheadQuery($q) as $result) {
-            $data[] = [
+        $data = array();
+        foreach ($repo->typeaheadQuery($q) as $result) {
+            $data[] = array(
                 'id' => $result->getGeonameid(),
                 'text' => $result->getName() . ' (' . $result->getCountry() . ')',
-            ];
+            );
         }
 
         return new JsonResponse($data);
@@ -81,7 +80,6 @@ class GeonamesController extends Controller  implements PaginatorAwareInterface 
      * @return array
      * @Route("/search", name="geonames_search", methods={"GET"})
      * @Template()
-     *
      */
     public function searchAction(Request $request, GeonamesRepository $repo) {
         $q = $request->query->get('q');
@@ -106,12 +104,13 @@ class GeonamesController extends Controller  implements PaginatorAwareInterface 
      * @Route("/import", name="geonames_import", methods={"GET"})
      *
      * @Template
+     *
      * @return array
      */
     public function importSearchAction(Request $request) {
         $q = $request->query->get('q');
         $results = array();
-        if($q) {
+        if ($q) {
             $user = $this->getParameter('wphp.geonames_user');
             $client = new GeoNamesClient($user);
             $results = $client->search(array(
@@ -120,10 +119,11 @@ class GeonamesController extends Controller  implements PaginatorAwareInterface 
                 'lang' => 'en',
             ));
         }
-        return [
+
+        return array(
             'q' => $q,
             'results' => $results,
-        ];
+        );
     }
 
     /**
@@ -132,23 +132,24 @@ class GeonamesController extends Controller  implements PaginatorAwareInterface 
      * @param Request $request
      * @param EntityManagerInterface $em
      *
-     * @return RedirectResponse
      * @throws \Exception
+     *
+     * @return RedirectResponse
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
      * @Route("/import", name="geonames_import_save", methods={"POST"})
-     *
      */
     public function importSaveAction(Request $request, EntityManagerInterface $em) {
         $user = $this->getParameter('wphp.geonames_user');
         $client = new GeoNamesClient($user);
         $repo = $em->getRepository(Geonames::class);
-        foreach($request->request->get('geonameid') as $geonameid) {
+        foreach ($request->request->get('geonameid') as $geonameid) {
             $data = $client->get(array(
                 'geonameId' => $geonameid,
                 'lang' => 'en',
             ));
-            if($repo->find($geonameid)) {
+            if ($repo->find($geonameid)) {
                 $this->addFlash('warning', "Geoname #{$geonameid} ({$data->asciiName}) is already in the database.");
+
                 continue;
             }
             $geoname = new Geonames();
@@ -156,13 +157,13 @@ class GeonamesController extends Controller  implements PaginatorAwareInterface 
             $geoname->setName($data->name);
             $geoname->setAsciiname($data->asciiName);
             $alternateNames = array();
-            foreach($data->alternateNames as $name) {
-                if(isset($name->lang) && $name->lang != 'en') {
+            foreach ($data->alternateNames as $name) {
+                if (isset($name->lang) && 'en' != $name->lang) {
                     continue;
                 }
                 $alternateNames[] = $name->name;
             }
-            $geoname->setAlternatenames(implode(", ", $alternateNames));
+            $geoname->setAlternatenames(implode(', ', $alternateNames));
             $geoname->setLatitude($data->lat);
             $geoname->setLongitude($data->lng);
             $geoname->setFclass($data->fcl);
@@ -174,7 +175,8 @@ class GeonamesController extends Controller  implements PaginatorAwareInterface 
             $em->persist($geoname);
         }
         $em->flush();
-        $this->addFlash("success", "The selected geonames have been imported.");
+        $this->addFlash('success', 'The selected geonames have been imported.');
+
         return $this->redirectToRoute('geonames_import', array($request->query->get('q')));
     }
 
@@ -183,6 +185,7 @@ class GeonamesController extends Controller  implements PaginatorAwareInterface 
      *
      * @Route("/{id}", name="geonames_show", methods={"GET"})
      * @Template()
+     *
      * @param Request $request
      * @param Geonames $geoname
      *
@@ -191,7 +194,7 @@ class GeonamesController extends Controller  implements PaginatorAwareInterface 
     public function showAction(Request $request, Geonames $geoname) {
         $em = $this->getDoctrine()->getManager();
         $dql = 'SELECT count(t.id) FROM AppBundle:Title t WHERE t.locationOfPrinting = :geoname';
-        if($this->getUser() === null) {
+        if (null === $this->getUser()) {
             $dql .= ' AND (t.finalcheck = 1 OR t.finalattempt = 1)';
         }
         $dql .= ' ORDER BY t.title';
@@ -210,6 +213,7 @@ class GeonamesController extends Controller  implements PaginatorAwareInterface 
      *
      * @Route("/{id}/titles", name="geonames_titles", methods={"GET"})
      * @Template()
+     *
      * @param Request $request
      * @param Geonames $geoname
      *
@@ -218,7 +222,7 @@ class GeonamesController extends Controller  implements PaginatorAwareInterface 
     public function titlesAction(Request $request, Geonames $geoname) {
         $em = $this->getDoctrine()->getManager();
         $dql = 'SELECT t FROM AppBundle:Title t WHERE t.locationOfPrinting = :geoname';
-        if($this->getUser() === null) {
+        if (null === $this->getUser()) {
             $dql .= ' AND (t.finalcheck = 1 OR t.finalattempt = 1)';
         }
         $dql .= ' ORDER BY t.title';
@@ -237,6 +241,7 @@ class GeonamesController extends Controller  implements PaginatorAwareInterface 
      *
      * @Route("/{id}/firms", name="geonames_firms", methods={"GET"})
      * @Template()
+     *
      * @param Request $request
      * @param Geonames $geoname
      *
@@ -260,6 +265,7 @@ class GeonamesController extends Controller  implements PaginatorAwareInterface 
      *
      * @Route("/{id}/people", name="geonames_people", methods={"GET"})
      * @Template()
+     *
      * @param Request $request
      * @param Geonames $geoname
      *
@@ -277,5 +283,4 @@ class GeonamesController extends Controller  implements PaginatorAwareInterface 
             'people' => $people,
         );
     }
-
 }

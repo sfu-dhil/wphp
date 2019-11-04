@@ -10,16 +10,20 @@ use Doctrine\Common\Persistence\ObjectManager;
 /**
  * Load some test Jackson Bibliography data.
  */
-class LoadJackson extends Fixture implements FixtureGroupInterface
-{
+class LoadJackson extends Fixture implements FixtureGroupInterface {
+    /**
+     * {@inheritdoc}
+     */
+    public static function getGroups() : array {
+        return array('test');
+    }
 
     /**
      * {@inheritdoc}
      *
      * @param ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
-    {
+    public function load(ObjectManager $manager) {
         for ($i = 0; $i < 4; $i++) {
             $fixture = new Jackson();
             $fixture->setJbid(1234 + $i);
@@ -31,13 +35,5 @@ class LoadJackson extends Fixture implements FixtureGroupInterface
             $this->setReference('jackson.' . $i, $fixture);
         }
         $manager->flush();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public static function getGroups(): array
-    {
-        return array('test');
     }
 }

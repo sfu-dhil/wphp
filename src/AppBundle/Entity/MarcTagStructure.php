@@ -5,7 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * MarcTagStructure
+ * MarcTagStructure.
  *
  * @ORM\Table(name="marc_tag_structure",
  *  uniqueConstraints={
@@ -14,10 +14,9 @@ use Doctrine\ORM\Mapping as ORM;
  * )
  * @ORM\Entity(repositoryClass="AppBundle\Repository\MarcTagStructureRepository")
  */
-class MarcTagStructure
-{
+class MarcTagStructure {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -40,67 +39,62 @@ class MarcTagStructure
     private $name;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="hidden", type="integer", nullable=true)
      */
     private $hidden;
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
     /**
-     * Set tagField
+     * Set tagField.
      *
      * @param string $tagField
      *
      * @return MarcTagStructure
      */
-    public function setTagField($tagField)
-    {
+    public function setTagField($tagField) {
         $this->tagField = $tagField;
 
         return $this;
     }
 
     /**
-     * Get tagField
+     * Get tagField.
      *
      * @return string
      */
-    public function getTagField()
-    {
+    public function getTagField() {
         return $this->tagField;
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
      *
      * @return MarcTagStructure
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 }

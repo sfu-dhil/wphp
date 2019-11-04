@@ -2,17 +2,21 @@
 
 namespace AppBundle\Tests\Entity;
 
-use AppBundle\Entity\Title;
-use AppBundle\Entity\Role;
 use AppBundle\Entity\Firmrole;
-use AppBundle\Entity\TitleRole;
+use AppBundle\Entity\Role;
+use AppBundle\Entity\Title;
 use AppBundle\Entity\TitleFirmrole;
+use AppBundle\Entity\TitleRole;
 use PHPUnit\Framework\TestCase;
 
 class TitleTest extends TestCase {
-
     /**
      * @dataProvider getTotalPriceData
+     *
+     * @param mixed $expected
+     * @param mixed $pence
+     * @param mixed $shillings
+     * @param mixed $pounds
      */
     public function testGetTotalPrice($expected, $pence, $shillings, $pounds) {
         $title = new Title();
@@ -34,25 +38,24 @@ class TitleTest extends TestCase {
             array(252, 0, 1, 1),
             array(0, 0, 0, 0),
             array(24, 12, 1, 0),
-            array(0, "I am a chicken", 0, 0),
-            array(0, "3 chickens", 0, 0),
-            array(0, 0, "3 chickens", 0),
-            array(0, 0, 0, "3 chickens"),
+            array(0, 'I am a chicken', 0, 0),
+            array(0, '3 chickens', 0, 0),
+            array(0, 0, '3 chickens', 0),
+            array(0, 0, 0, '3 chickens'),
             array(-240, 0, 0, -1),
             array(0, null, null, null),
             array(40, 40, null, 0),
             array(0, false, 0, 0),
-            array(12, false, 1, 0)
+            array(12, false, 1, 0),
         );
     }
 
     public function testGetTitleRoles() {
-
         $title = new Title();
         $role = new Role();
         $titleRole = new TitleRole();
 
-        $var = "Jane Taylor";
+        $var = 'Jane Taylor';
 
         $role->setName($var);
         $titleRole->setRole($role);
@@ -66,12 +69,11 @@ class TitleTest extends TestCase {
     }
 
     public function testGetTitleFirmRoles() {
-
         $title = new Title();
         $firmRole = new Firmrole();
         $titleFirmRole = new TitleFirmrole();
 
-        $var = "Jane Taylor";
+        $var = 'Jane Taylor';
 
         $firmRole->setName($var);
         $titleFirmRole->setFirmrole($firmRole);
@@ -83,5 +85,4 @@ class TitleTest extends TestCase {
 
         $this->AssertEquals(0, count($title->getTitleFirmroles()));
     }
-
 }

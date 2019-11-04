@@ -10,16 +10,20 @@ use Doctrine\Common\Persistence\ObjectManager;
 /**
  * Load some test MARC subfield data for testing.
  */
-class LoadMarcSubfieldStructure extends Fixture implements FixtureGroupInterface
-{
+class LoadMarcSubfieldStructure extends Fixture implements FixtureGroupInterface {
+    /**
+     * {@inheritdoc}
+     */
+    public static function getGroups() : array {
+        return array('test');
+    }
 
     /**
      * {@inheritdoc}
      *
      * @param ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
-    {
+    public function load(ObjectManager $manager) {
         for ($j = 0; $j < 20; $j++) {
             for ($i = 0; $i < 10; $i++) {
                 $subfield = 'abcdefghijklmnop'[$i];
@@ -27,19 +31,11 @@ class LoadMarcSubfieldStructure extends Fixture implements FixtureGroupInterface
                 $fixture->setTagField(100 + $j);
                 $fixture->setTagSubfield($subfield);
                 $fixture->setName('Field ' . (100 + $j) . $subfield);
-                $fixture->setHidden([0, -6, -5, -1][$i % 4]);
+                $fixture->setHidden(array(0, -6, -5, -1)[$i % 4]);
                 $manager->persist($fixture);
-                $this->setReference("marcsubfield.$j.$i", $fixture);
+                $this->setReference("marcsubfield.{$j}.{$i}", $fixture);
             }
         }
         $manager->flush();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public static function getGroups(): array
-    {
-        return array('test');
     }
 }

@@ -23,7 +23,6 @@ use Doctrine\ORM\EntityManagerInterface;
  * Import MARC records from ESTC.
  */
 class EstcMarcImporter {
-
     /**
      * @var EntityManagerInterface
      */
@@ -100,6 +99,7 @@ class EstcMarcImporter {
         foreach ($data as $row) {
             $fields[$row->getField() . $row->getSubfield()] = $row;
         }
+
         return $fields;
     }
 
@@ -114,7 +114,7 @@ class EstcMarcImporter {
             $this->messages[] = 'This title may already exist in the database. Please check for it before saving the form.';
         }
 
-        if(count($this->titleSourceRepository->findBy(array(
+        if (count($this->titleSourceRepository->findBy(array(
             'source' => $this->sourceRepo->findOneBy(array('name' => 'ESTC')),
             'identifier' => $id,
         )))) {
@@ -130,7 +130,7 @@ class EstcMarcImporter {
      * @return array
      */
     public function getDates($fields) {
-        if (!isset($fields['100d']) || $fields['100d']->getFieldData() === null) {
+        if ( ! isset($fields['100d']) || null === $fields['100d']->getFieldData()) {
             return array(null, null);
         }
         $data = $fields['100d']->getFieldData();
@@ -149,7 +149,8 @@ class EstcMarcImporter {
             return array($matches[1], null);
         }
 
-        $this->messages[] = 'Cannot parse author dates: ' . $data . ". Author information may be incorrect.";
+        $this->messages[] = 'Cannot parse author dates: ' . $data . '. Author information may be incorrect.';
+
         return array(null, null);
     }
 
@@ -167,7 +168,7 @@ class EstcMarcImporter {
 
         $people = $this->personRepo->findByNameDates($first, $last, $dob, $dod);
 
-        if (count($people) === 0) {
+        if (0 === count($people)) {
             $this->messages[] = 'No person record found for ' . $fullName . '. You may need to edit the person record after importing this title.';
             $person = new Person();
             $person->setLastName($last);
@@ -176,11 +177,13 @@ class EstcMarcImporter {
             $person->setDod($dod);
             $this->em->persist($person);
             $this->em->flush();
+
             return $person;
         }
         if (count($people) > 1) {
             $this->messages[] = 'More than one person record found for ' . $fullName . '. Check that this is the correct person.';
         }
+
         return $people[0];
     }
 
@@ -191,7 +194,7 @@ class EstcMarcImporter {
      * @param Person $person
      */
     public function addAuthor(Title $title, Person $person) {
-        if (!$person) {
+        if ( ! $person) {
             return;
         }
         $role = $this->roleRepo->findOneBy(array('name' => 'Author'));
@@ -208,11 +211,11 @@ class EstcMarcImporter {
      *
      * @param array $fields
      *
-     * @return object|null
+     * @return null|object
      */
     public function guessFormat($fields) {
-        if (!isset($fields['300c']) || $fields['300c']->getFieldData() === null) {
-            return null;
+        if ( ! isset($fields['300c']) || null === $fields['300c']->getFieldData()) {
+            return;
         }
         $data = $fields['300c']->getFieldData();
         $matches = array();
@@ -222,12 +225,13 @@ class EstcMarcImporter {
                 'abbreviation' => $matches[1],
             ));
         }
-        if (!$format) {
-            $this->messages[] = 'Cannot guess format from ' . $data . ".";
+        if ( ! $format) {
+            $this->messages[] = 'Cannot guess format from ' . $data . '.';
             $format = $this->formatRepo->findOneBy(array(
                 'name' => 'unknown',
             ));
         }
+
         return $format;
     }
 
@@ -239,20 +243,21 @@ class EstcMarcImporter {
      * @return array
      */
     public function guessDimensions($fields) {
-        if (!isset($fields['300c']) || $fields['300c']->getFieldData() === null) {
+        if ( ! isset($fields['300c']) || null === $fields['300c']->getFieldData()) {
             return array(null, null);
         }
         $data = $fields['300c']->getFieldData();
         $matches = array();
-        if (preg_match("/(\d+)\s*(?:cm)?\s*x\s*(\d+)\s*(?:cm)?/", $data, $matches)) {
+        if (preg_match('/(\\d+)\\s*(?:cm)?\\s*x\\s*(\\d+)\\s*(?:cm)?/', $data, $matches)) {
             return array($matches[1], $matches[2]);
         }
 
-        if (preg_match("/(\d+)\s*(?:cm|mm)/", $data, $matches)) {
+        if (preg_match('/(\\d+)\\s*(?:cm|mm)/', $data, $matches)) {
             return array($matches[1], null);
         }
 
         $this->messages[] = 'Cannot parse dimensions: ' . $data;
+
         return array(null, null);
     }
 
@@ -268,7 +273,7 @@ class EstcMarcImporter {
 
         $fullTitle = $fields['245a']->getFieldData();
         if (isset($fields['245b'])) {
-            $fullTitle .= " " . $fields['245b']->getFieldData();
+            $fullTitle .= ' ' . $fields['245b']->getFieldData();
         }
         $this->checkTitle($fullTitle, $fields['001']->getFieldData());
 
@@ -282,10 +287,10 @@ class EstcMarcImporter {
             $title->setImprint($fields['260b']->getFieldData());
         }
         if (isset($fields['260c'])) {
-            $title->setPubdate(preg_replace("/\.$/", '', $fields['260c']->getFieldData()));
+            $title->setPubdate(preg_replace('/\\.$/', '', $fields['260c']->getFieldData()));
         }
 
-        if(isset($fields['100a'])) {
+        if (isset($fields['100a'])) {
             $person = $this->getPerson($fields);
             $this->addAuthor($title, $person);
         }
@@ -303,6 +308,7 @@ class EstcMarcImporter {
         $title->setSizeL($width);
         $title->setSizeW($height);
         $title->setChecked(false);
+
         return $title;
     }
 
@@ -325,50 +331,49 @@ class EstcMarcImporter {
     /**
      * @param EstcMarcRepository $estcRepo
      */
-    public function setEstcRepo(EstcMarcRepository $estcRepo): void {
+    public function setEstcRepo(EstcMarcRepository $estcRepo) : void {
         $this->estcRepo = $estcRepo;
     }
 
     /**
      * @param PersonRepository $personRepo
      */
-    public function setPersonRepo(PersonRepository $personRepo): void {
+    public function setPersonRepo(PersonRepository $personRepo) : void {
         $this->personRepo = $personRepo;
     }
 
     /**
      * @param TitleRepository $titleRepo
      */
-    public function setTitleRepo(TitleRepository $titleRepo): void {
+    public function setTitleRepo(TitleRepository $titleRepo) : void {
         $this->titleRepo = $titleRepo;
     }
 
     /**
      * @param TitleSourceRepository $titleSourceRepo
      */
-    public function setTitleSourceRepo(TitleSourceRepository $titleSourceRepo): void {
+    public function setTitleSourceRepo(TitleSourceRepository $titleSourceRepo) : void {
         $this->titleSourceRepository = $titleSourceRepo;
     }
 
     /**
      * @param RoleRepository $roleRepo
      */
-    public function setRoleRepo(RoleRepository $roleRepo): void {
+    public function setRoleRepo(RoleRepository $roleRepo) : void {
         $this->roleRepo = $roleRepo;
     }
 
     /**
      * @param SourceRepository $sourceRepo
      */
-    public function setSourceRepo(SourceRepository $sourceRepo): void {
+    public function setSourceRepo(SourceRepository $sourceRepo) : void {
         $this->sourceRepo = $sourceRepo;
     }
 
     /**
      * @param FormatRepository $formatRepo
      */
-    public function setFormatRepo(FormatRepository $formatRepo): void {
+    public function setFormatRepo(FormatRepository $formatRepo) : void {
         $this->formatRepo = $formatRepo;
     }
-
 }

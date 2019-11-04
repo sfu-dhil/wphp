@@ -4,7 +4,6 @@ namespace AppBundle\Form\Title;
 
 use AppBundle\Entity\Format;
 use AppBundle\Entity\Genre;
-use AppBundle\Entity\Source;
 use AppBundle\Form\Firm\FirmFilterType;
 use AppBundle\Form\Person\PersonFilterType;
 use Symfony\Component\Form\AbstractType;
@@ -17,7 +16,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * Search form for titles.
  */
 class TitleSearchType extends AbstractType {
-
     /**
      * Build the form.
      *
@@ -40,7 +38,7 @@ class TitleSearchType extends AbstractType {
             'label' => 'Search Titles',
             'required' => false,
             'attr' => array(
-                'help_block' => 'Enter all or part of a title'
+                'help_block' => 'Enter all or part of a title',
             ),
         ));
 
@@ -57,7 +55,7 @@ class TitleSearchType extends AbstractType {
                 'Edition Number (Highest to Lowest)' => 'edition_desc',
             ),
             'attr' => array(
-                'help_block' => 'Choose a sort method for the results'
+                'help_block' => 'Choose a sort method for the results',
             ),
             'required' => false,
             'expanded' => false,
@@ -71,34 +69,34 @@ class TitleSearchType extends AbstractType {
             'required' => false,
             'attr' => array(
                 'help_block' => 'Find this exact title ID.',
-            )
+            ),
         ));
         $builder->add('person_filter', PersonFilterType::class, array(
             'label' => 'Filter by Person',
             'required' => false,
             'attr' => array(
-                'class' => 'embedded-form'
+                'class' => 'embedded-form',
             ),
         ));
         $builder->add('signed_author', TextType::class, array(
             'label' => 'Signed Author',
             'required' => false,
             'attr' => array(
-                'help_block' => 'Author attribution as it appears on the title page or at the end of the preface (Ex. “By a lady,” “By the author of“)'
+                'help_block' => 'Author attribution as it appears on the title page or at the end of the preface (Ex. “By a lady,” “By the author of“)',
             ),
         ));
         $builder->add('pseudonym', TextType::class, array(
             'label' => 'Pseudonym',
             'required' => false,
             'attr' => array(
-                'help_block' => 'The false name that the author has signed the work with'
+                'help_block' => 'The false name that the author has signed the work with',
             ),
         ));
         $builder->add('firm_filter', FirmFilterType::class, array(
             'label' => 'Filter by Firm',
             'required' => false,
             'attr' => array(
-                'class' => 'embedded-form'
+                'class' => 'embedded-form',
             ),
         ));
 
@@ -110,7 +108,7 @@ class TitleSearchType extends AbstractType {
                 'Unknown' => 'U',
             ),
             'attr' => array(
-                'help_block' => 'Limit results to those that have been self-published or not.'
+                'help_block' => 'Limit results to those that have been self-published or not.',
             ),
             'required' => false,
             'expanded' => true,
@@ -144,14 +142,14 @@ class TitleSearchType extends AbstractType {
             'label' => 'Edition Number',
             'required' => false,
             'attr' => array(
-                'help_block' => 'Edition number.'
+                'help_block' => 'Edition number.',
             ),
         ));
         $builder->add('imprint', TextType::class, array(
             'label' => 'Imprint',
             'required' => false,
             'attr' => array(
-                'help_block' => 'Information about printers, publishers, booksellers as represented on the title page'
+                'help_block' => 'Information about printers, publishers, booksellers as represented on the title page',
             ),
         ));
         $builder->add('colophon', null, array(
@@ -162,15 +160,15 @@ class TitleSearchType extends AbstractType {
             'label' => 'Location of Printing',
             'required' => false,
             'attr' => array(
-                'help_block' => 'Geotagged location as indicated by the imprint'
+                'help_block' => 'Geotagged location as indicated by the imprint',
             ),
         ));
         $builder->add('format', ChoiceType::class, array(
             'choices' => $formats,
-            'choice_label' => function($value, $key, $index) {
+            'choice_label' => function ($value, $key, $index) {
                 return $value->getName();
             },
-            'choice_value' => function($value) {
+            'choice_value' => function ($value) {
                 return $value->getId();
             },
             'label' => 'Format',
@@ -196,16 +194,16 @@ class TitleSearchType extends AbstractType {
             'label' => 'Filter by Price',
             'required' => false,
             'attr' => array(
-                'class' => 'embedded-form'
+                'class' => 'embedded-form',
             ),
         ));
 
         $builder->add('genre', ChoiceType::class, array(
             'choices' => $genres,
-            'choice_label' => function($value, $key, $index) {
+            'choice_label' => function ($value, $key, $index) {
                 return $value->getName();
             },
-            'choice_value' => function($value) {
+            'choice_value' => function ($value) {
                 return $value->getId();
             },
             'label' => 'Genre',
@@ -221,7 +219,7 @@ class TitleSearchType extends AbstractType {
             'label' => 'Filter by Source',
             'required' => false,
             'attr' => array(
-                'class' => 'embedded-form'
+                'class' => 'embedded-form',
             ),
         ));
 
@@ -230,53 +228,53 @@ class TitleSearchType extends AbstractType {
             'required' => false,
         ));
 
-        if($user) {
+        if ($user) {
             $builder->add('checked', ChoiceType::class, array(
-                'label'      => 'Hand-Verified',
-                'choices'    => array(
+                'label' => 'Hand-Verified',
+                'choices' => array(
                     'Yes' => 'Y',
-                    'No'  => 'N',
+                    'No' => 'N',
                 ),
-                'attr'       => array(
-                    'help_block' => 'Limit results to those that have been checked or not checked'
+                'attr' => array(
+                    'help_block' => 'Limit results to those that have been checked or not checked',
                 ),
-                'required'   => false,
-                'expanded'   => true,
-                'multiple'   => false,
+                'required' => false,
+                'expanded' => true,
+                'multiple' => false,
                 'empty_data' => null,
-                'data'       => null,
+                'data' => null,
             ));
 
             $builder->add('finalcheck', ChoiceType::class, array(
-                'label'      => 'Verified',
-                'choices'    => array(
+                'label' => 'Verified',
+                'choices' => array(
                     'Yes' => 'Y',
-                    'No'  => 'N',
+                    'No' => 'N',
                 ),
-                'attr'       => array(
-                    'help_block' => 'Limit results to those that have been double checked or not checked'
+                'attr' => array(
+                    'help_block' => 'Limit results to those that have been double checked or not checked',
                 ),
-                'required'   => false,
-                'expanded'   => true,
-                'multiple'   => false,
+                'required' => false,
+                'expanded' => true,
+                'multiple' => false,
                 'empty_data' => null,
-                'data'       => null,
+                'data' => null,
             ));
 
             $builder->add('finalattempt', ChoiceType::class, array(
-                'label'      => 'Attempted Verification',
-                'choices'    => array(
+                'label' => 'Attempted Verification',
+                'choices' => array(
                     'Yes' => 'Y',
-                    'No'  => 'N',
+                    'No' => 'N',
                 ),
-                'attr'       => array(
-                    'help_block' => 'Limit results to those that someone has attempted to verify'
+                'attr' => array(
+                    'help_block' => 'Limit results to those that someone has attempted to verify',
                 ),
-                'required'   => false,
-                'expanded'   => true,
-                'multiple'   => false,
+                'required' => false,
+                'expanded' => true,
+                'multiple' => false,
                 'empty_data' => null,
-                'data'       => null,
+                'data' => null,
             ));
         }
     }
@@ -290,5 +288,4 @@ class TitleSearchType extends AbstractType {
         parent::configureOptions($resolver);
         $resolver->setRequired(array('entity_manager', 'user'));
     }
-
 }

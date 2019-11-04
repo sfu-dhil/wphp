@@ -6,21 +6,20 @@ use AppBundle\Entity\Firmrole;
 use AppBundle\Form\FirmroleType;
 use AppBundle\Repository\FirmroleRepository;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Firmrole controller.
  *
  * @Route("/firmrole")
  */
-class FirmroleController extends Controller  implements PaginatorAwareInterface {
-
+class FirmroleController extends Controller implements PaginatorAwareInterface {
     use PaginatorTrait;
 
     /**
@@ -28,8 +27,8 @@ class FirmroleController extends Controller  implements PaginatorAwareInterface 
      *
      * @Route("/", name="firmrole_index", methods={"GET"})
      * @Template()
-     * @param Request $request
      *
+     * @param Request $request
      * @param FirmroleRepository $repo
      *
      * @return array
@@ -61,15 +60,15 @@ class FirmroleController extends Controller  implements PaginatorAwareInterface 
      */
     public function typeaheadAction(Request $request, FirmroleRepository $repo) {
         $q = $request->query->get('q');
-        if( ! $q) {
-            return new JsonResponse([]);
+        if ( ! $q) {
+            return new JsonResponse(array());
         }
-        $data = [];
-        foreach($repo->typeaheadQuery($q) as $result) {
-            $data[] = [
+        $data = array();
+        foreach ($repo->typeaheadQuery($q) as $result) {
+            $data[] = array(
                 'id' => $result->getId(),
                 'text' => $result->getName(),
-            ];
+            );
         }
 
         return new JsonResponse($data);
@@ -81,6 +80,7 @@ class FirmroleController extends Controller  implements PaginatorAwareInterface 
      * @Route("/new", name="firmrole_new", methods={"GET", "POST"})
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
      * @Template()
+     *
      * @param Request $request
      *
      * @return array|RedirectResponse
@@ -96,6 +96,7 @@ class FirmroleController extends Controller  implements PaginatorAwareInterface 
             $em->flush();
 
             $this->addFlash('success', 'The new firmrole was created.');
+
             return $this->redirectToRoute('firmrole_show', array('id' => $firmrole->getId()));
         }
 
@@ -110,6 +111,7 @@ class FirmroleController extends Controller  implements PaginatorAwareInterface 
      *
      * @Route("/{id}", name="firmrole_show", methods={"GET"})
      * @Template()
+     *
      * @param Request $request
      * @param Firmrole $firmrole
      *
@@ -134,6 +136,7 @@ class FirmroleController extends Controller  implements PaginatorAwareInterface 
      * @Route("/{id}/edit", name="firmrole_edit", methods={"GET", "POST"})
      * @Template()
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
+     *
      * @param Request $request
      * @param Firmrole $firmrole
      *
@@ -147,6 +150,7 @@ class FirmroleController extends Controller  implements PaginatorAwareInterface 
             $em = $this->getDoctrine()->getManager();
             $em->flush();
             $this->addFlash('success', 'The firmrole has been updated.');
+
             return $this->redirectToRoute('firmrole_show', array('id' => $firmrole->getId()));
         }
 
@@ -161,6 +165,7 @@ class FirmroleController extends Controller  implements PaginatorAwareInterface 
      *
      * @Route("/{id}/delete", name="firmrole_delete", methods={"GET"})
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
+     *
      * @param Request $request
      * @param Firmrole $firmrole
      *
@@ -174,5 +179,4 @@ class FirmroleController extends Controller  implements PaginatorAwareInterface 
 
         return $this->redirectToRoute('firmrole_index');
     }
-
 }

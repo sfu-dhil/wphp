@@ -5,6 +5,7 @@
     become: ~
     deploy_path: ~
     user: ~
+    ssh_multiplexing: false
 
 # The settings key must start with a dot(.) to prevent it being treated as
 # a host in the inventory.

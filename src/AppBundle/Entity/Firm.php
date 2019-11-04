@@ -7,7 +7,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Firm
+ * Firm.
  *
  * @ORM\Table(name="firm",
  *  indexes={
@@ -20,9 +20,7 @@ use Doctrine\ORM\Mapping as ORM;
  * )
  * @ORM\Entity(repositoryClass="AppBundle\Repository\FirmRepository")
  */
-class Firm
-{
-
+class Firm {
     const MALE = 'M';
 
     const FEMALE = 'F';
@@ -30,7 +28,7 @@ class Firm
     const UNKNOWN = 'U';
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
@@ -74,7 +72,7 @@ class Firm
     private $endDate;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="finalcheck", type="boolean", nullable=false)
      */
@@ -105,16 +103,25 @@ class Firm
     }
 
     /**
-     * Get id
+     * Get the name of the firm.
      *
-     * @return integer
+     * @return string
+     */
+    public function __toString() {
+        return $this->name;
+    }
+
+    /**
+     * Get id.
+     *
+     * @return int
      */
     public function getId() {
         return $this->id;
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
      *
@@ -127,7 +134,7 @@ class Firm
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
@@ -136,7 +143,7 @@ class Firm
     }
 
     /**
-     * Set streetAddress
+     * Set streetAddress.
      *
      * @param string $streetAddress
      *
@@ -149,7 +156,7 @@ class Firm
     }
 
     /**
-     * Get streetAddress
+     * Get streetAddress.
      *
      * @return string
      */
@@ -158,7 +165,7 @@ class Firm
     }
 
     /**
-     * Set startDate
+     * Set startDate.
      *
      * @param string $startDate
      *
@@ -171,19 +178,20 @@ class Firm
     }
 
     /**
-     * Get startDate
+     * Get startDate.
      *
      * @return string
      */
     public function getStartDate() {
-        if ($this->startDate === '0000-00-00') {
-            return null;
+        if ('0000-00-00' === $this->startDate) {
+            return;
         }
+
         return $this->startDate;
     }
 
     /**
-     * Set endDate
+     * Set endDate.
      *
      * @param string $endDate
      *
@@ -196,21 +204,22 @@ class Firm
     }
 
     /**
-     * Get endDate
+     * Get endDate.
      *
      * @return string
      */
     public function getEndDate() {
-        if ($this->endDate === '0000-00-00') {
-            return null;
+        if ('0000-00-00' === $this->endDate) {
+            return;
         }
+
         return $this->endDate;
     }
 
     /**
-     * Set finalcheck
+     * Set finalcheck.
      *
-     * @param boolean $finalcheck
+     * @param bool $finalcheck
      *
      * @return Firm
      */
@@ -221,16 +230,16 @@ class Firm
     }
 
     /**
-     * Get finalcheck
+     * Get finalcheck.
      *
-     * @return boolean
+     * @return bool
      */
     public function getFinalcheck() {
         return $this->finalcheck;
     }
 
     /**
-     * Set city
+     * Set city.
      *
      * @param Geonames $city
      *
@@ -243,7 +252,7 @@ class Firm
     }
 
     /**
-     * Get city
+     * Get city.
      *
      * @return Geonames
      */
@@ -252,7 +261,7 @@ class Firm
     }
 
     /**
-     * Add titleFirmrole
+     * Add titleFirmrole.
      *
      * @param TitleFirmrole $titleFirmrole
      *
@@ -265,7 +274,7 @@ class Firm
     }
 
     /**
-     * Remove titleFirmrole
+     * Remove titleFirmrole.
      *
      * @param TitleFirmrole $titleFirmrole
      */
@@ -276,40 +285,31 @@ class Firm
     /**
      * Get titleFirmroles for the firm, optionally sorted by name.
      *
-     * @param boolean $sort
+     * @param bool $sort
      *
      * @return Collection
      */
     public function getTitleFirmroles($sort = false) {
-        if(! $sort) {
+        if ( ! $sort) {
             return $this->titleFirmroles;
         }
 
         $iterator = $this->titleFirmroles->getIterator();
-        $iterator->uasort(function(TitleFirmrole $a, TitleFirmrole $b) {
+        $iterator->uasort(function (TitleFirmrole $a, TitleFirmrole $b) {
             return strcasecmp($a->getTitle()->getTitle(), $b->getTitle()->getTitle());
         });
-        return new ArrayCollection(iterator_to_array($iterator));
-    }
 
-    /**
-     * Get the name of the firm.
-     *
-     * @return string
-     */
-    public function __toString() {
-        return $this->name;
+        return new ArrayCollection(iterator_to_array($iterator));
     }
 
     /**
      * Set gender.
      *
-     * @param string|null $gender
+     * @param null|string $gender
      *
      * @return Firm
      */
-    public function setGender($gender = null)
-    {
+    public function setGender($gender = null) {
         $this->gender = $gender;
 
         return $this;
@@ -318,10 +318,9 @@ class Firm
     /**
      * Get gender.
      *
-     * @return string|null
+     * @return null|string
      */
-    public function getGender()
-    {
+    public function getGender() {
         return $this->gender;
     }
 }

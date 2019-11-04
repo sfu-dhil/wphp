@@ -6,11 +6,11 @@ use AppBundle\Entity\OrlandoBiblio;
 use AppBundle\Repository\OrlandoBiblioRepository;
 use AppBundle\Services\OrlandoManager;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
-use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * OrlandoBiblio controller.
@@ -19,14 +19,12 @@ use Symfony\Component\HttpFoundation\Request;
  * @Route("/resource/orlando_biblio")
  */
 class OrlandoBiblioController extends Controller implements PaginatorAwareInterface {
-
     use PaginatorTrait;
 
     /**
      * Lists all OrlandoBiblio entities.
      *
      * @param Request $request
-     *
      * @param OrlandoManager $manager
      *
      * @return array
@@ -51,7 +49,6 @@ class OrlandoBiblioController extends Controller implements PaginatorAwareInterf
      * Search for OrlandoBiblio entities.
      *
      * @param Request $request
-     *
      * @param OrlandoManager $manager
      * @param OrlandoBiblioRepository $repo
      *
@@ -63,7 +60,7 @@ class OrlandoBiblioController extends Controller implements PaginatorAwareInterf
         $q = $request->query->get('q');
         if ($q) {
             $query = $repo->searchQuery($q);
-                $orlandoBiblios = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
+            $orlandoBiblios = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
         } else {
             $orlandoBiblios = array();
         }
@@ -79,7 +76,6 @@ class OrlandoBiblioController extends Controller implements PaginatorAwareInterf
      * Finds and displays a OrlandoBiblio entity.
      *
      * @param OrlandoBiblio $orlandoBiblio
-     *
      * @param OrlandoManager $manager
      *
      * @return array
@@ -88,11 +84,9 @@ class OrlandoBiblioController extends Controller implements PaginatorAwareInterf
      * @Template()
      */
     public function showAction(OrlandoBiblio $orlandoBiblio, OrlandoManager $manager) {
-
         return array(
             'orlandoBiblio' => $orlandoBiblio,
             'manager' => $manager,
         );
     }
-
 }

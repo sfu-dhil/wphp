@@ -12,7 +12,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * The firmSearchtype is a search form for firms.
  */
 class FirmSearchType extends AbstractType {
-
     /**
      * Build the form.
      *
@@ -26,7 +25,7 @@ class FirmSearchType extends AbstractType {
             'label' => 'Search Firms by Name',
             'required' => false,
             'attr' => array(
-                'help_block' => 'Enter all or part of a firm name'
+                'help_block' => 'Enter all or part of a firm name',
             ),
         ));
 
@@ -43,7 +42,7 @@ class FirmSearchType extends AbstractType {
                 'End Date (Most Recent First)' => 'end_desc',
             ),
             'attr' => array(
-                'help_block' => 'Choose a sort method for the results'
+                'help_block' => 'Choose a sort method for the results',
             ),
             'required' => false,
             'expanded' => false,
@@ -55,7 +54,7 @@ class FirmSearchType extends AbstractType {
             'required' => false,
             'attr' => array(
                 'help_block' => 'Find this exact firm ID.',
-            )
+            ),
         ));
 
         $builder->add('gender', ChoiceType::class, array(
@@ -66,7 +65,7 @@ class FirmSearchType extends AbstractType {
                 'Unknown' => 'U',
             ),
             'attr' => array(
-                'help_block' => 'Leave this field blank to include all genders'
+                'help_block' => 'Leave this field blank to include all genders',
             ),
             'required' => false,
             'expanded' => true,
@@ -79,7 +78,7 @@ class FirmSearchType extends AbstractType {
             'label' => 'Address',
             'required' => false,
             'attr' => array(
-                'help_block' => 'Text search for a firm address'
+                'help_block' => 'Text search for a firm address',
             ),
         ));
 
@@ -87,7 +86,7 @@ class FirmSearchType extends AbstractType {
             'label' => 'City',
             'required' => false,
             'attr' => array(
-                'help_block' => 'Text search for a firm city'
+                'help_block' => 'Text search for a firm city',
             ),
         ));
         $builder->add('start', TextType::class, array(
@@ -104,7 +103,6 @@ class FirmSearchType extends AbstractType {
                 'help_block' => 'Enter a year (eg <kbd>1795</kbd>) or range of years (<kbd>1790-1800</kbd>) or a partial range of years (<kbd>*-1800</kbd>)',
             ),
         ));
-
     }
 
     /**
@@ -115,5 +113,4 @@ class FirmSearchType extends AbstractType {
     public function configureOptions(OptionsResolver $resolver) {
         parent::configureOptions($resolver);
     }
-
 }

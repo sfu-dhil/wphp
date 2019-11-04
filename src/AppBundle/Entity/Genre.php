@@ -7,15 +7,14 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Genre
+ * Genre.
  *
  * @ORM\Table(name="genre")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\GenreRepository")
  */
 class Genre {
-
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
@@ -43,23 +42,23 @@ class Genre {
     private $titles;
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct() {
         $this->titles = new ArrayCollection();
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return boolean
+     * @return bool
      */
     public function getId() {
         return $this->id;
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
      *
@@ -72,7 +71,7 @@ class Genre {
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
@@ -81,7 +80,7 @@ class Genre {
     }
 
     /**
-     * Add title
+     * Add title.
      *
      * @param Title $title
      *
@@ -94,7 +93,7 @@ class Genre {
     }
 
     /**
-     * Remove title
+     * Remove title.
      *
      * @param Title $title
      */
@@ -103,7 +102,7 @@ class Genre {
     }
 
     /**
-     * Get titles
+     * Get titles.
      *
      * @return Collection
      */
@@ -114,7 +113,7 @@ class Genre {
     /**
      * Set description.
      *
-     * @param string|null $description
+     * @param null|string $description
      *
      * @return Format
      */
@@ -127,10 +126,9 @@ class Genre {
     /**
      * Get description.
      *
-     * @return string|null
+     * @return null|string
      */
     public function getDescription() {
         return $this->description;
     }
-
 }

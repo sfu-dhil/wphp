@@ -9,6 +9,7 @@
          processIsolation="true"
          colors="false"
          defaultTestSuite="app"
+         cacheResultFile="var/cache/phpunit.cache"
          bootstrap="var/bootstrap.php.cache">
     <php>
         <ini name="error_reporting" value="-1" />

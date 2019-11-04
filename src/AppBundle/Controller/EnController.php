@@ -5,11 +5,11 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\En;
 use AppBundle\Repository\EnRepository;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
-use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * En controller.
@@ -17,8 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @Security("has_role('ROLE_USER')")
  * @Route("/resource/en")
  */
-class EnController extends Controller  implements PaginatorAwareInterface {
-
+class EnController extends Controller implements PaginatorAwareInterface {
     use PaginatorTrait;
 
     /**
@@ -47,7 +46,6 @@ class EnController extends Controller  implements PaginatorAwareInterface {
      * Search for En entities.
      *
      * @param Request $request
-     *
      * @param EnRepository $repo
      *
      * @return array
@@ -77,14 +75,12 @@ class EnController extends Controller  implements PaginatorAwareInterface {
      * @return array
      *
      * @Route("/{id}", name="resource_en_show", methods={"GET"})
-
+     *
      * @Template()
      */
     public function showAction(En $en) {
-
         return array(
             'en' => $en,
         );
     }
-
 }

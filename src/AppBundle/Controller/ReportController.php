@@ -2,29 +2,25 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\EstcMarc;
-use AppBundle\Entity\Source;
-use AppBundle\Entity\TitleFirmrole;
-use AppBundle\Entity\TitleSource;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
-use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Reports controller.
+ *
  * @Route("/report")
  * @Security("has_role('ROLE_CONTENT_ADMIN')")
  */
 class ReportController extends Controller implements PaginatorAwareInterface {
-
     use PaginatorTrait;
 
     /**
-     * List bad dates of publication
+     * List bad dates of publication.
      *
      * @Route("/titles_fc", name="report_titles_check", methods={"GET"})
      * @Template()
@@ -43,5 +39,4 @@ class ReportController extends Controller implements PaginatorAwareInterface {
             'titles' => $titles,
         );
     }
-
 }

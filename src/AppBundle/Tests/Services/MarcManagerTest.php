@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: mjoyce
  * Date: 2019-03-20
- * Time: 09:54
+ * Time: 09:54.
  */
 
 namespace AppBundle\Tests\Services;
@@ -17,25 +17,16 @@ use AppBundle\Entity\OsborneMarc;
 use AppBundle\Services\MarcManager;
 use Nines\UtilBundle\Tests\Util\BaseTestCase;
 
-class MarcManagerTest extends BaseTestCase
-{
-
+class MarcManagerTest extends BaseTestCase {
     private $manager;
 
-    protected function getFixtures()
-    {
-        return [
+    protected function getFixtures() {
+        return array(
             LoadEstcMarc::class,
             LoadOsborneMarc::class,
             LoadMarcTagStructure::class,
             LoadMarcSubfieldStructure::class,
-        ];
-    }
-
-    protected function setUp() : void
-    {
-        parent::setUp();
-        $this->manager = $this->getContainer()->get(MarcManager::class);
+        );
     }
 
     public function testSanity() {
@@ -132,5 +123,10 @@ class MarcManagerTest extends BaseTestCase
         $field->setSubfield('a');
         $name = $this->manager->getFieldName($field);
         $this->assertEquals('Field 100a', $name);
+    }
+
+    protected function setUp() : void {
+        parent::setUp();
+        $this->manager = $this->getContainer()->get(MarcManager::class);
     }
 }

@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace AppBundle\Migrations;
 
@@ -8,9 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Fix some bad dates and selfpublished attributes.
  */
-final class Version20190521182540 extends AbstractMigration
-{
-
+final class Version20190521182540 extends AbstractMigration {
     /**
      * Apply the migration.
      *
@@ -19,10 +19,9 @@ final class Version20190521182540 extends AbstractMigration
      * @throws \Doctrine\DBAL\DBALException
      * @throws \Doctrine\DBAL\Migrations\AbortMigrationException
      */
-    public function up(Schema $schema): void
-    {
+    public function up(Schema $schema) : void {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
+        $this->abortIf('mysql' !== $this->connection->getDatabasePlatform()->getName(), 'Migration can only be executed safely on \'mysql\'.');
 
         $this->addSql('begin');
         $this->addSql('UPDATE firm SET start_date=REGEXP_REPLACE(start_date, \'-[0-9]*\', \'\') WHERE start_date IS NOT NULL');
@@ -43,8 +42,7 @@ final class Version20190521182540 extends AbstractMigration
      *
      * @throws \Doctrine\DBAL\Migrations\IrreversibleMigrationException
      */
-    public function down(Schema $schema): void
-    {
+    public function down(Schema $schema) : void {
         $this->throwIrreversibleMigrationException();
     }
 }

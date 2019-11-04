@@ -3,20 +3,17 @@
  * Created by PhpStorm.
  * User: mjoyce
  * Date: 2019-03-20
- * Time: 09:54
+ * Time: 09:54.
  */
 
 namespace AppBundle\Tests\Services;
-
 
 use AppBundle\Services\RoleChecker;
 use Nines\UtilBundle\Tests\Util\BaseTestCase;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
-class RoleCheckerTest extends BaseTestCase
-{
-
+class RoleCheckerTest extends BaseTestCase {
     /**
      * @var RoleChecker
      */

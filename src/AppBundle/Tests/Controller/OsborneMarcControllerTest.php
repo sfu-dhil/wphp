@@ -2,22 +2,19 @@
 
 namespace AppBundle\Tests\Controller;
 
-use AppBundle\Entity\OsborneMarc;
 use AppBundle\DataFixtures\ORM\LoadOsborneMarc;
 use AppBundle\Repository\OsborneMarcRepository;
 use Nines\UserBundle\DataFixtures\ORM\LoadUser;
 use Nines\UtilBundle\Tests\Util\BaseTestCase;
 
-class OsborneMarcControllerTest extends BaseTestCase
-{
-
+class OsborneMarcControllerTest extends BaseTestCase {
     protected function getFixtures() {
-        return [
+        return array(
             LoadUser::class,
-            LoadOsborneMarc::class
-        ];
+            LoadOsborneMarc::class,
+        );
     }
-    
+
     /**
      * @group anon
      * @group index
@@ -27,7 +24,7 @@ class OsborneMarcControllerTest extends BaseTestCase
         $crawler = $client->request('GET', '/resource/osborne/');
         $this->assertEquals(302, $client->getResponse()->getStatusCode());
     }
-    
+
     /**
      * @group user
      * @group index
@@ -37,7 +34,7 @@ class OsborneMarcControllerTest extends BaseTestCase
         $crawler = $client->request('GET', '/resource/osborne/');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
-    
+
     /**
      * @group admin
      * @group index
@@ -47,7 +44,7 @@ class OsborneMarcControllerTest extends BaseTestCase
         $crawler = $client->request('GET', '/resource/osborne/');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
-    
+
     /**
      * @group anon
      * @group show
@@ -57,7 +54,7 @@ class OsborneMarcControllerTest extends BaseTestCase
         $crawler = $client->request('GET', '/resource/osborne/1');
         $this->assertEquals(302, $client->getResponse()->getStatusCode());
     }
-    
+
     /**
      * @group user
      * @group show
@@ -67,7 +64,7 @@ class OsborneMarcControllerTest extends BaseTestCase
         $crawler = $client->request('GET', '/resource/osborne/1');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
-    
+
     /**
      * @group admin
      * @group show
@@ -77,7 +74,6 @@ class OsborneMarcControllerTest extends BaseTestCase
         $crawler = $client->request('GET', '/resource/osborne/1');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
-
 
     public function testAnonSearch() {
         $client = $this->makeClient();
@@ -96,9 +92,9 @@ class OsborneMarcControllerTest extends BaseTestCase
 
         $formCrawler = $client->request('GET', '/resource/osborne/search');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $form = $formCrawler->selectButton('Search')->form([
+        $form = $formCrawler->selectButton('Search')->form(array(
             'q' => 'adventures',
-        ]);
+        ));
 
         $responseCrawler = $client->submit($form);
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
@@ -114,13 +110,12 @@ class OsborneMarcControllerTest extends BaseTestCase
 
         $formCrawler = $client->request('GET', '/resource/osborne/search');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $form = $formCrawler->selectButton('Search')->form([
+        $form = $formCrawler->selectButton('Search')->form(array(
             'q' => 'adventures',
-        ]);
+        ));
 
         $responseCrawler = $client->submit($form);
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertEquals(1, $responseCrawler->filter('td:contains("Osborne Field Data")')->count());
     }
-
 }

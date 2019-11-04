@@ -2,22 +2,19 @@
 
 namespace AppBundle\Tests\Controller;
 
-use AppBundle\Entity\En;
 use AppBundle\DataFixtures\ORM\LoadEn;
 use AppBundle\Repository\EnRepository;
 use Nines\UserBundle\DataFixtures\ORM\LoadUser;
 use Nines\UtilBundle\Tests\Util\BaseTestCase;
 
-class EnControllerTest extends BaseTestCase
-{
-
+class EnControllerTest extends BaseTestCase {
     protected function getFixtures() {
-        return [
+        return array(
             LoadUser::class,
-            LoadEn::class
-        ];
+            LoadEn::class,
+        );
     }
-    
+
     /**
      * @group anon
      * @group index
@@ -101,9 +98,9 @@ class EnControllerTest extends BaseTestCase
 
         $formCrawler = $client->request('GET', '/resource/en/search');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $form = $formCrawler->selectButton('Search')->form([
+        $form = $formCrawler->selectButton('Search')->form(array(
             'q' => 'adventures',
-        ]);
+        ));
 
         $responseCrawler = $client->submit($form);
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
@@ -119,9 +116,9 @@ class EnControllerTest extends BaseTestCase
 
         $formCrawler = $client->request('GET', '/resource/en/search');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $form = $formCrawler->selectButton('Search')->form([
+        $form = $formCrawler->selectButton('Search')->form(array(
             'q' => 'adventures',
-        ]);
+        ));
 
         $responseCrawler = $client->submit($form);
         $this->assertEquals(200, $client->getResponse()->getStatusCode());

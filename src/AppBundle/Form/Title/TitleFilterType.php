@@ -16,7 +16,6 @@ use Symfony\Component\Form\FormBuilderInterface;
  * service to have the doctrine registry injected as a dependency.
  */
 class TitleFilterType extends AbstractType {
-
     /**
      * @var EntityManager
      */
@@ -36,30 +35,29 @@ class TitleFilterType extends AbstractType {
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
-
         $genreRepo = $this->em->getRepository(Genre::class);
         $roleRepo = $this->em->getRepository(Role::class);
         $roles = $roleRepo->findAll(array(
             'name' => 'ASC',
         ));
         $genres = $genreRepo->findAll(array(
-            'name' => 'asc'
+            'name' => 'asc',
         ));
 
         $builder->add('title', TextType::class, array(
             'label' => 'Title',
             'required' => false,
             'attr' => array(
-                'help_block' => 'Enter all or part of a title'
+                'help_block' => 'Enter all or part of a title',
             ),
         ));
 
         $builder->add('person_role', ChoiceType::class, array(
             'choices' => $roles,
-            'choice_label' => function($value, $key, $index) {
+            'choice_label' => function ($value, $key, $index) {
                 return $value->getName();
             },
-            'choice_value' => function($value) {
+            'choice_value' => function ($value) {
                 if ($value) {
                     return $value->getId();
                 }
@@ -80,10 +78,10 @@ class TitleFilterType extends AbstractType {
 
         $builder->add('genre', ChoiceType::class, array(
             'choices' => $genres,
-            'choice_label' => function($value, $key, $index) {
+            'choice_label' => function ($value, $key, $index) {
                 return $value->getName();
             },
-            'choice_value' => function($value) {
+            'choice_value' => function ($value) {
                 return $value->getId();
             },
             'label' => 'Genre',
@@ -97,5 +95,4 @@ class TitleFilterType extends AbstractType {
             'required' => false,
         ));
     }
-
 }

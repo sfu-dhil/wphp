@@ -11,7 +11,6 @@ use Symfony\Component\Form\FormBuilderInterface;
  * Price form definitions.
  */
 class PriceType extends AbstractType {
-
     /**
      * Build the form.
      *
@@ -43,5 +42,4 @@ class PriceType extends AbstractType {
             'multiple' => false,
         ));
     }
-
 }

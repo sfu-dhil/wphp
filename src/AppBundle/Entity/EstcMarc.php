@@ -5,7 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * EstcFields
+ * EstcFields.
  *
  * This table requires a manually-created index.
  *
@@ -22,10 +22,9 @@ use Doctrine\ORM\Mapping as ORM;
  * )
  * @ORM\Entity(repositoryClass="AppBundle\Repository\EstcMarcRepository")
  */
-class EstcMarc
-{
+class EstcMarc {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -34,7 +33,7 @@ class EstcMarc
     private $id;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="cid", type="integer")
      */
@@ -71,108 +70,99 @@ class EstcMarc
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
     /**
-     * Set titleId
+     * Set titleId.
      *
-     * @param integer $titleId
+     * @param int $titleId
      *
      * @return EstcMarc
      */
-    public function setTitleId($titleId)
-    {
+    public function setTitleId($titleId) {
         $this->titleId = $titleId;
 
         return $this;
     }
 
     /**
-     * Get titleId
+     * Get titleId.
      *
-     * @return integer
+     * @return int
      */
-    public function getTitleId()
-    {
+    public function getTitleId() {
         return $this->titleId;
     }
 
     /**
-     * Set field
+     * Set field.
      *
      * @param string $field
      *
      * @return EstcMarc
      */
-    public function setField($field)
-    {
+    public function setField($field) {
         $this->field = $field;
 
         return $this;
     }
 
     /**
-     * Get field
+     * Get field.
      *
      * @return string
      */
-    public function getField()
-    {
+    public function getField() {
         return $this->field;
     }
 
     /**
-     * Set subfield
+     * Set subfield.
      *
      * @param string $subfield
      *
      * @return EstcMarc
      */
-    public function setSubfield($subfield)
-    {
+    public function setSubfield($subfield) {
         $this->subfield = $subfield;
 
         return $this;
     }
 
     /**
-     * Get subfield
+     * Get subfield.
      *
      * @return string
      */
-    public function getSubfield()
-    {
+    public function getSubfield() {
         return $this->subfield;
     }
 
     /**
-     * Set fieldData
+     * Set fieldData.
      *
      * @param string $fieldData
      *
      * @return EstcMarc
      */
-    public function setFieldData($fieldData)
-    {
+    public function setFieldData($fieldData) {
         $this->fieldData = $fieldData;
 
         return $this;
     }
 
     /**
-     * Get fieldData
+     * Get fieldData.
      *
      * @return string
      */
-    public function getFieldData()
-    {
+    public function getFieldData() {
         return $this->fieldData;
     }
 }

@@ -6,3 +6,7 @@
 	path = app/Resources/SensioGeneratorBundle/skeleton
 	url = https://github.com/ubermichael/skeleton.git
 	branch = master
+[submodule "deployment"]
+	path = deployment
+	url = https://github.com/ubermichael/deployment.git
+	branch = master

@@ -15,7 +15,6 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  * Construct links to various sources.
  */
 class SourceLinker {
-
     /**
      * @var EntityManagerInterface
      */
@@ -59,10 +58,10 @@ class SourceLinker {
      *
      * @param string $data
      *
-     * @return string|null
+     * @return null|string
      */
     public function estc($data) {
-        if (!$this->checker->hasRole('ROLE_USER')) {
+        if ( ! $this->checker->hasRole('ROLE_USER')) {
             return 'http://estc.bl.uk/' . $data;
         }
         $repo = $this->em->getRepository(EstcMarc::class);
@@ -76,7 +75,6 @@ class SourceLinker {
                 'id' => $record->getTitleId(),
             ));
         }
-        return null;
     }
 
     /**
@@ -85,11 +83,11 @@ class SourceLinker {
      *
      * @param string $data
      *
-     * @return string|null
+     * @return null|string
      */
     public function orlando($data) {
-        if (!$this->checker->hasRole('ROLE_USER')) {
-            return null;
+        if ( ! $this->checker->hasRole('ROLE_USER')) {
+            return;
         }
         $repo = $this->em->getRepository(OrlandoBiblio::class);
         $record = $repo->findOneBy(array(
@@ -100,7 +98,6 @@ class SourceLinker {
                 'id' => $record->getId(),
             ));
         }
-        return null;
     }
 
     /**
@@ -108,16 +105,17 @@ class SourceLinker {
      *
      * @param string $data
      *
-     * @return string|null
+     * @return null|string
      */
     public function jackson($data) {
         if ($this->checker->hasRole('ROLE_USER')) {
             $repo = $this->em->getRepository(Jackson::class);
-            $record = $repo->findOneBy(array('jbid' => $data,));
+            $record = $repo->findOneBy(array('jbid' => $data));
             if ($record) {
-                return $this->generator->generate('resource_jackson_show', array('id' => $record->getId(),));
+                return $this->generator->generate('resource_jackson_show', array('id' => $record->getId()));
             }
         }
+
         return "https://jacksonbibliography.library.utoronto.ca/search/details/{$data}";
     }
 
@@ -126,11 +124,11 @@ class SourceLinker {
      *
      * @param string $data
      *
-     * @return string|null
+     * @return null|string
      */
     public function en($data) {
-        if (!$this->checker->hasRole('ROLE_USER')) {
-            return null;
+        if ( ! $this->checker->hasRole('ROLE_USER')) {
+            return;
         }
         $repo = $this->em->getRepository(En::class);
         $record = $repo->findOneBy(array(
@@ -141,7 +139,6 @@ class SourceLinker {
                 'id' => $record->getId(),
             ));
         }
-        return null;
     }
 
     /**
@@ -149,11 +146,11 @@ class SourceLinker {
      *
      * @param string $data
      *
-     * @return string|null
+     * @return null|string
      */
     public function osborne($data) {
-        if (!$this->checker->hasRole('ROLE_USER')) {
-            return null;
+        if ( ! $this->checker->hasRole('ROLE_USER')) {
+            return;
         }
         $repo = $this->em->getRepository(OsborneMarc::class);
         $record = $repo->findOneBy(array(
@@ -165,7 +162,6 @@ class SourceLinker {
                 'id' => $record->getTitleId(),
             ));
         }
-        return null;
     }
 
     /**
@@ -177,7 +173,8 @@ class SourceLinker {
      */
     public function ecco($data) {
         // No role checking for this one.
-        $id = substr_replace($data, "0", 2, 0);
+        $id = substr_replace($data, '0', 2, 0);
+
         return "http://link.galegroup.com/apps/doc/{$id}/ECCO?sid=WomenPrintHistProject";
     }
 
@@ -187,29 +184,28 @@ class SourceLinker {
      * @param Source $source
      * @param string $data
      *
-     * @return string|null
+     * @return null|string
      */
     public function url(Source $source, $data) {
-        if (preg_match("/https?:/", $data)) {
+        if (preg_match('/https?:/', $data)) {
             return $data;
         }
         switch ($source->getName()) {
-            case "ESTC":
+            case 'ESTC':
                 return $this->estc($data);
-            case "Orlando":
+            case 'Orlando':
                 return $this->orlando($data);
-            case "Jackson Bibliography":
+            case 'Jackson Bibliography':
                 return $this->jackson($data);
-            case "The English Novel 1770-1829":
-            case "The English Novel 1830-1836":
+            case 'The English Novel 1770-1829':
+            case 'The English Novel 1830-1836':
                 return $this->en($data);
             case "Osborne Collection of Early Children's Books":
                 return $this->osborne($data);
             case 'ECCO':
                 return $this->ecco($data);
             default:
-                return null;
+                return;
         }
     }
-
 }

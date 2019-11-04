@@ -10,23 +10,15 @@ use AppBundle\Entity\EstcMarc;
 use AppBundle\Entity\Person;
 use AppBundle\Entity\Title;
 use AppBundle\Repository\EstcMarcRepository;
-use AppBundle\Repository\PersonRepository;
 use AppBundle\Repository\TitleRepository;
 use AppBundle\Repository\TitleSourceRepository;
 use Nines\UtilBundle\Tests\Util\BaseTestCase;
-use PHPUnit\Framework\TestCase;
 
 class EstcMarcImporterTest extends BaseTestCase {
-
     /**
      * @var EstcMarcImporter
      */
     private $importer;
-
-    protected function setUp() : void {
-        parent::setUp();
-        $this->importer = $this->getContainer()->get(EstcMarcImporter::class);
-    }
 
     protected function getFixtures() {
         return array(
@@ -74,6 +66,10 @@ class EstcMarcImporterTest extends BaseTestCase {
 
     /**
      * @dataProvider getDatesData
+     *
+     * @param mixed $expectedDob
+     * @param mixed $expectedDod
+     * @param mixed $data
      */
     public function testGetDates($expectedDob, $expectedDod, $data) {
         $f2 = new EstcMarc();
@@ -85,32 +81,32 @@ class EstcMarcImporterTest extends BaseTestCase {
 
     public function getDatesData() {
         return array(
-            ['1751', '1801', '1751-1801'],
-            ['1751', '1801', '1751-1801.'],
-            ['1751', '1801', '1751-1801,'],
-            [null, null, null],
+            array('1751', '1801', '1751-1801'),
+            array('1751', '1801', '1751-1801.'),
+            array('1751', '1801', '1751-1801,'),
+            array(null, null, null),
 
             // this is actual data. sigh.
-            ['1698', '1709', 'active 1698-1709.'],
-            ['1468', '1522', '1468?-1522.'],
-            [null, '1714', '-1714]'],
-            [null, '1147', '-1147?.'],
-            [null, 1716, '-1716.'],
-            ['1770', '1820', '1770?-1820?.'],
-            ['1770', null, '1770?-.'],
-            [null, '1520', '-1520 or 1521.'],
-            [null, '1783', '-1783 November 17.'],
-            [null, null, '-approximately 1676.'],
-            ['1752', '1820', '. 1752-1820.'],
-            ['1763', null, '.b. 1763.'],
-            [null, null, '100 B.C.-44 B.C.'],
-            ['1142', '1165', '1141 or 1142-1165.'],
-            [null, null, '121-180.'],
-            ['1388', '', '1388?.-'],
-            ['1580', '1653', '1580-1653)]'],
-            ['1590', null, '1590-approximately 1645.'],
-            ['1603', null, '1602 or 1603-'],
-            ['1605', null, '1605-'],
+            array('1698', '1709', 'active 1698-1709.'),
+            array('1468', '1522', '1468?-1522.'),
+            array(null, '1714', '-1714]'),
+            array(null, '1147', '-1147?.'),
+            array(null, 1716, '-1716.'),
+            array('1770', '1820', '1770?-1820?.'),
+            array('1770', null, '1770?-.'),
+            array(null, '1520', '-1520 or 1521.'),
+            array(null, '1783', '-1783 November 17.'),
+            array(null, null, '-approximately 1676.'),
+            array('1752', '1820', '. 1752-1820.'),
+            array('1763', null, '.b. 1763.'),
+            array(null, null, '100 B.C.-44 B.C.'),
+            array('1142', '1165', '1141 or 1142-1165.'),
+            array(null, null, '121-180.'),
+            array('1388', '', '1388?.-'),
+            array('1580', '1653', '1580-1653)]'),
+            array('1590', null, '1590-approximately 1645.'),
+            array('1603', null, '1602 or 1603-'),
+            array('1605', null, '1605-'),
         );
     }
 
@@ -187,6 +183,9 @@ class EstcMarcImporterTest extends BaseTestCase {
 
     /**
      * @dataProvider guessFormatData
+     *
+     * @param mixed $name
+     * @param mixed $data
      */
     public function testGuessFormat($name, $data) {
         $f1 = new EstcMarc();
@@ -198,16 +197,20 @@ class EstcMarcImporterTest extends BaseTestCase {
 
     public function guessFormatData() {
         return array(
-            ['octavo', '8vo'],
+            array('octavo', '8vo'),
 
             // real data. again.
-            ['octavo', '16 cm. (8vo)'],
-            ['quarto', '(4to and 8vo)'],
+            array('octavo', '16 cm. (8vo)'),
+            array('quarto', '(4to and 8vo)'),
         );
     }
 
     /**
      * @dataProvider guessDimensionsData
+     *
+     * @param mixed $width
+     * @param mixed $height
+     * @param mixed $data
      */
     public function testGuessDimensions($width, $height, $data) {
         $f1 = new EstcMarc();
@@ -219,12 +222,17 @@ class EstcMarcImporterTest extends BaseTestCase {
 
     public function guessDimensionsData() {
         return array(
-            ['10', '15', '10 x 15 cm'],
-            ['10', '15', '10cm x 15 cm'],
-            ['10', '15', '10x15cm'],
-            ['10', '15', '10cmx15 cm'],
-            ['10', null, '10 cm.'],
+            array('10', '15', '10 x 15 cm'),
+            array('10', '15', '10cm x 15 cm'),
+            array('10', '15', '10x15cm'),
+            array('10', '15', '10cmx15 cm'),
+            array('10', null, '10 cm.'),
         );
+    }
+
+    protected function setUp() : void {
+        parent::setUp();
+        $this->importer = $this->getContainer()->get(EstcMarcImporter::class);
     }
 
 //    public function testImport() {

@@ -11,16 +11,20 @@ use Doctrine\Common\Persistence\ObjectManager;
 /**
  * Load some test Osborne MARC data.
  */
-class LoadOsborneMarc extends Fixture implements DependentFixtureInterface, FixtureGroupInterface
-{
+class LoadOsborneMarc extends Fixture implements DependentFixtureInterface, FixtureGroupInterface {
+    /**
+     * {@inheritdoc}
+     */
+    public static function getGroups() : array {
+        return array('test');
+    }
 
     /**
      * {@inheritdoc}
      *
      * @param ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
-    {
+    public function load(ObjectManager $manager) {
         for ($n = 0; $n < 4; $n++) {
             $ldr = new OsborneMarc();
             $ldr->setTitleId(1 + $n);
@@ -47,9 +51,9 @@ class LoadOsborneMarc extends Fixture implements DependentFixtureInterface, Fixt
                     $fixture->setField(100 + $j);
                     $fixture->setSubfield('abcdefghijklmnop'[$i]);
                     $fixture->setTitleId(1 + $n);
-                    $fixture->setFieldData("Osborne Field Data $n $j $i");
+                    $fixture->setFieldData("Osborne Field Data {$n} {$j} {$i}");
                     $manager->persist($fixture);
-                    $this->setReference("osborne.$n.$j.$i", $fixture);
+                    $this->setReference("osborne.{$n}.{$j}.{$i}", $fixture);
                 }
             }
         }
@@ -59,19 +63,10 @@ class LoadOsborneMarc extends Fixture implements DependentFixtureInterface, Fixt
     /**
      * {@inheritdoc}
      */
-    public function getDependencies()
-    {
-        return [
+    public function getDependencies() {
+        return array(
             LoadMarcTagStructure::class,
             LoadMarcSubfieldStructure::class,
-        ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public static function getGroups(): array
-    {
-        return array('test');
+        );
     }
 }

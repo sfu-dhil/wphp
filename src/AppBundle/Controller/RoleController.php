@@ -6,21 +6,20 @@ use AppBundle\Entity\Role;
 use AppBundle\Form\RoleType;
 use AppBundle\Repository\RoleRepository;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Role controller.
  *
  * @Route("/role")
  */
-class RoleController extends Controller  implements PaginatorAwareInterface {
-
+class RoleController extends Controller implements PaginatorAwareInterface {
     use PaginatorTrait;
 
     /**
@@ -28,6 +27,7 @@ class RoleController extends Controller  implements PaginatorAwareInterface {
      *
      * @Route("/", name="role_index", methods={"GET"})
      * @Template()
+     *
      * @param Request $request
      * @param RoleRepository $repo
      *
@@ -50,32 +50,36 @@ class RoleController extends Controller  implements PaginatorAwareInterface {
      * @param RoleRepository $repo
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
      * @Route("/typeahead", name="role_typeahead", methods={"GET"})
-
+     *
+     *
      * @return JsonResponse
      */
     public function typeaheadAction(Request $request, RoleRepository $repo) {
         $q = $request->query->get('q');
-        if( ! $q) {
-            return new JsonResponse([]);
+        if ( ! $q) {
+            return new JsonResponse(array());
         }
-        $data = [];
-        foreach($repo->typeaheadQuery($q) as $result) {
-            $data[] = [
+        $data = array();
+        foreach ($repo->typeaheadQuery($q) as $result) {
+            $data[] = array(
                 'id' => $result->getId(),
                 'text' => $result->getName(),
-            ];
+            );
         }
 
         return new JsonResponse($data);
     }
+
     /**
      * Creates a new Role entity.
      *
      * @Route("/new", name="role_new", methods={"GET","POST"})
-
+     *
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
      * @Template()
+     *
      * @param Request $request
+     *
      * @return array
      */
     public function newAction(Request $request) {
@@ -89,6 +93,7 @@ class RoleController extends Controller  implements PaginatorAwareInterface {
             $em->flush();
 
             $this->addFlash('success', 'The new role was created.');
+
             return $this->redirectToRoute('role_show', array('id' => $role->getId()));
         }
 
@@ -103,6 +108,7 @@ class RoleController extends Controller  implements PaginatorAwareInterface {
      *
      * @Route("/{id}", name="role_show", methods={"GET"})
      * @Template()
+     *
      * @param Request $request
      * @param Role $role
      *
@@ -127,6 +133,7 @@ class RoleController extends Controller  implements PaginatorAwareInterface {
      * @Route("/{id}/edit", name="role_edit", methods={"GET","POST"})
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
      * @Template()
+     *
      * @param Request $request
      * @param Role $role
      *
@@ -140,6 +147,7 @@ class RoleController extends Controller  implements PaginatorAwareInterface {
             $em = $this->getDoctrine()->getManager();
             $em->flush();
             $this->addFlash('success', 'The role has been updated.');
+
             return $this->redirectToRoute('role_show', array('id' => $role->getId()));
         }
 
@@ -154,6 +162,7 @@ class RoleController extends Controller  implements PaginatorAwareInterface {
      *
      * @Route("/{id}/delete", name="role_delete", methods={"GET"})
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
+     *
      * @param Request $request
      * @param Role $role
      *
@@ -167,5 +176,4 @@ class RoleController extends Controller  implements PaginatorAwareInterface {
 
         return $this->redirectToRoute('role_index');
     }
-
 }

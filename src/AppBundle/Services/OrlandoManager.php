@@ -6,7 +6,6 @@ namespace AppBundle\Services;
  * Manage Orlando records.
  */
 class OrlandoManager {
-
     const DELIM = ' || ';
 
     /**
@@ -19,21 +18,21 @@ class OrlandoManager {
      */
     public function getField($data, $name = 'standard') {
         $name = strtolower($name);
-        $fields = [];
-        if (!$data) {
+        $fields = array();
+        if ( ! $data) {
             return $fields;
         }
         $records = explode(' %%% ', $data);
         foreach ($records as $record) {
             $rows = explode(self::DELIM, $record);
             foreach ($rows as $row) {
-                list($key, $value) = explode(" = ", $row);
+                list($key, $value) = explode(' = ', $row);
                 if (strtolower($key) === $name) {
                     $fields[] = $value;
                 }
             }
         }
+
         return $fields;
     }
-
 }

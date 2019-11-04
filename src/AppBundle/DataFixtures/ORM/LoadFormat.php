@@ -10,31 +10,35 @@ use Doctrine\Common\Persistence\ObjectManager;
 /**
  * Load some test format data.
  */
-class LoadFormat extends Fixture implements FixtureGroupInterface
-{
-
+class LoadFormat extends Fixture implements FixtureGroupInterface {
     const DATA = array(
-        ["folio","fo"],
-        ["quarto","4to"],
-        ["sexto","6to"],
-        ["octavo","8vo"],
-        ["duodecimo","12mo"],
-        ["sextodecimo","16mo"],
-        ["octodecimo","18mo"],
-        ["vicesimo-quarto","24mo"],
-        ["trigesimo-secundo","32mo"],
-        ["quadragesimo-octavo","48mo"],
-        ["sexagesimo-quarto","64mo"],
-        ["broadside","bs"],
+        array('folio', 'fo'),
+        array('quarto', '4to'),
+        array('sexto', '6to'),
+        array('octavo', '8vo'),
+        array('duodecimo', '12mo'),
+        array('sextodecimo', '16mo'),
+        array('octodecimo', '18mo'),
+        array('vicesimo-quarto', '24mo'),
+        array('trigesimo-secundo', '32mo'),
+        array('quadragesimo-octavo', '48mo'),
+        array('sexagesimo-quarto', '64mo'),
+        array('broadside', 'bs'),
     );
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
+     */
+    public static function getGroups() : array {
+        return array('test');
+    }
+
+    /**
+     * {@inheritdoc}
      *
      * @param ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
-    {
+    public function load(ObjectManager $manager) {
         for ($i = 0; $i < 4; $i++) {
             $fixture = new Format();
             $fixture->setName('Name ' . $i);
@@ -52,13 +56,5 @@ class LoadFormat extends Fixture implements FixtureGroupInterface
         }
 
         $manager->flush();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public static function getGroups(): array
-    {
-        return array('test');
     }
 }

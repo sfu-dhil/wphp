@@ -9,13 +9,12 @@ use Nines\UserBundle\DataFixtures\ORM\LoadUser;
 use Nines\UtilBundle\Tests\Util\BaseTestCase;
 
 class FirmroleControllerTest extends BaseTestCase {
-
     protected function getFixtures() {
-        return [
+        return array(
             LoadUser::class,
             LoadFirmrole::class,
             LoadTitleFirmrole::class,
-        ];
+        );
     }
 
     public function testAnonIndex() {
@@ -26,20 +25,20 @@ class FirmroleControllerTest extends BaseTestCase {
     }
 
     public function testUserIndex() {
-        $client = $this->makeClient([
+        $client = $this->makeClient(array(
             'username' => 'user@example.com',
             'password' => 'secret',
-        ]);
+        ));
         $crawler = $client->request('GET', '/firmrole/');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertEquals(0, $crawler->selectLink('New')->count());
     }
 
     public function testAdminIndex() {
-        $client = $this->makeClient([
+        $client = $this->makeClient(array(
             'username' => 'admin@example.com',
             'password' => 'supersecret',
-        ]);
+        ));
         $crawler = $client->request('GET', '/firmrole/');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertEquals(1, $crawler->selectLink('New')->count());
@@ -54,20 +53,20 @@ class FirmroleControllerTest extends BaseTestCase {
     }
 
     public function testUserTypeahead() {
-        $client = $this->makeClient([
+        $client = $this->makeClient(array(
             'username' => 'user@example.com',
             'password' => 'secret',
-        ]);
+        ));
         $crawler = $client->request('GET', '/firmrole/typeahead?q=name');
         $this->assertEquals(403, $client->getResponse()->getStatusCode());
         $this->assertStringContainsStringIgnoringCase('Access denied.', $client->getResponse()->getContent());
     }
 
     public function testAdminTypeahead() {
-        $client = $this->makeClient([
+        $client = $this->makeClient(array(
             'username' => 'admin@example.com',
             'password' => 'supersecret',
-        ]);
+        ));
         $crawler = $client->request('GET', '/firmrole/typeahead?q=name');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertEquals('application/json', $client->getResponse()->headers->get('Content-Type'));
@@ -84,10 +83,10 @@ class FirmroleControllerTest extends BaseTestCase {
     }
 
     public function testUserShow() {
-        $client = $this->makeClient([
+        $client = $this->makeClient(array(
             'username' => 'user@example.com',
             'password' => 'secret',
-        ]);
+        ));
         $crawler = $client->request('GET', '/firmrole/1');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertEquals(0, $crawler->selectLink('Edit')->count());
@@ -95,10 +94,10 @@ class FirmroleControllerTest extends BaseTestCase {
     }
 
     public function testAdminShow() {
-        $client = $this->makeClient([
+        $client = $this->makeClient(array(
             'username' => 'admin@example.com',
             'password' => 'supersecret',
-        ]);
+        ));
         $crawler = $client->request('GET', '/firmrole/1');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertEquals(1, $crawler->selectLink('Edit')->count());
@@ -113,25 +112,25 @@ class FirmroleControllerTest extends BaseTestCase {
     }
 
     public function testUserEdit() {
-        $client = $this->makeClient([
+        $client = $this->makeClient(array(
             'username' => 'user@example.com',
             'password' => 'secret',
-        ]);
+        ));
         $crawler = $client->request('GET', '/firmrole/1/edit');
         $this->assertEquals(403, $client->getResponse()->getStatusCode());
     }
 
     public function testAdminEdit() {
-        $client = $this->makeClient([
+        $client = $this->makeClient(array(
             'username' => 'admin@example.com',
             'password' => 'supersecret',
-        ]);
+        ));
         $formCrawler = $client->request('GET', '/firmrole/1/edit');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
-        $form = $formCrawler->selectButton('Update')->form([
-            'firmrole[name]' => 'Cheese.'
-        ]);
+        $form = $formCrawler->selectButton('Update')->form(array(
+            'firmrole[name]' => 'Cheese.',
+        ));
 
         $client->submit($form);
         $this->assertTrue($client->getResponse()->isRedirect('/firmrole/1'));
@@ -148,25 +147,25 @@ class FirmroleControllerTest extends BaseTestCase {
     }
 
     public function testUserNew() {
-        $client = $this->makeClient([
+        $client = $this->makeClient(array(
             'username' => 'user@example.com',
             'password' => 'secret',
-        ]);
+        ));
         $crawler = $client->request('GET', '/firmrole/new');
         $this->assertEquals(403, $client->getResponse()->getStatusCode());
     }
 
     public function testAdminNew() {
-        $client = $this->makeClient([
+        $client = $this->makeClient(array(
             'username' => 'admin@example.com',
             'password' => 'supersecret',
-        ]);
+        ));
         $formCrawler = $client->request('GET', '/firmrole/new');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
-        $form = $formCrawler->selectButton('Create')->form([
-            'firmrole[name]' => 'Cheese.'
-        ]);
+        $form = $formCrawler->selectButton('Create')->form(array(
+            'firmrole[name]' => 'Cheese.',
+        ));
 
         $client->submit($form);
         $this->assertTrue($client->getResponse()->isRedirect());
@@ -183,10 +182,10 @@ class FirmroleControllerTest extends BaseTestCase {
     }
 
     public function testUserDelete() {
-        $client = $this->makeClient([
+        $client = $this->makeClient(array(
             'username' => 'user@example.com',
             'password' => 'secret',
-        ]);
+        ));
         $crawler = $client->request('GET', '/firmrole/1/delete');
         $this->assertEquals(403, $client->getResponse()->getStatusCode());
     }
@@ -195,10 +194,10 @@ class FirmroleControllerTest extends BaseTestCase {
         self::bootKernel();
         $em = static::$kernel->getContainer()->get('doctrine')->getManager();
         $preCount = count($em->getRepository(Firmrole::class)->findAll());
-        $client = $this->makeClient([
+        $client = $this->makeClient(array(
             'username' => 'admin@example.com',
             'password' => 'supersecret',
-        ]);
+        ));
         $crawler = $client->request('GET', '/firmrole/1/delete');
         $this->assertEquals(302, $client->getResponse()->getStatusCode());
         $this->assertTrue($client->getResponse()->isRedirect());
@@ -209,5 +208,4 @@ class FirmroleControllerTest extends BaseTestCase {
         $postCount = count($em->getRepository(Firmrole::class)->findAll());
         $this->assertEquals($preCount - 1, $postCount);
     }
-
 }

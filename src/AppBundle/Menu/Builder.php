@@ -15,8 +15,7 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 /**
  * Menu builder for the navigation and search menus.
  */
-class Builder implements ContainerAwareInterface
-{
+class Builder implements ContainerAwareInterface {
     use ContainerAwareTrait;
 
     // U+25BE, black down-pointing small triangle.
@@ -58,8 +57,7 @@ class Builder implements ContainerAwareInterface
      * @param AuthorizationCheckerInterface $authChecker
      * @param TokenStorageInterface $tokenStorage
      */
-    public function __construct($spotlightMenuItems, EntityManagerInterface $em, FactoryInterface $factory, AuthorizationCheckerInterface $authChecker, TokenStorageInterface $tokenStorage)
-    {
+    public function __construct($spotlightMenuItems, EntityManagerInterface $em, FactoryInterface $factory, AuthorizationCheckerInterface $authChecker, TokenStorageInterface $tokenStorage) {
         $this->spotlightMenuItems = $spotlightMenuItems;
         $this->em = $em;
         $this->factory = $factory;
@@ -74,22 +72,35 @@ class Builder implements ContainerAwareInterface
      *
      * @return bool
      */
-    private function hasRole($role)
-    {
-        if (!$this->tokenStorage->getToken()) {
+    private function hasRole($role) {
+        if ( ! $this->tokenStorage->getToken()) {
             return false;
         }
+
         return $this->authChecker->isGranted($role);
+    }
+
+    /**
+     * Get the currently logged in user.
+     *
+     * @return null|object|string
+     */
+    private function getUser() {
+        if ( ! $this->hasRole('ROLE_USER')) {
+            return;
+        }
+
+        return $this->tokenStorage->getToken()->getUser();
     }
 
     /**
      * Build the navigation menu and return it.
      *
      * @param array $options
+     *
      * @return ItemInterface
      */
-    public function mainMenu(array $options)
-    {
+    public function mainMenu(array $options) {
         $menu = $this->factory->createItem('root');
         $menu->setChildrenAttributes(array(
             'class' => 'nav navbar-nav',
@@ -165,10 +176,10 @@ class Builder implements ContainerAwareInterface
      * Build the search menu and return it.
      *
      * @param array $options
+     *
      * @return ItemInterface
      */
-    public function searchMenu(array $options)
-    {
+    public function searchMenu(array $options) {
         $menu = $this->factory->createItem('root');
         $menu->setChildrenAttributes(array(
             'class' => 'nav navbar-nav',
@@ -209,6 +220,7 @@ class Builder implements ContainerAwareInterface
                 'route' => 'report_titles_check',
             ));
         }
+
         return $menu;
     }
 
@@ -219,8 +231,7 @@ class Builder implements ContainerAwareInterface
      *
      * @return ItemInterface
      */
-    public function spotlightMenu(array $options)
-    {
+    public function spotlightMenu(array $options) {
         $menu = $this->factory->createItem('root');
         $menu->setChildrenAttributes(array(
             'class' => 'nav navbar-nav',
@@ -240,40 +251,30 @@ class Builder implements ContainerAwareInterface
             $category = $repo->findOneBy(array(
                 'name' => $item,
             ));
-            if (!$category) {
+            if ( ! $category) {
                 continue;
             }
             $spotlight->addChild($category->getLabel(), array(
                 'route' => 'post_category_show',
                 'routeParameters' => array(
                     'id' => $category->getId(),
-                )
+                ),
             ));
         }
-        return $menu;
-    }
 
-    /**
-     * Get the currently logged in user.
-     *
-     * @return object|string|null
-     */
-    private function getUser() {
-        if( ! $this->hasRole('ROLE_USER')) {
-            return null;
-        }
-        return $this->tokenStorage->getToken()->getUser();
+        return $menu;
     }
 
     /**
      * Build a user menu.
      *
      * @param array $options
+     *
      * @return ItemInterface
      */
     public function userNavMenu(array $options) {
         $name = 'Login';
-        if(isset($options['name'])) {
+        if (isset($options['name'])) {
             $name = $options['name'];
         }
         $menu = $this->factory->createItem('root');
@@ -282,10 +283,11 @@ class Builder implements ContainerAwareInterface
         ));
         $menu->setAttribute('dropdown', true);
         $user = $this->getUser();
-        if (!$this->hasRole('ROLE_USER')) {
+        if ( ! $this->hasRole('ROLE_USER')) {
             $menu->addChild($name, array(
-                'route' => 'fos_user_security_login'
+                'route' => 'fos_user_security_login',
             ));
+
             return $menu;
         }
 
@@ -339,11 +341,11 @@ class Builder implements ContainerAwareInterface
         return $menu;
     }
 
-
     /**
      * Build a menu for blog posts.
      *
      * @param array $options
+     *
      * @return ItemInterface
      */
     public function postNavMenu(array $options) {
@@ -354,13 +356,13 @@ class Builder implements ContainerAwareInterface
         $menu->setAttribute('dropdown', true);
 
         $title = 'Announcements';
-        if(isset($options['title'])) {
+        if (isset($options['title'])) {
             $title = $options['title'];
         }
 
         $menu->addChild('announcements', array(
             'uri' => '#',
-            'label' => $title . self::CARET
+            'label' => $title . self::CARET,
         ));
         $menu['announcements']->setAttribute('dropdown', true);
         $menu['announcements']->setLinkAttribute('class', 'dropdown-toggle');
@@ -377,18 +379,19 @@ class Builder implements ContainerAwareInterface
             ->where('pc.label NOT IN (:spotlightCategories)')
             ->orderBy('p.created', 'DESC')
             ->setMaxResults(10)
-            ->setParameter(':spotlightCategories', $this->spotlightMenuItems);
+            ->setParameter(':spotlightCategories', $this->spotlightMenuItems)
+        ;
 
         $posts = $qb->getQuery()->execute();
         foreach ($posts as $post) {
-            if(in_array($post->getCategory()->getName(), $this->spotlightMenuItems)) {
+            if (in_array($post->getCategory()->getName(), $this->spotlightMenuItems)) {
                 continue;
             }
             $menu['announcements']->addChild($post->getTitle(), array(
                 'route' => 'post_show',
                 'routeParameters' => array(
                     'id' => $post->getId(),
-                )
+                ),
             ));
         }
         $menu['announcements']->addChild('divider', array(
@@ -424,5 +427,4 @@ class Builder implements ContainerAwareInterface
 
         return $menu;
     }
-
 }

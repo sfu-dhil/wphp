@@ -16,7 +16,6 @@ use Symfony\Component\Form\FormBuilderInterface;
  * injected as a dependency.
  */
 class FirmFilterType extends AbstractType {
-
     /**
      * @var EntityManager
      */
@@ -36,7 +35,6 @@ class FirmFilterType extends AbstractType {
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
-
         $firmRoleRepo = $this->em->getRepository(Firmrole::class);
         $roles = $firmRoleRepo->findAll(array(
             'name' => 'ASC',
@@ -53,7 +51,7 @@ class FirmFilterType extends AbstractType {
                 'Unknown' => 'U',
             ),
             'attr' => array(
-                'help_block' => 'Leave this field blank to include all genders'
+                'help_block' => 'Leave this field blank to include all genders',
             ),
             'required' => false,
             'expanded' => true,
@@ -62,10 +60,10 @@ class FirmFilterType extends AbstractType {
 
         $builder->add('firm_role', ChoiceType::class, array(
             'choices' => $roles,
-            'choice_label' => function($value, $key, $index) {
+            'choice_label' => function ($value, $key, $index) {
                 return $value->getName();
             },
-            'choice_value' => function($value) {
+            'choice_value' => function ($value) {
                 if ($value) {
                     return $value->getId();
                 }
@@ -80,5 +78,4 @@ class FirmFilterType extends AbstractType {
             'required' => false,
         ));
     }
-
 }

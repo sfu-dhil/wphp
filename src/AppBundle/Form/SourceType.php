@@ -2,9 +2,9 @@
 
 namespace AppBundle\Form;
 
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -12,7 +12,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * Form definition for the source class.
  */
 class SourceType extends AbstractType {
-
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
@@ -23,6 +22,13 @@ class SourceType extends AbstractType {
             'required' => false,
             'attr' => array(
                 'help_block' => '',
+            ),
+        ));
+        $builder->add('onlineSource', UrlType::class, array(
+            'label' => 'Online Source',
+            'required' => false,
+            'attr' => array(
+                'help_block' => 'Optional. Enter the URL for the source.',
             ),
         ));
         $builder->add('description', TextareaType::class, array(
@@ -48,8 +54,7 @@ class SourceType extends AbstractType {
      */
     public function configureOptions(OptionsResolver $resolver) {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Source'
+            'data_class' => 'AppBundle\Entity\Source',
         ));
     }
-
 }

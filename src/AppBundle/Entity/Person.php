@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Person
+ * Person.
  *
  * @ORM\Table(name="person",
  *  indexes={
@@ -19,9 +19,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * })
  * @ORM\Entity(repositoryClass="AppBundle\Repository\PersonRepository")
  */
-class Person
-{
-
+class Person {
     const MALE = 'M';
 
     const FEMALE = 'F';
@@ -29,7 +27,7 @@ class Person
     const UNKNOWN = 'U';
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
@@ -104,7 +102,7 @@ class Person
     private $imageUrl;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="finalcheck", type="boolean", nullable=false)
      */
@@ -145,16 +143,25 @@ class Person
     }
 
     /**
-     * Get id
+     * Get a string representation of the person, which is lastname, firstname.
      *
-     * @return integer
+     * @return string
+     */
+    public function __toString() {
+        return implode(', ', array_filter(array($this->lastName, $this->firstName)));
+    }
+
+    /**
+     * Get id.
+     *
+     * @return int
      */
     public function getId() {
         return $this->id;
     }
 
     /**
-     * Set lastName
+     * Set lastName.
      *
      * @param string $lastName
      *
@@ -167,7 +174,7 @@ class Person
     }
 
     /**
-     * Get lastName
+     * Get lastName.
      *
      * @return string
      */
@@ -176,7 +183,7 @@ class Person
     }
 
     /**
-     * Set firstName
+     * Set firstName.
      *
      * @param string $firstName
      *
@@ -189,7 +196,7 @@ class Person
     }
 
     /**
-     * Get firstName
+     * Get firstName.
      *
      * @return string
      */
@@ -198,7 +205,7 @@ class Person
     }
 
     /**
-     * Set title
+     * Set title.
      *
      * @param string $title
      *
@@ -211,7 +218,7 @@ class Person
     }
 
     /**
-     * Get title
+     * Get title.
      *
      * @return string
      */
@@ -220,7 +227,7 @@ class Person
     }
 
     /**
-     * Set gender
+     * Set gender.
      *
      * @param string $gender
      *
@@ -233,7 +240,7 @@ class Person
     }
 
     /**
-     * Get gender
+     * Get gender.
      *
      * @return string
      */
@@ -242,7 +249,7 @@ class Person
     }
 
     /**
-     * Set dob
+     * Set dob.
      *
      * @param string $dob
      *
@@ -255,19 +262,20 @@ class Person
     }
 
     /**
-     * Get dob
+     * Get dob.
      *
      * @return string
      */
     public function getDob() {
-        if ($this->dob === '0000-00-00') {
-            return null;
+        if ('0000-00-00' === $this->dob) {
+            return;
         }
+
         return $this->dob;
     }
 
     /**
-     * Set dod
+     * Set dod.
      *
      * @param string $dod
      *
@@ -280,21 +288,22 @@ class Person
     }
 
     /**
-     * Get dod
+     * Get dod.
      *
      * @return string
      */
     public function getDod() {
-        if ($this->dod === '0000-00-00') {
-            return null;
+        if ('0000-00-00' === $this->dod) {
+            return;
         }
+
         return $this->dod;
     }
 
     /**
-     * Set finalcheck
+     * Set finalcheck.
      *
-     * @param boolean $finalcheck
+     * @param bool $finalcheck
      *
      * @return Person
      */
@@ -305,16 +314,16 @@ class Person
     }
 
     /**
-     * Get finalcheck
+     * Get finalcheck.
      *
-     * @return boolean
+     * @return bool
      */
     public function getFinalcheck() {
         return $this->finalcheck;
     }
 
     /**
-     * Set cityOfBirth
+     * Set cityOfBirth.
      *
      * @param Geonames $cityOfBirth
      *
@@ -327,7 +336,7 @@ class Person
     }
 
     /**
-     * Get cityOfBirth
+     * Get cityOfBirth.
      *
      * @return Geonames
      */
@@ -336,7 +345,7 @@ class Person
     }
 
     /**
-     * Set cityOfDeath
+     * Set cityOfDeath.
      *
      * @param Geonames $cityOfDeath
      *
@@ -349,7 +358,7 @@ class Person
     }
 
     /**
-     * Get cityOfDeath
+     * Get cityOfDeath.
      *
      * @return Geonames
      */
@@ -358,7 +367,7 @@ class Person
     }
 
     /**
-     * Add titleRole
+     * Add titleRole.
      *
      * @param TitleRole $titleRole
      *
@@ -371,7 +380,7 @@ class Person
     }
 
     /**
-     * Remove titleRole
+     * Remove titleRole.
      *
      * @param TitleRole $titleRole
      */
@@ -380,7 +389,7 @@ class Person
     }
 
     /**
-     * Get titleRoles
+     * Get titleRoles.
      *
      * @return Collection
      */
@@ -389,23 +398,13 @@ class Person
     }
 
     /**
-     * Get a string representation of the person, which is lastname, firstname.
-     *
-     * @return string
-     */
-    public function __toString() {
-        return implode(', ', array_filter(array($this->lastName, $this->firstName)));
-    }
-
-    /**
      * Set viafUrl.
      *
-     * @param string|null $viafUrl
+     * @param null|string $viafUrl
      *
      * @return Person
      */
-    public function setViafUrl($viafUrl = null)
-    {
+    public function setViafUrl($viafUrl = null) {
         $this->viafUrl = $viafUrl;
 
         return $this;
@@ -414,22 +413,20 @@ class Person
     /**
      * Get viafUrl.
      *
-     * @return string|null
+     * @return null|string
      */
-    public function getViafUrl()
-    {
+    public function getViafUrl() {
         return $this->viafUrl;
     }
 
     /**
      * Set wikipediaUrl.
      *
-     * @param string|null $wikipediaUrl
+     * @param null|string $wikipediaUrl
      *
      * @return Person
      */
-    public function setWikipediaUrl($wikipediaUrl = null)
-    {
+    public function setWikipediaUrl($wikipediaUrl = null) {
         $this->wikipediaUrl = $wikipediaUrl;
 
         return $this;
@@ -438,22 +435,20 @@ class Person
     /**
      * Get wikipediaUrl.
      *
-     * @return string|null
+     * @return null|string
      */
-    public function getWikipediaUrl()
-    {
+    public function getWikipediaUrl() {
         return $this->wikipediaUrl;
     }
 
     /**
      * Set imageUrl.
      *
-     * @param string|null $imageUrl
+     * @param null|string $imageUrl
      *
      * @return Person
      */
-    public function setImageUrl($imageUrl = null)
-    {
+    public function setImageUrl($imageUrl = null) {
         $this->imageUrl = $imageUrl;
 
         return $this;
@@ -462,11 +457,9 @@ class Person
     /**
      * Get imageUrl.
      *
-     * @return string|null
+     * @return null|string
      */
-    public function getImageUrl()
-    {
+    public function getImageUrl() {
         return $this->imageUrl;
     }
-
 }
