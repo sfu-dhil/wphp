@@ -28,7 +28,7 @@ class TitleType extends AbstractType {
             'label' => 'Title',
             'required' => false,
             'attr' => array(
-                'help_block' => 'Full title, subtitle, signed author, and edition statement from the title page',
+                'help_block' => 'title.fields.title',
             ),
         ));
         $builder->add('titleRoles', CollectionType::class, array(

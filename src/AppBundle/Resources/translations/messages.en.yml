@@ -1,0 +1,5 @@
+title:
+  fields:
+    id: WPHP database ID of the title
+    title: Title of the book
+    contributors: Names of all women who have contributed to the work and their role in the work’s production

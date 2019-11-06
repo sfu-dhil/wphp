@@ -39,15 +39,15 @@
                 <table class="table table-bordered table-condensed table-hover table-striped">
                     <tbody>
                          <tr>
-                            <th data-toggle="popover" data-content="WPHP database ID of the title">ID</th>
+                            <th data-toggle="popover" data-content="{{ 'title.fields.id'|trans }}">ID</th>
                             <td>{{ title.id }}</td>
                         </tr>
                         <tr>
-                            <th data-toggle="popover"  data-content="Title of the book">Title</th>
+                            <th data-toggle="popover"  data-content="{{ 'title.fields.title'|trans }}">Title</th>
                             <td>{{ title.title }}</td>
                         </tr>
                         <tr>
-                            <th data-toggle="popover"  data-content="Names of all women who have contributed to the work and their role in the work’s production">Contributors</th>
+                            <th data-toggle="popover"  data-content="{{ 'title.fields.contributors'|trans }}">Contributors</th>
                             <td>
                                 {% for tr in title.titleRoles %}
                                     {% set person = tr.person %}
