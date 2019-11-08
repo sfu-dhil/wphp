@@ -116,7 +116,7 @@ class RoleController extends Controller implements PaginatorAwareInterface {
      */
     public function showAction(Request $request, Role $role) {
         $em = $this->getDoctrine()->getManager();
-        $dql = 'SELECT tr FROM AppBundle:TitleRole tr WHERE tr.role = :role';
+        $dql = 'SELECT tr FROM AppBundle:TitleRole tr INNER JOIN tr.person p WHERE tr.role = :role ORDER BY p.lastName, p.firstName';
         $query = $em->createQuery($dql);
         $query->setParameter('role', $role);
         $titleRoles = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);

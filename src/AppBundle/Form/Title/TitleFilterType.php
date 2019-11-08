@@ -69,7 +69,7 @@ class TitleFilterType extends AbstractType {
         ));
 
         $builder->add('pubdate', TextType::class, array(
-            'label' => 'Date of First Publication',
+            'label' => 'Date of Publication',
             'required' => false,
             'attr' => array(
                 'help_block' => 'Enter a year (eg <kbd>1795</kbd>) or range of years (<kbd>1790-1800</kbd>) or a partial range of years (<kbd>*-1800</kbd>)',

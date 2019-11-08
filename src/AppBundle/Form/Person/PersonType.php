@@ -57,6 +57,13 @@ class PersonType extends AbstractType {
                 'help_block' => 'Person’s date of birth as YYYY-MM-DD',
             ),
         ));
+        $builder->add('dod', null, array(
+            'label' => 'Death Date',
+            'required' => false,
+            'attr' => array(
+                'help_block' => 'Person’s date of death as YYYY-MM-DD',
+            ),
+        ));
         $builder->add('cityOfBirth', Select2EntityType::class, array(
             'label' => 'Place of Birth',
             'multiple' => false,
@@ -69,13 +76,6 @@ class PersonType extends AbstractType {
             'language' => 'en',
             'attr' => array(
                 'help_block' => 'Geotagged location of person’s birth',
-            ),
-        ));
-        $builder->add('dod', null, array(
-            'label' => 'Death Date',
-            'required' => false,
-            'attr' => array(
-                'help_block' => 'Person’s date of death as YYYY-MM-DD',
             ),
         ));
         $builder->add('cityOfDeath', Select2EntityType::class, array(
@@ -93,10 +93,10 @@ class PersonType extends AbstractType {
             ),
         ));
         $builder->add('viafUrl', UrlType::class, array(
-            'label' => 'VIAF URL',
+            'label' => 'VIAF URI',
             'required' => false,
             'attr' => array(
-                'help_block' => 'Enter a VIAF URL for this person',
+                'help_block' => 'Enter a VIAF URI for this person',
             ),
         ));
         $builder->add('wikipediaUrl', UrlType::class, array(

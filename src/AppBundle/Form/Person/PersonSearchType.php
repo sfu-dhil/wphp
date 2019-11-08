@@ -107,7 +107,7 @@ class PersonSearchType extends AbstractType {
         ));
 
         $builder->add('viafUrl', TextType::class, array(
-            'label' => 'VIAF Url',
+            'label' => 'VIAF URI',
             'required' => false,
             'attr' => array(
                 'help_block' => 'Enter a VIAF URI to check if we have a corresponding record. Enter <kbd>blank</kbd> to find records which do not have VIAF URIs.',
