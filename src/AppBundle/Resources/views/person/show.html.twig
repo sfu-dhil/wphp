@@ -52,6 +52,10 @@
                 <td>{% if person.dob %}{{ person.dob|replace({'-00': ''}) }}{% endif %}</td>
             </tr>
             <tr>
+                <th data-toggle="popover" data-content="YYYY-MM-DD">Date of Death</th>
+                <td>{% if person.dod %}{{ person.dod|replace({'-00': ''}) }}{% endif %}</td>
+            </tr>
+            <tr>
                 <th data-toggle="popover" data-content="Place of birth as geotagged">Place of Birth</th>
                 <td>
                     {% if person.cityOfBirth %}
@@ -60,10 +64,6 @@
                         </a>
                     {% endif %}
                 </td>
-            </tr>
-            <tr>
-                <th data-toggle="popover" data-content="YYYY-MM-DD">Date of Death</th>
-                <td>{% if person.dod %}{{ person.dod|replace({'-00': ''}) }}{% endif %}</td>
             </tr>
             <tr>
                 <th data-toggle="popover" data-content="Place of death as geotagged">Place of Death</th>
