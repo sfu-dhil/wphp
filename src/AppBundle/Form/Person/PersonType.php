@@ -93,10 +93,10 @@ class PersonType extends AbstractType {
             ),
         ));
         $builder->add('viafUrl', UrlType::class, array(
-            'label' => 'VIAF URL',
+            'label' => 'VIAF URI',
             'required' => false,
             'attr' => array(
-                'help_block' => 'Enter a VIAF URL for this person',
+                'help_block' => 'Enter a VIAF URI for this person',
             ),
         ));
         $builder->add('wikipediaUrl', UrlType::class, array(
