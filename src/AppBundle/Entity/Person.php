@@ -391,10 +391,25 @@ class Person {
     /**
      * Get titleRoles.
      *
-     * @return Collection
+     * @param bool $sort
+     *
+     * @return Collection|TitleRole[]
      */
-    public function getTitleRoles() {
-        return $this->titleRoles;
+    public function getTitleRoles($sort = false) {
+        if ( ! $sort) {
+            return $this->titleRoles;
+        }
+
+        $iterator = $this->titleRoles->getIterator();
+        $iterator->uasort(function (TitleRole $a, TitleRole $b) {
+            $dateCmp = $a->getTitle()->getPubdate() <=> $b->getTitle()->getPubdate();
+            if($dateCmp !== 0) {
+                return $dateCmp;
+            }
+            return strcasecmp($a->getTitle()->getTitle(), $b->getTitle()->getTitle());
+        });
+
+        return new ArrayCollection(iterator_to_array($iterator));
     }
 
     /**

@@ -144,7 +144,7 @@ class PersonController extends Controller implements PaginatorAwareInterface {
      * @return array
      */
     public function exportAction(Request $request, Person $person) {
-        $titleRoles = $person->getTitleRoles();
+        $titleRoles = $person->getTitleRoles(true);
         if ( ! $this->getUser()) {
             $titleRoles = $titleRoles->filter(function (TitleRole $tr) {
                 $title = $tr->getTitle();
@@ -204,7 +204,7 @@ class PersonController extends Controller implements PaginatorAwareInterface {
      * @return array
      */
     public function showAction(Request $request, Person $person) {
-        $titleRoles = $person->getTitleRoles();
+        $titleRoles = $person->getTitleRoles(true);
         if ( ! $this->getUser()) {
             $titleRoles = $titleRoles->filter(function (TitleRole $tr) {
                 $title = $tr->getTitle();
@@ -212,6 +212,7 @@ class PersonController extends Controller implements PaginatorAwareInterface {
                 return $title->getFinalattempt() || $title->getFinalcheck();
             });
         }
+
         $pagination = $this->paginator->paginate($titleRoles, $request->query->getInt('page', 1), 25);
 
         return array(
