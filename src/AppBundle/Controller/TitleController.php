@@ -182,7 +182,10 @@ class TitleController extends Controller implements PaginatorAwareInterface {
      */
     public function searchAction(Request $request, TitleRepository $repo) {
         $em = $this->getDoctrine()->getManager();
-        $form = $this->createForm(TitleSearchType::class, null, array('entity_manager' => $em, 'user' => $this->getUser()));
+        $form = $this->createForm(TitleSearchType::class, null, array(
+            'entity_manager' => $em,
+            'user' => $this->getUser()
+        ));
         $form->handleRequest($request);
         $titles = array();
         $submitted = false;
@@ -216,7 +219,10 @@ class TitleController extends Controller implements PaginatorAwareInterface {
      */
     public function searchExportAction(Request $request, TitleRepository $repo) {
         $em = $this->getDoctrine()->getManager();
-        $form = $this->createForm(TitleSearchType::class, null, array('entity_manager' => $em));
+        $form = $this->createForm(TitleSearchType::class, null, array(
+            'entity_manager' => $em,
+            'user' => $this->getUser()
+        ));
         $form->handleRequest($request);
         $titles = array();
 
