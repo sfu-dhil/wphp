@@ -23,8 +23,10 @@ class TitleRepository extends EntityRepository {
      */
     public function typeaheadQuery($q) {
         $qb = $this->createQueryBuilder('e');
-        $qb->andWhere('e.title LIKE :q');
+        $qb->where('e.title LIKE :q');
+        $qb->orWhere('e.id = :id');
         $qb->orderBy('e.title');
+        $qb->setParameter('id', $q);
         $qb->setParameter('q', "%{$q}%");
 
         return $qb->getQuery()->execute();
