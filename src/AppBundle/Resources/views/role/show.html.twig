@@ -13,10 +13,10 @@
             </a>
             {% if is_granted('ROLE_CONTENT_ADMIN') %}
                 <a href="{{ path('role_edit', { 'id': role.id }) }}" class="btn btn-default">
-                    <span class='glyphicon glyphicon-edit'></span> Edit
+                    <span class='glyphicon glyphicon-edit'></span> Edit Role
                 </a>
                 <a href="{{ path('role_delete', { 'id': role.id }) }}" class="btn btn-default" data-confirm="Are you sure you want to delete this Role?">
-                    <span class='glyphicon glyphicon-remove'></span> Delete
+                    <span class='glyphicon glyphicon-remove'></span> Delete Role
                 </a>
             {% endif %}
         </div>

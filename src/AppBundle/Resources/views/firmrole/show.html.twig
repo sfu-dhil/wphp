@@ -13,10 +13,10 @@
             </a>
             {% if is_granted('ROLE_CONTENT_ADMIN') %}
                 <a href="{{ path('firmrole_edit', { 'id': firmrole.id }) }}" class="btn btn-default">
-                    <span class='glyphicon glyphicon-edit'></span> Edit
+                    <span class='glyphicon glyphicon-edit'></span> Edit Firm Role
                 </a>
                 <a href="{{ path('firmrole_delete', { 'id': firmrole.id }) }}" class="btn btn-default" data-confirm="Are you sure you want to delete this Firmrole?">
-                    <span class='glyphicon glyphicon-remove'></span> Delete
+                    <span class='glyphicon glyphicon-remove'></span> Delete Firm Role
                 </a>
             {% endif %}
         </div>
