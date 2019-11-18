@@ -165,10 +165,13 @@ class TitleType extends AbstractType {
                 return $repo->createQueryBuilder('u')->orderBy('u.name', 'ASC');
             },
             'choice_label' => function (Format $format) {
+                dump($format);
                 return "{$format->getName()} ({$format->getAbbreviation()})";
             },
             'multiple' => false,
             'expanded' => false,
+            'required' => false,
+            'placeholder' => 'Unknown',
         ));
         $builder->add('sizeL', null, array(
             'label' => 'Size L',
@@ -210,6 +213,8 @@ class TitleType extends AbstractType {
             'choice_label' => 'name',
             'expanded' => false,
             'multiple' => false,
+            'required' => false,
+            'placeholder' => 'Unknown',
             'query_builder' => function (EntityRepository $er) {
                 return $er->createQueryBuilder('e')
                     ->orderBy('e.name', 'ASC')
