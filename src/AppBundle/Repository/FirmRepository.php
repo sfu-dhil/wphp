@@ -22,8 +22,10 @@ class FirmRepository extends EntityRepository {
      */
     public function typeaheadQuery($q) {
         $qb = $this->createQueryBuilder('e');
-        $qb->andWhere('e.name LIKE :q');
+        $qb->where('e.name LIKE :q');
+        $qb->orWhere('e.id = :id');
         $qb->orderBy('e.name');
+        $qb->setParameter('id', $q);
         $qb->setParameter('q', "%{$q}%");
 
         return $qb->getQuery()->execute();
