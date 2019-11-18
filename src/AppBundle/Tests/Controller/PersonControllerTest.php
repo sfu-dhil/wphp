@@ -20,7 +20,7 @@ class PersonControllerTest extends BaseTestCase {
         $client = $this->makeClient();
         $crawler = $client->request('GET', '/person/');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertEquals(0, $crawler->selectLink('New')->count());
+        $this->assertEquals(0, $crawler->selectLink('Add Person')->count());
     }
 
     public function testUserIndex() {
@@ -30,7 +30,7 @@ class PersonControllerTest extends BaseTestCase {
         ));
         $crawler = $client->request('GET', '/person/');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertEquals(0, $crawler->selectLink('New')->count());
+        $this->assertEquals(0, $crawler->selectLink('Add Person')->count());
     }
 
     public function testAdminIndex() {
@@ -40,7 +40,7 @@ class PersonControllerTest extends BaseTestCase {
         ));
         $crawler = $client->request('GET', '/person/');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertEquals(1, $crawler->selectLink('New')->count());
+        $this->assertEquals(1, $crawler->selectLink('Add Person')->count());
     }
 
     public function testAnonTypeahead() {

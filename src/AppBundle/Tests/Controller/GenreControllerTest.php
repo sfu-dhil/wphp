@@ -19,7 +19,7 @@ class GenreControllerTest extends BaseTestCase {
         $client = $this->makeClient();
         $crawler = $client->request('GET', '/genre/');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertEquals(0, $crawler->selectLink('New')->count());
+        $this->assertEquals(0, $crawler->selectLink('Add Genre')->count());
     }
 
     public function testUserIndex() {
@@ -29,7 +29,7 @@ class GenreControllerTest extends BaseTestCase {
         ));
         $crawler = $client->request('GET', '/genre/');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertEquals(0, $crawler->selectLink('New')->count());
+        $this->assertEquals(0, $crawler->selectLink('Add Genre')->count());
     }
 
     public function testAdminIndex() {
@@ -39,7 +39,7 @@ class GenreControllerTest extends BaseTestCase {
         ));
         $crawler = $client->request('GET', '/genre/');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertEquals(1, $crawler->selectLink('New')->count());
+        $this->assertEquals(1, $crawler->selectLink('Add Genre')->count());
     }
 
     public function testAnonTypeahead() {

@@ -21,7 +21,7 @@ class FirmroleControllerTest extends BaseTestCase {
         $client = $this->makeClient();
         $crawler = $client->request('GET', '/firmrole/');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertEquals(0, $crawler->selectLink('New')->count());
+        $this->assertEquals(0, $crawler->selectLink('Add Firm Role')->count());
     }
 
     public function testUserIndex() {
@@ -31,7 +31,7 @@ class FirmroleControllerTest extends BaseTestCase {
         ));
         $crawler = $client->request('GET', '/firmrole/');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertEquals(0, $crawler->selectLink('New')->count());
+        $this->assertEquals(0, $crawler->selectLink('Add Firm Role')->count());
     }
 
     public function testAdminIndex() {
@@ -41,7 +41,7 @@ class FirmroleControllerTest extends BaseTestCase {
         ));
         $crawler = $client->request('GET', '/firmrole/');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertEquals(1, $crawler->selectLink('New')->count());
+        $this->assertEquals(1, $crawler->selectLink('Add Firm Role')->count());
     }
 
     public function testAnonTypeahead() {

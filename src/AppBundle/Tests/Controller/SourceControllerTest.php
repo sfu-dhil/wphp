@@ -19,7 +19,7 @@ class SourceControllerTest extends BaseTestCase {
         $client = $this->makeClient();
         $crawler = $client->request('GET', '/source/');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertEquals(0, $crawler->selectLink('New')->count());
+        $this->assertEquals(0, $crawler->selectLink('Add Source')->count());
     }
 
     public function testUserIndex() {
@@ -29,7 +29,7 @@ class SourceControllerTest extends BaseTestCase {
         ));
         $crawler = $client->request('GET', '/source/');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertEquals(0, $crawler->selectLink('New')->count());
+        $this->assertEquals(0, $crawler->selectLink('Add Source')->count());
     }
 
     public function testAdminIndex() {
@@ -39,7 +39,7 @@ class SourceControllerTest extends BaseTestCase {
         ));
         $crawler = $client->request('GET', '/source/');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertEquals(1, $crawler->selectLink('New')->count());
+        $this->assertEquals(1, $crawler->selectLink('Add Source')->count());
     }
 
     public function testAnonTypeahead() {
