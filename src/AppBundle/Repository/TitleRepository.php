@@ -219,7 +219,6 @@ class TitleRepository extends EntityRepository {
             $qb->setParameter('notes', $data['notes']);
         }
         if (isset($data['self_published']) && $data['self_published']) {
-            dump($data['self_published']);
             switch ($data['self_published']) {
                 case 'Y':
                     $qb->andWhere('e.selfpublished = 1');
