@@ -28,7 +28,7 @@ class TitleType extends AbstractType {
             'label' => 'Title',
             'required' => false,
             'attr' => array(
-                'help_block' => 'title.fields.title',
+                'help_block' => 'Title of the book',
             ),
         ));
         $builder->add('titleRoles', CollectionType::class, array(
