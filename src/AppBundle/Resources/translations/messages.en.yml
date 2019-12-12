@@ -21,13 +21,13 @@ title:
     pricePence: Portion of the price of the work in pence
     shelfmark: Call numbers for location in various libraries
     checked: Indicates that a physical copy of the text has been consulted
-    finalcheck:
+    finalcheck: Indicates that either two sources have been consulted or the text has been hand-checked
     finalattempt: An unsuccessful attempt has been made to find two independent sources to verify the title
     notes: Any other important information, including links to sources
     locationOfPrinting: Geotagged location as indicated by the imprint
     format: The way that sheets have been folded and gathered into pages
     genre: Category that the work falls into
-    titleRoles: Indicates that either two sources have been consulted or the text has been hand-checked
+    titleRoles:
     titleFirmRoles: Names of all printers, publishers, and booksellers listed in the imprint and their role in the work’s production
     titleSources: Sources consulted to populate the entry fields
     contributors: Names of all women who have contributed to the work and their role in the work’s production

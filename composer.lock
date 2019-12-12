@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5dc68ca8bf182f966e37d9ecaeedbdbc",
+    "content-hash": "53adf3b6bde38127a92b5e7b5ff9ca63",
     "packages": [
         {
             "name": "aternus/geonames-client",
@@ -4180,12 +4180,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ubermichael/nines-bundles.git",
-                "reference": "c2a3a07fb9af65df90432568dcbbdbf59670d3eb"
+                "reference": "fe64fd47c39d6f7bbf99b186c1dfcf49969accf4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ubermichael/nines-bundles/zipball/c2a3a07fb9af65df90432568dcbbdbf59670d3eb",
-                "reference": "c2a3a07fb9af65df90432568dcbbdbf59670d3eb",
+                "url": "https://api.github.com/repos/ubermichael/nines-bundles/zipball/fe64fd47c39d6f7bbf99b186c1dfcf49969accf4",
+                "reference": "fe64fd47c39d6f7bbf99b186c1dfcf49969accf4",
                 "shasum": ""
             },
             "require": {
@@ -4219,7 +4219,7 @@
                 "source": "https://github.com/ubermichael/nines-bundles/tree/2.x",
                 "issues": "https://github.com/ubermichael/nines-bundles/issues"
             },
-            "time": "2019-10-25T18:09:37+00:00"
+            "time": "2019-12-12T22:21:08+00:00"
         },
         {
             "name": "zendframework/zend-code",
@@ -4459,52 +4459,6 @@
                 "persistence"
             ],
             "time": "2019-11-13T15:46:58+00:00"
-        },
-        {
-            "name": "joshtronic/php-loremipsum",
-            "version": "1.0.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/joshtronic/php-loremipsum.git",
-                "reference": "e41f4f76303b09b66448100d45a1bfdf695192bd"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/joshtronic/php-loremipsum/zipball/e41f4f76303b09b66448100d45a1bfdf695192bd",
-                "reference": "e41f4f76303b09b66448100d45a1bfdf695192bd",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0"
-            },
-            "require-dev": {
-                "satooshi/php-coveralls": "~1.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "joshtronic\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Josh Sherman",
-                    "email": "hello@joshtronic.com",
-                    "homepage": "https://joshtronic.com"
-                }
-            ],
-            "description": "Lorem ipsum generator in PHP without dependencies",
-            "homepage": "https://github.com/joshtronic/php-loremipsum",
-            "keywords": [
-                "generator",
-                "ipsum",
-                "lorem"
-            ],
-            "time": "2019-01-03T06:21:50+00:00"
         },
         {
             "name": "liip/functional-test-bundle",
@@ -5949,57 +5903,6 @@
             ],
             "description": "This bundle generates code for you",
             "time": "2017-12-07T15:36:41+00:00"
-        },
-        {
-            "name": "squizlabs/php_codesniffer",
-            "version": "3.5.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
-                "reference": "65b12cdeaaa6cd276d4c3033a95b9b88b12701e7"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/65b12cdeaaa6cd276d4c3033a95b9b88b12701e7",
-                "reference": "65b12cdeaaa6cd276d4c3033a95b9b88b12701e7",
-                "shasum": ""
-            },
-            "require": {
-                "ext-simplexml": "*",
-                "ext-tokenizer": "*",
-                "ext-xmlwriter": "*",
-                "php": ">=5.4.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^4.0 || ^5.0 || ^6.0 || ^7.0"
-            },
-            "bin": [
-                "bin/phpcs",
-                "bin/phpcbf"
-            ],
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "3.x-dev"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Greg Sherwood",
-                    "role": "lead"
-                }
-            ],
-            "description": "PHP_CodeSniffer tokenizes PHP, JavaScript and CSS files and detects violations of a defined set of coding standards.",
-            "homepage": "https://github.com/squizlabs/PHP_CodeSniffer",
-            "keywords": [
-                "phpcs",
-                "standards"
-            ],
-            "time": "2019-10-28T04:36:32+00:00"
         },
         {
             "name": "symfony/phpunit-bridge",
