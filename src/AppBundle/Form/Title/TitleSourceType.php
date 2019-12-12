@@ -5,6 +5,7 @@ namespace AppBundle\Form\Title;
 use AppBundle\Entity\Source;
 use AppBundle\Entity\TitleSource;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Tetranz\Select2EntityBundle\Form\Type\Select2EntityType;
