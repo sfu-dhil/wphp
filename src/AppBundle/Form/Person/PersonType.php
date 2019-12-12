@@ -24,21 +24,21 @@ class PersonType extends AbstractType {
             'label' => 'Last Name',
             'required' => false,
             'attr' => array(
-                'help_block' => '',
+                'help_block' => 'person.form.lastName',
             ),
         ));
         $builder->add('firstName', null, array(
             'label' => 'First Name',
             'required' => false,
             'attr' => array(
-                'help_block' => '',
+                'help_block' => 'person.form.firstName',
             ),
         ));
         $builder->add('title', null, array(
             'label' => 'Title',
             'required' => false,
             'attr' => array(
-                'help_block' => '',
+                'help_block' => 'person.form.title',
             ),
         ));
         $builder->add('gender', ChoiceType::class, array(
@@ -49,19 +49,22 @@ class PersonType extends AbstractType {
                 'Male' => Person::MALE,
                 'Unknown' => Person::UNKNOWN,
             ),
+            'attr' => array(
+                'help_block' => 'person.form.gender',
+            ),
         ));
         $builder->add('dob', null, array(
             'label' => 'Date of Birth',
             'required' => false,
             'attr' => array(
-                'help_block' => 'Person’s date of birth as YYYY-MM-DD',
+                'help_block' => 'person.form.dob',
             ),
         ));
         $builder->add('dod', null, array(
             'label' => 'Death Date',
             'required' => false,
             'attr' => array(
-                'help_block' => 'Person’s date of death as YYYY-MM-DD',
+                'help_block' => 'person.form.dod',
             ),
         ));
         $builder->add('cityOfBirth', Select2EntityType::class, array(
@@ -75,7 +78,7 @@ class PersonType extends AbstractType {
             'delay' => 250,
             'language' => 'en',
             'attr' => array(
-                'help_block' => 'Geotagged location of person’s birth',
+                'help_block' => 'person.form.cityOfBirth',
             ),
         ));
         $builder->add('cityOfDeath', Select2EntityType::class, array(
@@ -89,28 +92,28 @@ class PersonType extends AbstractType {
             'delay' => 250,
             'language' => 'en',
             'attr' => array(
-                'help_block' => 'Geotagged location of person’s death',
+                'help_block' => 'person.form.cityOfDeath',
             ),
         ));
         $builder->add('viafUrl', UrlType::class, array(
             'label' => 'VIAF URI',
             'required' => false,
             'attr' => array(
-                'help_block' => 'Enter a VIAF URI for this person',
+                'help_block' => 'person.form.viafUrl',
             ),
         ));
         $builder->add('wikipediaUrl', UrlType::class, array(
             'label' => 'Wikipedia URL',
             'required' => false,
             'attr' => array(
-                'help_block' => 'Enter a Wikipedia URL for this person',
+                'help_block' => 'person.form.wikipediaUrl',
             ),
         ));
         $builder->add('imageUrl', UrlType::class, array(
             'label' => 'Image URL',
             'required' => false,
             'attr' => array(
-                'help_block' => 'Enter the URL for an image for this person. Make sure the licensing on the image is permissive.',
+                'help_block' => 'person.form.imageUrl',
             ),
         ));
         $builder->add('finalcheck', ChoiceType::class, array(
@@ -124,7 +127,7 @@ class PersonType extends AbstractType {
             'required' => true,
             'placeholder' => false,
             'attr' => array(
-                'help_block' => 'Indicates the final attempt to find person’s information',
+                'help_block' => 'person.form.finalCheck',
             ),
         ));
     }

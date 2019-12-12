@@ -48,7 +48,7 @@ class TitleFilterType extends AbstractType {
             'label' => 'Title',
             'required' => false,
             'attr' => array(
-                'help_block' => 'Enter all or part of a title',
+                'help_block' => 'title.search.title',
             ),
         ));
 
@@ -72,7 +72,7 @@ class TitleFilterType extends AbstractType {
             'label' => 'Date of Publication',
             'required' => false,
             'attr' => array(
-                'help_block' => 'Enter a year (eg <kbd>1795</kbd>) or range of years (<kbd>1790-1800</kbd>) or a partial range of years (<kbd>*-1800</kbd>)',
+                'help_block' => 'title.search.pubdate',
             ),
         ));
 
@@ -88,11 +88,17 @@ class TitleFilterType extends AbstractType {
             'required' => false,
             'expanded' => true,
             'multiple' => true,
+            'attr' => array(
+                'help_block' => 'title.search.genre',
+            ),
         ));
 
         $builder->add('location', TextType::class, array(
             'label' => 'Location of Printing',
             'required' => false,
+            'attr' => array(
+                'help_block' => 'title.search.locationOfPrinting',
+            ),
         ));
     }
 }

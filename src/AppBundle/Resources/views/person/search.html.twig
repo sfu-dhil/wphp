@@ -37,6 +37,15 @@
             {{ knp_pagination_render(people) }}
         </div>
 
+        <div class='btn-toolbar pull-right'>
+            <div class='btn-group'>
+                {% if is_granted('ROLE_CONTENT_ADMIN') %}
+                    <a href="{{ path('person_new') }}" class="btn btn-default">
+                        <span class="glyphicon glyphicon-plus"></span> Add Person
+                    </a>
+                {% endif %}
+            </div>
+        </div>
         {{ include('AppBundle:person:table.html.twig') }}
 
         <div class="navigation">

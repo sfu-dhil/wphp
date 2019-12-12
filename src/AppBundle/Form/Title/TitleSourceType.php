@@ -27,9 +27,16 @@ class TitleSourceType extends AbstractType {
             'allow_clear' => true,
             'delay' => 250,
             'language' => 'en',
+            'attr' => array(
+                'help_block' => 'source.form.name'
+            )
         ));
 
-        $builder->add('identifier');
+        $builder->add('identifier', TextType::class, array(
+            'attr' => [
+                'help_block' => 'source.form.identifier'
+            ]
+        ));
     }
 
     /**

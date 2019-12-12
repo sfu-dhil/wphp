@@ -38,7 +38,7 @@ class TitleSearchType extends AbstractType {
             'label' => 'Search Titles',
             'required' => false,
             'attr' => array(
-                'help_block' => 'Enter all or part of a title',
+                'help_block' => 'title.search.title',
             ),
         ));
 
@@ -68,7 +68,7 @@ class TitleSearchType extends AbstractType {
             'label' => 'Title ID',
             'required' => false,
             'attr' => array(
-                'help_block' => 'Find this exact title ID.',
+                'help_block' => 'title.search.id',
             ),
         ));
         $builder->add('person_filter', PersonFilterType::class, array(
@@ -82,14 +82,14 @@ class TitleSearchType extends AbstractType {
             'label' => 'Signed Author',
             'required' => false,
             'attr' => array(
-                'help_block' => 'Author attribution as it appears on the title page or at the end of the preface (Ex. “By a lady,” “By the author of“)',
+                'help_block' => 'title.search.signedAuthor',
             ),
         ));
         $builder->add('pseudonym', TextType::class, array(
             'label' => 'Pseudonym',
             'required' => false,
             'attr' => array(
-                'help_block' => 'The false name that the author has signed the work with',
+                'help_block' => 'title.search.psuedonym',
             ),
         ));
         $builder->add('firm_filter', FirmFilterType::class, array(
@@ -108,7 +108,7 @@ class TitleSearchType extends AbstractType {
                 'Unknown' => 'U',
             ),
             'attr' => array(
-                'help_block' => 'Limit results to those that have been self-published or not.',
+                'help_block' => 'title.search.selfPublished',
             ),
             'required' => false,
             'expanded' => true,
@@ -121,46 +121,49 @@ class TitleSearchType extends AbstractType {
             'label' => 'Volumes',
             'required' => false,
             'attr' => array(
-                'help_block' => 'Limit results to titles with this exact number of volumes.',
+                'help_block' => 'title.search.volumes',
             ),
         ));
         $builder->add('pubdate', TextType::class, array(
             'label' => 'Date of Publication',
             'required' => false,
             'attr' => array(
-                'help_block' => 'Enter a year (eg <kbd>1795</kbd>) or range of years (<kbd>1790-1800</kbd>) or a partial range of years (<kbd>*-1800</kbd>)',
+                'help_block' => 'title.search.pubDate',
             ),
         ));
         $builder->add('date_of_first_publication', TextType::class, array(
             'label' => 'Date of First Publication',
             'required' => false,
             'attr' => array(
-                'help_block' => 'Enter a year (eg <kbd>1795</kbd>) or range of years (<kbd>1790-1800</kbd>) or a partial range of years (<kbd>*-1800</kbd>)',
+                'help_block' => 'title.search.dateOfFirstPublication',
             ),
         ));
         $builder->add('editionNumber', TextType::class, array(
             'label' => 'Edition Number',
             'required' => false,
             'attr' => array(
-                'help_block' => 'Edition number.',
+                'help_block' => 'title.search.editionNumber',
             ),
         ));
         $builder->add('imprint', TextType::class, array(
             'label' => 'Imprint',
             'required' => false,
             'attr' => array(
-                'help_block' => 'Information about printers, publishers, booksellers as represented on the title page',
+                'help_block' => 'title.search.imprint',
             ),
         ));
         $builder->add('colophon', null, array(
             'label' => 'Colophon',
             'required' => false,
+            'attr' => array(
+                'help_block' => 'title.search.colophon',
+            ),
         ));
         $builder->add('location', TextType::class, array(
             'label' => 'Location of Printing',
             'required' => false,
             'attr' => array(
-                'help_block' => 'Geotagged location as indicated by the imprint',
+                'help_block' => 'title.search.locationOfPrinting',
             ),
         ));
         $builder->add('format', ChoiceType::class, array(
@@ -175,19 +178,22 @@ class TitleSearchType extends AbstractType {
             'required' => false,
             'expanded' => true,
             'multiple' => true,
+            'attr' => array(
+                'help_block' => 'title.search.format',
+            ),
         ));
         $builder->add('sizeL', TextType::class, array(
             'label' => 'Length',
             'required' => false,
             'attr' => array(
-                'help_block' => 'Length of the book in cm.',
+                'help_block' => 'title.search.sizeL',
             ),
         ));
         $builder->add('sizeW', TextType::class, array(
             'label' => 'Width',
             'required' => false,
             'attr' => array(
-                'help_block' => 'Width of the book in cm.',
+                'help_block' => 'title.search.sizeW',
             ),
         ));
         $builder->add('price_filter', PriceType::class, array(
@@ -210,10 +216,16 @@ class TitleSearchType extends AbstractType {
             'required' => false,
             'expanded' => true,
             'multiple' => true,
+            'attr' => array(
+                'help_block' => 'title.search.genre',
+            ),
         ));
         $builder->add('shelfmark', null, array(
             'label' => 'Shelfmark',
             'required' => false,
+            'attr' => array(
+                'help_block' => 'title.search.shelfmark',
+            ),
         ));
         $builder->add('titlesource_filter', TitleSourceFilterType::class, array(
             'label' => 'Filter by Source',
@@ -226,6 +238,9 @@ class TitleSearchType extends AbstractType {
         $builder->add('notes', null, array(
             'label' => 'Notes',
             'required' => false,
+            'attr' => array(
+                'help_block' => 'title.search.notes',
+            ),
         ));
 
         if ($user) {
@@ -236,7 +251,7 @@ class TitleSearchType extends AbstractType {
                     'No' => 'N',
                 ),
                 'attr' => array(
-                    'help_block' => 'Limit results to those that have been checked or not checked',
+                    'help_block' => 'title.search.checked',
                 ),
                 'required' => false,
                 'expanded' => true,
@@ -252,7 +267,7 @@ class TitleSearchType extends AbstractType {
                     'No' => 'N',
                 ),
                 'attr' => array(
-                    'help_block' => 'Limit results to those that have been double checked or not checked',
+                    'help_block' => 'title.search.finalcheck',
                 ),
                 'required' => false,
                 'expanded' => true,
@@ -268,7 +283,7 @@ class TitleSearchType extends AbstractType {
                     'No' => 'N',
                 ),
                 'attr' => array(
-                    'help_block' => 'Limit results to those that someone has attempted to verify',
+                    'help_block' => 'title.search.finalattempt',
                 ),
                 'required' => false,
                 'expanded' => true,
