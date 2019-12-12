@@ -42,6 +42,9 @@ class FirmFilterType extends AbstractType {
         $builder->add('firm_name', TextType::class, array(
             'label' => 'Firm Name',
             'required' => false,
+            'attr' => array(
+                'help_block' => 'firm.search.name',
+            ),
         ));
         $builder->add('firm_gender', ChoiceType::class, array(
             'label' => 'Gender',
@@ -51,7 +54,7 @@ class FirmFilterType extends AbstractType {
                 'Unknown' => 'U',
             ),
             'attr' => array(
-                'help_block' => 'Leave this field blank to include all genders',
+                'help_block' => 'firm.search.gender',
             ),
             'required' => false,
             'expanded' => true,
@@ -76,6 +79,9 @@ class FirmFilterType extends AbstractType {
         $builder->add('firm_address', TextType::class, array(
             'label' => 'Firm Address',
             'required' => false,
+            'attr' => array(
+                'help_block' => 'firm.search.address',
+            ),
         ));
     }
 }

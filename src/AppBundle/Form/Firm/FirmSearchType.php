@@ -25,7 +25,7 @@ class FirmSearchType extends AbstractType {
             'label' => 'Search Firms by Name',
             'required' => false,
             'attr' => array(
-                'help_block' => 'Enter all or part of a firm name',
+                'help_block' => 'firm.search.name',
             ),
         ));
 
@@ -53,7 +53,7 @@ class FirmSearchType extends AbstractType {
             'label' => 'Firm ID',
             'required' => false,
             'attr' => array(
-                'help_block' => 'Find this exact firm ID.',
+                'help_block' => 'firm.search.id',
             ),
         ));
 
@@ -65,7 +65,7 @@ class FirmSearchType extends AbstractType {
                 'Unknown' => 'U',
             ),
             'attr' => array(
-                'help_block' => 'Leave this field blank to include all genders',
+                'help_block' => 'firm.search.gender',
             ),
             'required' => false,
             'expanded' => true,
@@ -78,7 +78,7 @@ class FirmSearchType extends AbstractType {
             'label' => 'Address',
             'required' => false,
             'attr' => array(
-                'help_block' => 'Text search for a firm address',
+                'help_block' => 'firm.search.streetAddress',
             ),
         ));
 
@@ -86,21 +86,21 @@ class FirmSearchType extends AbstractType {
             'label' => 'City',
             'required' => false,
             'attr' => array(
-                'help_block' => 'Text search for a firm city',
+                'help_block' => 'firm.search.city',
             ),
         ));
         $builder->add('start', TextType::class, array(
             'label' => 'Start Date',
             'required' => false,
             'attr' => array(
-                'help_block' => 'Enter a year (eg <kbd>1795</kbd>) or range of years (<kbd>1790-1800</kbd>) or a partial range of years (<kbd>*-1800</kbd>)',
+                'help_block' => 'firm.search.startDate',
             ),
         ));
         $builder->add('end', TextType::class, array(
             'label' => 'End Date',
             'required' => false,
             'attr' => array(
-                'help_block' => 'Enter a year (eg <kbd>1795</kbd>) or range of years (<kbd>1790-1800</kbd>) or a partial range of years (<kbd>*-1800</kbd>)',
+                'help_block' => 'firm.search.endDate',
             ),
         ));
     }

@@ -24,23 +24,23 @@
     <table class="table table-bordered table-condensed table-hover table-striped">
         <tbody>
             <tr>
-                <th data-toggle="popover" data-content="Unique ID number for this entry">ID</th>
+                <th data-toggle="popover" data-content="{{ 'firm.fields.id'|trans }}">ID</th>
                 <td>{{ firm.id }}</td>
             </tr>
             <tr>
-                <th data-toggle="popover" data-content="Most complete name of the firm known">Name</th>
+                <th data-toggle="popover" data-content="{{ 'firm.fields.name'|trans }}">Name</th>
                 <td>{{ firm.name }}</td>
             </tr>
             <tr>
-                <th data-toggle="popover" data-content="Most complete name of the firm known">Gender</th>
+                <th data-toggle="popover" data-content="{{ 'firm.fields.gender'|trans }}">Gender</th>
                 <td>{% include 'AppBundle:firm/partials:gender.html.twig' %}</td>
             </tr>
             <tr>
-                <th data-toggle="popover" data-content="Street address of the firm as geotagged">Street Address</th>
+                <th data-toggle="popover" data-content="{{ 'firm.fields.streetAddress'|trans }}">Street Address</th>
                 <td>{{ firm.streetAddress }}</td>
             </tr>
             <tr>
-                <th data-toggle="popover" data-content="City/town/village in which the firm’s street address is located; geotagged">City</th>
+                <th data-toggle="popover" data-content="{{ 'firm.fields.city'|trans }}">City</th>
                 <td>
                     {% if firm.city %}
                         <a href="{{ path('geonames_show', {'id': firm.city.geonameid}) }}">
@@ -50,11 +50,11 @@
                 </td>
             </tr>
             <tr>
-                <th data-toggle="popover" data-content="YYYY-MM-DD">Start Date</th>
+                <th data-toggle="popover" data-content="{{ 'firm.fields.startDate'|trans }}">Start Date</th>
                 <td>{{ firm.startDate }}</td>
             </tr>
             <tr>
-                <th data-toggle="popover" data-content="YYYY-MM-DD">End date</th>
+                <th data-toggle="popover" data-content="{{ 'firm.fields.endDate'|trans }}">End date</th>
                 <td>{{ firm.endDate }}</td>
             </tr>
         </tbody>

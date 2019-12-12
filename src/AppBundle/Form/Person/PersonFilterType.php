@@ -41,7 +41,7 @@ class PersonFilterType extends AbstractType {
             'label' => 'Name',
             'required' => false,
             'attr' => array(
-                'help_block' => 'Enter all or part of a personal name',
+                'help_block' => 'person.search.name',
             ),
         ));
 
@@ -53,7 +53,7 @@ class PersonFilterType extends AbstractType {
                 'Unknown' => 'U',
             ),
             'attr' => array(
-                'help_block' => 'Leave this field blank to include all genders',
+                'help_block' => 'person.search.gender',
             ),
             'required' => false,
             'expanded' => true,

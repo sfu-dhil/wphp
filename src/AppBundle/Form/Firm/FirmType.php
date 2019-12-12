@@ -23,7 +23,7 @@ class FirmType extends AbstractType {
             'label' => 'Name',
             'required' => false,
             'attr' => array(
-                'help_block' => 'Most complete name of the firm known',
+                'help_block' => 'firm.form.name',
             ),
         ));
         $builder->add('gender', ChoiceType::class, array(
@@ -35,12 +35,15 @@ class FirmType extends AbstractType {
                 'Unknown' => Firm::UNKNOWN,
             ),
             'empty_data' => Firm::UNKNOWN,
+            'attr' => array(
+                'help_block' => 'firm.form.gender',
+            ),
         ));
         $builder->add('streetAddress', null, array(
             'label' => 'Street Address',
             'required' => false,
             'attr' => array(
-                'help_block' => 'Street address of the firm as geotagged (a new firm entry is made when relocated)',
+                'help_block' => 'firm.form.streetAddress',
             ),
         ));
         $builder->add('city', Select2EntityType::class, array(
@@ -53,21 +56,21 @@ class FirmType extends AbstractType {
             'delay' => 250,
             'language' => 'en',
             'attr' => array(
-                'help_block' => 'City/town/village in which the firm’s street address is located; geotagged',
+                'help_block' => 'firm.form.city',
             ),
         ));
         $builder->add('startDate', null, array(
             'label' => 'Start Date',
             'required' => false,
             'attr' => array(
-                'help_block' => 'If known, YYYY-MM-DD',
+                'help_block' => 'firm.form.startDate',
             ),
         ));
         $builder->add('endDate', null, array(
             'label' => 'End Date',
             'required' => false,
             'attr' => array(
-                'help_block' => 'If known, YYYY-MM-DD',
+                'help_block' => 'firm.form.endDate',
             ),
         ));
         $builder->add('finalcheck', ChoiceType::class, array(
@@ -81,7 +84,7 @@ class FirmType extends AbstractType {
             'required' => true,
             'placeholder' => false,
             'attr' => array(
-                'help_block' => 'Indicates the final attempt to find further information about the firm',
+                'help_block' => 'firm.form.finalCheck',
             ),
         ));
     }

@@ -27,7 +27,7 @@ class PersonSearchType extends AbstractType {
             'label' => 'Search Persons by Name',
             'required' => false,
             'attr' => array(
-                'help_block' => 'Enter all or part of a personal name',
+                'help_block' => 'person.search.name',
             ),
         ));
 
@@ -59,7 +59,7 @@ class PersonSearchType extends AbstractType {
             'label' => 'Person ID',
             'required' => false,
             'attr' => array(
-                'help_block' => 'Find this exact person ID.',
+                'help_block' => 'person.search.id',
             ),
         ));
 
@@ -71,7 +71,7 @@ class PersonSearchType extends AbstractType {
                 'Unknown' => 'U',
             ),
             'attr' => array(
-                'help_block' => 'Leave this field blank to include all genders',
+                'help_block' => 'person.search.gender',
             ),
             'required' => false,
             'expanded' => true,
@@ -84,7 +84,7 @@ class PersonSearchType extends AbstractType {
             'label' => 'Date of Birth',
             'required' => false,
             'attr' => array(
-                'help_block' => 'Enter a year (eg <kbd>1795</kbd>) or range of years (<kbd>1790-1800</kbd>) or a partial range of years (<kbd>*-1800</kbd>)',
+                'help_block' => 'person.search.dob',
             ),
         ));
 
@@ -92,39 +92,45 @@ class PersonSearchType extends AbstractType {
             'label' => 'Date of Death',
             'required' => false,
             'attr' => array(
-                'help_block' => 'Enter a year (eg <kbd>1795</kbd>) or range of years (<kbd>1790-1800</kbd>) or a partial range of years (<kbd>*-1800</kbd>)',
+                'help_block' => 'person.search.dod',
             ),
         ));
 
         $builder->add('birthplace', TextType::class, array(
             'label' => 'Place of Birth',
             'required' => false,
+            'attr' => array(
+                'help_block' => 'person.search.cityOfBirth',
+            ),
         ));
 
         $builder->add('deathplace', TextType::class, array(
             'label' => 'Place of Death',
             'required' => false,
+            'attr' => array(
+                'help_block' => 'person.search.cityOfDeath',
+            ),
         ));
 
         $builder->add('viafUrl', TextType::class, array(
             'label' => 'VIAF URI',
             'required' => false,
             'attr' => array(
-                'help_block' => 'Enter a VIAF URI to check if we have a corresponding record. Enter <kbd>blank</kbd> to find records which do not have VIAF URIs.',
+                'help_block' => 'person.search.viafUrl',
             ),
         ));
         $builder->add('wikipediaUrl', TextType::class, array(
             'label' => 'Wikipedia URL',
             'required' => false,
             'attr' => array(
-                'help_block' => 'Enter a Wikipedia URL to check if we have a corresponding record. Enter <kbd>blank</kbd> to find records which do not have Wikipedia URLs.',
+                'help_block' => 'person.search.wikipediaUrl',
             ),
         ));
         $builder->add('imageUrl', TextType::class, array(
             'label' => 'Image URL',
             'required' => false,
             'attr' => array(
-                'help_block' => 'Enter an image URL to check if we have a corresponding record. Enter <kbd>blank</kbd> to find records which do not have image URLs.',
+                'help_block' => 'person.search.imageUrl',
             ),
         ));
 

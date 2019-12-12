@@ -1,5 +1,116 @@
 title:
-  fields:
+  fields: &title_fields
     id: WPHP database ID of the title
     title: Title of the book
+    editionNumber: Edition number for sorting, extracted from the edition field.
+    signedAuthor: Author attribution from the title page or the end of the preface
+    psuedonym: Any false author name
+    imprint: Information about printers, publishers, booksellers as shown on the title page
+    selfPublished: Indicates if the title was published by the author
+    pubDate: Date (year) as it appears on the imprint
+    dateOfFirstPublication: Date (year) that the work was first published
+    sizeL: Length measured in cm
+    sizeW: Width measured in cm
+    edition: Edition as it appears on the title page
+    colophon:
+    volumes: Number of volumes of the edition, using arabic numerals
+    pagination: Number of pages of each volume
+    totalPrice:
+    pricePound: Portion of the price of the work in pounds
+    priceShilling: Portion of the price of the work in shillings
+    pricePence: Portion of the price of the work in pence
+    shelfmark: Call numbers for location in various libraries
+    checked: Indicates that a physical copy of the text has been consulted
+    finalcheck:
+    finalattempt: An unsuccessful attempt has been made to find two independent sources to verify the title
+    notes: Any other important information, including links to sources
+    locationOfPrinting: Geotagged location as indicated by the imprint
+    format: The way that sheets have been folded and gathered into pages
+    genre: Category that the work falls into
+    titleRoles: Indicates that either two sources have been consulted or the text has been hand-checked
+    titleFirmRoles: Names of all printers, publishers, and booksellers listed in the imprint and their role in the work’s production
+    titleSources: Sources consulted to populate the entry fields
     contributors: Names of all women who have contributed to the work and their role in the work’s production
+  form:
+    <<: *title_fields
+  search:
+    <<: *title_fields
+    id: Find this exact title ID.
+    title: Enter all or part of a title
+    psuedonym: The false name that the author has signed the work with
+    selfPublished: Limit results to those that have been self-published or not
+    pubDate: Enter a year (eg <kbd>1795</kbd>) or range of years (<kbd>1790-1800</kbd>) or a partial range of years (<kbd>*-1800</kbd>)
+    dateOfFirstPublication: Enter a year (eg <kbd>1795</kbd>) or range of years (<kbd>1790-1800</kbd>) or a partial range of years (<kbd>*-1800</kbd>)
+    volumes: Limit results to titles with this exact number of volumes.
+    checked: Limit results to those that have been checked or not checked
+    finalcheck: Limit results to those that have been double checked or not checked
+    finalattempt: Limit results to those that someone has attempted to verify
+
+firm:
+  fields: &firm_fields
+    id: Unique ID number for this entry
+    name: Most complete name of the firm known
+    gender: Gender of the principal people running the firm
+    streetAddress: Street address of the firm as geotagged
+    startDate: YYYY-MM-DD
+    endDate: YYYY-MM-DD
+    city: City/town/village in which the firm’s street address is located; geotagged
+    finalCheck: Indicates the final attempt to find further information about the firm
+  form:
+    <<: *firm_fields
+  search:
+    <<: *firm_fields
+    id: Find this exact firm ID
+    name: Enter all or part of a firm name
+    gender: Leave this field blank to include all genders
+    startDate: Enter a year (eg <kbd>1795</kbd>) or range of years (<kbd>1790-1800</kbd>) or a partial range of years (<kbd>*-1800</kbd>)
+    endDate: Enter a year (eg <kbd>1795</kbd>) or range of years (<kbd>1790-1800</kbd>) or a partial range of years (<kbd>*-1800</kbd>)
+
+geonames:
+  fields:
+    geonameid: Location’s URI from Geonames.com
+    name: Location’s name
+    titles: Number of titles associated with the location
+    firms: Number of firms associated with the location
+    people: Number of people that were born and died in the location
+    asciiname: Location’s name in ASCII code
+    latitude: Location’s latitude
+    longitude: Location’s longitude
+    country: Initials of the country
+    admin1: Feature code of a primary administrative division of a country
+    admin2: Feature code of a subdivision of a first-order administrative division
+    admin3: Feature code of a subdivision of a second-order administrative division
+    admin4: Feature code of a subdivision of a third-order administrative division
+
+person:
+  fields: &person_fields
+    id: Unique ID number for this entry
+    lastName: Person’s last name by which he or she is most commonly known
+    firstName: Person’s first name and where appropriate, full aristocratic title
+    title: Person's aristocratic title, if exists
+    gender: Person's gender, if known
+    dob: YYYY-MM-DD
+    dod: YYYY-MM-DD
+    viafUrl:
+    wikipediaUrl:
+    imageUrl:
+    finalCheck: Indicates the final attempt to find person’s information
+    cityOfBirth: Place of birth as geotagged
+    cityOfDeath: Place of death as geotagged
+  form:
+    <<: *person_fields
+    dob: Person’s date of birth as YYYY-MM-DD
+    dod: Person’s date of death as YYYY-MM-DD
+    viafUrl: Enter the URL for an image for this person. Make sure the licensing on the image is permissive.
+    wikipediaUrl: Enter a VIAF URI for this person
+    imageUrl: Enter a VIAF URI for this person
+  search:
+    <<: *person_fields
+    id: Find this exact person ID.
+    name: Enter all or part of a personal name
+    gender: Leave this field blank to include all genders
+    dob: Enter a year (eg <kbd>1795</kbd>) or range of years (<kbd>1790-1800</kbd>) or a partial range of years (<kbd>*-1800</kbd>)
+    dod: Enter a year (eg <kbd>1795</kbd>) or range of years (<kbd>1790-1800</kbd>) or a partial range of years (<kbd>*-1800</kbd>)
+    viafUrl: Enter a VIAF URI to check if we have a corresponding record. Enter <kbd>blank</kbd> to find records which do not have VIAF URIs.
+    wikipediaUrl: Enter a Wikipedia URL to check if we have a corresponding record. Enter <kbd>blank</kbd> to find records which do not have Wikipedia URLs.
+    imageUrl: Enter an image URL to check if we have a corresponding record. Enter <kbd>blank</kbd> to find records which do not have image URLs.
