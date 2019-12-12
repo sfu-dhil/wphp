@@ -70,10 +70,13 @@ class PersonFilterType extends AbstractType {
                     return $value->getId();
                 }
             },
-            'label' => 'Firm Role',
+            'label' => 'Role',
             'required' => false,
             'expanded' => true,
             'multiple' => true,
+            'attr' => array(
+                'help_block' => 'person.search.role',
+            ),
         ));
     }
 }

@@ -32,10 +32,16 @@ class TitleSourceFilterType extends AbstractType {
             'expanded' => false,
             'multiple' => false,
             'placeholder' => 'Select a source to filter the results.',
+            'attr' => [
+                'source.search.name'
+            ]
         ));
         $builder->add('identifier', null, array(
             'label' => 'Source ID',
             'required' => false,
+            'attr' => [
+                'source.search.identifier'
+            ]
         ));
     }
 

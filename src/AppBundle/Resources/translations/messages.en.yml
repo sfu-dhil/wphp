@@ -56,6 +56,7 @@ firm:
     endDate: YYYY-MM-DD
     city: City/town/village in which the firm’s street address is located; geotagged
     finalCheck: Indicates the final attempt to find further information about the firm
+    role: The firm's involvement in publishing a title
   form:
     <<: *firm_fields
   search:
@@ -97,6 +98,7 @@ person:
     finalCheck: Indicates the final attempt to find person’s information
     cityOfBirth: Place of birth as geotagged
     cityOfDeath: Place of death as geotagged
+    role: The person's involvement in publishing a title
   form:
     <<: *person_fields
     dob: Person’s date of birth as YYYY-MM-DD
@@ -114,3 +116,12 @@ person:
     viafUrl: Enter a VIAF URI to check if we have a corresponding record. Enter <kbd>blank</kbd> to find records which do not have VIAF URIs.
     wikipediaUrl: Enter a Wikipedia URL to check if we have a corresponding record. Enter <kbd>blank</kbd> to find records which do not have Wikipedia URLs.
     imageUrl: Enter an image URL to check if we have a corresponding record. Enter <kbd>blank</kbd> to find records which do not have image URLs.
+
+source:
+  fields: &source_fields
+    name: An archive or institution that provided data for a record
+    identifier: An identifier used by an institution
+  form:
+    <<: *source_fields
+  search:
+    <<: *source_fields

@@ -75,6 +75,9 @@ class FirmFilterType extends AbstractType {
             'required' => false,
             'expanded' => true,
             'multiple' => true,
+            'attr' => array(
+                'help_block' => 'firm.search.role',
+            ),
         ));
         $builder->add('firm_address', TextType::class, array(
             'label' => 'Firm Address',
