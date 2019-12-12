@@ -5,6 +5,7 @@ namespace AppBundle\Form\Title;
 use AppBundle\Entity\Source;
 use AppBundle\Entity\TitleSource;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Tetranz\Select2EntityBundle\Form\Type\Select2EntityType;
@@ -27,9 +28,16 @@ class TitleSourceType extends AbstractType {
             'allow_clear' => true,
             'delay' => 250,
             'language' => 'en',
+            'attr' => array(
+                'help_block' => 'source.form.name'
+            )
         ));
 
-        $builder->add('identifier');
+        $builder->add('identifier', TextType::class, array(
+            'attr' => [
+                'help_block' => 'source.form.identifier'
+            ]
+        ));
     }
 
     /**

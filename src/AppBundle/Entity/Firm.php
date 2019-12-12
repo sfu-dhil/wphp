@@ -296,7 +296,13 @@ class Firm {
 
         $iterator = $this->titleFirmroles->getIterator();
         $iterator->uasort(function (TitleFirmrole $a, TitleFirmrole $b) {
-            return strcasecmp($a->getTitle()->getTitle(), $b->getTitle()->getTitle());
+                if($a->getTitle()->getPubdate() === $b->getTitle()->getPubDate()) {
+                    if($a->getFirmrole()->getName() === $b->getFirmrole()->getName()) {
+                        return strcasecmp($a->getTitle()->getTitle(), $b->getTitle()->getTitle());
+                    }
+                    return strcasecmp($a->getFirmrole()->getName(), $b->getFirmrole()->getName());
+                }
+                return $a->getTitle()->getPubdate() <=> $b->getTitle()->getPubDate();
         });
 
         return new ArrayCollection(iterator_to_array($iterator));
