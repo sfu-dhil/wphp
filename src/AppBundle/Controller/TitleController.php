@@ -97,7 +97,6 @@ class TitleController extends Controller implements PaginatorAwareInterface {
      *
      * @Route("/export", name="title_export", methods={"GET"})
      *
-     *
      * @return BinaryFileResponse
      */
     public function exportAction() {
@@ -184,7 +183,7 @@ class TitleController extends Controller implements PaginatorAwareInterface {
         $em = $this->getDoctrine()->getManager();
         $form = $this->createForm(TitleSearchType::class, null, array(
             'entity_manager' => $em,
-            'user' => $this->getUser()
+            'user' => $this->getUser(),
         ));
         $form->handleRequest($request);
         $titles = array();
@@ -221,7 +220,7 @@ class TitleController extends Controller implements PaginatorAwareInterface {
         $em = $this->getDoctrine()->getManager();
         $form = $this->createForm(TitleSearchType::class, null, array(
             'entity_manager' => $em,
-            'user' => $this->getUser()
+            'user' => $this->getUser(),
         ));
         $form->handleRequest($request);
         $titles = array();

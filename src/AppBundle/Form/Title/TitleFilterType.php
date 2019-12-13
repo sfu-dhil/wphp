@@ -66,9 +66,9 @@ class TitleFilterType extends AbstractType {
             'required' => false,
             'expanded' => true,
             'multiple' => true,
-            'attr' => [
+            'attr' => array(
                 'help_block' => 'title.search.titleRoles',
-            ]
+            ),
         ));
 
         $builder->add('pubdate', TextType::class, array(

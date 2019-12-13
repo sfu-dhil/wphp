@@ -403,9 +403,10 @@ class Person {
         $iterator = $this->titleRoles->getIterator();
         $iterator->uasort(function (TitleRole $a, TitleRole $b) {
             $dateCmp = $a->getTitle()->getPubdate() <=> $b->getTitle()->getPubdate();
-            if($dateCmp !== 0) {
+            if (0 !== $dateCmp) {
                 return $dateCmp;
             }
+
             return strcasecmp($a->getTitle()->getTitle(), $b->getTitle()->getTitle());
         });
 

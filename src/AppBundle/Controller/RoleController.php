@@ -51,7 +51,6 @@ class RoleController extends Controller implements PaginatorAwareInterface {
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
      * @Route("/typeahead", name="role_typeahead", methods={"GET"})
      *
-     *
      * @return JsonResponse
      */
     public function typeaheadAction(Request $request, RoleRepository $repo) {

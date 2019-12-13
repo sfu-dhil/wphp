@@ -145,8 +145,8 @@ class TitleType extends AbstractType {
             'label' => 'Colophon',
             'required' => false,
             'attr' => array(
-                'help_block' => 'title.form.colophon'
-            )
+                'help_block' => 'title.form.colophon',
+            ),
         ));
 
         $builder->add('locationOfPrinting', Select2EntityType::class, array(
@@ -176,7 +176,7 @@ class TitleType extends AbstractType {
             'placeholder' => 'Unknown',
             'attr' => array(
                 'help_block' => 'title.form.format',
-            )
+            ),
         ));
         $builder->add('sizeL', null, array(
             'label' => 'Size L',
