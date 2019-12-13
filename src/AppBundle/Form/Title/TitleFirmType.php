@@ -29,6 +29,9 @@ class TitleFirmType extends AbstractType {
             'allow_clear' => true,
             'delay' => 250,
             'language' => 'en',
+            'attr' => [
+                'help_block' => 'title.firm.name'
+            ]
         ));
 
         $builder->add('firmrole', EntityType::class, array(
@@ -37,6 +40,9 @@ class TitleFirmType extends AbstractType {
             'multiple' => false,
             'expanded' => false,
             'placeholder' => 'Select a firm role',
+            'attr' => [
+                'help_block' => 'title.firm.role'
+            ]
         ));
     }
 

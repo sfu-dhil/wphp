@@ -21,14 +21,23 @@ class PriceType extends AbstractType {
         $builder->add('price_pound', TextType::class, array(
             'label' => 'Price (£)',
             'required' => false,
+            'attr' => [
+                'help_block' => 'title.fields.pricePound',
+            ]
         ));
         $builder->add('price_shilling', TextType::class, array(
             'label' => 'Price (s)',
             'required' => false,
+            'attr' => [
+                'help_block' => 'title.fields.priceShilling',
+            ]
         ));
         $builder->add('price_pence', TextType::class, array(
             'label' => 'Price (p)',
             'required' => false,
+            'attr' => [
+                'help_block' => 'title.fields.pricePence',
+            ]
         ));
         $builder->add('price_comparison', ChoiceType::class, array(
             'label' => 'Comparison',
@@ -40,6 +49,9 @@ class PriceType extends AbstractType {
             ),
             'expanded' => false,
             'multiple' => false,
+            'attr' => [
+                'help_block' => 'How to compare this price against the record prices',
+            ]
         ));
     }
 }

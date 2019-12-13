@@ -29,6 +29,9 @@ class TitlePersonType extends AbstractType {
             'allow_clear' => true,
             'delay' => 250,
             'language' => 'en',
+            'attr' => [
+                'help_block' => 'person.search.name',
+            ]
         ));
 
         $builder->add('role', EntityType::class, array(
@@ -37,6 +40,9 @@ class TitlePersonType extends AbstractType {
             'multiple' => false,
             'expanded' => false,
             'placeholder' => 'Select a role',
+            'attr' => [
+                'help_block' => 'title.person.role'
+            ]
         ));
     }
 
