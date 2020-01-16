@@ -658,6 +658,10 @@ a.btn-primary:first-child:hover {
     display: block;
   }
 
+  #navbar[aria-expanded=false] > ul.nav {
+    display: none;
+  }
+
   .navbar-default .navbar-nav {
     float: none;
     width: 100%;
