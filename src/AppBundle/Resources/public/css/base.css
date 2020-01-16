@@ -716,10 +716,13 @@ a.btn-primary:first-child:hover {
 }
 
 .splash_image img {
-  width: 100%;
-  height: auto;
   display: block;
   filter: grayscale(50%);
+}
+
+img {
+  width: 100%;
+  height: 100%;
 }
 
 .panel-image {
