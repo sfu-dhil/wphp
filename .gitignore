@@ -32,3 +32,5 @@
 /app/Resources/views/jquery.collection.html.twig
 /web/tinymce
 .phpunit.result.cache
+*.code-workspace
+.DS_Store
