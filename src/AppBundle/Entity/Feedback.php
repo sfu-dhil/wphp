@@ -51,7 +51,7 @@ class Feedback {
      * The DateTime the entity was created (persisted really).
      *
      * @var DateTime
-     * @ORM\Column(name="created", type="datetime", options={"default": 0})
+     * @ORM\Column(name="created", type="datetime", nullable=false)
      */
     private $created;
 
