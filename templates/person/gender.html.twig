@@ -1,0 +1,11 @@
+{% spaceless %}
+    {% if person.gender == constant('App\\Entity\\Person::FEMALE') %}
+        Female
+    {% elseif person.gender == constant('App\\Entity\\Person::MALE') %}
+        Male
+    {% elseif person.gender == constant('App\\Entity\\Person::UNKNOWN')%}
+        Unknown
+    {% else %}
+        Unknown ({{ person.gender }})
+    {% endif %}
+{% endspaceless %}

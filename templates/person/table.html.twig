@@ -1,0 +1,60 @@
+<table class="table table-bordered table-condensed table-hover table-striped">
+    <thead>
+        <tr>
+            {% include 'partials/sortable.html.twig' with {
+                'pagination': people,
+                'header': 'ID',
+                'field': 'e.id',
+            } %}
+            {% include 'partials/sortable.html.twig' with {
+                'pagination': people,
+                'header': 'Last name',
+                'field': ['e.lastName', 'e.firstName', 'e.dob'],
+            } %}
+            {% include 'partials/sortable.html.twig' with {
+                'pagination': people,
+                'header': 'First name',
+                'field': ['e.firstName', 'e.lastName', 'e.dob'],
+            } %}
+            {% include 'partials/sortable.html.twig' with {
+                'pagination': people,
+                'header': 'Gender',
+                'field': ['e.gender', 'e.lastName', 'e.firstName', 'e.dob'],
+            } %}
+            {% include 'partials/sortable.html.twig' with {
+                'pagination': people,
+                'header': 'Date of Birth',
+                'field': ['e.dob', 'e.lastName', 'e.firstName'],
+            } %}
+            {% include 'partials/sortable.html.twig' with {
+                'pagination': people,
+                'header': 'Date of Death',
+                'field': ['e.dod', 'e.lastName', 'e.firstName'],
+            } %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for person in people %}
+            <tr>
+                <td>
+                    <a href="{{ path('person_show', { 'id': person.id }) }}">
+                        {{ person.id }}
+                    </a>
+                </td>
+                <td>
+                    <a href="{{ path('person_show', { 'id': person.id }) }}">
+                        {{ person.lastName }}
+                    </a>
+                </td>
+                <td>
+                    <a href="{{ path('person_show', { 'id': person.id }) }}">
+                        {{ person.firstName }}
+                    </a>
+                </td>
+                <td>{% include 'person/gender.html.twig' %}</td>
+                <td>{% if person.dob %}{{ person.dob|replace({'-00': ''}) }}{% endif %}</td>
+                <td>{% if person.dod %}{{ person.dod|replace({'-00': ''}) }}{% endif %}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

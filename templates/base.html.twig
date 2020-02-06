@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="google" content="notranslate" />
+        <title>{% block title %}WPHP{% endblock %}</title>
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
+        <link rel="stylesheet" href="{{ asset('bower/bootstrap/dist/css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('bower/bootstrap/dist/css/bootstrap-theme.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('bundles/app/css/base.css') }}">
+        {% block htmlhead %}{% endblock %}
+        <script src="{{ asset('bower/jquery/dist/jquery.min.js') }}"></script>
+        {% block styles %}{% endblock -%}
+    </head>
+    <body class="page_{{ app.request.pathinfo|replace({'/': '_'}) }}">
+        <!-- <nav class="navbar navbar-default navbar-fixed-top"> -->
+        <nav class="navbar navbar-default">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar" aria-expanded="true" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div id="navbar" class="collapse navbar-collapse in" aria-expanded="true">
+                    <ul class="nav navbar-nav">
+                        <li><a href="{{ path('homepage') }}"><img src="{{ asset('bundles/app/images/logo_white.svg')}}" title="Home page" /></a></li>
+                    </ul>
+                    {{ knp_menu_render('nines_blog_pages') }}
+                    {{ knp_menu_render('main') }}
+                    {{ knp_menu_render('search') }}
+                    {{ knp_menu_render('spotlight') }}
+                    {% set postMenu = knp_menu_get('wphp_post', [], {'title': 'News & Events'}) %}
+                    {{ knp_menu_render(postMenu) }}
+                    {{ knp_menu_render('wphp_user') }}
+                </div>
+            </div>
+        </nav>
+        <div class="container">
+            {% if block('pageheader') is defined %}
+                <div class="page-header">
+                    {{ block('pageheader') }}
+                </div>
+            {% endif %}
+
+            {% for type, messages in app.session.flashbag.all() %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ type }}">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+
+            {% block body %}
+            {% endblock %}
+        </div>
+
+        <footer class="footer">
+            <div class="container">
+                <div class='col-md-12'>
+                    <p><strong>The Women’s Print History Project</strong><br>
+                        <!-- <a href="{{ path('feedback_new') }}">Feedback</a> | -->
+                        <a href="{{ asset('docs/sphinx/index.html') }}">Documentation</a> |
+                        <a href="{{ path('privacy') }}">Privacy</a> |
+                        <a href="https://github.com/sfu-dhil/wphp">GitHub</a>
+                    </p>
+                </div>
+            </div>
+        </footer>
+
+
+        <script src="{{ asset('bower/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('bundles/app/js/form.js') }}"></script>
+        {% block javascripts %}
+        {% endblock %}
+
+        {% if piwik_enabled %}
+            <!-- Piwik -->
+            <script type="text/javascript">
+                var _paq = _paq || [];
+                _paq.push(["setDomains", ["{{ piwik_domain }}"]]);
+                _paq.push(["setDoNotTrack", true]);
+                _paq.push(['trackPageView']);
+                _paq.push(['enableLinkTracking']);
+                (function () {
+                    var u = "{{ piwik_url }}";
+                    _paq.push(['setTrackerUrl', u + 'piwik.php']);
+                    _paq.push(['setSiteId', '{{ piwik_siteid }}']);
+                    var d = document, g = d.createElement('script'), s = d.getElementsByTagName('script')[0];
+                    g.type = 'text/javascript';
+                    g.async = true;
+                    g.defer = true;
+                    g.src = u + 'piwik.js';
+                    s.parentNode.insertBefore(g, s);
+                })();
+            </script>
+            <noscript>
+            <p><img src="{{ piwik_url }}piwik.php?idsite={{ piwik_siteid }}" style="border:0;" alt="" /></p>
+            </noscript>
+            <!-- End Piwik Code -->
+        {% endif %}
+
+    </body>
+</html>

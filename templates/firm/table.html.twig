@@ -1,0 +1,48 @@
+<table class="table table-bordered table-condensed table-hover table-striped">
+    <thead>
+        <tr>
+            {% include 'partials/sortable.html.twig' with {
+                'pagination': firms,
+                'header': 'ID',
+                'field': 'e.id',
+            } %}
+            {% include 'partials/sortable.html.twig' with {
+                'pagination': firms,
+                'header': 'Name',
+                'field': ['e.name', 'e.startDate'],
+            } %}
+            <th>Street Address</th>
+            {% include 'partials/sortable.html.twig' with {
+                'pagination': firms,
+                'header': 'City',
+                'field': ['g.name', 'e.name'],
+            } %}
+            {% include 'partials/sortable.html.twig' with {
+                'pagination': firms,
+                'header': 'Start Date',
+                'field': ['e.startDate', 'e.name'],
+            } %}
+            {% include 'partials/sortable.html.twig' with {
+                'pagination': firms,
+                'header': 'End date',
+                'field': ['e.endDate', 'e.name'],
+            } %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for firm in firms %}
+            <tr>
+                <td>{{ firm.id }}</td>
+                <td>
+                    <a href="{{ path('firm_show', { 'id': firm.id }) }}">
+                        {{ firm.name }}
+                    </a>
+                </td>
+                <td>{{ firm.streetAddress }}</td>    
+                <td>{{ firm.city }}</td>
+                <td>{{ firm.startDate }}</td>
+                <td>{{ firm.endDate }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

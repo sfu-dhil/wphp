@@ -1,36 +1,24 @@
-/app/config/parameters.yml
-/app/config/deploy.yml
 
-/phpunit.xml
-
-/var/*
-!/var/cache
-/var/cache/*
-!var/cache/.gitkeep
-!/var/logs
-/var/logs/*
-!var/logs/.gitkeep
-!/var/sessions
-/var/sessions/*
-!var/sessions/.gitkeep
-!var/SymfonyRequirements.php
-
+###> symfony/framework-bundle ###
+/.env.local
+/.env.local.php
+/.env.*.local
+/config/secrets/prod/prod.decrypt.private.php
+/public/bundles/
+/var/
 /vendor/
+###< symfony/framework-bundle ###
 
-/web/bundles/
-
-/data
-
-/web/docs/*
-!/web/docs/.gitkeep
-/web/bower
-
-/coverage
-/.idea
-/etc
-/web/js
-/app/Resources/views/jquery.collection.html.twig
-/web/tinymce
+###> symfony/phpunit-bridge ###
+.phpunit
 .phpunit.result.cache
-*.code-workspace
-.DS_Store
+/phpunit.xml
+###< symfony/phpunit-bridge ###
+
+# PHPStorm config.
+/.idea
+.yarn-integrity
+public/yarn
+config/deploy.yaml
+*.sql
+jquery.collection.js
