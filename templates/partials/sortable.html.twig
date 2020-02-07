@@ -1,4 +1,4 @@
-{% spaceless %}
+{% apply spaceless %}
     {% if sortable is defined and sortable == true %}
         {% if field is iterable %}
             {% set fieldQ = field|join('+') %}
@@ -11,4 +11,4 @@
     {% else %}
         <th>{{ header }}</th>
     {% endif %}
-{% endspaceless %}
+{% endapply %}

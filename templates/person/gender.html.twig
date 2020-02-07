@@ -1,4 +1,4 @@
-{% spaceless %}
+{% apply spaceless %}
     {% if person.gender == constant('App\\Entity\\Person::FEMALE') %}
         Female
     {% elseif person.gender == constant('App\\Entity\\Person::MALE') %}
@@ -8,4 +8,4 @@
     {% else %}
         Unknown ({{ person.gender }})
     {% endif %}
-{% endspaceless %}
+{% endapply %}
