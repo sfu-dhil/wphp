@@ -253,7 +253,7 @@ class Builder implements ContainerAwareInterface {
                 continue;
             }
             $spotlight->addChild($category->getLabel(), [
-                'route' => 'post_category_show',
+                'route' => 'nines_blog_post_category_show',
                 'routeParameters' => [
                     'id' => $category->getId(),
                 ],
@@ -296,9 +296,9 @@ class Builder implements ContainerAwareInterface {
         $userMenu->setLinkAttribute('data-toggle', 'dropdown');
         $userMenu->setChildrenAttribute('class', 'dropdown-menu');
 
-        $user->addChild('Profile', ['route' => 'nines_user_profile_index']);
-        $user->addChild('Change password', ['route' => 'nines_user_profile_password']);
-        $user->addChild('Logout', ['route' => 'nines_user_security_logout']);
+        $userMenu->addChild('Profile', ['route' => 'nines_user_profile_index']);
+        $userMenu->addChild('Change password', ['route' => 'nines_user_profile_password']);
+        $userMenu->addChild('Logout', ['route' => 'nines_user_security_logout']);
 
         if ($this->hasRole('ROLE_ADMIN')) {
             $userMenu->addChild('divider', [
@@ -311,7 +311,7 @@ class Builder implements ContainerAwareInterface {
 
             $userMenu->addChild('users', [
                 'label' => 'Users',
-                'route' => 'user',
+                'route' => 'nines_user_admin_index',
             ]);
         }
 
@@ -325,13 +325,13 @@ class Builder implements ContainerAwareInterface {
             ]);
 
             $userMenu->addChild('Comments', [
-                'route' => 'admin_comment_index',
+                'route' => 'nines_feedback_comment_index',
             ]);
             $userMenu->addChild('Comment Notes', [
-                'route' => 'admin_comment_note_index',
+                'route' => 'nines_feedback_comment_note_index',
             ]);
             $userMenu->addChild('Comment States', [
-                'route' => 'admin_comment_status_index',
+                'route' => 'nines_feedback_comment_status_index',
             ]);
         }
 
@@ -383,7 +383,7 @@ class Builder implements ContainerAwareInterface {
                 continue;
             }
             $menu['announcements']->addChild($post->getTitle(), [
-                'route' => 'post_show',
+                'route' => 'nines_blog_post_show',
                 'routeParameters' => [
                     'id' => $post->getId(),
                 ],
@@ -412,11 +412,11 @@ class Builder implements ContainerAwareInterface {
 
             $menu['announcements']->addChild('post_category', [
                 'label' => 'Post Categories',
-                'route' => 'post_category_index',
+                'route' => 'nines_blog_post_category_index',
             ]);
             $menu['announcements']->addChild('post_status', [
                 'label' => 'Post Statuses',
-                'route' => 'post_status_index',
+                'route' => 'nines_blog_post_status_index',
             ]);
         }
 

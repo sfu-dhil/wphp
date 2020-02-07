@@ -6,12 +6,22 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="google" content="notranslate" />
         <title>{% block title %}WPHP{% endblock %}</title>
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
-        <link rel="stylesheet" href="{{ asset('bower/bootstrap/dist/css/bootstrap.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('bower/bootstrap/dist/css/bootstrap-theme.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('bundles/app/css/base.css') }}">
+        <link rel="stylesheet" href="{{ asset('yarn/bootstrap3/dist/css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('yarn/bootstrap3/dist/css/bootstrap-theme.min.css') }}">
+
+        <link rel="stylesheet" href="{{ asset('css/base.css') }}">
+
+        <script src="{{ asset('yarn/jquery/dist/jquery.min.js') }}"></script>
+
+        <script src="{{ asset('yarn/select2/dist/js/select2.full.min.js') }}"></script>
+        <link href="{{ asset('yarn/select2/dist/css/select2.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('yarn/select2-bootstrap-css/select2-bootstrap.min.css') }}" rel="stylesheet">
+
+        <script src="{{ asset('bundles/tetranzselect2entity/js/select2entity.js') }}"></script>
+        <script src="{{ asset('yarn/symfony-collection/jquery.collection.js') }}"></script>
+
+        <script src="{{ asset('js/form.js') }}"></script>
         {% block htmlhead %}{% endblock %}
-        <script src="{{ asset('bower/jquery/dist/jquery.min.js') }}"></script>
         {% block styles %}{% endblock -%}
     </head>
     <body class="page_{{ app.request.pathinfo|replace({'/': '_'}) }}">
@@ -28,7 +38,9 @@
                 </div>
                 <div id="navbar" class="collapse navbar-collapse in" aria-expanded="true">
                     <ul class="nav navbar-nav">
-                        <li><a href="{{ path('homepage') }}"><img src="{{ asset('bundles/app/images/logo_white.svg')}}" title="Home page" /></a></li>
+                        <li><a href="{{ path('homepage') }}">
+                                <img src="{{ asset('images/logo_white.svg')}}" title="Home page" />
+                            </a></li>
                     </ul>
                     {{ knp_menu_render('nines_blog_pages') }}
                     {{ knp_menu_render('main') }}
@@ -74,8 +86,7 @@
         </footer>
 
 
-        <script src="{{ asset('bower/bootstrap/dist/js/bootstrap.min.js') }}"></script>
-        <script src="{{ asset('bundles/app/js/form.js') }}"></script>
+        <script src="{{ asset('yarn/bootstrap3/dist/js/bootstrap.min.js') }}"></script>
         {% block javascripts %}
         {% endblock %}
 
