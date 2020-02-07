@@ -8,19 +8,19 @@ declare(strict_types=1);
  * with this source code in the file LICENSE.
  */
 
-namespace AppBundle\Tests\Services;
+namespace App\Tests\Services;
 
-use AppBundle\DataFixtures\ORM\LoadEn;
-use AppBundle\DataFixtures\ORM\LoadEstcMarc;
-use AppBundle\DataFixtures\ORM\LoadJackson;
-use AppBundle\DataFixtures\ORM\LoadOrlandoBiblio;
-use AppBundle\DataFixtures\ORM\LoadOsborneMarc;
-use AppBundle\Entity\Source;
-use AppBundle\Services\RoleChecker;
-use AppBundle\Services\SourceLinker;
-use Nines\UtilBundle\Tests\Util\BaseTestCase;
+use App\DataFixtures\EnFixtures;
+use App\DataFixtures\EstcMarcFixtures;
+use App\DataFixtures\JacksonFixtures;
+use App\DataFixtures\OrlandoBiblioFixtures;
+use App\DataFixtures\OsborneMarcFixtures;
+use App\Entity\Source;
+use App\Services\RoleChecker;
+use App\Services\SourceLinker;
+use Nines\UtilBundle\Tests\ControllerBaseCase;
 
-class SourceLinkerTest extends BaseTestCase {
+class SourceLinkerTest extends ControllerBaseCase {
     /**
      * @var SourceLinker
      */
@@ -28,13 +28,13 @@ class SourceLinkerTest extends BaseTestCase {
 
     private $checker;
 
-    protected function getFixtures() {
+    protected function fixtures() : array {
         return [
-            LoadEstcMarc::class,
-            LoadOrlandoBiblio::class,
-            LoadJackson::class,
-            LoadEn::class,
-            LoadOsborneMarc::class,
+            EstcMarcFixtures::class,
+            OrlandoBiblioFixtures::class,
+            JacksonFixtures::class,
+            EnFixtures::class,
+            OsborneMarcFixtures::class,
         ];
     }
 

@@ -8,11 +8,11 @@ declare(strict_types=1);
  * with this source code in the file LICENSE.
  */
 
-namespace AppBundle\Tests\Entity;
+namespace App\Tests\Entity;
 
-use AppBundle\Entity\Person;
-use AppBundle\Entity\Role;
-use AppBundle\Entity\TitleRole;
+use App\Entity\Person;
+use App\Entity\Role;
+use App\Entity\TitleRole;
 use PHPUnit\Framework\TestCase;
 
 /**

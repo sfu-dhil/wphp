@@ -8,18 +8,18 @@ declare(strict_types=1);
  * with this source code in the file LICENSE.
  */
 
-namespace AppBundle\Tests\Controller;
+namespace App\Tests\Controller;
 
-use AppBundle\DataFixtures\ORM\LoadOsborneMarc;
-use AppBundle\Repository\OsborneMarcRepository;
-use Nines\UserBundle\DataFixtures\ORM\LoadUser;
-use Nines\UtilBundle\Tests\Util\BaseTestCase;
+use App\DataFixtures\OsborneMarcFixtures;
+use App\Repository\OsborneMarcRepository;
+use Nines\UserBundle\DataFixtures\UserFixtures;
+use Nines\UtilBundle\Tests\ControllerBaseCase;
 
-class OsborneMarcControllerTest extends BaseTestCase {
-    protected function getFixtures() {
+class OsborneMarcControllerTest extends ControllerBaseCase {
+    protected function fixtures() : array {
         return [
-            LoadUser::class,
-            LoadOsborneMarc::class,
+            UserFixtures::class,
+            OsborneMarcFixtures::class,
         ];
     }
 
@@ -28,9 +28,9 @@ class OsborneMarcControllerTest extends BaseTestCase {
      * @group index
      */
     public function testAnonIndex() : void {
-        $client = $this->makeClient();
-        $crawler = $client->request('GET', '/resource/osborne/');
-        $this->assertSame(302, $client->getResponse()->getStatusCode());
+
+        $crawler = $this->client->request('GET', '/resource/osborne/');
+        $this->assertSame(302, $this->client->getResponse()->getStatusCode());
     }
 
     /**
@@ -38,9 +38,9 @@ class OsborneMarcControllerTest extends BaseTestCase {
      * @group index
      */
     public function testUserIndex() : void {
-        $client = $this->makeClient(LoadUser::USER);
-        $crawler = $client->request('GET', '/resource/osborne/');
-        $this->assertSame(200, $client->getResponse()->getStatusCode());
+        $this->login('user.user');
+        $crawler = $this->client->request('GET', '/resource/osborne/');
+        $this->assertSame(200, $this->client->getResponse()->getStatusCode());
     }
 
     /**
@@ -48,9 +48,9 @@ class OsborneMarcControllerTest extends BaseTestCase {
      * @group index
      */
     public function testAdminIndex() : void {
-        $client = $this->makeClient(LoadUser::ADMIN);
-        $crawler = $client->request('GET', '/resource/osborne/');
-        $this->assertSame(200, $client->getResponse()->getStatusCode());
+        $this->login('user.admin');
+        $crawler = $this->client->request('GET', '/resource/osborne/');
+        $this->assertSame(200, $this->client->getResponse()->getStatusCode());
     }
 
     /**
@@ -58,9 +58,9 @@ class OsborneMarcControllerTest extends BaseTestCase {
      * @group show
      */
     public function testAnonShow() : void {
-        $client = $this->makeClient();
-        $crawler = $client->request('GET', '/resource/osborne/1');
-        $this->assertSame(302, $client->getResponse()->getStatusCode());
+
+        $crawler = $this->client->request('GET', '/resource/osborne/1');
+        $this->assertSame(302, $this->client->getResponse()->getStatusCode());
     }
 
     /**
@@ -68,9 +68,9 @@ class OsborneMarcControllerTest extends BaseTestCase {
      * @group show
      */
     public function testUserShow() : void {
-        $client = $this->makeClient(LoadUser::USER);
-        $crawler = $client->request('GET', '/resource/osborne/1');
-        $this->assertSame(200, $client->getResponse()->getStatusCode());
+        $this->login('user.user');
+        $crawler = $this->client->request('GET', '/resource/osborne/1');
+        $this->assertSame(200, $this->client->getResponse()->getStatusCode());
     }
 
     /**
@@ -78,16 +78,16 @@ class OsborneMarcControllerTest extends BaseTestCase {
      * @group show
      */
     public function testAdminShow() : void {
-        $client = $this->makeClient(LoadUser::ADMIN);
-        $crawler = $client->request('GET', '/resource/osborne/1');
-        $this->assertSame(200, $client->getResponse()->getStatusCode());
+        $this->login('user.admin');
+        $crawler = $this->client->request('GET', '/resource/osborne/1');
+        $this->assertSame(200, $this->client->getResponse()->getStatusCode());
     }
 
     public function testAnonSearch() : void {
-        $client = $this->makeClient();
 
-        $crawler = $client->request('GET', '/resource/estc/search');
-        $this->assertSame(302, $client->getResponse()->getStatusCode());
+
+        $crawler = $this->client->request('GET', '/resource/estc/search');
+        $this->assertSame(302, $this->client->getResponse()->getStatusCode());
         $this->assertSame(0, $crawler->selectLink('Search')->count());
     }
 
@@ -95,17 +95,17 @@ class OsborneMarcControllerTest extends BaseTestCase {
         $repo = $this->createMock(OsborneMarcRepository::class);
         $repo->method('searchQuery')->willReturn([$this->getReference('osborne.0.0.2')]);
         $repo->method('findOneBy')->willReturn($this->getReference('osborne.0.0.0'));
-        $client = $this->makeClient(LoadUser::USER);
-        $client->getContainer()->set(OsborneMarcRepository::class, $repo);
+        $this->login('user.user');
+        $this->client->getContainer()->set(OsborneMarcRepository::class, $repo);
 
-        $formCrawler = $client->request('GET', '/resource/osborne/search');
-        $this->assertSame(200, $client->getResponse()->getStatusCode());
+        $formCrawler = $this->client->request('GET', '/resource/osborne/search');
+        $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $form = $formCrawler->selectButton('Search')->form([
             'q' => 'adventures',
         ]);
 
-        $responseCrawler = $client->submit($form);
-        $this->assertSame(200, $client->getResponse()->getStatusCode());
+        $responseCrawler = $this->client->submit($form);
+        $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $this->assertSame(1, $responseCrawler->filter('td:contains("Osborne Field Data")')->count());
     }
 
@@ -113,17 +113,17 @@ class OsborneMarcControllerTest extends BaseTestCase {
         $repo = $this->createMock(OsborneMarcRepository::class);
         $repo->method('searchQuery')->willReturn([$this->getReference('osborne.0.0.2')]);
         $repo->method('findOneBy')->willReturn($this->getReference('osborne.0.0.0'));
-        $client = $this->makeClient(LoadUser::ADMIN);
-        $client->getContainer()->set(OsborneMarcRepository::class, $repo);
+        $this->login('user.admin');
+        $this->client->getContainer()->set(OsborneMarcRepository::class, $repo);
 
-        $formCrawler = $client->request('GET', '/resource/osborne/search');
-        $this->assertSame(200, $client->getResponse()->getStatusCode());
+        $formCrawler = $this->client->request('GET', '/resource/osborne/search');
+        $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $form = $formCrawler->selectButton('Search')->form([
             'q' => 'adventures',
         ]);
 
-        $responseCrawler = $client->submit($form);
-        $this->assertSame(200, $client->getResponse()->getStatusCode());
+        $responseCrawler = $this->client->submit($form);
+        $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $this->assertSame(1, $responseCrawler->filter('td:contains("Osborne Field Data")')->count());
     }
 }

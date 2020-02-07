@@ -8,32 +8,32 @@ declare(strict_types=1);
  * with this source code in the file LICENSE.
  */
 
-namespace AppBundle\Services;
+namespace App\Services;
 
-use AppBundle\DataFixtures\ORM\LoadFormat;
-use AppBundle\DataFixtures\ORM\LoadPerson;
-use AppBundle\DataFixtures\ORM\LoadRole;
-use AppBundle\DataFixtures\ORM\LoadSource;
-use AppBundle\Entity\EstcMarc;
-use AppBundle\Entity\Person;
-use AppBundle\Entity\Title;
-use AppBundle\Repository\EstcMarcRepository;
-use AppBundle\Repository\TitleRepository;
-use AppBundle\Repository\TitleSourceRepository;
-use Nines\UtilBundle\Tests\Util\BaseTestCase;
+use App\DataFixtures\FormatFixtures;
+use App\DataFixtures\PersonFixtures;
+use App\DataFixtures\RoleFixtures;
+use App\DataFixtures\SourceFixtures;
+use App\Entity\EstcMarc;
+use App\Entity\Person;
+use App\Entity\Title;
+use App\Repository\EstcMarcRepository;
+use App\Repository\TitleRepository;
+use App\Repository\TitleSourceRepository;
+use Nines\UtilBundle\Tests\ControllerBaseCase;
 
-class EstcMarcImporterTest extends BaseTestCase {
+class EstcMarcImporterTest extends ControllerBaseCase {
     /**
      * @var EstcMarcImporter
      */
     private $importer;
 
-    protected function getFixtures() {
+    protected function fixtures() : array {
         return [
-            LoadPerson::class,
-            LoadRole::class,
-            LoadSource::class,
-            LoadFormat::class,
+            PersonFixtures::class,
+            RoleFixtures::class,
+            SourceFixtures::class,
+            FormatFixtures::class,
         ];
     }
 
@@ -124,12 +124,12 @@ class EstcMarcImporterTest extends BaseTestCase {
         $f2 = new EstcMarc();
         $f2->setField('100d')->setSubfield('d')->setFieldData('1751-1801.');
 
-        $personCount = $this->em->getRepository(Person::class)->count([]);
-        $this->em->clear();
+        $personCount = $this->entityManager->getRepository(Person::class)->count([]);
+        $this->entityManager->clear();
 
         $person = $this->importer->getPerson(['100a' => $f1, '100d' => $f2]);
         $this->assertInstanceOf(Person::class, $person);
-        $this->assertSame($personCount, $this->em->getRepository(Person::class)->count([]));
+        $this->assertSame($personCount, $this->entityManager->getRepository(Person::class)->count([]));
         $this->assertCount(0, $this->importer->getMessages());
         $this->assertSame('LastName 1', $person->getLastName());
     }
@@ -137,12 +137,12 @@ class EstcMarcImporterTest extends BaseTestCase {
     public function testGetPersonNoDates() : void {
         $f1 = new EstcMarc();
         $f1->setField('100')->setSubfield('a')->setFieldData('LastName 1, FirstName 1.');
-        $personCount = $this->em->getRepository(Person::class)->count([]);
-        $this->em->clear();
+        $personCount = $this->entityManager->getRepository(Person::class)->count([]);
+        $this->entityManager->clear();
 
         $person = $this->importer->getPerson(['100a' => $f1]);
         $this->assertInstanceOf(Person::class, $person);
-        $this->assertSame($personCount, $this->em->getRepository(Person::class)->count([]));
+        $this->assertSame($personCount, $this->entityManager->getRepository(Person::class)->count([]));
         $this->assertSame('LastName 1', $person->getLastName());
     }
 
@@ -150,17 +150,17 @@ class EstcMarcImporterTest extends BaseTestCase {
         $person = new Person();
         $person->setLastName('LastName 1');
         $person->setFirstName('FirstName 1');
-        $this->em->persist($person);
-        $this->em->flush();
+        $this->entityManager->persist($person);
+        $this->entityManager->flush();
 
         $f1 = new EstcMarc();
         $f1->setField('100')->setSubfield('a')->setFieldData('LastName 1, FirstName 1.');
-        $personCount = $this->em->getRepository(Person::class)->count([]);
-        $this->em->clear();
+        $personCount = $this->entityManager->getRepository(Person::class)->count([]);
+        $this->entityManager->clear();
 
         $found = $this->importer->getPerson(['100a' => $f1]);
         $this->assertInstanceOf(Person::class, $found);
-        $this->assertSame($personCount, $this->em->getRepository(Person::class)->count([]));
+        $this->assertSame($personCount, $this->entityManager->getRepository(Person::class)->count([]));
         $this->assertSame('LastName 1', $found->getLastName());
         $this->assertCount(1, $this->importer->getMessages());
     }
@@ -170,12 +170,12 @@ class EstcMarcImporterTest extends BaseTestCase {
         $f1->setField('100')->setSubfield('a')->setFieldData('Doolittle, Eliza');
         $f2 = new EstcMarc();
         $f2->setField('100d')->setSubfield('d')->setFieldData('1701-1761.');
-        $personCount = $this->em->getRepository(Person::class)->count([]);
-        $this->em->clear();
+        $personCount = $this->entityManager->getRepository(Person::class)->count([]);
+        $this->entityManager->clear();
 
         $person = $this->importer->getPerson(['100a' => $f1, '100d' => $f2]);
         $this->assertInstanceOf(Person::class, $person);
-        $this->assertSame($personCount + 1, $this->em->getRepository(Person::class)->count([]));
+        $this->assertSame($personCount + 1, $this->entityManager->getRepository(Person::class)->count([]));
         $this->assertSame('Doolittle', $person->getLastName());
     }
 

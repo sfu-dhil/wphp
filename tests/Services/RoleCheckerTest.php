@@ -8,14 +8,14 @@ declare(strict_types=1);
  * with this source code in the file LICENSE.
  */
 
-namespace AppBundle\Tests\Services;
+namespace App\Tests\Services;
 
-use AppBundle\Services\RoleChecker;
-use Nines\UtilBundle\Tests\Util\BaseTestCase;
+use App\Services\RoleChecker;
+use Nines\UtilBundle\Tests\ControllerBaseCase;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
-class RoleCheckerTest extends BaseTestCase {
+class RoleCheckerTest extends ControllerBaseCase {
     /**
      * @var RoleChecker
      */

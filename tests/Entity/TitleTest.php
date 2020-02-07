@@ -8,13 +8,13 @@ declare(strict_types=1);
  * with this source code in the file LICENSE.
  */
 
-namespace AppBundle\Tests\Entity;
+namespace App\Tests\Entity;
 
-use AppBundle\Entity\Firmrole;
-use AppBundle\Entity\Role;
-use AppBundle\Entity\Title;
-use AppBundle\Entity\TitleFirmrole;
-use AppBundle\Entity\TitleRole;
+use App\Entity\Firmrole;
+use App\Entity\Role;
+use App\Entity\Title;
+use App\Entity\TitleFirmrole;
+use App\Entity\TitleRole;
 use PHPUnit\Framework\TestCase;
 
 class TitleTest extends TestCase {

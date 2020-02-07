@@ -17,3 +17,7 @@ framework:
     #fragments: true
     php_errors:
         log: true
+
+liip_test_fixtures:
+    cache_db:
+        sqlite: liip_test_fixtures.services_database_backup.sqlite

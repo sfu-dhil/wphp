@@ -8,20 +8,20 @@ declare(strict_types=1);
  * with this source code in the file LICENSE.
  */
 
-namespace AppBundle\Tests\Services;
+namespace App\Tests\Services;
 
-use AppBundle\DataFixtures\ORM\LoadOrlandoBiblio;
-use AppBundle\Services\OrlandoManager;
-use Nines\UtilBundle\Tests\Util\BaseTestCase;
+use App\DataFixtures\OrlandoBiblioFixtures;
+use App\Services\OrlandoManager;
+use Nines\UtilBundle\Tests\ControllerBaseCase;
 
-class OrlandoManagerTest extends BaseTestCase {
+class OrlandoManagerTest extends ControllerBaseCase {
     public const DATA = 'A_ID = 20384 || STANDARD = Author 2 || ROLE = EDITOR %%% A_ID = 19884 || STANDARD = Other Author 2 || ROLE = AUTHOR';
 
     private $manager;
 
-    protected function getFixtures() {
+    protected function fixtures() : array {
         return [
-            LoadOrlandoBiblio::class,
+            OrlandoBiblioFixtures::class,
         ];
     }
 

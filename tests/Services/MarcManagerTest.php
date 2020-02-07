@@ -8,26 +8,26 @@ declare(strict_types=1);
  * with this source code in the file LICENSE.
  */
 
-namespace AppBundle\Tests\Services;
+namespace App\Tests\Services;
 
-use AppBundle\DataFixtures\ORM\LoadEstcMarc;
-use AppBundle\DataFixtures\ORM\LoadMarcSubfieldStructure;
-use AppBundle\DataFixtures\ORM\LoadMarcTagStructure;
-use AppBundle\DataFixtures\ORM\LoadOsborneMarc;
-use AppBundle\Entity\EstcMarc;
-use AppBundle\Entity\OsborneMarc;
-use AppBundle\Services\MarcManager;
-use Nines\UtilBundle\Tests\Util\BaseTestCase;
+use App\DataFixtures\EstcMarcFixtures;
+use App\DataFixtures\MarcSubfieldStructureFixtures;
+use App\DataFixtures\MarcTagStructureFixtures;
+use App\DataFixtures\OsborneMarcFixtures;
+use App\Entity\EstcMarc;
+use App\Entity\OsborneMarc;
+use App\Services\MarcManager;
+use Nines\UtilBundle\Tests\ControllerBaseCase;
 
-class MarcManagerTest extends BaseTestCase {
+class MarcManagerTest extends ControllerBaseCase {
     private $manager;
 
-    protected function getFixtures() {
+    protected function fixtures() : array {
         return [
-            LoadEstcMarc::class,
-            LoadOsborneMarc::class,
-            LoadMarcTagStructure::class,
-            LoadMarcSubfieldStructure::class,
+            EstcMarcFixtures::class,
+            OsborneMarcFixtures::class,
+            MarcTagStructureFixtures::class,
+            MarcSubfieldStructureFixtures::class,
         ];
     }
 

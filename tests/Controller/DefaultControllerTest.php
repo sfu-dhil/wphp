@@ -8,23 +8,22 @@ declare(strict_types=1);
  * with this source code in the file LICENSE.
  */
 
-namespace AppBundle\Tests\AppBundle\Controller;
+namespace App\Tests\App\Controller;
 
-use Nines\BlogBundle\DataFixtures\ORM\LoadPage;
-use Nines\UserBundle\DataFixtures\ORM\LoadUser;
-use Nines\UtilBundle\Tests\Util\BaseTestCase;
+use Nines\BlogBundle\DataFixtures\PageFixtures;
+use Nines\UserBundle\DataFixtures\UserFixtures;
+use Nines\UtilBundle\Tests\ControllerBaseCase;
 
-class DefaultControllerTest extends BaseTestCase {
-    protected function getFixtures() {
+class DefaultControllerTest extends ControllerBaseCase {
+    protected function fixtures() : array {
         return [
-            LoadPage::class,
-            LoadUser::class,
+            PageFixtures::class,
+            UserFixtures::class,
         ];
     }
 
     public function testIndex() : void {
-        $client = static::createClient();
-        $crawler = $client->request('GET', '/');
-        $this->assertSame(200, $client->getResponse()->getStatusCode());
+        $crawler = $this->client->request('GET', '/');
+        $this->assertSame(200, $this->client->getResponse()->getStatusCode());
     }
 }
