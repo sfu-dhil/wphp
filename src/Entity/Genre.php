@@ -1,5 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -82,8 +90,6 @@ class Genre {
     /**
      * Add title.
      *
-     * @param Title $title
-     *
      * @return Genre
      */
     public function addTitle(Title $title) {
@@ -94,10 +100,8 @@ class Genre {
 
     /**
      * Remove title.
-     *
-     * @param Title $title
      */
-    public function removeTitle(Title $title) {
+    public function removeTitle(Title $title) : void {
         $this->titles->removeElement($title);
     }
 

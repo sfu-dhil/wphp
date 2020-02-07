@@ -1,5 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace AppBundle\Tests\Entity;
 
 use AppBundle\Entity\Firmrole;
@@ -18,39 +26,39 @@ class TitleTest extends TestCase {
      * @param mixed $shillings
      * @param mixed $pounds
      */
-    public function testGetTotalPrice($expected, $pence, $shillings, $pounds) {
+    public function testGetTotalPrice($expected, $pence, $shillings, $pounds) : void {
         $title = new Title();
         $title->setPricePence($pence);
         $title->setPriceShilling($shillings);
         $title->setPricePound($pounds);
-        $this->assertEquals($expected, $title->getTotalPrice());
+        $this->assertSame($expected, $title->getTotalPrice());
     }
 
     public function getTotalPriceData() {
-        return array(
+        return [
             // array( expected, pence, shillings, pounds)
-            array(240, 0, 20, 0),
-            array(10, 10, 0, 0),
-            array(240, 0, 0, 1),
-            array(480, 0, 0, 2),
-            array(262, 10, 1, 1),
-            array(250, 10, 0, 1),
-            array(252, 0, 1, 1),
-            array(0, 0, 0, 0),
-            array(24, 12, 1, 0),
-            array(0, 'I am a chicken', 0, 0),
-            array(0, '3 chickens', 0, 0),
-            array(0, 0, '3 chickens', 0),
-            array(0, 0, 0, '3 chickens'),
-            array(-240, 0, 0, -1),
-            array(0, null, null, null),
-            array(40, 40, null, 0),
-            array(0, false, 0, 0),
-            array(12, false, 1, 0),
-        );
+            [240, 0, 20, 0],
+            [10, 10, 0, 0],
+            [240, 0, 0, 1],
+            [480, 0, 0, 2],
+            [262, 10, 1, 1],
+            [250, 10, 0, 1],
+            [252, 0, 1, 1],
+            [0, 0, 0, 0],
+            [24, 12, 1, 0],
+            [0, 'I am a chicken', 0, 0],
+            [0, '3 chickens', 0, 0],
+            [0, 0, '3 chickens', 0],
+            [0, 0, 0, '3 chickens'],
+            [-240, 0, 0, -1],
+            [0, null, null, null],
+            [40, 40, null, 0],
+            [0, false, 0, 0],
+            [12, false, 1, 0],
+        ];
     }
 
-    public function testGetTitleRoles() {
+    public function testGetTitleRoles() : void {
         $title = new Title();
         $role = new Role();
         $titleRole = new TitleRole();
@@ -68,7 +76,7 @@ class TitleTest extends TestCase {
         $this->AssertEquals(0, count($title->getTitleRoles()));
     }
 
-    public function testGetTitleFirmRoles() {
+    public function testGetTitleFirmRoles() : void {
         $title = new Title();
         $firmRole = new Firmrole();
         $titleFirmRole = new TitleFirmrole();

@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace AppBundle\Tests\Entity;
@@ -25,18 +27,18 @@ class PersonTest extends TestCase {
      * @param mixed $expected
      * @param mixed $date
      */
-    public function testGetDob($expected, $date) {
+    public function testGetDob($expected, $date) : void {
         $person = new Person();
         $person->setDob($date);
         $this->AssertEquals($expected, $person->getDob());
     }
 
     public function getDobData() {
-        return array(
-            array(null, '0000-00-00'),
-            array('1982-11-06', '1982-11-06'),
-            array(null, null),
-        );
+        return [
+            [null, '0000-00-00'],
+            ['1982-11-06', '1982-11-06'],
+            [null, null],
+        ];
     }
 
     /**
@@ -45,21 +47,21 @@ class PersonTest extends TestCase {
      * @param mixed $expected
      * @param mixed $date
      */
-    public function testGetDod($expected, $date) {
+    public function testGetDod($expected, $date) : void {
         $person = new Person();
         $person->setDod($date);
         $this->AssertEquals($expected, $person->getDod());
     }
 
     public function getDodData() {
-        return array(
-            array(null, '0000-00-00'),
-            array('1982-11-06', '1982-11-06'),
-            array(null, null),
-        );
+        return [
+            [null, '0000-00-00'],
+            ['1982-11-06', '1982-11-06'],
+            [null, null],
+        ];
     }
 
-    public function testGetTitleRoles() {
+    public function testGetTitleRoles() : void {
         $person = new Person();
         $role = new Role();
         $titleRole = new TitleRole();
@@ -77,7 +79,7 @@ class PersonTest extends TestCase {
         $this->AssertEquals(0, count($person->getTitleRoles()));
     }
 
-    public function testToString() {
+    public function testToString() : void {
         $person = new Person();
 
         $firstName = 'Jane';

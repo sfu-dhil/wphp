@@ -1,5 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\DataFixtures;
 
 use App\Entity\Format;
@@ -11,34 +19,32 @@ use Doctrine\Persistence\ObjectManager;
  * Load some test format data.
  */
 class FormatFixtures extends Fixture implements FixtureGroupInterface {
-    const DATA = array(
-        array('folio', 'fo'),
-        array('quarto', '4to'),
-        array('sexto', '6to'),
-        array('octavo', '8vo'),
-        array('duodecimo', '12mo'),
-        array('sextodecimo', '16mo'),
-        array('octodecimo', '18mo'),
-        array('vicesimo-quarto', '24mo'),
-        array('trigesimo-secundo', '32mo'),
-        array('quadragesimo-octavo', '48mo'),
-        array('sexagesimo-quarto', '64mo'),
-        array('broadside', 'bs'),
-    );
+    public const DATA = [
+        ['folio', 'fo'],
+        ['quarto', '4to'],
+        ['sexto', '6to'],
+        ['octavo', '8vo'],
+        ['duodecimo', '12mo'],
+        ['sextodecimo', '16mo'],
+        ['octodecimo', '18mo'],
+        ['vicesimo-quarto', '24mo'],
+        ['trigesimo-secundo', '32mo'],
+        ['quadragesimo-octavo', '48mo'],
+        ['sexagesimo-quarto', '64mo'],
+        ['broadside', 'bs'],
+    ];
 
     /**
      * {@inheritdoc}
      */
     public static function getGroups() : array {
-        return array('test');
+        return ['test'];
     }
 
     /**
      * {@inheritdoc}
-     *
-     * @param ObjectManager $manager
      */
-    public function load(ObjectManager $manager) {
+    public function load(ObjectManager $manager) : void {
         for ($i = 0; $i < 4; $i++) {
             $fixture = new Format();
             $fixture->setName('Name ' . $i);

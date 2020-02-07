@@ -1,5 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\Form\Person;
 
 use App\Entity\Role;
@@ -19,48 +27,42 @@ class PersonFilterType extends AbstractType {
      */
     private $em;
 
-    /**
-     * @param EntityManagerInterface $em
-     */
     public function __construct(EntityManagerInterface $em) {
         $this->em = $em;
     }
 
     /**
      * Build the form.
-     *
-     * @param FormBuilderInterface $builder
-     * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options) : void {
         $roleRepo = $this->em->getRepository(Role::class);
-        $roles = $roleRepo->findAll(array(
+        $roles = $roleRepo->findAll([
             'name' => 'ASC',
-        ));
-        $builder->add('name', TextType::class, array(
+        ]);
+        $builder->add('name', TextType::class, [
             'label' => 'Name',
             'required' => false,
-            'attr' => array(
+            'attr' => [
                 'help_block' => 'person.search.name',
-            ),
-        ));
+            ],
+        ]);
 
-        $builder->add('gender', ChoiceType::class, array(
+        $builder->add('gender', ChoiceType::class, [
             'label' => 'Gender',
-            'choices' => array(
+            'choices' => [
                 'Female' => 'F',
                 'Male' => 'M',
                 'Unknown' => 'U',
-            ),
-            'attr' => array(
+            ],
+            'attr' => [
                 'help_block' => 'person.search.gender',
-            ),
+            ],
             'required' => false,
             'expanded' => true,
             'multiple' => true,
-        ));
+        ]);
 
-        $builder->add('person_role', ChoiceType::class, array(
+        $builder->add('person_role', ChoiceType::class, [
             'choices' => $roles,
             'choice_label' => function ($value, $key, $index) {
                 return $value->getName();
@@ -74,9 +76,9 @@ class PersonFilterType extends AbstractType {
             'required' => false,
             'expanded' => true,
             'multiple' => true,
-            'attr' => array(
+            'attr' => [
                 'help_block' => 'person.search.role',
-            ),
-        ));
+            ],
+        ]);
     }
 }

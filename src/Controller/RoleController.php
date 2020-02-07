@@ -1,5 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\Controller;
 
 use App\Entity\Role;
@@ -7,6 +15,7 @@ use App\Form\RoleType;
 use App\Repository\RoleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
+use Nines\UtilBundle\Controller\PaginatorTrait;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,7 +23,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Nines\UtilBundle\Controller\PaginatorTrait;
 
 /**
  * Role controller.
@@ -30,9 +38,6 @@ class RoleController extends AbstractController implements PaginatorAwareInterfa
      * @Route("/", name="role_index", methods={"GET"})
      * @Template()
      *
-     * @param Request $request
-     * @param RoleRepository $repo
-     *
      * @return array
      */
     public function indexAction(Request $request, RoleRepository $repo, EntityManagerInterface $em) {
@@ -40,15 +45,13 @@ class RoleController extends AbstractController implements PaginatorAwareInterfa
         $query = $em->createQuery($dql);
         $roles = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
 
-        return array(
+        return [
             'roles' => $roles,
             'repo' => $repo,
-        );
+        ];
     }
 
     /**
-     * @param Request $request
-     * @param RoleRepository $repo
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
      * @Route("/typeahead", name="role_typeahead", methods={"GET"})
      *
@@ -57,14 +60,14 @@ class RoleController extends AbstractController implements PaginatorAwareInterfa
     public function typeaheadAction(Request $request, RoleRepository $repo) {
         $q = $request->query->get('q');
         if ( ! $q) {
-            return new JsonResponse(array());
+            return new JsonResponse([]);
         }
-        $data = array();
+        $data = [];
         foreach ($repo->typeaheadQuery($q) as $result) {
-            $data[] = array(
+            $data[] = [
                 'id' => $result->getId(),
                 'text' => $result->getName(),
-            );
+            ];
         }
 
         return new JsonResponse($data);
@@ -77,8 +80,6 @@ class RoleController extends AbstractController implements PaginatorAwareInterfa
      *
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
      * @Template()
-     *
-     * @param Request $request
      *
      * @return array
      */
@@ -93,13 +94,13 @@ class RoleController extends AbstractController implements PaginatorAwareInterfa
 
             $this->addFlash('success', 'The new role was created.');
 
-            return $this->redirectToRoute('role_show', array('id' => $role->getId()));
+            return $this->redirectToRoute('role_show', ['id' => $role->getId()]);
         }
 
-        return array(
+        return [
             'role' => $role,
             'form' => $form->createView(),
-        );
+        ];
     }
 
     /**
@@ -107,9 +108,6 @@ class RoleController extends AbstractController implements PaginatorAwareInterfa
      *
      * @Route("/{id}", name="role_show", methods={"GET"})
      * @Template()
-     *
-     * @param Request $request
-     * @param Role $role
      *
      * @return array
      */
@@ -119,10 +117,10 @@ class RoleController extends AbstractController implements PaginatorAwareInterfa
         $query->setParameter('role', $role);
         $titleRoles = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
 
-        return array(
+        return [
             'role' => $role,
             'titleRoles' => $titleRoles,
-        );
+        ];
     }
 
     /**
@@ -131,9 +129,6 @@ class RoleController extends AbstractController implements PaginatorAwareInterfa
      * @Route("/{id}/edit", name="role_edit", methods={"GET","POST"})
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
      * @Template()
-     *
-     * @param Request $request
-     * @param Role $role
      *
      * @return array|RedirectResponse
      */
@@ -145,13 +140,13 @@ class RoleController extends AbstractController implements PaginatorAwareInterfa
             $em->flush();
             $this->addFlash('success', 'The role has been updated.');
 
-            return $this->redirectToRoute('role_show', array('id' => $role->getId()));
+            return $this->redirectToRoute('role_show', ['id' => $role->getId()]);
         }
 
-        return array(
+        return [
             'role' => $role,
             'edit_form' => $editForm->createView(),
-        );
+        ];
     }
 
     /**
@@ -159,9 +154,6 @@ class RoleController extends AbstractController implements PaginatorAwareInterfa
      *
      * @Route("/{id}/delete", name="role_delete", methods={"GET"})
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
-     *
-     * @param Request $request
-     * @param Role $role
      *
      * @return RedirectResponse
      */

@@ -1,5 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -21,11 +29,11 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="App\Repository\FirmRepository")
  */
 class Firm {
-    const MALE = 'M';
+    public const MALE = 'M';
 
-    const FEMALE = 'F';
+    public const FEMALE = 'F';
 
-    const UNKNOWN = 'U';
+    public const UNKNOWN = 'U';
 
     /**
      * @var int
@@ -263,8 +271,6 @@ class Firm {
     /**
      * Add titleFirmrole.
      *
-     * @param TitleFirmrole $titleFirmrole
-     *
      * @return Firm
      */
     public function addTitleFirmrole(TitleFirmrole $titleFirmrole) {
@@ -275,10 +281,8 @@ class Firm {
 
     /**
      * Remove titleFirmrole.
-     *
-     * @param TitleFirmrole $titleFirmrole
      */
-    public function removeTitleFirmrole(TitleFirmrole $titleFirmrole) {
+    public function removeTitleFirmrole(TitleFirmrole $titleFirmrole) : void {
         $this->titleFirmroles->removeElement($titleFirmrole);
     }
 

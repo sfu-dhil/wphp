@@ -1,5 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\Controller;
 
 use App\Entity\Source;
@@ -7,6 +15,7 @@ use App\Form\SourceType;
 use App\Repository\SourceRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
+use Nines\UtilBundle\Controller\PaginatorTrait;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,7 +23,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Nines\UtilBundle\Controller\PaginatorTrait;
 
 /**
  * Source controller.
@@ -30,9 +38,6 @@ class SourceController extends AbstractController implements PaginatorAwareInter
      * @Route("/", name="source_index", methods={"GET"})
      * @Template()
      *
-     * @param Request $request
-     * @param SourceRepository $repo
-     *
      * @return array
      */
     public function indexAction(Request $request, EntityManagerInterface $em, SourceRepository $repo) {
@@ -40,17 +45,14 @@ class SourceController extends AbstractController implements PaginatorAwareInter
         $query = $em->createQuery($dql);
         $sources = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
 
-        return array(
+        return [
             'sources' => $sources,
             'repo' => $repo,
-        );
+        ];
     }
 
     /**
      * Typeahead action for editor widgets.
-     *
-     * @param Request $request
-     * @param SourceRepository $repo
      *
      * @return JsonResponse
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
@@ -59,14 +61,14 @@ class SourceController extends AbstractController implements PaginatorAwareInter
     public function typeaheadAction(Request $request, SourceRepository $repo) {
         $q = $request->query->get('q');
         if ( ! $q) {
-            return new JsonResponse(array());
+            return new JsonResponse([]);
         }
-        $data = array();
+        $data = [];
         foreach ($repo->typeaheadQuery($q) as $result) {
-            $data[] = array(
+            $data[] = [
                 'id' => $result->getId(),
                 'text' => $result->getName(),
-            );
+            ];
         }
 
         return new JsonResponse($data);
@@ -78,8 +80,6 @@ class SourceController extends AbstractController implements PaginatorAwareInter
      * @Route("/new", name="source_new", methods={"GET","POST"})
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
      * @Template()
-     *
-     * @param Request $request
      *
      * @return array|RedirectResponse
      */
@@ -94,13 +94,13 @@ class SourceController extends AbstractController implements PaginatorAwareInter
 
             $this->addFlash('success', 'The new source was created.');
 
-            return $this->redirectToRoute('source_show', array('id' => $source->getId()));
+            return $this->redirectToRoute('source_show', ['id' => $source->getId()]);
         }
 
-        return array(
+        return [
             'source' => $source,
             'form' => $form->createView(),
-        );
+        ];
     }
 
     /**
@@ -108,9 +108,6 @@ class SourceController extends AbstractController implements PaginatorAwareInter
      *
      * @Route("/{id}", name="source_show", methods={"GET"})
      * @Template()
-     *
-     * @param Request $request
-     * @param Source $source
      *
      * @return array
      */
@@ -120,10 +117,10 @@ class SourceController extends AbstractController implements PaginatorAwareInter
         $query->setParameter('source', $source);
         $titles = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
 
-        return array(
+        return [
             'source' => $source,
             'titles' => $titles,
-        );
+        ];
     }
 
     /**
@@ -132,9 +129,6 @@ class SourceController extends AbstractController implements PaginatorAwareInter
      * @Route("/{id}/edit", name="source_edit", methods={"GET","POST"})
      * @Template()
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
-     *
-     * @param Request $request
-     * @param Source $source
      *
      * @return array|RedirectResponse
      */
@@ -146,13 +140,13 @@ class SourceController extends AbstractController implements PaginatorAwareInter
             $em->flush();
             $this->addFlash('success', 'The source has been updated.');
 
-            return $this->redirectToRoute('source_show', array('id' => $source->getId()));
+            return $this->redirectToRoute('source_show', ['id' => $source->getId()]);
         }
 
-        return array(
+        return [
             'source' => $source,
             'edit_form' => $editForm->createView(),
-        );
+        ];
     }
 
     /**
@@ -160,9 +154,6 @@ class SourceController extends AbstractController implements PaginatorAwareInter
      *
      * @Route("/{id}/delete", name="source_delete", methods={"GET"})
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
-     *
-     * @param Request $request
-     * @param Source $source
      *
      * @return RedirectResponse
      */

@@ -1,15 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\Controller;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
+use Nines\UtilBundle\Controller\PaginatorTrait;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Nines\UtilBundle\Controller\PaginatorTrait;
 
 /**
  * Reports controller.
@@ -26,9 +34,6 @@ class ReportController extends AbstractController implements PaginatorAwareInter
      * @Route("/titles_fc", name="report_titles_check", methods={"GET"})
      * @Template()
      *
-     * @param Request $request
-     * @param EntityManagerInterface $em
-     *
      * @return array
      */
     public function titlesFinalCheckAction(Request $request, EntityManagerInterface $em) {
@@ -36,8 +41,8 @@ class ReportController extends AbstractController implements PaginatorAwareInter
         $query = $em->createQuery($dql);
         $titles = $this->paginator->paginate($query->execute(), $request->query->getInt('page', 1), 25);
 
-        return array(
+        return [
             'titles' => $titles,
-        );
+        ];
     }
 }

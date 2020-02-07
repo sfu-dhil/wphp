@@ -1,12 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\Services;
 
 /**
  * Manage Orlando records.
  */
 class OrlandoManager {
-    const DELIM = ' || ';
+    public const DELIM = ' || ';
 
     /**
      * Get the named field for the Orlando data.
@@ -18,7 +26,7 @@ class OrlandoManager {
      */
     public function getField($data, $name = 'standard') {
         $name = strtolower($name);
-        $fields = array();
+        $fields = [];
         if ( ! $data) {
             return $fields;
         }

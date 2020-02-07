@@ -1,5 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\Form\Title;
 
 use App\Entity\Genre;
@@ -21,38 +29,32 @@ class TitleFilterType extends AbstractType {
      */
     private $em;
 
-    /**
-     * @param EntityManagerInterface $em
-     */
     public function __construct(EntityManagerInterface $em) {
         $this->em = $em;
     }
 
     /**
      * Build the form.
-     *
-     * @param FormBuilderInterface $builder
-     * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options) : void {
         $genreRepo = $this->em->getRepository(Genre::class);
         $roleRepo = $this->em->getRepository(Role::class);
-        $roles = $roleRepo->findAll(array(
+        $roles = $roleRepo->findAll([
             'name' => 'ASC',
-        ));
-        $genres = $genreRepo->findAll(array(
+        ]);
+        $genres = $genreRepo->findAll([
             'name' => 'asc',
-        ));
+        ]);
 
-        $builder->add('title', TextType::class, array(
+        $builder->add('title', TextType::class, [
             'label' => 'Title',
             'required' => false,
-            'attr' => array(
+            'attr' => [
                 'help_block' => 'title.search.title',
-            ),
-        ));
+            ],
+        ]);
 
-        $builder->add('person_role', ChoiceType::class, array(
+        $builder->add('person_role', ChoiceType::class, [
             'choices' => $roles,
             'choice_label' => function ($value, $key, $index) {
                 return $value->getName();
@@ -66,20 +68,20 @@ class TitleFilterType extends AbstractType {
             'required' => false,
             'expanded' => true,
             'multiple' => true,
-            'attr' => array(
+            'attr' => [
                 'help_block' => 'title.search.titleRoles',
-            ),
-        ));
+            ],
+        ]);
 
-        $builder->add('pubdate', TextType::class, array(
+        $builder->add('pubdate', TextType::class, [
             'label' => 'Date of Publication',
             'required' => false,
-            'attr' => array(
+            'attr' => [
                 'help_block' => 'title.search.pubdate',
-            ),
-        ));
+            ],
+        ]);
 
-        $builder->add('genre', ChoiceType::class, array(
+        $builder->add('genre', ChoiceType::class, [
             'choices' => $genres,
             'choice_label' => function ($value, $key, $index) {
                 return $value->getName();
@@ -91,17 +93,17 @@ class TitleFilterType extends AbstractType {
             'required' => false,
             'expanded' => true,
             'multiple' => true,
-            'attr' => array(
+            'attr' => [
                 'help_block' => 'title.search.genre',
-            ),
-        ));
+            ],
+        ]);
 
-        $builder->add('location', TextType::class, array(
+        $builder->add('location', TextType::class, [
             'label' => 'Location of Printing',
             'required' => false,
-            'attr' => array(
+            'attr' => [
                 'help_block' => 'title.search.locationOfPrinting',
-            ),
-        ));
+            ],
+        ]);
     }
 }

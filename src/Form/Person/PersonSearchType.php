@@ -1,5 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\Form\Person;
 
 use App\Form\Firm\FirmFilterType;
@@ -16,24 +24,21 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class PersonSearchType extends AbstractType {
     /**
      * Build the form.
-     *
-     * @param FormBuilderInterface $builder
-     * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options) : void {
         $builder->setMethod('get');
 
-        $builder->add('name', TextType::class, array(
+        $builder->add('name', TextType::class, [
             'label' => 'Search Persons by Name',
             'required' => false,
-            'attr' => array(
+            'attr' => [
                 'help_block' => 'person.search.name',
-            ),
-        ));
+            ],
+        ]);
 
-        $builder->add('order', ChoiceType::class, array(
+        $builder->add('order', ChoiceType::class, [
             'label' => 'Results Sorted By',
-            'choices' => array(
+            'choices' => [
                 'Last Name (A to Z)' => 'lastname_asc',
                 'Last Name (Z to A)' => 'lastname_desc',
                 'First Name (A to Z)' => 'firstname_asc',
@@ -44,120 +49,118 @@ class PersonSearchType extends AbstractType {
                 'Birth Date (Youngest First)' => 'birth_desc',
                 'Death Date (Most Recent Last)' => 'death_asc',
                 'Death Date (Most Recent First)' => 'death_desc',
-            ),
-            'attr' => array(
+            ],
+            'attr' => [
                 'help_block' => 'Choose a sort method for the results',
-            ),
+            ],
             'required' => false,
             'expanded' => false,
             'multiple' => false,
             'empty_data' => null,
             'data' => null,
-        ));
+        ]);
 
-        $builder->add('id', TextType::class, array(
+        $builder->add('id', TextType::class, [
             'label' => 'Person ID',
             'required' => false,
-            'attr' => array(
+            'attr' => [
                 'help_block' => 'person.search.id',
-            ),
-        ));
+            ],
+        ]);
 
-        $builder->add('gender', ChoiceType::class, array(
+        $builder->add('gender', ChoiceType::class, [
             'label' => 'Gender',
-            'choices' => array(
+            'choices' => [
                 'Female' => 'F',
                 'Male' => 'M',
                 'Unknown' => 'U',
-            ),
-            'attr' => array(
+            ],
+            'attr' => [
                 'help_block' => 'person.search.gender',
-            ),
+            ],
             'required' => false,
             'expanded' => true,
             'multiple' => true,
             'empty_data' => null,
             'data' => null,
-        ));
+        ]);
 
-        $builder->add('dob', TextType::class, array(
+        $builder->add('dob', TextType::class, [
             'label' => 'Date of Birth',
             'required' => false,
-            'attr' => array(
+            'attr' => [
                 'help_block' => 'person.search.dob',
-            ),
-        ));
+            ],
+        ]);
 
-        $builder->add('dod', TextType::class, array(
+        $builder->add('dod', TextType::class, [
             'label' => 'Date of Death',
             'required' => false,
-            'attr' => array(
+            'attr' => [
                 'help_block' => 'person.search.dod',
-            ),
-        ));
+            ],
+        ]);
 
-        $builder->add('birthplace', TextType::class, array(
+        $builder->add('birthplace', TextType::class, [
             'label' => 'Place of Birth',
             'required' => false,
-            'attr' => array(
+            'attr' => [
                 'help_block' => 'person.search.cityOfBirth',
-            ),
-        ));
+            ],
+        ]);
 
-        $builder->add('deathplace', TextType::class, array(
+        $builder->add('deathplace', TextType::class, [
             'label' => 'Place of Death',
             'required' => false,
-            'attr' => array(
+            'attr' => [
                 'help_block' => 'person.search.cityOfDeath',
-            ),
-        ));
+            ],
+        ]);
 
-        $builder->add('viafUrl', TextType::class, array(
+        $builder->add('viafUrl', TextType::class, [
             'label' => 'VIAF URI',
             'required' => false,
-            'attr' => array(
+            'attr' => [
                 'help_block' => 'person.search.viafUrl',
-            ),
-        ));
-        $builder->add('wikipediaUrl', TextType::class, array(
+            ],
+        ]);
+        $builder->add('wikipediaUrl', TextType::class, [
             'label' => 'Wikipedia URL',
             'required' => false,
-            'attr' => array(
+            'attr' => [
                 'help_block' => 'person.search.wikipediaUrl',
-            ),
-        ));
-        $builder->add('imageUrl', TextType::class, array(
+            ],
+        ]);
+        $builder->add('imageUrl', TextType::class, [
             'label' => 'Image URL',
             'required' => false,
-            'attr' => array(
+            'attr' => [
                 'help_block' => 'person.search.imageUrl',
-            ),
-        ));
+            ],
+        ]);
 
-        $builder->add('title_filter', TitleFilterType::class, array(
+        $builder->add('title_filter', TitleFilterType::class, [
             'label' => 'Filter by Title',
             'required' => false,
-            'attr' => array(
+            'attr' => [
                 'class' => 'embedded-form',
-            ),
-        ));
+            ],
+        ]);
 
-        $builder->add('firm_filter', FirmFilterType::class, array(
+        $builder->add('firm_filter', FirmFilterType::class, [
             'label' => 'Filter by Firm',
             'required' => false,
-            'attr' => array(
+            'attr' => [
                 'class' => 'embedded-form',
-            ),
-        ));
+            ],
+        ]);
     }
 
     /**
      * {@inheritdoc}
-     *
-     * @param OptionsResolver $resolver
      */
-    public function configureOptions(OptionsResolver $resolver) {
+    public function configureOptions(OptionsResolver $resolver) : void {
         parent::configureOptions($resolver);
-        $resolver->setRequired(array('entity_manager'));
+        $resolver->setRequired(['entity_manager']);
     }
 }

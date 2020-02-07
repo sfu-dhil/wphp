@@ -1,5 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\Services;
 
 use App\Entity\EstcMarc;
@@ -70,8 +78,6 @@ class EstcMarcImporter {
 
     /**
      * EstcMarcImporter constructor.
-     *
-     * @param EntityManagerInterface $em
      */
     public function __construct(EntityManagerInterface $em) {
         $this->em = $em;
@@ -82,7 +88,7 @@ class EstcMarcImporter {
         $this->sourceRepo = $this->em->getRepository(Source::class);
         $this->formatRepo = $this->em->getRepository(Format::class);
         $this->titleSourceRepository = $this->em->getRepository(TitleSource::class);
-        $this->messages = array();
+        $this->messages = [];
     }
 
     /**
@@ -93,8 +99,8 @@ class EstcMarcImporter {
      * @return array
      */
     public function getFields($id) {
-        $data = $this->estcRepo->findBy(array('titleId' => $id));
-        $fields = array();
+        $data = $this->estcRepo->findBy(['titleId' => $id]);
+        $fields = [];
 
         foreach ($data as $row) {
             $fields[$row->getField() . $row->getSubfield()] = $row;
@@ -109,15 +115,15 @@ class EstcMarcImporter {
      * @param string $fullTitle
      * @param string $id
      */
-    public function checkTitle($fullTitle, $id) {
-        if (count($this->titleRepo->findBy(array('title' => $fullTitle)))) {
+    public function checkTitle($fullTitle, $id) : void {
+        if (count($this->titleRepo->findBy(['title' => $fullTitle]))) {
             $this->messages[] = 'This title may already exist in the database. Please check for it before saving the form.';
         }
 
-        if (count($this->titleSourceRepository->findBy(array(
-            'source' => $this->sourceRepo->findOneBy(array('name' => 'ESTC')),
+        if (count($this->titleSourceRepository->findBy([
+            'source' => $this->sourceRepo->findOneBy(['name' => 'ESTC']),
             'identifier' => $id,
-        )))) {
+        ]))) {
             $this->messages[] = 'This ESTC ID already exists in the database. Please check that you are not duplicating data.';
         }
     }
@@ -131,27 +137,27 @@ class EstcMarcImporter {
      */
     public function getDates($fields) {
         if ( ! isset($fields['100d']) || null === $fields['100d']->getFieldData()) {
-            return array(null, null);
+            return [null, null];
         }
         $data = $fields['100d']->getFieldData();
 
-        $matches = array();
+        $matches = [];
         if (preg_match('/(\d{4})[?.]*-(\d{4})/', $data, $matches)) {
-            return array($matches[1], $matches[2]);
+            return [$matches[1], $matches[2]];
         }
         if (preg_match('/-(\d{4})/', $data, $matches)) {
-            return array(null, $matches[1]);
+            return [null, $matches[1]];
         }
         if (preg_match('/(\d{4})[?.]*-/', $data, $matches)) {
-            return array($matches[1], null);
+            return [$matches[1], null];
         }
         if (preg_match('/b\.\s*(\d{4})/', $data, $matches)) {
-            return array($matches[1], null);
+            return [$matches[1], null];
         }
 
         $this->messages[] = 'Cannot parse author dates: ' . $data . '. Author information may be incorrect.';
 
-        return array(null, null);
+        return [null, null];
     }
 
     /**
@@ -189,15 +195,12 @@ class EstcMarcImporter {
 
     /**
      * Add the person to a title as an author.
-     *
-     * @param Title $title
-     * @param Person $person
      */
-    public function addAuthor(Title $title, Person $person) {
+    public function addAuthor(Title $title, Person $person) : void {
         if ( ! $person) {
             return;
         }
-        $role = $this->roleRepo->findOneBy(array('name' => 'Author'));
+        $role = $this->roleRepo->findOneBy(['name' => 'Author']);
         $titleRole = new TitleRole();
         $titleRole->setPerson($person);
         $titleRole->setRole($role);
@@ -218,18 +221,18 @@ class EstcMarcImporter {
             return;
         }
         $data = $fields['300c']->getFieldData();
-        $matches = array();
+        $matches = [];
         $format = null;
         if (preg_match('/(\d+[mtv]o)/', $data, $matches)) {
-            $format = $this->formatRepo->findOneBy(array(
+            $format = $this->formatRepo->findOneBy([
                 'abbreviation' => $matches[1],
-            ));
+            ]);
         }
         if ( ! $format) {
             $this->messages[] = 'Cannot guess format from ' . $data . '.';
-            $format = $this->formatRepo->findOneBy(array(
+            $format = $this->formatRepo->findOneBy([
                 'name' => 'unknown',
-            ));
+            ]);
         }
 
         return $format;
@@ -244,21 +247,21 @@ class EstcMarcImporter {
      */
     public function guessDimensions($fields) {
         if ( ! isset($fields['300c']) || null === $fields['300c']->getFieldData()) {
-            return array(null, null);
+            return [null, null];
         }
         $data = $fields['300c']->getFieldData();
-        $matches = array();
+        $matches = [];
         if (preg_match('/(\\d+)\\s*(?:cm)?\\s*x\\s*(\\d+)\\s*(?:cm)?/', $data, $matches)) {
-            return array($matches[1], $matches[2]);
+            return [$matches[1], $matches[2]];
         }
 
         if (preg_match('/(\\d+)\\s*(?:cm|mm)/', $data, $matches)) {
-            return array($matches[1], null);
+            return [$matches[1], null];
         }
 
         $this->messages[] = 'Cannot parse dimensions: ' . $data;
 
-        return array(null, null);
+        return [null, null];
     }
 
     /**
@@ -296,7 +299,7 @@ class EstcMarcImporter {
         }
 
         $titleSource = new TitleSource();
-        $titleSource->setSource($this->sourceRepo->findOneBy(array('name' => 'ESTC')));
+        $titleSource->setSource($this->sourceRepo->findOneBy(['name' => 'ESTC']));
         $titleSource->setTitle($title);
         $titleSource->setIdentifier($fields['001']->getFieldData());
         $title->addTitleSource($titleSource);
@@ -324,55 +327,34 @@ class EstcMarcImporter {
     /**
      * Clear out the messages list.
      */
-    public function resetMessages() {
-        $this->messages = array();
+    public function resetMessages() : void {
+        $this->messages = [];
     }
 
-    /**
-     * @param EstcMarcRepository $estcRepo
-     */
     public function setEstcRepo(EstcMarcRepository $estcRepo) : void {
         $this->estcRepo = $estcRepo;
     }
 
-    /**
-     * @param PersonRepository $personRepo
-     */
     public function setPersonRepo(PersonRepository $personRepo) : void {
         $this->personRepo = $personRepo;
     }
 
-    /**
-     * @param TitleRepository $titleRepo
-     */
     public function setTitleRepo(TitleRepository $titleRepo) : void {
         $this->titleRepo = $titleRepo;
     }
 
-    /**
-     * @param TitleSourceRepository $titleSourceRepo
-     */
     public function setTitleSourceRepo(TitleSourceRepository $titleSourceRepo) : void {
         $this->titleSourceRepository = $titleSourceRepo;
     }
 
-    /**
-     * @param RoleRepository $roleRepo
-     */
     public function setRoleRepo(RoleRepository $roleRepo) : void {
         $this->roleRepo = $roleRepo;
     }
 
-    /**
-     * @param SourceRepository $sourceRepo
-     */
     public function setSourceRepo(SourceRepository $sourceRepo) : void {
         $this->sourceRepo = $sourceRepo;
     }
 
-    /**
-     * @param FormatRepository $formatRepo
-     */
     public function setFormatRepo(FormatRepository $formatRepo) : void {
         $this->formatRepo = $formatRepo;
     }

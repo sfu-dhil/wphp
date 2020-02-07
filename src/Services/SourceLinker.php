@@ -1,5 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\Services;
 
 use App\Entity\En;
@@ -32,10 +40,6 @@ class SourceLinker {
 
     /**
      * SourceLinker constructor.
-     *
-     * @param EntityManagerInterface $em
-     * @param UrlGeneratorInterface $generator
-     * @param RoleChecker $checker
      */
     public function __construct(EntityManagerInterface $em, UrlGeneratorInterface $generator, RoleChecker $checker) {
         $this->em = $em;
@@ -45,10 +49,8 @@ class SourceLinker {
 
     /**
      * Set the role checker.
-     *
-     * @param RoleChecker $checker
      */
-    public function setRoleChecker(RoleChecker $checker) {
+    public function setRoleChecker(RoleChecker $checker) : void {
         $this->checker = $checker;
     }
 
@@ -65,15 +67,15 @@ class SourceLinker {
             return 'http://estc.bl.uk/' . $data;
         }
         $repo = $this->em->getRepository(EstcMarc::class);
-        $record = $repo->findOneBy(array(
+        $record = $repo->findOneBy([
             'fieldData' => $data,
             'field' => '001',
-        ));
+        ]);
 
         if ($record) {
-            return $this->generator->generate('resource_estc_show', array(
+            return $this->generator->generate('resource_estc_show', [
                 'id' => $record->getTitleId(),
-            ));
+            ]);
         }
     }
 
@@ -90,13 +92,13 @@ class SourceLinker {
             return;
         }
         $repo = $this->em->getRepository(OrlandoBiblio::class);
-        $record = $repo->findOneBy(array(
+        $record = $repo->findOneBy([
             'orlandoId' => $data,
-        ));
+        ]);
         if ($record) {
-            return $this->generator->generate('resource_orlando_biblio_show', array(
+            return $this->generator->generate('resource_orlando_biblio_show', [
                 'id' => $record->getId(),
-            ));
+            ]);
         }
     }
 
@@ -110,9 +112,9 @@ class SourceLinker {
     public function jackson($data) {
         if ($this->checker->hasRole('ROLE_USER')) {
             $repo = $this->em->getRepository(Jackson::class);
-            $record = $repo->findOneBy(array('jbid' => $data));
+            $record = $repo->findOneBy(['jbid' => $data]);
             if ($record) {
-                return $this->generator->generate('resource_jackson_show', array('id' => $record->getId()));
+                return $this->generator->generate('resource_jackson_show', ['id' => $record->getId()]);
             }
         }
 
@@ -131,13 +133,13 @@ class SourceLinker {
             return;
         }
         $repo = $this->em->getRepository(En::class);
-        $record = $repo->findOneBy(array(
+        $record = $repo->findOneBy([
             'enId' => $data,
-        ));
+        ]);
         if ($record) {
-            return $this->generator->generate('resource_en_show', array(
+            return $this->generator->generate('resource_en_show', [
                 'id' => $record->getId(),
-            ));
+            ]);
         }
     }
 
@@ -153,14 +155,14 @@ class SourceLinker {
             return;
         }
         $repo = $this->em->getRepository(OsborneMarc::class);
-        $record = $repo->findOneBy(array(
+        $record = $repo->findOneBy([
             'fieldData' => $data,
             'field' => '001',
-        ));
+        ]);
         if ($record) {
-            return $this->generator->generate('resource_osborne_show', array(
+            return $this->generator->generate('resource_osborne_show', [
                 'id' => $record->getTitleId(),
-            ));
+            ]);
         }
     }
 
@@ -181,7 +183,6 @@ class SourceLinker {
     /**
      * If the data matches https? it will be returned as is. Otherwise generate a URL based on the source.
      *
-     * @param Source $source
      * @param string $data
      *
      * @return null|string

@@ -1,5 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\Controller;
 
 use App\Entity\Geonames;
@@ -8,6 +16,7 @@ use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use GeoNames\Client as GeoNamesClient;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
+use Nines\UtilBundle\Controller\PaginatorTrait;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,7 +24,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Nines\UtilBundle\Controller\PaginatorTrait;
 
 /**
  * Geonames controller.
@@ -31,8 +39,6 @@ class GeonamesController extends AbstractController implements PaginatorAwareInt
      * @Route("/", name="geonames_index", methods={"GET"})
      * @Template()
      *
-     * @param Request $request
-     *
      * @return array
      */
     public function indexAction(Request $request, EntityManagerInterface $em) {
@@ -40,16 +46,13 @@ class GeonamesController extends AbstractController implements PaginatorAwareInt
         $query = $em->createQuery($dql);
         $geonames = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
 
-        return array(
+        return [
             'geonames' => $geonames,
-        );
+        ];
     }
 
     /**
      * Typeahead action for editor widgets.
-     *
-     * @param Request $request
-     * @param GeonamesRepository $repo
      *
      * @return JsonResponse
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
@@ -58,14 +61,14 @@ class GeonamesController extends AbstractController implements PaginatorAwareInt
     public function typeaheadAction(Request $request, GeonamesRepository $repo) {
         $q = $request->query->get('q');
         if ( ! $q) {
-            return new JsonResponse(array());
+            return new JsonResponse([]);
         }
-        $data = array();
+        $data = [];
         foreach ($repo->typeaheadQuery($q) as $result) {
-            $data[] = array(
+            $data[] = [
                 'id' => $result->getGeonameid(),
                 'text' => $result->getName() . ' (' . $result->getCountry() . ')',
-            );
+            ];
         }
 
         return new JsonResponse($data);
@@ -73,9 +76,6 @@ class GeonamesController extends AbstractController implements PaginatorAwareInt
 
     /**
      * Search for geonames entities.
-     *
-     * @param Request $request
-     * @param GeonamesRepository $repo
      *
      * @return array
      * @Route("/search", name="geonames_search", methods={"GET"})
@@ -87,19 +87,18 @@ class GeonamesController extends AbstractController implements PaginatorAwareInt
             $query = $repo->searchQuery($q);
             $geonames = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
         } else {
-            $geonames = array();
+            $geonames = [];
         }
 
-        return array(
+        return [
             'geonames' => $geonames,
             'q' => $q,
-        );
+        ];
     }
 
     /**
      * Search and display results from the Geonames API in preparation for import.
      *
-     * @param Request $request
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
      * @Route("/import", name="geonames_import", methods={"GET"})
      *
@@ -109,28 +108,25 @@ class GeonamesController extends AbstractController implements PaginatorAwareInt
      */
     public function importSearchAction(Request $request) {
         $q = $request->query->get('q');
-        $results = array();
+        $results = [];
         if ($q) {
             $user = $this->getParameter('wphp.geonames_user');
             $client = new GeoNamesClient($user);
-            $results = $client->search(array(
+            $results = $client->search([
                 'name' => $q,
-                'fcl' => array('A', 'P'),
+                'fcl' => ['A', 'P'],
                 'lang' => 'en',
-            ));
+            ]);
         }
 
-        return array(
+        return [
             'q' => $q,
             'results' => $results,
-        );
+        ];
     }
 
     /**
      * Import one or more search results from the Geonames API.
-     *
-     * @param Request $request
-     * @param EntityManagerInterface $em
      *
      * @throws \Exception
      *
@@ -143,10 +139,10 @@ class GeonamesController extends AbstractController implements PaginatorAwareInt
         $client = new GeoNamesClient($user);
         $repo = $em->getRepository(Geonames::class);
         foreach ($request->request->get('geonameid') as $geonameid) {
-            $data = $client->get(array(
+            $data = $client->get([
                 'geonameId' => $geonameid,
                 'lang' => 'en',
-            ));
+            ]);
             if ($repo->find($geonameid)) {
                 $this->addFlash('warning', "Geoname #{$geonameid} ({$data->asciiName}) is already in the database.");
 
@@ -156,9 +152,9 @@ class GeonamesController extends AbstractController implements PaginatorAwareInt
             $geoname->setGeonameid($data->geonameId);
             $geoname->setName($data->name);
             $geoname->setAsciiname($data->asciiName);
-            $alternateNames = array();
+            $alternateNames = [];
             foreach ($data->alternateNames as $name) {
-                if (isset($name->lang) && 'en' != $name->lang) {
+                if (isset($name->lang) && 'en' !== $name->lang) {
                     continue;
                 }
                 $alternateNames[] = $name->name;
@@ -177,7 +173,7 @@ class GeonamesController extends AbstractController implements PaginatorAwareInt
         $em->flush();
         $this->addFlash('success', 'The selected geonames have been imported.');
 
-        return $this->redirectToRoute('geonames_import', array($request->query->get('q')));
+        return $this->redirectToRoute('geonames_import', [$request->query->get('q')]);
     }
 
     /**
@@ -185,9 +181,6 @@ class GeonamesController extends AbstractController implements PaginatorAwareInt
      *
      * @Route("/{id}", name="geonames_show", methods={"GET"})
      * @Template()
-     *
-     * @param Request $request
-     * @param Geonames $geoname
      *
      * @return array
      */
@@ -201,10 +194,10 @@ class GeonamesController extends AbstractController implements PaginatorAwareInt
         $query->setParameter('geoname', $geoname);
         $count = $query->getSingleScalarResult();
 
-        return array(
+        return [
             'geoname' => $geoname,
             'count' => $count,
-        );
+        ];
     }
 
     /**
@@ -212,9 +205,6 @@ class GeonamesController extends AbstractController implements PaginatorAwareInt
      *
      * @Route("/{id}/titles", name="geonames_titles", methods={"GET"})
      * @Template()
-     *
-     * @param Request $request
-     * @param Geonames $geoname
      *
      * @return array
      */
@@ -228,10 +218,10 @@ class GeonamesController extends AbstractController implements PaginatorAwareInt
         $query->setParameter('geoname', $geoname);
         $titles = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
 
-        return array(
+        return [
             'geoname' => $geoname,
             'titles' => $titles,
-        );
+        ];
     }
 
     /**
@@ -239,9 +229,6 @@ class GeonamesController extends AbstractController implements PaginatorAwareInt
      *
      * @Route("/{id}/firms", name="geonames_firms", methods={"GET"})
      * @Template()
-     *
-     * @param Request $request
-     * @param Geonames $geoname
      *
      * @return array
      */
@@ -251,10 +238,10 @@ class GeonamesController extends AbstractController implements PaginatorAwareInt
         $query->setParameter('geoname', $geoname);
         $firms = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
 
-        return array(
+        return [
             'geoname' => $geoname,
             'firms' => $firms,
-        );
+        ];
     }
 
     /**
@@ -262,9 +249,6 @@ class GeonamesController extends AbstractController implements PaginatorAwareInt
      *
      * @Route("/{id}/people", name="geonames_people", methods={"GET"})
      * @Template()
-     *
-     * @param Request $request
-     * @param Geonames $geoname
      *
      * @return array
      */
@@ -274,9 +258,9 @@ class GeonamesController extends AbstractController implements PaginatorAwareInt
         $query->setParameter('geoname', $geoname);
         $people = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
 
-        return array(
+        return [
             'geoname' => $geoname,
             'people' => $people,
-        );
+        ];
     }
 }

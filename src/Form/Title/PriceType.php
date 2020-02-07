@@ -1,5 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\Form\Title;
 
 use Symfony\Component\Form\AbstractType;
@@ -13,45 +21,42 @@ use Symfony\Component\Form\FormBuilderInterface;
 class PriceType extends AbstractType {
     /**
      * Build the form.
-     *
-     * @param FormBuilderInterface $builder
-     * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options) : void {
-        $builder->add('price_pound', TextType::class, array(
+        $builder->add('price_pound', TextType::class, [
             'label' => 'Price (£)',
             'required' => false,
-            'attr' => array(
+            'attr' => [
                 'help_block' => 'title.fields.pricePound',
-            ),
-        ));
-        $builder->add('price_shilling', TextType::class, array(
+            ],
+        ]);
+        $builder->add('price_shilling', TextType::class, [
             'label' => 'Price (s)',
             'required' => false,
-            'attr' => array(
+            'attr' => [
                 'help_block' => 'title.fields.priceShilling',
-            ),
-        ));
-        $builder->add('price_pence', TextType::class, array(
+            ],
+        ]);
+        $builder->add('price_pence', TextType::class, [
             'label' => 'Price (p)',
             'required' => false,
-            'attr' => array(
+            'attr' => [
                 'help_block' => 'title.fields.pricePence',
-            ),
-        ));
-        $builder->add('price_comparison', ChoiceType::class, array(
+            ],
+        ]);
+        $builder->add('price_comparison', ChoiceType::class, [
             'label' => 'Comparison',
             'required' => true,
-            'choices' => array(
+            'choices' => [
                 'Equal to' => 'eq',
                 'Less than' => 'lt',
                 'Greater than' => 'gt',
-            ),
+            ],
             'expanded' => false,
             'multiple' => false,
-            'attr' => array(
+            'attr' => [
                 'help_block' => 'How to compare this price against the record prices',
-            ),
-        ));
+            ],
+        ]);
     }
 }

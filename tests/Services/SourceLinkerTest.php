@@ -1,5 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace AppBundle\Tests\Services;
 
 use AppBundle\DataFixtures\ORM\LoadEn;
@@ -21,85 +29,85 @@ class SourceLinkerTest extends BaseTestCase {
     private $checker;
 
     protected function getFixtures() {
-        return array(
+        return [
             LoadEstcMarc::class,
             LoadOrlandoBiblio::class,
             LoadJackson::class,
             LoadEn::class,
             LoadOsborneMarc::class,
-        );
+        ];
     }
 
-    public function testSanity() {
+    public function testSanity() : void {
         $this->assertInstanceOf(SourceLinker::class, $this->linker);
     }
 
-    public function testEstcAnon() {
+    public function testEstcAnon() : void {
         $this->checker->method('hasRole')->willReturn(false);
         $this->assertNull($this->linker->estc('abc'));
     }
 
-    public function testEstcUser() {
+    public function testEstcUser() : void {
         $this->assertStringEndsWith('resource/estc/1', $this->linker->estc('abc-0'));
     }
 
-    public function testEstcNotFound() {
+    public function testEstcNotFound() : void {
         $this->assertNull($this->linker->estc('abc-123456'));
     }
 
-    public function testOrlandoAnon() {
+    public function testOrlandoAnon() : void {
         $this->checker->method('hasRole')->willReturn(false);
         $this->assertNull($this->linker->orlando('abc'));
     }
 
-    public function testOrlandoUser() {
+    public function testOrlandoUser() : void {
         $this->assertStringEndsWith('resource/orlando_biblio/1', $this->linker->orlando('100'));
     }
 
-    public function testOrlandoNotFound() {
+    public function testOrlandoNotFound() : void {
         $this->assertNull($this->linker->orlando('800'));
     }
 
-    public function testJacksonAnon() {
+    public function testJacksonAnon() : void {
         $this->checker->method('hasRole')->willReturn(false);
         $this->assertStringEndsWith('details/abc', $this->linker->jackson('abc'));
     }
 
-    public function testJacksonUser() {
+    public function testJacksonUser() : void {
         $this->assertStringEndsWith('resource/jackson/1', $this->linker->jackson('1234'));
     }
 
-    public function testJacksonNotFound() {
+    public function testJacksonNotFound() : void {
         $this->assertStringEndsWith('details/abc123', $this->linker->jackson('abc123'));
     }
 
-    public function testEnAnon() {
+    public function testEnAnon() : void {
         $this->checker->method('hasRole')->willReturn(false);
         $this->assertNull($this->linker->en('abc'));
     }
 
-    public function testEnUser() {
+    public function testEnUser() : void {
         $this->assertStringEndsWith('resource/en/1', $this->linker->en('en-0'));
     }
 
-    public function testEnNotFound() {
+    public function testEnNotFound() : void {
         $this->assertNull($this->linker->en('abc-123456'));
     }
 
-    public function testOsborneAnon() {
+    public function testOsborneAnon() : void {
         $this->checker->method('hasRole')->willReturn(false);
         $this->assertNull($this->linker->osborne('abc'));
     }
 
-    public function testOsborneUser() {
+    public function testOsborneUser() : void {
         $this->assertStringEndsWith('resource/osborne/1', $this->linker->osborne('abc-0'));
     }
 
-    public function testOsborneNotFound() {
+    public function testOsborneNotFound() : void {
         $this->assertNull($this->linker->osborne('abc-123456'));
     }
 
-    public function testEcco() {
+    public function testEcco() : void {
         $this->assertStringContainsString('aa0aaaa', $this->linker->ecco('aaaaaa'));
     }
 
@@ -110,7 +118,7 @@ class SourceLinkerTest extends BaseTestCase {
      * @param mixed $name
      * @param mixed $data
      */
-    public function testUrl($expected, $name, $data) {
+    public function testUrl($expected, $name, $data) : void {
         $source = $this->createMock(Source::class);
         $source->method('getName')->willReturn($name);
         $actual = $this->linker->url($source, $data);
@@ -122,32 +130,32 @@ class SourceLinkerTest extends BaseTestCase {
     }
 
     public function urlData() {
-        return array(
-            array('/^https\:\/\/example.com/', 'ESTC', 'https://example.com/foo/bar'),
-            array('/^https\:\/\/example.com/', 'cheesery', 'https://example.com/foo/bar'),
+        return [
+            ['/^https\:\/\/example.com/', 'ESTC', 'https://example.com/foo/bar'],
+            ['/^https\:\/\/example.com/', 'cheesery', 'https://example.com/foo/bar'],
 
-            array('{resource/estc/1$}', 'ESTC', 'abc-0'),
-            array(null, 'ESTC', 'abcdef'),
+            ['{resource/estc/1$}', 'ESTC', 'abc-0'],
+            [null, 'ESTC', 'abcdef'],
 
-            array('{resource/orlando_biblio/1$}', 'Orlando', '100'),
-            array(null, 'Orlando', 'abcdef'),
+            ['{resource/orlando_biblio/1$}', 'Orlando', '100'],
+            [null, 'Orlando', 'abcdef'],
 
-            array('{resource/jackson/1$}', 'Jackson Bibliography', '1234'),
-            array('{details/abcdef$}', 'Jackson Bibliography', 'abcdef'),
+            ['{resource/jackson/1$}', 'Jackson Bibliography', '1234'],
+            ['{details/abcdef$}', 'Jackson Bibliography', 'abcdef'],
 
-            array('{resource/en/1$}', 'The English Novel 1770-1829', 'en-0'),
-            array(null, 'The English Novel 1770-1829', 'abcdef'),
-            array('{resource/en/1$}', 'The English Novel 1830-1836', 'en-0'),
-            array(null, 'The English Novel 1830-1836', 'abcdef'),
+            ['{resource/en/1$}', 'The English Novel 1770-1829', 'en-0'],
+            [null, 'The English Novel 1770-1829', 'abcdef'],
+            ['{resource/en/1$}', 'The English Novel 1830-1836', 'en-0'],
+            [null, 'The English Novel 1830-1836', 'abcdef'],
 
-            array('{resource/osborne/1$}', 'Osborne Collection of Early Children\'s Books', 'abc-0'),
-            array(null, 'Osborne Collection of Early Children\'s Books', 'abcdef'),
+            ['{resource/osborne/1$}', 'Osborne Collection of Early Children\'s Books', 'abc-0'],
+            [null, 'Osborne Collection of Early Children\'s Books', 'abcdef'],
 
-            array('{ab0cdef}', 'ECCO', 'abcdef'),
+            ['{ab0cdef}', 'ECCO', 'abcdef'],
 
             //            ['/^https\:\/\/example.com/', 'ESTC', 'https://example.com/foo/bar'],
             //            ['/^https\:\/\/example.com/', 'ESTC', 'https://example.com/foo/bar'],
-        );
+        ];
     }
 
     protected function setUp() : void {

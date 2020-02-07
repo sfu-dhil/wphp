@@ -1,5 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\Form\Firm;
 
 use Symfony\Component\Form\AbstractType;
@@ -14,24 +22,21 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class FirmSearchType extends AbstractType {
     /**
      * Build the form.
-     *
-     * @param FormBuilderInterface $builder
-     * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options) : void {
         $builder->setMethod('get');
 
-        $builder->add('name', TextType::class, array(
+        $builder->add('name', TextType::class, [
             'label' => 'Search Firms by Name',
             'required' => false,
-            'attr' => array(
+            'attr' => [
                 'help_block' => 'firm.search.name',
-            ),
-        ));
+            ],
+        ]);
 
-        $builder->add('order', ChoiceType::class, array(
+        $builder->add('order', ChoiceType::class, [
             'label' => 'Results Sorted By',
-            'choices' => array(
+            'choices' => [
                 'Firm Name (A to Z)' => 'name_asc',
                 'Firm Name (Z to A)' => 'name_desc',
                 'City (A to Z)' => 'city_asc',
@@ -40,77 +45,75 @@ class FirmSearchType extends AbstractType {
                 'Start Date (Youngest First)' => 'start_desc',
                 'End Date (Least Recent First)' => 'end_asc',
                 'End Date (Most Recent First)' => 'end_desc',
-            ),
-            'attr' => array(
+            ],
+            'attr' => [
                 'help_block' => 'Choose a sort method for the results',
-            ),
+            ],
             'required' => false,
             'expanded' => false,
             'multiple' => false,
-        ));
+        ]);
 
-        $builder->add('id', TextType::class, array(
+        $builder->add('id', TextType::class, [
             'label' => 'Firm ID',
             'required' => false,
-            'attr' => array(
+            'attr' => [
                 'help_block' => 'firm.search.id',
-            ),
-        ));
+            ],
+        ]);
 
-        $builder->add('gender', ChoiceType::class, array(
+        $builder->add('gender', ChoiceType::class, [
             'label' => 'Gender',
-            'choices' => array(
+            'choices' => [
                 'Female' => 'F',
                 'Male' => 'M',
                 'Unknown' => 'U',
-            ),
-            'attr' => array(
+            ],
+            'attr' => [
                 'help_block' => 'firm.search.gender',
-            ),
+            ],
             'required' => false,
             'expanded' => true,
             'multiple' => true,
             'empty_data' => null,
             'data' => null,
-        ));
+        ]);
 
-        $builder->add('address', TextType::class, array(
+        $builder->add('address', TextType::class, [
             'label' => 'Address',
             'required' => false,
-            'attr' => array(
+            'attr' => [
                 'help_block' => 'firm.search.streetAddress',
-            ),
-        ));
+            ],
+        ]);
 
-        $builder->add('city', TextType::class, array(
+        $builder->add('city', TextType::class, [
             'label' => 'City',
             'required' => false,
-            'attr' => array(
+            'attr' => [
                 'help_block' => 'firm.search.city',
-            ),
-        ));
-        $builder->add('start', TextType::class, array(
+            ],
+        ]);
+        $builder->add('start', TextType::class, [
             'label' => 'Start Date',
             'required' => false,
-            'attr' => array(
+            'attr' => [
                 'help_block' => 'firm.search.startDate',
-            ),
-        ));
-        $builder->add('end', TextType::class, array(
+            ],
+        ]);
+        $builder->add('end', TextType::class, [
             'label' => 'End Date',
             'required' => false,
-            'attr' => array(
+            'attr' => [
                 'help_block' => 'firm.search.endDate',
-            ),
-        ));
+            ],
+        ]);
     }
 
     /**
      * {@inheritdoc}
-     *
-     * @param OptionsResolver $resolver
      */
-    public function configureOptions(OptionsResolver $resolver) {
+    public function configureOptions(OptionsResolver $resolver) : void {
         parent::configureOptions($resolver);
     }
 }

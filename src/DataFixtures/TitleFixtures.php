@@ -1,5 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\DataFixtures;
 
 use App\Entity\Title;
@@ -16,15 +24,13 @@ class TitleFixtures extends Fixture implements DependentFixtureInterface, Fixtur
      * {@inheritdoc}
      */
     public static function getGroups() : array {
-        return array('test');
+        return ['test'];
     }
 
     /**
      * {@inheritdoc}
-     *
-     * @param ObjectManager $manager
      */
-    public function load(ObjectManager $manager) {
+    public function load(ObjectManager $manager) : void {
         for ($i = 0; $i < 4; $i++) {
             $fixture = new Title();
             $fixture->setTitle('Title ' . $i);
@@ -65,7 +71,7 @@ class TitleFixtures extends Fixture implements DependentFixtureInterface, Fixtur
     public function getDependencies() {
         // add dependencies here, or remove this
         // function and "implements DependentFixtureInterface" above
-        return array(
+        return [
             FirmFixtures::class,
             FormatFixtures::class,
             GenreFixtures::class,
@@ -73,6 +79,6 @@ class TitleFixtures extends Fixture implements DependentFixtureInterface, Fixtur
             PersonFixtures::class,
             RoleFixtures::class,
             SourceFixtures::class,
-        );
+        ];
     }
 }

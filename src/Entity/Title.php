@@ -1,5 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -625,7 +633,7 @@ class Title {
      * @ORM\PrePersist
      * @ORM\PreUpdate
      */
-    public function setTotalPrice() {
+    public function setTotalPrice() : void {
         $this->totalPrice = 0;
 
         if ($this->pricePound && is_int($this->pricePound)) {
@@ -807,8 +815,6 @@ class Title {
     /**
      * Add titleRole.
      *
-     * @param TitleRole $titleRole
-     *
      * @return Title
      */
     public function addTitleRole(TitleRole $titleRole) {
@@ -819,10 +825,8 @@ class Title {
 
     /**
      * Remove titleRole.
-     *
-     * @param TitleRole $titleRole
      */
-    public function removeTitleRole(TitleRole $titleRole) {
+    public function removeTitleRole(TitleRole $titleRole) : void {
         $this->titleRoles->removeElement($titleRole);
     }
 
@@ -847,8 +851,6 @@ class Title {
     /**
      * Add titleFirmrole.
      *
-     * @param TitleFirmrole $titleFirmrole
-     *
      * @return Title
      */
     public function addTitleFirmrole(TitleFirmrole $titleFirmrole) {
@@ -859,10 +861,8 @@ class Title {
 
     /**
      * Remove titleFirmrole.
-     *
-     * @param TitleFirmrole $titleFirmrole
      */
-    public function removeTitleFirmrole(TitleFirmrole $titleFirmrole) {
+    public function removeTitleFirmrole(TitleFirmrole $titleFirmrole) : void {
         $titleFirmrole->setTitle(null);
         $titleFirmrole->setFirm(null);
         $titleFirmrole->setFirmrole(null);
@@ -957,14 +957,12 @@ class Title {
      *
      * @param array|Collection|TitleSource[] $titleSources
      */
-    public function setTitleSources($titleSources) {
+    public function setTitleSources($titleSources) : void {
         $this->titleSources = $titleSources;
     }
 
     /**
      * Add titleSource.
-     *
-     * @param TitleSource $titleSource
      *
      * @return Title
      */
@@ -976,8 +974,6 @@ class Title {
 
     /**
      * Remove titleSource.
-     *
-     * @param TitleSource $titleSource
      *
      * @return bool TRUE if this collection contained the specified element, FALSE otherwise.
      */

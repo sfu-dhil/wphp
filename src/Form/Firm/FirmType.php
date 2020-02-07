@@ -1,5 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\Form\Firm;
 
 use App\Entity\Firm;
@@ -14,39 +22,35 @@ use Tetranz\Select2EntityBundle\Form\Type\Select2EntityType;
  * Form definition for the firm class.
  */
 class FirmType extends AbstractType {
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options) : void {
-        $builder->add('name', null, array(
+        $builder->add('name', null, [
             'label' => 'Name',
             'required' => false,
-            'attr' => array(
+            'attr' => [
                 'help_block' => 'firm.form.name',
-            ),
-        ));
-        $builder->add('gender', ChoiceType::class, array(
+            ],
+        ]);
+        $builder->add('gender', ChoiceType::class, [
             'expanded' => true,
             'multiple' => false,
-            'choices' => array(
+            'choices' => [
                 'Female' => Firm::FEMALE,
                 'Male' => Firm::MALE,
                 'Unknown' => Firm::UNKNOWN,
-            ),
+            ],
             'empty_data' => Firm::UNKNOWN,
-            'attr' => array(
+            'attr' => [
                 'help_block' => 'firm.form.gender',
-            ),
-        ));
-        $builder->add('streetAddress', null, array(
+            ],
+        ]);
+        $builder->add('streetAddress', null, [
             'label' => 'Street Address',
             'required' => false,
-            'attr' => array(
+            'attr' => [
                 'help_block' => 'firm.form.streetAddress',
-            ),
-        ));
-        $builder->add('city', Select2EntityType::class, array(
+            ],
+        ]);
+        $builder->add('city', Select2EntityType::class, [
             'multiple' => false,
             'remote_route' => 'geonames_typeahead',
             'class' => Geonames::class,
@@ -55,46 +59,43 @@ class FirmType extends AbstractType {
             'allow_clear' => true,
             'delay' => 250,
             'language' => 'en',
-            'attr' => array(
+            'attr' => [
                 'help_block' => 'firm.form.city',
-            ),
-        ));
-        $builder->add('startDate', null, array(
+            ],
+        ]);
+        $builder->add('startDate', null, [
             'label' => 'Start Date',
             'required' => false,
-            'attr' => array(
+            'attr' => [
                 'help_block' => 'firm.form.startDate',
-            ),
-        ));
-        $builder->add('endDate', null, array(
+            ],
+        ]);
+        $builder->add('endDate', null, [
             'label' => 'End Date',
             'required' => false,
-            'attr' => array(
+            'attr' => [
                 'help_block' => 'firm.form.endDate',
-            ),
-        ));
-        $builder->add('finalcheck', ChoiceType::class, array(
+            ],
+        ]);
+        $builder->add('finalcheck', ChoiceType::class, [
             'label' => 'Firm Finalcheck',
             'expanded' => true,
             'multiple' => false,
-            'choices' => array(
+            'choices' => [
                 'Yes' => true,
                 'No' => false,
-            ),
+            ],
             'required' => true,
             'placeholder' => false,
-            'attr' => array(
+            'attr' => [
                 'help_block' => 'firm.form.finalCheck',
-            ),
-        ));
+            ],
+        ]);
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     */
-    public function configureOptions(OptionsResolver $resolver) {
-        $resolver->setDefaults(array(
+    public function configureOptions(OptionsResolver $resolver) : void {
+        $resolver->setDefaults([
             'data_class' => Firm::class,
-        ));
+        ]);
     }
 }

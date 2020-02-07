@@ -1,5 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\Controller;
 
 use App\Entity\Firmrole;
@@ -7,6 +15,7 @@ use App\Form\FirmroleType;
 use App\Repository\FirmroleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
+use Nines\UtilBundle\Controller\PaginatorTrait;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,7 +23,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Nines\UtilBundle\Controller\PaginatorTrait;
 
 /**
  * Firmrole controller.
@@ -30,7 +38,6 @@ class FirmroleController extends AbstractController implements PaginatorAwareInt
      * @Route("/", name="firmrole_index", methods={"GET"})
      * @Template()
      *
-     * @param Request $request
      * @param FirmroleRepository $repo
      *
      * @return array
@@ -38,22 +45,19 @@ class FirmroleController extends AbstractController implements PaginatorAwareInt
     public function indexAction(Request $request, EntityManagerInterface $em) {
         $dql = 'SELECT e FROM App:Firmrole e ORDER BY e.name';
         $query = $em->createQuery($dql);
-        $firmroles = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25, array(
+        $firmroles = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25, [
             'defaultSortFieldName' => 'e.name',
             'defaultSortDirection' => 'asc',
-        ));
+        ]);
 
-        return array(
+        return [
             'firmroles' => $firmroles,
             'repo' => $em->getRepository(Firmrole::class),
-        );
+        ];
     }
 
     /**
      * Typeahead action for editor widgets.
-     *
-     * @param Request $request
-     * @param FirmroleRepository $repo
      *
      * @return JsonResponse
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
@@ -62,14 +66,14 @@ class FirmroleController extends AbstractController implements PaginatorAwareInt
     public function typeaheadAction(Request $request, FirmroleRepository $repo) {
         $q = $request->query->get('q');
         if ( ! $q) {
-            return new JsonResponse(array());
+            return new JsonResponse([]);
         }
-        $data = array();
+        $data = [];
         foreach ($repo->typeaheadQuery($q) as $result) {
-            $data[] = array(
+            $data[] = [
                 'id' => $result->getId(),
                 'text' => $result->getName(),
-            );
+            ];
         }
 
         return new JsonResponse($data);
@@ -81,8 +85,6 @@ class FirmroleController extends AbstractController implements PaginatorAwareInt
      * @Route("/new", name="firmrole_new", methods={"GET", "POST"})
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
      * @Template()
-     *
-     * @param Request $request
      *
      * @return array|RedirectResponse
      */
@@ -97,13 +99,13 @@ class FirmroleController extends AbstractController implements PaginatorAwareInt
 
             $this->addFlash('success', 'The new firmrole was created.');
 
-            return $this->redirectToRoute('firmrole_show', array('id' => $firmrole->getId()));
+            return $this->redirectToRoute('firmrole_show', ['id' => $firmrole->getId()]);
         }
 
-        return array(
+        return [
             'firmrole' => $firmrole,
             'form' => $form->createView(),
-        );
+        ];
     }
 
     /**
@@ -111,9 +113,6 @@ class FirmroleController extends AbstractController implements PaginatorAwareInt
      *
      * @Route("/{id}", name="firmrole_show", methods={"GET"})
      * @Template()
-     *
-     * @param Request $request
-     * @param Firmrole $firmrole
      *
      * @return array
      */
@@ -123,10 +122,10 @@ class FirmroleController extends AbstractController implements PaginatorAwareInt
         $query->setParameter('firmrole', $firmrole);
         $titleFirmRoles = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
 
-        return array(
+        return [
             'firmrole' => $firmrole,
             'titleFirmRoles' => $titleFirmRoles,
-        );
+        ];
     }
 
     /**
@@ -135,9 +134,6 @@ class FirmroleController extends AbstractController implements PaginatorAwareInt
      * @Route("/{id}/edit", name="firmrole_edit", methods={"GET", "POST"})
      * @Template()
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
-     *
-     * @param Request $request
-     * @param Firmrole $firmrole
      *
      * @return array|RedirectResponse
      */
@@ -149,13 +145,13 @@ class FirmroleController extends AbstractController implements PaginatorAwareInt
             $em->flush();
             $this->addFlash('success', 'The firmrole has been updated.');
 
-            return $this->redirectToRoute('firmrole_show', array('id' => $firmrole->getId()));
+            return $this->redirectToRoute('firmrole_show', ['id' => $firmrole->getId()]);
         }
 
-        return array(
+        return [
             'firmrole' => $firmrole,
             'edit_form' => $editForm->createView(),
-        );
+        ];
     }
 
     /**
@@ -163,9 +159,6 @@ class FirmroleController extends AbstractController implements PaginatorAwareInt
      *
      * @Route("/{id}/delete", name="firmrole_delete", methods={"GET"})
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
-     *
-     * @param Request $request
-     * @param Firmrole $firmrole
      *
      * @return RedirectResponse
      */

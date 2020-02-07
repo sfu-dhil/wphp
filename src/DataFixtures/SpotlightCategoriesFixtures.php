@@ -1,5 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\DataFixtures;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -11,38 +19,36 @@ use Nines\BlogBundle\Entity\PostCategory;
  * Load some test spotlight categories.
  */
 class SpotlightCategoriesFixtures extends Fixture implements FixtureGroupInterface {
-    const DATA = array(
-        array(
+    public const DATA = [
+        [
             'name' => 'person',
             'label' => 'Person Spotlights',
-        ),
-        array(
+        ],
+        [
             'name' => 'firm',
             'label' => 'Firm Spotlights',
-        ),
-        array(
+        ],
+        [
             'name' => 'title',
             'label' => 'Title Spotlights',
-        ),
-    );
+        ],
+    ];
 
     /**
      * {@inheritdoc}
      */
     public static function getGroups() : array {
-        return array('setup');
+        return ['setup'];
     }
 
     /**
      * {@inheritdoc}
-     *
-     * @param ObjectManager $manager
      */
-    public function load(ObjectManager $manager) {
+    public function load(ObjectManager $manager) : void {
         foreach (self::DATA as $data) {
-            $category = $manager->getRepository(PostCategory::class)->findOneBy(array(
+            $category = $manager->getRepository(PostCategory::class)->findOneBy([
                 'name' => $data['name'],
-            ));
+            ]);
             if ( ! $category) {
                 $category = new PostCategory();
                 $category->setLabel($data['label']);

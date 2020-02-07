@@ -1,16 +1,24 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\Controller;
 
 use App\Entity\Feedback;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
+use Nines\UtilBundle\Controller\PaginatorTrait;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Nines\UtilBundle\Controller\PaginatorTrait;
 
 /**
  * Feedback controller.
@@ -29,8 +37,6 @@ class FeedbackController extends AbstractController implements PaginatorAwareInt
      * @Template()
      * @Security("is_granted('ROLE_COMMENT_ADMIN')")
      *
-     * @param Request $request
-     *
      * @return array
      */
     public function indexAction(Request $request, EntityManagerInterface $em) {
@@ -38,9 +44,9 @@ class FeedbackController extends AbstractController implements PaginatorAwareInt
         $query = $em->createQuery($dql);
         $feedbacks = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
 
-        return array(
+        return [
             'feedbacks' => $feedbacks,
-        );
+        ];
     }
 
     /**
@@ -50,8 +56,6 @@ class FeedbackController extends AbstractController implements PaginatorAwareInt
      *
      * @Template()
      * @Security("not (is_granted('ROLE_USER'))")
-     *
-     * @param Request $request
      *
      * @return array
      */
@@ -69,10 +73,10 @@ class FeedbackController extends AbstractController implements PaginatorAwareInt
             return $this->redirectToRoute('homepage');
         }
 
-        return array(
+        return [
             'feedback' => $feedback,
             'form' => $form->createView(),
-        );
+        ];
     }
 
     /**
@@ -82,13 +86,11 @@ class FeedbackController extends AbstractController implements PaginatorAwareInt
      * @Template()
      * @Security("is_granted('ROLE_COMMENT_ADMIN')")
      *
-     * @param Feedback $feedback
-     *
      * @return array
      */
     public function showAction(Feedback $feedback) {
-        return array(
+        return [
             'feedback' => $feedback,
-        );
+        ];
     }
 }

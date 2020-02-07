@@ -1,5 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\DataFixtures;
 
 use App\Entity\Geonames;
@@ -16,15 +24,13 @@ class GeonamesFixtures extends Fixture implements FixtureGroupInterface {
      * {@inheritdoc}
      */
     public static function getGroups() : array {
-        return array('test');
+        return ['test'];
     }
 
     /**
      * {@inheritdoc}
-     *
-     * @param ObjectManager $manager
      */
-    public function load(ObjectManager $manager) {
+    public function load(ObjectManager $manager) : void {
         for ($i = 0; $i < 4; $i++) {
             $fixture = new Geonames();
             $fixture->setGeonameid($i);

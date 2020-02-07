@@ -1,8 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\Repository;
 
+use App\Entity\EstcMarc;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * EstcRepository.
@@ -11,6 +21,13 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
  * repository methods below.
  */
 class EstcMarcRepository extends ServiceEntityRepository {
+
+    public function __construct(ManagerRegistry $registry) {
+        parent::__construct($registry, EstcMarc::class);
+    }
+
+
+
     /**
      * Create a query to return records for the index page.
      *

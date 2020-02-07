@@ -2,6 +2,12 @@
 
 declare(strict_types=1);
 
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
@@ -13,8 +19,6 @@ use Doctrine\Migrations\AbstractMigration;
 final class Version20190502192819 extends AbstractMigration {
     /**
      * Apply the migration.
-     *
-     * @param Schema $schema
      *
      * @throws \Doctrine\DBAL\DBALException
      * @throws \Doctrine\DBAL\Migrations\AbortMigrationException
@@ -45,8 +49,6 @@ final class Version20190502192819 extends AbstractMigration {
 
     /**
      * This migration cannot be undone.
-     *
-     * @param Schema $schema
      *
      * @throws \Doctrine\DBAL\Migrations\IrreversibleMigrationException
      */

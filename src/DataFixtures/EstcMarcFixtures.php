@@ -1,59 +1,65 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\DataFixtures;
 
-use App\Entity\OsborneMarc;
+use App\Entity\EstcMarc;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
 /**
- * Load some test Osborne MARC data.
+ * Load some test ESTC MARC data.
  */
-class OsborneMarcFixtures extends Fixture implements DependentFixtureInterface, FixtureGroupInterface {
+class EstcMarcFixtures extends Fixture implements DependentFixtureInterface, FixtureGroupInterface {
     /**
      * {@inheritdoc}
      */
     public static function getGroups() : array {
-        return array('test');
+        return ['test'];
     }
 
     /**
      * {@inheritdoc}
-     *
-     * @param ObjectManager $manager
      */
-    public function load(ObjectManager $manager) {
+    public function load(ObjectManager $manager) : void {
         for ($n = 0; $n < 4; $n++) {
-            $ldr = new OsborneMarc();
+            $ldr = new EstcMarc();
             $ldr->setTitleId(1 + $n);
             $ldr->setField('ldr');
-            $ldr->setFieldData('osborne-leader-' . $n);
+            $ldr->setFieldData('estc-leader-' . $n);
             $manager->persist($ldr);
 
-            $id = new OsborneMarc();
+            $id = new EstcMarc();
             $id->setTitleId(1 + $n);
             $id->setField('001');
             $id->setFieldData('abc-' . $n);
             $manager->persist($id);
 
-            $title = new OsborneMarc();
+            $title = new EstcMarc();
             $title->setTitleId(1 + $n);
             $title->setField('245');
             $title->setSubfield('a');
-            $title->setFieldData('OSBORNE Title ' . $n);
+            $title->setFieldData('ESTC Title ' . $n);
             $manager->persist($title);
 
             for ($j = 0; $j < 20; $j++) {
                 for ($i = 0; $i < 10; $i++) {
-                    $fixture = new OsborneMarc();
+                    $fixture = new EstcMarc();
+                    $fixture->setTitleId(1 + $n);
                     $fixture->setField(100 + $j);
                     $fixture->setSubfield('abcdefghijklmnop'[$i]);
-                    $fixture->setTitleId(1 + $n);
-                    $fixture->setFieldData("Osborne Field Data {$n} {$j} {$i}");
+                    $fixture->setFieldData("Estc Field Data {$n} " . (100 + $j) . 'abcdefghijklmnop'[$i]);
                     $manager->persist($fixture);
-                    $this->setReference("osborne.{$n}.{$j}.{$i}", $fixture);
+                    $this->setReference("estc.{$n}.{$j}.{$i}", $fixture);
                 }
             }
         }
@@ -64,9 +70,9 @@ class OsborneMarcFixtures extends Fixture implements DependentFixtureInterface, 
      * {@inheritdoc}
      */
     public function getDependencies() {
-        return array(
+        return [
             MarcTagStructureFixtures::class,
             MarcSubfieldStructureFixtures::class,
-        );
+        ];
     }
 }

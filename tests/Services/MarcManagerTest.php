@@ -1,9 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: mjoyce
- * Date: 2019-03-20
- * Time: 09:54.
+
+declare(strict_types=1);
+
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace AppBundle\Tests\Services;
@@ -21,108 +23,108 @@ class MarcManagerTest extends BaseTestCase {
     private $manager;
 
     protected function getFixtures() {
-        return array(
+        return [
             LoadEstcMarc::class,
             LoadOsborneMarc::class,
             LoadMarcTagStructure::class,
             LoadMarcSubfieldStructure::class,
-        );
+        ];
     }
 
-    public function testSanity() {
+    public function testSanity() : void {
         $this->assertInstanceOf(MarcManager::class, $this->manager);
     }
 
-    public function testGetEstcTitle() {
+    public function testGetEstcTitle() : void {
         $estcMarc = $this->getReference('estc.0.0.0');
-        $this->assertEquals('ESTC Title 0', $this->manager->getTitle($estcMarc));
+        $this->assertSame('ESTC Title 0', $this->manager->getTitle($estcMarc));
     }
 
-    public function testGetOsborneTitle() {
+    public function testGetOsborneTitle() : void {
         $estcMarc = $this->getReference('osborne.0.0.0');
-        $this->assertEquals('OSBORNE Title 0', $this->manager->getTitle($estcMarc));
+        $this->assertSame('OSBORNE Title 0', $this->manager->getTitle($estcMarc));
     }
 
-    public function testGetEstcAuthor() {
+    public function testGetEstcAuthor() : void {
         $estcMarc = $this->getReference('estc.0.0.0');
-        $this->assertEquals('Estc Field Data 0 100a', $this->manager->getAuthor($estcMarc));
+        $this->assertSame('Estc Field Data 0 100a', $this->manager->getAuthor($estcMarc));
     }
 
-    public function testGetOsborneAuthor() {
+    public function testGetOsborneAuthor() : void {
         $estcMarc = $this->getReference('osborne.0.0.0');
-        $this->assertEquals('Osborne Field Data 0 0 0', $this->manager->getAuthor($estcMarc));
+        $this->assertSame('Osborne Field Data 0 0 0', $this->manager->getAuthor($estcMarc));
     }
 
-    public function testGetEstcData() {
+    public function testGetEstcData() : void {
         $estcMarc = $this->getReference('estc.0.0.0');
         $data = $this->manager->getData($estcMarc);
         $this->assertCount(203, $data);
     }
 
-    public function testGetDataData() {
+    public function testGetDataData() : void {
         $estcMarc = $this->getReference('osborne.0.0.0');
         $data = $this->manager->getData($estcMarc);
         $this->assertCount(203, $data);
     }
 
-    public function testGetUnknownEstcFieldName() {
+    public function testGetUnknownEstcFieldName() : void {
         $field = new EstcMarc();
         $field->setField('999');
         $name = $this->manager->getFieldName($field);
-        $this->assertEquals('999', $name);
+        $this->assertSame('999', $name);
     }
 
-    public function testGetEstcFieldName() {
+    public function testGetEstcFieldName() : void {
         $field = new EstcMarc();
         $field->setField(100);
         $name = $this->manager->getFieldName($field);
-        $this->assertEquals('Tag 0', $name);
+        $this->assertSame('Tag 0', $name);
     }
 
-    public function testGetUnknownOsborneFieldName() {
+    public function testGetUnknownOsborneFieldName() : void {
         $field = new OsborneMarc();
         $field->setField('999');
         $name = $this->manager->getFieldName($field);
-        $this->assertEquals('999', $name);
+        $this->assertSame('999', $name);
     }
 
-    public function testGetOsborneFieldName() {
+    public function testGetOsborneFieldName() : void {
         $field = new OsborneMarc();
         $field->setField(100);
         $name = $this->manager->getFieldName($field);
-        $this->assertEquals('Tag 0', $name);
+        $this->assertSame('Tag 0', $name);
     }
 
-    public function testGetUnknownEstcSubfieldName() {
+    public function testGetUnknownEstcSubfieldName() : void {
         $field = new EstcMarc();
         $field->setField(100);
         $field->setSubfield('z');
         $name = $this->manager->getFieldName($field);
-        $this->assertEquals('100z', $name);
+        $this->assertSame('100z', $name);
     }
 
-    public function testGetEstcSubfieldName() {
+    public function testGetEstcSubfieldName() : void {
         $field = new EstcMarc();
         $field->setField(100);
         $field->setSubfield('a');
         $name = $this->manager->getFieldName($field);
-        $this->assertEquals('Field 100a', $name);
+        $this->assertSame('Field 100a', $name);
     }
 
-    public function testGetUnknownOsborneSubfieldName() {
+    public function testGetUnknownOsborneSubfieldName() : void {
         $field = new OsborneMarc();
         $field->setField(100);
         $field->setSubfield('z');
         $name = $this->manager->getFieldName($field);
-        $this->assertEquals('100z', $name);
+        $this->assertSame('100z', $name);
     }
 
-    public function testGetOsborneSubfieldName() {
+    public function testGetOsborneSubfieldName() : void {
         $field = new OsborneMarc();
         $field->setField(100);
         $field->setSubfield('a');
         $name = $this->manager->getFieldName($field);
-        $this->assertEquals('Field 100a', $name);
+        $this->assertSame('Field 100a', $name);
     }
 
     protected function setUp() : void {

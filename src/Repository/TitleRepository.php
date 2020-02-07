@@ -1,11 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\Repository;
 
 use App\Entity\TitleSource;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Query;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * Title Repository.
@@ -14,6 +23,10 @@ use Doctrine\ORM\Query;
  * repository methods below.
  */
 class TitleRepository extends ServiceEntityRepository {
+    public function __construct(ManagerRegistry $registry) {
+        parent::__construct($registry, Title::class);
+    }
+
     /**
      * Do a name search for a typeahead query.
      *
@@ -40,7 +53,7 @@ class TitleRepository extends ServiceEntityRepository {
      *
      * @return Query
      */
-    public function buildSearchQuery($data = array(), $user = null) {
+    public function buildSearchQuery($data = [], $user = null) {
         $qb = $this->createQueryBuilder('e');
         $qb->orderBy('e.pubdate');
         $qb->addOrderBy('e.title');
@@ -117,21 +130,21 @@ class TitleRepository extends ServiceEntityRepository {
         if ($user) {
             if (isset($data['checked'])) {
                 $qb->andWhere('e.checked = :checked');
-                $qb->setParameter('checked', 'Y' == $data['checked']);
+                $qb->setParameter('checked', 'Y' === $data['checked']);
             }
             if (isset($data['finalcheck'])) {
                 $qb->andWhere('e.finalcheck = :finalcheck');
-                $qb->setParameter('finalcheck', 'Y' == $data['finalcheck']);
+                $qb->setParameter('finalcheck', 'Y' === $data['finalcheck']);
             }
             if (isset($data['finalattempt'])) {
                 $qb->andWhere('e.finalattempt = :finalattempt');
-                $qb->setParameter('finalattempt', 'Y' == $data['finalattempt']);
+                $qb->setParameter('finalattempt', 'Y' === $data['finalattempt']);
             }
         } else {
             $qb->andWhere('e.finalcheck = 1 OR e.finalattempt = 1');
         }
         if (isset($data['pubdate']) && $data['pubdate']) {
-            $m = array();
+            $m = [];
             if (preg_match('/^\s*[0-9]{4}\s*$/', $data['pubdate'])) {
                 $qb->andWhere("YEAR(STRTODATE(e.pubdate, '%Y')) = :year");
                 $qb->setParameter('year', $data['pubdate']);
@@ -144,7 +157,7 @@ class TitleRepository extends ServiceEntityRepository {
             }
         }
         if (isset($data['date_of_first_publication']) && $data['date_of_first_publication']) {
-            $m = array();
+            $m = [];
             if (preg_match('/^\s*[0-9]{4}\s*$/', $data['date_of_first_publication'])) {
                 $qb->andWhere("YEAR(STRTODATE(e.dateOfFirstPublication, '%Y')) = :year");
                 $qb->setParameter('year', $data['date_of_first_publication']);
@@ -247,14 +260,14 @@ class TitleRepository extends ServiceEntityRepository {
                 $qb->setParameter("{$pAlias}_name", $filter['name']);
             }
             if (isset($filter['gender']) && $filter['gender']) {
-                $genders = array();
-                if (in_array('M', $filter['gender'])) {
+                $genders = [];
+                if (in_array('M', $filter['gender'], true)) {
                     $genders[] = 'M';
                 }
-                if (in_array('F', $filter['gender'])) {
+                if (in_array('F', $filter['gender'], true)) {
                     $genders[] = 'F';
                 }
-                if (in_array('U', $filter['gender'])) {
+                if (in_array('U', $filter['gender'], true)) {
                     $genders[] = '';
                 }
                 $qb->andWhere("{$pAlias}.gender in (:genders)");
@@ -287,14 +300,14 @@ class TitleRepository extends ServiceEntityRepository {
                 $qb->setParameter("{$fAlias}_address", $filter['firm_address']);
             }
             if (isset($filter['firm_gender']) && $filter['firm_gender']) {
-                $genders = array();
-                if (in_array('M', $filter['firm_gender'])) {
+                $genders = [];
+                if (in_array('M', $filter['firm_gender'], true)) {
                     $genders[] = 'M';
                 }
-                if (in_array('F', $filter['firm_gender'])) {
+                if (in_array('F', $filter['firm_gender'], true)) {
                     $genders[] = 'F';
                 }
-                if (in_array('U', $filter['firm_gender'])) {
+                if (in_array('U', $filter['firm_gender'], true)) {
                     $genders[] = 'U';
                 }
                 $qb->andWhere("{$fAlias}.gender in (:genders)");

@@ -1,18 +1,26 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\Controller;
 
 use App\Entity\EstcMarc;
 use App\Repository\EstcMarcRepository;
 use App\Services\MarcManager;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
+use Nines\UtilBundle\Controller\PaginatorTrait;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Nines\UtilBundle\Controller\PaginatorTrait;
 
 /**
  * EstcMarc controller.
@@ -26,10 +34,6 @@ class EstcMarcController extends AbstractController implements PaginatorAwareInt
     /**
      * Lists all EstcMarc entities.
      *
-     * @param Request $request
-     * @param MarcManager $manager
-     * @param EstcMarcRepository $repo
-     *
      * @return array
      *
      * @Route("/", name="resource_estc_index", methods={"GET"})
@@ -39,18 +43,14 @@ class EstcMarcController extends AbstractController implements PaginatorAwareInt
         $query = $repo->indexQuery();
         $estcMarcs = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
 
-        return array(
+        return [
             'estcMarcs' => $estcMarcs,
             'manager' => $manager,
-        );
+        ];
     }
 
     /**
      * Search for EstcMarc entities.
-     *
-     * @param Request $request
-     * @param MarcManager $manager
-     * @param EstcMarcRepository $repo
      *
      * @return array
      * @Route("/search", name="resource_estc_search", methods={"GET"})
@@ -62,30 +62,26 @@ class EstcMarcController extends AbstractController implements PaginatorAwareInt
             $result = $repo->searchQuery($q);
             $titleIds = $this->paginator->paginate($result, $request->query->getInt('page', 1), 25);
         } else {
-            $titleIds = array();
+            $titleIds = [];
         }
-        $estcMarcs = array();
+        $estcMarcs = [];
         foreach ($titleIds as $titleId) {
-            $estcMarcs[] = $repo->findOneBy(array(
+            $estcMarcs[] = $repo->findOneBy([
                 'titleId' => $titleId,
                 'field' => 'ldr',
-            ));
+            ]);
         }
 
-        return array(
+        return [
             'titleIds' => $titleIds,
             'estcMarcs' => $estcMarcs,
             'q' => $q,
             'manager' => $manager,
-        );
+        ];
     }
 
     /**
      * Search for EstcMarc entities.
-     *
-     * @param Request $request
-     * @param MarcManager $manager
-     * @param EstcMarcRepository $repo
      *
      * @return array
      * @Route("/imprint_search", name="resource_estc_search_imprint", methods={"GET"})
@@ -97,29 +93,26 @@ class EstcMarcController extends AbstractController implements PaginatorAwareInt
             $result = $repo->imprintSearchQuery($q);
             $titleIds = $this->paginator->paginate($result, $request->query->getInt('page', 1), 25);
         } else {
-            $titleIds = array();
+            $titleIds = [];
         }
-        $estcMarcs = array();
+        $estcMarcs = [];
         foreach ($titleIds as $titleId) {
-            $estcMarcs[] = $repo->findOneBy(array(
+            $estcMarcs[] = $repo->findOneBy([
                 'titleId' => $titleId,
                 'field' => 'ldr',
-            ));
+            ]);
         }
 
-        return array(
+        return [
             'titleIds' => $titleIds,
             'estcMarcs' => $estcMarcs,
             'q' => $q,
             'manager' => $manager,
-        );
+        ];
     }
 
     /**
      * Finds and displays a EstcMarc entity.
-     *
-     * @param EstcMarc $estcMarc
-     * @param MarcManager $manager
      *
      * @return array
      *
@@ -128,9 +121,9 @@ class EstcMarcController extends AbstractController implements PaginatorAwareInt
      * @Template()
      */
     public function showAction(EstcMarc $estcMarc, MarcManager $manager) {
-        return array(
+        return [
             'estcMarc' => $estcMarc,
             'manager' => $manager,
-        );
+        ];
     }
 }

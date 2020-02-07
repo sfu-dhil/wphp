@@ -1,10 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\Repository;
 
 use App\Entity\Firmrole;
 use App\Entity\TitleFirmrole;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * FirmroleRepository.
@@ -13,6 +22,10 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
  * repository methods below.
  */
 class FirmroleRepository extends ServiceEntityRepository {
+    public function __construct(ManagerRegistry $registry) {
+        parent::__construct($registry, Firmrole::class);
+    }
+
     /**
      * Do a name search for a typeahead query.
      *
@@ -31,8 +44,6 @@ class FirmroleRepository extends ServiceEntityRepository {
 
     /**
      * Count the firms in a given role.
-     *
-     * @param Firmrole $firmrole
      *
      * @throws \Doctrine\ORM\NonUniqueResultException
      *

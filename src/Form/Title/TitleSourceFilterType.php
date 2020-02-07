@@ -1,10 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\Form\Title;
 
 use App\Entity\Source;
 use App\Entity\TitleSource;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -16,12 +23,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class TitleSourceFilterType extends AbstractType {
     /**
      * Build the form.
-     *
-     * @param FormBuilderInterface $builder
-     * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options) : void {
-        $builder->add('source', EntityType::class, array(
+        $builder->add('source', EntityType::class, [
             'class' => Source::class,
             'query_builder' => function (EntityRepository $er) {
                 return $er->createQueryBuilder('ts')->orderBy('ts.name', 'ASC');
@@ -32,27 +36,25 @@ class TitleSourceFilterType extends AbstractType {
             'expanded' => false,
             'multiple' => false,
             'placeholder' => 'Select a source to filter the results.',
-            'attr' => array(
+            'attr' => [
                 'source.search.name',
-            ),
-        ));
-        $builder->add('identifier', null, array(
+            ],
+        ]);
+        $builder->add('identifier', null, [
             'label' => 'Source ID',
             'required' => false,
-            'attr' => array(
+            'attr' => [
                 'source.search.identifier',
-            ),
-        ));
+            ],
+        ]);
     }
 
     /**
      * {@inheritdoc}
-     *
-     * @param OptionsResolver $resolver
      */
-    public function configureOptions(OptionsResolver $resolver) {
-        $resolver->setDefaults(array(
+    public function configureOptions(OptionsResolver $resolver) : void {
+        $resolver->setDefaults([
             'data_class' => TitleSource::class,
-        ));
+        ]);
     }
 }

@@ -1,5 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\Command;
 
 use App\Entity\Title;
@@ -12,7 +20,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  * UpdateEditionNumberCommand command.
  */
 class UpdateEditionNumberCommand extends ContainerAwareCommand {
-    const BATCH_SIZE = 100;
+    public const BATCH_SIZE = 100;
 
     /**
      * @var EntityManagerInterface
@@ -21,8 +29,6 @@ class UpdateEditionNumberCommand extends ContainerAwareCommand {
 
     /**
      * UpdateEditionNumberCommand constructor.
-     *
-     * @param EntityManagerInterface $em
      */
     public function __construct(EntityManagerInterface $em) {
         parent::__construct();
@@ -32,7 +38,7 @@ class UpdateEditionNumberCommand extends ContainerAwareCommand {
     /**
      * Configure the command.
      */
-    protected function configure() {
+    protected function configure() : void {
         $this
             ->setName('wphp:update:editions')
             ->setDescription('Update title edition number from edition text.')
@@ -47,11 +53,11 @@ class UpdateEditionNumberCommand extends ContainerAwareCommand {
      * @param OutputInterface $output
      *                                Output destination.
      */
-    protected function execute(InputInterface $input, OutputInterface $output) {
+    protected function execute(InputInterface $input, OutputInterface $output) : void {
         $qb = $this->em->createQueryBuilder();
         $qb->select('e')->from(Title::class, 'e')->where('e.edition is not null');
         $iterator = $qb->getQuery()->iterate();
-        $matches = array();
+        $matches = [];
         while ($row = $iterator->next()) {
             $title = $row[0];
             if ($title->getEditionNumber()) {

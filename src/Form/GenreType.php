@@ -1,5 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\Form;
 
 use Symfony\Component\Form\AbstractType;
@@ -11,34 +19,27 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * Form definition for the genre class.
  */
 class GenreType extends AbstractType {
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options) : void {
-        $builder->add('name', null, array(
+        $builder->add('name', null, [
             'label' => 'Name',
             'required' => false,
-            'attr' => array(
+            'attr' => [
                 'help_block' => '',
-            ),
-        ));
-        $builder->add('description', TextareaType::class, array(
+            ],
+        ]);
+        $builder->add('description', TextareaType::class, [
             'label' => 'Description',
             'required' => false,
-            'attr' => array(
+            'attr' => [
                 'help_block' => 'Provide a short description of the genre.',
                 'class' => 'tinymce',
-            ),
-        ));
+            ],
+        ]);
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     */
-    public function configureOptions(OptionsResolver $resolver) {
-        $resolver->setDefaults(array(
+    public function configureOptions(OptionsResolver $resolver) : void {
+        $resolver->setDefaults([
             'data_class' => 'App\Entity\Genre',
-        ));
+        ]);
     }
 }

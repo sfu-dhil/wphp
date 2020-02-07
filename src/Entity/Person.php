@@ -1,5 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -20,11 +28,11 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass="App\Repository\PersonRepository")
  */
 class Person {
-    const MALE = 'M';
+    public const MALE = 'M';
 
-    const FEMALE = 'F';
+    public const FEMALE = 'F';
 
-    const UNKNOWN = 'U';
+    public const UNKNOWN = 'U';
 
     /**
      * @var int
@@ -148,7 +156,7 @@ class Person {
      * @return string
      */
     public function __toString() {
-        return implode(', ', array_filter(array($this->lastName, $this->firstName)));
+        return implode(', ', array_filter([$this->lastName, $this->firstName]));
     }
 
     /**
@@ -369,8 +377,6 @@ class Person {
     /**
      * Add titleRole.
      *
-     * @param TitleRole $titleRole
-     *
      * @return Person
      */
     public function addTitleRole(TitleRole $titleRole) {
@@ -381,10 +387,8 @@ class Person {
 
     /**
      * Remove titleRole.
-     *
-     * @param TitleRole $titleRole
      */
-    public function removeTitleRole(TitleRole $titleRole) {
+    public function removeTitleRole(TitleRole $titleRole) : void {
         $this->titleRoles->removeElement($titleRole);
     }
 

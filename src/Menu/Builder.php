@@ -1,5 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\Menu;
 
 use Doctrine\ORM\EntityManagerInterface;
@@ -19,7 +27,7 @@ class Builder implements ContainerAwareInterface {
     use ContainerAwareTrait;
 
     // U+25BE, black down-pointing small triangle.
-    const CARET = ' ▾';
+    public const CARET = ' ▾';
 
     /**
      * List of spotlight menu items.
@@ -52,10 +60,6 @@ class Builder implements ContainerAwareInterface {
      * Build the menu builder.
      *
      * @param array $spotlightMenuItems
-     * @param EntityManagerInterface $em
-     * @param FactoryInterface $factory
-     * @param AuthorizationCheckerInterface $authChecker
-     * @param TokenStorageInterface $tokenStorage
      */
     public function __construct($spotlightMenuItems, EntityManagerInterface $em, FactoryInterface $factory, AuthorizationCheckerInterface $authChecker, TokenStorageInterface $tokenStorage) {
         $this->spotlightMenuItems = $spotlightMenuItems;
@@ -96,77 +100,75 @@ class Builder implements ContainerAwareInterface {
     /**
      * Build the navigation menu and return it.
      *
-     * @param array $options
-     *
      * @return ItemInterface
      */
     public function mainMenu(array $options) {
         $menu = $this->factory->createItem('root');
-        $menu->setChildrenAttributes(array(
+        $menu->setChildrenAttributes([
             'class' => 'nav navbar-nav',
-        ));
+        ]);
 
-        $browse = $menu->addChild('browse', array(
+        $browse = $menu->addChild('browse', [
             'uri' => '#',
             'label' => 'Explore ' . self::CARET,
-        ));
+        ]);
         $browse->setAttribute('dropdown', true);
         $browse->setLinkAttribute('class', 'dropdown-toggle');
         $browse->setLinkAttribute('data-toggle', 'dropdown');
         $browse->setChildrenAttribute('class', 'dropdown-menu');
 
-        $browse->addChild('Titles', array(
+        $browse->addChild('Titles', [
             'route' => 'title_index',
-        ));
-        $browse->addChild('Persons', array(
+        ]);
+        $browse->addChild('Persons', [
             'route' => 'person_index',
-        ));
-        $browse->addChild('Firms', array(
+        ]);
+        $browse->addChild('Firms', [
             'route' => 'firm_index',
-        ));
+        ]);
 
-        $browse->addChild('Formats', array(
+        $browse->addChild('Formats', [
             'route' => 'format_index',
-        ));
-        $browse->addChild('Genres', array(
+        ]);
+        $browse->addChild('Genres', [
             'route' => 'genre_index',
-        ));
-        $browse->addChild('Sources', array(
+        ]);
+        $browse->addChild('Sources', [
             'route' => 'source_index',
-        ));
-        $browse->addChild('Contributor Roles', array(
+        ]);
+        $browse->addChild('Contributor Roles', [
             'route' => 'role_index',
-        ));
-        $browse->addChild('Firm Roles', array(
+        ]);
+        $browse->addChild('Firm Roles', [
             'route' => 'firmrole_index',
-        ));
+        ]);
 
         if ($this->hasRole('ROLE_USER')) {
-            $divider = $browse->addChild('divider', array(
+            $divider = $browse->addChild('divider', [
                 'label' => '',
-            ));
-            $divider->setAttributes(array(
+            ]);
+            $divider->setAttributes([
                 'role' => 'separator',
                 'class' => 'divider',
-            ));
-            $browse->addChild('Geonames', array(
+            ]);
+            $browse->addChild('Geonames', [
                 'route' => 'geonames_index',
-            ));
-            $browse->addChild('English Novel', array(
+            ]);
+            $browse->addChild('English Novel', [
                 'route' => 'resource_en_index',
-            ));
-            $browse->addChild('ESTC', array(
+            ]);
+            $browse->addChild('ESTC', [
                 'route' => 'resource_estc_index',
-            ));
-            $browse->addChild('Jackson', array(
+            ]);
+            $browse->addChild('Jackson', [
                 'route' => 'resource_jackson_index',
-            ));
-            $browse->addChild('Orlando', array(
+            ]);
+            $browse->addChild('Orlando', [
                 'route' => 'resource_orlando_biblio_index',
-            ));
-            $browse->addChild('Osborne', array(
+            ]);
+            $browse->addChild('Osborne', [
                 'route' => 'resource_osborne_index',
-            ));
+            ]);
         }
 
         return $menu;
@@ -175,50 +177,48 @@ class Builder implements ContainerAwareInterface {
     /**
      * Build the search menu and return it.
      *
-     * @param array $options
-     *
      * @return ItemInterface
      */
     public function searchMenu(array $options) {
         $menu = $this->factory->createItem('root');
-        $menu->setChildrenAttributes(array(
+        $menu->setChildrenAttributes([
             'class' => 'nav navbar-nav',
-        ));
+        ]);
 
-        $search = $menu->addChild('search', array(
+        $search = $menu->addChild('search', [
             'uri' => '#',
             'label' => 'Search ' . self::CARET,
-        ));
+        ]);
         $search->setAttribute('dropdown', true);
         $search->setLinkAttribute('class', 'dropdown-toggle');
         $search->setLinkAttribute('data-toggle', 'dropdown');
         $search->setChildrenAttribute('class', 'dropdown-menu');
 
-        $search->addChild('Titles', array(
+        $search->addChild('Titles', [
             'route' => 'title_search',
-        ));
-        $search->addChild('Persons', array(
+        ]);
+        $search->addChild('Persons', [
             'route' => 'person_search',
-        ));
-        $search->addChild('Firms', array(
+        ]);
+        $search->addChild('Firms', [
             'route' => 'firm_search',
-        ));
+        ]);
         if ($this->hasRole('ROLE_USER')) {
-            $divider = $search->addChild('divider', array(
+            $divider = $search->addChild('divider', [
                 'label' => '',
-            ));
-            $divider->setAttributes(array(
+            ]);
+            $divider->setAttributes([
                 'role' => 'separator',
                 'class' => 'divider',
-            ));
+            ]);
 
-            $search->addChild('Admin Reports', array(
+            $search->addChild('Admin Reports', [
                 'uri' => '#',
-            ));
+            ]);
 
-            $search->addChild('Titles to Check', array(
+            $search->addChild('Titles to Check', [
                 'route' => 'report_titles_check',
-            ));
+            ]);
         }
 
         return $menu;
@@ -227,20 +227,18 @@ class Builder implements ContainerAwareInterface {
     /**
      * Build the spotlight menu and return it.
      *
-     * @param array $options
-     *
      * @return ItemInterface
      */
     public function spotlightMenu(array $options) {
         $menu = $this->factory->createItem('root');
-        $menu->setChildrenAttributes(array(
+        $menu->setChildrenAttributes([
             'class' => 'nav navbar-nav',
-        ));
+        ]);
 
-        $spotlight = $menu->addChild('spotlight', array(
+        $spotlight = $menu->addChild('spotlight', [
             'uri' => '#',
             'label' => 'Spotlight ' . self::CARET,
-        ));
+        ]);
         $spotlight->setAttribute('dropdown', true);
         $spotlight->setLinkAttribute('class', 'dropdown-toggle');
         $spotlight->setLinkAttribute('data-toggle', 'dropdown');
@@ -248,18 +246,18 @@ class Builder implements ContainerAwareInterface {
 
         $repo = $this->em->getRepository(PostCategory::class);
         foreach ($this->spotlightMenuItems as $item) {
-            $category = $repo->findOneBy(array(
+            $category = $repo->findOneBy([
                 'name' => $item,
-            ));
+            ]);
             if ( ! $category) {
                 continue;
             }
-            $spotlight->addChild($category->getLabel(), array(
+            $spotlight->addChild($category->getLabel(), [
                 'route' => 'post_category_show',
-                'routeParameters' => array(
+                'routeParameters' => [
                     'id' => $category->getId(),
-                ),
-            ));
+                ],
+            ]);
         }
 
         return $menu;
@@ -267,8 +265,6 @@ class Builder implements ContainerAwareInterface {
 
     /**
      * Build a user menu.
-     *
-     * @param array $options
      *
      * @return ItemInterface
      */
@@ -278,64 +274,65 @@ class Builder implements ContainerAwareInterface {
             $name = $options['name'];
         }
         $menu = $this->factory->createItem('root');
-        $menu->setChildrenAttributes(array(
+        $menu->setChildrenAttributes([
             'class' => 'nav navbar-nav navbar-right',
-        ));
+        ]);
         $menu->setAttribute('dropdown', true);
         $user = $this->getUser();
         if ( ! $this->hasRole('ROLE_USER')) {
-            $menu->addChild($name, array(
-                'route' => 'fos_user_security_login',
-            ));
+            $menu->addChild($name, [
+                'route' => 'nines_user_security_login',
+            ]);
 
             return $menu;
         }
 
-        $userMenu = $menu->addChild('user', array(
+        $userMenu = $menu->addChild('user', [
             'uri' => '#',
             'label' => $user->getUsername() . self::CARET,
-        ));
+        ]);
         $userMenu->setAttribute('dropdown', true);
         $userMenu->setLinkAttribute('class', 'dropdown-toggle');
         $userMenu->setLinkAttribute('data-toggle', 'dropdown');
         $userMenu->setChildrenAttribute('class', 'dropdown-menu');
-        $userMenu->addChild('Profile', array('route' => 'fos_user_profile_show'));
-        $userMenu->addChild('Change password', array('route' => 'fos_user_change_password'));
-        $userMenu->addChild('Logout', array('route' => 'fos_user_security_logout'));
+
+        $user->addChild('Profile', ['route' => 'nines_user_profile_index']);
+        $user->addChild('Change password', ['route' => 'nines_user_profile_password']);
+        $user->addChild('Logout', ['route' => 'nines_user_security_logout']);
 
         if ($this->hasRole('ROLE_ADMIN')) {
-            $userMenu->addChild('divider', array(
+            $userMenu->addChild('divider', [
                 'label' => '',
-            ));
-            $userMenu['divider']->setAttributes(array(
+            ]);
+            $userMenu['divider']->setAttributes([
                 'role' => 'separator',
                 'class' => 'divider',
-            ));
+            ]);
 
-            $userMenu->addChild('users', array(
+            $userMenu->addChild('users', [
                 'label' => 'Users',
                 'route' => 'user',
-            ));
+            ]);
         }
 
         if ($this->hasRole('ROLE_COMMENT_ADMIN')) {
-            $userMenu->addChild('comment_divider', array(
+            $userMenu->addChild('comment_divider', [
                 'label' => '',
-            ));
-            $userMenu['comment_divider']->setAttributes(array(
+            ]);
+            $userMenu['comment_divider']->setAttributes([
                 'role' => 'separator',
                 'class' => 'divider',
-            ));
+            ]);
 
-            $userMenu->addChild('Comments', array(
+            $userMenu->addChild('Comments', [
                 'route' => 'admin_comment_index',
-            ));
-            $userMenu->addChild('Comment Notes', array(
+            ]);
+            $userMenu->addChild('Comment Notes', [
                 'route' => 'admin_comment_note_index',
-            ));
-            $userMenu->addChild('Comment States', array(
+            ]);
+            $userMenu->addChild('Comment States', [
                 'route' => 'admin_comment_status_index',
-            ));
+            ]);
         }
 
         return $menu;
@@ -344,15 +341,13 @@ class Builder implements ContainerAwareInterface {
     /**
      * Build a menu for blog posts.
      *
-     * @param array $options
-     *
      * @return ItemInterface
      */
     public function postNavMenu(array $options) {
         $menu = $this->factory->createItem('root');
-        $menu->setChildrenAttributes(array(
+        $menu->setChildrenAttributes([
             'class' => 'nav navbar-nav',
-        ));
+        ]);
         $menu->setAttribute('dropdown', true);
 
         $title = 'Announcements';
@@ -360,18 +355,18 @@ class Builder implements ContainerAwareInterface {
             $title = $options['title'];
         }
 
-        $menu->addChild('announcements', array(
+        $menu->addChild('announcements', [
             'uri' => '#',
             'label' => $title . self::CARET,
-        ));
+        ]);
         $menu['announcements']->setAttribute('dropdown', true);
         $menu['announcements']->setLinkAttribute('class', 'dropdown-toggle');
         $menu['announcements']->setLinkAttribute('data-toggle', 'dropdown');
         $menu['announcements']->setChildrenAttribute('class', 'dropdown-menu');
 
-        $status = $this->em->getRepository('NinesBlogBundle:PostStatus')->findOneBy(array(
+        $status = $this->em->getRepository('NinesBlogBundle:PostStatus')->findOneBy([
             'public' => true,
-        ));
+        ]);
         $qb = $this->em->createQueryBuilder();
         $qb->select('p')
             ->from(Post::class, 'p')
@@ -384,45 +379,45 @@ class Builder implements ContainerAwareInterface {
 
         $posts = $qb->getQuery()->execute();
         foreach ($posts as $post) {
-            if (in_array($post->getCategory()->getName(), $this->spotlightMenuItems)) {
+            if (in_array($post->getCategory()->getName(), $this->spotlightMenuItems, true)) {
                 continue;
             }
-            $menu['announcements']->addChild($post->getTitle(), array(
+            $menu['announcements']->addChild($post->getTitle(), [
                 'route' => 'post_show',
-                'routeParameters' => array(
+                'routeParameters' => [
                     'id' => $post->getId(),
-                ),
-            ));
+                ],
+            ]);
         }
-        $menu['announcements']->addChild('divider', array(
+        $menu['announcements']->addChild('divider', [
             'label' => '',
-        ));
-        $menu['announcements']['divider']->setAttributes(array(
+        ]);
+        $menu['announcements']['divider']->setAttributes([
             'role' => 'separator',
             'class' => 'divider',
-        ));
+        ]);
 
-        $menu['announcements']->addChild('All Announcements', array(
-            'route' => 'post_index',
-        ));
+        $menu['announcements']->addChild('All Announcements', [
+            'route' => 'nines_blog_post_index',
+        ]);
 
         if ($this->hasRole('ROLE_BLOG_ADMIN')) {
-            $menu['announcements']->addChild('divider', array(
+            $menu['announcements']->addChild('divider', [
                 'label' => '',
-            ));
-            $menu['announcements']['divider']->setAttributes(array(
+            ]);
+            $menu['announcements']['divider']->setAttributes([
                 'role' => 'separator',
                 'class' => 'divider',
-            ));
+            ]);
 
-            $menu['announcements']->addChild('post_category', array(
+            $menu['announcements']->addChild('post_category', [
                 'label' => 'Post Categories',
                 'route' => 'post_category_index',
-            ));
-            $menu['announcements']->addChild('post_status', array(
+            ]);
+            $menu['announcements']->addChild('post_status', [
                 'label' => 'Post Statuses',
                 'route' => 'post_status_index',
-            ));
+            ]);
         }
 
         return $menu;

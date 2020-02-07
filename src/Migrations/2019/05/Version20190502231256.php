@@ -2,6 +2,12 @@
 
 declare(strict_types=1);
 
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
@@ -13,8 +19,6 @@ use Doctrine\Migrations\AbstractMigration;
 final class Version20190502231256 extends AbstractMigration {
     /**
      * Apply the migration.
-     *
-     * @param Schema $schema
      */
     public function up(Schema $schema) : void {
         $this->addSql('UPDATE person SET gender = \'U\' WHERE gender is null');
@@ -26,8 +30,6 @@ final class Version20190502231256 extends AbstractMigration {
 
     /**
      * Undo the migration. Does nothing.
-     *
-     * @param Schema $schema
      */
     public function down(Schema $schema) : void {
     }

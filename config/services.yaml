@@ -13,6 +13,11 @@ parameters:
 
     app.geonames.username: '%env(GEONAMES_USERNAME)%'
 
+    dhil.piwik_enabled: '%env(bool:PIWIK_ENABLED)%'
+    dhil.piwik_url: null
+    dhil.piwik_siteid: null
+    dhil.piwik_domain: null
+
     wphp.spotlight_menu:
         - spotlight_titles
         - spotlight_person

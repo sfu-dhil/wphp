@@ -1,5 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\Controller;
 
 use App\Entity\OrlandoBiblio;
@@ -7,12 +15,12 @@ use App\Repository\OrlandoBiblioRepository;
 use App\Services\OrlandoManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
+use Nines\UtilBundle\Controller\PaginatorTrait;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Nines\UtilBundle\Controller\PaginatorTrait;
 
 /**
  * OrlandoBiblio controller.
@@ -26,9 +34,6 @@ class OrlandoBiblioController extends AbstractController implements PaginatorAwa
     /**
      * Lists all OrlandoBiblio entities.
      *
-     * @param Request $request
-     * @param OrlandoManager $manager
-     *
      * @return array
      *
      * @Route("/", name="resource_orlando_biblio_index", methods={"GET"})
@@ -40,18 +45,14 @@ class OrlandoBiblioController extends AbstractController implements PaginatorAwa
         $query = $qb->getQuery();
         $orlandoBiblios = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
 
-        return array(
+        return [
             'orlandoBiblios' => $orlandoBiblios,
             'manager' => $manager,
-        );
+        ];
     }
 
     /**
      * Search for OrlandoBiblio entities.
-     *
-     * @param Request $request
-     * @param OrlandoManager $manager
-     * @param OrlandoBiblioRepository $repo
      *
      * @return array
      * @Route("/search", name="resource_orlando_biblio_search", methods={"GET"})
@@ -63,21 +64,18 @@ class OrlandoBiblioController extends AbstractController implements PaginatorAwa
             $query = $repo->searchQuery($q);
             $orlandoBiblios = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
         } else {
-            $orlandoBiblios = array();
+            $orlandoBiblios = [];
         }
 
-        return array(
+        return [
             'orlandoBiblios' => $orlandoBiblios,
             'q' => $q,
             'manager' => $manager,
-        );
+        ];
     }
 
     /**
      * Finds and displays a OrlandoBiblio entity.
-     *
-     * @param OrlandoBiblio $orlandoBiblio
-     * @param OrlandoManager $manager
      *
      * @return array
      *
@@ -85,9 +83,9 @@ class OrlandoBiblioController extends AbstractController implements PaginatorAwa
      * @Template()
      */
     public function showAction(OrlandoBiblio $orlandoBiblio, OrlandoManager $manager) {
-        return array(
+        return [
             'orlandoBiblio' => $orlandoBiblio,
             'manager' => $manager,
-        );
+        ];
     }
 }

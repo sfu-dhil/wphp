@@ -1,5 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace AppBundle\Tests\Services;
 
 use AppBundle\DataFixtures\ORM\LoadOrlandoBiblio;
@@ -7,34 +15,34 @@ use AppBundle\Services\OrlandoManager;
 use Nines\UtilBundle\Tests\Util\BaseTestCase;
 
 class OrlandoManagerTest extends BaseTestCase {
-    const DATA = 'A_ID = 20384 || STANDARD = Author 2 || ROLE = EDITOR %%% A_ID = 19884 || STANDARD = Other Author 2 || ROLE = AUTHOR';
+    public const DATA = 'A_ID = 20384 || STANDARD = Author 2 || ROLE = EDITOR %%% A_ID = 19884 || STANDARD = Other Author 2 || ROLE = AUTHOR';
 
     private $manager;
 
     protected function getFixtures() {
-        return array(
+        return [
             LoadOrlandoBiblio::class,
-        );
+        ];
     }
 
-    public function testSanity() {
+    public function testSanity() : void {
         $this->assertInstanceOf(OrlandoManager::class, $this->manager);
     }
 
-    public function testNullData() {
+    public function testNullData() : void {
         $this->assertCount(0, $this->manager->getField(null));
     }
 
-    public function testGetField() {
-        $this->assertEquals(array('Author 2', 'Other Author 2'), $this->manager->getField(self::DATA));
+    public function testGetField() : void {
+        $this->assertSame(['Author 2', 'Other Author 2'], $this->manager->getField(self::DATA));
     }
 
-    public function testGetEmptyField() {
-        $this->assertEquals(array(), $this->manager->getField(self::DATA, 'cheese'));
+    public function testGetEmptyField() : void {
+        $this->assertSame([], $this->manager->getField(self::DATA, 'cheese'));
     }
 
-    public function testGetNamedField() {
-        $this->assertEquals(array('EDITOR', 'AUTHOR'), $this->manager->getField(self::DATA, 'role'));
+    public function testGetNamedField() : void {
+        $this->assertSame(['EDITOR', 'AUTHOR'], $this->manager->getField(self::DATA, 'role'));
     }
 
     protected function setUp() : void {

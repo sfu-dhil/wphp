@@ -1,5 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\Controller;
 
 use App\Entity\Firm;
@@ -9,6 +17,7 @@ use App\Form\Firm\FirmType;
 use App\Repository\FirmRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
+use Nines\UtilBundle\Controller\PaginatorTrait;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,7 +27,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
-use Nines\UtilBundle\Controller\PaginatorTrait;
 
 /**
  * Firm controller.
@@ -35,36 +43,31 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
      *
      * @Template()
      *
-     * @param Request $request
-     *
      * @return array
      */
     public function indexAction(Request $request, EntityManagerInterface $em) {
-        $form = $this->createForm(FirmSearchType::class, null, array(
+        $form = $this->createForm(FirmSearchType::class, null, [
             'action' => $this->generateUrl('firm_search'),
-        ));
+        ]);
         $dql = 'SELECT e FROM App:Firm e';
         if ('g.name+e.name' === $request->query->get('sort')) {
             $dql = 'SELECT e FROM App:Firm e LEFT JOIN e.city g ORDER BY e.name, e.startDate';
         }
         $query = $em->createQuery($dql);
-        $firms = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25, array(
-            'defaultSortFieldName' => array('e.name', 'e.startDate'),
+        $firms = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25, [
+            'defaultSortFieldName' => ['e.name', 'e.startDate'],
             'defaultSortDirection' => 'asc',
-        ));
+        ]);
 
-        return array(
+        return [
             'search_form' => $form->createView(),
             'firms' => $firms,
             'sortable' => true,
-        );
+        ];
     }
 
     /**
      * Search for firms and return a JSON repsonse for a typeahead widget.
-     *
-     * @param Request $request
-     * @param FirmRepository $repo
      *
      * @return JsonResponse
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
@@ -73,14 +76,14 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
     public function typeaheadAction(Request $request, FirmRepository $repo) {
         $q = $request->query->get('q');
         if ( ! $q) {
-            return new JsonResponse(array());
+            return new JsonResponse([]);
         }
-        $data = array();
+        $data = [];
         foreach ($repo->typeaheadQuery($q) as $result) {
-            $data[] = array(
+            $data[] = [
                 'id' => $result->getId(),
                 'text' => $result->getName(),
-            );
+            ];
         }
 
         return new JsonResponse($data);
@@ -92,15 +95,12 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
      * @Route("/search", name="firm_search", methods={"GET"})
      * @Template()
      *
-     * @param Request $request
-     * @param FirmRepository $repo
-     *
      * @return array
      */
     public function searchAction(Request $request, FirmRepository $repo) {
         $form = $this->createForm(FirmSearchType::class);
         $form->handleRequest($request);
-        $firms = array();
+        $firms = [];
         $submitted = false;
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -109,20 +109,17 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
             $firms = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
         }
 
-        return array(
+        return [
             'search_form' => $form->createView(),
             'firms' => $firms,
             'submitted' => $submitted,
-        );
+        ];
     }
 
     /**
      * Full text search export for Title entities.
      *
      * @Route("/search/export", name="firm_search_export", methods={"GET"})
-     *
-     * @param Request $request
-     * @param FirmRepository $repo
      *
      * @return BinaryFileResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
@@ -137,17 +134,17 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
             $iterator = $query->iterate();
             $tmpPath = tempnam(sys_get_temp_dir(), 'wphp-export-');
             $fh = fopen($tmpPath, 'w');
-            fputcsv($fh, array('ID', 'Name', 'Street Address', 'City', 'Start Date', 'End Date'));
+            fputcsv($fh, ['ID', 'Name', 'Street Address', 'City', 'Start Date', 'End Date']);
             foreach ($iterator as $row) {
                 $firm = $row[0];
-                fputcsv($fh, array(
+                fputcsv($fh, [
                     $firm->getId(),
                     $firm->getName(),
                     $firm->getStreetAddress(),
                     $firm->getCity()->getName(),
                     preg_replace('/-00/', '', $firm->getStartDate()),
                     preg_replace('/-00/', '', $firm->getEndDate()),
-                ));
+                ]);
             }
             fclose($fh);
             $response = new BinaryFileResponse($tmpPath);
@@ -167,14 +164,12 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
      * @Route("/jump", name="firm_jump", methods={"GET"})
      * @Template()
      *
-     * @param Request $request
-     *
      * @return RedirectResponse
      */
     public function jumpAction(Request $request) {
         $q = $request->query->get('q');
         if ($q) {
-            return $this->redirect($this->generateUrl('firm_show', array('id' => $q)));
+            return $this->redirect($this->generateUrl('firm_show', ['id' => $q]));
         }
 
         return $this->redirect($this->generateUrl('firm_index'));
@@ -186,8 +181,6 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
      * @Route("/new", name="firm_new", methods={"GET","POST"})
      * @Template()
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
-     *
-     * @param Request $request
      *
      * @return array|RedirectResponse
      */
@@ -202,13 +195,13 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
 
             $this->addFlash('success', 'The new firm was created.');
 
-            return $this->redirectToRoute('firm_show', array('id' => $firm->getId()));
+            return $this->redirectToRoute('firm_show', ['id' => $firm->getId()]);
         }
 
-        return array(
+        return [
             'firm' => $firm,
             'form' => $form->createView(),
-        );
+        ];
     }
 
     /**
@@ -216,9 +209,6 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
      *
      * @Route("/{id}.{_format}", name="firm_show", defaults={"_format": "html"}, methods={"GET"})
      * @Template()
-     *
-     * @param Request $request
-     * @param Firm $firm
      *
      * @return array
      */
@@ -233,10 +223,10 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
         }
         $pagination = $this->paginator->paginate($firmRoles, $request->query->getInt('page', 1), 25);
 
-        return array(
+        return [
             'firm' => $firm,
             'pagination' => $pagination,
-        );
+        ];
     }
 
     /**
@@ -244,9 +234,6 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
      *
      * @Route("/{id}/export", name="firm_export", methods={"GET","POST"})
      * @Template()
-     *
-     * @param Request $request
-     * @param Firm $firm
      *
      * @return array
      */
@@ -260,11 +247,11 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
             });
         }
 
-        return array(
+        return [
             'firm' => $firm,
             'firmRoles' => $firmRoles,
             'format' => $request->query->get('format', 'mla'),
-        );
+        ];
     }
 
     /**
@@ -273,9 +260,6 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
      * @Route("/{id}/edit", name="firm_edit", methods={"GET","POST"})
      * @Template()
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
-     *
-     * @param Request $request
-     * @param Firm $firm
      *
      * @return array|RedirectResponse
      */
@@ -287,13 +271,13 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
             $em->flush();
             $this->addFlash('success', 'The firm has been updated.');
 
-            return $this->redirectToRoute('firm_show', array('id' => $firm->getId()));
+            return $this->redirectToRoute('firm_show', ['id' => $firm->getId()]);
         }
 
-        return array(
+        return [
             'firm' => $firm,
             'edit_form' => $editForm->createView(),
-        );
+        ];
     }
 
     /**
@@ -301,9 +285,6 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
      *
      * @Route("/{id}/delete", name="firm_delete", methods={"GET"})
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
-     *
-     * @param Request $request
-     * @param Firm $firm
      *
      * @return RedirectResponse
      */

@@ -1,5 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\DataFixtures;
 
 use App\Entity\MarcSubfieldStructure;
@@ -15,15 +23,13 @@ class MarcSubfieldStructureFixtures extends Fixture implements FixtureGroupInter
      * {@inheritdoc}
      */
     public static function getGroups() : array {
-        return array('test');
+        return ['test'];
     }
 
     /**
      * {@inheritdoc}
-     *
-     * @param ObjectManager $manager
      */
-    public function load(ObjectManager $manager) {
+    public function load(ObjectManager $manager) : void {
         for ($j = 0; $j < 20; $j++) {
             for ($i = 0; $i < 10; $i++) {
                 $subfield = 'abcdefghijklmnop'[$i];
@@ -31,7 +37,7 @@ class MarcSubfieldStructureFixtures extends Fixture implements FixtureGroupInter
                 $fixture->setTagField(100 + $j);
                 $fixture->setTagSubfield($subfield);
                 $fixture->setName('Field ' . (100 + $j) . $subfield);
-                $fixture->setHidden(array(0, -6, -5, -1)[$i % 4]);
+                $fixture->setHidden([0, -6, -5, -1][$i % 4]);
                 $manager->persist($fixture);
                 $this->setReference("marcsubfield.{$j}.{$i}", $fixture);
             }

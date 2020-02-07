@@ -1,10 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\Repository;
 
 use App\Entity\Firm;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * FirmRepository.
@@ -13,6 +22,11 @@ use Doctrine\ORM\Query;
  * repository methods below.
  */
 class FirmRepository extends ServiceEntityRepository {
+
+    public function __construct(ManagerRegistry $registry) {
+        parent::__construct($registry, Firm::class);
+    }
+
     /**
      * Do a name search for a typeahead widget.
      *
@@ -100,14 +114,14 @@ class FirmRepository extends ServiceEntityRepository {
             $qb->setParameter('id', $data['id']);
         }
         if (isset($data['gender']) && $data['gender']) {
-            $genders = array();
-            if (in_array('M', $data['gender'])) {
+            $genders = [];
+            if (in_array('M', $data['gender'], true)) {
                 $genders[] = 'M';
             }
-            if (in_array('F', $data['gender'])) {
+            if (in_array('F', $data['gender'], true)) {
                 $genders[] = 'F';
             }
-            if (in_array('U', $data['gender'])) {
+            if (in_array('U', $data['gender'], true)) {
                 $genders[] = 'U';
             }
             $qb->andWhere('e.gender in (:genders)');
@@ -125,7 +139,7 @@ class FirmRepository extends ServiceEntityRepository {
             $qb->setParameter('cname', $data['city']);
         }
         if (isset($data['start']) && $data['start']) {
-            $m = array();
+            $m = [];
             if (preg_match('/^\s*[0-9]{4}\s*$/', $data['start'])) {
                 $qb->andWhere('YEAR(e.startDate) = :yearb');
                 $qb->setParameter('yearb', $data['start']);
@@ -139,7 +153,7 @@ class FirmRepository extends ServiceEntityRepository {
         }
 
         if (isset($data['end']) && $data['end']) {
-            $m = array();
+            $m = [];
             if (preg_match('/^\s*[0-9]{4}\s*$/', $data['end'])) {
                 $qb->andWhere('YEAR(e.endDate) = :yeare');
                 $qb->setParameter('yeare', $data['end']);

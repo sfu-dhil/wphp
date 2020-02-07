@@ -1,5 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\Entity;
 
 use DateTime;
@@ -616,8 +624,6 @@ class Geonames {
     /**
      * Add title.
      *
-     * @param Title $title
-     *
      * @return Geonames
      */
     public function addTitle(Title $title) {
@@ -628,10 +634,8 @@ class Geonames {
 
     /**
      * Remove title.
-     *
-     * @param Title $title
      */
-    public function removeTitle(Title $title) {
+    public function removeTitle(Title $title) : void {
         $this->titles->removeElement($title);
     }
 
@@ -647,8 +651,6 @@ class Geonames {
     /**
      * Add firm.
      *
-     * @param Firm $firm
-     *
      * @return Geonames
      */
     public function addFirm(Firm $firm) {
@@ -659,10 +661,8 @@ class Geonames {
 
     /**
      * Remove firm.
-     *
-     * @param Firm $firm
      */
-    public function removeFirm(Firm $firm) {
+    public function removeFirm(Firm $firm) : void {
         $this->firms->removeElement($firm);
     }
 
@@ -678,8 +678,6 @@ class Geonames {
     /**
      * Add peopleBorn.
      *
-     * @param Person $peopleBorn
-     *
      * @return Geonames
      */
     public function addPeopleBorn(Person $peopleBorn) {
@@ -690,10 +688,8 @@ class Geonames {
 
     /**
      * Remove peopleBorn.
-     *
-     * @param Person $peopleBorn
      */
-    public function removePeopleBorn(Person $peopleBorn) {
+    public function removePeopleBorn(Person $peopleBorn) : void {
         $this->peopleBorn->removeElement($peopleBorn);
     }
 
@@ -709,8 +705,6 @@ class Geonames {
     /**
      * Add peopleDied.
      *
-     * @param Firm $peopleDied
-     *
      * @return Geonames
      */
     public function addPeopleDied(Firm $peopleDied) {
@@ -721,10 +715,8 @@ class Geonames {
 
     /**
      * Remove peopleDied.
-     *
-     * @param Firm $peopleDied
      */
-    public function removePeopleDied(Firm $peopleDied) {
+    public function removePeopleDied(Firm $peopleDied) : void {
         $this->peopleDied->removeElement($peopleDied);
     }
 

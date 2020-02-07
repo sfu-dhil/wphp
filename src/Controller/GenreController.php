@@ -1,5 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\Controller;
 
 use App\Entity\Genre;
@@ -7,6 +15,7 @@ use App\Form\GenreType;
 use App\Repository\GenreRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
+use Nines\UtilBundle\Controller\PaginatorTrait;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,7 +23,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Nines\UtilBundle\Controller\PaginatorTrait;
 
 /**
  * Genre controller.
@@ -30,9 +38,6 @@ class GenreController extends AbstractController implements PaginatorAwareInterf
      * @Route("/", name="genre_index", methods={"GET"})
      * @Template()
      *
-     * @param Request $request
-     * @param GenreRepository $repo
-     *
      * @return array
      */
     public function indexAction(Request $request, GenreRepository $repo, EntityManagerInterface $em) {
@@ -40,17 +45,14 @@ class GenreController extends AbstractController implements PaginatorAwareInterf
         $query = $em->createQuery($dql);
         $genres = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
 
-        return array(
+        return [
             'genres' => $genres,
             'repo' => $repo,
-        );
+        ];
     }
 
     /**
      * Typeahead action for an editor widget.
-     *
-     * @param Request $request
-     * @param GenreRepository $repo
      *
      * @return JsonResponse
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
@@ -59,14 +61,14 @@ class GenreController extends AbstractController implements PaginatorAwareInterf
     public function typeaheadAction(Request $request, GenreRepository $repo) {
         $q = $request->query->get('q');
         if ( ! $q) {
-            return new JsonResponse(array());
+            return new JsonResponse([]);
         }
-        $data = array();
+        $data = [];
         foreach ($repo->typeaheadQuery($q) as $result) {
-            $data[] = array(
+            $data[] = [
                 'id' => $result->getId(),
                 'text' => $result->getName(),
-            );
+            ];
         }
 
         return new JsonResponse($data);
@@ -78,8 +80,6 @@ class GenreController extends AbstractController implements PaginatorAwareInterf
      * @Route("/new", name="genre_new", methods={"GET", "POST"})
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
      * @Template()
-     *
-     * @param Request $request
      *
      * @return array|RedirectResponse
      */
@@ -94,13 +94,13 @@ class GenreController extends AbstractController implements PaginatorAwareInterf
 
             $this->addFlash('success', 'The new genre was created.');
 
-            return $this->redirectToRoute('genre_show', array('id' => $genre->getId()));
+            return $this->redirectToRoute('genre_show', ['id' => $genre->getId()]);
         }
 
-        return array(
+        return [
             'genre' => $genre,
             'form' => $form->createView(),
-        );
+        ];
     }
 
     /**
@@ -108,9 +108,6 @@ class GenreController extends AbstractController implements PaginatorAwareInterf
      *
      * @Route("/{id}", name="genre_show", methods={"GET"})
      * @Template()
-     *
-     * @param Request $request
-     * @param Genre $genre
      *
      * @return array
      */
@@ -124,10 +121,10 @@ class GenreController extends AbstractController implements PaginatorAwareInterf
         $query->setParameter('genre', $genre);
         $titles = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
 
-        return array(
+        return [
             'genre' => $genre,
             'titles' => $titles,
-        );
+        ];
     }
 
     /**
@@ -136,9 +133,6 @@ class GenreController extends AbstractController implements PaginatorAwareInterf
      * @Route("/{id}/edit", name="genre_edit", methods={"GET","POST"})
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
      * @Template()
-     *
-     * @param Request $request
-     * @param Genre $genre
      *
      * @return array|RedirectResponse
      */
@@ -150,13 +144,13 @@ class GenreController extends AbstractController implements PaginatorAwareInterf
             $em->flush();
             $this->addFlash('success', 'The genre has been updated.');
 
-            return $this->redirectToRoute('genre_show', array('id' => $genre->getId()));
+            return $this->redirectToRoute('genre_show', ['id' => $genre->getId()]);
         }
 
-        return array(
+        return [
             'genre' => $genre,
             'edit_form' => $editForm->createView(),
-        );
+        ];
     }
 
     /**
@@ -164,9 +158,6 @@ class GenreController extends AbstractController implements PaginatorAwareInterf
      *
      * @Route("/{id}/delete", name="genre_delete", methods={"GET"})
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
-     *
-     * @param Request $request
-     * @param Genre $genre
      *
      * @return RedirectResponse
      */

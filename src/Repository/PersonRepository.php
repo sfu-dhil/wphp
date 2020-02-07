@@ -1,9 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\Repository;
 
 use App\Entity\Person;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * PersonRepository.
@@ -12,6 +21,10 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
  * repository methods below.
  */
 class PersonRepository extends ServiceEntityRepository {
+    public function __construct(ManagerRegistry $registry) {
+        parent::__construct($registry, Person::class);
+    }
+
     /**
      * Do a name search for a typeahead query.
      *
@@ -146,14 +159,14 @@ class PersonRepository extends ServiceEntityRepository {
             $qb->setParameter('id', $data['id']);
         }
         if (isset($data['gender']) && $data['gender']) {
-            $genders = array();
-            if (in_array('M', $data['gender'])) {
+            $genders = [];
+            if (in_array('M', $data['gender'], true)) {
                 $genders[] = 'M';
             }
-            if (in_array('F', $data['gender'])) {
+            if (in_array('F', $data['gender'], true)) {
                 $genders[] = 'F';
             }
-            if (in_array('U', $data['gender'])) {
+            if (in_array('U', $data['gender'], true)) {
                 $genders[] = 'U';
             }
             $qb->andWhere('e.gender in (:genders)');
@@ -161,7 +174,7 @@ class PersonRepository extends ServiceEntityRepository {
         }
 
         if (isset($data['dob']) && $data['dob']) {
-            $m = array();
+            $m = [];
             if (preg_match('/^\s*[0-9]{4}\s*$/', $data['dob'])) {
                 $qb->andWhere('YEAR(e.dob) = :yearb');
                 $qb->setParameter('yearb', $data['dob']);
@@ -175,7 +188,7 @@ class PersonRepository extends ServiceEntityRepository {
         }
 
         if (isset($data['dod']) && $data['dod']) {
-            $m = array();
+            $m = [];
             if (preg_match('/^\s*[0-9]{4}\s*$/', $data['dod'])) {
                 $qb->andWhere('YEAR(e.dod) = :yeard');
                 $qb->setParameter('yeard', $data['dod']);
@@ -241,7 +254,7 @@ class PersonRepository extends ServiceEntityRepository {
             }
 
             if (isset($filter['pubdate']) && $filter['pubdate']) {
-                $m = array();
+                $m = [];
                 if (preg_match('/^\s*[0-9]{4}\s*$/', $filter['pubdate'])) {
                     $qb->andWhere("YEAR(STRTODATE({$tAlias}.pubdate, '%Y')) = :{$tAlias}_year");
                     $qb->setParameter("{$tAlias}_year", $filter['pubdate']);

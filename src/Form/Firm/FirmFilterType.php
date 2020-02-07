@@ -1,5 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\Form\Firm;
 
 use App\Entity\Firmrole;
@@ -21,47 +29,41 @@ class FirmFilterType extends AbstractType {
      */
     private $em;
 
-    /**
-     * @param EntityManagerInterface $em
-     */
     public function __construct(EntityManagerInterface $em) {
         $this->em = $em;
     }
 
     /**
      * Build the form type.
-     *
-     * @param FormBuilderInterface $builder
-     * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options) : void {
         $firmRoleRepo = $this->em->getRepository(Firmrole::class);
-        $roles = $firmRoleRepo->findAll(array(
+        $roles = $firmRoleRepo->findAll([
             'name' => 'ASC',
-        ));
-        $builder->add('firm_name', TextType::class, array(
+        ]);
+        $builder->add('firm_name', TextType::class, [
             'label' => 'Firm Name',
             'required' => false,
-            'attr' => array(
+            'attr' => [
                 'help_block' => 'firm.search.name',
-            ),
-        ));
-        $builder->add('firm_gender', ChoiceType::class, array(
+            ],
+        ]);
+        $builder->add('firm_gender', ChoiceType::class, [
             'label' => 'Gender',
-            'choices' => array(
+            'choices' => [
                 'Female' => 'F',
                 'Male' => 'M',
                 'Unknown' => 'U',
-            ),
-            'attr' => array(
+            ],
+            'attr' => [
                 'help_block' => 'firm.search.gender',
-            ),
+            ],
             'required' => false,
             'expanded' => true,
             'multiple' => true,
-        ));
+        ]);
 
-        $builder->add('firm_role', ChoiceType::class, array(
+        $builder->add('firm_role', ChoiceType::class, [
             'choices' => $roles,
             'choice_label' => function ($value, $key, $index) {
                 return $value->getName();
@@ -75,16 +77,16 @@ class FirmFilterType extends AbstractType {
             'required' => false,
             'expanded' => true,
             'multiple' => true,
-            'attr' => array(
+            'attr' => [
                 'help_block' => 'firm.search.role',
-            ),
-        ));
-        $builder->add('firm_address', TextType::class, array(
+            ],
+        ]);
+        $builder->add('firm_address', TextType::class, [
             'label' => 'Firm Address',
             'required' => false,
-            'attr' => array(
+            'attr' => [
                 'help_block' => 'firm.search.address',
-            ),
-        ));
+            ],
+        ]);
     }
 }

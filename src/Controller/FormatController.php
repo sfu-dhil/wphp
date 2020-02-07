@@ -1,5 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\Controller;
 
 use App\Entity\Format;
@@ -7,6 +15,7 @@ use App\Form\FormatType;
 use App\Repository\FormatRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
+use Nines\UtilBundle\Controller\PaginatorTrait;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,7 +23,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Nines\UtilBundle\Controller\PaginatorTrait;
 
 /**
  * Format controller.
@@ -30,9 +38,6 @@ class FormatController extends AbstractController implements PaginatorAwareInter
      * @Route("/", name="format_index", methods={"GET"})
      * @Template()
      *
-     * @param Request $request
-     * @param FormatRepository $repo
-     *
      * @return array
      */
     public function indexAction(Request $request, FormatRepository $repo, EntityManagerInterface $em) {
@@ -40,17 +45,14 @@ class FormatController extends AbstractController implements PaginatorAwareInter
         $query = $em->createQuery($dql);
         $formats = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
 
-        return array(
+        return [
             'formats' => $formats,
             'repo' => $repo,
-        );
+        ];
     }
 
     /**
      * Searchf for formats and return a JSON response for a typeahead widget.
-     *
-     * @param Request $request
-     * @param FormatRepository $repo
      *
      * @return JsonResponse
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
@@ -59,14 +61,14 @@ class FormatController extends AbstractController implements PaginatorAwareInter
     public function typeaheadAction(Request $request, FormatRepository $repo) {
         $q = $request->query->get('q');
         if ( ! $q) {
-            return new JsonResponse(array());
+            return new JsonResponse([]);
         }
-        $data = array();
+        $data = [];
         foreach ($repo->typeaheadQuery($q) as $result) {
-            $data[] = array(
+            $data[] = [
                 'id' => $result->getId(),
                 'text' => $result->getName(),
-            );
+            ];
         }
 
         return new JsonResponse($data);
@@ -78,8 +80,6 @@ class FormatController extends AbstractController implements PaginatorAwareInter
      * @Route("/new", name="format_new", methods={"GET", "POST"})
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
      * @Template()
-     *
-     * @param Request $request
      *
      * @return array|RedirectResponse
      */
@@ -94,13 +94,13 @@ class FormatController extends AbstractController implements PaginatorAwareInter
 
             $this->addFlash('success', 'The new format was created.');
 
-            return $this->redirectToRoute('format_show', array('id' => $format->getId()));
+            return $this->redirectToRoute('format_show', ['id' => $format->getId()]);
         }
 
-        return array(
+        return [
             'format' => $format,
             'form' => $form->createView(),
-        );
+        ];
     }
 
     /**
@@ -108,9 +108,6 @@ class FormatController extends AbstractController implements PaginatorAwareInter
      *
      * @Route("/{id}", name="format_show", methods={"GET"})
      * @Template()
-     *
-     * @param Request $request
-     * @param Format $format
      *
      * @return array
      */
@@ -125,10 +122,10 @@ class FormatController extends AbstractController implements PaginatorAwareInter
         $query->setParameter('format', $format);
         $titles = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
 
-        return array(
+        return [
             'format' => $format,
             'titles' => $titles,
-        );
+        ];
     }
 
     /**
@@ -137,9 +134,6 @@ class FormatController extends AbstractController implements PaginatorAwareInter
      * @Route("/{id}/edit", name="format_edit", methods={"GET","POST"})
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
      * @Template()
-     *
-     * @param Request $request
-     * @param Format $format
      *
      * @return array|RedirectResponse
      */
@@ -151,13 +145,13 @@ class FormatController extends AbstractController implements PaginatorAwareInter
             $em->flush();
             $this->addFlash('success', 'The format has been updated.');
 
-            return $this->redirectToRoute('format_show', array('id' => $format->getId()));
+            return $this->redirectToRoute('format_show', ['id' => $format->getId()]);
         }
 
-        return array(
+        return [
             'format' => $format,
             'edit_form' => $editForm->createView(),
-        );
+        ];
     }
 
     /**
@@ -165,9 +159,6 @@ class FormatController extends AbstractController implements PaginatorAwareInter
      *
      * @Route("/{id}/delete", name="format_delete", methods={"GET"})
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
-     *
-     * @param Request $request
-     * @param Format $format
      *
      * @return RedirectResponse
      */

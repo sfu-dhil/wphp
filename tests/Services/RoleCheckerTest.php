@@ -1,9 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: mjoyce
- * Date: 2019-03-20
- * Time: 09:54.
+
+declare(strict_types=1);
+
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace AppBundle\Tests\Services;
@@ -19,7 +21,7 @@ class RoleCheckerTest extends BaseTestCase {
      */
     private $checker;
 
-    public function testMissingToken() {
+    public function testMissingToken() : void {
         $authChecker = $this->createMock(AuthorizationCheckerInterface::class);
         $authChecker->method('isGranted')->will($this->throwException(new \Exception('No token')));
         $storage = $this->createMock(TokenStorageInterface::class);
@@ -28,7 +30,7 @@ class RoleCheckerTest extends BaseTestCase {
         $this->assertFalse($checker->hasRole('ROLE_USER'));
     }
 
-    public function testNotAuthorized() {
+    public function testNotAuthorized() : void {
         $authChecker = $this->createMock(AuthorizationCheckerInterface::class);
         $authChecker->method('isGranted')->willReturn(false);
         $storage = $this->createMock(TokenStorageInterface::class);
@@ -37,7 +39,7 @@ class RoleCheckerTest extends BaseTestCase {
         $this->assertFalse($checker->hasRole('ROLE_USER'));
     }
 
-    public function testAuthorized() {
+    public function testAuthorized() : void {
         $authChecker = $this->createMock(AuthorizationCheckerInterface::class);
         $authChecker->method('isGranted')->willReturn(true);
         $storage = $this->createMock(TokenStorageInterface::class);

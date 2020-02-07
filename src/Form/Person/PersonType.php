@@ -1,5 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\Form\Person;
 
 use App\Entity\Geonames;
@@ -15,59 +23,55 @@ use Tetranz\Select2EntityBundle\Form\Type\Select2EntityType;
  * Form definition for the person class.
  */
 class PersonType extends AbstractType {
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options) : void {
-        $builder->add('lastName', null, array(
+        $builder->add('lastName', null, [
             'label' => 'Last Name',
             'required' => false,
-            'attr' => array(
+            'attr' => [
                 'help_block' => 'person.form.lastName',
-            ),
-        ));
-        $builder->add('firstName', null, array(
+            ],
+        ]);
+        $builder->add('firstName', null, [
             'label' => 'First Name',
             'required' => false,
-            'attr' => array(
+            'attr' => [
                 'help_block' => 'person.form.firstName',
-            ),
-        ));
-        $builder->add('title', null, array(
+            ],
+        ]);
+        $builder->add('title', null, [
             'label' => 'Title',
             'required' => false,
-            'attr' => array(
+            'attr' => [
                 'help_block' => 'person.form.title',
-            ),
-        ));
-        $builder->add('gender', ChoiceType::class, array(
+            ],
+        ]);
+        $builder->add('gender', ChoiceType::class, [
             'expanded' => true,
             'multiple' => false,
-            'choices' => array(
+            'choices' => [
                 'Female' => Person::FEMALE,
                 'Male' => Person::MALE,
                 'Unknown' => Person::UNKNOWN,
-            ),
-            'attr' => array(
+            ],
+            'attr' => [
                 'help_block' => 'person.form.gender',
-            ),
-        ));
-        $builder->add('dob', null, array(
+            ],
+        ]);
+        $builder->add('dob', null, [
             'label' => 'Date of Birth',
             'required' => false,
-            'attr' => array(
+            'attr' => [
                 'help_block' => 'person.form.dob',
-            ),
-        ));
-        $builder->add('dod', null, array(
+            ],
+        ]);
+        $builder->add('dod', null, [
             'label' => 'Death Date',
             'required' => false,
-            'attr' => array(
+            'attr' => [
                 'help_block' => 'person.form.dod',
-            ),
-        ));
-        $builder->add('cityOfBirth', Select2EntityType::class, array(
+            ],
+        ]);
+        $builder->add('cityOfBirth', Select2EntityType::class, [
             'label' => 'Place of Birth',
             'multiple' => false,
             'remote_route' => 'geonames_typeahead',
@@ -77,11 +81,11 @@ class PersonType extends AbstractType {
             'allow_clear' => true,
             'delay' => 250,
             'language' => 'en',
-            'attr' => array(
+            'attr' => [
                 'help_block' => 'person.form.cityOfBirth',
-            ),
-        ));
-        $builder->add('cityOfDeath', Select2EntityType::class, array(
+            ],
+        ]);
+        $builder->add('cityOfDeath', Select2EntityType::class, [
             'label' => 'Place of Death',
             'multiple' => false,
             'remote_route' => 'geonames_typeahead',
@@ -91,53 +95,50 @@ class PersonType extends AbstractType {
             'allow_clear' => true,
             'delay' => 250,
             'language' => 'en',
-            'attr' => array(
+            'attr' => [
                 'help_block' => 'person.form.cityOfDeath',
-            ),
-        ));
-        $builder->add('viafUrl', UrlType::class, array(
+            ],
+        ]);
+        $builder->add('viafUrl', UrlType::class, [
             'label' => 'VIAF URI',
             'required' => false,
-            'attr' => array(
+            'attr' => [
                 'help_block' => 'person.form.viafUrl',
-            ),
-        ));
-        $builder->add('wikipediaUrl', UrlType::class, array(
+            ],
+        ]);
+        $builder->add('wikipediaUrl', UrlType::class, [
             'label' => 'Wikipedia URL',
             'required' => false,
-            'attr' => array(
+            'attr' => [
                 'help_block' => 'person.form.wikipediaUrl',
-            ),
-        ));
-        $builder->add('imageUrl', UrlType::class, array(
+            ],
+        ]);
+        $builder->add('imageUrl', UrlType::class, [
             'label' => 'Image URL',
             'required' => false,
-            'attr' => array(
+            'attr' => [
                 'help_block' => 'person.form.imageUrl',
-            ),
-        ));
-        $builder->add('finalcheck', ChoiceType::class, array(
+            ],
+        ]);
+        $builder->add('finalcheck', ChoiceType::class, [
             'label' => 'Verified',
             'expanded' => true,
             'multiple' => false,
-            'choices' => array(
+            'choices' => [
                 'Yes' => true,
                 'No' => false,
-            ),
+            ],
             'required' => true,
             'placeholder' => false,
-            'attr' => array(
+            'attr' => [
                 'help_block' => 'person.form.finalCheck',
-            ),
-        ));
+            ],
+        ]);
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     */
-    public function configureOptions(OptionsResolver $resolver) {
-        $resolver->setDefaults(array(
+    public function configureOptions(OptionsResolver $resolver) : void {
+        $resolver->setDefaults([
             'data_class' => Person::class,
-        ));
+        ]);
     }
 }

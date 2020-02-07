@@ -1,5 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\Entity;
 
 use DateTime;
@@ -58,7 +66,7 @@ class Feedback {
     /**
      * Does nothing.
      */
-    private function setCreated() {
+    private function setCreated() : void {
     }
 
     /**
@@ -141,7 +149,7 @@ class Feedback {
      *
      * @ORM\PrePersist()
      */
-    public function prePersist() {
+    public function prePersist() : void {
         if ( ! isset($this->created)) {
             $this->created = new DateTime();
         }
