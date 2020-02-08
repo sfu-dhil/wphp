@@ -39,7 +39,7 @@ class TitleSourceFixtures extends Fixture implements DependentFixtureInterface, 
                 $fixture->setSource($this->getReference('source.' . $j));
                 $fixture->setIdentifier('http://example.com/id/' . $i . '/' . $j);
                 $manager->persist($fixture);
-                $this->em->setReference('titlesource.' . $i);
+                $this->setReference('titlesource.' . $i, $fixture);
             }
         }
         $manager->flush();

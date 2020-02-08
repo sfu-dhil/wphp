@@ -17,6 +17,7 @@ use Nines\UserBundle\DataFixtures\UserFixtures;
 use Nines\UtilBundle\Tests\ControllerBaseCase;
 
 class FirmControllerTest extends ControllerBaseCase {
+
     protected function fixtures() : array {
         return [
             UserFixtures::class,
@@ -106,14 +107,15 @@ class FirmControllerTest extends ControllerBaseCase {
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
 
         $form = $formCrawler->selectButton('Update')->form([
-            'firm[name]' => 'Cheese.',
+            'firm[name]'          => 'Cheese.',
             'firm[streetAddress]' => '123 Cheese St.',
-            'firm[city]' => '',
-            'firm[gender]' => 'U',
-            'firm[startDate]' => '1972',
-            'firm[endDate]' => '1999',
-            'firm[finalcheck]' => 1,
-        ]);
+            'firm[city]'          => '',
+            'firm[gender]'        => 'U',
+            'firm[startDate]'     => '1972',
+            'firm[endDate]'       => '1999',
+            'firm[finalcheck]'    => 1,
+        ])
+        ;
 
         $this->client->submit($form);
         $this->assertTrue($this->client->getResponse()->isRedirect('/firm/1'));
@@ -141,14 +143,15 @@ class FirmControllerTest extends ControllerBaseCase {
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
 
         $form = $formCrawler->selectButton('Create')->form([
-            'firm[name]' => 'Cheese.',
+            'firm[name]'          => 'Cheese.',
             'firm[streetAddress]' => '123 Cheese St.',
-            'firm[city]' => '',
-            'firm[gender]' => 'U',
-            'firm[startDate]' => '1972',
-            'firm[endDate]' => '1999',
-            'firm[finalcheck]' => 1,
-        ]);
+            'firm[city]'          => '',
+            'firm[gender]'        => 'U',
+            'firm[startDate]'     => '1972',
+            'firm[endDate]'       => '1999',
+            'firm[finalcheck]'    => 1,
+        ])
+        ;
 
         $this->client->submit($form);
         $this->assertTrue($this->client->getResponse()->isRedirect());
@@ -171,9 +174,7 @@ class FirmControllerTest extends ControllerBaseCase {
     }
 
     public function testAdminDelete() : void {
-        self::bootKernel();
-        $em = static::$kernel->getContainer()->get('doctrine')->getManager();
-        $preCount = count($em->getRepository(Firm::class)->findAll());
+        $preCount = count($this->entityManager->getRepository(Firm::class)->findAll());
         $this->login('user.admin');
         $crawler = $this->client->request('GET', '/firm/1/delete');
         $this->assertSame(302, $this->client->getResponse()->getStatusCode());
@@ -181,8 +182,8 @@ class FirmControllerTest extends ControllerBaseCase {
         $responseCrawler = $this->client->followRedirect();
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
 
-        $em->clear();
-        $postCount = count($em->getRepository(Firm::class)->findAll());
+        $this->entityManager->clear();
+        $postCount = count($this->entityManager->getRepository(Firm::class)->findAll());
         $this->assertSame($preCount - 1, $postCount);
     }
 
@@ -197,7 +198,8 @@ class FirmControllerTest extends ControllerBaseCase {
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $form = $formCrawler->selectButton('Search')->form([
             'firm_search[name]' => 'adventures',
-        ]);
+        ])
+        ;
 
         $responseCrawler = $this->client->submit($form);
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
@@ -215,7 +217,8 @@ class FirmControllerTest extends ControllerBaseCase {
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $form = $formCrawler->selectButton('Search')->form([
             'firm_search[name]' => 'adventures',
-        ]);
+        ])
+        ;
 
         $responseCrawler = $this->client->submit($form);
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
@@ -233,7 +236,8 @@ class FirmControllerTest extends ControllerBaseCase {
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $form = $formCrawler->selectButton('Search')->form([
             'firm_search[name]' => 'adventures',
-        ]);
+        ])
+        ;
 
         $responseCrawler = $this->client->submit($form);
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());

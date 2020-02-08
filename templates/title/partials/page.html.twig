@@ -28,13 +28,13 @@
                     </a>
                 </td>
                 <td>
-                    {% for tr in title.titleRoles if tr.role.name == 'Author' %}
+                    {% for tr in title.titleRoles|filter(r => r.role.name == 'Author') %}
                         {% set person = tr.person %}
                         <a href="{{ path('person_show', {'id': person.id}) }}">{{ person.lastName }}, {{ person.firstName }}</a><br/>
                     {% endfor %}
                 </td>
                 <td>
-                    {% for tfr in title.titleFirmRoles if tfr.firmrole.name == 'Publisher' %}
+                    {% for tfr in title.titleFirmRoles|filter(r => r.firmRole.name == 'Publisher') %}
                         {% set firm = tfr.firm %}
                         <a href="{{ path('firm_show', {'id': firm.id}) }}">{{ firm.name }} {% if firm.city %}({{firm.city.name }}){% endif %}</a><br/>
                     {% endfor %}

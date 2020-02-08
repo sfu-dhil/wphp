@@ -7,6 +7,18 @@ nines_feedback:
         - user@example.com
         - another@example.com
     routing:
-        nines_blog:
+        firm:
+            class: App\Entity\Firm
+            route: firm_show
+        person:
+            class: App\Entity\Person
+            route: person_show
+        title:
+            class: App\Entity\Title
+            route: title_show
+        blog_post:
+            class: Nines\BlogBundle\Entity\Post
+            route: post_show
+        blog_page:
             class: Nines\BlogBundle\Entity\Page
-            route: nines_blog_page_show
+            route: page_show

@@ -164,9 +164,9 @@ class GenreControllerTest extends ControllerBaseCase {
     }
 
     public function testAdminDelete() : void {
-        self::bootKernel();
-        $em = static::$kernel->getContainer()->get('doctrine')->getManager();
-        $preCount = count($em->getRepository(Genre::class)->findAll());
+
+
+        $preCount = count($this->entityManager->getRepository(Genre::class)->findAll());
         $this->login('user.admin');
         $crawler = $this->client->request('GET', '/genre/1/delete');
         $this->assertSame(302, $this->client->getResponse()->getStatusCode());
@@ -174,8 +174,8 @@ class GenreControllerTest extends ControllerBaseCase {
         $responseCrawler = $this->client->followRedirect();
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
 
-        $em->clear();
-        $postCount = count($em->getRepository(Genre::class)->findAll());
+        $this->entityManager->clear();
+        $postCount = count($this->entityManager->getRepository(Genre::class)->findAll());
         $this->assertSame($preCount - 1, $postCount);
     }
 }

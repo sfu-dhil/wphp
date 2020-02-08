@@ -14,6 +14,7 @@ use App\Entity\Format;
 use App\Entity\Genre;
 use App\Entity\Geonames;
 use App\Entity\Title;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -167,7 +168,7 @@ class TitleType extends AbstractType {
         ]);
         $builder->add('format', EntityType::class, [
             'class' => Format::class,
-            'query_builder' => function (EntityRepository $repo) {
+            'query_builder' => function (ServiceEntityRepository $repo) {
                 return $repo->createQueryBuilder('u')->orderBy('u.name', 'ASC');
             },
             'choice_label' => function (Format $format) {
@@ -223,7 +224,7 @@ class TitleType extends AbstractType {
             'multiple' => false,
             'required' => false,
             'placeholder' => 'Unknown',
-            'query_builder' => function (EntityRepository $er) {
+            'query_builder' => function (ServiceEntityRepository $er) {
                 return $er->createQueryBuilder('e')
                     ->orderBy('e.name', 'ASC')
                 ;

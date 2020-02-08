@@ -14,6 +14,9 @@ use App\Entity\Format;
 use App\Entity\Genre;
 use App\Form\Firm\FirmFilterType;
 use App\Form\Person\PersonFilterType;
+use App\Repository\FormatRepository;
+use App\Repository\GenreRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -24,18 +27,33 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * Search form for titles.
  */
 class TitleSearchType extends AbstractType {
+
+    /**
+     * @var FormatRepository
+     */
+    private $formatRepository;
+
+    /**
+     * @var GenreRepository
+     */
+    private $genreRepository;
+
+    public function __construct(FormatRepository $formatRepository, GenreRepository $genreRepository) {
+        $this->formatRepository = $formatRepository;
+        $this->genreRepository = $genreRepository;
+    }
+
     /**
      * Build the form.
      */
     public function buildForm(FormBuilderInterface $builder, array $options) : void {
         $builder->setMethod('get');
-        $em = $options['entity_manager'];
         $user = $options['user'];
 
-        $formats = $em->getRepository(Format::class)->findAll([
+        $formats = $this->formatRepository->findAll([
             'name' => 'ASC',
         ]);
-        $genres = $em->getRepository(Genre::class)->findAll([
+        $genres = $this->genreRepository->findAll([
             'name' => 'ASC',
         ]);
 
@@ -304,6 +322,6 @@ class TitleSearchType extends AbstractType {
      */
     public function configureOptions(OptionsResolver $resolver) : void {
         parent::configureOptions($resolver);
-        $resolver->setRequired(['entity_manager', 'user']);
+        $resolver->setRequired(['user']);
     }
 }

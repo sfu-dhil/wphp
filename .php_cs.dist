@@ -87,7 +87,6 @@ return PhpCsFixer\Config::create()
                 'phpunit',
             ]
         ],
-        'ordered_imports' => ['alpha', 'length'],
 
         'phpdoc_add_missing_param_annotation' => ['only_untyped' => false],
         'phpdoc_align' => ['align' => 'left'],

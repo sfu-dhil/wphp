@@ -57,7 +57,6 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
 
         $form = $this->createForm(TitleSearchType::class, null, [
             'action' => $this->generateUrl('title_search'),
-            'entity_manager' => $em,
             'user' => $this->getUser(),
         ]);
         $titles = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25, [
@@ -180,14 +179,13 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
      */
     public function searchAction(Request $request, TitleRepository $repo) {
         $form = $this->createForm(TitleSearchType::class, null, [
-            'entity_manager' => $em,
             'user' => $this->getUser(),
         ]);
         $form->handleRequest($request);
         $titles = [];
         $submitted = false;
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $data = array_filter($form->getData());
             if (count($data) > 2) {
                 $submitted = true;
@@ -213,13 +211,12 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
      */
     public function searchExportAction(Request $request, TitleRepository $repo) {
         $form = $this->createForm(TitleSearchType::class, null, [
-            'entity_manager' => $em,
             'user' => $this->getUser(),
         ]);
         $form->handleRequest($request);
         $titles = [];
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $query = $repo->buildSearchQuery($form->getData(), $this->getUser());
             $titles = $query->execute();
         }

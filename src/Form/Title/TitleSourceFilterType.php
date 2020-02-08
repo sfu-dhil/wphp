@@ -12,6 +12,7 @@ namespace App\Form\Title;
 
 use App\Entity\Source;
 use App\Entity\TitleSource;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -27,7 +28,7 @@ class TitleSourceFilterType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) : void {
         $builder->add('source', EntityType::class, [
             'class' => Source::class,
-            'query_builder' => function (EntityRepository $er) {
+            'query_builder' => function (ServiceEntityRepository $er) {
                 return $er->createQueryBuilder('ts')->orderBy('ts.name', 'ASC');
             },
             'label' => 'Source',

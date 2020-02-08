@@ -23,6 +23,8 @@ parameters:
         - spotlight_person
         - spotlight_firms
 
+    wphp.title_index_authors: 3
+
 services:
     # default configuration for services in *this* file
     _defaults:

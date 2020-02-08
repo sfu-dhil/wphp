@@ -34,7 +34,7 @@ class EnRepository extends ServiceEntityRepository {
      */
     public function searchQuery($q) {
         $qb = $this->createQueryBuilder('e');
-        $qb->andWhere('MATCH (e.author, e.title) AGAINST(:q BOOLEAN) > 0');
+        $qb->andWhere('MATCH (e.author, e.title) AGAINST (:q BOOLEAN) > 0');
         $qb->setParameter('q', $q);
 
         return $qb->getQuery();

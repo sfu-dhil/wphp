@@ -23,3 +23,5 @@ doctrine:
         dql:
             string_functions:
                 match: Nines\UtilBundle\Extensions\Doctrine\MatchAgainst
+            numeric_functions:
+                year: App\Extensions\Doctrine\Year

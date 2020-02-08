@@ -209,9 +209,9 @@ class TitleControllerTest extends ControllerBaseCase {
     }
 
     public function testAdminDelete() : void {
-        self::bootKernel();
-        $em = static::$kernel->getContainer()->get('doctrine')->getManager();
-        $preCount = count($em->getRepository(Title::class)->findAll());
+
+
+        $preCount = count($this->entityManager->getRepository(Title::class)->findAll());
         $this->login('user.admin');
         $crawler = $this->client->request('GET', '/title/1/delete');
         $this->assertSame(302, $this->client->getResponse()->getStatusCode());
@@ -219,8 +219,8 @@ class TitleControllerTest extends ControllerBaseCase {
         $responseCrawler = $this->client->followRedirect();
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
 
-        $em->clear();
-        $postCount = count($em->getRepository(Title::class)->findAll());
+        $this->entityManager->clear();
+        $postCount = count($this->entityManager->getRepository(Title::class)->findAll());
         $this->assertSame($preCount - 1, $postCount);
     }
 
