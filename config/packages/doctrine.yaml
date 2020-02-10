@@ -22,6 +22,6 @@ doctrine:
                 alias: App
         dql:
             string_functions:
-                match: Nines\UtilBundle\Extensions\Doctrine\MatchAgainst
+                match: Nines\UtilBundle\Extensions\Doctrine\MySQL\MatchAgainst
             numeric_functions:
-                year: App\Extensions\Doctrine\Year
+                year: Nines\UtilBundle\Extensions\Doctrine\MySQL\Year

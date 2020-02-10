@@ -12,14 +12,14 @@ namespace App\Command;
 
 use App\Entity\Title;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * UpdateEditionNumberCommand command.
  */
-class UpdateEditionNumberCommand extends ContainerAwareCommand {
+class UpdateEditionNumberCommand extends Command {
     public const BATCH_SIZE = 100;
 
     /**
@@ -29,6 +29,8 @@ class UpdateEditionNumberCommand extends ContainerAwareCommand {
 
     /**
      * UpdateEditionNumberCommand constructor.
+     *
+     * @param EntityManagerInterface $em
      */
     public function __construct(EntityManagerInterface $em) {
         parent::__construct();

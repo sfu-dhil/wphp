@@ -16,13 +16,14 @@ use App\Entity\TitleSource;
 use App\Services\MarcManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Check each title and update the ESTC source ID attribute if applicable.
  */
-class UpdateEstcCommand extends ContainerAwareCommand {
+class UpdateEstcCommand extends Command {
     public const BATCH_SIZE = 100;
 
     public const ESTC_ID = 2;
@@ -39,6 +40,9 @@ class UpdateEstcCommand extends ContainerAwareCommand {
 
     /**
      * UpdateEstcCommand constructor.
+     *
+     * @param EntityManagerInterface $em
+     * @param MarcManager $manager
      */
     public function __construct(EntityManagerInterface $em, MarcManager $manager) {
         parent::__construct();
@@ -57,10 +61,8 @@ class UpdateEstcCommand extends ContainerAwareCommand {
     /**
      * Execute the command.
      *
-     * @param InputInterface $input
-     *                              Command input, as defined in the configure() method.
-     * @param OutputInterface $output
-     *                                Output destination.
+     * @param InputInterface $input Command input, as defined in the configure() method.
+     * @param OutputInterface $output Output destination.
      */
     protected function execute(InputInterface $input, OutputInterface $output) : void {
         $qb = $this->em->createQueryBuilder();

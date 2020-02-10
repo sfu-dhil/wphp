@@ -3,3 +3,7 @@ doctrine:
         driver: pdo_sqlite
         path: "%kernel.cache_dir%/test.db"
         url: null
+    orm:
+        dql:
+            numeric_functions:
+                year: Nines\UtilBundle\Extensions\Doctrine\SQLite\Year

@@ -22,3 +22,4 @@ public/yarn
 config/deploy.yaml
 *.sql
 jquery.collection.js
+templates/jquery.collection.html.twig
