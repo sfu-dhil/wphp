@@ -1,3 +1,3 @@
 <?php
 
-require 'deployment/symfony.php';
+require 'deployment/symfony44.php';
