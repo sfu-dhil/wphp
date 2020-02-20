@@ -15,7 +15,6 @@ twig:
     globals:
         text_service: '@Nines\UtilBundle\Services\Text'
         comment_service: '@Nines\FeedbackBundle\Services\CommentService'
-        nines_editor_config: js/editor-config.js
         piwik_enabled: '%dhil.piwik_enabled%'
         piwik_url: '%dhil.piwik_url%'
         piwik_siteid: '%dhil.piwik_siteid%'
