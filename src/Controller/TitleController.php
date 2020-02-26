@@ -102,10 +102,11 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
      * @return BinaryFileResponse
      */
     public function exportAction(EntityManagerInterface $em) {
-        $dql = 'SELECT e FROM App:Title e ORDER BY e.id';
+        $dql = 'SELECT e FROM App:Title e';
         if (null === $this->getUser()) {
             $dql .= ' WHERE (e.finalcheck = 1 OR e.finalattempt = 1)';
         }
+        $dql .= ' ORDER BY e.id';
         $query = $em->createQuery($dql);
         $iterator = $query->iterate();
         $tmpPath = tempnam(sys_get_temp_dir(), 'wphp-export-');
