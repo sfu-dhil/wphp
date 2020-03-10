@@ -288,6 +288,11 @@ class TitleRepository extends ServiceEntityRepository {
             $tfrAlias = 'tfr_' . $idx;
             $fAlias = 'f_' . $idx;
             $qb->innerJoin('e.titleFirmroles', $tfrAlias)->innerJoin("{$tfrAlias}.firm", $fAlias);
+
+            if(isset($filter['firm_id']) && $filter['firm_id']) {
+                $qb->andWhere("{$fAlias}.id = :firm_id");
+                $qb->setParameter("firm_id", $filter['firm_id']);
+            }
             if (isset($filter['firm_name']) && $filter['firm_name']) {
                 $qb->andWhere("MATCH({$fAlias}.name) AGAINST(:{$fAlias}_name BOOLEAN) > 0");
                 $qb->setParameter("{$fAlias}_name", $filter['firm_name']);
