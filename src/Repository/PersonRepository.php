@@ -296,6 +296,11 @@ class PersonRepository extends ServiceEntityRepository {
                 ->innerJoin("{$tAlias}.titleFirmroles", $tfrAlias)
                 ->innerJoin("{$tfrAlias}.firm", $fAlias);
 
+            if(isset($filter['firm_id']) && $filter['firm_id']) {
+                $qb->andWhere("{$fAlias}.id = :firm_id");
+                $qb->setParameter("firm_id", $filter['firm_id']);
+            }
+
             if(isset($filter['firm_name']) && $filter['firm_name']) {
                 $qb->andWhere("MATCH({$fAlias}.name) AGAINST (:firm_name BOOLEAN) > 0");
                 $qb->setParameter("firm_name", $filter['firm_name']);
