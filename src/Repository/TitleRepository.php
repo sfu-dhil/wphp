@@ -256,6 +256,7 @@ class TitleRepository extends ServiceEntityRepository {
             $trAlias = 'tr_' . $idx;
             $pAlias = 'p_' . $idx;
             $qb->innerJoin('e.titleRoles', $trAlias)->innerJoin("{$trAlias}.person", $pAlias);
+            
             if (isset($filter['name']) && $filter['name']) {
                 $qb->andWhere("MATCH ({$pAlias}.lastName, {$pAlias}.firstName, {$pAlias}.title) AGAINST(:{$pAlias}_name BOOLEAN) > 0");
                 $qb->setParameter("{$pAlias}_name", $filter['name']);

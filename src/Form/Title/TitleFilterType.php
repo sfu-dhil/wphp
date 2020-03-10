@@ -46,6 +46,14 @@ class TitleFilterType extends AbstractType {
             'name' => 'asc',
         ]);
 
+        $builder->add('id', TextType::class, [
+            'label' => 'ID',
+            'required' => false,
+            'attr' => [
+                'help_block' => 'title.search.id',
+            ],
+        ]);
+
         $builder->add('title', TextType::class, [
             'label' => 'Title',
             'required' => false,
