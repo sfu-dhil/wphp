@@ -12,6 +12,7 @@ namespace App\Repository;
 
 use App\Entity\Person;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -77,7 +78,7 @@ class PersonRepository extends ServiceEntityRepository {
      *
      * @param array $data
      *
-     * @return \Doctrine\ORM\Query
+     * @return Query
      */
     public function buildSearchQuery($data) {
         $qb = $this->createQueryBuilder('e');
@@ -242,7 +243,8 @@ class PersonRepository extends ServiceEntityRepository {
             $idx = '00';
             $trAlias = 'tr_' . $idx;
             $tAlias = 't_' . $idx;
-            $qb->innerJoin('e.titleRoles', $trAlias)->innerJoin("{$trAlias}.title", $tAlias);
+            $qb->innerJoin('e.titleRoles', $trAlias)
+               ->innerJoin("{$trAlias}.title", $tAlias);
             if (isset($filter['title']) && $filter['title']) {
                 $qb->andWhere("MATCH({$tAlias}.title) AGAINST(:{$tAlias}_title BOOLEAN) > 0");
                 $qb->setParameter("{$tAlias}_title", $filter['title']);
@@ -277,6 +279,51 @@ class PersonRepository extends ServiceEntityRepository {
                 $qb->innerJoin("{$tAlias}.locationOfPrinting", $gAlias);
                 $qb->andWhere("MATCH({$gAlias}.alternatenames, {$gAlias}.name) AGAINST(:{$gAlias}_location BOOLEAN) > 0");
                 $qb->setParameter("{$gAlias}_location", $filter['location']);
+            }
+        }
+
+        if(isset($data['firm_filter'])) {
+            $filter = $data['firm_filter'];
+            dump($filter);
+            $idx = '01';
+            $trAlias = 'tr_' . $idx;
+            $tfrAlias = 'tfr_' . $idx;
+            $tAlias = 't_' . $idx;
+            $fAlias = 'f_' . $idx;
+
+            $qb->innerJoin('e.titleRoles', $trAlias)
+                ->innerJoin("{$trAlias}.title", $tAlias)
+                ->innerJoin("{$tAlias}.titleFirmroles", $tfrAlias)
+                ->innerJoin("{$tfrAlias}.firm", $fAlias);
+
+            if(isset($filter['firm_name']) && $filter['firm_name']) {
+                $qb->andWhere("MATCH({$fAlias}.name) AGAINST (:firm_name BOOLEAN) > 0");
+                $qb->setParameter("firm_name", $filter['firm_name']);
+            }
+
+            if(isset($filter['firm_gender']) && $filter['firm_gender']) {
+                $genders = [];
+                if (in_array('M', $filter['firm_gender'], true)) {
+                    $genders[] = 'M';
+                }
+                if (in_array('F', $filter['firm_gender'], true)) {
+                    $genders[] = 'F';
+                }
+                if (in_array('U', $filter['firm_gender'], true)) {
+                    $genders[] = 'U';
+                }
+                $qb->andWhere("{$fAlias}.gender in (:firm_genders)");
+                $qb->setParameter('firm_genders', $genders);
+            }
+
+            if(isset($filter['firm_role']) && $filter['firm_role']) {
+                $qb->andWhere("{$tfrAlias}.firmrole IN (:firm_firmRoles)");
+                $qb->setParameter("firm_firmRoles", $filter['firm_role']);
+            }
+
+            if(isset($filter['firm_address']) && $filter['firm_address']) {
+                $qb->andWhere("MATCH ({$fAlias}.streetAddress) AGAINST (:firm_address BOOLEAN) > 0");
+                $qb->setParameter("firm_address", $filter['firm_address']);
             }
         }
 

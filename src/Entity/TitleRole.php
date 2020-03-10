@@ -38,7 +38,7 @@ class TitleRole {
     private $id;
 
     /**
-     * @var \Title
+     * @var Title
      *
      * @ORM\ManyToOne(targetEntity="Title", inversedBy="titleRoles")
      * @ORM\JoinColumns({
@@ -48,7 +48,7 @@ class TitleRole {
     private $title;
 
     /**
-     * @var \Person
+     * @var Person
      *
      * @ORM\ManyToOne(targetEntity="Person", inversedBy="titleRoles")
      * @ORM\JoinColumns({
@@ -58,7 +58,7 @@ class TitleRole {
     private $person;
 
     /**
-     * @var \Role
+     * @var Role
      *
      * @ORM\ManyToOne(targetEntity="Role")
      * @ORM\JoinColumns({
@@ -79,7 +79,7 @@ class TitleRole {
     /**
      * Set title.
      *
-     * @param \App\Entity\Title $title
+     * @param Title $title
      *
      * @return TitleRole
      */
@@ -92,7 +92,7 @@ class TitleRole {
     /**
      * Get title.
      *
-     * @return \App\Entity\Title
+     * @return Title
      */
     public function getTitle() {
         return $this->title;
@@ -101,7 +101,7 @@ class TitleRole {
     /**
      * Set person.
      *
-     * @param \App\Entity\Person $person
+     * @param Person $person
      *
      * @return TitleRole
      */
@@ -114,7 +114,7 @@ class TitleRole {
     /**
      * Get person.
      *
-     * @return \App\Entity\Person
+     * @return Person
      */
     public function getPerson() {
         return $this->person;
@@ -123,7 +123,7 @@ class TitleRole {
     /**
      * Set role.
      *
-     * @param \App\Entity\Role $role
+     * @param Role $role
      *
      * @return TitleRole
      */
@@ -136,7 +136,7 @@ class TitleRole {
     /**
      * Get role.
      *
-     * @return \App\Entity\Role
+     * @return Role
      */
     public function getRole() {
         return $this->role;

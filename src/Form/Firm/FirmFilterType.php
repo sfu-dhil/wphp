@@ -85,7 +85,7 @@ class FirmFilterType extends AbstractType {
             'label' => 'Firm Address',
             'required' => false,
             'attr' => [
-                'help_block' => 'firm.search.address',
+                'help_block' => 'firm.search.streetAddress',
             ],
         ]);
     }
