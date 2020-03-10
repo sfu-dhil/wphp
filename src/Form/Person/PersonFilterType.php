@@ -39,6 +39,15 @@ class PersonFilterType extends AbstractType {
         $roles = $roleRepo->findAll([
             'name' => 'ASC',
         ]);
+
+        $builder->add('id', TextType::class, [
+            'label' => 'ID',
+            'required' => false,
+            'attr' => [
+                'help_block' => 'person.search.id',
+            ],
+        ]);
+
         $builder->add('name', TextType::class, [
             'label' => 'Name',
             'required' => false,
