@@ -2,7 +2,7 @@
 /* Webfont: LatoLatin-Black */
 @font-face {
   font-family: "LatoLatinWebBlack";
-  src: url("/assets/node_modules/lato-font/fonts/lato-black/lato-black.woff2") format("woff2"), url("/assets/node_modules/lato-font/fonts/lato-black/lato-black.woff") format("woff");
+  src: url("/yarn/lato-font/fonts/lato-black/lato-black.woff2") format("woff2"), url("/yarn/lato-font/fonts/lato-black/lato-black.woff") format("woff");
   /* Modern Browsers */
   font-style: normal;
   font-weight: normal;
@@ -11,7 +11,7 @@
 /* Webfont: LatoLatin-Regular */
 @font-face {
   font-family: "LatoLatinWeb";
-  src: url("/assets/node_modules/lato-font/fonts/lato-normal/lato-normal.woff2") format("woff2"), url("/assets/node_modules/lato-font/fonts/lato-normal/lato-normal.woff") format("woff");
+  src: url("/yarn/lato-font/fonts/lato-normal/lato-normal.woff2") format("woff2"), url("/yarn/lato-font/fonts/lato-normal/lato-normal.woff") format("woff");
   /* Modern Browsers */
   font-style: normal;
   font-weight: normal;
@@ -24,7 +24,7 @@
   font-style: normal;
   font-display: swap;
   font-weight: normal;
-  src: local("Cormorant Garamond SemiBold "), local("Cormorant Garamond-SemiBold"), url("/assets/node_modules/typeface-cormorant-garamond/files/cormorant-garamond-latin-600.woff2") format("woff2"), url("/assets/node_modules/typeface-cormorant-garamond/cormorant-garamond-latin-600.woff") format("woff");
+  src: local("Cormorant Garamond SemiBold "), local("Cormorant Garamond-SemiBold"), url("/yarn/typeface-cormorant-garamond/files/cormorant-garamond-latin-600.woff2") format("woff2"), url("/yarn/typeface-cormorant-garamond/cormorant-garamond-latin-600.woff") format("woff");
   /* Modern Browsers */
 }
 /* cormorant-garamond-700normal - latin */
@@ -33,13 +33,13 @@
   font-style: normal;
   font-display: swap;
   font-weight: normal;
-  src: local("Cormorant Garamond Bold "), local("Cormorant Garamond-Bold"), url("/assets/node_modules/typeface-cormorant-garamond/cormorant-garamond-latin-700.woff2") format("woff2"), url("/assets/node_modules/typeface-cormorant-garamond/cormorant-garamond-latin-700.woff") format("woff");
+  src: local("Cormorant Garamond Bold "), local("Cormorant Garamond-Bold"), url("/yarn/typeface-cormorant-garamond/cormorant-garamond-latin-700.woff2") format("woff2"), url("/yarn/typeface-cormorant-garamond/cormorant-garamond-latin-700.woff") format("woff");
   /* Modern Browsers */
 }
 /* Webfont: LatoLatin-Black */
 @font-face {
   font-family: "LatoLatinWebBlack";
-  src: url("/assets/node_modules/lato-font/fonts/lato-black/lato-black.woff2") format("woff2"), url("/assets/node_modules/lato-font/fonts/lato-black/lato-black.woff") format("woff");
+  src: url("/yarn/lato-font/fonts/lato-black/lato-black.woff2") format("woff2"), url("/yarn/lato-font/fonts/lato-black/lato-black.woff") format("woff");
   /* Modern Browsers */
   font-style: normal;
   font-weight: normal;
@@ -48,7 +48,7 @@
 /* Webfont: LatoLatin-Regular */
 @font-face {
   font-family: "LatoLatinWeb";
-  src: url("/assets/node_modules/lato-font/fonts/lato-normal/lato-normal.woff2") format("woff2"), url("/assets/node_modules/lato-font/fonts/lato-normal/lato-normal.woff") format("woff");
+  src: url("/yarn/lato-font/fonts/lato-normal/lato-normal.woff2") format("woff2"), url("/yarn/lato-font/fonts/lato-normal/lato-normal.woff") format("woff");
   /* Modern Browsers */
   font-style: normal;
   font-weight: normal;
@@ -61,7 +61,7 @@
   font-style: normal;
   font-display: swap;
   font-weight: normal;
-  src: local("Cormorant Garamond SemiBold "), local("Cormorant Garamond-SemiBold"), url("/assets/node_modules/typeface-cormorant-garamond/files/cormorant-garamond-latin-600.woff2") format("woff2"), url("/assets/node_modules/typeface-cormorant-garamond/cormorant-garamond-latin-600.woff") format("woff");
+  src: local("Cormorant Garamond SemiBold "), local("Cormorant Garamond-SemiBold"), url("/yarn/typeface-cormorant-garamond/files/cormorant-garamond-latin-600.woff2") format("woff2"), url("/yarn/typeface-cormorant-garamond/cormorant-garamond-latin-600.woff") format("woff");
   /* Modern Browsers */
 }
 /* cormorant-garamond-700normal - latin */
@@ -70,7 +70,7 @@
   font-style: normal;
   font-display: swap;
   font-weight: normal;
-  src: local("Cormorant Garamond Bold "), local("Cormorant Garamond-Bold"), url("/assets/node_modules/typeface-cormorant-garamond/cormorant-garamond-latin-700.woff2") format("woff2"), url("/assets/node_modules/typeface-cormorant-garamond/cormorant-garamond-latin-700.woff") format("woff");
+  src: local("Cormorant Garamond Bold "), local("Cormorant Garamond-Bold"), url("/yarn/typeface-cormorant-garamond/cormorant-garamond-latin-700.woff2") format("woff2"), url("/yarn/typeface-cormorant-garamond/cormorant-garamond-latin-700.woff") format("woff");
   /* Modern Browsers */
 }
 html {

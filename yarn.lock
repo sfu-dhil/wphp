@@ -17,6 +17,11 @@ jquery@>=1.7, jquery@^3.4.1:
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.4.1.tgz#714f1f8d9dde4bdfa55764ba37ef214630d80ef2"
   integrity sha512-36+AdBzCL+y6qjw5Tx7HgzeGCzC81MDDgaUP8ld2zhx58HdqXGoBd+tHdrBMiyjGQs0Hxs/MLZTu/eHNJJuWPw==
 
+lato-font@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/lato-font/-/lato-font-3.0.0.tgz#91b837e2374b668fb7331d44c894d37a2d9f8e11"
+  integrity sha1-kbg34jdLZo+3Mx1EyJTTei2fjhE=
+
 select2-bootstrap-css@^1.4.6:
   version "1.4.6"
   resolved "https://registry.yarnpkg.com/select2-bootstrap-css/-/select2-bootstrap-css-1.4.6.tgz#5cfb68246f5299ca1858e01efd788804c734997e"
@@ -39,3 +44,8 @@ tinymce@^5.1.5:
   version "5.2.0"
   resolved "https://registry.yarnpkg.com/tinymce/-/tinymce-5.2.0.tgz#e838640f61c8a936317bc27a5d2e16c297df3418"
   integrity sha512-Q7KAu9sLB6TBhKFdb2LHPGy770zkSEjpN1VRqZ6pxNuVQ0mbGWgMocHDvM9XL9yJaOhFrJP6s9XM7zG2gapGpA==
+
+typeface-cormorant-garamond@^0.0.72:
+  version "0.0.72"
+  resolved "https://registry.yarnpkg.com/typeface-cormorant-garamond/-/typeface-cormorant-garamond-0.0.72.tgz#86e1564b87f2d89599ae27cf0b762bae95c99798"
+  integrity sha512-SOImWwsy5h0Vtj8oWMY2KjEnalkA86I7c98UMXplZQ9cTKoq4kfojc/R2B55kzJGhg0uEz0GcbDtFcyQzxTOqg==
