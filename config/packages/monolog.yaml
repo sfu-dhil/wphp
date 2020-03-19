@@ -5,4 +5,4 @@ monolog:
             path: "%kernel.logs_dir%/%kernel.environment%.log"
             level: warning
             channels: ["!event", "!doctrine", "!console"]
-            max_files: 1
+            max_files: 30
