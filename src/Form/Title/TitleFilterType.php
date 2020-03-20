@@ -85,7 +85,7 @@ class TitleFilterType extends AbstractType {
             'label' => 'Date of Publication',
             'required' => false,
             'attr' => [
-                'help_block' => 'title.search.pubdate',
+                'help_block' => 'title.search.pubDate',
             ],
         ]);
 
