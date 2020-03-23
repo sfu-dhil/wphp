@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9378103090859026420a1f783778c790",
+    "content-hash": "9286585e6b4d9ef6cacf9cc7366373bf",
     "packages": [
         {
             "name": "aternus/geonames-client",
@@ -6702,12 +6702,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ubermichael/nines-bundles.git",
-                "reference": "f3d0906ce27ff751f4465a21372f1fefad82fc65"
+                "reference": "02d74595b361b17d6b64e14eae354372740f9c10"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ubermichael/nines-bundles/zipball/f3d0906ce27ff751f4465a21372f1fefad82fc65",
-                "reference": "f3d0906ce27ff751f4465a21372f1fefad82fc65",
+                "url": "https://api.github.com/repos/ubermichael/nines-bundles/zipball/02d74595b361b17d6b64e14eae354372740f9c10",
+                "reference": "02d74595b361b17d6b64e14eae354372740f9c10",
                 "shasum": ""
             },
             "require": {
@@ -6750,7 +6750,7 @@
                 "source": "https://github.com/ubermichael/nines-bundles/tree/4.x",
                 "issues": "https://github.com/ubermichael/nines-bundles/issues"
             },
-            "time": "2020-02-26T19:50:05+00:00"
+            "time": "2020-03-23T22:43:22+00:00"
         },
         {
             "name": "webmozart/assert",
@@ -7756,5 +7756,6 @@
         "ext-ctype": "*",
         "ext-iconv": "*"
     },
-    "platform-dev": []
+    "platform-dev": [],
+    "plugin-api-version": "1.1.0"
 }

@@ -1,59 +1,40 @@
 {% extends 'base.html.twig' %}
 
-{% block pageheader %}
-    <div class="splash_image"><img src="{{ asset('images/beauty_in_search_of_knowledge_cropped.jpg') }}"></div>
-
-    <div class="col-sm-12"><h1>&nbsp;</h1></div>
-{% endblock %}
-
 {% block body %}
 
-  <div class="col-sm-12">
+    <div class="col-sm-12">
 
-    <p><em>The Women’s Print History Project, 1750-1830</em> is a comprehensive bibliographical database of women’s contributions to print for one of the most convulsive periods in both women’s and print history. We collect detailed information about books that women were involved in producing, not just as authors, but also as printers, publishers, booksellers, editors, compilers, translators, engravers, illustrators, and composers. In addition to detailed bibliographical information about the material components of the book, we record basic data about the people and firms that produced them, allowing us to trace the networks and relationships that structured the book trades.</p><p>&nbsp;</p>
+        {% if homepage %}
+            {{ homepage.content|raw }}
+        {% endif %}
+
         <h2>Spotlights</h2>
-      </div>
-        <div class="col-sm-4 blog-panel blog-1">
-          <a href="{{ path('nines_blog_post_show', {'id': 4}) }}">
+    </div>
+    <div class="col-sm-4 blog-panel blog-1">
+        <a href="{{ path('nines_blog_post_show', {'id': 4}) }}">
             <div class="panel panel-default">
-              <div class="panel-image"></div>
-              <div class="panel-heading">Mother Shipton / Ursula Southeil: The Oldest Woman in WPHP</div>
-              <!-- <div class="panel-body">
-                <p>Mother Shipton, the famed prophetess of Tudor York, is the oldest woman in WPHP. Though she may not have been an historical person, her influence as a powerful female prophet continued, in varied forms, throughout the eighteenth century.</p>
-                <p><a href="">Read more</a></p>
-
-              </div> -->
+                <div class="panel-image"></div>
+                <div class="panel-heading">Mother Shipton / Ursula Southeil: The Oldest Woman in WPHP</div>
             </div>
-          </a>
-        </div>
-        <div class="col-sm-4 blog-panel blog-2">
-          <a href="{{ path('nines_blog_post_show', {'id': 2}) }}">
+        </a>
+    </div>
+    <div class="col-sm-4 blog-panel blog-2">
+        <a href="{{ path('nines_blog_post_show', {'id': 2}) }}">
             <div class="panel panel-default">
-              <div class="panel-image"></div>
-              <div class="panel-heading">Martha Gurney: Abolitionist Bookseller of Holborn Hill</div>
-              <!-- <div class="panel-body">
-                <p>Mother Shipton, the famed prophetess of Tudor York, is the oldest woman in WPHP. Though she may not have been an historical person, her influence as a powerful female prophet continued, in varied forms, throughout the eighteenth century.</p>
-                <p><a href="">Read more</a></p>
-
-              </div> -->
+                <div class="panel-image"></div>
+                <div class="panel-heading">Martha Gurney: Abolitionist Bookseller of Holborn Hill</div>
             </div>
-          </a>
-        </div>
-        <div class="col-sm-4 blog-panel blog-3">
-          <a href="{{ path('nines_blog_post_show', {'id': 1}) }}">
+        </a>
+    </div>
+    <div class="col-sm-4 blog-panel blog-3">
+        <a href="{{ path('nines_blog_post_show', {'id': 1}) }}">
             <div class="panel panel-default">
-              <div class="panel-image"></div>
-              <div class="panel-heading">A New System of Domestic Cookery: the bestselling cookbook of the 19th century</div>
-              <!-- <div class="panel-body">
-                <p>
-
-  In 1806 appeared A New System of Domestic Cookery, formed upon principles of economy, and adapted to the uses of private familes, signed "by a lady," written by Maria Eliza Rundell (1745–1828), and published with the fashionable West End publisher, John Murray II. Domestic Cookery would go on to become the best-selling cookbook of the nineteenth century, with the 68th edition appearing in 1845.
-  </p>
-                <p><a href="">Read more</a></p>
-              </div> -->
-            </a>
-          </div>
-        </div>
-      </div>
+                <div class="panel-image"></div>
+                <div class="panel-heading">A New System of Domestic Cookery: the bestselling cookbook of the 19th
+                    century
+                </div>
+            </div>
+        </a>
+    </div>
 
 {% endblock %}
