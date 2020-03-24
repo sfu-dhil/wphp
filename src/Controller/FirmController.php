@@ -141,7 +141,7 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
                     $firm->getId(),
                     $firm->getName(),
                     $firm->getStreetAddress(),
-                    $firm->getCity()->getName(),
+                    $firm->getCity() ? $firm->getCity()->getName() : '',
                     preg_replace('/-00/', '', $firm->getStartDate()),
                     preg_replace('/-00/', '', $firm->getEndDate()),
                 ]);
