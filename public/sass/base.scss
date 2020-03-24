@@ -483,23 +483,11 @@ a.btn-primary {
     color: $color_white;
   }
 
-  &:first-child,
-  &:active,
-  &:focus,
-  &:hover {
-    background-color: $color_salmon;
-    color: black;
-    border-color: $color_red;
+  &:hover,
+  &:focus {
+    background-color: #1f1f1f ;
   }
 
-  &:first-child {
-    color: black;
-    &:active,
-    &:focus,
-    &:hover {
-      color: $color_white;
-    }
-  }
 }
 // buttons end
 
