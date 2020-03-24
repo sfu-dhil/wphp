@@ -496,40 +496,14 @@ a.btn-primary:link,
 a.btn-primary:visited {
   color: #fff;
 }
-input.btn-default:first-child, input.btn-default:active, input.btn-default:focus, input.btn-default:hover,
-input.btn-primary:first-child,
-input.btn-primary:active,
-input.btn-primary:focus,
+input.btn-default:hover, input.btn-default:focus,
 input.btn-primary:hover,
-a.btn-default:first-child,
-a.btn-default:active,
-a.btn-default:focus,
+input.btn-primary:focus,
 a.btn-default:hover,
-a.btn-primary:first-child,
-a.btn-primary:active,
-a.btn-primary:focus,
-a.btn-primary:hover {
-  background-color: #eaa89a;
-  color: black;
-  border-color: #73685B;
-}
-input.btn-default:first-child,
-input.btn-primary:first-child,
-a.btn-default:first-child,
-a.btn-primary:first-child {
-  color: black;
-}
-input.btn-default:first-child:active, input.btn-default:first-child:focus, input.btn-default:first-child:hover,
-input.btn-primary:first-child:active,
-input.btn-primary:first-child:focus,
-input.btn-primary:first-child:hover,
-a.btn-default:first-child:active,
-a.btn-default:first-child:focus,
-a.btn-default:first-child:hover,
-a.btn-primary:first-child:active,
-a.btn-primary:first-child:focus,
-a.btn-primary:first-child:hover {
-  color: #fff;
+a.btn-default:focus,
+a.btn-primary:hover,
+a.btn-primary:focus {
+  background-color: #1f1f1f;
 }
 
 /* Start navbar (header) */
