@@ -2,39 +2,30 @@
 
 {% block body %}
 
-    <div class="col-sm-12">
+    <div class='row'>
+        <div class="col-sm-12">
 
-        {% if homepage %}
-            {{ homepage.content|raw }}
-        {% endif %}
+            {% if homepage %}
+                {{ homepage.content|raw }}
+            {% endif %}
 
-        <h2>Spotlights</h2>
+            <h2>Spotlights</h2>
+        </div>
     </div>
-    <div class="col-sm-4 blog-panel blog-1">
-        <a href="{{ path('nines_blog_post_show', {'id': 4}) }}">
-            <div class="panel panel-default">
-                <div class="panel-image"></div>
-                <div class="panel-heading">Mother Shipton / Ursula Southeil: The Oldest Woman in WPHP</div>
-            </div>
-        </a>
-    </div>
-    <div class="col-sm-4 blog-panel blog-2">
-        <a href="{{ path('nines_blog_post_show', {'id': 2}) }}">
-            <div class="panel panel-default">
-                <div class="panel-image"></div>
-                <div class="panel-heading">Martha Gurney: Abolitionist Bookseller of Holborn Hill</div>
-            </div>
-        </a>
-    </div>
-    <div class="col-sm-4 blog-panel blog-3">
-        <a href="{{ path('nines_blog_post_show', {'id': 1}) }}">
-            <div class="panel panel-default">
-                <div class="panel-image"></div>
-                <div class="panel-heading">A New System of Domestic Cookery: the bestselling cookbook of the 19th
-                    century
+
+    <div class='row'>
+
+        {% for spotlight in spotlights %}
+            <div class="col-sm-4 blog-panel">
+                <div class="panel panel-default">
+                    <a href="{{ path('nines_blog_post_show', {'id': spotlight.id}) }}">
+                        <div class="panel-heading">{{ spotlight.title }}</div>
+                    </a>
+                    <div class='panel-body'>{{ spotlight.excerpt|raw }}</div>
                 </div>
             </div>
-        </a>
+        {% endfor %}
+
     </div>
 
 {% endblock %}
