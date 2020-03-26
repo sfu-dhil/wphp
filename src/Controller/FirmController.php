@@ -11,10 +11,12 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Entity\Firm;
+use App\Entity\Firmrole;
 use App\Entity\TitleFirmrole;
 use App\Form\Firm\FirmSearchType;
 use App\Form\Firm\FirmType;
 use App\Repository\FirmRepository;
+use App\Services\CsvExporter;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Nines\UtilBundle\Controller\PaginatorTrait;
@@ -231,13 +233,46 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
 
     /**
      * Exports a firm's titles in a format.
+     * @Route("/{id}/export/{format}", name="firm_export_csv", methods={"GET","POST"}, requirements={"format" = "^csv$"})
+     * @Template()
      *
-     * @Route("/{id}/export", name="firm_export", methods={"GET","POST"})
+     * @return BinaryFileResponse
+     */
+    public function exportCSVAction(Request $request, Firm $firm, CsvExporter $exporter) {
+        $firmRoles = $firm->getTitleFirmroles(true);
+        if ( ! $this->getUser()) {
+            $firmRoles = $firmRoles->filter(function (TitleFirmrole $tfr) {
+                $title = $tfr->getTitle();
+
+                return $title->getFinalattempt() || $title->getFinalcheck();
+            });
+        }
+
+        $tmpPath = tempnam(sys_get_temp_dir(), 'wphp-export-');
+        $fh = fopen($tmpPath, 'w');
+        fputcsv($fh, array_merge($exporter->firmHeaders(), $exporter->titleHeaders()));
+
+        /** @var TitleFirmrole $role */
+        foreach($firmRoles as $role) {
+            fputcsv($fh, array_merge($exporter->firmRow($role->getFirm()), [$role->getFirmrole()->getName()], $exporter->titleRow($role->getTitle())));
+        }
+        fclose($fh);
+        $response = new BinaryFileResponse($tmpPath);
+        $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'wphp-firm-titles.csv');
+        $response->deleteFileAfterSend(true);
+
+        return $response;
+    }
+
+    /**
+     * Exports a firm's titles in a format.
+     *
+     * @Route("/{id}/export/{format}", name="firm_export", methods={"GET","POST"})
      * @Template()
      *
      * @return array
      */
-    public function exportAction(Request $request, Firm $firm) {
+    public function exportAction(Request $request, Firm $firm, $format) {
         $firmRoles = $firm->getTitleFirmroles(true);
         if ( ! $this->getUser()) {
             $firmRoles = $firmRoles->filter(function (TitleFirmrole $tfr) {
@@ -250,7 +285,7 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
         return [
             'firm' => $firm,
             'firmRoles' => $firmRoles,
-            'format' => $request->query->get('format', 'mla'),
+            'format' => $format,
         ];
     }
 

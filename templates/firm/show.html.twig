@@ -87,17 +87,8 @@
             {% endfor %}
         </tbody>
     </table>
-    <div class='btn-toolbar pull-right'>
-        <div class="title">
-            <h4>Export citation list</h4>
-        </div>
-        <div class='btn-group'>
-            <a class='btn btn-default' href="{{ path('firm_export', {'id': firm.id, 'format': 'mla'}) }}">MLA</a>
-            <a class='btn btn-default' href="{{ path('firm_export', {'id': firm.id, 'format': 'apa'}) }}">APA</a>
-            <a class='btn btn-default' href="{{ path('firm_export', {'id': firm.id, 'format': 'chicago'}) }}">Chicago</a>
-            <a class='btn btn-default' href="{{ path('firm_export', {'id': firm.id, 'format': 'bibtex'}) }}">BibTex</a>
-        </div>
-    </div>
+
+    {% include 'partials/export.html.twig' with {'path': 'firm_export', 'parameters': {'id': firm.id}} %}
 
     <div class="clearfix"></div>
 
