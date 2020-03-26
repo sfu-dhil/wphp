@@ -61,9 +61,9 @@ class CsvExporter {
             'Edition',
             'Volumes',
             'Pagination',
-            'Price_pound',
-            'Price_shilling',
-            'Price_pence',
+            'Price Pound',
+            'Price Shilling',
+            'Price Pence',
             'Genre',
             'Shelf mark',
         ];

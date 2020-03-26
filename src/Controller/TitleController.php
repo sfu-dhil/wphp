@@ -158,13 +158,52 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
 
     /**
      * Full text search for Title entities.
+     * @Route("/search/export/{format}", name="title_search_export_csv", methods={"GET"}, requirements={"format"="^csv$"})
+     * @Template()
      *
-     * @Route("/search/export", name="title_search_export", methods={"GET"})
+     * @param Request $request
+     * @param TitleRepository $repo
+     * @param CsvExporter $exporter
+     *
+     * @return BinaryFileResponse
+     */
+    public function searchExportCsvAction(Request $request, TitleRepository $repo, CsvExporter $exporter) {
+        $form = $this->createForm(TitleSearchType::class, null, [
+            'user' => $this->getUser(),
+        ]);
+        $form->handleRequest($request);
+        $titles = [];
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $query = $repo->buildSearchQuery($form->getData(), $this->getUser());
+            $titles = $query->execute();
+        }
+
+        $tmpPath = tempnam(sys_get_temp_dir(), 'wphp-export-');
+        $fh = fopen($tmpPath, 'w');
+        fputcsv($fh, $exporter->titleHeaders());
+        foreach($titles as $title) {
+            fputcsv($fh, $exporter->titleRow($title));
+        }
+        fclose($fh);
+        $response = new BinaryFileResponse($tmpPath);
+        $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'wphp-search-titles.csv');
+        $response->deleteFileAfterSend(true);
+
+        return $response;
+    }
+
+
+
+    /**
+     * Full text search for Title entities.
+     *
+     * @Route("/search/export/{format}", name="title_search_export", methods={"GET"})
      * @Template()
      *
      * @return array
      */
-    public function searchExportAction(Request $request, TitleRepository $repo) {
+    public function searchExportAction(Request $request, TitleRepository $repo, $format) {
         $form = $this->createForm(TitleSearchType::class, null, [
             'user' => $this->getUser(),
         ]);
@@ -178,7 +217,7 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
 
         return [
             'titles' => $titles,
-            'format' => $request->query->get('format', 'mla'),
+            'format' => $format,
         ];
     }
 
