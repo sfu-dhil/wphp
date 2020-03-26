@@ -133,17 +133,8 @@
                 </tr>
             {% endfor %}
     </table>
-    <div class='btn-toolbar pull-right'>
-        <div class="title">
-            <h4>Export citation list</h4>
-        </div>
-        <div class='btn-group'>
-            <a class='btn btn-default' href="{{ path('person_export', {'id': person.id, 'format': 'mla'}) }}">MLA</a>
-            <a class='btn btn-default' href="{{ path('person_export', {'id': person.id, 'format': 'apa'}) }}">APA</a>
-            <a class='btn btn-default' href="{{ path('person_export', {'id': person.id, 'format': 'chicago'}) }}">Chicago</a>
-            <a class='btn btn-default' href="{{ path('person_export', {'id': person.id, 'format': 'bibtex'}) }}">BibTex</a>
-        </div>
-    </div>
+
+    {% include 'partials/export.html.twig' with {'path': 'person_export', 'parameters': {'id': person.id}} %}
 
     <div class="navigation">
         {{ knp_pagination_render(pagination) }}

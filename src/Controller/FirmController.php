@@ -15,6 +15,7 @@ use App\Entity\TitleFirmrole;
 use App\Form\Firm\FirmSearchType;
 use App\Form\Firm\FirmType;
 use App\Repository\FirmRepository;
+use App\Services\CsvExporter;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Nines\UtilBundle\Controller\PaginatorTrait;
@@ -40,7 +41,6 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
      * Lists all Firm entities.
      *
      * @Route("/", name="firm_index", methods={"GET"})
-     *
      * @Template()
      *
      * @return array
@@ -121,41 +121,38 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
      *
      * @Route("/search/export", name="firm_search_export", methods={"GET"})
      *
-     * @return BinaryFileResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return BinaryFileResponse
      */
     public function searchExportAction(Request $request, FirmRepository $repo) {
         $form = $this->createForm(FirmSearchType::class);
         $form->handleRequest($request);
+        $firms = [];
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $submitted = true;
             $query = $repo->buildSearchQuery($form->getData());
-
-            $iterator = $query->iterate();
-            $tmpPath = tempnam(sys_get_temp_dir(), 'wphp-export-');
-            $fh = fopen($tmpPath, 'w');
-            fputcsv($fh, ['ID', 'Name', 'Street Address', 'City', 'Start Date', 'End Date']);
-            foreach ($iterator as $row) {
-                $firm = $row[0];
-                fputcsv($fh, [
-                    $firm->getId(),
-                    $firm->getName(),
-                    $firm->getStreetAddress(),
-                    $firm->getCity() ? $firm->getCity()->getName() : '',
-                    preg_replace('/-00/', '', $firm->getStartDate()),
-                    preg_replace('/-00/', '', $firm->getEndDate()),
-                ]);
-            }
-            fclose($fh);
-            $response = new BinaryFileResponse($tmpPath);
-            $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'wphp-firms.csv');
-            $response->deleteFileAfterSend(true);
-
-            return $response;
+            $firms = $query->execute();
         }
-        $this->addFlash('error', 'form not submitted.');
 
-        return $this->redirectToRoute('firm_search');
+        $tmpPath = tempnam(sys_get_temp_dir(), 'wphp-export-');
+        $fh = fopen($tmpPath, 'w');
+        fputcsv($fh, ['ID', 'Name', 'Street Address', 'City', 'Start Date', 'End Date']);
+        foreach ($firms as $row) {
+            $firm = $row[0];
+            fputcsv($fh, [
+                $firm->getId(),
+                $firm->getName(),
+                $firm->getStreetAddress(),
+                $firm->getCity() ? $firm->getCity()->getName() : '',
+                preg_replace('/-00/', '', $firm->getStartDate()),
+                preg_replace('/-00/', '', $firm->getEndDate()),
+            ]);
+        }
+        fclose($fh);
+        $response = new BinaryFileResponse($tmpPath);
+        $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'wphp-firms.csv');
+        $response->deleteFileAfterSend(true);
+
+        return $response;
     }
 
     /**
@@ -232,12 +229,52 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
     /**
      * Exports a firm's titles in a format.
      *
-     * @Route("/{id}/export", name="firm_export", methods={"GET","POST"})
+     * @Route("/{id}/export/{format}", name="firm_export_csv", methods={"GET","POST"}, requirements={"format" =
+     *     "^csv$"})
      * @Template()
+     *
+     * @return BinaryFileResponse
+     */
+    public function exportCSVAction(Request $request, Firm $firm, CsvExporter $exporter) {
+        $firmRoles = $firm->getTitleFirmroles(true);
+        if ( ! $this->getUser()) {
+            $firmRoles = $firmRoles->filter(function (TitleFirmrole $tfr) {
+                $title = $tfr->getTitle();
+
+                return $title->getFinalattempt() || $title->getFinalcheck();
+            });
+        }
+
+        $tmpPath = tempnam(sys_get_temp_dir(), 'wphp-export-');
+        $fh = fopen($tmpPath, 'w');
+        fputcsv($fh, array_merge($exporter->firmHeaders(), ['Role'], $exporter->titleHeaders()));
+
+        /** @var TitleFirmrole $role */
+        foreach ($firmRoles as $role) {
+            fputcsv($fh, array_merge($exporter->firmRow($role->getFirm()), [
+                $role->getFirmrole()
+                    ->getName(),
+            ], $exporter->titleRow($role->getTitle())));
+        }
+        fclose($fh);
+        $response = new BinaryFileResponse($tmpPath);
+        $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'wphp-firm-titles.csv');
+        $response->deleteFileAfterSend(true);
+
+        return $response;
+    }
+
+    /**
+     * Exports a firm's titles in a format.
+     *
+     * @Route("/{id}/export/{format}", name="firm_export", methods={"GET","POST"})
+     * @Template()
+     *
+     * @param mixed $format
      *
      * @return array
      */
-    public function exportAction(Request $request, Firm $firm) {
+    public function exportAction(Request $request, Firm $firm, $format) {
         $firmRoles = $firm->getTitleFirmroles(true);
         if ( ! $this->getUser()) {
             $firmRoles = $firmRoles->filter(function (TitleFirmrole $tfr) {
@@ -250,7 +287,7 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
         return [
             'firm' => $firm,
             'firmRoles' => $firmRoles,
-            'format' => $request->query->get('format', 'mla'),
+            'format' => $format,
         ];
     }
 

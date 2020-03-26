@@ -2,6 +2,12 @@
 
 declare(strict_types=1);
 
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace DoctrineMigrations;
 
 use Doctrine\DBAL\Schema\Schema;
@@ -10,10 +16,8 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20200207001829 extends AbstractMigration
-{
-    public function getDescription() : string
-    {
+final class Version20200207001829 extends AbstractMigration {
+    public function getDescription() : string {
         return 'FOS User to Nines User';
     }
 
@@ -51,8 +55,7 @@ ENDSQL
         $this->addSql('CREATE UNIQUE INDEX UNIQ_5BA994A1E7927C74 ON nines_user (email)');
     }
 
-    public function down(Schema $schema) : void
-    {
+    public function down(Schema $schema) : void {
         $this->throwIrreversibleMigrationException();
     }
 }

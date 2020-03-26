@@ -29,7 +29,6 @@ class OsborneMarcControllerTest extends ControllerBaseCase {
      * @group index
      */
     public function testAnonIndex() : void {
-
         $crawler = $this->client->request('GET', '/resource/osborne/');
         $this->assertSame(302, $this->client->getResponse()->getStatusCode());
     }
@@ -59,7 +58,6 @@ class OsborneMarcControllerTest extends ControllerBaseCase {
      * @group show
      */
     public function testAnonShow() : void {
-
         $crawler = $this->client->request('GET', '/resource/osborne/1');
         $this->assertSame(302, $this->client->getResponse()->getStatusCode());
     }
@@ -85,8 +83,6 @@ class OsborneMarcControllerTest extends ControllerBaseCase {
     }
 
     public function testAnonSearch() : void {
-
-
         $crawler = $this->client->request('GET', '/resource/estc/search');
         $this->assertSame(302, $this->client->getResponse()->getStatusCode());
         $this->assertSame(0, $crawler->selectLink('Search')->count());

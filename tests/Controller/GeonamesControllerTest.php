@@ -23,7 +23,6 @@ class GeonamesControllerTest extends ControllerBaseCase {
     }
 
     public function testAnonIndex() : void {
-
         $crawler = $this->client->request('GET', '/geonames/');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
     }
@@ -41,7 +40,6 @@ class GeonamesControllerTest extends ControllerBaseCase {
     }
 
     public function testAnonTypeahead() : void {
-
         $crawler = $this->client->request('GET', '/geonames/typeahead?q=name');
         $this->assertSame(302, $this->client->getResponse()->getStatusCode());
         $this->assertSame('text/html; charset=UTF-8', $this->client->getResponse()->headers->get('Content-Type'));
@@ -65,7 +63,6 @@ class GeonamesControllerTest extends ControllerBaseCase {
     }
 
     public function testAnonShow() : void {
-
         $crawler = $this->client->request('GET', '/geonames/1');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
     }

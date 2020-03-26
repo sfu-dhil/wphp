@@ -28,7 +28,6 @@ class EnControllerTest extends ControllerBaseCase {
      * @group index
      */
     public function testAnonIndex() : void {
-
         $crawler = $this->client->request('GET', '/resource/en/');
         $this->assertSame(302, $this->client->getResponse()->getStatusCode());
         $this->assertSame(0, $crawler->selectLink('New')->count());
@@ -60,7 +59,6 @@ class EnControllerTest extends ControllerBaseCase {
      * @group show
      */
     public function testAnonShow() : void {
-
         $crawler = $this->client->request('GET', '/resource/en/1');
         $this->assertSame(302, $this->client->getResponse()->getStatusCode());
         $this->assertSame(0, $crawler->selectLink('Edit')->count());
@@ -90,8 +88,6 @@ class EnControllerTest extends ControllerBaseCase {
     }
 
     public function testAnonSearch() : void {
-
-
         $crawler = $this->client->request('GET', '/resource/en/search');
         $this->assertSame(302, $this->client->getResponse()->getStatusCode());
         $this->assertSame(0, $crawler->selectLink('Search')->count());

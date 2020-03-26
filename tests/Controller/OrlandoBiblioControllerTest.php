@@ -28,7 +28,6 @@ class OrlandoBiblioControllerTest extends ControllerBaseCase {
      * @group index
      */
     public function testAnonIndex() : void {
-
         $crawler = $this->client->request('GET', '/resource/orlando_biblio/');
         $this->assertSame(302, $this->client->getResponse()->getStatusCode());
     }
@@ -58,7 +57,6 @@ class OrlandoBiblioControllerTest extends ControllerBaseCase {
      * @group show
      */
     public function testAnonShow() : void {
-
         $crawler = $this->client->request('GET', '/resource/orlando_biblio/1');
         $this->assertSame(302, $this->client->getResponse()->getStatusCode());
     }
@@ -84,8 +82,6 @@ class OrlandoBiblioControllerTest extends ControllerBaseCase {
     }
 
     public function testAnonSearch() : void {
-
-
         $crawler = $this->client->request('GET', '/resource/orlando_biblio/search');
         $this->assertSame(302, $this->client->getResponse()->getStatusCode());
         $this->assertSame(0, $crawler->selectLink('Search')->count());

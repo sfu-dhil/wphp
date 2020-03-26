@@ -15,7 +15,6 @@ use App\Entity\Source;
 use App\Entity\TitleSource;
 use App\Services\MarcManager;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -40,9 +39,6 @@ class UpdateEstcCommand extends Command {
 
     /**
      * UpdateEstcCommand constructor.
-     *
-     * @param EntityManagerInterface $em
-     * @param MarcManager $manager
      */
     public function __construct(EntityManagerInterface $em, MarcManager $manager) {
         parent::__construct();

@@ -28,7 +28,6 @@ class JacksonControllerTest extends ControllerBaseCase {
      * @group index
      */
     public function testAnonIndex() : void {
-
         $crawler = $this->client->request('GET', '/resource/jackson/');
         $this->assertSame(302, $this->client->getResponse()->getStatusCode());
     }
@@ -58,7 +57,6 @@ class JacksonControllerTest extends ControllerBaseCase {
      * @group show
      */
     public function testAnonShow() : void {
-
         $crawler = $this->client->request('GET', '/resource/jackson/1');
         $this->assertSame(302, $this->client->getResponse()->getStatusCode());
     }
@@ -84,8 +82,6 @@ class JacksonControllerTest extends ControllerBaseCase {
     }
 
     public function testAnonSearch() : void {
-
-
         $crawler = $this->client->request('GET', '/resource/jackson/search');
         $this->assertSame(302, $this->client->getResponse()->getStatusCode());
         $this->assertSame(0, $crawler->selectLink('Search')->count());

@@ -24,7 +24,6 @@ class GenreControllerTest extends ControllerBaseCase {
     }
 
     public function testAnonIndex() : void {
-
         $crawler = $this->client->request('GET', '/genre/');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $this->assertSame(0, $crawler->selectLink('Add Genre')->count());
@@ -45,7 +44,6 @@ class GenreControllerTest extends ControllerBaseCase {
     }
 
     public function testAnonTypeahead() : void {
-
         $crawler = $this->client->request('GET', '/genre/typeahead?q=name');
         $this->assertSame(302, $this->client->getResponse()->getStatusCode());
         $this->assertSame('text/html; charset=UTF-8', $this->client->getResponse()->headers->get('Content-Type'));
@@ -69,7 +67,6 @@ class GenreControllerTest extends ControllerBaseCase {
     }
 
     public function testAnonShow() : void {
-
         $crawler = $this->client->request('GET', '/genre/1');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $this->assertSame(0, $crawler->selectLink('Edit')->count());
@@ -93,7 +90,6 @@ class GenreControllerTest extends ControllerBaseCase {
     }
 
     public function testAnonEdit() : void {
-
         $crawler = $this->client->request('GET', '/genre/1/edit');
         $this->assertSame(302, $this->client->getResponse()->getStatusCode());
         $this->assertTrue($this->client->getResponse()->isRedirect());
@@ -122,7 +118,6 @@ class GenreControllerTest extends ControllerBaseCase {
     }
 
     public function testAnonNew() : void {
-
         $crawler = $this->client->request('GET', '/genre/new');
         $this->assertSame(302, $this->client->getResponse()->getStatusCode());
         $this->assertTrue($this->client->getResponse()->isRedirect());
@@ -151,7 +146,6 @@ class GenreControllerTest extends ControllerBaseCase {
     }
 
     public function testAnonDelete() : void {
-
         $crawler = $this->client->request('GET', '/genre/1/delete');
         $this->assertSame(302, $this->client->getResponse()->getStatusCode());
         $this->assertTrue($this->client->getResponse()->isRedirect());
@@ -164,8 +158,6 @@ class GenreControllerTest extends ControllerBaseCase {
     }
 
     public function testAdminDelete() : void {
-
-
         $preCount = count($this->entityManager->getRepository(Genre::class)->findAll());
         $this->login('user.admin');
         $crawler = $this->client->request('GET', '/genre/1/delete');

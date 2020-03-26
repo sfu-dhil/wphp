@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace App\Tests\Services;
 
 use App\Services\RoleChecker;
+use Exception;
 use Nines\UtilBundle\Tests\ControllerBaseCase;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -23,7 +24,7 @@ class RoleCheckerTest extends ControllerBaseCase {
 
     public function testMissingToken() : void {
         $authChecker = $this->createMock(AuthorizationCheckerInterface::class);
-        $authChecker->method('isGranted')->will($this->throwException(new \Exception('No token')));
+        $authChecker->method('isGranted')->will($this->throwException(new Exception('No token')));
         $storage = $this->createMock(TokenStorageInterface::class);
         $storage->method('getToken')->willReturn(false);
         $checker = new RoleChecker($authChecker, $storage);

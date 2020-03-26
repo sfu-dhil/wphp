@@ -14,6 +14,7 @@ use App\Entity\Geonames;
 use App\Repository\GeonamesRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use GeoNames\Client as GeoNamesClient;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Nines\UtilBundle\Controller\PaginatorTrait;
@@ -128,7 +129,7 @@ class GeonamesController extends AbstractController implements PaginatorAwareInt
     /**
      * Import one or more search results from the Geonames API.
      *
-     * @throws \Exception
+     * @throws Exception
      *
      * @return RedirectResponse
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")

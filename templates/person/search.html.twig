@@ -27,6 +27,7 @@
             {% if submitted %}
                 <a class="btn btn-default" href="{{ path('person_search') }}">Reset</a>
                 <a class="btn btn-default" href="{{ path('person_index') }}">Cancel</a>
+                {% include 'partials/export.html.twig' with {'path': 'person_search_export', 'csvOnly': true } %}
             {% endif %}
         </div>
     </div>
