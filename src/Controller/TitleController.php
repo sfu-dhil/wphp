@@ -14,6 +14,7 @@ use App\Entity\Title;
 use App\Form\Title\TitleSearchType;
 use App\Form\Title\TitleType;
 use App\Repository\TitleRepository;
+use App\Services\CsvExporter;
 use App\Services\EstcMarcImporter;
 use App\Services\SourceLinker;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -101,66 +102,19 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
      *
      * @return BinaryFileResponse
      */
-    public function exportAction(EntityManagerInterface $em) {
-        $dql = 'SELECT e FROM App:Title e';
+    public function exportAction(EntityManagerInterface $em, CsvExporter $exporter) {
+        $qb = $em->createQueryBuilder();
+        $qb->select('e')->from(Title::class, 'e');
         if (null === $this->getUser()) {
-            $dql .= ' WHERE (e.finalcheck = 1 OR e.finalattempt = 1)';
+            $qb->where('e.finalcheck = 1 OR e.finalattempt = 1');
         }
-        $dql .= ' ORDER BY e.id';
-        $query = $em->createQuery($dql);
-        $iterator = $query->iterate();
+        $qb->orderBy('e.id');
+        $iterator = $qb->getQuery()->iterate();
         $tmpPath = tempnam(sys_get_temp_dir(), 'wphp-export-');
         $fh = fopen($tmpPath, 'w');
-        fputcsv($fh, [
-            'id',
-            'title',
-            'signed_author',
-            'pseudonym',
-            'imprint',
-            'selfpublished',
-            'printing_city',
-            'printing_country',
-            'printing_lat',
-            'printing_long',
-            'pubdate',
-            'format',
-            'length',
-            'width',
-            'edition',
-            'volumes',
-            'pagination',
-            'price_pound',
-            'price_shilling',
-            'price_pence',
-            'genre',
-            'shelfmark',
-        ]);
+        fputcsv($fh, $exporter->titleHeaders());
         foreach ($iterator as $row) {
-            $title = $row[0];
-            fputcsv($fh, [
-                $title->getId(),
-                $title->getTitle(),
-                $title->getSignedAuthor(),
-                $title->getPseudonym(),
-                $title->getImprint(),
-                $title->getSelfPublished() ? 'yes' : 'no',
-                ($title->getLocationOfPrinting() ? $title->getLocationOfPrinting()->getName() : ''),
-                ($title->getLocationOfPrinting() ? $title->getLocationOfPrinting()->getCountry() : ''),
-                ($title->getLocationOfPrinting() ? $title->getLocationOfPrinting()->getLatitude() : ''),
-                ($title->getLocationOfPrinting() ? $title->getLocationOfPrinting()->getLongitude() : ''),
-                $title->getPubDate(),
-                ($title->getFormat() ? $title->getFormat()->getName() : ''),
-                $title->getSizeL(),
-                $title->getSizeW(),
-                $title->getEdition(),
-                $title->getVolumes(),
-                $title->getPagination(),
-                $title->getPricePound(),
-                $title->getPriceShilling(),
-                $title->getPricePence(),
-                ($title->getGenre() ? $title->getGenre()->getName() : ''),
-                $title->getShelfmark(),
-            ]);
+            fputcsv($fh, $exporter->titleRow($row[0]));
         }
         fclose($fh);
         $response = new BinaryFileResponse($tmpPath);
