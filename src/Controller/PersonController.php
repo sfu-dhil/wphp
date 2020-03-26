@@ -90,6 +90,44 @@ class PersonController extends AbstractController implements PaginatorAwareInter
 
     /**
      * Full text search for Person entities.
+     * @Route("/search/export/{format}", name="person_search_export", methods={"GET"}, requirements={"format"="^csv$"})
+     * @Template()
+     *
+     * @param Request $request
+     * @param EntityManagerInterface $em
+     * @param PersonRepository $repo
+     * @param CsvExporter $exporter
+     *
+     * @return BinaryFileResponse
+     */
+    public function searchExportCsvAction(Request $request, EntityManagerInterface $em, PersonRepository $repo, CsvExporter $exporter) {
+        $form = $this->createForm(PersonSearchType::class, null, ['entity_manager' => $em]);
+        $form->handleRequest($request);
+        $persons = [];
+        $submitted = false;
+
+        if ($form->isSubmitted()) {
+            $submitted = true;
+            $query = $repo->buildSearchQuery($form->getData());
+            $persons = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
+        }
+        $tmpPath = tempnam(sys_get_temp_dir(), 'wphp-export-');
+        $fh = fopen($tmpPath, 'w');
+        fputcsv($fh, $exporter->personHeaders());
+        foreach($persons as $person) {
+            fputcsv($fh, $exporter->personRow($person));
+        }
+
+        fclose($fh);
+        $response = new BinaryFileResponse($tmpPath);
+        $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'wphp-search-persons.csv');
+        $response->deleteFileAfterSend(true);
+
+        return $response;
+    }
+
+    /**
+     * Full text search for Person entities.
      *
      * @Route("/search", name="person_search", methods={"GET"})
      * @Template()

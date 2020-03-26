@@ -38,7 +38,7 @@ class CsvExporter {
             $person->getDob(),
             $person->getCityOfBirth() ? $person->getCityOfBirth()->getName() : '',
             $person->getDod(),
-            $person->getCityOfDeath() ? $person->getCityOfBirth()->getName() : '',
+            $person->getCityOfDeath() ? $person->getCityOfDeath()->getName() : '',
         ];
     }
 
