@@ -15,15 +15,18 @@ use App\Entity\TitleRole;
 use App\Form\Person\PersonSearchType;
 use App\Form\Person\PersonType;
 use App\Repository\PersonRepository;
+use App\Services\CsvExporter;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Nines\UtilBundle\Controller\PaginatorTrait;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -131,14 +134,47 @@ class PersonController extends AbstractController implements PaginatorAwareInter
     }
 
     /**
+     * Exports a person's titles in CSV.
+     *
+     * @Route("/{id}/export/{format}", name="person_export_csv", methods={"GET","POST"}, requirements={"format" = "^csv$"})
+     * @Template()
+     *
+     * @return BinaryFileResponse
+     */
+    public function exportCsvAction(Request $request, Person $person, CsvExporter $exporter) {
+        $titleRoles = $person->getTitleRoles(true);
+        if ( ! $this->getUser()) {
+            $titleRoles = $titleRoles->filter(function (TitleRole $tr) {
+                $title = $tr->getTitle();
+
+                return $title->getFinalattempt() || $title->getFinalcheck();
+            });
+        }
+
+        $tmpPath = tempnam(sys_get_temp_dir(), 'wphp-export-');
+        $fh = fopen($tmpPath, 'w');
+        fputcsv($fh, array_merge($exporter->personHeaders(), ['Role'], $exporter->titleHeaders()));
+        foreach($titleRoles as $role) {
+            fputcsv($fh, array_merge($exporter->personRow($person), [$role->getRole()->getName()], $exporter->titleRow($role->getTitle())));
+        }
+
+        fclose($fh);
+        $response = new BinaryFileResponse($tmpPath);
+        $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'wphp-person-titles.csv');
+        $response->deleteFileAfterSend(true);
+
+        return $response;
+    }
+
+    /**
      * Exports a person's titles in a format.
      *
-     * @Route("/{id}/export", name="person_export", methods={"GET","POST"})
+     * @Route("/{id}/export/{format}", name="person_export", methods={"GET","POST"})
      * @Template()
      *
      * @return array
      */
-    public function exportAction(Request $request, Person $person) {
+    public function exportAction(Request $request, Person $person, $format) {
         $titleRoles = $person->getTitleRoles(true);
         if ( ! $this->getUser()) {
             $titleRoles = $titleRoles->filter(function (TitleRole $tr) {
@@ -151,7 +187,7 @@ class PersonController extends AbstractController implements PaginatorAwareInter
         return [
             'person' => $person,
             'titles' => $titleRoles,
-            'format' => $request->query->get('format', 'mla'),
+            'format' => $format,
         ];
     }
 

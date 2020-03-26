@@ -250,7 +250,7 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
 
         $tmpPath = tempnam(sys_get_temp_dir(), 'wphp-export-');
         $fh = fopen($tmpPath, 'w');
-        fputcsv($fh, array_merge($exporter->firmHeaders(), $exporter->titleHeaders()));
+        fputcsv($fh, array_merge($exporter->firmHeaders(), ['Role'], $exporter->titleHeaders()));
 
         /** @var TitleFirmrole $role */
         foreach($firmRoles as $role) {

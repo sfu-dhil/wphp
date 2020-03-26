@@ -5,6 +5,7 @@ namespace App\Services;
 
 
 use App\Entity\Firm;
+use App\Entity\Person;
 use App\Entity\Title;
 
 class CsvExporter {
@@ -21,6 +22,23 @@ class CsvExporter {
             $firm->getCity() ? $firm->getCity()->getName() : '',
             preg_replace('/-00/', '', $firm->getStartDate()),
             preg_replace('/-00/', '', $firm->getEndDate()),
+        ];
+    }
+
+    public function personHeaders() {
+        return ['Person ID', 'Last Name', 'First Name', 'Gender', 'Birth Date', 'Birth City', 'Death Date', 'Death City'];
+    }
+
+    public function personRow(Person $person) {
+        return [
+            $person->getId(),
+            $person->getLastName(),
+            $person->getFirstName(),
+            $person->getGender(),
+            $person->getDob(),
+            $person->getCityOfBirth() ? $person->getCityOfBirth()->getName() : '',
+            $person->getDod(),
+            $person->getCityOfDeath() ? $person->getCityOfBirth()->getName() : '',
         ];
     }
 
