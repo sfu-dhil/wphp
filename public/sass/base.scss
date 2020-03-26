@@ -484,10 +484,18 @@ a.btn-primary {
   }
 
   &:hover,
-  &:focus {
+  &:focus,
+  &:active:focus,
+  &:active {
+    color: $color_white;
     background-color: #1f1f1f ;
   }
+}
 
+.open > .dropdown-toggle.btn-default,
+.open > .dropdown-toggle.btn-default:hover {
+  color: $color_white;
+  background-color: #1f1f1f ;
 }
 // buttons end
 

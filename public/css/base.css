@@ -496,13 +496,26 @@ a.btn-primary:link,
 a.btn-primary:visited {
   color: #fff;
 }
-input.btn-default:hover, input.btn-default:focus,
+input.btn-default:hover, input.btn-default:focus, input.btn-default:active:focus, input.btn-default:active,
 input.btn-primary:hover,
 input.btn-primary:focus,
+input.btn-primary:active:focus,
+input.btn-primary:active,
 a.btn-default:hover,
 a.btn-default:focus,
+a.btn-default:active:focus,
+a.btn-default:active,
 a.btn-primary:hover,
-a.btn-primary:focus {
+a.btn-primary:focus,
+a.btn-primary:active:focus,
+a.btn-primary:active {
+  color: #fff;
+  background-color: #1f1f1f;
+}
+
+.open > .dropdown-toggle.btn-default,
+.open > .dropdown-toggle.btn-default:hover {
+  color: #fff;
   background-color: #1f1f1f;
 }
 
