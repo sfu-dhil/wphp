@@ -11,7 +11,6 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Entity\Firm;
-use App\Entity\Firmrole;
 use App\Entity\TitleFirmrole;
 use App\Form\Firm\FirmSearchType;
 use App\Form\Firm\FirmType;
@@ -32,6 +31,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Firm controller.
+ *
  * @Route("/firm")
  */
 class FirmController extends AbstractController implements PaginatorAwareInterface {
@@ -39,6 +39,7 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
 
     /**
      * Lists all Firm entities.
+     *
      * @Route("/", name="firm_index", methods={"GET"})
      * @Template()
      *
@@ -90,6 +91,7 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
 
     /**
      * Full text search for Firm entities.
+     *
      * @Route("/search", name="firm_search", methods={"GET"})
      * @Template()
      *
@@ -116,6 +118,7 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
 
     /**
      * Full text search export for Title entities.
+     *
      * @Route("/search/export", name="firm_search_export", methods={"GET"})
      *
      * @return BinaryFileResponse
@@ -154,6 +157,7 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
 
     /**
      * Search for Title entities.
+     *
      * @Route("/jump", name="firm_jump", methods={"GET"})
      * @Template()
      *
@@ -170,6 +174,7 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
 
     /**
      * Creates a new Firm entity.
+     *
      * @Route("/new", name="firm_new", methods={"GET","POST"})
      * @Template()
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
@@ -198,6 +203,7 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
 
     /**
      * Finds and displays a Firm entity.
+     *
      * @Route("/{id}.{_format}", name="firm_show", defaults={"_format": "html"}, methods={"GET"})
      * @Template()
      *
@@ -222,6 +228,7 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
 
     /**
      * Exports a firm's titles in a format.
+     *
      * @Route("/{id}/export/{format}", name="firm_export_csv", methods={"GET","POST"}, requirements={"format" =
      *     "^csv$"})
      * @Template()
@@ -246,7 +253,7 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
         foreach ($firmRoles as $role) {
             fputcsv($fh, array_merge($exporter->firmRow($role->getFirm()), [
                 $role->getFirmrole()
-                     ->getName(),
+                    ->getName(),
             ], $exporter->titleRow($role->getTitle())));
         }
         fclose($fh);
@@ -259,8 +266,11 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
 
     /**
      * Exports a firm's titles in a format.
+     *
      * @Route("/{id}/export/{format}", name="firm_export", methods={"GET","POST"})
      * @Template()
+     *
+     * @param mixed $format
      *
      * @return array
      */
@@ -283,6 +293,7 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
 
     /**
      * Displays a form to edit an existing Firm entity.
+     *
      * @Route("/{id}/edit", name="firm_edit", methods={"GET","POST"})
      * @Template()
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
@@ -308,6 +319,7 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
 
     /**
      * Deletes a Firm entity.
+     *
      * @Route("/{id}/delete", name="firm_delete", methods={"GET"})
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
      *

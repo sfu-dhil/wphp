@@ -25,7 +25,6 @@ class PersonControllerTest extends ControllerBaseCase {
     }
 
     public function testAnonIndex() : void {
-
         $crawler = $this->client->request('GET', '/person/');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $this->assertSame(0, $crawler->selectLink('Add Person')->count());
@@ -46,7 +45,6 @@ class PersonControllerTest extends ControllerBaseCase {
     }
 
     public function testAnonTypeahead() : void {
-
         $crawler = $this->client->request('GET', '/person/typeahead?q=name');
         $this->assertSame(302, $this->client->getResponse()->getStatusCode());
         $this->assertSame('text/html; charset=UTF-8', $this->client->getResponse()->headers->get('Content-Type'));
@@ -70,7 +68,6 @@ class PersonControllerTest extends ControllerBaseCase {
     }
 
     public function testAnonShow() : void {
-
         $crawler = $this->client->request('GET', '/person/1');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $this->assertSame(0, $crawler->selectLink('Edit')->count());
@@ -94,7 +91,6 @@ class PersonControllerTest extends ControllerBaseCase {
     }
 
     public function testAnonEdit() : void {
-
         $crawler = $this->client->request('GET', '/person/1/edit');
         $this->assertSame(302, $this->client->getResponse()->getStatusCode());
         $this->assertTrue($this->client->getResponse()->isRedirect());
@@ -131,7 +127,6 @@ class PersonControllerTest extends ControllerBaseCase {
     }
 
     public function testAnonNew() : void {
-
         $crawler = $this->client->request('GET', '/person/new');
         $this->assertSame(302, $this->client->getResponse()->getStatusCode());
         $this->assertTrue($this->client->getResponse()->isRedirect());
@@ -168,7 +163,6 @@ class PersonControllerTest extends ControllerBaseCase {
     }
 
     public function testAnonDelete() : void {
-
         $crawler = $this->client->request('GET', '/person/1/delete');
         $this->assertSame(302, $this->client->getResponse()->getStatusCode());
         $this->assertTrue($this->client->getResponse()->isRedirect());
@@ -181,8 +175,6 @@ class PersonControllerTest extends ControllerBaseCase {
     }
 
     public function testAdminDelete() : void {
-
-
         $preCount = count($this->entityManager->getRepository(Person::class)->findAll());
         $this->login('user.admin');
         $crawler = $this->client->request('GET', '/person/1/delete');

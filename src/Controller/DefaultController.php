@@ -52,7 +52,7 @@ class DefaultController extends AbstractController implements PaginatorAwareInte
         $qb->orderBy('p.id', 'desc');
 
         $spotlights = [];
-        foreach($spotlightCategories as $cat) {
+        foreach ($spotlightCategories as $cat) {
             $spotlights[] = $qb->getQuery()->setParameter('category', $cat)->getOneOrNullResult();
         }
 

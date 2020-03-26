@@ -244,9 +244,10 @@ class PersonRepository extends ServiceEntityRepository {
             $trAlias = 'tr_' . $idx;
             $tAlias = 't_' . $idx;
             $qb->innerJoin('e.titleRoles', $trAlias)
-               ->innerJoin("{$trAlias}.title", $tAlias);
+                ->innerJoin("{$trAlias}.title", $tAlias)
+            ;
 
-            if(isset($filter['id']) && $filter['id']) {
+            if (isset($filter['id']) && $filter['id']) {
                 $qb->andWhere("{$tAlias}.id = :{$tAlias}_id");
                 $qb->setParameter("{$tAlias}_id", $filter['id']);
             }
@@ -288,7 +289,7 @@ class PersonRepository extends ServiceEntityRepository {
             }
         }
 
-        if(isset($data['firm_filter'])) {
+        if (isset($data['firm_filter'])) {
             $filter = $data['firm_filter'];
             $idx = '01';
             $trAlias = 'tr_' . $idx;
@@ -299,19 +300,20 @@ class PersonRepository extends ServiceEntityRepository {
             $qb->innerJoin('e.titleRoles', $trAlias)
                 ->innerJoin("{$trAlias}.title", $tAlias)
                 ->innerJoin("{$tAlias}.titleFirmroles", $tfrAlias)
-                ->innerJoin("{$tfrAlias}.firm", $fAlias);
+                ->innerJoin("{$tfrAlias}.firm", $fAlias)
+            ;
 
-            if(isset($filter['firm_id']) && $filter['firm_id']) {
+            if (isset($filter['firm_id']) && $filter['firm_id']) {
                 $qb->andWhere("{$fAlias}.id = :{$fAlias}_id");
                 $qb->setParameter("{$fAlias}_id", $filter['firm_id']);
             }
 
-            if(isset($filter['firm_name']) && $filter['firm_name']) {
+            if (isset($filter['firm_name']) && $filter['firm_name']) {
                 $qb->andWhere("MATCH({$fAlias}.name) AGAINST (:{$fAlias}_name BOOLEAN) > 0");
                 $qb->setParameter("{$fAlias}_name", $filter['firm_name']);
             }
 
-            if(isset($filter['firm_gender']) && $filter['firm_gender']) {
+            if (isset($filter['firm_gender']) && $filter['firm_gender']) {
                 $genders = [];
                 if (in_array('M', $filter['firm_gender'], true)) {
                     $genders[] = 'M';
@@ -326,12 +328,12 @@ class PersonRepository extends ServiceEntityRepository {
                 $qb->setParameter("{$fAlias}_genders", $genders);
             }
 
-            if(isset($filter['firm_role']) && $filter['firm_role']) {
+            if (isset($filter['firm_role']) && $filter['firm_role']) {
                 $qb->andWhere("{$tfrAlias}.firmrole IN (:{$fAlias}_firmRoles)");
                 $qb->setParameter("{$fAlias}_firmRoles", $filter['firm_role']);
             }
 
-            if(isset($filter['firm_address']) && $filter['firm_address']) {
+            if (isset($filter['firm_address']) && $filter['firm_address']) {
                 $qb->andWhere("MATCH ({$fAlias}.streetAddress) AGAINST (:{$fAlias}_address BOOLEAN) > 0");
                 $qb->setParameter("{$fAlias}_address", $filter['firm_address']);
             }

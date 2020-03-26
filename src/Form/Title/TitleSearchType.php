@@ -10,13 +10,10 @@ declare(strict_types=1);
 
 namespace App\Form\Title;
 
-use App\Entity\Format;
-use App\Entity\Genre;
 use App\Form\Firm\FirmFilterType;
 use App\Form\Person\PersonFilterType;
 use App\Repository\FormatRepository;
 use App\Repository\GenreRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -27,7 +24,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * Search form for titles.
  */
 class TitleSearchType extends AbstractType {
-
     /**
      * @var FormatRepository
      */

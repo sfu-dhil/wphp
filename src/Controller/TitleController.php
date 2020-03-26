@@ -158,12 +158,9 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
 
     /**
      * Full text search for Title entities.
+     *
      * @Route("/search/export/{format}", name="title_search_export_csv", methods={"GET"}, requirements={"format"="^csv$"})
      * @Template()
-     *
-     * @param Request $request
-     * @param TitleRepository $repo
-     * @param CsvExporter $exporter
      *
      * @return BinaryFileResponse
      */
@@ -182,7 +179,7 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
         $tmpPath = tempnam(sys_get_temp_dir(), 'wphp-export-');
         $fh = fopen($tmpPath, 'w');
         fputcsv($fh, $exporter->titleHeaders());
-        foreach($titles as $title) {
+        foreach ($titles as $title) {
             fputcsv($fh, $exporter->titleRow($title));
         }
         fclose($fh);
@@ -193,13 +190,13 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
         return $response;
     }
 
-
-
     /**
      * Full text search for Title entities.
      *
      * @Route("/search/export/{format}", name="title_search_export", methods={"GET"})
      * @Template()
+     *
+     * @param mixed $format
      *
      * @return array
      */

@@ -17,7 +17,6 @@ use Nines\UserBundle\DataFixtures\UserFixtures;
 use Nines\UtilBundle\Tests\ControllerBaseCase;
 
 class FirmControllerTest extends ControllerBaseCase {
-
     protected function fixtures() : array {
         return [
             UserFixtures::class,
@@ -26,7 +25,6 @@ class FirmControllerTest extends ControllerBaseCase {
     }
 
     public function testAnonIndex() : void {
-
         $crawler = $this->client->request('GET', '/firm/');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $this->assertSame(0, $crawler->selectLink('Add Firm')->count());
@@ -47,7 +45,6 @@ class FirmControllerTest extends ControllerBaseCase {
     }
 
     public function testAnonTypeahead() : void {
-
         $crawler = $this->client->request('GET', '/firm/typeahead?q=name');
         $this->assertSame(302, $this->client->getResponse()->getStatusCode());
         $this->assertSame('text/html; charset=UTF-8', $this->client->getResponse()->headers->get('Content-Type'));
@@ -71,7 +68,6 @@ class FirmControllerTest extends ControllerBaseCase {
     }
 
     public function testAnonShow() : void {
-
         $crawler = $this->client->request('GET', '/firm/1');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $this->assertSame(0, $crawler->selectLink('Edit')->count());
@@ -95,7 +91,6 @@ class FirmControllerTest extends ControllerBaseCase {
     }
 
     public function testAnonEdit() : void {
-
         $crawler = $this->client->request('GET', '/firm/1/edit');
         $this->assertSame(302, $this->client->getResponse()->getStatusCode());
         $this->assertTrue($this->client->getResponse()->isRedirect());
@@ -107,13 +102,13 @@ class FirmControllerTest extends ControllerBaseCase {
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
 
         $form = $formCrawler->selectButton('Update')->form([
-            'firm[name]'          => 'Cheese.',
+            'firm[name]' => 'Cheese.',
             'firm[streetAddress]' => '123 Cheese St.',
-            'firm[city]'          => '',
-            'firm[gender]'        => 'U',
-            'firm[startDate]'     => '1972',
-            'firm[endDate]'       => '1999',
-            'firm[finalcheck]'    => 1,
+            'firm[city]' => '',
+            'firm[gender]' => 'U',
+            'firm[startDate]' => '1972',
+            'firm[endDate]' => '1999',
+            'firm[finalcheck]' => 1,
         ])
         ;
 
@@ -125,7 +120,6 @@ class FirmControllerTest extends ControllerBaseCase {
     }
 
     public function testAnonNew() : void {
-
         $crawler = $this->client->request('GET', '/firm/new');
         $this->assertSame(302, $this->client->getResponse()->getStatusCode());
         $this->assertTrue($this->client->getResponse()->isRedirect());
@@ -143,13 +137,13 @@ class FirmControllerTest extends ControllerBaseCase {
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
 
         $form = $formCrawler->selectButton('Create')->form([
-            'firm[name]'          => 'Cheese.',
+            'firm[name]' => 'Cheese.',
             'firm[streetAddress]' => '123 Cheese St.',
-            'firm[city]'          => '',
-            'firm[gender]'        => 'U',
-            'firm[startDate]'     => '1972',
-            'firm[endDate]'       => '1999',
-            'firm[finalcheck]'    => 1,
+            'firm[city]' => '',
+            'firm[gender]' => 'U',
+            'firm[startDate]' => '1972',
+            'firm[endDate]' => '1999',
+            'firm[finalcheck]' => 1,
         ])
         ;
 
@@ -161,7 +155,6 @@ class FirmControllerTest extends ControllerBaseCase {
     }
 
     public function testAnonDelete() : void {
-
         $crawler = $this->client->request('GET', '/firm/1/delete');
         $this->assertSame(302, $this->client->getResponse()->getStatusCode());
         $this->assertTrue($this->client->getResponse()->isRedirect());

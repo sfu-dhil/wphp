@@ -29,8 +29,6 @@ class UpdateEditionNumberCommand extends Command {
 
     /**
      * UpdateEditionNumberCommand constructor.
-     *
-     * @param EntityManagerInterface $em
      */
     public function __construct(EntityManagerInterface $em) {
         parent::__construct();

@@ -90,13 +90,9 @@ class PersonController extends AbstractController implements PaginatorAwareInter
 
     /**
      * Full text search for Person entities.
+     *
      * @Route("/search/export/{format}", name="person_search_export", methods={"GET"}, requirements={"format"="^csv$"})
      * @Template()
-     *
-     * @param Request $request
-     * @param EntityManagerInterface $em
-     * @param PersonRepository $repo
-     * @param CsvExporter $exporter
      *
      * @return BinaryFileResponse
      */
@@ -112,7 +108,7 @@ class PersonController extends AbstractController implements PaginatorAwareInter
         $tmpPath = tempnam(sys_get_temp_dir(), 'wphp-export-');
         $fh = fopen($tmpPath, 'w');
         fputcsv($fh, $exporter->personHeaders());
-        foreach($persons as $person) {
+        foreach ($persons as $person) {
             fputcsv($fh, $exporter->personRow($person));
         }
 
@@ -190,7 +186,7 @@ class PersonController extends AbstractController implements PaginatorAwareInter
         $tmpPath = tempnam(sys_get_temp_dir(), 'wphp-export-');
         $fh = fopen($tmpPath, 'w');
         fputcsv($fh, array_merge($exporter->personHeaders(), ['Role'], $exporter->titleHeaders()));
-        foreach($titleRoles as $role) {
+        foreach ($titleRoles as $role) {
             fputcsv($fh, array_merge($exporter->personRow($person), [$role->getRole()->getName()], $exporter->titleRow($role->getTitle())));
         }
 
@@ -207,6 +203,8 @@ class PersonController extends AbstractController implements PaginatorAwareInter
      *
      * @Route("/{id}/export/{format}", name="person_export", methods={"GET","POST"})
      * @Template()
+     *
+     * @param mixed $format
      *
      * @return array
      */

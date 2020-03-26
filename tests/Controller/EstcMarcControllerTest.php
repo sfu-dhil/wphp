@@ -29,7 +29,6 @@ class EstcMarcControllerTest extends ControllerBaseCase {
      * @group index
      */
     public function testAnonIndex() : void {
-
         $crawler = $this->client->request('GET', '/resource/estc/');
         $this->assertSame(302, $this->client->getResponse()->getStatusCode());
     }
@@ -59,7 +58,6 @@ class EstcMarcControllerTest extends ControllerBaseCase {
      * @group show
      */
     public function testAnonShow() : void {
-
         $crawler = $this->client->request('GET', '/resource/estc/1');
         $this->assertSame(302, $this->client->getResponse()->getStatusCode());
     }
@@ -139,8 +137,6 @@ class EstcMarcControllerTest extends ControllerBaseCase {
     }
 
     public function testAnonImprintSearch() : void {
-
-
         $crawler = $this->client->request('GET', '/resource/estc/imprint_search');
         $this->assertSame(302, $this->client->getResponse()->getStatusCode());
         $this->assertSame(0, $crawler->selectLink('Search')->count());

@@ -41,13 +41,13 @@ class FirmFilterType extends AbstractType {
         $roles = $firmRoleRepo->findAll([
             'name' => 'ASC',
         ]);
-        $builder->add('firm_id', TextType::class, array(
+        $builder->add('firm_id', TextType::class, [
             'label' => 'Firm ID',
             'required' => false,
             'attr' => [
                 'help_block' => 'firm.search.id',
             ],
-        ));
+        ]);
         $builder->add('firm_name', TextType::class, [
             'label' => 'Firm Name',
             'required' => false,

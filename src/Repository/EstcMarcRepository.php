@@ -21,12 +21,9 @@ use Doctrine\Persistence\ManagerRegistry;
  * repository methods below.
  */
 class EstcMarcRepository extends ServiceEntityRepository {
-
     public function __construct(ManagerRegistry $registry) {
         parent::__construct($registry, EstcMarc::class);
     }
-
-
 
     /**
      * Create a query to return records for the index page.
