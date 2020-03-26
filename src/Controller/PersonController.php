@@ -104,12 +104,10 @@ class PersonController extends AbstractController implements PaginatorAwareInter
         $form = $this->createForm(PersonSearchType::class, null, ['entity_manager' => $em]);
         $form->handleRequest($request);
         $persons = [];
-        $submitted = false;
 
         if ($form->isSubmitted()) {
-            $submitted = true;
             $query = $repo->buildSearchQuery($form->getData());
-            $persons = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
+            $persons = $query->execute();
         }
         $tmpPath = tempnam(sys_get_temp_dir(), 'wphp-export-');
         $fh = fopen($tmpPath, 'w');
