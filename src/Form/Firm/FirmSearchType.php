@@ -10,6 +10,8 @@ declare(strict_types=1);
 
 namespace App\Form\Firm;
 
+use App\Form\Person\PersonFilterType;
+use App\Form\Title\TitleFilterType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -17,7 +19,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * The firmSearchtype is a search form for firms.
+ * A search form for firms.
  */
 class FirmSearchType extends AbstractType {
     /**
@@ -106,6 +108,22 @@ class FirmSearchType extends AbstractType {
             'required' => false,
             'attr' => [
                 'help_block' => 'firm.search.endDate',
+            ],
+        ]);
+
+        $builder->add('title_filter', TitleFilterType::class, [
+            'label' => 'Filter by Title',
+            'required' => false,
+            'attr' => [
+                'class' => 'embedded-form',
+            ],
+        ]);
+
+        $builder->add('person_filter', PersonFilterType::class, [
+            'label' => 'Filter by Person',
+            'required' => false,
+            'attr' => [
+                'class' => 'embedded-form',
             ],
         ]);
     }
