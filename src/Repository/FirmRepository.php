@@ -165,6 +165,94 @@ class FirmRepository extends ServiceEntityRepository {
             }
         }
 
+        if(isset($data['title_filter']) && count(array_filter($data['title_filter']))) {
+            $filter = $data['title_filter'];
+            $idx = '00';
+            $tfrAlias = 'tfr_' . $idx;
+            $tAlias = 't_' . $idx;
+            $qb->innerJoin('e.titleFirmroles', $tfrAlias)
+               ->innerJoin("{$tfrAlias}.title", $tAlias);
+
+            if (isset($filter['id']) && $filter['id']) {
+                $qb->andWhere("{$tAlias}.id = :{$tAlias}_id");
+                $qb->setParameter("{$tAlias}_id", $filter['id']);
+            }
+
+            if (isset($filter['title']) && $filter['title']) {
+                $qb->andWhere("MATCH({$tAlias}.title) AGAINST(:{$tAlias}_title BOOLEAN) > 0");
+                $qb->setParameter("{$tAlias}_title", $filter['title']);
+            }
+
+            if (isset($filter['pubdate']) && $filter['pubdate']) {
+                $m = [];
+                if (preg_match('/^\s*[0-9]{4}\s*$/', $filter['pubdate'])) {
+                    $qb->andWhere("YEAR(STRTODATE({$tAlias}.pubdate, '%Y')) = :{$tAlias}_year");
+                    $qb->setParameter("{$tAlias}_year", $filter['pubdate']);
+                } elseif (preg_match('/^\s*(\*|[0-9]{4})\s*-\s*(\*|[0-9]{4})\s*$/', $filter['pubdate'], $m)) {
+                    $from = ('*' === $m[1] ? -1 : $m[1]);
+                    $to = ('*' === $m[2] ? 9999 : $m[2]);
+                    $qb->andWhere(":{$tAlias}_from <= YEAR(STRTODATE({$tAlias}.pubdate, '%Y')) AND YEAR(STRTODATE({$tAlias}.pubdate, '%Y')) <= :{$tAlias}_to");
+                    $qb->setParameter("{$tAlias}_from", $from);
+                    $qb->setParameter("{$tAlias}_to", $to);
+                }
+            }
+
+            if (isset($filter['genre']) && count($filter['genre']) > 0) {
+                $qb->andWhere("{$tAlias}.genre in (:{$tAlias}_genres)");
+                $qb->setParameter("{$tAlias}_genres", $filter['genre']);
+            }
+
+            if (isset($filter['location']) && $filter['location']) {
+                $gAlias = 'g_' . $idx;
+                $qb->innerJoin("{$tAlias}.locationOfPrinting", $gAlias);
+                $qb->andWhere("MATCH({$gAlias}.alternatenames, {$gAlias}.name) AGAINST(:{$gAlias}_location BOOLEAN) > 0");
+                $qb->setParameter("{$gAlias}_location", $filter['location']);
+            }
+        }
+
+        if(isset($data['person_filter']) && count(array_filter($data['person_filter']))) {
+            $filter = $data['person_filter'];
+            $idx = '01';
+            $tfrAlias = 'tfr_' . $idx;
+            $tAlias = 't_' . $idx;
+            $trAlias = 'tr_' . $idx;
+            $pAlias = 'p_' . $idx;
+
+            $qb->innerJoin('e.titleFirmroles', $tfrAlias)
+               ->innerJoin("{$tfrAlias}.title", $tAlias)
+                ->innerJoin("{$tAlias}.titleRoles", $trAlias)
+                ->innerJoin("{$trAlias}.person", $pAlias);
+
+            if (isset($filter['id']) && $filter['id']) {
+                $qb->andWhere("{$pAlias}.id = :{$pAlias}_id");
+                $qb->setParameter("{$pAlias}_id", $filter['id']);
+            }
+            if (isset($filter['name']) && $filter['name']) {
+                $qb->andWhere("MATCH ({$pAlias}.lastName, {$pAlias}.firstName, {$pAlias}.title) AGAINST(:{$pAlias}_name BOOLEAN) > 0");
+                $qb->setParameter("{$pAlias}_name", $filter['name']);
+            }
+            if (isset($filter['gender']) && $filter['gender']) {
+                $genders = [];
+                if (in_array('M', $filter['gender'], true)) {
+                    $genders[] = 'M';
+                }
+                if (in_array('F', $filter['gender'], true)) {
+                    $genders[] = 'F';
+                }
+                if (in_array('U', $filter['gender'], true)) {
+                    $genders[] = '';
+                }
+                $qb->andWhere("{$pAlias}.gender in (:genders)");
+                $qb->setParameter('genders', $genders);
+            }
+
+            if (isset($filter['person_role']) && count($filter['person_role']) > 0) {
+                $qb->andWhere("{$trAlias}.role in (:roles_{$idx})");
+                $qb->setParameter("roles_{$idx}", $filter['person_role']);
+            }
+
+        }
+
         return $qb->getQuery();
     }
 
