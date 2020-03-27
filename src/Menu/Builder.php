@@ -26,9 +26,6 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 class Builder implements ContainerAwareInterface {
     use ContainerAwareTrait;
 
-    // U+25BE, black down-pointing small triangle.
-    public const CARET = ' ▾';
-
     /**
      * List of spotlight menu items.
      *
@@ -110,7 +107,7 @@ class Builder implements ContainerAwareInterface {
 
         $browse = $menu->addChild('browse', [
             'uri' => '#',
-            'label' => 'Explore ' . self::CARET,
+            'label' => 'Explore',
         ]);
         $browse->setAttribute('dropdown', true);
         $browse->setLinkAttribute('class', 'dropdown-toggle');
@@ -187,7 +184,7 @@ class Builder implements ContainerAwareInterface {
 
         $search = $menu->addChild('search', [
             'uri' => '#',
-            'label' => 'Search ' . self::CARET,
+            'label' => 'Search',
         ]);
         $search->setAttribute('dropdown', true);
         $search->setLinkAttribute('class', 'dropdown-toggle');
@@ -237,7 +234,7 @@ class Builder implements ContainerAwareInterface {
 
         $spotlight = $menu->addChild('spotlight', [
             'uri' => '#',
-            'label' => 'Spotlight ' . self::CARET,
+            'label' => 'Spotlight',
         ]);
         $spotlight->setAttribute('dropdown', true);
         $spotlight->setLinkAttribute('class', 'dropdown-toggle');
@@ -289,7 +286,7 @@ class Builder implements ContainerAwareInterface {
 
         $userMenu = $menu->addChild('user', [
             'uri' => '#',
-            'label' => $user->getUsername() . self::CARET,
+            'label' => $user->getUsername(),
         ]);
         $userMenu->setAttribute('dropdown', true);
         $userMenu->setLinkAttribute('class', 'dropdown-toggle');
@@ -357,7 +354,7 @@ class Builder implements ContainerAwareInterface {
 
         $menu->addChild('announcements', [
             'uri' => '#',
-            'label' => $title . self::CARET,
+            'label' => $title,
         ]);
         $menu['announcements']->setAttribute('dropdown', true);
         $menu['announcements']->setLinkAttribute('class', 'dropdown-toggle');

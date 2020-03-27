@@ -574,6 +574,12 @@ a.btn-primary:active {
   color: #fff;
 }
 
+a.dropdown-toggle::after {
+  content: "▾";
+  padding-left: 0.3em;
+  font-size: small;
+}
+
 .navbar-default .navbar-nav > li > a:active,
 .navbar-default .navbar-nav > li > a:focus,
 .navbar-default .navbar-nav > li > a:hover,

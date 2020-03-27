@@ -569,12 +569,12 @@ a.btn-primary {
   color: $header_link_color;
 }
 
-// .navbar-default .navbar-nav {
-//   display: flex;
-//   flex-direction: column;
-//   height: 75px;
-//
-// }
+a.dropdown-toggle::after {
+  content: "▾";
+  padding-left: 0.3em;
+  font-size: small;
+}
+
 
 // Header menu items that are active or hover.
 .navbar-default .navbar-nav > li > a:active,
