@@ -171,8 +171,22 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
         $form->handleRequest($request);
         $titles = [];
 
+        $name = '';
         if ($form->isSubmitted() && $form->isValid()) {
             $query = $repo->buildSearchQuery($form->getData(), $this->getUser());
+            foreach($query->getParameters() as $param) {
+                $paramValue = $param->getValue();
+                $value = '';
+                if (is_array($paramValue)) {
+                    $value = implode('-', array_map(function ($e) {
+                        return (string) $e;
+                    }, $paramValue));
+                }
+                else {
+                    $value = $paramValue;
+                }
+                $name .= '-' . preg_replace('/[^a-zA-Z0-9-]*/', '', $value);
+            }
             $titles = $query->execute();
         }
 
@@ -184,7 +198,7 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
         }
         fclose($fh);
         $response = new BinaryFileResponse($tmpPath);
-        $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'wphp-search-titles.csv');
+        $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'wphp-search-titles' . $name . '.csv');
         $response->deleteFileAfterSend(true);
 
         return $response;

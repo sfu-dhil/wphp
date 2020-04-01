@@ -243,6 +243,10 @@ class OrlandoBiblio {
      */
     private $researchnotes;
 
+    public function __toString() {
+        return $this->analyticStandardTitle;
+    }
+
     /**
      * Get id.
      *

@@ -67,6 +67,10 @@ class MarcSubfieldStructure {
      */
     private $hidden;
 
+    public function __toString() {
+        return $this->name;
+    }
+
     /**
      * Get id.
      *
