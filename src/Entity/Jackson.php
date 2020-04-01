@@ -136,6 +136,10 @@ class Jackson {
      */
     private $examnote;
 
+    public function __toString() {
+        return $this->title;
+    }
+
     /**
      * Get id.
      *

@@ -128,8 +128,19 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
         $form->handleRequest($request);
         $firms = [];
 
+        $name = '';
         if ($form->isSubmitted() && $form->isValid()) {
             $query = $repo->buildSearchQuery($form->getData());
+            foreach($query->getParameters() as $param) {
+                $paramValue = $param->getValue();
+                $value = '';
+                if(is_array($paramValue)) {
+                    $value = implode('-', array_map(function($e){ return (string) $e;}, $paramValue));
+                } else {
+                    $value = $paramValue;
+                }
+                $name .= '-' . preg_replace('/[^a-zA-Z0-9-]*/', '', $value);
+            }
             $firms = $query->execute();
         }
 
@@ -149,7 +160,7 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
         }
         fclose($fh);
         $response = new BinaryFileResponse($tmpPath);
-        $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'wphp-firms.csv');
+        $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'wphp-firms-search' . $name . '.csv');
         $response->deleteFileAfterSend(true);
 
         return $response;
@@ -258,7 +269,7 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
         }
         fclose($fh);
         $response = new BinaryFileResponse($tmpPath);
-        $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'wphp-firm-titles.csv');
+        $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'wphp-firm-' . $firm->getId() . '-titles.csv');
         $response->deleteFileAfterSend(true);
 
         return $response;

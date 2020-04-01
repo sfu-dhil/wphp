@@ -68,6 +68,10 @@ class OsborneMarc {
      */
     private $fieldData;
 
+    public function __toString() {
+        return $this->fieldData;
+    }
+
     /**
      * Get id.
      *
