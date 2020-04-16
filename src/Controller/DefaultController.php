@@ -50,6 +50,7 @@ class DefaultController extends AbstractController implements PaginatorAwareInte
         $qb->innerJoin('p.status', 's');
         $qb->andWhere('s.public = 1');
         $qb->orderBy('p.id', 'desc');
+        $qb->setMaxResults(1);
 
         $spotlights = [];
         foreach ($spotlightCategories as $cat) {
