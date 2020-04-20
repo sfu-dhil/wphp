@@ -147,8 +147,7 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
         $tmpPath = tempnam(sys_get_temp_dir(), 'wphp-export-');
         $fh = fopen($tmpPath, 'w');
         fputcsv($fh, ['ID', 'Name', 'Street Address', 'City', 'Start Date', 'End Date']);
-        foreach ($firms as $row) {
-            $firm = $row[0];
+        foreach ($firms as $firm) {
             fputcsv($fh, [
                 $firm->getId(),
                 $firm->getName(),
