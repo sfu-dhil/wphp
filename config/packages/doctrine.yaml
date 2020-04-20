@@ -23,5 +23,6 @@ doctrine:
         dql:
             string_functions:
                 match: Nines\UtilBundle\Extensions\Doctrine\MySQL\MatchAgainst
+                strtodate: Nines\UtilBundle\Extensions\Doctrine\MySQL\StrToDate
             numeric_functions:
                 year: Nines\UtilBundle\Extensions\Doctrine\MySQL\Year
