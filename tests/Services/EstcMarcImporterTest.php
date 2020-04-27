@@ -240,7 +240,7 @@ class EstcMarcImporterTest extends ControllerBaseCase {
 
     protected function setUp() : void {
         parent::setUp();
-        $this->importer = $this->getContainer()->get(EstcMarcImporter::class);
+        $this->importer = self::$container->get(EstcMarcImporter::class);
     }
 
 //    public function testImport() {

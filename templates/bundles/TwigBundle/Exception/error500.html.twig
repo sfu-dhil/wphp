@@ -1,88 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="google" content="notranslate" />
-        <title>{% block title %}WPHP{% endblock %}</title>
-        <link rel="stylesheet" href="{{ asset('yarn/bootstrap3/dist/css/bootstrap.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('yarn/bootstrap3/dist/css/bootstrap-theme.min.css') }}">
+{% extends 'base.html.twig' %}
 
-        <link rel="stylesheet" href="{{ asset('css/base.css') }}">
+{% block pageheader %}
+    <h1>Page Not Found</h1>
+{% endblock %}
 
-        <script src="{{ asset('yarn/jquery/dist/jquery.min.js') }}"></script>
+{% block body %}
 
-        <script src="{{ asset('yarn/select2/dist/js/select2.full.min.js') }}"></script>
-        <link href="{{ asset('yarn/select2/dist/css/select2.min.css') }}" rel="stylesheet">
-        <link href="{{ asset('yarn/select2-bootstrap-css/select2-bootstrap.min.css') }}" rel="stylesheet">
+    <p>The page you have requested has caused an internal error. Please
+        <a href="mailto:dhil@sfu.ca">contact the DHIL</a> and include
+        the details below.
+    </p>
 
-        <script src="{{ asset('bundles/tetranzselect2entity/js/select2entity.js') }}"></script>
-        <script src="{{ asset('yarn/symfony-collection/jquery.collection.js') }}"></script>
+    {% include '@Twig/Exception/details.html.twig' %}
 
-        <script src="{{ asset('js/form.js') }}"></script>
-    </head>
-    <body>
-        <!-- <nav class="navbar navbar-default navbar-fixed-top"> -->
-        <nav class="navbar navbar-default">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar" aria-expanded="true" aria-controls="navbar">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                </div>
-                <div id="navbar" class="collapse navbar-collapse in" aria-expanded="true">
-                    <ul class="nav navbar-nav">
-                        <li><a href="{{ path('homepage') }}">
-                                Home
-                            </a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-
-        <div class="container">
-
-            <h1>Internal Server Error</h1>
-
-            <p>The page you have requested has caused an internal error. Please
-                <a href="mailto:dhil@sfu.ca">contact the DHIL</a> and include
-                the details below.
-            </p>
-
-            <dl class="dl-horizontal">
-                <dt>Date</dt>
-                <dd>{{ "now"|date('c') }}</dd>
-                <dt>IP</dt>
-                <dd>{{ app.request.getClientIps()|join(';') }}</dd>
-                <dt>URL</dt>
-                <dd>{{ app.request.getUri() }}</dd>
-                <dt>Class</dt>
-                <dd>{{ exception.getStatusCode() }} - {{ exception.class }}</dd>
-                <dt>Message</dt>
-                <dd>{{ exception.message }}</dd>
-            </dl>
-
-            <p><button class="btn btn-default" onclick="window.history.go(-1);">Back</button></p>
-
-        </div>
-
-        <footer class="footer">
-            <div class="container">
-                <div class='col-md-12'>
-                    <p><strong>The Women's Print History Project</strong><br>
-                        <a href="{{ asset('docs/sphinx/index.html') }}">Documentation</a> |
-                        <a href="{{ path('privacy') }}">Privacy</a> |
-                        <a href="https://github.com/sfu-dhil/wphp">GitHub</a>
-                    </p>
-                </div>
-            </div>
-        </footer>
-
-        <script src="{{ asset('bower/bootstrap/dist/js/bootstrap.min.js') }}"></script>
-
-    </body>
-</html>
+{% endblock %}

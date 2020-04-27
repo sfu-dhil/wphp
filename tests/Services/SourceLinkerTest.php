@@ -162,7 +162,7 @@ class SourceLinkerTest extends ControllerBaseCase {
         parent::setUp();
         $this->checker = $this->createMock(RoleChecker::class);
         $this->checker->method('hasRole')->willReturn(true);
-        $this->linker = $this->getContainer()->get(SourceLinker::class);
+        $this->linker = self::$container->get(SourceLinker::class);
         $this->linker->setRoleChecker($this->checker);
     }
 }
