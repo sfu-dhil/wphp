@@ -47,6 +47,6 @@ class OrlandoManagerTest extends ControllerBaseCase {
 
     protected function setUp() : void {
         parent::setUp();
-        $this->manager = $this->getContainer()->get(OrlandoManager::class);
+        $this->manager = self::$container->get(OrlandoManager::class);
     }
 }

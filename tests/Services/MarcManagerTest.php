@@ -129,6 +129,6 @@ class MarcManagerTest extends ControllerBaseCase {
 
     protected function setUp() : void {
         parent::setUp();
-        $this->manager = $this->getContainer()->get(MarcManager::class);
+        $this->manager = self::$container->get(MarcManager::class);
     }
 }
