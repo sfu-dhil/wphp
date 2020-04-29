@@ -355,6 +355,12 @@ p.help-block {
 }
 
 .blog-panel {
+
+  img {
+    max-width: 100%;
+    height: auto !important;
+  }
+
   a {
     display: block;
     width: 100%;
