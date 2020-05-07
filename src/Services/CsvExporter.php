@@ -16,13 +16,14 @@ use App\Entity\Title;
 
 class CsvExporter {
     public function firmHeaders() {
-        return ['Firm ID', 'Name', 'Street Address', 'City', 'Start Date', 'End Date'];
+        return ['Firm ID', 'Name', 'Gender', 'Street Address', 'City', 'Start Date', 'End Date'];
     }
 
     public function firmRow(Firm $firm) {
         return [
             $firm->getId(),
             $firm->getName(),
+            $firm->getGender(),
             $firm->getStreetAddress(),
             $firm->getCity() ? $firm->getCity()->getName() : '',
             preg_replace('/-00/', '', $firm->getStartDate()),

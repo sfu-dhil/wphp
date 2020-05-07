@@ -14,6 +14,7 @@ use App\Entity\Person;
 use App\Entity\TitleRole;
 use App\Form\Person\PersonSearchType;
 use App\Form\Person\PersonType;
+use App\Repository\FirmRepository;
 use App\Repository\PersonRepository;
 use App\Services\CsvExporter;
 use Doctrine\ORM\EntityManagerInterface;
@@ -265,6 +266,41 @@ class PersonController extends AbstractController implements PaginatorAwareInter
             'person' => $person,
             'form' => $form->createView(),
         ];
+    }
+
+    /**
+     * Exports all person entries in CSV.
+     *
+     * @Route("/export", name="person_export_all", methods={"GET"})
+     * @param Request $request
+     * @param CsvExporter $exporter
+     * @param PersonRepository $repo
+     *
+     * @return BinaryFileResponse
+     */
+    public function exportAllAction(Request $request, CsvExporter $exporter, PersonRepository $repo) {
+        $persons = [];
+        if ( $this->getUser()) {
+            $persons = $repo->findAll();
+        } else {
+            $persons = $repo->findBy([
+                'finalcheck' => 1,
+            ]);
+        }
+
+        $tmpPath = tempnam(sys_get_temp_dir(), 'wphp-all-persons');
+        $fh = fopen($tmpPath, 'w');
+        fputcsv($fh, array_merge($exporter->personHeaders()));
+
+        foreach ($persons as $person) {
+            fputcsv($fh, $exporter->personRow($person));
+        }
+        fclose($fh);
+        $response = new BinaryFileResponse($tmpPath);
+        $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'wphp-all-persons.csv');
+        $response->deleteFileAfterSend(true);
+
+        return $response;
     }
 
     /**
