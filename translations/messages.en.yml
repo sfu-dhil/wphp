@@ -16,7 +16,7 @@ title:
     locationOfPrinting: Location of printing as indicated by the imprint
     notes: Any other important information
     pagination: Number of pages of each volume
-    pricePence: Portion of the price of the titleSources in pence
+    pricePence: Portion of the price of the title in pence
     pricePound: Portion of the price of the title in pounds
     priceShilling: Portion of the price of the title in shillings
     psuedonym: A false or invented contributor name
@@ -81,11 +81,12 @@ title:
     selfPublished: Limit results to titles known to have been self-published
     shelfmark: Search by call numbers of copies of the title in various libraries
     signedAuthor: Search by author attribution from the title page or the end of the preface
-    sizeL: Search by page length as measured in cm
-    sizeW: Search by page Width as measured in cm
+    sizeL: Search by page length as measured in cm by entering a length (eg <kbd>10</kbd> or range of lengths (<kbd>9-15</kbd> or partial range of lengths (<kbd>*-15</kbd>)
+    sizeW: Search by page width as measured in cm by entering a width (eg <kbd>10</kbd> or range of widths (<kbd>9-15</kbd> or partial range of widths (<kbd>*-15</kbd>)
     title: Search for all or part of a title
     volumes: Limit results to titles with this exact number of volumes
     priceCompare: How to compare the price you enter against the price recorded for titles returned by the search
+    sort: Choose a sort method for the results
 
 firm:
   fields: &firm_fields

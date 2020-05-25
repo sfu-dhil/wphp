@@ -45,7 +45,7 @@ class TitlePersonType extends AbstractType {
             'expanded' => false,
             'placeholder' => 'Select a role',
             'attr' => [
-                'help_block' => 'title.person.role',
+                'help_block' => 'title.form.titleRoles',
             ],
         ]);
     }
