@@ -47,7 +47,7 @@ title:
     locationOfPrinting: Enter the location of printing as indicated by the imprint
     notes: Include any other important information about the title that doesn't fit into one of the other fields
     pagination: Enter each volume indicated by a capital letter roman numeral, prefatory matter indicated by lowercase roman numerals, regular pagination indicated in arabic numerals
-    pricePence: Enter the portion of the price of the titleSources in pence
+    pricePence: Enter the portion of the price of the title in pence
     pricePound: Enter the portion of the price of the title in pounds
     priceShilling: Enter the portion of the price of the title in shillings
     psuedonym: Enter any false or invented contributor name
@@ -85,6 +85,7 @@ title:
     sizeW: Search by page Width as measured in cm
     title: Search for all or part of a title
     volumes: Limit results to titles with this exact number of volumes
+    priceCompare: How to compare the price you enter against the price recorded for titles returned by the search
 
 firm:
   fields: &firm_fields
