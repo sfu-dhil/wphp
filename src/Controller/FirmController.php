@@ -212,6 +212,41 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
     }
 
     /**
+     * Exports a firm's titles in a format.
+     *
+     * @Route("/export", name="firm_export_all", methods={"GET"})
+     * @param Request $request
+     * @param CsvExporter $exporter
+     * @param FirmRepository $repo
+     *
+     * @return BinaryFileResponse
+     */
+    public function exportAllAction(Request $request, CsvExporter $exporter, FirmRepository $repo) {
+        $firms = [];
+        if ( $this->getUser()) {
+            $firms = $repo->findAll();
+        } else {
+            $firms = $repo->findBy([
+                'finalcheck' => 1,
+            ]);
+        }
+
+        $tmpPath = tempnam(sys_get_temp_dir(), 'wphp-all-firms-');
+        $fh = fopen($tmpPath, 'w');
+        fputcsv($fh, array_merge($exporter->firmHeaders()));
+
+        foreach ($firms as $firm) {
+            fputcsv($fh, $exporter->firmRow($firm));
+        }
+        fclose($fh);
+        $response = new BinaryFileResponse($tmpPath);
+        $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'wphp-all-firms.csv');
+        $response->deleteFileAfterSend(true);
+
+        return $response;
+    }
+
+    /**
      * Finds and displays a Firm entity.
      *
      * @Route("/{id}.{_format}", name="firm_show", defaults={"_format": "html"}, methods={"GET"})
