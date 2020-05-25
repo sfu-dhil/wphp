@@ -121,12 +121,30 @@ class TitleRepository extends ServiceEntityRepository {
             $qb->setParameter('volumes', $data['volumes']);
         }
         if (isset($data['sizeW']) && $data['sizeW']) {
-            $qb->andWhere('e.sizeW = :sizeW');
-            $qb->setParameter('sizeW', $data['sizeW']);
+            $m = [];
+            if(preg_match('/^\s*[0-9]+\s*$/', $data['sizeW'])) {
+                $qb->andWhere('e.sizeW = :sizeW');
+                $qb->setParameter('sizeW', $data['sizeW']);
+            } elseif(preg_match('/^\s*(\*|[0-9]+)\s*-\s*(\*|[0-9]+)\s*$/', $data['sizeW'], $m)) {
+                $from = ('*' === $m[1] ? 0 : $m[1]);
+                $to = ('*' === $m[2] ? 9999 : $m[2]);
+                $qb->andWhere("(:sizeW_from <= e.sizeW) AND (e.sizeW <= :sizeW_to)");
+                $qb->setParameter('sizeW_from', $from);
+                $qb->setParameter('sizeW_to', $to);
+            }
         }
         if (isset($data['sizeL']) && $data['sizeL']) {
-            $qb->andWhere('e.sizeL = :sizeL');
-            $qb->setParameter('sizeL', $data['sizeL']);
+            $m = [];
+            if(preg_match('/^\s*[0-9]+\s*$/', $data['sizeL'])) {
+                $qb->andWhere('e.sizeL = :sizeL');
+                $qb->setParameter('sizeL', $data['sizeL']);
+            } elseif(preg_match('/^\s*(\*|[0-9]+)\s*-\s*(\*|[0-9]+)\s*$/', $data['sizeL'], $m)) {
+                $from = ('*' === $m[1] ? 0 : $m[1]);
+                $to = ('*' === $m[2] ? 9999 : $m[2]);
+                $qb->andWhere("(:sizeL_from <= e.sizeL) AND (e.sizeL <= :sizeL_to)");
+                $qb->setParameter('sizeL_from', $from);
+                $qb->setParameter('sizeL_to', $to);
+            }
         }
         if ($user) {
             if (isset($data['checked'])) {
