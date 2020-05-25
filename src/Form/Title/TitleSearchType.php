@@ -46,10 +46,10 @@ class TitleSearchType extends AbstractType {
         $builder->setMethod('get');
         $user = $options['user'];
 
-        $formats = $this->formatRepository->findAll([
+        $formats = $this->formatRepository->findBy([], [
             'name' => 'ASC',
         ]);
-        $genres = $this->genreRepository->findAll([
+        $genres = $this->genreRepository->findBy([], [
             'name' => 'ASC',
         ]);
 
@@ -74,7 +74,7 @@ class TitleSearchType extends AbstractType {
                 'Edition Number (Highest to Lowest)' => 'edition_desc',
             ],
             'attr' => [
-                'help_block' => 'Choose a sort method for the results',
+                'help_block' => 'title.search.sort',
             ],
             'required' => false,
             'expanded' => false,

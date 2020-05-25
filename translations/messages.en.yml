@@ -86,6 +86,7 @@ title:
     title: Search for all or part of a title
     volumes: Limit results to titles with this exact number of volumes
     priceCompare: How to compare the price you enter against the price recorded for titles returned by the search
+    sort: Choose a sort method for the results
 
 firm:
   fields: &firm_fields
