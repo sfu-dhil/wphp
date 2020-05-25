@@ -1,72 +1,120 @@
 
 title:
   fields: &title_fields
-    id: WPHP database ID of the title
-    checked: Indicates that a physical copy of the text has been consulted
-    colophon:
-    contributors: Names of all women who have contributed to the work and their role in the work’s production
-    dateOfFirstPublication: Date (year) that the work was first published
+    id: Unique ID number for this title
+    checked: Indicates that a physical copy of the title has been consulted to verify title information
+    colophon: Information, usually about the printer, from the front or the back of the book
+    contributors: All persons who have contributed to the intellectual content of the title and all women involved in the title's production
+    dateOfFirstPublication: Date (year) that the title was first published
     edition: Edition as it appears on the title page
-    editionNumber: Edition number for sorting, extracted from the edition field.
-    finalattempt: An unsuccessful attempt has been made to find two independent sources to verify the title
-    finalcheck: Indicates that either two sources have been consulted or the text has been hand-checked
-    format: The way that sheets have been folded and gathered into pages
-    genre: Category that the work falls into
+    editionNumber: Edition number translated into arabic numberals
+    finalattempt: Indicates that an attempt has been made to identify two sources to verify the title information but that only one source has been found
+    finalcheck: Indicates that either two sources have been consulted to verify title information or the title has been hand-verified
+    format: The way that sheets have been folded and gathered
+    genre: Category that the title falls into
     imprint: Information about printers, publishers, booksellers as shown on the title page
-    locationOfPrinting: Geotagged location as indicated by the imprint
-    notes: Any other important information, including links to sources
+    locationOfPrinting: Location of printing as indicated by the imprint
+    notes: Any other important information
     pagination: Number of pages of each volume
-    pricePence: Portion of the price of the work in pence
-    pricePound: Portion of the price of the work in pounds
-    priceShilling: Portion of the price of the work in shillings
-    psuedonym: Any false author name
+    pricePence: Portion of the price of the titleSources in pence
+    pricePound: Portion of the price of the title in pounds
+    priceShilling: Portion of the price of the title in shillings
+    psuedonym: A false or invented contributor name
     pubDate: Date (year) as it appears on the imprint
-    selfPublished: Indicates if the title was published by the author
-    shelfmark: Call numbers for location in various libraries
+    selfPublished: Indicates whether the title was self-published or published by a publisher
+    shelfmark: Call numbers for locations of copies of the title in various libraries
     signedAuthor: Author attribution from the title page or the end of the preface
-    sizeL: Length measured in cm
-    sizeW: Width measured in cm
-    title: Title of the book
-    titleFirmRoles: Names of all printers, publishers, and booksellers listed in the imprint and their role in the work’s production
-    titleRoles: Names of all women who have contributed to the work and their role in the work’s production
-    titleSources: Sources consulted to populate the entry fields
+    sizeL: Length of a page measured in cm
+    sizeW: Width of a page measured in cm
+    title: Full title as it appears on the title page
+    titleFirmRoles: Names of all printers, publishers, and booksellers listed in the imprint or colophon
+    titleRoles: Roles of all persons who have contributed to the intellectual content of the title and of all women involved in the title's production
+    titleSources: Sources consulted to populate the title fields
     totalPrice: Total price of the title in pence
-    volumes: Number of volumes of the edition, using arabic numerals
+    volumes: Number of volumes that the edition was published in, using arabic numerals
   form:
     <<: *title_fields
+    checked: Select yes if a physical copy of the title has been consulted to verify title information
+    colophon: Enter information, usually about the printer, from the front or the back of the book
+    contributors: Enter names of all persons who have contributed to the intellectual content of the title and all women involved in the title's production
+    edition: Enter the edition as it appears on the title page; 1st editions are not indicated on title pages so in the case of an earliest known printing 1st edition is assumed
+    editionNumber: Enter the edition number translated into arabic numberals
+    finalattempt: Select yes if an attempt has been made to identify two sources to verify the title information but only one source has been found
+    finalcheck: Select yes if either two sources have been consulted to verify title information or the title has been hand-verified
+    format: Select the format for the title, signifying the way that sheets have been folded and gathered
+    genre: Select the category that the title falls into
+    imprint: Enter information about printers, publishers, booksellers as shown on the title page
+    locationOfPrinting: Enter the location of printing as indicated by the imprint
+    notes: Include any other important information about the title that doesn't fit into one of the other fields
+    pagination: Enter each volume indicated by a capital letter roman numeral, prefatory matter indicated by lowercase roman numerals, regular pagination indicated in arabic numerals
+    pricePence: Enter the portion of the price of the titleSources in pence
+    pricePound: Enter the portion of the price of the title in pounds
+    priceShilling: Enter the portion of the price of the title in shillings
+    psuedonym: Enter any false or invented contributor name
+    pubDate: Enter the year of publication as it appears on the imprint. Where imprint information is unavailable, use the best estimate we have of the year of publication
+    selfPublished: Check yes if the title was self-published (no is the default)
+    shelfmark: Enter all call numbers for locations of copies of the title in various libraries
+    signedAuthor: Enter the full author attribution from the title page or the end of the preface. If there is no signed author enter anonymous.
+    sizeL: Enter the length of a page measured in cm
+    sizeW: Enter the width of a page measured in cm
+    title: Enter the full title as it appears on the title page, including any statement about the edition and author
+    titleRoles: Enter the roles for all persons who have contributed to the intellectual content of the title and of all women involved in the title's production
+    titleFirmRoles: Make a new entry for all printers, publishers, and booksellers listed in the imprint or colophon
+    titleSources: Create a new entry for every source consulted to populate the title fields
+    volumes: Enter the exact number of volumes that the edition was published in, using arabic numerals
   search:
     <<: *title_fields
-    id: Find this exact title ID.
-    checked: Limit results to those that have been checked or not checked
-    dateOfFirstPublication: Enter a year (eg <kbd>1795</kbd>) or range of years (<kbd>1790-1800</kbd>) or a partial range of years (<kbd>*-1800</kbd>)
-    finalattempt: Limit results to those that someone has attempted to verify
-    finalcheck: Limit results to those that have been double checked or not checked
-    psuedonym: The false name that the author has signed the work with
-    pubDate: Enter a year (eg <kbd>1795</kbd>) or range of years (<kbd>1790-1800</kbd>) or a partial range of years (<kbd>*-1800</kbd>)
-    selfPublished: Limit results to those that have been self-published or not
-    title: Enter all or part of a title
-    volumes: Limit results to titles with this exact number of volumes.
+    id: Search for a title by entering the title ID
+    checked: Limit results to titles that have been hand-verified or not hand-verified
+    colophon: Search the colophon of the title
+    dateOfFirstPublication: Search by date of first publication by entering year (eg <kbd>1795</kbd>) or range of years (<kbd>1790-1800</kbd>) or a partial range of years (<kbd>*-1800</kbd>)
+    editionNumber: Search by edition number, in arabic numberals
+    format: Search by the title's format
+    finalattempt: Limit results to titles that we have attempted to verify or for which we have not attempted verification
+    finalcheck: Limit results to titles that have been verified or not verified
+    genre: Filter search by generic category(ies)
+    imprint: Search the imprint of the title
+    locationOfPrinting: Search the location of printing as indicated by the imprint
+    notes: Search for notes on the title
+    psuedonym: Search by a false or invented contributor name
+    pubDate: Search for date of publication by entering a year (eg <kbd>1795</kbd>) or range of years (<kbd>1790-1800</kbd>) or a partial range of years (<kbd>*-1800</kbd>)
+    selfPublished: Limit results to titles known to have been self-published
+    shelfmark: Search by call numbers of copies of the title in various libraries
+    signedAuthor: Search by author attribution from the title page or the end of the preface
+    sizeL: Search by page length as measured in cm
+    sizeW: Search by page Width as measured in cm
+    title: Search for all or part of a title
+    volumes: Limit results to titles with this exact number of volumes
 
 firm:
   fields: &firm_fields
-    id: Unique ID number for this entry
-    city: City/town/village in which the firm’s street address is located; geotagged
-    endDate: YYYY-MM-DD
+    id: Unique ID number for this firm
+    city: City/town/village in which the firm is located
+    endDate: Year, month, and day in which firm ceased operations at given address, if known
     finalCheck: Indicates the final attempt to find further information about the firm
-    gender: Gender of the principal people running the firm
+    gender: Indicated as female if at least one woman is known to have worked in the firm
     name: Most complete name of the firm known
     role: The firm's involvement in publishing a title
-    startDate: YYYY-MM-DD
-    streetAddress: Street address of the firm as geotagged
+    startDate: Year, month, and day in which firm began operations at given address, if known
+    streetAddress: Street address of the firm as stated in the imprint or colophon
   form:
     <<: *firm_fields
+    city: Enter the city/town/village in which the firm is located
+    endDate: Enter the year, month, and day in which firm ceased operations at given address, if known
+    gender: Check female if at least one woman is known to have worked in the firm; enter male if the firm is known to be all male; defaulty is unknown
+    name: Enter the most complete name of the firm known
+    role: Select the role played by the firm in publishing a title
+    startDate: Enter the year, month, and day in which firm began operations at given address, if known
+    streetAddress: Enter the street address of the firm as stated in the imprint or colophon
   search:
     <<: *firm_fields
-    id: Find this exact firm ID
-    endDate: Enter a year (eg <kbd>1795</kbd>) or range of years (<kbd>1790-1800</kbd>) or a partial range of years (<kbd>*-1800</kbd>)
-    gender: Leave this field blank to include all genders
-    name: Enter all or part of a firm name
-    startDate: Enter a year (eg <kbd>1795</kbd>) or range of years (<kbd>1790-1800</kbd>) or a partial range of years (<kbd>*-1800</kbd>)
+    id: Search for a firm by entering the firm ID
+    city: Search by the city/town/village in which the firm is located
+    endDate: Search by year (eg <kbd>1795</kbd>) or range of years (<kbd>1790-1800</kbd>) or a partial range of years (<kbd>*-1800</kbd>)
+    streetAddress: Search by street address of the firm as stated in the imprint or colophon
+    gender: Search by gender of the firm or leave unchecked to include all genders
+    name: Search for all or part of a firm name
+    startDate: Search by year (eg <kbd>1795</kbd>) or range of years (<kbd>1790-1800</kbd>) or a partial range of years (<kbd>*-1800</kbd>)
 
 geonames:
   fields: &geonames_fields
@@ -86,43 +134,52 @@ geonames:
 
 person:
   fields: &person_fields
-    id: Unique ID number for this entry
-    cityOfBirth: Place of birth as geotagged
-    cityOfDeath: Place of death as geotagged
-    dob: YYYY-MM-DD
-    dod: YYYY-MM-DD
+    id: Unique ID number for this person
+    cityOfBirth: Place of birth
+    cityOfDeath: Place of death
+    dob: Year, month, and day of birth, if known
+    dod: Year, month, and day of death, if known
     finalCheck: Indicates the final attempt to find person’s information
-    firstName: Person’s first name and where appropriate, full aristocratic title
+    firstName: Person’s first name and middle names
     gender: Person's gender, if known
-    imageUrl:
+    imageUrl: Link to an image of the person
     lastName: Person’s last name by which he or she is most commonly known
-    role: The person's involvement in publishing a title
-    title: Person's aristocratic title, if exists
-    viafUrl:
-    wikipediaUrl:
+    role: The person's contribution to the intellectual content of the title or, if a woman, to the title's production
+    title: Person's aristocratic title
+    viafUrl: Link to perons's Virtual International Authority File if available
+    wikipediaUrl: Link to person's Wikipedia entry
   form:
     <<: *person_fields
-    dob: Person’s date of birth as YYYY-MM-DD
-    dod: Person’s date of death as YYYY-MM-DD
-    imageUrl: Enter a VIAF URI for this person
-    viafUrl: Enter the URL for an image for this person. Make sure the licensing on the image is permissive.
-    wikipediaUrl: Enter a VIAF URI for this person
+    cityOfBirth: Enter the place of birth
+    cityOfDeath: Enter the place of death
+    dob: Person’s date of birth as YYYY-MM-DD; enter partial information in this format
+    dod: Person’s date of death as YYYY-MM-DD; enter partial information in this format
+    firstName: Enter a person’s first name, middle name; Mrs., Mr., Lady or Madame may also be included, especially if the first name is not known, and where appropriate
+    imageUrl: Enter a link to an image of the person if available; make sure the licensing on the image is permissive
+    lastName: Enter the person’s last name by which he or she is most commonly known (we mostly include a woman’s maiden name, though we will provide a married name for well-known writers known by their married name)
+    title: Enter the person's aristocratic title, where appropriate
+    viafUrl: Enter the link to a person's Virtual International Authority File if available
+    wikipediaUrl: Enter the person’s entry in Wikipedia if available
   search:
     <<: *person_fields
-    id: Find this exact person ID.
+    id: Search for a person by entering the person ID
     dob: Enter a year (eg <kbd>1795</kbd>) or range of years (<kbd>1790-1800</kbd>) or a partial range of years (<kbd>*-1800</kbd>)
     dod: Enter a year (eg <kbd>1795</kbd>) or range of years (<kbd>1790-1800</kbd>) or a partial range of years (<kbd>*-1800</kbd>)
-    gender: Leave this field blank to include all genders
+    gender: Search by gender or leave unchecked to include all genders
     imageUrl: Enter an image URL to check if we have a corresponding record. Enter <kbd>blank</kbd> to find records which do not have image URLs.
-    name: Enter all or part of a personal name
+    name: Search for all or part of a person's name
     viafUrl: Enter a VIAF URI to check if we have a corresponding record. Enter <kbd>blank</kbd> to find records which do not have VIAF URIs.
     wikipediaUrl: Enter a Wikipedia URL to check if we have a corresponding record. Enter <kbd>blank</kbd> to find records which do not have Wikipedia URLs.
 
 source:
   fields: &source_fields
-    identifier: An identifier used by an institution
-    name: An archive or institution that provided data for a record
+    identifier: A unique identifier used by the source
+    name: An archive, institution or resource that provides information for a title record
   form:
     <<: *source_fields
+    identifier: Enter the unique identifier used by the source
+    name: Select from the drop down menu the archive, institution or resource that provides information for a title record
   search:
     <<: *source_fields
+    identifier: Search by the unique identifier used by the source
+    name: Search by the archive, institution or resource that provides information for a title record
