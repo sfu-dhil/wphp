@@ -233,19 +233,8 @@ class TitleRepository extends ServiceEntityRepository {
             $qb->setParameter('notes', $data['notes']);
         }
         if (isset($data['self_published']) && $data['self_published']) {
-            switch ($data['self_published']) {
-                case 'Y':
-                    $qb->andWhere('e.selfpublished = 1');
-
-                    break;
-                case 'N':
-                    $qb->andWhere('e.selfpublished = 0');
-
-                    break;
-                case 'U':
-                    $qb->andWhere('e.selfpublished is null');
-
-                    break;
+            if($data['self_published']) {
+                $qb->andWhere('e.selfpublished = 1');
             }
         }
 

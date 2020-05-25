@@ -122,9 +122,8 @@ class TitleSearchType extends AbstractType {
         $builder->add('self_published', ChoiceType::class, [
             'label' => 'Self-Published',
             'choices' => [
-                'Yes' => 'Y',
-                'No' => 'N',
-                'Unknown' => 'U',
+                'All' => '',
+                'Only self-published' => 'Y',
             ],
             'attr' => [
                 'help_block' => 'title.search.selfPublished',
@@ -132,7 +131,6 @@ class TitleSearchType extends AbstractType {
             'required' => false,
             'expanded' => true,
             'multiple' => false,
-            'empty_data' => null,
             'data' => null,
         ]);
 
