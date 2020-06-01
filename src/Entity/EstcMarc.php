@@ -73,7 +73,7 @@ class EstcMarc {
      *
      * @return string
      */
-    public function __toString() {
+    public function __toString() : string {
         return $this->field . $this->subfield;
     }
 

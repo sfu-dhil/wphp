@@ -243,7 +243,7 @@ class OrlandoBiblio {
      */
     private $researchnotes;
 
-    public function __toString() {
+    public function __toString() : string {
         return $this->analyticStandardTitle;
     }
 
