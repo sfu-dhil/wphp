@@ -155,7 +155,7 @@ class Person {
      *
      * @return string
      */
-    public function __toString() {
+    public function __toString() : string {
         return implode(', ', array_filter([$this->lastName, $this->firstName]));
     }
 

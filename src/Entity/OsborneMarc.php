@@ -68,7 +68,7 @@ class OsborneMarc {
      */
     private $fieldData;
 
-    public function __toString() {
+    public function __toString() : string {
         return $this->fieldData;
     }
 
