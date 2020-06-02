@@ -131,11 +131,11 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
         $name = '';
         if ($form->isSubmitted() && $form->isValid()) {
             $query = $repo->buildSearchQuery($form->getData());
-            foreach($query->getParameters() as $param) {
+            foreach ($query->getParameters() as $param) {
                 $paramValue = $param->getValue();
                 $value = '';
-                if(is_array($paramValue)) {
-                    $value = implode('-', array_map(function($e){ return (string) $e;}, $paramValue));
+                if (is_array($paramValue)) {
+                    $value = implode('-', array_map(function ($e) { return (string) $e; }, $paramValue));
                 } else {
                     $value = $paramValue;
                 }
@@ -215,15 +215,12 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
      * Exports a firm's titles in a format.
      *
      * @Route("/export", name="firm_export_all", methods={"GET"})
-     * @param Request $request
-     * @param CsvExporter $exporter
-     * @param FirmRepository $repo
      *
      * @return BinaryFileResponse
      */
     public function exportAllAction(Request $request, CsvExporter $exporter, FirmRepository $repo) {
         $firms = [];
-        if ( $this->getUser()) {
+        if ($this->getUser()) {
             $firms = $repo->findAll();
         } else {
             $firms = $repo->findBy([

@@ -60,7 +60,6 @@ class Genre {
         return $this->name;
     }
 
-
     /**
      * Get id.
      *

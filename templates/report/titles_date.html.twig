@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block pageheader %}
+    <h1>Titles with Bad Publication Date</h1>
+    {% if titles|length > 0 %}
+        Displaying {{ titles|length }} titles of {{ titles.getTotalItemCount }} total
+        with bad publication dates.
+    {% else %}
+        No errors found!
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    <p class="explanation">All publication dates for titles should be properly formed dates.</p>
+    {% if titles|length > 0 %}
+<div class="navigation">
+    {{ knp_pagination_render(titles) }}
+</div>
+<table class="table table-bordered table-condensed table-hover table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Attempted Verification</th>
+            <th>Verified</th>
+            <th>Pub Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for title in titles %}
+        <tr>
+            <td>
+                <a href="{{ path('title_show', { 'id': title.id }) }}">
+                    {{ title.id }}
+                </a>
+            </td>
+            <td>
+                <a href="{{ path('title_show', { 'id': title.id }) }}">
+                    {{ title.title }}
+                </a>
+            </td>
+            
+            <td>{% if title.finalattempt %}Yes{% else %}No{% endif %}</td>
+            <td>{% if title.finalcheck %}Yes{% else %}No{% endif %}</td>
+            <td>{{ title.pubdate }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+        <div class="navigation">
+            {{ knp_pagination_render(titles) }}
+        </div>
+    {% endif %}
+
+{% endblock %}

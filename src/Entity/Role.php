@@ -43,8 +43,6 @@ class Role {
 
     /**
      * Return the name of this role.
-     *
-     * @return string
      */
     public function __toString() : string {
         return $this->name;

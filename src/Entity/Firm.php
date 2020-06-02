@@ -112,8 +112,6 @@ class Firm {
 
     /**
      * Get the name of the firm.
-     *
-     * @return string
      */
     public function __toString() : string {
         return $this->name;

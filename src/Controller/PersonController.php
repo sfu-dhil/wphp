@@ -14,7 +14,6 @@ use App\Entity\Person;
 use App\Entity\TitleRole;
 use App\Form\Person\PersonSearchType;
 use App\Form\Person\PersonType;
-use App\Repository\FirmRepository;
 use App\Repository\PersonRepository;
 use App\Services\CsvExporter;
 use Doctrine\ORM\EntityManagerInterface;
@@ -105,15 +104,14 @@ class PersonController extends AbstractController implements PaginatorAwareInter
         $name = '';
         if ($form->isSubmitted()) {
             $query = $repo->buildSearchQuery($form->getData());
-            foreach($query->getParameters() as $param) {
+            foreach ($query->getParameters() as $param) {
                 $paramValue = $param->getValue();
                 $value = '';
                 if (is_array($paramValue)) {
                     $value = implode('-', array_map(function ($e) {
                         return (string) $e;
                     }, $paramValue));
-                }
-                else {
+                } else {
                     $value = $paramValue;
                 }
                 $name .= '-' . preg_replace('/[^a-zA-Z0-9-]*/', '', $value);
@@ -193,6 +191,7 @@ class PersonController extends AbstractController implements PaginatorAwareInter
         if ( ! $this->getUser()) {
             $titleRoles = $titleRoles->filter(function (TitleRole $tr) {
                 $title = $tr->getTitle();
+
                 return $title->getFinalattempt() || $title->getFinalcheck();
             });
         }
@@ -272,15 +271,12 @@ class PersonController extends AbstractController implements PaginatorAwareInter
      * Exports all person entries in CSV.
      *
      * @Route("/export", name="person_export_all", methods={"GET"})
-     * @param Request $request
-     * @param CsvExporter $exporter
-     * @param PersonRepository $repo
      *
      * @return BinaryFileResponse
      */
     public function exportAllAction(Request $request, CsvExporter $exporter, PersonRepository $repo) {
         $persons = [];
-        if ( $this->getUser()) {
+        if ($this->getUser()) {
             $persons = $repo->findAll();
         } else {
             $persons = $repo->findBy([

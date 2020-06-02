@@ -209,12 +209,16 @@ class Builder implements ContainerAwareInterface {
                 'class' => 'divider',
             ]);
 
-            $search->addChild('Admin Reports', [
-                'uri' => '#',
+            $search->addChild('Titles to Final Check', [
+                'route' => 'report_titles_check',
             ]);
 
-            $search->addChild('Titles to Check', [
-                'route' => 'report_titles_check',
+            $search->addChild('Titles with Bad Publication Date', [
+                'route' => 'report_titles_date',
+            ]);
+
+            $search->addChild('People with Bad Wikipedia URLs', [
+                'route' => 'report_person_wiki',
             ]);
         }
 

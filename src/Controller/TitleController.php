@@ -174,15 +174,14 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
         $name = '';
         if ($form->isSubmitted() && $form->isValid()) {
             $query = $repo->buildSearchQuery($form->getData(), $this->getUser());
-            foreach($query->getParameters() as $param) {
+            foreach ($query->getParameters() as $param) {
                 $paramValue = $param->getValue();
                 $value = '';
                 if (is_array($paramValue)) {
                     $value = implode('-', array_map(function ($e) {
                         return (string) $e;
                     }, $paramValue));
-                }
-                else {
+                } else {
                     $value = $paramValue;
                 }
                 $name .= '-' . preg_replace('/[^a-zA-Z0-9-]*/', '', $value);

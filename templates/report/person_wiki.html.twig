@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block pageheader %}
+    <h1>People with bad Wikipedia URL</h1>
+    {% if people|length > 0 %}
+        Displaying {{ people|length }} people of {{ people.getTotalItemCount }} total
+        with bad Wikipedia links.
+    {% else %}
+        No errors found!
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    <p class="explanation">All Wikipedia links for a person should point to the standard, desktop version of an English Wikipedia page where possible.</p>
+
+    {% if people|length > 0 %}
+        <div class="navigation">
+            {{ knp_pagination_render(people) }}
+        </div>
+        <table class="table table-bordered table-condensed table-hover table-striped">
+            <thead>
+                <tr>
+                    <th>Person ID</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Wikipedia Link</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for person in people %}
+                    <tr>
+                        <td>
+                            <a href="{{ path('person_show', { 'id': person.id }) }}">
+                                {{ person.id }}
+                            </a>
+                        </td>
+                        <td>
+                            <a href="{{ path('person_show', { 'id': person.id }) }}">
+                                {{ person.firstName }}
+                            </a>
+                        </td>
+                        <td>
+                            <a href="{{ path('person_show', { 'id': person.id }) }}">
+                                {{ person.lastName }}
+                            </a>
+                        </td>
+                        <td>
+                            <a href="{{ person.wikipediaURL }}">{{ person.wikipediaURL }}</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="navigation">
+            {{ knp_pagination_render(people) }}
+        </div>
+    {% endif %}
+
+{% endblock %}

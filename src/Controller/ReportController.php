@@ -29,7 +29,7 @@ class ReportController extends AbstractController implements PaginatorAwareInter
     use PaginatorTrait;
 
     /**
-     * List bad dates of publication.
+     * List titles that need to be final checked.
      *
      * @Route("/titles_fc", name="report_titles_check", methods={"GET"})
      * @Template()
@@ -38,6 +38,42 @@ class ReportController extends AbstractController implements PaginatorAwareInter
      */
     public function titlesFinalCheckAction(Request $request, EntityManagerInterface $em) {
         $dql = 'SELECT e FROM App:Title e WHERE e.finalcheck = 0 AND e.finalattempt = 0 ORDER BY e.id';
+        $query = $em->createQuery($dql);
+        $titles = $this->paginator->paginate($query->execute(), $request->query->getInt('page', 1), 25);
+
+        return [
+            'titles' => $titles,
+        ];
+    }
+
+    /**
+     * List bad wikipedia links for people.
+     *
+     * @Route("/person_wiki", name="report_person_wiki", methods={"GET"})
+     * @Template()
+     *
+     * @return array
+     */
+    public function personWikiAction(Request $request, EntityManagerInterface $em) {
+        $dql = "SELECT e FROM App:Person e WHERE e.wikipediaUrl NOT LIKE 'https://en.wikip%'";
+        $query = $em->createQuery($dql);
+        $people = $this->paginator->paginate($query->execute(), $request->query->getInt('page', 1), 25);
+
+        return [
+            'people' => $people,
+        ];
+    }
+
+    /**
+     * List bad publication dates for titles.
+     *
+     * @Route("/titles_date", name="report_titles_date", methods={"GET"})
+     * @Template()
+     *
+     * @return array
+     */
+    public function titlesDateAction(Request $request, EntityManagerInterface $em) {
+        $dql = "SELECT e FROM App:Title e WHERE e.pubdate IS NOT NULL AND e.pubdate != '' AND (regexp(e.pubdate,'[^0-9-]') > 0)";
         $query = $em->createQuery($dql);
         $titles = $this->paginator->paginate($query->execute(), $request->query->getInt('page', 1), 25);
 
