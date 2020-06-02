@@ -73,7 +73,7 @@ class ReportController extends AbstractController implements PaginatorAwareInter
      * @return array
      */
     public function titlesDateAction(Request $request, EntityManagerInterface $em) {
-        $dql = "SELECT e FROM App:Title e WHERE e.pubdate IS NOT NULL AND e.pubdate != '' AND (regexp(e.pubdate,'[^0-9-]') > 0)";
+        $dql = "SELECT e FROM App:Title e WHERE e.pubdate IS NOT NULL AND e.pubdate != '' AND regexp(e.pubdate,'[^0-9-]') = 1";
         $query = $em->createQuery($dql);
         $titles = $this->paginator->paginate($query->execute(), $request->query->getInt('page', 1), 25);
 
