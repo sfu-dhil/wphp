@@ -45,8 +45,8 @@ class ReportController extends AbstractController implements PaginatorAwareInter
             'titles' => $titles,
         ];
     }
-    
-     /**
+
+    /**
      * List bad wikipedia links for people.
      *
      * @Route("/person_wiki", name="report_person_wiki", methods={"GET"})
@@ -63,7 +63,7 @@ class ReportController extends AbstractController implements PaginatorAwareInter
             'people' => $people,
         ];
     }
-    
+
     /**
      * List bad publication dates for titles.
      *
@@ -73,10 +73,10 @@ class ReportController extends AbstractController implements PaginatorAwareInter
      * @return array
      */
     public function titlesDateAction(Request $request, EntityManagerInterface $em) {
-    
         $dql = "SELECT e FROM App:Title e WHERE e.pubdate IS NOT NULL AND e.pubdate != '' AND (regexp(e.pubdate,'[^0-9-]') > 0)";
         $query = $em->createQuery($dql);
         $titles = $this->paginator->paginate($query->execute(), $request->query->getInt('page', 1), 25);
+
         return [
             'titles' => $titles,
         ];

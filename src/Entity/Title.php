@@ -261,8 +261,6 @@ class Title {
 
     /**
      * Return the title's title.
-     *
-     * @return string
      */
     public function __toString() : string {
         return $this->title;

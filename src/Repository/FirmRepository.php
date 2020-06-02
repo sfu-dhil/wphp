@@ -165,13 +165,14 @@ class FirmRepository extends ServiceEntityRepository {
             }
         }
 
-        if(isset($data['title_filter']) && count(array_filter($data['title_filter']))) {
+        if (isset($data['title_filter']) && count(array_filter($data['title_filter']))) {
             $filter = $data['title_filter'];
             $idx = '00';
             $tfrAlias = 'tfr_' . $idx;
             $tAlias = 't_' . $idx;
             $qb->innerJoin('e.titleFirmroles', $tfrAlias)
-               ->innerJoin("{$tfrAlias}.title", $tAlias);
+                ->innerJoin("{$tfrAlias}.title", $tAlias)
+            ;
 
             if (isset($filter['id']) && $filter['id']) {
                 $qb->andWhere("{$tAlias}.id = :{$tAlias}_id");
@@ -210,7 +211,7 @@ class FirmRepository extends ServiceEntityRepository {
             }
         }
 
-        if(isset($data['person_filter']) && count(array_filter($data['person_filter']))) {
+        if (isset($data['person_filter']) && count(array_filter($data['person_filter']))) {
             $filter = $data['person_filter'];
             $idx = '01';
             $tfrAlias = 'tfr_' . $idx;
@@ -219,9 +220,10 @@ class FirmRepository extends ServiceEntityRepository {
             $pAlias = 'p_' . $idx;
 
             $qb->innerJoin('e.titleFirmroles', $tfrAlias)
-               ->innerJoin("{$tfrAlias}.title", $tAlias)
+                ->innerJoin("{$tfrAlias}.title", $tAlias)
                 ->innerJoin("{$tAlias}.titleRoles", $trAlias)
-                ->innerJoin("{$trAlias}.person", $pAlias);
+                ->innerJoin("{$trAlias}.person", $pAlias)
+            ;
 
             if (isset($filter['id']) && $filter['id']) {
                 $qb->andWhere("{$pAlias}.id = :{$pAlias}_id");
@@ -250,7 +252,6 @@ class FirmRepository extends ServiceEntityRepository {
                 $qb->andWhere("{$trAlias}.role in (:roles_{$idx})");
                 $qb->setParameter("roles_{$idx}", $filter['person_role']);
             }
-
         }
 
         return $qb->getQuery();
