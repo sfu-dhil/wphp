@@ -140,12 +140,12 @@ class FirmRepository extends ServiceEntityRepository {
         if (isset($data['start']) && $data['start']) {
             $m = [];
             if (preg_match('/^\s*[0-9]{4}\s*$/', $data['start'])) {
-                $qb->andWhere('YEAR(e.startDate) = :yearb');
+                $qb->andWhere('e.startDate = :yearb');
                 $qb->setParameter('yearb', $data['start']);
             } elseif (preg_match('/^\s*(\*|[0-9]{4})\s*-\s*(\*|[0-9]{4})\s*$/', $data['start'], $m)) {
                 $from = ('*' === $m[1] ? -1 : $m[1]);
                 $to = ('*' === $m[2] ? 9999 : $m[2]);
-                $qb->andWhere(':fromb <= YEAR(e.startDate) AND YEAR(e.startDate) <= :tob');
+                $qb->andWhere(':fromb <= e.startDate AND e.startDate <= :tob');
                 $qb->setParameter('fromb', $from);
                 $qb->setParameter('tob', $to);
             }
@@ -154,12 +154,12 @@ class FirmRepository extends ServiceEntityRepository {
         if (isset($data['end']) && $data['end']) {
             $m = [];
             if (preg_match('/^\s*[0-9]{4}\s*$/', $data['end'])) {
-                $qb->andWhere('YEAR(e.endDate) = :yeare');
+                $qb->andWhere('e.endDate = :yeare');
                 $qb->setParameter('yeare', $data['end']);
             } elseif (preg_match('/^\s*(\*|[0-9]{4})\s*-\s*(\*|[0-9]{4})\s*$/', $data['end'], $m)) {
                 $from = ('*' === $m[1] ? -1 : $m[1]);
                 $to = ('*' === $m[2] ? 9999 : $m[2]);
-                $qb->andWhere(':frome <= YEAR(e.endDate) AND YEAR(e.endDate) <= :toe');
+                $qb->andWhere(':frome <= e.endDate AND e.endDate <= :toe');
                 $qb->setParameter('frome', $from);
                 $qb->setParameter('toe', $to);
             }
