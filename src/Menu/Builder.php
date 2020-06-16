@@ -372,7 +372,7 @@ class Builder implements ContainerAwareInterface {
         $qb->select('p')
             ->from(Post::class, 'p')
             ->innerJoin(PostCategory::class, 'pc')
-            ->where('pc.label NOT IN (:spotlightCategories)')
+            ->where('pc.name NOT IN (:spotlightCategories)')
             ->orderBy('p.created', 'DESC')
             ->setMaxResults(10)
             ->setParameter(':spotlightCategories', $this->spotlightMenuItems)
@@ -380,16 +380,15 @@ class Builder implements ContainerAwareInterface {
 
         $posts = $qb->getQuery()->execute();
         foreach ($posts as $post) {
-            if (in_array($post->getCategory()->getName(), $this->spotlightMenuItems, true)) {
-                continue;
-            }
-            $menu['announcements']->addChild($post->getTitle(), [
+            $menu['announcements']->addChild('p_' . $post->getId(), [
+                'label' => $post->getTitle(),
                 'route' => 'nines_blog_post_show',
                 'routeParameters' => [
                     'id' => $post->getId(),
                 ],
             ]);
         }
+
         $menu['announcements']->addChild('divider', [
             'label' => '',
         ]);
