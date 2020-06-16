@@ -243,9 +243,7 @@ class PersonRepository extends ServiceEntityRepository {
             $idx = '00';
             $trAlias = 'tr_' . $idx;
             $tAlias = 't_' . $idx;
-            $qb->innerJoin('e.titleRoles', $trAlias)
-                ->innerJoin("{$trAlias}.title", $tAlias)
-            ;
+            $qb->innerJoin('e.titleRoles', $trAlias)->innerJoin("{$trAlias}.title", $tAlias);
 
             if (isset($filter['id']) && $filter['id']) {
                 $qb->andWhere("{$tAlias}.id = :{$tAlias}_id");
@@ -289,7 +287,7 @@ class PersonRepository extends ServiceEntityRepository {
             }
         }
 
-        if (isset($data['firm_filter'])) {
+        if (isset($data['firm_filter']) && count(array_filter($data['firm_filter']))) {
             $filter = $data['firm_filter'];
             $idx = '01';
             $trAlias = 'tr_' . $idx;
