@@ -15,6 +15,7 @@ use App\Entity\TitleSource;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Query;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -44,6 +45,49 @@ class TitleRepository extends ServiceEntityRepository {
         $qb->setParameter('q', "%{$q}%");
 
         return $qb->getQuery()->execute();
+    }
+
+    /**
+     * @param QueryBuilder $qb
+     * @param array $data
+     * @param string $fieldName
+     * @param string $formName
+     */
+    private function fulltextPart(QueryBuilder $qb, $data, $fieldName, $formName) {
+        if( ! isset($data[$formName])) {
+            return;
+        }
+        $term = trim($data[$formName]);
+        if( ! $term) {
+            return;
+        }
+
+        $m = [];
+        if(preg_match('/^"(.*)"$/u', $term, $m)) {
+            $qb->andWhere("e.{$fieldName} like :{$fieldName}Exact");
+            $qb->setParameter("{$fieldName}Exact", "%{$m[1]}%");
+        } else {
+            $qb->andWhere("MATCH (e.{$fieldName}) AGAINST(:{$fieldName} BOOLEAN) > 0");
+            $qb->setParameter($fieldName, $term);
+        }
+    }
+
+    /**
+     * @param QueryBuilder $qb
+     * @param array $data
+     * @param string $fieldName
+     * @param string $formName
+     */
+    private function arrayPart($qb, $data, $fieldName, $formName) {
+        if( ! isset($data[$formName]) || ! is_array($data[$formName])) {
+            return;
+        }
+        $list = $data[$formName];
+        if( ! count($list)) {
+            return;
+        }
+        $qb->andWhere("e.{$fieldName} IN (:{$fieldName})");
+        $qb->setParameter($fieldName, $list);
     }
 
     /**
@@ -193,10 +237,8 @@ class TitleRepository extends ServiceEntityRepository {
             $qb->andWhere('MATCH(g.alternatenames, g.name) AGAINST (:location BOOLEAN) > 0');
             $qb->setParameter('location', $data['location']);
         }
-        if (isset($data['format']) && is_array($data['format']) && count($data['format'])) {
-            $qb->andWhere('e.format IN (:formats)');
-            $qb->setParameter('formats', $data['format']);
-        }
+        $this->arrayPart($qb, $data, 'format', 'format');
+
         if (null !== $data['price_filter']['price_pound'] ||
             null !== $data['price_filter']['price_shilling'] ||
             null !== $data['price_filter']['price_pence']) {
@@ -222,34 +264,16 @@ class TitleRepository extends ServiceEntityRepository {
             $qb->andWhere('e.totalPrice > 0');
             $qb->setParameter('total', $total);
         }
-        if (isset($data['genre']) && is_array($data['genre']) && count($data['genre'])) {
-            $qb->andWhere('e.genre IN (:genres)');
-            $qb->setParameter('genres', $data['genre']);
-        }
-        if (isset($data['signed_author']) && $data['signed_author']) {
-            $qb->andWhere('MATCH (e.signedAuthor) AGAINST(:signedAuthor BOOLEAN) > 0');
-            $qb->setParameter('signedAuthor', $data['signed_author']);
-        }
-        if (isset($data['imprint']) && $data['imprint']) {
-            $qb->andWhere('MATCH (e.imprint) AGAINST(:imprint BOOLEAN) > 0');
-            $qb->setParameter('imprint', $data['imprint']);
-        }
-        if (isset($data['colophon']) && $data['colophon']) {
-            $qb->andWhere('MATCH (e.colophon) AGAINST(:colophon BOOLEAN) > 0');
-            $qb->setParameter('colophon', $data['colophon']);
-        }
-        if (isset($data['pseudonym']) && $data['pseudonym']) {
-            $qb->andWhere('MATCH (e.pseudonym) AGAINST (:pseudonym BOOLEAN) > 0');
-            $qb->setParameter('pseudonym', $data['pseudonym']);
-        }
-        if (isset($data['shelfmark']) && $data['shelfmark']) {
-            $qb->andWhere('MATCH (e.shelfmark) AGAINST (:shelfmark BOOLEAN) > 0');
-            $qb->setParameter('shelfmark', $data['shelfmark']);
-        }
-        if (isset($data['notes']) && $data['notes']) {
-            $qb->andWhere('MATCH (e.notes) AGAINST (:notes BOOLEAN) > 0');
-            $qb->setParameter('notes', $data['notes']);
-        }
+
+        $this->arrayPart($qb, $data, 'genre', 'genre');
+
+        $this->fulltextPart($qb, $data, 'signedAuthor', 'signed_author');
+        $this->fulltextPart($qb, $data, 'imprint', 'imprint');
+        $this->fulltextPart($qb, $data, 'colophon', 'colophon');
+        $this->fulltextPart($qb, $data, 'pseudonym', 'pseudonym');
+        $this->fulltextPart($qb, $data, 'shelfmark', 'shelfmark');
+        $this->fulltextPart($qb, $data, 'notes', 'notes');
+
         if (isset($data['self_published']) && $data['self_published']) {
             if ($data['self_published']) {
                 $qb->andWhere('e.selfpublished = 1');
