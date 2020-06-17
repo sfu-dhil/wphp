@@ -63,11 +63,13 @@ class TitleRepository extends ServiceEntityRepository {
         }
 
         $m = [];
-        if(preg_match('/^"([a-zA-Z0-9 ]*)"$/u', $term, $m)) {
-            $qb->andWhere("e.{$fieldName} like '%{$m[1]}%'");
+        if(preg_match('/^"(.*)"$/u', $term, $m)) {
+            $qb->andWhere("e.{$fieldName} like :{$fieldName}Exact");
+            $qb->setParameter("{$fieldName}Exact", "%{$m[1]}%");
+        } else {
+            $qb->andWhere("MATCH (e.{$fieldName}) AGAINST(:{$fieldName} BOOLEAN) > 0");
+            $qb->setParameter($fieldName, $term);
         }
-        $qb->andWhere("MATCH (e.{$fieldName}) AGAINST(:{$fieldName} BOOLEAN) > 0");
-        $qb->setParameter($fieldName, $term);
     }
 
     /**
