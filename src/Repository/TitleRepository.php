@@ -102,10 +102,7 @@ class TitleRepository extends ServiceEntityRepository {
         $qb = $this->createQueryBuilder('e');
         $qb->orderBy('e.pubdate');
         $qb->addOrderBy('e.title');
-        if (isset($data['title']) && $data['title']) {
-            $qb->andWhere('MATCH (e.title) AGAINST (:title BOOLEAN) > 0');
-            $qb->setParameter('title', $data['title']);
-        }
+        $this->fulltextPart($qb, $data, 'title', 'title');
         if (isset($data['order']) && $data['order']) {
             switch ($data['order']) {
                 case 'title_asc':
