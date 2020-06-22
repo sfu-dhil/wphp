@@ -62,6 +62,13 @@ application, and it's organized with git submodules.
   php -d memory_limit=-1 ./vendor/bin/composer install -o
   ```
 
+3a. Configure Symfony with the database configuration information and other 
+    parameters. Copy the file below and 
+    
+    ```bash
+    cp .env .env.local    
+    ```
+
 4. Update file permissions. The user running the web server must
   be able to write to `var/cache/*` and `var/logs/*` and `var/sessions/*`. The symfony
   docs provide [recommended commands](http://symfony.com/doc/current/setup/file_permissions.html).
@@ -81,15 +88,15 @@ application, and it's organized with git submodules.
   ./bin/console fos:user:create --super-admin  
   ```
 
-7. Install the web assets (bundled CSS and Javascript files). Some assets are managed via Bower.
+7. Install the web assets (bundled CSS and Javascript files). Some assets are managed via Yarn.
 
   ```bash
-  bower install
+  yarn install
   ```
 
-8. Configure the web server. The application's `web/` directory must
+8. Configure the web server. The application's `public/` directory must
   be accessible to the world. Symfony
-  provides [example configurations](http://symfony.com/doc/current/setup/web_server_configuration.html)
+  provides [example configurations](http://symfony.com/doc/4.4/setup/web_server_configuration.html)
   for most server setups.
 
 At this point, the web interface should be up and running, and you should
