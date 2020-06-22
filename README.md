@@ -36,6 +36,7 @@ application, and it's organized with git submodules.
 1. Create a database and database user.
 
   ```sql
+  create user wphp@localhost;
   create database wphp;
   grant all on wphp.* to wphp@localhost;
   set password for wphp@localhost = password('hotpockets');
