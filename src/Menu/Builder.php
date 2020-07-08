@@ -216,10 +216,6 @@ class Builder implements ContainerAwareInterface {
             $search->addChild('Titles with Bad Publication Date', [
                 'route' => 'report_titles_date',
             ]);
-
-            $search->addChild('People with Bad Wikipedia URLs', [
-                'route' => 'report_person_wiki',
-            ]);
         }
 
         return $menu;

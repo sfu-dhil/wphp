@@ -33,6 +33,7 @@ class TitlePersonType extends AbstractType {
             'allow_clear' => true,
             'delay' => 250,
             'language' => 'en',
+            'required' => true,
             'attr' => [
                 'help_block' => 'person.search.name',
             ],
@@ -44,6 +45,7 @@ class TitlePersonType extends AbstractType {
             'multiple' => false,
             'expanded' => false,
             'placeholder' => 'Select a role',
+            'required' => true,
             'attr' => [
                 'help_block' => 'title.form.titleRoles',
             ],

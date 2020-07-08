@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block pageheader %}
+    <h1>Firms to Final Check</h1>
+    {% if firms|length > 0 %}
+        Displaying {{ firms|length }} firms of {{ firms.getTotalItemCount }} total that need to be final checked.
+    {% else %}
+        No firms found!
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    <p class="explanation">These firms have not been final checked.</p>
+
+    {% if firms|length > 0 %}
+        <div class="navigation">
+            {{ knp_pagination_render(firms) }}
+        </div>
+
+        {% include 'firm/table.html.twig' with {'firms': firms} %}
+
+        <div class="navigation">
+            {{ knp_pagination_render(firms) }}
+        </div>
+    {% endif %}
+
+{% endblock %}

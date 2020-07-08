@@ -47,24 +47,6 @@ class ReportController extends AbstractController implements PaginatorAwareInter
     }
 
     /**
-     * List bad wikipedia links for people.
-     *
-     * @Route("/person_wiki", name="report_person_wiki", methods={"GET"})
-     * @Template()
-     *
-     * @return array
-     */
-    public function personWikiAction(Request $request, EntityManagerInterface $em) {
-        $dql = "SELECT e FROM App:Person e WHERE e.wikipediaUrl NOT LIKE 'https://en.wikip%'";
-        $query = $em->createQuery($dql);
-        $people = $this->paginator->paginate($query->execute(), $request->query->getInt('page', 1), 25);
-
-        return [
-            'people' => $people,
-        ];
-    }
-
-    /**
      * List bad publication dates for titles.
      *
      * @Route("/titles_date", name="report_titles_date", methods={"GET"})
@@ -79,6 +61,24 @@ class ReportController extends AbstractController implements PaginatorAwareInter
 
         return [
             'titles' => $titles,
+        ];
+    }
+
+    /**
+     * List firms that have not been checked.
+     *
+     * @Route("/firms_fc", name="report_firms_fc", methods={"GET"})
+     * @Template()
+     *
+     * @return array
+     */
+    public function firmsFinalCheckAction(Request $request, EntityManagerInterface $em) {
+        $dql = "SELECT e FROM App:Firm e WHERE e.finalcheck != 1";
+        $query = $em->createQuery($dql);
+        $firms = $this->paginator->paginate($query->execute(), $request->query->getInt('page', 1), 25);
+
+        return [
+            'firms' => $firms,
         ];
     }
 }
