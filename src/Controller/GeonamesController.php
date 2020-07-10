@@ -111,7 +111,7 @@ class GeonamesController extends AbstractController implements PaginatorAwareInt
         $q = $request->query->get('q');
         $results = [];
         if ($q) {
-            $user = $this->getParameter('wphp.geonames_user');
+            $user = $this->getParameter('wphp.geonames.username');
             $client = new GeoNamesClient($user);
             $results = $client->search([
                 'name' => $q,
@@ -136,7 +136,7 @@ class GeonamesController extends AbstractController implements PaginatorAwareInt
      * @Route("/import", name="geonames_import_save", methods={"POST"})
      */
     public function importSaveAction(Request $request, EntityManagerInterface $em) {
-        $user = $this->getParameter('wphp.geonames_user');
+        $user = $this->getParameter('wphp.geonames.username');
         $client = new GeoNamesClient($user);
         $repo = $em->getRepository(Geonames::class);
         foreach ($request->request->get('geonameid') as $geonameid) {
@@ -165,7 +165,9 @@ class GeonamesController extends AbstractController implements PaginatorAwareInt
             $geoname->setLongitude($data->lng);
             $geoname->setFclass($data->fcl);
             $geoname->setFcode($data->fcode);
-            $geoname->setCountry($data->countryCode);
+            if(isset($data->countryCode)) {
+                $geoname->setCountry($data->countryCode);
+            }
             $geoname->setPopulation($data->population);
             $geoname->setTimezone($data->timezone->timeZoneId);
             $geoname->setModdate(new DateTime());

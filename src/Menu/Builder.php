@@ -374,8 +374,14 @@ class Builder implements ContainerAwareInterface {
             ->where('pc.name NOT IN (:spotlightCategories)')
             ->orderBy('p.created', 'DESC')
             ->setMaxResults(10)
-            ->setParameter(':spotlightCategories', $this->spotlightMenuItems)
-        ;
+            ->setParameter(':spotlightCategories', $this->spotlightMenuItems);
+        if( ! $this->hasRole('ROLE_USER')) {
+            $status = $this->em->getRepository('NinesBlogBundle:PostStatus')->findOneBy([
+                'public' => true,
+            ]);
+            $qb->andWhere('p.status = :status');
+            $qb->setParameter('status', $status);
+        }
 
         $posts = $qb->getQuery()->execute();
         foreach ($posts as $post) {

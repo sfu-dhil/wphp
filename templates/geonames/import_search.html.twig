@@ -46,7 +46,7 @@
                             <td>{{ result.geonameId }}</td>
                             <td>{{ result.name }}</td>
                             <td>{{ result.toponymName }}</td>
-                            <td>{{ result.countryName }}</td>
+                            <td>{% if result.countryName is defined %}{{ result.countryName }}{% endif %}</td>
                             <td><a href="https://maps.google.com/?q={{ result.lat }},{{ result.lng }}" target="_blank">Map</a>
                             </td>
                         </tr>

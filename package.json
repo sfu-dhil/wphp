@@ -13,6 +13,7 @@
     "select2": "^4.0.12",
     "select2-bootstrap-css": "^1.4.6",
     "symfony-collection": "^2.1.30",
+    "tablesorter": "^2.31.3",
     "tinymce": "^5.1.5",
     "typeface-cormorant-garamond": "^0.0.72"
   }

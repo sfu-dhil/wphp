@@ -283,7 +283,7 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
      * @return array
      * @Route("/import/{id}", name="title_marc_import", methods={"GET"})
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
-     * @Template("App:title:new.html.twig")
+     * @Template("title/new.html.twig")
      */
     public function importMarcAction(Request $request, EstcMarcImporter $importer, $id) {
         $title = $importer->import($id);

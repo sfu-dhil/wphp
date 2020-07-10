@@ -32,14 +32,18 @@ class TitleSourceType extends AbstractType {
             'allow_clear' => true,
             'delay' => 250,
             'language' => 'en',
+            'required' => true,
             'attr' => [
                 'help_block' => 'source.form.name',
+                'required' => true,
             ],
         ]);
 
         $builder->add('identifier', TextType::class, [
+            'required' => true,
             'attr' => [
                 'help_block' => 'source.form.identifier',
+                'required' => true,
             ],
         ]);
     }

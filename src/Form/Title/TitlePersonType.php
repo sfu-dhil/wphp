@@ -36,6 +36,7 @@ class TitlePersonType extends AbstractType {
             'required' => true,
             'attr' => [
                 'help_block' => 'person.search.name',
+                'required' => true,
             ],
         ]);
 
@@ -48,6 +49,7 @@ class TitlePersonType extends AbstractType {
             'required' => true,
             'attr' => [
                 'help_block' => 'title.form.titleRoles',
+                'required' => true,
             ],
         ]);
     }

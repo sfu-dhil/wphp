@@ -2,7 +2,7 @@
 
 {% block pageheader %}
     <h1>Search Titles</h1>
-    {% if titles|length > 0 %}
+    {% if submitted %}
         Displaying {{ titles|length }} titles of {{ titles.getTotalItemCount }} total.
     {% endif %}
 {% endblock %}

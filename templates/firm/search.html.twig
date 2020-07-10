@@ -2,13 +2,12 @@
 
 {% block pageheader %}
     <h1>Search Firms</h1>
-    {%  if firms|length > 0 %}
+    {%  if submitted %}
         Displaying {{ firms|length }} firms of {{ firms.getTotalItemCount }} total.
     {% endif %}
 {% endblock %}
 
 {% block body %}
-
     {{ form_start(search_form, {'attr': { 'class': 'search'}}) }}
     {{ form_row(search_form.name) }}
     {{ form_row(search_form.order) }}
