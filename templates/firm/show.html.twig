@@ -54,9 +54,15 @@
                 <td>{{ firm.startDate }}</td>
             </tr>
             <tr>
-                <th data-toggle="popover" data-content="{{ 'firm.fields.endDate'|trans }}">End date</th>
+                <th data-toggle="popover" data-content="{{ 'firm.fields.endDate'|trans }}">End Date</th>
                 <td>{{ firm.endDate }}</td>
             </tr>
+            {% if app.user %}
+                <tr>
+                    <th data-toggle="popover" data-content="{{ 'firm.fields.finalCheck'|trans }}">Final Check</th>
+                    <td>{% if firm.finalcheck %}Yes{% else %}No{% endif %}</td>
+                </tr>
+            {% endif %}
         </tbody>
     </table>
 
