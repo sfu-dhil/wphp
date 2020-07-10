@@ -216,6 +216,9 @@ class Builder implements ContainerAwareInterface {
             $search->addChild('Titles with Bad Publication Date', [
                 'route' => 'report_titles_date',
             ]);
+            $search->addChild('Firms to Check', [
+                'route' => 'report_firms_fc',
+            ]);
         }
 
         return $menu;
