@@ -1,19 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block pageheader %} 
+{% block pageheader %}
     <h1>Geonames Search</h1>
     {% if q %}
-    <p class="count">
         Displaying {{ geonames|length }} geonames of {{ geonames.getTotalItemCount }} total.
-    </p>
     {% endif %}
-{% endblock %} 
+{% endblock %}
 
 {% block body %}
 
     <form method="get" class="form-horizontal" action="{{ path('geonames_search') }}">
         <fieldset>
-            <legend>Search the Jackson Bibliography records</legend>
+            <legend>Search the WPHP Geonames records</legend>
             <div class="form-group">
                 <label class='col-sm-2 control-label' for='q'>Search term</label>
                 <div class='input-group'>
@@ -31,38 +29,38 @@
     </form>
 
     {% if q %}
-    <div class="navigation">
-        {{ knp_pagination_render(geonames) }}
-    </div>
+        <div class="navigation">
+            {{ knp_pagination_render(geonames) }}
+        </div>
 
-    <table class="table table-bordered table-condensed table-hover table-striped">
-        <thead>
-            <tr>
-                <th>Geoname ID</th>
-                <th>Name</th>
-                <th>Alternate names</th>
-                <th>Country</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for geoname in geonames %}
+        <table class="table table-bordered table-condensed table-hover table-striped">
+            <thead>
                 <tr>
-                    <td>
-                        <a href="{{ path('geonames_show', { 'id': geoname.geonameid }) }}">
-                            {{ geoname.geonameid }}
-                        </a>
-                    </td>
-                    <td>{{ geoname.name }}</td>
-                    <td>{{ geoname.alternatenames }}</td>
-                    <td>{{ geoname.country }}</td>
+                    <th>Geoname ID</th>
+                    <th>Name</th>
+                    <th>Alternate names</th>
+                    <th>Country</th>
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                {% for geoname in geonames %}
+                    <tr>
+                        <td>
+                            <a href="{{ path('geonames_show', { 'id': geoname.geonameid }) }}">
+                                {{ geoname.geonameid }}
+                            </a>
+                        </td>
+                        <td>{{ geoname.name }}</td>
+                        <td>{{ geoname.alternatenames }}</td>
+                        <td>{{ geoname.country }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
 
-    <div class="navigation">
-        {{ knp_pagination_render(geonames) }}
-    </div>
+        <div class="navigation">
+            {{ knp_pagination_render(geonames) }}
+        </div>
 
     {% endif %}
 
