@@ -30,7 +30,7 @@ class TitleType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) : void {
         $builder->add('title', null, [
             'label' => 'Title',
-            'required' => false,
+            'required' => true,
             'attr' => [
                 'help_block' => 'title.form.title',
             ],

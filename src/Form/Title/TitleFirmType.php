@@ -33,8 +33,10 @@ class TitleFirmType extends AbstractType {
             'allow_clear' => true,
             'delay' => 250,
             'language' => 'en',
+            'required' => true,
             'attr' => [
-                'help_block' => 'title.firm.name',
+                'help_block' => 'firm.fields.name',
+                'required' => true,
             ],
         ]);
 
@@ -44,8 +46,10 @@ class TitleFirmType extends AbstractType {
             'multiple' => false,
             'expanded' => false,
             'placeholder' => 'Select a firm role',
+            'required' => true,
             'attr' => [
-                'help_block' => 'title.firm.role',
+                'help_block' => 'firm.fields.role',
+                'required' => true,
             ],
         ]);
     }
