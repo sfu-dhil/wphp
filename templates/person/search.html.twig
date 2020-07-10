@@ -2,10 +2,8 @@
 
 {% block pageheader %}
     <h1>Search Persons</h1>
-    {% if people|length %}
-        <p class="count">
-            Displaying {{ people|length }} people of {{ people.getTotalItemCount }} total.
-        </p>
+    {% if submitted %}
+       Displaying {{ people|length }} people of {{ people.getTotalItemCount }} total.
     {% endif %}
 {% endblock %}
 
