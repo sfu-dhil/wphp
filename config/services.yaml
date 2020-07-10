@@ -11,7 +11,7 @@ parameters:
     asset.request_context.base_path: '%env(string:ROUTE_BASE)%'
     asset.request_context.secure: auto
 
-    app.geonames.username: '%env(GEONAMES_USERNAME)%'
+    wphp.geonames.username: '%env(GEONAMES_USERNAME)%'
 
     dhil.piwik_enabled: '%env(bool:PIWIK_ENABLED)%'
     dhil.piwik_url: //piwik.lib.sfu.ca/piwik/
