@@ -219,6 +219,9 @@ class Builder implements ContainerAwareInterface {
             $search->addChild('Firms to Check', [
                 'route' => 'report_firms_fc',
             ]);
+            $search->addChild('Persons to Check', [
+                'route' => 'report_persons_fc',
+            ]);
         }
 
         return $menu;

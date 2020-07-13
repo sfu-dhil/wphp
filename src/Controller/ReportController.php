@@ -81,4 +81,22 @@ class ReportController extends AbstractController implements PaginatorAwareInter
             'firms' => $firms,
         ];
     }
+
+    /**
+     * List firms that have not been checked.
+     *
+     * @Route("/persons_fc", name="report_persons_fc", methods={"GET"})
+     * @Template()
+     *
+     * @return array
+     */
+    public function personsFinalCheckAction(Request $request, EntityManagerInterface $em) {
+        $dql = "SELECT e FROM App:Person e WHERE e.finalcheck != 1";
+        $query = $em->createQuery($dql);
+        $persons = $this->paginator->paginate($query->execute(), $request->query->getInt('page', 1), 25);
+
+        return [
+            'persons' => $persons,
+        ];
+    }
 }

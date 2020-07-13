@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block pageheader %}
+    <h1>Persons to Final Check</h1>
+    {% if persons|length > 0 %}
+        Displaying {{ persons|length }} persons of {{ persons.getTotalItemCount }} total that need to be final checked.
+    {% else %}
+        No persons found!
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    <p class="explanation">These persons have not been final checked.</p>
+
+    {% if persons|length > 0 %}
+        <div class="navigation">
+            {{ knp_pagination_render(persons) }}
+        </div>
+
+        {% include 'person/table.html.twig' with {'people': persons} %}
+
+        <div class="navigation">
+            {{ knp_pagination_render(persons) }}
+        </div>
+    {% endif %}
+
+{% endblock %}
