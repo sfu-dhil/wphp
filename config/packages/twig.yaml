@@ -20,3 +20,4 @@ twig:
         piwik_siteid: '%dhil.piwik_siteid%'
         piwik_domain: '%dhil.piwik_domain%'
         title_index_authors: "%wphp.title_index_authors%"
+        nines_editor_config: js/editor-config.js
