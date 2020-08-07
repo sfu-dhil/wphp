@@ -91,15 +91,13 @@
                             <td>{{ title.pubdate }}</td>
                         </tr>
                         <tr>
-                            <th data-toggle="popover"  data-content="{{ 'title.fields.edition'|trans }}">Edition</th>
+                            <th data-toggle="popover"  data-content="{{ 'title.fields.edition'|trans }}">Edition Statement</th>
                             <td>{{ title.edition }}</td>
                         </tr>
-                        {% if is_granted('ROLE_USER') %}
-                            <tr>
-                                <th data-toggle="popover"  data-content="{{ 'title.fields.editionNumber'|trans }}">Edition Number</th>
-                                <td>{{ title.editionNumber }}</td>
-                            </tr>
-                        {% endif %}
+                        <tr>
+                            <th data-toggle="popover"  data-content="{{ 'title.fields.editionNumber'|trans }}">Edition Number</th>
+                            <td>{{ title.editionNumber }}</td>
+                        </tr>
                         <tr>
                             <th data-toggle="popover"  data-content="{{ 'title.fields.dateOfFirstPublication'|trans }}">Date of First Publication</th>
                             <td>{{ title.dateOfFirstPublication }}</td>

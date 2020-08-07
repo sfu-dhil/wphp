@@ -118,7 +118,7 @@ class TitleType extends AbstractType {
             ],
         ]);
         $builder->add('edition', null, [
-            'label' => 'Edition',
+            'label' => 'Edition Statement',
             'required' => false,
             'attr' => [
                 'help_block' => 'title.form.edition',

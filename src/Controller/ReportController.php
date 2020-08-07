@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Entity\Title;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Nines\UtilBundle\Controller\PaginatorTrait;
@@ -97,6 +98,30 @@ class ReportController extends AbstractController implements PaginatorAwareInter
 
         return [
             'persons' => $persons,
+        ];
+    }
+
+    /**
+     * List firms that have not been checked.
+     *
+     * @Route("/editions", name="report_editions", methods={"GET"})
+     * @Template()
+     *
+     * @return array
+     */
+    public function editionsAction(Request $request, EntityManagerInterface $em) {
+        $qb = $em->createQueryBuilder();
+        $qb->select('title')
+            ->from(Title::class, 'title')
+            ->orWhere("title.edition LIKE '%irish%'")
+            ->orWhere("title.edition LIKE '%american%'")
+            ->orWhere("regexp(title.edition, '[0-9]') = 1")
+            ->orderBy('title.id', 'ASC');
+
+        $titles = $this->paginator->paginate($qb, $request->query->getInt('page', 1), 25);
+
+        return [
+            'titles' => $titles,
         ];
     }
 }

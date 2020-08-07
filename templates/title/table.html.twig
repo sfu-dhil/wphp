@@ -57,7 +57,7 @@
                     {% if title.titleFirmRoles|length > title_index_authors %}and {{ title.titleFirmRoles|length - title_index_authors }} more.{% endif %}
                 </td>
                 <td>{{ title.pubdate }}</td>
-                <td>{{ title.edition }}</td>
+                <td>{{ title.editionNumber }}</td>
             </tr>
         {% endfor %}
     </tbody>
