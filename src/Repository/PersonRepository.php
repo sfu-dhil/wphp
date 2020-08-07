@@ -62,11 +62,11 @@ class PersonRepository extends ServiceEntityRepository {
         $qb->setParameter('first', $firstName);
 
         if ($dob) {
-            $qb->andWhere('YEAR(e.dob) = :dob');
+            $qb->andWhere('(e.dob = :dob) OR (YEAR(e.dob) = :dob)');
             $qb->setParameter('dob', $dob);
         }
         if ($dod) {
-            $qb->andWhere('YEAR(e.dod) = :dod');
+            $qb->andWhere('(e.dod = :dod) OR (YEAR(e.dod) = :dod)');
             $qb->setParameter('dod', $dod);
         }
 
