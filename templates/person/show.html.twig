@@ -91,15 +91,15 @@
                     {% endif %}
                 </td>
             </tr>
+            <tr data-toggle="popover" data-content="{{ 'person.fields.imageUrl'|trans }}">
+                <th>Image URL</th>
+                <td>
+                    {% if person.imageUrl %}
+                        <a href="{{person.imageUrl }}">{{ person.imageUrl }}</a>
+                    {% endif %}
+                </td>
+            </tr>
             {% if is_granted('ROLE_USER') %}
-                <tr data-toggle="popover" data-content="{{ 'person.fields.imageUrl'|trans }}">
-                    <th>Image URL</th>
-                    <td>
-                        {% if person.imageUrl %}
-                            <a href="{{person.imageUrl }}">{{ person.imageUrl }}</a>
-                        {% endif %}
-                    </td>
-                </tr>
                 <tr data-toggle="popover" data-content="{{ 'person.fields.finalCheck'|trans }}">
                     <th>Verified</th>
                     <td>{% if person.finalCheck %}Yes{% else %}No{% endif %}</td>
