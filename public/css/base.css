@@ -138,14 +138,13 @@ strong {
   padding: 20px;
   background-color: #5c5349;
   color: #fff;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
 }
 .footer .container {
-  padding-right: 15px;
-  padding-left: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+.footer .container:before, .footer .container:after {
+  content: unset;
 }
 .footer a {
   color: #fff;
@@ -161,13 +160,48 @@ strong {
 }
 .footer p {
   margin: 0;
-  font-family: "LatoLatinWeb", sans-serif;
-  font-size: 1em;
+  font-family: "CormorantGaramond-SemiBold", serif;
+  font-size: 16px;
 }
 .footer strong {
-  font-family: "CormorantGaramond-SemiBold", serif;
   font-weight: normal;
-  font-size: 20px;
+  font-size: 22px;
+  margin-bottom: 0.5rem;
+}
+
+/* Social icons stuff */
+.social-icons {
+  list-style: none;
+  display: flex;
+  font-size: 35px;
+  justify-content: space-evenly;
+}
+.social-icons a {
+  padding: 0 1rem;
+}
+.social-icons a:hover {
+  /* facebook, twitter, and instagram colours
+    Thanks to this gist: https://gist.github.com/pololee/c13213df6f560cfd2075 */
+  /* Spotify green from Branding Guidelines:
+  https://developer.spotify.com/branding-guidelines/ */
+}
+.social-icons a:hover i {
+  transition: color 0.2s ease-in-out;
+}
+.social-icons a:hover .fa-facebook-square {
+  color: #5d70c1;
+}
+.social-icons a:hover .fa-twitter-square {
+  color: #4099FF;
+}
+.social-icons a:hover .fa-instagram-square {
+  color: #E1306C;
+}
+.social-icons a:hover .fa-podcast {
+  color: #b251e0;
+}
+.social-icons a:hover .fa-spotify {
+  color: #1DB954;
 }
 
 .nav-tabs > li > a {
