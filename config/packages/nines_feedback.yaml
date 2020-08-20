@@ -18,7 +18,7 @@ nines_feedback:
             route: title_show
         blog_post:
             class: Nines\BlogBundle\Entity\Post
-            route: post_show
+            route: nines_blog_post_show
         blog_page:
             class: Nines\BlogBundle\Entity\Page
-            route: page_show
+            route: nines_blog_page_show
