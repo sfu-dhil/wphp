@@ -55,7 +55,7 @@
             allow_down: false,
             add: '<a href="#" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-plus"></span></a>',
             remove: '<a href="#" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-minus"></span></a>',
-            add_at_the_end: false,
+            add_at_the_end: true,
         });
     }
 
