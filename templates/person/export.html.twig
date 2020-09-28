@@ -1,15 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block pageheader %} 
+{% block pageheader %}
     <h1>Titles by <em>{{ person }}</em> <small>in {{ format|upper }} format</small></h1>
-{% endblock %} 
+{% endblock %}
 
 {% block body %}
     <p>There are {{ titles|length }} titles associated with this person.<p>
-    <ul class="list-group">
+    <div class="list-group">
         {% for tr in titles %}
             {% set title = tr.title %}
-            <li class="list-group-item">{{ include('partials/citation/' ~ format ~ '.html.twig', {'title': title}) }}</li>
+            <div class="list-group-item">{{ include('partials/citation/' ~ format ~ '.html.twig', {'title': title}) }}</div>
             {% endfor %}
-    </ul>
+    </div>
 {% endblock %}
