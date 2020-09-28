@@ -102,6 +102,14 @@
         {{ knp_pagination_render(pagination) }}
     </div>
 
+    {{ include('partials/citation.html.twig', {
+            'title': '"' ~ firm ~ '"',
+            'record': firm,
+            'type': 'Firm',
+            'url': url('firm_show', {'id': firm.id})
+        })
+    }}
+
     <div class="clearfix"></div>
 
     {% include '@NinesFeedback/comment/comment-interface.html.twig' with { 'entity': firm } %}
