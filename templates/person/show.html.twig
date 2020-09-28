@@ -140,7 +140,13 @@
         {{ knp_pagination_render(pagination) }}
     </div>
 
-    <div class='clearfix'></div>
+    {{ include('partials/citation.html.twig', {
+        'title': '"' ~ person ~ '"',
+        'record': person,
+        'type': 'Person',
+        'url': url('person_show', {'id': person.id})
+    })
+    }}
 
     {% include '@NinesFeedback/comment/comment-interface.html.twig' with { 'entity': person } %}
 

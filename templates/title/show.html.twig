@@ -248,6 +248,16 @@
         </div>
     </div>
 
+    {% set roles = title.titleRoles('Author') %}
+    {% set authorString %}{% for role in roles %}{{ role.person }}{% if not loop.last %}, {% endif %}{% endfor %}{% endset %}
+    {{ include('partials/citation.html.twig', {
+        'title': authorString ~ '. "' ~ title ~ '"',
+        'record': title,
+        'type': 'title',
+        'url': url('title_show', {'id': title.id})
+    })
+    }}
+
     <div class="container">
         {% include '@NinesFeedback/comment/comment-interface.html.twig' with { 'entity': title } %}
     </div>

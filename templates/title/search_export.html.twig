@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block pageheader %} 
+{% block pageheader %}
     <h1>Title Export <small>in {{ format|upper }} format</small></h1>
-{% endblock %} 
+{% endblock %}
 
 {% block body %}
-    <ul class="list-group">
+    <div class="list-group">
         {% for title in titles %}
-            <li class="list-group-item">{{ include('partials/citation/' ~ format ~ '.html.twig') }}</li>
+            <div class="list-group-item">{{ include('partials/citation/' ~ format ~ '.html.twig') }}</div>
             {% endfor %}
-    </ul>
+    </div>
 {% endblock %}
