@@ -23,6 +23,7 @@ use Doctrine\ORM\Mapping as ORM;
  *      @ORM\Index(name="title_signedauthor_ft", columns={"signed_author"}, flags={"fulltext"}),
  *      @ORM\Index(name="title_pseudonym_idx", columns={"pseudonym"}, flags={"fulltext"}),
  *      @ORM\Index(name="title_imprint_idx", columns={"imprint"}, flags={"fulltext"}),
+ *      @ORM\Index(name="title_copyright_idx", columns={"copyright"}, flags={"fulltext"}),
  *      @ORM\Index(name="title_colophon_idx", columns={"colophon"}, flags={"fulltext"}),
  *      @ORM\Index(name="title_shelfmark_idx", columns={"shelfmark"}, flags={"fulltext"}),
  *      @ORM\Index(name="title_notes_idx", columns={"notes"}, flags={"fulltext"}),
@@ -74,6 +75,13 @@ class Title {
      * @ORM\Column(name="imprint", type="text", nullable=true)
      */
     private $imprint;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="copyright", type="text", nullable=true)
+     */
+    private $copyright;
 
     /**
      * @var bool
@@ -383,6 +391,29 @@ class Title {
      */
     public function getImprint() {
         return $this->imprint;
+    }
+
+
+    /**
+     * Set copyright.
+     *
+     * @param string $copyright
+     *
+     * @return Title
+     */
+    public function setCopyright($copyright) {
+        $this->copyright = $copyright;
+
+        return $this;
+    }
+
+    /**
+     * Get copyright.
+     *
+     * @return string
+     */
+    public function getCopyright() {
+        return $this->copyright;
     }
 
     /**

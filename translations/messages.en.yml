@@ -13,6 +13,7 @@ title:
     format: The way that sheets have been folded and gathered
     genre: Category that the title falls into
     imprint: Information about printers, publishers, booksellers as shown on the title page
+    copyright: Copyright information as printed on the title page
     locationOfPrinting: Location of printing as indicated by the imprint
     notes: Any other important information
     pagination: Number of pages of each volume

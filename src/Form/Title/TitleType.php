@@ -145,6 +145,13 @@ class TitleType extends AbstractType {
                 'help_block' => 'title.form.imprint',
             ],
         ]);
+        $builder->add('copyright', null, [
+            'label' => 'Copyright',
+            'required' => false,
+            'attr' => [
+                'help_block' => 'title.form.copyright',
+            ],
+        ]);
         $builder->add('colophon', null, [
             'label' => 'Colophon',
             'required' => false,
