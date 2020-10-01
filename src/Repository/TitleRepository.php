@@ -266,6 +266,7 @@ class TitleRepository extends ServiceEntityRepository {
 
         $this->fulltextPart($qb, $data, 'signedAuthor', 'signed_author');
         $this->fulltextPart($qb, $data, 'imprint', 'imprint');
+        $this->fulltextPart($qb, $data, 'copyright', 'copyright');
         $this->fulltextPart($qb, $data, 'colophon', 'colophon');
         $this->fulltextPart($qb, $data, 'pseudonym', 'pseudonym');
         $this->fulltextPart($qb, $data, 'shelfmark', 'shelfmark');
