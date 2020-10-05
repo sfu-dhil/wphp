@@ -11,10 +11,12 @@ declare(strict_types=1);
 namespace App\Menu;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Query\Expr\Join;
 use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
 use Nines\BlogBundle\Entity\Post;
 use Nines\BlogBundle\Entity\PostCategory;
+use Nines\BlogBundle\Entity\PostStatus;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -107,20 +109,20 @@ class Builder implements ContainerAwareInterface {
 
         $browse = $menu->addChild('browse', [
             'uri' => '#',
-            'label' => 'Explore',
+            'label' => 'Database',
         ]);
         $browse->setAttribute('dropdown', true);
         $browse->setLinkAttribute('class', 'dropdown-toggle');
         $browse->setLinkAttribute('data-toggle', 'dropdown');
         $browse->setChildrenAttribute('class', 'dropdown-menu');
 
-        $browse->addChild('Titles', [
+        $browse->addChild('Search Titles', [
             'route' => 'title_index',
         ]);
-        $browse->addChild('Persons', [
+        $browse->addChild('Search Persons', [
             'route' => 'person_index',
         ]);
-        $browse->addChild('Firms', [
+        $browse->addChild('Search Firms', [
             'route' => 'firm_index',
         ]);
 
@@ -172,62 +174,6 @@ class Builder implements ContainerAwareInterface {
     }
 
     /**
-     * Build the search menu and return it.
-     *
-     * @return ItemInterface
-     */
-    public function searchMenu(array $options) {
-        $menu = $this->factory->createItem('root');
-        $menu->setChildrenAttributes([
-            'class' => 'nav navbar-nav',
-        ]);
-
-        $search = $menu->addChild('search', [
-            'uri' => '#',
-            'label' => 'Search',
-        ]);
-        $search->setAttribute('dropdown', true);
-        $search->setLinkAttribute('class', 'dropdown-toggle');
-        $search->setLinkAttribute('data-toggle', 'dropdown');
-        $search->setChildrenAttribute('class', 'dropdown-menu');
-
-        $search->addChild('Titles', [
-            'route' => 'title_search',
-        ]);
-        $search->addChild('Persons', [
-            'route' => 'person_search',
-        ]);
-        $search->addChild('Firms', [
-            'route' => 'firm_search',
-        ]);
-        if ($this->hasRole('ROLE_USER')) {
-            $divider = $search->addChild('divider', [
-                'label' => '',
-            ]);
-            $divider->setAttributes([
-                'role' => 'separator',
-                'class' => 'divider',
-            ]);
-
-            $search->addChild('Titles to Final Check', [
-                'route' => 'report_titles_check',
-            ]);
-
-            $search->addChild('Titles with Bad Publication Date', [
-                'route' => 'report_titles_date',
-            ]);
-            $search->addChild('Firms to Check', [
-                'route' => 'report_firms_fc',
-            ]);
-            $search->addChild('Persons to Check', [
-                'route' => 'report_persons_fc',
-            ]);
-        }
-
-        return $menu;
-    }
-
-    /**
      * Build the spotlight menu and return it.
      *
      * @return ItemInterface
@@ -260,6 +206,73 @@ class Builder implements ContainerAwareInterface {
                 'routeParameters' => [
                     'id' => $category->getId(),
                 ],
+            ]);
+        }
+
+        return $menu;
+    }
+
+    /**
+     * Build the research menu and return it.
+     *
+     * @return ItemInterface
+     */
+    public function researchMenu(array $options) {
+        $menu = $this->factory->createItem('root');
+        $menu->setChildrenAttributes([
+            'class' => 'nav navbar-nav',
+        ]);
+
+        $research = $menu->addChild('research', [
+            'uri' => '#',
+            'label' => 'Research',
+        ]);
+        $research->setAttribute('dropdown', true);
+        $research->setLinkAttribute('class', 'dropdown-toggle');
+        $research->setLinkAttribute('data-toggle', 'dropdown');
+        $research->setChildrenAttribute('class', 'dropdown-menu');
+
+        $category = $this->em->getRepository(PostCategory::class)
+            ->findOneBy(['name' => 'research']);
+
+        $qb = $this->em->createQueryBuilder();
+        $qb->select('p')->from(Post::class, 'p')
+            ->where('p.category = :category')
+            ->setParameter('category', $category)
+            ->orderBy('p.created', 'DESC')->setMaxResults(10);
+
+        if ( ! $this->hasRole('ROLE_USER')) {
+            $status = $this->em->getRepository(PostStatus::class)->findOneBy([
+                'public' => true,
+            ]);
+            $qb->andWhere('p.status = :status');
+            $qb->setParameter('status', $status);
+        }
+
+        $posts = $qb->getQuery()->execute();
+        foreach ($posts as $post) {
+            $research->addChild('r_' . $post->getId(), [
+                'label' => $post->getTitle(),
+                'route' => 'nines_blog_post_show',
+                'routeParameters' => [
+                    'id' => $post->getId(),
+                ],
+            ]);
+        }
+
+        if ($this->hasRole('ROLE_USER')) {
+            $research->addChild('divider', [
+                'label' => '',
+            ]);
+            $research['divider']->setAttributes([
+                'role' => 'separator',
+                'class' => 'divider',
+            ]);
+            $research->addChild('All Research', [
+                'route' => 'nines_blog_post_category_show',
+                'routeParameters' => [
+                    'id' => $category->getId(),
+                ]
             ]);
         }
 
@@ -371,14 +384,8 @@ class Builder implements ContainerAwareInterface {
             'public' => true,
         ]);
         $qb = $this->em->createQueryBuilder();
-        $qb->select('p')
-            ->from(Post::class, 'p')
-            ->innerJoin(PostCategory::class, 'pc')
-            ->where('pc.name NOT IN (:spotlightCategories)')
-            ->orderBy('p.created', 'DESC')
-            ->setMaxResults(10)
-            ->setParameter(':spotlightCategories', $this->spotlightMenuItems);
-        if( ! $this->hasRole('ROLE_USER')) {
+        $qb->select('p')->from(Post::class, 'p')->innerJoin(PostCategory::class, 'pc')->where('pc.name NOT IN (:spotlightCategories)')->orderBy('p.created', 'DESC')->setMaxResults(10)->setParameter(':spotlightCategories', $this->spotlightMenuItems);
+        if ( ! $this->hasRole('ROLE_USER')) {
             $status = $this->em->getRepository('NinesBlogBundle:PostStatus')->findOneBy([
                 'public' => true,
             ]);
