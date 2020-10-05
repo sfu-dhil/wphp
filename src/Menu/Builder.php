@@ -235,6 +235,10 @@ class Builder implements ContainerAwareInterface {
         $category = $this->em->getRepository(PostCategory::class)
             ->findOneBy(['name' => 'research']);
 
+        if( ! $category) {
+            return $research;
+        }
+
         $qb = $this->em->createQueryBuilder();
         $qb->select('p')->from(Post::class, 'p')
             ->where('p.category = :category')
