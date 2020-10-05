@@ -44,9 +44,9 @@
                     </ul>
                     {{ knp_menu_render('nines_blog_pages') }}
                     {{ knp_menu_render('main') }}
-                    {{ knp_menu_render('search') }}
+                    {{ knp_menu_render('research') }}
                     {{ knp_menu_render('spotlight') }}
-                    {% set postMenu = knp_menu_get('wphp_post', [], {'title': 'News & Events'}) %}
+                    {% set postMenu = knp_menu_get('wphp_post', [], {'title': 'News'}) %}
                     {{ knp_menu_render(postMenu) }}
                     {{ knp_menu_render('wphp_user') }}
                 </div>

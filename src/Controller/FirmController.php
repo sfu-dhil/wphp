@@ -82,7 +82,7 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
         foreach ($repo->typeaheadQuery($q) as $result) {
             $data[] = [
                 'id' => $result->getId(),
-                'text' => $result->getName(),
+                'text' => $result->getName() . ' (#' . $result->getId() . ')',
             ];
         }
 
