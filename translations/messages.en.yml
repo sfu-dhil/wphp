@@ -3,7 +3,7 @@ title:
   fields: &title_fields
     id: Unique ID number for this title
     checked: Indicates that a physical copy of the title has been consulted to verify title information
-    colophon: Information, usually about the printer, from the front or the back of the book
+    colophon: Information, usually about the printer, including an address when provided, found at the front or the back of the book
     contributors: All persons who have contributed to the intellectual content of the title and all women involved in the title's production
     dateOfFirstPublication: Date (year) that the title was first published
     edition: Edition as it appears on the title page
@@ -13,7 +13,7 @@ title:
     format: The way that sheets have been folded and gathered
     genre: Category that the title falls into
     imprint: Information about printers, publishers, booksellers as shown on the title page
-    copyright: Copyright information as printed on the title page
+    copyright: Copyright statement as printed in the book
     locationOfPrinting: Location of printing as indicated by the imprint
     notes: Any other important information
     pagination: Number of pages of each volume

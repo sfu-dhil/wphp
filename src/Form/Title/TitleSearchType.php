@@ -170,7 +170,7 @@ class TitleSearchType extends AbstractType {
             ],
         ]);
         $builder->add('copyright', null, [
-            'label' => 'Copyright',
+            'label' => 'Copyright Statement',
             'required' => false,
             'attr' => [
                 'help_block' => 'title.search.copyright',
