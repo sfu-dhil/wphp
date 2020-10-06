@@ -20,6 +20,7 @@ title:
     pricePence: Portion of the price of the title in pence
     pricePound: Portion of the price of the title in pounds
     priceShilling: Portion of the price of the title in shillings
+    otherPrice: The price of the title outside the UK
     psuedonym: A false or invented contributor name
     pubDate: Date (year) as it appears on the imprint
     selfPublished: Indicates whether the title was self-published or published by a publisher
@@ -51,6 +52,8 @@ title:
     pricePence: Enter the portion of the price of the title in pence
     pricePound: Enter the portion of the price of the title in pounds
     priceShilling: Enter the portion of the price of the title in shillings
+    otherPrice: Enter the price of the title outside the UK and select the appropriate currency in the next field
+    otherCurrency: Select the currency of the Non-UK price
     psuedonym: Enter any false or invented contributor name
     pubDate: Enter the year of publication as it appears on the imprint. Where imprint information is unavailable, use the best estimate we have of the year of publication
     selfPublished: Check yes if the title was self-published (no is the default)

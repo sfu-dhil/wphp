@@ -117,18 +117,6 @@ class CurrencyController extends AbstractController implements PaginatorAwareInt
     }
 
     /**
-     * @Route("/new_popup", name="currency_new_popup", methods={"GET","POST"})
-     * @Template()
-     * @IsGranted("ROLE_CONTENT_ADMIN")
-     * @param Request $request
-     *
-     * @return array|RedirectResponse
-     */
-    public function new_popup(Request $request) {
-        return $this->new($request);
-    }
-
-    /**
      * @Route("/{id}", name="currency_show", methods={"GET"})
      * @Template()
      * @param Currency $currency

@@ -68,7 +68,11 @@ class Currency extends AbstractEntity {
             $fmt = new NumberFormatter('en_CA', NumberFormatter::CURRENCY);
             return $fmt->formatCurrency($value, $this->code);
         }
-        return $this->symbol . $value;
+        $v = sprintf('%.2f', $value);
+        if($this->symbol) {
+            return $this->symbol . $v;
+        }
+        return $this->name ? $v . ' ' . $this->name : $v;
     }
 
     public function getCode(): ?string

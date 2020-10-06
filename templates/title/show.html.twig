@@ -170,6 +170,14 @@
                             </td>
                         </tr>
                         <tr>
+                            <th data-toggle="popover"  data-content="{{ 'title.fields.otherPrice'|trans }}">Non-UK Price</th>
+                            <td>
+                                {% if title.otherPrice %}
+                                    {{ title.otherCurrency.format(title.otherPrice) }}
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
                             <th data-toggle="popover"  data-content="{{ 'title.fields.genre'|trans }}">Genre</th>
                             <td>
                                 {% if title.genre %}

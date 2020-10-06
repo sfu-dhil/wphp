@@ -38,14 +38,26 @@ class CurrencyRepository extends ServiceEntityRepository
      * @return Collection|Currency[]
      */
     public function typeaheadQuery($q) {
-        throw new \RuntimeException("Not implemented yet.");
         $qb = $this->createQueryBuilder('currency');
-        $qb->andWhere('currency.column LIKE :q');
-        $qb->orderBy('currency.column', 'ASC');
+        $qb->andWhere('currency.name LIKE :q');
+        $qb->orderBy('currency.name', 'ASC');
         $qb->setParameter('q', "{$q}%");
 
         return $qb->getQuery()->execute();
     }
 
-    
+    /**
+     * @param string $q
+     *
+     * @return Collection|Currency[]
+     */
+    public function searchQuery($q) {
+        $qb = $this->createQueryBuilder('currency');
+        $qb->andWhere('currency.name LIKE :q');
+        $qb->orderBy('currency.name', 'ASC');
+        $qb->setParameter('q', "{$q}%");
+
+        return $qb->getQuery()->execute();
+    }
+
 }

@@ -1033,12 +1033,12 @@ class Title {
 
     public function getOtherPrice(): ?float
     {
-        return $this->otherPrice;
+        return (float)$this->otherPrice;
     }
 
-    public function setOtherPrice(?string $otherPrice): self
+    public function setOtherPrice($otherPrice): self
     {
-        $this->otherPrice = $otherPrice;
+        $this->otherPrice = (float)$otherPrice;
 
         return $this;
     }

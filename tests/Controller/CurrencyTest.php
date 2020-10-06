@@ -12,9 +12,9 @@ use Symfony\Component\HttpFoundation\Response;
 class CurrencyTest extends ControllerBaseCase {
 
     // Change this to HTTP_OK when the site is public.
-    private const ANON_RESPONSE_CODE=Response::HTTP_FOUND;
+    private const ANON_RESPONSE_CODE = Response::HTTP_OK;
 
-    private const TYPEAHEAD_QUERY='currency';
+    private const TYPEAHEAD_QUERY = 'name';
 
     protected function fixtures() : array {
         return [
@@ -95,7 +95,7 @@ class CurrencyTest extends ControllerBaseCase {
         $this->client->request('GET', '/currency/typeahead?q=' . self::TYPEAHEAD_QUERY);
         $response = $this->client->getResponse();
         $this->assertSame(self::ANON_RESPONSE_CODE, $this->client->getResponse()->getStatusCode());
-        if(self::ANON_RESPONSE_CODE === Response::HTTP_FOUND) {
+        if (self::ANON_RESPONSE_CODE === Response::HTTP_FOUND) {
             // If authentication is required stop here.
             return;
         }
@@ -136,11 +136,11 @@ class CurrencyTest extends ControllerBaseCase {
         $repo = $this->createMock(CurrencyRepository::class);
         $repo->method('searchQuery')->willReturn([$this->getReference('currency.1')]);
         $this->client->disableReboot();
-        $this->client->getContainer()->set('test.'.CurrencyRepository::class, $repo);
+        $this->client->getContainer()->set('test.' . CurrencyRepository::class, $repo);
 
         $crawler = $this->client->request('GET', '/currency/search');
         $this->assertSame(self::ANON_RESPONSE_CODE, $this->client->getResponse()->getStatusCode());
-        if(self::ANON_RESPONSE_CODE === Response::HTTP_FOUND) {
+        if (self::ANON_RESPONSE_CODE === Response::HTTP_FOUND) {
             // If authentication is required stop here.
             return;
         }
@@ -157,7 +157,7 @@ class CurrencyTest extends ControllerBaseCase {
         $repo = $this->createMock(CurrencyRepository::class);
         $repo->method('searchQuery')->willReturn([$this->getReference('currency.1')]);
         $this->client->disableReboot();
-        $this->client->getContainer()->set('test.'.CurrencyRepository::class, $repo);
+        $this->client->getContainer()->set('test.' . CurrencyRepository::class, $repo);
 
         $this->login('user.user');
         $crawler = $this->client->request('GET', '/currency/search');
@@ -175,7 +175,7 @@ class CurrencyTest extends ControllerBaseCase {
         $repo = $this->createMock(CurrencyRepository::class);
         $repo->method('searchQuery')->willReturn([$this->getReference('currency.1')]);
         $this->client->disableReboot();
-        $this->client->getContainer()->set('test.'.CurrencyRepository::class, $repo);
+        $this->client->getContainer()->set('test.' . CurrencyRepository::class, $repo);
 
         $this->login('user.admin');
         $crawler = $this->client->request('GET', '/currency/search');
@@ -219,21 +219,21 @@ class CurrencyTest extends ControllerBaseCase {
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
 
         $form = $formCrawler->selectButton('Save')->form([
-        'currency[code]' => 'Updated Code',
-            'currency[name]' => 'Updated Name',
-            'currency[symbol]' => 'Updated Symbol',
+            'currency[code]' => 'UNK',
+            'currency[name]' => '¤',
+            'currency[symbol]' => 'Currency Sign',
             'currency[description]' => 'Updated Description',
-                    ]);
+        ]);
 
         $this->client->submit($form);
         $this->assertTrue($this->client->getResponse()->isRedirect('/currency/1'));
         $responseCrawler = $this->client->followRedirect();
         $this->assertEquals(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
-        $this->assertEquals(1, $responseCrawler->filter('td:contains("Updated Code")')->count());
-            $this->assertEquals(1, $responseCrawler->filter('td:contains("Updated Name")')->count());
-            $this->assertEquals(1, $responseCrawler->filter('td:contains("Updated Symbol")')->count());
-            $this->assertEquals(1, $responseCrawler->filter('td:contains("Updated Description")')->count());
-                }
+        $this->assertEquals(1, $responseCrawler->filter('td:contains("UNK")')->count());
+        $this->assertEquals(1, $responseCrawler->filter('td:contains("¤")')->count());
+        $this->assertEquals(1, $responseCrawler->filter('td:contains("Currency Sign")')->count());
+        $this->assertEquals(1, $responseCrawler->filter('td:contains("Updated Description")')->count());
+    }
 
     /**
      * @group anon
@@ -241,16 +241,6 @@ class CurrencyTest extends ControllerBaseCase {
      */
     public function testAnonNew() {
         $crawler = $this->client->request('GET', '/currency/new');
-        $this->assertSame(Response::HTTP_FOUND, $this->client->getResponse()->getStatusCode());
-        $this->assertTrue($this->client->getResponse()->isRedirect());
-    }
-
-    /**
-     * @group anon
-     * @group new
-     */
-    public function testAnonNewPopup() {
-        $crawler = $this->client->request('GET', '/currency/new_popup');
         $this->assertSame(Response::HTTP_FOUND, $this->client->getResponse()->getStatusCode());
         $this->assertTrue($this->client->getResponse()->isRedirect());
     }
@@ -266,16 +256,6 @@ class CurrencyTest extends ControllerBaseCase {
     }
 
     /**
-     * @group user
-     * @group new
-     */
-    public function testUserNewPopup() {
-        $this->login('user.user');
-        $crawler = $this->client->request('GET', '/currency/new_popup');
-        $this->assertSame(403, $this->client->getResponse()->getStatusCode());
-    }
-
-    /**
      * @group admin
      * @group new
      */
@@ -285,47 +265,22 @@ class CurrencyTest extends ControllerBaseCase {
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
 
         $form = $formCrawler->selectButton('Save')->form([
-        'currency[code]' => 'New Code',
-            'currency[name]' => 'New Name',
-            'currency[symbol]' => 'New Symbol',
+            'currency[code]' => 'UNK',
+            'currency[name]' => '¤',
+            'currency[symbol]' => 'Currency Sign',
             'currency[description]' => 'New Description',
-                    ]);
+        ]);
 
         $this->client->submit($form);
         $this->assertTrue($this->client->getResponse()->isRedirect());
         $responseCrawler = $this->client->followRedirect();
         $this->assertEquals(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
-        $this->assertEquals(1, $responseCrawler->filter('td:contains("New Code")')->count());
-            $this->assertEquals(1, $responseCrawler->filter('td:contains("New Name")')->count());
-            $this->assertEquals(1, $responseCrawler->filter('td:contains("New Symbol")')->count());
-            $this->assertEquals(1, $responseCrawler->filter('td:contains("New Description")')->count());
-                }
+        $this->assertEquals(1, $responseCrawler->filter('td:contains("UNK")')->count());
+        $this->assertEquals(1, $responseCrawler->filter('td:contains("¤")')->count());
+        $this->assertEquals(1, $responseCrawler->filter('td:contains("Currency Sign")')->count());
+        $this->assertEquals(1, $responseCrawler->filter('td:contains("New Description")')->count());
+    }
 
-    /**
-     * @group admin
-     * @group new
-     */
-    public function testAdminNewPopup() {
-        $this->login('user.admin');
-        $formCrawler = $this->client->request('GET', '/currency/new_popup');
-        $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
-
-        $form = $formCrawler->selectButton('Save')->form([
-        'currency[code]' => 'New Code',
-            'currency[name]' => 'New Name',
-            'currency[symbol]' => 'New Symbol',
-            'currency[description]' => 'New Description',
-                    ]);
-
-        $this->client->submit($form);
-        $this->assertTrue($this->client->getResponse()->isRedirect());
-        $responseCrawler = $this->client->followRedirect();
-        $this->assertEquals(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
-        $this->assertEquals(1, $responseCrawler->filter('td:contains("New Code")')->count());
-            $this->assertEquals(1, $responseCrawler->filter('td:contains("New Name")')->count());
-            $this->assertEquals(1, $responseCrawler->filter('td:contains("New Symbol")')->count());
-            $this->assertEquals(1, $responseCrawler->filter('td:contains("New Description")')->count());
-                }
 
     /**
      * @group admin

@@ -150,6 +150,9 @@ class Builder implements ContainerAwareInterface {
                 'role' => 'separator',
                 'class' => 'divider',
             ]);
+            $browse->addChild('Currencies', [
+                'route' => 'currency_index',
+            ]);
             $browse->addChild('Geonames', [
                 'route' => 'geonames_index',
             ]);
