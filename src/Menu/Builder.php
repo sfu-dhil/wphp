@@ -171,6 +171,27 @@ class Builder implements ContainerAwareInterface {
             $browse->addChild('Osborne', [
                 'route' => 'resource_osborne_index',
             ]);
+
+            $divider = $browse->addChild('divider2', [
+                'label' => '',
+            ]);
+            $divider->setAttributes([
+                'role' => 'separator',
+                'class' => 'divider',
+            ]);
+            $browse->addChild('Titles to Final Check', [
+                'route' => 'report_titles_check',
+            ]);
+
+            $browse->addChild('Titles with Bad Publication Date', [
+                'route' => 'report_titles_date',
+            ]);
+            $browse->addChild('Firms to Check', [
+                'route' => 'report_firms_fc',
+            ]);
+            $browse->addChild('Persons to Check', [
+                'route' => 'report_persons_fc',
+            ]);
         }
 
         return $menu;
