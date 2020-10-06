@@ -97,6 +97,7 @@ class CsvExporter {
             $title->getPricePound(),
             $title->getPriceShilling(),
             $title->getPricePence(),
+            ($title->getOtherPrice() ? $title->getOtherCurrency()->format($title->getOtherPrice()) : ''),
             ($title->getGenre() ? $title->getGenre()->getName() : ''),
             $title->getShelfmark(),
         ];

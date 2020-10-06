@@ -175,6 +175,12 @@ class Title {
     private $pricePence;
 
     /**
+     * @var float
+     * @ORM\Column(name="other_price", type="decimal", precision=7, scale=2, nullable=true)
+     */
+    private $otherPrice;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="shelfmark", type="text", nullable=true)
@@ -238,6 +244,12 @@ class Title {
      * })
      */
     private $genre;
+
+    /**
+     * @var Currency
+     * @ORM\ManyToOne(targetEntity="App\Entity\Currency", inversedBy="titles")
+     */
+    private $otherCurrency;
 
     /**
      * @var Collection|TitleRole[]
@@ -1017,5 +1029,29 @@ class Title {
      */
     public function getTitleSources() {
         return $this->titleSources;
+    }
+
+    public function getOtherPrice(): ?float
+    {
+        return (float)$this->otherPrice;
+    }
+
+    public function setOtherPrice($otherPrice): self
+    {
+        $this->otherPrice = (float)$otherPrice;
+
+        return $this;
+    }
+
+    public function getOtherCurrency(): ?Currency
+    {
+        return $this->otherCurrency;
+    }
+
+    public function setOtherCurrency(?Currency $otherCurrency): self
+    {
+        $this->otherCurrency = $otherCurrency;
+
+        return $this;
     }
 }

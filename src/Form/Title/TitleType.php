@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace App\Form\Title;
 
+use App\Entity\Currency;
 use App\Entity\Format;
 use App\Entity\Genre;
 use App\Entity\Geonames;
@@ -19,6 +20,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Tetranz\Select2EntityBundle\Form\Type\Select2EntityType;
@@ -224,6 +226,42 @@ class TitleType extends AbstractType {
                 'help_block' => 'title.form.pricePence',
             ],
         ]);
+
+        $builder->add('otherPrice', NumberType::class, [
+            'label' => 'Non-UK price',
+            'scale' => 2,
+            'required' => false,
+            'attr' => [
+                'help_block' => 'title.form.otherPrice',
+            ],
+        ]);
+
+        $builder->add('otherPrice', NumberType::class, [
+            'label' => 'Non-UK price',
+            'scale' => 2,
+            'required' => false,
+            'attr' => [
+                'help_block' => 'title.form.otherPrice',
+            ],
+        ]);
+
+        $builder->add('otherCurrency', EntityType::class, [
+            'label' => 'Non-UK Currency',
+            'class' => Currency::class,
+            'choice_label' => 'name',
+            'expanded' => false,
+            'multiple' => false,
+            'required' => false,
+            'placeholder' => '',
+            'query_builder' => function (ServiceEntityRepository $er) {
+                return $er->createQueryBuilder('e')
+                    ->orderBy('e.name', 'ASC');
+            },
+            'attr' => [
+                'help_block' => 'title.form.otherCurrency',
+            ],
+        ]);
+
         $builder->add('genre', EntityType::class, [
             'class' => Genre::class,
             'choice_label' => 'name',
