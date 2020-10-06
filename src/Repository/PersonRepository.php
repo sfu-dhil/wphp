@@ -12,6 +12,7 @@ namespace App\Repository;
 
 use App\Entity\Person;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -94,61 +95,61 @@ class PersonRepository extends ServiceEntityRepository {
                 case 'lastname_asc':
                     $qb->orderBy('e.lastName', 'ASC');
                     $qb->addOrderBy('e.firstName', 'ASC');
-                    $qb->addOrderBy('date(e.dob)');
+                    $qb->addOrderBy('year(e.dob)');
 
                     break;
                 case 'lastname_desc':
                     $qb->orderBy('e.lastName', 'DESC');
                     $qb->addOrderBy('e.firstName', 'ASC');
-                    $qb->addOrderBy('date(e.dob)');
+                    $qb->addOrderBy('year(e.dob)');
 
                     break;
                 case 'firstname_asc':
                     $qb->orderBy('e.firstName', 'ASC');
                     $qb->addOrderBy('e.lastName', 'ASC');
-                    $qb->addOrderBy('date(e.dob)');
+                    $qb->addOrderBy('year(e.dob)');
 
                     break;
                 case 'firstname_desc':
                     $qb->orderBy('e.firstName', 'DESC');
                     $qb->addOrderBy('e.lastName', 'ASC');
-                    $qb->addOrderBy('date(e.dob)');
+                    $qb->addOrderBy('year(e.dob)');
 
                     break;
                 case 'gender_asc':
                     $qb->orderBy('e.gender', 'ASC');
                     $qb->addOrderBy('e.lastName', 'ASC');
                     $qb->addOrderBy('e.firstName', 'ASC');
-                    $qb->addOrderBy('date(e.dob)');
+                    $qb->addOrderBy('year(e.dob)');
 
                     break;
                 case 'gender_desc':
                     $qb->orderBy('e.gender', 'DESC');
                     $qb->addOrderBy('e.lastName', 'ASC');
                     $qb->addOrderBy('e.firstName', 'ASC');
-                    $qb->addOrderBy('date(e.dob)');
+                    $qb->addOrderBy('year(e.dob)');
 
                     break;
                 case 'birth_asc':
-                    $qb->orderBy('date(e.dob)', 'ASC');
+                    $qb->orderBy('year(e.dob)', 'ASC');
                     $qb->addOrderBy('e.lastName', 'ASC');
                     $qb->addOrderBy('e.firstName', 'ASC');
 
                     break;
                 case 'birth_desc':
-                    $qb->orderBy('date(e.dob)', 'DESC');
+                    $qb->orderBy('year(e.dob)', 'DESC');
                     $qb->addOrderBy('e.lastName', 'ASC');
                     $qb->addOrderBy('e.firstName', 'ASC');
 
                     break;
                 case 'death_asc':
-                    $qb->orderBy('date(e.dod)', 'ASC');
+                    $qb->orderBy('year(e.dod)', 'ASC');
                     $qb->addOrderBy('e.lastName', 'ASC');
                     $qb->addOrderBy('e.firstName', 'ASC');
 
                     break;
                 case 'death_desc':
-                    $qb->orderBy('date(e.dod)', 'DESC');
+                    $qb->orderBy('year(e.dod)', 'DESC');
                     $qb->addOrderBy('e.lastName', 'ASC');
                     $qb->addOrderBy('e.firstName', 'ASC');
 
@@ -337,7 +338,7 @@ class PersonRepository extends ServiceEntityRepository {
             }
         }
 
-        return $qb->getQuery();
+        return $qb->getQuery()->execute();
     }
 
     /**
@@ -345,7 +346,7 @@ class PersonRepository extends ServiceEntityRepository {
      *
      * @param int $limit
      *
-     * @return Collection
+     * @return Collection|Person[]
      */
     public function random($limit) {
         $qb = $this->createQueryBuilder('e');
