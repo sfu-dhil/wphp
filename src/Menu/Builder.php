@@ -288,6 +288,7 @@ class Builder implements ContainerAwareInterface {
             ]);
         }
 
+        $research->addChild('divider');
         $research['divider']->setAttributes([
             'role' => 'separator',
             'class' => 'divider',
