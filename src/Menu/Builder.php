@@ -288,21 +288,16 @@ class Builder implements ContainerAwareInterface {
             ]);
         }
 
-        if ($this->hasRole('ROLE_USER')) {
-            $research->addChild('divider', [
-                'label' => '',
-            ]);
-            $research['divider']->setAttributes([
-                'role' => 'separator',
-                'class' => 'divider',
-            ]);
-            $research->addChild('All Research', [
-                'route' => 'nines_blog_post_category_show',
-                'routeParameters' => [
-                    'id' => $category->getId(),
-                ]
-            ]);
-        }
+        $research['divider']->setAttributes([
+            'role' => 'separator',
+            'class' => 'divider',
+        ]);
+        $research->addChild('All Research', [
+            'route' => 'nines_blog_post_category_show',
+            'routeParameters' => [
+                'id' => $category->getId(),
+            ]
+        ]);
 
         return $menu;
     }
@@ -412,7 +407,13 @@ class Builder implements ContainerAwareInterface {
             'public' => true,
         ]);
         $qb = $this->em->createQueryBuilder();
-        $qb->select('p')->from(Post::class, 'p')->innerJoin(PostCategory::class, 'pc')->where('pc.name NOT IN (:spotlightCategories)')->orderBy('p.created', 'DESC')->setMaxResults(10)->setParameter(':spotlightCategories', $this->spotlightMenuItems);
+        $qb->select('p')
+            ->from(Post::class, 'p')
+            ->innerJoin(PostCategory::class, 'pc')
+            ->where('pc.name NOT IN (:spotlightCategories)')
+            ->orderBy('p.created', 'DESC')
+            ->setMaxResults(10)
+            ->setParameter(':spotlightCategories', $this->spotlightMenuItems);
         if ( ! $this->hasRole('ROLE_USER')) {
             $status = $this->em->getRepository('NinesBlogBundle:PostStatus')->findOneBy([
                 'public' => true,
