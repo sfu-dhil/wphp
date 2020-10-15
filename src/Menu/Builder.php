@@ -410,11 +410,10 @@ class Builder implements ContainerAwareInterface {
         $qb = $this->em->createQueryBuilder();
         $qb->select('p')
             ->from(Post::class, 'p')
-            ->innerJoin(PostCategory::class, 'pc')
-            ->where('pc.name NOT IN (:spotlightCategories)')
+            ->innerJoin(PostCategory::class, 'pc', Join::WITH, 'p.category = pc')
+            ->where('pc.name = \'news\'')
             ->orderBy('p.created', 'DESC')
-            ->setMaxResults(10)
-            ->setParameter(':spotlightCategories', $this->spotlightMenuItems);
+            ->setMaxResults(10);
         if ( ! $this->hasRole('ROLE_USER')) {
             $status = $this->em->getRepository('NinesBlogBundle:PostStatus')->findOneBy([
                 'public' => true,
