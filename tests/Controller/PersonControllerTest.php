@@ -113,9 +113,9 @@ class PersonControllerTest extends ControllerBaseCase {
             'person[title]' => '',
             'person[gender]' => 'F',
             'person[dob]' => '1921',
-            'person[cityOfBirth]' => 0,
+            'person[cityOfBirth]' => 1,
             'person[dod]' => '1999',
-            'person[cityOfDeath]' => 0,
+            'person[cityOfDeath]' => 1,
             'person[finalcheck]' => 1,
         ]);
 
@@ -149,9 +149,9 @@ class PersonControllerTest extends ControllerBaseCase {
             'person[title]' => '',
             'person[gender]' => 'F',
             'person[dob]' => '1921',
-            'person[cityOfBirth]' => 0,
+            'person[cityOfBirth]' => '',
             'person[dod]' => '1999',
-            'person[cityOfDeath]' => 0,
+            'person[cityOfDeath]' => '',
             'person[finalcheck]' => 1,
         ]);
 

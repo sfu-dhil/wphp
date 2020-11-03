@@ -51,6 +51,7 @@ class PersonType extends AbstractType {
             'choices' => [
                 'Female' => Person::FEMALE,
                 'Male' => Person::MALE,
+                'Transgender' => Person::TRANS,
                 'Unknown' => Person::UNKNOWN,
             ],
             'attr' => [

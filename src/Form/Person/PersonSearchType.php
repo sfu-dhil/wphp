@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace App\Form\Person;
 
+use App\Entity\Person;
 use App\Form\Firm\FirmFilterType;
 use App\Form\Title\TitleFilterType;
 use Symfony\Component\Form\AbstractType;
@@ -71,9 +72,10 @@ class PersonSearchType extends AbstractType {
         $builder->add('gender', ChoiceType::class, [
             'label' => 'Gender',
             'choices' => [
-                'Female' => 'F',
-                'Male' => 'M',
-                'Unknown' => 'U',
+                'Female' => Person::FEMALE,
+                'Male' => Person::MALE,
+                'Transgender' => Person::TRANS,
+                'Unknown' => Person::UNKNOWN,
             ],
             'attr' => [
                 'help_block' => 'person.search.gender',
