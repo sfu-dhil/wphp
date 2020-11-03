@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace App\Form\Person;
 
+use App\Entity\Person;
 use App\Entity\Role;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -59,9 +60,10 @@ class PersonFilterType extends AbstractType {
         $builder->add('gender', ChoiceType::class, [
             'label' => 'Gender',
             'choices' => [
-                'Female' => 'F',
-                'Male' => 'M',
-                'Unknown' => 'U',
+                'Female' => Person::FEMALE,
+                'Male' => Person::MALE,
+                'Transgender' => Person::TRANS,
+                'Unknown' => Person::UNKNOWN,
             ],
             'attr' => [
                 'help_block' => 'person.search.gender',

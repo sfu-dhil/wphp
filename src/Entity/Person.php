@@ -34,6 +34,8 @@ class Person {
 
     public const UNKNOWN = 'U';
 
+    public const TRANS = 'T';
+
     /**
      * @var int
      *
