@@ -25,3 +25,4 @@ jquery.collection.js
 templates/jquery.collection.html.twig
 public/docs
 public/images/blog
+src/.preload.php
