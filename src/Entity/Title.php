@@ -128,7 +128,7 @@ class Title {
     /**
      * @var string
      *
-     * @ORM\Column(name="colophon", type="string", length=200, nullable=true)
+     * @ORM\Column(name="colophon", type="text", nullable=true)
      */
     private $colophon;
 
@@ -142,7 +142,7 @@ class Title {
     /**
      * @var string
      *
-     * @ORM\Column(name="pagination", type="string", length=100, nullable=true)
+     * @ORM\Column(name="pagination", type="string", length=200, nullable=true)
      */
     private $pagination;
 

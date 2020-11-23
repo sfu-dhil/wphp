@@ -21,6 +21,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Tetranz\Select2EntityBundle\Form\Type\Select2EntityType;
@@ -154,7 +155,7 @@ class TitleType extends AbstractType {
                 'help_block' => 'title.form.copyright',
             ],
         ]);
-        $builder->add('colophon', null, [
+        $builder->add('colophon', TextareaType::class, [
             'label' => 'Colophon',
             'required' => false,
             'attr' => [
