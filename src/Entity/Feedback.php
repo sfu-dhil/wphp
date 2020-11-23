@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use DateTime;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -19,7 +20,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="feedback")
  * @ORM\Entity(repositoryClass="App\Repository\FeedbackRepository")
- * @ORM\HasLifecycleCallbacks()
+ * @ORM\HasLifecycleCallbacks
  */
 class Feedback {
     /**
@@ -43,7 +44,7 @@ class Feedback {
      *
      * @ORM\Column(name="email", type="string", length=255)
      * @Assert\Email(
-     *     message = "The email '{{ value }}' is not a valid email."
+     *     message="The email '{{ value }}' is not a valid email."
      * )
      */
     private $email;
@@ -147,11 +148,11 @@ class Feedback {
     /**
      * Sets the created timestamps.
      *
-     * @ORM\PrePersist()
+     * @ORM\PrePersist
      */
     public function prePersist() : void {
         if ( ! isset($this->created)) {
-            $this->created = new DateTime();
+            $this->created = new DateTimeImmutable();
         }
     }
 

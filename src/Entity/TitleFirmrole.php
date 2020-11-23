@@ -33,7 +33,7 @@ class TitleFirmrole {
      *
      * @ORM\ManyToOne(targetEntity="Title", inversedBy="titleFirmroles")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="title_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
+     *     @ORM\JoinColumn(name="title_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      * })
      */
     private $title;
@@ -43,7 +43,7 @@ class TitleFirmrole {
      *
      * @ORM\ManyToOne(targetEntity="Firm", inversedBy="titleFirmroles")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="firm_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
+     *     @ORM\JoinColumn(name="firm_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      * })
      */
     private $firm;
@@ -53,7 +53,7 @@ class TitleFirmrole {
      *
      * @ORM\ManyToOne(targetEntity="Firmrole")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="firmrole_id", referencedColumnName="id", nullable=false)
+     *     @ORM\JoinColumn(name="firmrole_id", referencedColumnName="id", nullable=false)
      * })
      */
     private $firmrole;
@@ -74,7 +74,7 @@ class TitleFirmrole {
      *
      * @return TitleFirmrole
      */
-    public function setTitle(Title $title = null) {
+    public function setTitle(?Title $title = null) {
         $this->title = $title;
 
         return $this;
@@ -96,7 +96,7 @@ class TitleFirmrole {
      *
      * @return TitleFirmrole
      */
-    public function setFirm(Firm $firm = null) {
+    public function setFirm(?Firm $firm = null) {
         $this->firm = $firm;
 
         return $this;
@@ -118,7 +118,7 @@ class TitleFirmrole {
      *
      * @return TitleFirmrole
      */
-    public function setFirmrole(Firmrole $firmrole = null) {
+    public function setFirmrole(?Firmrole $firmrole = null) {
         $this->firmrole = $firmrole;
 
         return $this;

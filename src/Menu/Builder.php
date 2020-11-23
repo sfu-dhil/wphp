@@ -218,6 +218,7 @@ class Builder implements ContainerAwareInterface {
         $spotlight->setChildrenAttribute('class', 'dropdown-menu');
 
         $repo = $this->em->getRepository(PostCategory::class);
+
         foreach ($this->spotlightMenuItems as $item) {
             $category = $repo->findOneBy([
                 'name' => $item,
@@ -257,9 +258,10 @@ class Builder implements ContainerAwareInterface {
         $research->setChildrenAttribute('class', 'dropdown-menu');
 
         $category = $this->em->getRepository(PostCategory::class)
-            ->findOneBy(['name' => 'research']);
+            ->findOneBy(['name' => 'research'])
+        ;
 
-        if( ! $category) {
+        if ( ! $category) {
             return $research;
         }
 
@@ -278,6 +280,7 @@ class Builder implements ContainerAwareInterface {
         }
 
         $posts = $qb->getQuery()->execute();
+
         foreach ($posts as $post) {
             $research->addChild('r_' . $post->getId(), [
                 'label' => $post->getTitle(),
@@ -297,7 +300,7 @@ class Builder implements ContainerAwareInterface {
             'route' => 'nines_blog_post_category_show',
             'routeParameters' => [
                 'id' => $category->getId(),
-            ]
+            ],
         ]);
 
         return $menu;
@@ -413,7 +416,8 @@ class Builder implements ContainerAwareInterface {
             ->innerJoin(PostCategory::class, 'pc', Join::WITH, 'p.category = pc')
             ->where('pc.name = \'news\'')
             ->orderBy('p.created', 'DESC')
-            ->setMaxResults(10);
+            ->setMaxResults(10)
+        ;
         if ( ! $this->hasRole('ROLE_USER')) {
             $status = $this->em->getRepository('NinesBlogBundle:PostStatus')->findOneBy([
                 'public' => true,
@@ -423,6 +427,7 @@ class Builder implements ContainerAwareInterface {
         }
 
         $posts = $qb->getQuery()->execute();
+
         foreach ($posts as $post) {
             $menu['announcements']->addChild('p_' . $post->getId(), [
                 'label' => $post->getTitle(),

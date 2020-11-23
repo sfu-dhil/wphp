@@ -72,11 +72,11 @@ class PersonTest extends TestCase {
         $titleRole->setRole($role);
         $person->addTitleRole($titleRole);
 
-        $this->AssertEquals(1, count($person->getTitleRoles()));
+        $this->assertCount(1, $person->getTitleRoles());
 
         $person->removeTitleRole($titleRole);
 
-        $this->AssertEquals(0, count($person->getTitleRoles()));
+        $this->assertCount(0, $person->getTitleRoles());
     }
 
     public function testToString() : void {

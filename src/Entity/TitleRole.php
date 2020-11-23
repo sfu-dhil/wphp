@@ -21,9 +21,9 @@ use Doctrine\ORM\Mapping as ORM;
  * }
  *
  * @ORM\Table(name="title_role",
- *  uniqueConstraints={
- *      @ORM\UniqueConstraint(name="titlerole_uniq", columns={"title_id", "person_id", "role_id"})
- *  }
+ *     uniqueConstraints={
+ *         @ORM\UniqueConstraint(name="titlerole_uniq", columns={"title_id", "person_id", "role_id"})
+ *     }
  * )
  * @ORM\Entity
  */
@@ -42,7 +42,7 @@ class TitleRole {
      *
      * @ORM\ManyToOne(targetEntity="Title", inversedBy="titleRoles")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="title_id", referencedColumnName="id")
+     *     @ORM\JoinColumn(name="title_id", referencedColumnName="id")
      * })
      */
     private $title;
@@ -52,7 +52,7 @@ class TitleRole {
      *
      * @ORM\ManyToOne(targetEntity="Person", inversedBy="titleRoles")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="person_id", referencedColumnName="id")
+     *     @ORM\JoinColumn(name="person_id", referencedColumnName="id")
      * })
      */
     private $person;
@@ -62,7 +62,7 @@ class TitleRole {
      *
      * @ORM\ManyToOne(targetEntity="Role")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="role_id", referencedColumnName="id")
+     *     @ORM\JoinColumn(name="role_id", referencedColumnName="id")
      * })
      */
     private $role;
@@ -83,7 +83,7 @@ class TitleRole {
      *
      * @return TitleRole
      */
-    public function setTitle(Title $title = null) {
+    public function setTitle(?Title $title = null) {
         $this->title = $title;
 
         return $this;
@@ -105,7 +105,7 @@ class TitleRole {
      *
      * @return TitleRole
      */
-    public function setPerson(Person $person = null) {
+    public function setPerson(?Person $person = null) {
         $this->person = $person;
 
         return $this;
@@ -127,7 +127,7 @@ class TitleRole {
      *
      * @return TitleRole
      */
-    public function setRole(Role $role = null) {
+    public function setRole(?Role $role = null) {
         $this->role = $role;
 
         return $this;

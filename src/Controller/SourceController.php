@@ -36,7 +36,7 @@ class SourceController extends AbstractController implements PaginatorAwareInter
      * Lists all Source entities.
      *
      * @Route("/", name="source_index", methods={"GET"})
-     * @Template()
+     * @Template
      *
      * @return array
      */
@@ -64,6 +64,7 @@ class SourceController extends AbstractController implements PaginatorAwareInter
             return new JsonResponse([]);
         }
         $data = [];
+
         foreach ($repo->typeaheadQuery($q) as $result) {
             $data[] = [
                 'id' => $result->getId(),
@@ -77,9 +78,9 @@ class SourceController extends AbstractController implements PaginatorAwareInter
     /**
      * Creates a new Source entity.
      *
-     * @Route("/new", name="source_new", methods={"GET","POST"})
+     * @Route("/new", name="source_new", methods={"GET", "POST"})
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
-     * @Template()
+     * @Template
      *
      * @return array|RedirectResponse
      */
@@ -107,7 +108,7 @@ class SourceController extends AbstractController implements PaginatorAwareInter
      * Finds and displays a Source entity.
      *
      * @Route("/{id}", name="source_show", methods={"GET"})
-     * @Template()
+     * @Template
      *
      * @return array
      */
@@ -126,8 +127,8 @@ class SourceController extends AbstractController implements PaginatorAwareInter
     /**
      * Displays a form to edit an existing Source entity.
      *
-     * @Route("/{id}/edit", name="source_edit", methods={"GET","POST"})
-     * @Template()
+     * @Route("/{id}/edit", name="source_edit", methods={"GET", "POST"})
+     * @Template
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
      *
      * @return array|RedirectResponse

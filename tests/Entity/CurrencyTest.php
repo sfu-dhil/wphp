@@ -11,9 +11,6 @@ declare(strict_types=1);
 namespace App\Tests\Entity;
 
 use App\Entity\Currency;
-use App\Entity\Person;
-use App\Entity\Role;
-use App\Entity\TitleRole;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -50,13 +47,18 @@ class CurrencyTest extends TestCase {
 
     /**
      * @dataProvider getData
+     *
+     * @param mixed $code
+     * @param mixed $symbol
+     * @param mixed $name
+     * @param mixed $value
+     * @param mixed $expected
      */
-    public function testFormat($code, $symbol, $name, $value, $expected) {
+    public function testFormat($code, $symbol, $name, $value, $expected) : void {
         $currency = new Currency();
         $currency->setCode($code);
         $currency->setName($name);
         $currency->setSymbol($symbol);
-        $this->assertEquals($expected, $currency->format($value));
+        $this->assertSame($expected, $currency->format($value));
     }
-
 }

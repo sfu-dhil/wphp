@@ -69,10 +69,10 @@ class FirmTest extends TestCase {
         $titleFirmRole->setFirmrole($firmRole);
         $firm->addTitleFirmrole($titleFirmRole);
 
-        $this->AssertEquals(1, count($firm->getTitleFirmroles()));
+        $this->assertCount(1, $firm->getTitleFirmroles());
 
         $firm->removeTitleFirmrole($titleFirmRole);
 
-        $this->AssertEquals(0, count($firm->getTitleFirmroles()));
+        $this->assertCount(0, $firm->getTitleFirmroles());
     }
 }

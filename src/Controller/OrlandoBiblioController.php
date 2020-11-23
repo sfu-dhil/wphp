@@ -37,7 +37,7 @@ class OrlandoBiblioController extends AbstractController implements PaginatorAwa
      * @return array
      *
      * @Route("/", name="resource_orlando_biblio_index", methods={"GET"})
-     * @Template()
+     * @Template
      */
     public function indexAction(Request $request, OrlandoManager $manager, EntityManagerInterface $em) {
         $qb = $em->createQueryBuilder();
@@ -56,7 +56,7 @@ class OrlandoBiblioController extends AbstractController implements PaginatorAwa
      *
      * @return array
      * @Route("/search", name="resource_orlando_biblio_search", methods={"GET"})
-     * @Template()
+     * @Template
      */
     public function searchAction(Request $request, OrlandoManager $manager, OrlandoBiblioRepository $repo) {
         $q = $request->query->get('q');
@@ -80,7 +80,7 @@ class OrlandoBiblioController extends AbstractController implements PaginatorAwa
      * @return array
      *
      * @Route("/{id}", name="resource_orlando_biblio_show", methods={"GET"})
-     * @Template()
+     * @Template
      */
     public function showAction(OrlandoBiblio $orlandoBiblio, OrlandoManager $manager) {
         return [

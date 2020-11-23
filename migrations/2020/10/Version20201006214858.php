@@ -2,6 +2,12 @@
 
 declare(strict_types=1);
 
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace DoctrineMigrations;
 
 use Doctrine\DBAL\Schema\Schema;
@@ -10,15 +16,12 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20201006214858 extends AbstractMigration
-{
-    public function getDescription() : string
-    {
+final class Version20201006214858 extends AbstractMigration {
+    public function getDescription() : string {
         return '';
     }
 
-    public function up(Schema $schema) : void
-    {
+    public function up(Schema $schema) : void {
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql('CREATE TABLE currency (id INT AUTO_INCREMENT NOT NULL, code VARCHAR(3) DEFAULT NULL, name VARCHAR(64) NOT NULL, symbol VARCHAR(4) DEFAULT NULL, description LONGTEXT DEFAULT NULL, created DATETIME NOT NULL, updated DATETIME NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('ALTER TABLE title ADD other_currency_id INT DEFAULT NULL, ADD other_price NUMERIC(7, 2) DEFAULT NULL');
@@ -31,8 +34,7 @@ final class Version20201006214858 extends AbstractMigration
         $this->connection->executeQuery("INSERT INTO currency(code, name, symbol, created, updated) VALUES ('USD', 'American Dollar', '$', now(), now())");
     }
 
-    public function down(Schema $schema) : void
-    {
+    public function down(Schema $schema) : void {
         $this->throwIrreversibleMigrationException();
     }
 }

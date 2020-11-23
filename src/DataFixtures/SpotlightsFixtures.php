@@ -38,6 +38,7 @@ class SpotlightsFixtures extends Fixture implements DependentFixtureInterface, F
             'name' => 'published',
         ]);
         $user = $manager->getRepository(\Nines\UserBundle\Entity\User::class)->find(1);
+
         foreach (SpotlightCategoriesFixtures::DATA as $data) {
             for ($i = 0; $i < 3; $i++) {
                 $category = $manager->getRepository(PostCategory::class)->findOneBy([

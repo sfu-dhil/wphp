@@ -48,7 +48,7 @@ class FormatRepository extends ServiceEntityRepository {
      *
      * @return mixed
      */
-    public function countTitles(Format $format, User $user = null) {
+    public function countTitles(Format $format, ?User $user = null) {
         $qb = $this->_em->createQueryBuilder();
         $qb->select('count(title.id)');
         $qb->andWhere('title.format = :format');

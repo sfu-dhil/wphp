@@ -12,7 +12,7 @@ namespace App\Controller;
 
 use App\Entity\Geonames;
 use App\Repository\GeonamesRepository;
-use DateTime;
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use GeoNames\Client as GeoNamesClient;
@@ -38,7 +38,7 @@ class GeonamesController extends AbstractController implements PaginatorAwareInt
      * Lists all Geonames entities.
      *
      * @Route("/", name="geonames_index", methods={"GET"})
-     * @Template()
+     * @Template
      *
      * @return array
      */
@@ -65,6 +65,7 @@ class GeonamesController extends AbstractController implements PaginatorAwareInt
             return new JsonResponse([]);
         }
         $data = [];
+
         foreach ($repo->typeaheadQuery($q) as $result) {
             $data[] = [
                 'id' => $result->getGeonameid(),
@@ -80,7 +81,7 @@ class GeonamesController extends AbstractController implements PaginatorAwareInt
      *
      * @return array
      * @Route("/search", name="geonames_search", methods={"GET"})
-     * @Template()
+     * @Template
      */
     public function searchAction(Request $request, GeonamesRepository $repo) {
         $q = $request->query->get('q');
@@ -139,6 +140,7 @@ class GeonamesController extends AbstractController implements PaginatorAwareInt
         $user = $this->getParameter('wphp.geonames.username');
         $client = new GeoNamesClient($user);
         $repo = $em->getRepository(Geonames::class);
+
         foreach ($request->request->get('geonameid') as $geonameid) {
             $data = $client->get([
                 'geonameId' => $geonameid,
@@ -154,6 +156,7 @@ class GeonamesController extends AbstractController implements PaginatorAwareInt
             $geoname->setName($data->name);
             $geoname->setAsciiname($data->asciiName);
             $alternateNames = [];
+
             foreach ($data->alternateNames as $name) {
                 if (isset($name->lang) && 'en' !== $name->lang) {
                     continue;
@@ -165,12 +168,12 @@ class GeonamesController extends AbstractController implements PaginatorAwareInt
             $geoname->setLongitude($data->lng);
             $geoname->setFclass($data->fcl);
             $geoname->setFcode($data->fcode);
-            if(isset($data->countryCode)) {
+            if (isset($data->countryCode)) {
                 $geoname->setCountry($data->countryCode);
             }
             $geoname->setPopulation($data->population);
             $geoname->setTimezone($data->timezone->timeZoneId);
-            $geoname->setModdate(new DateTime());
+            $geoname->setModdate(new DateTimeImmutable());
             $em->persist($geoname);
         }
         $em->flush();
@@ -183,7 +186,7 @@ class GeonamesController extends AbstractController implements PaginatorAwareInt
      * Finds and displays a Geonames entity.
      *
      * @Route("/{id}", name="geonames_show", methods={"GET"})
-     * @Template()
+     * @Template
      *
      * @return array
      */
@@ -207,7 +210,7 @@ class GeonamesController extends AbstractController implements PaginatorAwareInt
      * Finds and displays a Geonames entity.
      *
      * @Route("/{id}/titles", name="geonames_titles", methods={"GET"})
-     * @Template()
+     * @Template
      *
      * @return array
      */
@@ -231,7 +234,7 @@ class GeonamesController extends AbstractController implements PaginatorAwareInt
      * Finds and displays a Geonames entity.
      *
      * @Route("/{id}/firms", name="geonames_firms", methods={"GET"})
-     * @Template()
+     * @Template
      *
      * @return array
      */
@@ -251,7 +254,7 @@ class GeonamesController extends AbstractController implements PaginatorAwareInt
      * Finds and displays a Geonames entity.
      *
      * @Route("/{id}/people", name="geonames_people", methods={"GET"})
-     * @Template()
+     * @Template
      *
      * @return array
      */

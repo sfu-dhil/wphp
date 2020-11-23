@@ -16,10 +16,10 @@ use Doctrine\ORM\Mapping as ORM;
  * Jackson.
  *
  * @ORM\Table(name="jackson_biblio",
- *  indexes={
- *      @ORM\Index(name="jackson_jbid_idx", columns={"jbid"}),
- *      @ORM\Index(name="jackson_ft", columns={"author", "title"}, flags={"fulltext"})
- *  }
+ *     indexes={
+ *         @ORM\Index(name="jackson_jbid_idx", columns={"jbid"}),
+ *         @ORM\Index(name="jackson_ft", columns={"author", "title"}, flags={"fulltext"})
+ *     }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\JacksonRepository")
  */

@@ -33,7 +33,7 @@ class ReportController extends AbstractController implements PaginatorAwareInter
      * List titles that need to be final checked.
      *
      * @Route("/titles_fc", name="report_titles_check", methods={"GET"})
-     * @Template()
+     * @Template
      *
      * @return array
      */
@@ -51,7 +51,7 @@ class ReportController extends AbstractController implements PaginatorAwareInter
      * List bad publication dates for titles.
      *
      * @Route("/titles_date", name="report_titles_date", methods={"GET"})
-     * @Template()
+     * @Template
      *
      * @return array
      */
@@ -69,12 +69,12 @@ class ReportController extends AbstractController implements PaginatorAwareInter
      * List firms that have not been checked.
      *
      * @Route("/firms_fc", name="report_firms_fc", methods={"GET"})
-     * @Template()
+     * @Template
      *
      * @return array
      */
     public function firmsFinalCheckAction(Request $request, EntityManagerInterface $em) {
-        $dql = "SELECT e FROM App:Firm e WHERE e.finalcheck != 1";
+        $dql = 'SELECT e FROM App:Firm e WHERE e.finalcheck != 1';
         $query = $em->createQuery($dql);
         $firms = $this->paginator->paginate($query->execute(), $request->query->getInt('page', 1), 25);
 
@@ -87,12 +87,12 @@ class ReportController extends AbstractController implements PaginatorAwareInter
      * List firms that have not been checked.
      *
      * @Route("/persons_fc", name="report_persons_fc", methods={"GET"})
-     * @Template()
+     * @Template
      *
      * @return array
      */
     public function personsFinalCheckAction(Request $request, EntityManagerInterface $em) {
-        $dql = "SELECT e FROM App:Person e WHERE e.finalcheck != 1";
+        $dql = 'SELECT e FROM App:Person e WHERE e.finalcheck != 1';
         $query = $em->createQuery($dql);
         $persons = $this->paginator->paginate($query->execute(), $request->query->getInt('page', 1), 25);
 
@@ -105,7 +105,7 @@ class ReportController extends AbstractController implements PaginatorAwareInter
      * List firms that have not been checked.
      *
      * @Route("/editions", name="report_editions", methods={"GET"})
-     * @Template()
+     * @Template
      *
      * @return array
      */
@@ -116,7 +116,8 @@ class ReportController extends AbstractController implements PaginatorAwareInter
             ->orWhere("title.edition LIKE '%irish%'")
             ->orWhere("title.edition LIKE '%american%'")
             ->orWhere("regexp(title.edition, '[0-9]') = 1")
-            ->orderBy('title.id', 'ASC');
+            ->orderBy('title.id', 'ASC')
+        ;
 
         $titles = $this->paginator->paginate($qb, $request->query->getInt('page', 1), 25);
 

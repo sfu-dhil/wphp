@@ -31,7 +31,7 @@ class DefaultController extends AbstractController implements PaginatorAwareInte
      * Home page.
      *
      * @Route("/", name="homepage")
-     * @Template()
+     * @Template
      *
      * @return array
      */
@@ -53,6 +53,7 @@ class DefaultController extends AbstractController implements PaginatorAwareInte
         $qb->setMaxResults(1);
 
         $spotlights = [];
+
         foreach ($spotlightCategories as $cat) {
             $spotlights[] = $qb->getQuery()->setParameter('category', $cat)->getOneOrNullResult();
         }
@@ -67,7 +68,7 @@ class DefaultController extends AbstractController implements PaginatorAwareInte
      * Privacy page.
      *
      * @Route("/privacy", name="privacy")
-     * @Template()
+     * @Template
      *
      * @return array
      */

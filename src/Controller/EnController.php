@@ -36,7 +36,7 @@ class EnController extends AbstractController implements PaginatorAwareInterface
      * @return array
      *
      * @Route("/", name="resource_en_index", methods={"GET"})
-     * @Template()
+     * @Template
      */
     public function indexAction(Request $request, EntityManagerInterface $em) {
         $qb = $em->createQueryBuilder();
@@ -54,7 +54,7 @@ class EnController extends AbstractController implements PaginatorAwareInterface
      *
      * @return array
      * @Route("/search", name="resource_en_search", methods={"GET"})
-     * @Template()
+     * @Template
      */
     public function searchAction(Request $request, EnRepository $repo) {
         $q = $request->query->get('q');
@@ -78,7 +78,7 @@ class EnController extends AbstractController implements PaginatorAwareInterface
      *
      * @Route("/{id}", name="resource_en_show", methods={"GET"})
      *
-     * @Template()
+     * @Template
      */
     public function showAction(En $en) {
         return [
