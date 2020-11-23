@@ -2,6 +2,12 @@
 
 declare(strict_types=1);
 
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\Entity;
 
 use App\Repository\CurrencyRepository;
@@ -15,12 +21,11 @@ use NumberFormatter;
  * @ORM\Entity(repositoryClass=CurrencyRepository::class)
  */
 class Currency extends AbstractEntity {
-
     /**
      * The 3-letter ISO 4217 currency code indicating the currency to use.
      *
-     * @link https://en.wikipedia.org/wiki/ISO_4217
-     * @link https://www.iso.org/iso-4217-currency-codes.html
+     * @see https://en.wikipedia.org/wiki/ISO_4217
+     * @see https://www.iso.org/iso-4217-currency-codes.html
      *
      * @var string
      * @ORM\Column(type="string", length=3, nullable=true)
@@ -51,73 +56,67 @@ class Currency extends AbstractEntity {
      */
     private $titles;
 
-    /**
-     * @inheritDoc
-     */
-    public function __toString() : string {
-        return $this->name;
-    }
-
     public function __construct() {
         parent::__construct();
         $this->titles = new ArrayCollection();
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function __toString() : string {
+        return $this->name;
+    }
+
     public function format($value) {
-        if($this->code) {
+        if ($this->code) {
             $fmt = new NumberFormatter('en_CA', NumberFormatter::CURRENCY);
+
             return $fmt->formatCurrency($value, $this->code);
         }
         $v = sprintf('%.2f', $value);
-        if($this->symbol) {
+        if ($this->symbol) {
             return $this->symbol . $v;
         }
+
         return $this->name ? $v . ' ' . $this->name : $v;
     }
 
-    public function getCode(): ?string
-    {
+    public function getCode() : ?string {
         return $this->code;
     }
 
-    public function setCode(?string $code): self
-    {
+    public function setCode(?string $code) : self {
         $this->code = $code;
 
         return $this;
     }
 
-    public function getName(): ?string
-    {
+    public function getName() : ?string {
         return $this->name;
     }
 
-    public function setName(string $name): self
-    {
+    public function setName(string $name) : self {
         $this->name = $name;
 
         return $this;
     }
 
-    public function getSymbol(): ?string
-    {
+    public function getSymbol() : ?string {
         return $this->symbol;
     }
 
-    public function setSymbol(?string $symbol): self
-    {
+    public function setSymbol(?string $symbol) : self {
         $this->symbol = $symbol;
 
         return $this;
     }
 
-    public function getDescription(): ?string
-    {
+    public function getDescription() : ?string {
         return $this->description;
     }
 
-    public function setDescription(?string $description): self
-    {
+    public function setDescription(?string $description) : self {
         $this->description = $description;
 
         return $this;
@@ -126,14 +125,12 @@ class Currency extends AbstractEntity {
     /**
      * @return Collection|Title[]
      */
-    public function getTitles(): Collection
-    {
+    public function getTitles() : Collection {
         return $this->titles;
     }
 
-    public function addTitle(Title $title): self
-    {
-        if (!$this->titles->contains($title)) {
+    public function addTitle(Title $title) : self {
+        if ( ! $this->titles->contains($title)) {
             $this->titles[] = $title;
             $title->setOtherCurrency($this);
         }
@@ -141,8 +138,7 @@ class Currency extends AbstractEntity {
         return $this;
     }
 
-    public function removeTitle(Title $title): self
-    {
+    public function removeTitle(Title $title) : self {
         if ($this->titles->contains($title)) {
             $this->titles->removeElement($title);
             // set the owning side to null (unless already changed)
@@ -153,5 +149,4 @@ class Currency extends AbstractEntity {
 
         return $this;
     }
-
 }

@@ -63,7 +63,7 @@ class SourceControllerTest extends ControllerBaseCase {
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $this->assertSame('application/json', $this->client->getResponse()->headers->get('Content-Type'));
         $json = json_decode($this->client->getResponse()->getContent());
-        $this->assertSame(4, count($json));
+        $this->assertCount(4, $json);
     }
 
     public function testAnonShow() : void {

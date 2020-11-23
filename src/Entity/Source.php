@@ -55,7 +55,7 @@ class Source {
     /**
      * @var string
      * @ORM\Column(name="onlinesource", type="string", length=200, nullable=true)
-     * @Assert\Url()
+     * @Assert\Url
      */
     private $onlineSource;
 

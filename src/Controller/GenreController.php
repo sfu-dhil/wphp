@@ -36,7 +36,7 @@ class GenreController extends AbstractController implements PaginatorAwareInterf
      * Lists all Genre entities.
      *
      * @Route("/", name="genre_index", methods={"GET"})
-     * @Template()
+     * @Template
      *
      * @return array
      */
@@ -64,6 +64,7 @@ class GenreController extends AbstractController implements PaginatorAwareInterf
             return new JsonResponse([]);
         }
         $data = [];
+
         foreach ($repo->typeaheadQuery($q) as $result) {
             $data[] = [
                 'id' => $result->getId(),
@@ -79,7 +80,7 @@ class GenreController extends AbstractController implements PaginatorAwareInterf
      *
      * @Route("/new", name="genre_new", methods={"GET", "POST"})
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
-     * @Template()
+     * @Template
      *
      * @return array|RedirectResponse
      */
@@ -107,7 +108,7 @@ class GenreController extends AbstractController implements PaginatorAwareInterf
      * Finds and displays a Genre entity.
      *
      * @Route("/{id}", name="genre_show", methods={"GET"})
-     * @Template()
+     * @Template
      *
      * @return array
      */
@@ -130,9 +131,9 @@ class GenreController extends AbstractController implements PaginatorAwareInterf
     /**
      * Displays a form to edit an existing Genre entity.
      *
-     * @Route("/{id}/edit", name="genre_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="genre_edit", methods={"GET", "POST"})
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
-     * @Template()
+     * @Template
      *
      * @return array|RedirectResponse
      */

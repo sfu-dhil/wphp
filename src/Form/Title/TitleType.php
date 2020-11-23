@@ -256,7 +256,8 @@ class TitleType extends AbstractType {
             'placeholder' => '',
             'query_builder' => function (ServiceEntityRepository $er) {
                 return $er->createQueryBuilder('e')
-                    ->orderBy('e.name', 'ASC');
+                    ->orderBy('e.name', 'ASC')
+                ;
             },
             'attr' => [
                 'help_block' => 'title.form.otherCurrency',

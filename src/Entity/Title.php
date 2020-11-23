@@ -18,20 +18,20 @@ use Doctrine\ORM\Mapping as ORM;
  * Title.
  *
  * @ORM\Table(name="title",
- *  indexes={
- *      @ORM\Index(name="title_title_ft", columns={"title"}, flags={"fulltext"}),
- *      @ORM\Index(name="title_signedauthor_ft", columns={"signed_author"}, flags={"fulltext"}),
- *      @ORM\Index(name="title_pseudonym_idx", columns={"pseudonym"}, flags={"fulltext"}),
- *      @ORM\Index(name="title_imprint_idx", columns={"imprint"}, flags={"fulltext"}),
- *      @ORM\Index(name="title_copyright_idx", columns={"copyright"}, flags={"fulltext"}),
- *      @ORM\Index(name="title_colophon_idx", columns={"colophon"}, flags={"fulltext"}),
- *      @ORM\Index(name="title_shelfmark_idx", columns={"shelfmark"}, flags={"fulltext"}),
- *      @ORM\Index(name="title_notes_idx", columns={"notes"}, flags={"fulltext"}),
- *      @ORM\Index(name="title_price_idx", columns={"price_total"}),
- *     @ORM\Index(name="title_edition_idx", columns={"edition"}, flags={"fulltext"})
- * })
- * @ORM\Entity(repositoryClass="App\Repository\TitleRepository")
- * @ORM\HasLifecycleCallbacks()
+ *     indexes={
+ *         @ORM\Index(name="title_title_ft", columns={"title"}, flags={"fulltext"}),
+ *         @ORM\Index(name="title_signedauthor_ft", columns={"signed_author"}, flags={"fulltext"}),
+ *         @ORM\Index(name="title_pseudonym_idx", columns={"pseudonym"}, flags={"fulltext"}),
+ *         @ORM\Index(name="title_imprint_idx", columns={"imprint"}, flags={"fulltext"}),
+ *         @ORM\Index(name="title_copyright_idx", columns={"copyright"}, flags={"fulltext"}),
+ *         @ORM\Index(name="title_colophon_idx", columns={"colophon"}, flags={"fulltext"}),
+ *         @ORM\Index(name="title_shelfmark_idx", columns={"shelfmark"}, flags={"fulltext"}),
+ *         @ORM\Index(name="title_notes_idx", columns={"notes"}, flags={"fulltext"}),
+ *         @ORM\Index(name="title_price_idx", columns={"price_total"}),
+ *         @ORM\Index(name="title_edition_idx", columns={"edition"}, flags={"fulltext"})
+ *     })
+ *     @ORM\Entity(repositoryClass="App\Repository\TitleRepository")
+ *     @ORM\HasLifecycleCallbacks
  */
 class Title {
     /**
@@ -221,7 +221,7 @@ class Title {
      *
      * @ORM\ManyToOne(targetEntity="Geonames", inversedBy="titles")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="location_of_printing", referencedColumnName="geonameid")
+     *     @ORM\JoinColumn(name="location_of_printing", referencedColumnName="geonameid")
      * })
      */
     private $locationOfPrinting;
@@ -231,7 +231,7 @@ class Title {
      *
      * @ORM\ManyToOne(targetEntity="Format", inversedBy="titles")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="format_id", referencedColumnName="id")
+     *     @ORM\JoinColumn(name="format_id", referencedColumnName="id")
      * })
      */
     private $format;
@@ -241,7 +241,7 @@ class Title {
      *
      * @ORM\ManyToOne(targetEntity="Genre", inversedBy="titles")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="genre_id", referencedColumnName="id")
+     *     @ORM\JoinColumn(name="genre_id", referencedColumnName="id")
      * })
      */
     private $genre;
@@ -405,7 +405,6 @@ class Title {
     public function getImprint() {
         return $this->imprint;
     }
-
 
     /**
      * Set copyright.
@@ -795,7 +794,7 @@ class Title {
      *
      * @return Title
      */
-    public function setLocationOfPrinting(Geonames $locationOfPrinting = null) {
+    public function setLocationOfPrinting(?Geonames $locationOfPrinting = null) {
         $this->locationOfPrinting = $locationOfPrinting;
 
         return $this;
@@ -817,7 +816,7 @@ class Title {
      *
      * @return Title
      */
-    public function setFormat(Format $format = null) {
+    public function setFormat(?Format $format = null) {
         $this->format = $format;
 
         return $this;
@@ -839,7 +838,7 @@ class Title {
      *
      * @return Title
      */
-    public function setGenre(Genre $genre = null) {
+    public function setGenre(?Genre $genre = null) {
         $this->genre = $genre;
 
         return $this;
@@ -1032,25 +1031,21 @@ class Title {
         return $this->titleSources;
     }
 
-    public function getOtherPrice(): ?float
-    {
-        return (float)$this->otherPrice;
+    public function getOtherPrice() : ?float {
+        return (float) $this->otherPrice;
     }
 
-    public function setOtherPrice($otherPrice): self
-    {
-        $this->otherPrice = (float)$otherPrice;
+    public function setOtherPrice($otherPrice) : self {
+        $this->otherPrice = (float) $otherPrice;
 
         return $this;
     }
 
-    public function getOtherCurrency(): ?Currency
-    {
+    public function getOtherCurrency() : ?Currency {
         return $this->otherCurrency;
     }
 
-    public function setOtherCurrency(?Currency $otherCurrency): self
-    {
+    public function setOtherCurrency(?Currency $otherCurrency) : self {
         $this->otherCurrency = $otherCurrency;
 
         return $this;

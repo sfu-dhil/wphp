@@ -33,6 +33,7 @@ class TitleSourceFixtures extends Fixture implements DependentFixtureInterface, 
     public function load(ObjectManager $manager) : void {
         for ($i = 0; $i < 4; $i++) {
             $title = $this->getReference('title.' . $i);
+
             for ($j = 0; $j < 2; $j++) {
                 $fixture = new TitleSource();
                 $fixture->setTitle($title);

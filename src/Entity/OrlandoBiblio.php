@@ -16,10 +16,10 @@ use Doctrine\ORM\Mapping as ORM;
  * OrlandoBiblio.
  *
  * @ORM\Table(name="orlando_biblio",
- *  indexes={
- *      @ORM\Index(name="orlandobiblio_biid_idx", columns={"BI_ID"}),
- *      @ORM\Index(name="orlandobiblio_ft", columns={"AUTHOR", "MONOGRAPHIC_STANDARD_TITLE"}, flags={"fulltext"})
- *  }
+ *     indexes={
+ *         @ORM\Index(name="orlandobiblio_biid_idx", columns={"BI_ID"}),
+ *         @ORM\Index(name="orlandobiblio_ft", columns={"AUTHOR", "MONOGRAPHIC_STANDARD_TITLE"}, flags={"fulltext"})
+ *     }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\OrlandoBiblioRepository")
  */

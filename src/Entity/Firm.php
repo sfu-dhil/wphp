@@ -18,13 +18,13 @@ use Doctrine\ORM\Mapping as ORM;
  * Firm.
  *
  * @ORM\Table(name="firm",
- *  indexes={
- *      @ORM\Index(name="firm_name_ft", columns={"name"}, flags={"fulltext"}),
- *      @ORM\Index(name="firm_address_ft", columns={"street_address"}, flags={"fulltext"}),
- *  },
- *  uniqueConstraints={
- *      @ORM\UniqueConstraint(name="firm_uniq", columns={"name", "city_id", "start_date", "end_date"})
- *  }
+ *     indexes={
+ *         @ORM\Index(name="firm_name_ft", columns={"name"}, flags={"fulltext"}),
+ *         @ORM\Index(name="firm_address_ft", columns={"street_address"}, flags={"fulltext"}),
+ *     },
+ *     uniqueConstraints={
+ *         @ORM\UniqueConstraint(name="firm_uniq", columns={"name", "city_id", "start_date", "end_date"})
+ *     }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\FirmRepository")
  */
@@ -54,7 +54,7 @@ class Firm {
     /**
      * @var string
      *
-     * @ORM\Column(name="gender", type="string", length=1, nullable=false, options={"default"="U"})
+     * @ORM\Column(name="gender", type="string", length=1, nullable=false, options={"default": "U"})
      */
     private $gender;
 
@@ -91,7 +91,7 @@ class Firm {
      *
      * @ORM\ManyToOne(targetEntity="Geonames", inversedBy="firms")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="city_id", referencedColumnName="geonameid")
+     *     @ORM\JoinColumn(name="city_id", referencedColumnName="geonameid")
      * })
      */
     private $city;
@@ -251,7 +251,7 @@ class Firm {
      *
      * @return Firm
      */
-    public function setCity(Geonames $city = null) {
+    public function setCity(?Geonames $city = null) {
         $this->city = $city;
 
         return $this;

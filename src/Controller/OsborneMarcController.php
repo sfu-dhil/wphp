@@ -38,7 +38,7 @@ class OsborneMarcController extends AbstractController implements PaginatorAware
      *
      * @Route("/", name="resource_osborne_index", methods={"GET"})
      *
-     * @Template()
+     * @Template
      */
     public function indexAction(Request $request, MarcManager $manager, OsborneMarcRepository $repo) {
         $query = $repo->indexQuery();
@@ -54,7 +54,7 @@ class OsborneMarcController extends AbstractController implements PaginatorAware
      * Search for OsborneMarc entities.
      *
      * @Route("/search", name="resource_osborne_search", methods={"GET"})
-     * @Template()
+     * @Template
      *
      * @return array
      */
@@ -67,6 +67,7 @@ class OsborneMarcController extends AbstractController implements PaginatorAware
             $titleIds = [];
         }
         $osborneMarcs = [];
+
         foreach ($titleIds as $titleId) {
             $osborneMarcs[] = $repo->findOneBy([
                 'titleId' => $titleId,
@@ -90,7 +91,7 @@ class OsborneMarcController extends AbstractController implements PaginatorAware
      * @Route("/{id}", name="resource_osborne_show", methods={"GET"})
      *
      * @ParamConverter("osborneMarc", options={"mapping": {"id": "titleId"}})
-     * @Template()
+     * @Template
      */
     public function showAction(OsborneMarc $osborneMarc, MarcManager $manager) {
         return [

@@ -45,7 +45,7 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
      *
      * @Route("/", name="title_index", methods={"GET"})
      *
-     * @Template()
+     * @Template
      *
      * @return array
      */
@@ -85,6 +85,7 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
             return new JsonResponse([]);
         }
         $data = [];
+
         foreach ($repo->typeaheadQuery($q) as $result) {
             $data[] = [
                 'id' => $result->getId(),
@@ -113,6 +114,7 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
         $tmpPath = tempnam(sys_get_temp_dir(), 'wphp-export-');
         $fh = fopen($tmpPath, 'w');
         fputcsv($fh, $exporter->titleHeaders());
+
         foreach ($iterator as $row) {
             fputcsv($fh, $exporter->titleRow($row[0]));
         }
@@ -128,7 +130,7 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
      * Full text search for Title entities.
      *
      * @Route("/search", name="title_search", methods={"GET"})
-     * @Template()
+     * @Template
      *
      * @return array
      */
@@ -159,8 +161,8 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
     /**
      * Full text search for Title entities.
      *
-     * @Route("/search/export/{format}", name="title_search_export_csv", methods={"GET"}, requirements={"format"="^csv$"})
-     * @Template()
+     * @Route("/search/export/{format}", name="title_search_export_csv", methods={"GET"}, requirements={"format": "^csv$"})
+     * @Template
      *
      * @return BinaryFileResponse
      */
@@ -174,6 +176,7 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
         $name = '';
         if ($form->isSubmitted() && $form->isValid()) {
             $query = $repo->buildSearchQuery($form->getData(), $this->getUser());
+
             foreach ($query->getParameters() as $param) {
                 $paramValue = $param->getValue();
                 $value = '';
@@ -192,6 +195,7 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
         $tmpPath = tempnam(sys_get_temp_dir(), 'wphp-export-');
         $fh = fopen($tmpPath, 'w');
         fputcsv($fh, $exporter->titleHeaders());
+
         foreach ($titles as $title) {
             fputcsv($fh, $exporter->titleRow($title));
         }
@@ -207,7 +211,7 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
      * Full text search for Title entities.
      *
      * @Route("/search/export/{format}", name="title_search_export", methods={"GET"})
-     * @Template()
+     * @Template
      *
      * @param mixed $format
      *
@@ -234,9 +238,9 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
     /**
      * Creates a new Title entity.
      *
-     * @Route("/new", name="title_new", methods={"GET","POST"})
+     * @Route("/new", name="title_new", methods={"GET", "POST"})
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
-     * @Template()
+     * @Template
      *
      * @return array|RedirectResponse
      */
@@ -257,6 +261,7 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
                 $tr->setTitle($title);
                 $em->persist($tr);
             }
+
             foreach ($title->getTitleSources() as $ts) {
                 $ts->setTitle($title);
                 $em->persist($ts);
@@ -287,6 +292,7 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
      */
     public function importMarcAction(Request $request, EstcMarcImporter $importer, $id) {
         $title = $importer->import($id);
+
         foreach ($importer->getMessages() as $message) {
             $this->addFlash('warning', $message);
         }
@@ -306,7 +312,7 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
      * Finds and displays a Title entity.
      *
      * @Route("/{id}.{_format}", name="title_show", defaults={"_format": "html"}, methods={"GET"})
-     * @Template()
+     * @Template
      *
      * @return array
      */
@@ -324,8 +330,8 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
     /**
      * Displays a form to edit an existing Title entity.
      *
-     * @Route("/{id}/edit", name="title_edit", methods={"GET","POST"})
-     * @Template()
+     * @Route("/{id}/edit", name="title_edit", methods={"GET", "POST"})
+     * @Template
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
      *
      * @return array|RedirectResponse
@@ -333,15 +339,18 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
     public function editAction(Request $request, Title $title, EntityManagerInterface $em) {
         // collect the titleFirmRole objects before modification.
         $titleFirmRoles = new ArrayCollection();
+
         foreach ($title->getTitleFirmroles() as $tfr) {
             $titleFirmRoles->add($tfr);
         }
 
         $titleRoles = new ArrayCollection();
+
         foreach ($title->getTitleroles() as $tr) {
             $titleRoles->add($tr);
         }
         $titleSources = new ArrayCollection();
+
         foreach ($title->getTitleSources() as $ts) {
             $titleSources->add($ts);
         }
@@ -408,8 +417,8 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
     /**
      * Displays a form to edit an existing Title entity.
      *
-     * @Route("/{id}/copy", name="title_copy", methods={"GET","POST"})
-     * @Template()
+     * @Route("/{id}/copy", name="title_copy", methods={"GET", "POST"})
+     * @Template
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
      *
      * @return array
@@ -437,9 +446,11 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
         foreach ($title->getTitleFirmroles() as $tfr) {
             $em->remove($tfr);
         }
+
         foreach ($title->getTitleRoles() as $tr) {
             $em->remove($tr);
         }
+
         foreach ($title->getTitleSources() as $ts) {
             $em->remove($ts);
         }

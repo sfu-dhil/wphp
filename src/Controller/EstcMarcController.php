@@ -37,7 +37,7 @@ class EstcMarcController extends AbstractController implements PaginatorAwareInt
      * @return array
      *
      * @Route("/", name="resource_estc_index", methods={"GET"})
-     * @Template()
+     * @Template
      */
     public function indexAction(Request $request, MarcManager $manager, EstcMarcRepository $repo) {
         $query = $repo->indexQuery();
@@ -54,7 +54,7 @@ class EstcMarcController extends AbstractController implements PaginatorAwareInt
      *
      * @return array
      * @Route("/search", name="resource_estc_search", methods={"GET"})
-     * @Template()
+     * @Template
      */
     public function searchAction(Request $request, MarcManager $manager, EstcMarcRepository $repo) {
         $q = $request->query->get('q');
@@ -65,6 +65,7 @@ class EstcMarcController extends AbstractController implements PaginatorAwareInt
             $titleIds = [];
         }
         $estcMarcs = [];
+
         foreach ($titleIds as $titleId) {
             $estcMarcs[] = $repo->findOneBy([
                 'titleId' => $titleId,
@@ -85,7 +86,7 @@ class EstcMarcController extends AbstractController implements PaginatorAwareInt
      *
      * @return array
      * @Route("/imprint_search", name="resource_estc_search_imprint", methods={"GET"})
-     * @Template()
+     * @Template
      */
     public function imprintSearchAction(Request $request, MarcManager $manager, EstcMarcRepository $repo) {
         $q = $request->query->get('q');
@@ -96,6 +97,7 @@ class EstcMarcController extends AbstractController implements PaginatorAwareInt
             $titleIds = [];
         }
         $estcMarcs = [];
+
         foreach ($titleIds as $titleId) {
             $estcMarcs[] = $repo->findOneBy([
                 'titleId' => $titleId,
@@ -118,7 +120,7 @@ class EstcMarcController extends AbstractController implements PaginatorAwareInt
      *
      * @Route("/{id}", name="resource_estc_show", methods={"GET"})
      * @ParamConverter("estcMarc", options={"mapping": {"id": "titleId"}})
-     * @Template()
+     * @Template
      */
     public function showAction(EstcMarc $estcMarc, MarcManager $manager) {
         return [

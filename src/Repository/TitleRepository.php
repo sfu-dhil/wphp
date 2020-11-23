@@ -30,6 +30,48 @@ class TitleRepository extends ServiceEntityRepository {
     }
 
     /**
+     * @param array $data
+     * @param string $fieldName
+     * @param string $formName
+     */
+    private function fulltextPart(QueryBuilder $qb, $data, $fieldName, $formName) : void {
+        if ( ! isset($data[$formName])) {
+            return;
+        }
+        $term = trim($data[$formName]);
+        if ( ! $term) {
+            return;
+        }
+
+        $m = [];
+        if (preg_match('/^"(.*)"$/u', $term, $m)) {
+            $qb->andWhere("e.{$fieldName} like :{$fieldName}Exact");
+            $qb->setParameter("{$fieldName}Exact", "%{$m[1]}%");
+        } else {
+            $qb->andWhere("MATCH (e.{$fieldName}) AGAINST(:{$fieldName} BOOLEAN) > 0");
+            $qb->setParameter($fieldName, $term);
+        }
+    }
+
+    /**
+     * @param QueryBuilder $qb
+     * @param array $data
+     * @param string $fieldName
+     * @param string $formName
+     */
+    private function arrayPart($qb, $data, $fieldName, $formName) : void {
+        if ( ! isset($data[$formName]) || ! is_array($data[$formName])) {
+            return;
+        }
+        $list = $data[$formName];
+        if ( ! count($list)) {
+            return;
+        }
+        $qb->andWhere("e.{$fieldName} IN (:{$fieldName})");
+        $qb->setParameter($fieldName, $list);
+    }
+
+    /**
      * Do a name search for a typeahead query.
      *
      * @param string $q
@@ -45,49 +87,6 @@ class TitleRepository extends ServiceEntityRepository {
         $qb->setParameter('q', "%{$q}%");
 
         return $qb->getQuery()->execute();
-    }
-
-    /**
-     * @param QueryBuilder $qb
-     * @param array $data
-     * @param string $fieldName
-     * @param string $formName
-     */
-    private function fulltextPart(QueryBuilder $qb, $data, $fieldName, $formName) {
-        if( ! isset($data[$formName])) {
-            return;
-        }
-        $term = trim($data[$formName]);
-        if( ! $term) {
-            return;
-        }
-
-        $m = [];
-        if(preg_match('/^"(.*)"$/u', $term, $m)) {
-            $qb->andWhere("e.{$fieldName} like :{$fieldName}Exact");
-            $qb->setParameter("{$fieldName}Exact", "%{$m[1]}%");
-        } else {
-            $qb->andWhere("MATCH (e.{$fieldName}) AGAINST(:{$fieldName} BOOLEAN) > 0");
-            $qb->setParameter($fieldName, $term);
-        }
-    }
-
-    /**
-     * @param QueryBuilder $qb
-     * @param array $data
-     * @param string $fieldName
-     * @param string $formName
-     */
-    private function arrayPart($qb, $data, $fieldName, $formName) {
-        if( ! isset($data[$formName]) || ! is_array($data[$formName])) {
-            return;
-        }
-        $list = $data[$formName];
-        if( ! count($list)) {
-            return;
-        }
-        $qb->andWhere("e.{$fieldName} IN (:{$fieldName})");
-        $qb->setParameter($fieldName, $list);
     }
 
     /**
