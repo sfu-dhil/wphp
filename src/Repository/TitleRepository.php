@@ -153,9 +153,14 @@ class TitleRepository extends ServiceEntityRepository {
             $qb->andWhere('e.id = :id');
             $qb->setParameter('id', $data['id']);
         }
-        if (isset($data['editionNumber']) && $data['editionNumber']) {
-            $qb->andWhere('e.editionNumber = :editionNumber');
-            $qb->setParameter('editionNumber', $data['editionNumber']);
+        if (isset($data['edition']) && $data['edition']) {
+            if (preg_match('/^\s*[0-9]+\s*$/', $data['edition'])) {
+                $qb->andWhere('e.editionNumber = :editionNumber');
+                $qb->setParameter('editionNumber', $data['editionNumber']);
+            } else {
+                $qb->andWhere('MATCH(e.edition) AGAINST(:edition) > 0');
+                $qb->setParameter('edition', $data['edition']);
+            }
         }
         if (isset($data['volumes']) && $data['volumes']) {
             $qb->andWhere('e.volumes = :volumes');
