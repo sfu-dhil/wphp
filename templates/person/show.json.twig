@@ -4,23 +4,23 @@
         {
             "@type": "Person",
             "givenName": "{{ person.firstName}}",
-            "familyName":"{{ person.lastName}}",
-            "sameAs":[
+            "familyName": "{{ person.lastName}}",
+            "sameAs": [
                 "{{ person.wikipediaUrl}}",
                 "{{ person.viafUrl}}"
             ],
-            "birthDate":"{{person.dob}}",
-            "deathDate":"{{person.dob}}",
-            "birthPlace":"{{person.cityOfBirth}}",
-            "deathPlace":"{{person.cityOfDeath}}",
-            "@id": "{{ person.id }}"
+            "birthDate": "{{person.dob}}",
+            "deathDate": "{{person.dod}}",
+            "birthPlace": "{{person.cityOfBirth}}",
+            "deathPlace": "{{person.cityOfDeath}}",
+            "@id": "{{ url('person_show', {'id':person.id}) }}"
         },
-        {% for titleRole in person.getTitleRoles("Author") %}{% set book = titleRole.title %}{
-            "@type": "book",
-            "@id":"{{book.id}}",
-            "name":"{{book.title}}",
-            "Genre":"{{book.genre}}",
-            "datePublished":"{{book.pubdate}}",
+            {% for titleRole in person.getTitleRoles("Author") %}{% set book = titleRole.title %}{
+            "@type": "Book",
+            "@id": "{{ url('title_show', {'id':book.id}) }}",
+            "name": "{{book.title}}",
+            "genre": "{{book.genre}}",
+            "datePublished": "{{book.pubdate}}",
             "locationCreated": {
                 "@type": "Place",
                 "name": "{{book.locationOfPrinting}}",
@@ -31,21 +31,33 @@
                 }
             },
             "author": [
-            {% for titleRole in book.getTitleRoles("Author") %}{% set author = titleRole.person %}  {
-                "@id":"{{ url('person_show', {'id':author.id}) }}"
-              },
-            {% endfor %}],
+                {% for titleRole in book.getTitleRoles("Author") %}{% set author = titleRole.person %}
+                {
+                    "@id": "{{ url('person_show', {'id':author.id}) }}"
+                }
+                {% if not loop.last %},
+                {% endif %}
 
+                {% endfor %}
+            ],
             "publisher": [
-            {% for titleFirmrole in book.getTitleFirmroles("Publisher") %}{% set firm = titleFirmrole.firm %}  {
-                "@type":"Organization",
-                "name":"{{firm.name}}",
-                "@id":"{{ url('firm_show', {'id':firm.id}) }}",
-                "address": "{{ firm.streetAddress }}"
-              }
-            {% endfor %}]
+                {% for titleFirmrole in book.getTitleFirmroles("Publisher") %}{% set firm = titleFirmrole.firm %}
+                {
+                    "@type": "Organization",
+                    "name": "{{firm.name}}",
+                    "@id": "{{ url('firm_show', {'id':firm.id}) }}",
+                    "address": "{{ firm.streetAddress }}"
+                }
+                {% if not loop.last %},
+                {% endif %}
+
+                {% endfor %}
+            ]
         }
+        {% if not loop.last %},
+        {% endif %}
+
         {% endfor %}
-      ]
+    ]
 }
 
