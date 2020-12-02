@@ -1,0 +1,46 @@
+{
+    "@context": "http://schema.org/",
+    "@type": "Book",
+    "@id": "{{ url('title_show', {'id':title.id}) }}",
+    "name": "{{title.title}}",
+    "datePublished": "{{title.pubdate}}",
+    "locationCreated": {
+        "@type": "Place",
+        "name": "{{title.locationOfPrinting}}",
+        "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": "{{title.locationOfPrinting.latitude}}",
+            "longitude": "{{title.locationOfPrinting.longitude}}"
+        }
+    },
+    "publisherImprint": "{{title.locationOfPrinting.longitude}}",
+    "author": [
+            {% for titleRole in title.getTitleRoles("Author") %}{% set author = titleRole.person %}{
+            "@type": "Person",
+            "name": "{{ author.firstName }} {{ author.lastName }}",
+            "id": "{{ url('person_show', {'id':author.id}) }}"
+        }
+        {% if not loop.last %},
+        {% endif %}
+        {% endfor %}
+    ],
+    "publisher": [
+        {% for titleFirmrole in title.getTitleFirmroles("Publisher") %}{% set firm = titleFirmrole.firm %}
+        {
+            "@type": "Organization",
+            "name": "{{ firm.name }}",
+            "foundingDate": "{{ firm.startDate }}",
+            "dissolutionDate": "{{ firm.endDate }}",
+            "@id": "{{ url('firm_show', {'id':firm.id}) }}",
+            "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "{{ firm.city }}",
+                "streetAddress": "{{ firm.streetAddress }}"
+            }
+        }
+        {% if not loop.last %},
+        {% endif %}
+        {% endfor %}
+    ]
+}
+
