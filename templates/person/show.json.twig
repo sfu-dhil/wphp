@@ -2,61 +2,69 @@
     "@context": "https://schema.org",
     "@graph": [
         {
-            "@type": "Person",
-            "givenName": "{{ person.firstName}}",
-            "familyName": "{{ person.lastName}}",
-            "sameAs": [
-                "{{ person.wikipediaUrl}}",
-                "{{ person.viafUrl}}"
-            ],
-            "birthDate": "{{person.dob}}",
-            "deathDate": "{{person.dod}}",
-            "birthPlace": "{{person.cityOfBirth}}",
-            "deathPlace": "{{person.cityOfDeath}}",
-            "@id": "{{ url('person_show', {'id':person.id}) }}"
-        },
-            {% for titleRole in person.getTitleRoles("Author") %}{% set book = titleRole.title %}{
-            "@type": "Book",
-            "@id": "{{ url('title_show', {'id':book.id}) }}",
-            "name": "{{book.title}}",
-            "genre": "{{book.genre}}",
-            "datePublished": "{{book.pubdate}}",
-            "locationCreated": {
-                "@type": "Place",
-                "name": "{{book.locationOfPrinting}}",
-                "geo": {
-                    "@type": "GeoCoordinates",
-                    "latitude": "{{book.locationOfPrinting.latitude}}",
-                    "longitude": "{{book.locationOfPrinting.longitude}}"
-                }
-            },
-            "author": [
-                {% for titleRole in book.getTitleRoles("Author") %}{% set author = titleRole.person %}
-                {
-                    "@id": "{{ url('person_show', {'id':author.id}) }}"
-                }
-                {% if not loop.last %},
-                {% endif %}
-
-                {% endfor %}
-            ],
-            "publisher": [
-                {% for titleFirmrole in book.getTitleFirmroles("Publisher") %}{% set firm = titleFirmrole.firm %}
-                {
-                    "@type": "Organization",
-                    "name": "{{firm.name}}",
-                    "@id": "{{ url('firm_show', {'id':firm.id}) }}",
-                    "address": "{{ firm.streetAddress }}"
-                }
-                {% if not loop.last %},
-                {% endif %}
-
-                {% endfor %}
+            "@type": "Person"
+            {% if person.firstname %},"givenName": "{{ person.firstName}}" {% endif %}
+            {% if person.lastName %},"familyName": "{{ person.lastName}}" {% endif %}
+            ,"gender": "{{ person.gender }}"
+            {% if (person.wikipediaUrl) or (person.viafUrl) %}
+            ,"sameAs": [
+                {% if person.wikipediaUrl %} "{{ person.wikipediaUrl}}"{% endif %}
+                {% if (person.wikipediaUrl) and (person.viafUrl) %} , {% endif %}
+                {% if person.viafUrl %} "{{ person.viafUrl}}" {% endif %}
             ]
+            {% endif %}
+            {% if person.dob %},"birthDate": "{{person.dob}}" {% endif %}
+            {% if person.dod %}, "deathDate": "{{person.dod}}" {% endif %}
+            {% if person.cityOfBirth %}, "birthPlace": "{{person.cityOfBirth}}" {% endif %}
+            {% if person.cityOfDeath %}, "deathPlace": "{{person.cityOfDeath}}" {% endif %}
+            ,"@id": "{{ url('person_show', {'id':person.id}) }}"
         }
-        {% if not loop.last %},
-        {% endif %}
+        {% for titleRole in person.getTitleRoles("Author") %}
+         {% if titleRole.getRole.getName == "Author" %}
+                {% set book = titleRole.title %}
+                {% if book %}
+                ,{
+                    "@type": "Book",
+                    "@id": "{{ url('title_show', {'id':book.id}) }}" ,
+                    "name": "{{book.title}}"
+                    {% if book.genre %} ,"genre": "{{book.genre}}" {% endif %}
+                    {% if book.pubdate %},"datePublished": "{{book.pubdate}}" {% endif %},
+                    "locationCreated": {
+                        "@type": "Place"
+                        {% if book.locationOfPrinting %}, "name": "{{book.locationOfPrinting}}" {% endif %},
+                        "geo": {
+                            "@type": "GeoCoordinates",
+                            "latitude": "{{book.locationOfPrinting.latitude}}",
+                            "longitude": "{{book.locationOfPrinting.longitude}}"
+                        }
+                    }
+                     ,"author": [
+                        {% for titleRole in book.getTitleRoles("Author") %}{% set author = titleRole.person %}
+                        {
+                            "@id": "{{ url('person_show', {'id':author.id}) }}"
+                        }
+                        {% if not loop.last %},
+                        {% endif %}
 
+                        {% endfor %}
+                        ]
+
+                    ,"publisher": [
+                        {% for titleFirmrole in book.getTitleFirmroles("Publisher") %}{% set firm = titleFirmrole.firm %}
+                        {
+                            "@type": "Organization"
+                            {% if firm.name %}, "name": "{{firm.name}}" {% endif %},
+                            "@id": "{{ url('firm_show', {'id':firm.id}) }}"
+                            {% if firm.streetAddress %}, "address": "{{ firm.streetAddress }}" {% endif %}
+                        }
+                        {% if not loop.last %},
+                        {% endif %}
+
+                        {% endfor %}
+                        ]
+                }
+            {% endif %}
+        {% endif %}
         {% endfor %}
     ]
 }

@@ -2,22 +2,22 @@
     "@context": "http://schema.org/",
     "@type": "Book",
     "@id": "{{ url('title_show', {'id':title.id}) }}",
-    "name": "{{title.title}}",
-    "datePublished": "{{title.pubdate}}",
+    "name": "{{title.title}}"
+    {% if title.pubdate %}, "datePublished": "{{title.pubdate}}" {% endif %},
     "locationCreated": {
-        "@type": "Place",
-        "name": "{{title.locationOfPrinting}}",
+        "@type": "Place"
+        {% if title.locationOfPrinting %}, "name": "{{title.locationOfPrinting}}" {% endif %},
         "geo": {
             "@type": "GeoCoordinates",
             "latitude": "{{title.locationOfPrinting.latitude}}",
             "longitude": "{{title.locationOfPrinting.longitude}}"
         }
-    },
-    "publisherImprint": "{{title.locationOfPrinting.longitude}}",
+    }
+    {% if title.locationOfPrinting %}, "publisherImprint": "{{title.imprint}}" {% endif %},
     "author": [
             {% for titleRole in title.getTitleRoles("Author") %}{% set author = titleRole.person %}{
-            "@type": "Person",
-            "name": "{{ author.firstName }} {{ author.lastName }}",
+            "@type": "Person"
+            {% if (author.firstName) and (author.lastName) %}, "name": "{{ author.firstName }} {{ author.lastName }}"  {% endif %},
             "id": "{{ url('person_show', {'id':author.id}) }}"
         }
         {% if not loop.last %},
@@ -27,15 +27,15 @@
     "publisher": [
         {% for titleFirmrole in title.getTitleFirmroles("Publisher") %}{% set firm = titleFirmrole.firm %}
         {
-            "@type": "Organization",
-            "name": "{{ firm.name }}",
-            "foundingDate": "{{ firm.startDate }}",
-            "dissolutionDate": "{{ firm.endDate }}",
+            "@type": "Organization"
+            {% if firm.name %}, "name": "{{firm.name}}" {% endif %}
+            {% if firm.startDate %}, "foundingDate": "{{ firm.startDate }}" {% endif %}
+            {% if firm.endDate %}  ,"dissolutionDate": "{{ firm.endDate }}" {% endif %},
             "@id": "{{ url('firm_show', {'id':firm.id}) }}",
             "address": {
-                "@type": "PostalAddress",
-                "addressLocality": "{{ firm.city }}",
-                "streetAddress": "{{ firm.streetAddress }}"
+                "@type": "PostalAddress"
+                {% if firm.city %},"addressLocality": "{{ firm.city }}" {% endif %}
+                {% if firm.streetAddress %}, "streetAddress": "{{ firm.streetAddress }}" {% endif %}
             }
         }
         {% if not loop.last %},
