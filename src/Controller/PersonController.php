@@ -42,7 +42,7 @@ class PersonController extends AbstractController implements PaginatorAwareInter
      *
      * @Route("/", name="person_index", methods={"GET"})
      *
-     * @Template()
+     * @Template
      *
      * @return array
      */
@@ -78,6 +78,7 @@ class PersonController extends AbstractController implements PaginatorAwareInter
             return new JsonResponse([]);
         }
         $data = [];
+
         foreach ($repo->typeaheadQuery($q) as $result) {
             $data[] = [
                 'id' => $result->getId(),
@@ -91,8 +92,8 @@ class PersonController extends AbstractController implements PaginatorAwareInter
     /**
      * Full text search for Person entities.
      *
-     * @Route("/search/export/{format}", name="person_search_export", methods={"GET"}, requirements={"format"="^csv$"})
-     * @Template()
+     * @Route("/search/export/{format}", name="person_search_export", methods={"GET"}, requirements={"format": "^csv$"})
+     * @Template
      *
      * @return BinaryFileResponse
      */
@@ -104,6 +105,7 @@ class PersonController extends AbstractController implements PaginatorAwareInter
         $name = '';
         if ($form->isSubmitted()) {
             $query = $repo->buildSearchQuery($form->getData());
+
             foreach ($query->getParameters() as $param) {
                 $paramValue = $param->getValue();
                 $value = '';
@@ -121,6 +123,7 @@ class PersonController extends AbstractController implements PaginatorAwareInter
         $tmpPath = tempnam(sys_get_temp_dir(), 'wphp-export-');
         $fh = fopen($tmpPath, 'w');
         fputcsv($fh, $exporter->personHeaders());
+
         foreach ($persons as $person) {
             fputcsv($fh, $exporter->personRow($person));
         }
@@ -137,7 +140,7 @@ class PersonController extends AbstractController implements PaginatorAwareInter
      * Full text search for Person entities.
      *
      * @Route("/search", name="person_search", methods={"GET"})
-     * @Template()
+     * @Template
      *
      * @return array
      */
@@ -165,7 +168,7 @@ class PersonController extends AbstractController implements PaginatorAwareInter
      *
      * @Route("/jump", name="person_jump", methods={"GET"})
      *
-     * @Template()
+     * @Template
      *
      * @return array
      */
@@ -181,8 +184,8 @@ class PersonController extends AbstractController implements PaginatorAwareInter
     /**
      * Exports a person's titles in CSV.
      *
-     * @Route("/{id}/export/{format}", name="person_export_csv", methods={"GET","POST"}, requirements={"format" = "^csv$"})
-     * @Template()
+     * @Route("/{id}/export/{format}", name="person_export_csv", methods={"GET", "POST"}, requirements={"format": "^csv$"})
+     * @Template
      *
      * @return BinaryFileResponse
      */
@@ -199,6 +202,7 @@ class PersonController extends AbstractController implements PaginatorAwareInter
         $tmpPath = tempnam(sys_get_temp_dir(), 'wphp-export-');
         $fh = fopen($tmpPath, 'w');
         fputcsv($fh, array_merge($exporter->personHeaders(), ['Role'], $exporter->titleHeaders()));
+
         foreach ($titleRoles as $role) {
             fputcsv($fh, array_merge($exporter->personRow($person), [$role->getRole()->getName()], $exporter->titleRow($role->getTitle())));
         }
@@ -214,8 +218,8 @@ class PersonController extends AbstractController implements PaginatorAwareInter
     /**
      * Exports a person's titles in a format.
      *
-     * @Route("/{id}/export/{format}", name="person_export", methods={"GET","POST"})
-     * @Template()
+     * @Route("/{id}/export/{format}", name="person_export", methods={"GET", "POST"})
+     * @Template
      *
      * @param mixed $format
      *
@@ -241,9 +245,9 @@ class PersonController extends AbstractController implements PaginatorAwareInter
     /**
      * Creates a new Person entity.
      *
-     * @Route("/new", name="person_new", methods={"GET","POST"})
+     * @Route("/new", name="person_new", methods={"GET", "POST"})
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
-     * @Template()
+     * @Template
      *
      * @return array|RedirectResponse
      */
@@ -303,7 +307,7 @@ class PersonController extends AbstractController implements PaginatorAwareInter
      * Finds and displays a Person entity.
      *
      * @Route("/{id}.{_format}", name="person_show", defaults={"_format": "html"}, methods={"GET"})
-     * @Template()
+     * @Template
      *
      * @return array
      */
@@ -402,10 +406,10 @@ class PersonController extends AbstractController implements PaginatorAwareInter
     /**
      * Displays a form to edit an existing Person entity.
      *
-     * @Route("/{id}/edit", name="person_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="person_edit", methods={"GET", "POST"})
      *
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
-     * @Template()
+     * @Template
      *
      * @return array
      */

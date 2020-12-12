@@ -36,7 +36,7 @@ class RoleController extends AbstractController implements PaginatorAwareInterfa
      * Lists all Role entities.
      *
      * @Route("/", name="role_index", methods={"GET"})
-     * @Template()
+     * @Template
      *
      * @return array
      */
@@ -63,6 +63,7 @@ class RoleController extends AbstractController implements PaginatorAwareInterfa
             return new JsonResponse([]);
         }
         $data = [];
+
         foreach ($repo->typeaheadQuery($q) as $result) {
             $data[] = [
                 'id' => $result->getId(),
@@ -76,10 +77,10 @@ class RoleController extends AbstractController implements PaginatorAwareInterfa
     /**
      * Creates a new Role entity.
      *
-     * @Route("/new", name="role_new", methods={"GET","POST"})
+     * @Route("/new", name="role_new", methods={"GET", "POST"})
      *
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
-     * @Template()
+     * @Template
      *
      * @return array
      */
@@ -107,7 +108,7 @@ class RoleController extends AbstractController implements PaginatorAwareInterfa
      * Finds and displays a Role entity.
      *
      * @Route("/{id}", name="role_show", methods={"GET"})
-     * @Template()
+     * @Template
      *
      * @return array
      */
@@ -126,9 +127,9 @@ class RoleController extends AbstractController implements PaginatorAwareInterfa
     /**
      * Displays a form to edit an existing Role entity.
      *
-     * @Route("/{id}/edit", name="role_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="role_edit", methods={"GET", "POST"})
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
-     * @Template()
+     * @Template
      *
      * @return array|RedirectResponse
      */

@@ -11,7 +11,7 @@ declare(strict_types=1);
 namespace App\DataFixtures;
 
 use App\Entity\Geonames;
-use DateTime;
+use DateTimeImmutable;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -51,7 +51,7 @@ class GeonamesFixtures extends Fixture implements FixtureGroupInterface {
             $fixture->setElevation($i);
             $fixture->setGtopo30($i);
             $fixture->setTimezone('Z+' . $i);
-            $fixture->setModdate(new DateTime());
+            $fixture->setModdate(new DateTimeImmutable());
 
             $manager->persist($fixture);
             $this->setReference('geonames.' . $i, $fixture);

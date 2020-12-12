@@ -69,11 +69,11 @@ class TitleTest extends TestCase {
         $titleRole->setRole($role);
         $title->addTitleRole($titleRole);
 
-        $this->AssertEquals(1, count($title->getTitleRoles()));
+        $this->assertCount(1, $title->getTitleRoles());
 
         $title->removeTitleRole($titleRole);
 
-        $this->AssertEquals(0, count($title->getTitleRoles()));
+        $this->assertCount(0, $title->getTitleRoles());
     }
 
     public function testGetTitleFirmRoles() : void {
@@ -87,10 +87,10 @@ class TitleTest extends TestCase {
         $titleFirmRole->setFirmrole($firmRole);
         $title->addTitleFirmrole($titleFirmRole);
 
-        $this->AssertEquals(1, count($title->getTitleFirmroles()));
+        $this->assertCount(1, $title->getTitleFirmroles());
 
         $title->removeTitleFirmrole($titleFirmRole);
 
-        $this->AssertEquals(0, count($title->getTitleFirmroles()));
+        $this->assertCount(0, $title->getTitleFirmroles());
     }
 }

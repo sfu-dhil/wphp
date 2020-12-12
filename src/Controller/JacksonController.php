@@ -37,7 +37,7 @@ class JacksonController extends AbstractController implements PaginatorAwareInte
      *
      * @Route("/", name="resource_jackson_index", methods={"GET"})
      *
-     * @Template()
+     * @Template
      */
     public function indexAction(Request $request, EntityManagerInterface $em) {
         $qb = $em->createQueryBuilder();
@@ -55,7 +55,7 @@ class JacksonController extends AbstractController implements PaginatorAwareInte
      *
      * @return array
      * @Route("/search", name="resource_jackson_search", methods={"GET"})
-     * @Template()
+     * @Template
      */
     public function searchAction(Request $request, JacksonRepository $repo) {
         $q = $request->query->get('q');
@@ -79,7 +79,7 @@ class JacksonController extends AbstractController implements PaginatorAwareInte
      *
      * @Route("/{id}", name="resource_jackson_show", methods={"GET"})
      *
-     * @Template()
+     * @Template
      */
     public function showAction(Jackson $jackson) {
         return [

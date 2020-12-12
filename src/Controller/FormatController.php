@@ -36,7 +36,7 @@ class FormatController extends AbstractController implements PaginatorAwareInter
      * Lists all Format entities.
      *
      * @Route("/", name="format_index", methods={"GET"})
-     * @Template()
+     * @Template
      *
      * @return array
      */
@@ -64,6 +64,7 @@ class FormatController extends AbstractController implements PaginatorAwareInter
             return new JsonResponse([]);
         }
         $data = [];
+
         foreach ($repo->typeaheadQuery($q) as $result) {
             $data[] = [
                 'id' => $result->getId(),
@@ -79,7 +80,7 @@ class FormatController extends AbstractController implements PaginatorAwareInter
      *
      * @Route("/new", name="format_new", methods={"GET", "POST"})
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
-     * @Template()
+     * @Template
      *
      * @return array|RedirectResponse
      */
@@ -107,7 +108,7 @@ class FormatController extends AbstractController implements PaginatorAwareInter
      * Finds and displays a Format entity.
      *
      * @Route("/{id}", name="format_show", methods={"GET"})
-     * @Template()
+     * @Template
      *
      * @return array
      */
@@ -131,9 +132,9 @@ class FormatController extends AbstractController implements PaginatorAwareInter
     /**
      * Displays a form to edit an existing Format entity.
      *
-     * @Route("/{id}/edit", name="format_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="format_edit", methods={"GET", "POST"})
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
-     * @Template()
+     * @Template
      *
      * @return array|RedirectResponse
      */

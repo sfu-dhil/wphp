@@ -19,13 +19,13 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Person.
  *
  * @ORM\Table(name="person",
- *  indexes={
- *      @ORM\Index(name="person_full_idx", columns={"last_name", "first_name", "title"}, flags={"fulltext"}),
- *      @ORM\Index(name="person_viaf_idx", columns={"viaf_permalink"}, flags={"fulltext"}),
- *      @ORM\Index(name="person_wikipedia_idx", columns={"wikipedia_link"}, flags={"fulltext"}),
- *      @ORM\Index(name="person_image_idx", columns={"image_link"}, flags={"fulltext"}),
- * })
- * @ORM\Entity(repositoryClass="App\Repository\PersonRepository")
+ *     indexes={
+ *         @ORM\Index(name="person_full_idx", columns={"last_name", "first_name", "title"}, flags={"fulltext"}),
+ *         @ORM\Index(name="person_viaf_idx", columns={"viaf_permalink"}, flags={"fulltext"}),
+ *         @ORM\Index(name="person_wikipedia_idx", columns={"wikipedia_link"}, flags={"fulltext"}),
+ *         @ORM\Index(name="person_image_idx", columns={"image_link"}, flags={"fulltext"}),
+ *     })
+ *     @ORM\Entity(repositoryClass="App\Repository\PersonRepository")
  */
 class Person {
     public const MALE = 'M';
@@ -69,7 +69,7 @@ class Person {
     /**
      * @var string
      *
-     * @ORM\Column(name="gender", type="string", length=1, nullable=false, options={"default"="U"})
+     * @ORM\Column(name="gender", type="string", length=1, nullable=false, options={"default": "U"})
      */
     private $gender;
 
@@ -123,7 +123,7 @@ class Person {
      *
      * @ORM\ManyToOne(targetEntity="Geonames", inversedBy="peopleBorn")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="city_id_of_birth", referencedColumnName="geonameid")
+     *     @ORM\JoinColumn(name="city_id_of_birth", referencedColumnName="geonameid")
      * })
      */
     private $cityOfBirth;
@@ -133,7 +133,7 @@ class Person {
      *
      * @ORM\ManyToOne(targetEntity="Geonames", inversedBy="peopleDied")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="city_id_of_death", referencedColumnName="geonameid")
+     *     @ORM\JoinColumn(name="city_id_of_death", referencedColumnName="geonameid")
      * })
      */
     private $cityOfDeath;
@@ -337,7 +337,7 @@ class Person {
      *
      * @return Person
      */
-    public function setCityOfBirth(Geonames $cityOfBirth = null) {
+    public function setCityOfBirth(?Geonames $cityOfBirth = null) {
         $this->cityOfBirth = $cityOfBirth;
 
         return $this;
@@ -359,7 +359,7 @@ class Person {
      *
      * @return Person
      */
-    public function setCityOfDeath(Geonames $cityOfDeath = null) {
+    public function setCityOfDeath(?Geonames $cityOfDeath = null) {
         $this->cityOfDeath = $cityOfDeath;
 
         return $this;

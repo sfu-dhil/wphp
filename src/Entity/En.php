@@ -17,12 +17,12 @@ use Symfony\Component\Validator\Constraints as Assert;
  * English Novel bibliographic entry.
  *
  * @ORM\Table(name="en",
- *  indexes={
- *      @ORM\Index(name="en_ft", columns={"author","title"}, flags={"fulltext"})
- *  },
- *  uniqueConstraints={
- *      @ORM\UniqueConstraint(name="en_enid_uniq", columns={"en_id"})
- *  }
+ *     indexes={
+ *         @ORM\Index(name="en_ft", columns={"author", "title"}, flags={"fulltext"})
+ *     },
+ *     uniqueConstraints={
+ *         @ORM\UniqueConstraint(name="en_enid_uniq", columns={"en_id"})
+ *     }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\EnRepository")
  */

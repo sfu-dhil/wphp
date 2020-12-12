@@ -25,17 +25,19 @@ class OrlandoManager {
      * @return array
      */
     public function getField($data, $name = 'standard') {
-        $name = strtolower($name);
+        $name = mb_strtolower($name);
         $fields = [];
         if ( ! $data) {
             return $fields;
         }
         $records = explode(' %%% ', $data);
+
         foreach ($records as $record) {
             $rows = explode(self::DELIM, $record);
+
             foreach ($rows as $row) {
                 list($key, $value) = explode(' = ', $row);
-                if (strtolower($key) === $name) {
+                if (mb_strtolower($key) === $name) {
                     $fields[] = $value;
                 }
             }

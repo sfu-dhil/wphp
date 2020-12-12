@@ -21,12 +21,12 @@ use Doctrine\ORM\Mapping as ORM;
  * index on a text column. So create it manually.
  *
  * @ORM\Table(name="estc_fields",
- *  indexes={
- *      @ORM\Index(name="estcmarc_cid_idx", columns={"cid"}),
- *      @ORM\Index(name="estcmarc_data_ft", columns={"field_data"}, flags={"fulltext"}),
- *      @ORM\Index(name="estcmarc_data_idx", columns={"field_data"}, options={"lengths": {24} }),
- *      @ORM\Index(name="estcmarc_field_idx", columns={"field"})
- *  }
+ *     indexes={
+ *         @ORM\Index(name="estcmarc_cid_idx", columns={"cid"}),
+ *         @ORM\Index(name="estcmarc_data_ft", columns={"field_data"}, flags={"fulltext"}),
+ *         @ORM\Index(name="estcmarc_data_idx", columns={"field_data"}, options={"lengths": {24} }),
+ *         @ORM\Index(name="estcmarc_field_idx", columns={"field"})
+ *     }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\EstcMarcRepository")
  */

@@ -16,9 +16,9 @@ use Doctrine\ORM\Mapping as ORM;
  * MarcTagStructure.
  *
  * @ORM\Table(name="marc_tag_structure",
- *  uniqueConstraints={
- *      @ORM\UniqueConstraint(name="marctag_tagfield_uniq", columns={"tagfield"})
- *  }
+ *     uniqueConstraints={
+ *         @ORM\UniqueConstraint(name="marctag_tagfield_uniq", columns={"tagfield"})
+ *     }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\MarcTagStructureRepository")
  */

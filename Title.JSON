@@ -1,0 +1,38 @@
+{
+  "@context": "http://schema.org/",
+  "@type": "Book",
+  "@id": "https://womensprinthistoryproject.com/title/9614",
+  "name": "The Poetic Present; a Collection of Superior Pieces from the Best Authors. Calculated to Interest and Improve the Minds of Young People. Selected by Clara Hall",
+  "datePublished": "1830",
+  "locationCreated": "London GB",
+  "publisherImprint": "Edward Lacey, 76, St. Paul's Church Yard",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Maria Abdy",
+      "@id": "https://womensprinthistoryproject.com/person/1"
+    },
+    {
+      "@type": "Person",
+      "name": "Amelia Opie",
+      "@id": "https://womensprinthistoryproject.com/person/446"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Letitia Elizabeth Landon",
+      "@id": "https://womensprinthistoryproject.com/person/450"
+    }
+  ],
+  "publisher": {
+    "@type": "Organization",
+    "name": "Edward Lacey",
+    "foundingDate": "1829",
+    "dissolutionDate": "1848",
+    "@id": "https://womensprinthistoryproject.com/firm/950",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "London",
+      "streetAddress": "76 St. Paul's Churchyard"
+    }
+  }
+}

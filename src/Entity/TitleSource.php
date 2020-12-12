@@ -16,11 +16,11 @@ use Doctrine\ORM\Mapping as ORM;
  * TitleSource.
  *
  * @ORM\Table(name="title_source",
- *  indexes={
- *      @ORM\Index(name="title_source_identifier_idx", columns={"identifier"}),
- *      @ORM\Index(name="title_source_identifier_ft", columns={"identifier"}, flags={"fulltext"})
- * })
- * @ORM\Entity
+ *     indexes={
+ *         @ORM\Index(name="title_source_identifier_idx", columns={"identifier"}),
+ *         @ORM\Index(name="title_source_identifier_ft", columns={"identifier"}, flags={"fulltext"})
+ *     })
+ *     @ORM\Entity
  */
 class TitleSource {
     /**
@@ -88,7 +88,7 @@ class TitleSource {
      *
      * @return TitleSource
      */
-    public function setTitle(Title $title = null) {
+    public function setTitle(?Title $title = null) {
         $this->title = $title;
 
         return $this;
@@ -110,7 +110,7 @@ class TitleSource {
      *
      * @return TitleSource
      */
-    public function setSource(Source $source = null) {
+    public function setSource(?Source $source = null) {
         $this->source = $source;
 
         return $this;

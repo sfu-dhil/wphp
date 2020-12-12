@@ -1,6 +1,6 @@
 doctrine_migrations:
     migrations_paths:
-        'DoctrineMigrations': 'src/Migrations'
+        'DoctrineMigrations': 'migrations'
     organize_migrations: BY_YEAR_AND_MONTH
     storage:
         table_storage:

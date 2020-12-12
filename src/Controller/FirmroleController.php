@@ -36,7 +36,7 @@ class FirmroleController extends AbstractController implements PaginatorAwareInt
      * Lists all Firmrole entities.
      *
      * @Route("/", name="firmrole_index", methods={"GET"})
-     * @Template()
+     * @Template
      *
      * @param FirmroleRepository $repo
      *
@@ -69,6 +69,7 @@ class FirmroleController extends AbstractController implements PaginatorAwareInt
             return new JsonResponse([]);
         }
         $data = [];
+
         foreach ($repo->typeaheadQuery($q) as $result) {
             $data[] = [
                 'id' => $result->getId(),
@@ -84,7 +85,7 @@ class FirmroleController extends AbstractController implements PaginatorAwareInt
      *
      * @Route("/new", name="firmrole_new", methods={"GET", "POST"})
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
-     * @Template()
+     * @Template
      *
      * @return array|RedirectResponse
      */
@@ -112,7 +113,7 @@ class FirmroleController extends AbstractController implements PaginatorAwareInt
      * Finds and displays a Firmrole entity.
      *
      * @Route("/{id}", name="firmrole_show", methods={"GET"})
-     * @Template()
+     * @Template
      *
      * @return array
      */
@@ -132,7 +133,7 @@ class FirmroleController extends AbstractController implements PaginatorAwareInt
      * Displays a form to edit an existing Firmrole entity.
      *
      * @Route("/{id}/edit", name="firmrole_edit", methods={"GET", "POST"})
-     * @Template()
+     * @Template
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
      *
      * @return array|RedirectResponse
