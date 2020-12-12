@@ -27,7 +27,7 @@
                         {% for titleRole in book.getTitleRoles("Author") %}{% set author = titleRole.person %}
                         {
                             "@type": "Person"
-                            {% if (author.firstName) and (author.lastName) %}, "name": "{{ author.firstName }} {{ author.lastName }}"  {% endif %},
+                            {% if (author.firstName) and (author.lastName) %} ,"name": "{{ author.firstName }} {{ author.lastName }}"  {% endif %},
                             "id": "{{ url('person_show', {'id':author.id}) }}"
                         }
                         {% if not loop.last %},
