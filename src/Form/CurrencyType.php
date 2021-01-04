@@ -31,21 +31,21 @@ class CurrencyType extends AbstractType {
             'attr' => [
                 'help_block' => '',
             ],
-                ]);
+        ]);
         $builder->add('name', TextType::class, [
             'label' => 'Name',
             'required' => true,
             'attr' => [
                 'help_block' => '',
             ],
-                ]);
+        ]);
         $builder->add('symbol', TextType::class, [
             'label' => 'Symbol',
             'required' => false,
             'attr' => [
                 'help_block' => '',
             ],
-                ]);
+        ]);
         $builder->add('description', TextareaType::class, [
             'label' => 'Description',
             'required' => false,
@@ -53,7 +53,7 @@ class CurrencyType extends AbstractType {
                 'help_block' => '',
                 'class' => 'tinymce',
             ],
-                ]);
+        ]);
     }
 
     /**

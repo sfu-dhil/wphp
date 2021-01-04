@@ -29,7 +29,7 @@ class TitleFirmrole {
     private $id;
 
     /**
-     * @var \Title
+     * @var Title
      *
      * @ORM\ManyToOne(targetEntity="Title", inversedBy="titleFirmroles")
      * @ORM\JoinColumns({
@@ -39,7 +39,7 @@ class TitleFirmrole {
     private $title;
 
     /**
-     * @var \Firm
+     * @var Firm
      *
      * @ORM\ManyToOne(targetEntity="Firm", inversedBy="titleFirmroles")
      * @ORM\JoinColumns({
@@ -49,7 +49,7 @@ class TitleFirmrole {
     private $firm;
 
     /**
-     * @var \Firmrole
+     * @var Firmrole
      *
      * @ORM\ManyToOne(targetEntity="Firmrole")
      * @ORM\JoinColumns({

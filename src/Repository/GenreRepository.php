@@ -44,6 +44,8 @@ class GenreRepository extends ServiceEntityRepository {
     /**
      * Count the titles in a genre.
      *
+     * @param ?User $user
+     *
      * @throws \Doctrine\ORM\NonUniqueResultException
      *
      * @return mixed
