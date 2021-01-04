@@ -13,10 +13,10 @@ parameters:
 
     wphp.geonames.username: '%env(GEONAMES_USERNAME)%'
 
-    dhil.piwik_enabled: '%env(bool:PIWIK_ENABLED)%'
-    dhil.piwik_url: //piwik.lib.sfu.ca/piwik/
-    dhil.piwik_siteid: 32
-    dhil.piwik_domain: dhil.lib.sfu.ca/wphp
+    dhil.matomo_enabled: '%env(bool:MATOMO_ENABLED)%'
+    dhil.matomo_url: //matomo.lib.sfu.ca/library/
+    dhil.matomo_siteid: 32
+    dhil.matomo_domain: dhil.lib.sfu.ca/wphp
 
     wphp.spotlight_menu:
         - spotlight_titles
@@ -26,6 +26,8 @@ parameters:
     wphp.title_index_authors: 3
 
     nines.editor.upload_dir: public/images/blog
+
+    nines_feedback.recipients: '%env(json:FEEDBACK_RECIPIENTS)%'
 
     page_size: 25
 
