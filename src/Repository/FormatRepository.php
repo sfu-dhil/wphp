@@ -44,6 +44,8 @@ class FormatRepository extends ServiceEntityRepository {
     /**
      * Count the titles in a format.
      *
+     * @param ?User $user
+     *
      * @throws \Doctrine\ORM\NonUniqueResultException
      *
      * @return mixed

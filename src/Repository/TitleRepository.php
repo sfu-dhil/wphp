@@ -240,9 +240,9 @@ class TitleRepository extends ServiceEntityRepository {
         }
         $this->arrayPart($qb, $data, 'format', 'format');
 
-        if (null !== $data['price_filter']['price_pound'] ||
-            null !== $data['price_filter']['price_shilling'] ||
-            null !== $data['price_filter']['price_pence']) {
+        if (null !== $data['price_filter']['price_pound']
+            || null !== $data['price_filter']['price_shilling']
+            || null !== $data['price_filter']['price_pence']) {
             $total = $data['price_filter']['price_pound'] * 240
                 + $data['price_filter']['price_shilling'] * 12
                 + $data['price_filter']['price_pence'];

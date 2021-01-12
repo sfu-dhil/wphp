@@ -2,7 +2,7 @@ nines_feedback:
     default_status: submitted
     public_status: published
     subject: New feedback received
-    sender: noreply@example.com
+    sender: 'noreply@%router.request_context.host%'
     recipients:
         - user@example.com
         - another@example.com

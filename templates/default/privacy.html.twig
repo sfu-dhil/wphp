@@ -70,8 +70,8 @@
             <h3 class="panel-title">Analytics Settings</h3>
         </div>
         <div class="panel-body">
-            {% if piwik_enabled %}
-                <iframe style="border: 0; height: auto; width: 100%;" src="{{ piwik_url }}/index.php?module=CoreAdminHome&action=optOut&language=en">
+            {% if matomo_enabled %}
+                <iframe style="border: 0; height: auto; width: 100%;" src="{{ matomo_url }}index.php?module=CoreAdminHome&action=optOut&language=en">
                 </iframe>
             {% else %}
                 <p>Tracking is not enabled for this website.</p>

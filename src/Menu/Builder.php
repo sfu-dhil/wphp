@@ -210,7 +210,7 @@ class Builder implements ContainerAwareInterface {
 
         $spotlight = $menu->addChild('spotlight', [
             'uri' => '#',
-            'label' => 'Spotlight',
+            'label' => 'Spotlights',
         ]);
         $spotlight->setAttribute('dropdown', true);
         $spotlight->setLinkAttribute('class', 'dropdown-toggle');

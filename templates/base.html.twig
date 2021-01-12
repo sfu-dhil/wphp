@@ -117,33 +117,12 @@
 
 
         <script src="{{ asset('yarn/bootstrap3/dist/js/bootstrap.min.js') }}"></script>
+
         {% block javascripts %}
         {% endblock %}
 
-        {% if piwik_enabled %}
-            <!-- Piwik -->
-            <script type="text/javascript">
-                var _paq = _paq || [];
-                _paq.push(["setDomains", ["{{ piwik_domain }}"]]);
-                _paq.push(["setDoNotTrack", true]);
-                _paq.push(['trackPageView']);
-                _paq.push(['enableLinkTracking']);
-                (function () {
-                    var u = "{{ piwik_url }}";
-                    _paq.push(['setTrackerUrl', u + 'piwik.php']);
-                    _paq.push(['setSiteId', '{{ piwik_siteid }}']);
-                    var d = document, g = d.createElement('script'), s = d.getElementsByTagName('script')[0];
-                    g.type = 'text/javascript';
-                    g.async = true;
-                    g.defer = true;
-                    g.src = u + 'piwik.js';
-                    s.parentNode.insertBefore(g, s);
-                })();
-            </script>
-            <noscript>
-            <p><img src="{{ piwik_url }}piwik.php?idsite={{ piwik_siteid }}" style="border:0;" alt="" /></p>
-            </noscript>
-            <!-- End Piwik Code -->
+        {% if matomo_enabled %}
+            {% include '@NinesUtil/matomo.html.twig' %}
         {% endif %}
 
     </body>
