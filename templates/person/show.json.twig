@@ -5,7 +5,7 @@
             "@type": "Person"
             {% if person.firstname %},"givenName": "{{ person.firstName}}" {% endif %}
             {% if person.lastName %},"familyName": "{{ person.lastName}}" {% endif %}
-            ,"gender": "{{ person.gender }}"
+            ,"gender": "{% include 'person/gender.html.twig' %}"
             {% if (person.wikipediaUrl) or (person.viafUrl) %}
             ,"sameAs": [
                 {% if person.wikipediaUrl %} "{{ person.wikipediaUrl}}"{% endif %}
@@ -15,12 +15,32 @@
             {% endif %}
             {% if person.dob %},"birthDate": "{{person.dob}}" {% endif %}
             {% if person.dod %}, "deathDate": "{{person.dod}}" {% endif %}
-            {% if person.cityOfBirth %}, "birthPlace": "{{person.cityOfBirth}}" {% endif %}
-            {% if person.cityOfDeath %}, "deathPlace": "{{person.cityOfDeath}}" {% endif %}
+            {% if person.cityOfBirth %},
+                "birthPlace": {
+                    "@type": "Place",
+                    "name": "{{person.cityOfBirth}}",
+                    "geo": {
+                        "@type": "GeoCoordinates",
+                        "latitude": "{{person.cityOfBirth.latitude}}",
+                        "longitude": "{{person.cityOfBirth.longitude}}"
+                    }
+                }
+             {% endif %}
+            {% if person.cityOfDeath %},
+                "deathPlace": {
+                    "@type": "Place",
+                    "name": "{{person.cityOfDeath}}",
+                    "geo": {
+                        "@type": "GeoCoordinates",
+                        "latitude": "{{person.cityOfDeath.latitude}}",
+                        "longitude": "{{person.cityOfDeath.longitude}}"
+                    }
+                }
+            {% endif %}
             ,"@id": "{{ url('person_show', {'id':person.id}) }}"
         }
         {% for titleRole in person.getTitleRoles("Author") %}
-         {% if titleRole.getRole.getName == "Author" %}
+         {% if titleRole.Role.Name == "Author" %}
                 {% set book = titleRole.title %}
                 {% if book %}
                 ,{
@@ -28,19 +48,22 @@
                     "@id": "{{ url('title_show', {'id':book.id}) }}" ,
                     "name": "{{book.title}}"
                     {% if book.genre %} ,"genre": "{{book.genre}}" {% endif %}
-                    {% if book.pubdate %},"datePublished": "{{book.pubdate}}" {% endif %},
-                    "locationCreated": {
-                        "@type": "Place"
-                        {% if book.locationOfPrinting %}, "name": "{{book.locationOfPrinting}}" {% endif %},
-                        "geo": {
-                            "@type": "GeoCoordinates",
-                            "latitude": "{{book.locationOfPrinting.latitude}}",
-                            "longitude": "{{book.locationOfPrinting.longitude}}"
-                        }
-                    }
+                    {% if book.pubdate %},"datePublished": "{{book.pubdate}}" {% endif %}
+                    {% if book.locationOfPrinting %},
+                        "locationCreated": {
+                                    "@type": "Place",
+                                     "name": "{{book.locationOfPrinting}}",
+                                    "geo": {
+                                        "@type": "GeoCoordinates",
+                                        "latitude": "{{book.locationOfPrinting.latitude}}",
+                                        "longitude": "{{book.locationOfPrinting.longitude}}"
+                                    }
+                                }
+                    {% endif %}
                      ,"author": [
                         {% for titleRole in book.getTitleRoles("Author") %}{% set author = titleRole.person %}
                         {
+                            "type":"person",
                             "@id": "{{ url('person_show', {'id':author.id}) }}"
                         }
                         {% if not loop.last %},

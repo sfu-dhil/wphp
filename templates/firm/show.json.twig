@@ -22,12 +22,22 @@
                     "@id": "{{ url('title_show', {'id':book.id}) }}",
                     "name": "{{book.title}}"
                     {% if book.pubdate %}, "datePublished": "{{ book.pubdate }}" {% endif %}
-                    {% if book.pubdate %}, "locationCreated": "{{ book.locationOfPrinting }}" {% endif %},
-                    "author": [
+                    {% if book.locationOfPrinting %},
+                        "locationCreated": {
+                            "@type": "Place",
+                            "name": "{{book.locationOfPrinting}}",
+                            "geo": {
+                                "@type": "GeoCoordinates",
+                                "latitude": "{{book.locationOfPrinting.latitude}}",
+                                "longitude": "{{book.locationOfPrinting.longitude}}"
+                            }
+                        }
+                    {% endif %}
+                    ,"author": [
                         {% for titleRole in book.getTitleRoles("Author") %}{% set author = titleRole.person %}
                         {
                             "@type": "Person"
-                            {% if (author.firstName) and (author.lastName) %},"name": "{{ author.firstName }} {{ author.lastName }}"  {% endif %},
+                            ,"name": "{{ author }}",
                             "id": "{{ url('person_show', {'id':author.id}) }}"
                         }
                         {% if not loop.last %},

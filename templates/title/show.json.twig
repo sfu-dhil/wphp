@@ -3,17 +3,18 @@
     "@type": "Book",
     "@id": "{{ url('title_show', {'id':title.id}) }}",
     "name": "{{title.title}}"
-    {% if title.pubdate %}, "datePublished": "{{title.pubdate}}" {% endif %},
+    {% if title.pubdate %}, "datePublished": "{{title.pubdate}}" {% endif %}
+    {% if title.locationOfPrinting %},
     "locationCreated": {
-        "@type": "Place"
-        {% if title.locationOfPrinting %}, "name": "{{title.locationOfPrinting}}" {% endif %},
+        "@type": "Place",
+         "name": "{{title.locationOfPrinting}}" {% endif %},
         "geo": {
             "@type": "GeoCoordinates",
             "latitude": "{{title.locationOfPrinting.latitude}}",
             "longitude": "{{title.locationOfPrinting.longitude}}"
         }
     }
-    {% if title.locationOfPrinting %}, "publisherImprint": "{{title.imprint}}" {% endif %},
+    /*{% if title.imprint %}, "publisherImprint": "{{title.imprint}}" {% endif %}*/,
     "author": [
             {% for titleRole in title.getTitleRoles("Author") %}{% set author = titleRole.person %}{
             "@type": "Person"
