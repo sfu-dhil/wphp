@@ -14,7 +14,7 @@
             "longitude": "{{title.locationOfPrinting.longitude}}"
         }
     }
-    /*{% if title.imprint %}, "publisherImprint": "{{title.imprint}}" {% endif %}*/,
+    {#{% if title.imprint %}, "publisherImprint": "{{title.imprint}}" {% endif %}#},
     "author": [
             {% for titleRole in title.getTitleRoles("Author") %}{% set author = titleRole.person %}{
             "@type": "Person"
