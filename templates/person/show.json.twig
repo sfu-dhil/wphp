@@ -19,6 +19,7 @@
                 "birthPlace": {
                     "@type": "Place",
                     "name": "{{person.cityOfBirth}}",
+                    "@id": "{{ person.cityOfBirth.geonameid }}",
                     "geo": {
                         "@type": "GeoCoordinates",
                         "latitude": "{{person.cityOfBirth.latitude}}",
@@ -30,6 +31,7 @@
                 "deathPlace": {
                     "@type": "Place",
                     "name": "{{person.cityOfDeath}}",
+                    "@id": "{{ person.cityOfDeath.geonameid }}",
                     "geo": {
                         "@type": "GeoCoordinates",
                         "latitude": "{{person.cityOfDeath.latitude}}",
@@ -52,7 +54,8 @@
                     {% if book.locationOfPrinting %},
                         "locationCreated": {
                                     "@type": "Place",
-                                     "name": "{{book.locationOfPrinting}}",
+                                    "name": "{{book.locationOfPrinting}}",
+                                    "@id": "{{ book.locationOfPrinting.geonameid }}",
                                     "geo": {
                                         "@type": "GeoCoordinates",
                                         "latitude": "{{book.locationOfPrinting.latitude}}",

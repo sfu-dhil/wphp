@@ -7,7 +7,8 @@
     {% if title.locationOfPrinting %},
     "locationCreated": {
         "@type": "Place",
-         "name": "{{title.locationOfPrinting}}" {% endif %},
+        "name": "{{title.locationOfPrinting}}" {% endif %},
+        "@id": "{{ title.locationOfPrinting.geonameid }}",
         "geo": {
             "@type": "GeoCoordinates",
             "latitude": "{{title.locationOfPrinting.latitude}}",
@@ -19,7 +20,7 @@
             {% for titleRole in title.getTitleRoles("Author") %}{% set author = titleRole.person %}{
             "@type": "Person"
             {% if (author.firstName) and (author.lastName) %}, "name": "{{ author.firstName }} {{ author.lastName }}"  {% endif %},
-            "id": "{{ url('person_show', {'id':author.id}) }}"
+            "@id": "{{ url('person_show', {'id':author.id}) }}"
         }
         {% if not loop.last %},
         {% endif %}
