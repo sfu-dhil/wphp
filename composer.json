@@ -2,9 +2,9 @@
     "name": "sfu_dhil/wphp",
     "description": "Women's Print History Project",
     "type": "project",
-    "license": "GPL-2-or-later",
+    "license": "GPL-2.0-or-later",
     "require": {
-        "php": "^7.2",
+        "php": "^7.4",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "aternus/geonames-client": "^1.0",

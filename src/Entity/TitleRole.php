@@ -42,7 +42,7 @@ class TitleRole {
      *
      * @ORM\ManyToOne(targetEntity="Title", inversedBy="titleRoles")
      * @ORM\JoinColumns({
-     *     @ORM\JoinColumn(name="title_id", referencedColumnName="id")
+     *     @ORM\JoinColumn(name="title_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      * })
      */
     private $title;
@@ -52,7 +52,7 @@ class TitleRole {
      *
      * @ORM\ManyToOne(targetEntity="Person", inversedBy="titleRoles")
      * @ORM\JoinColumns({
-     *     @ORM\JoinColumn(name="person_id", referencedColumnName="id")
+     *     @ORM\JoinColumn(name="person_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      * })
      */
     private $person;
@@ -62,7 +62,7 @@ class TitleRole {
      *
      * @ORM\ManyToOne(targetEntity="Role")
      * @ORM\JoinColumns({
-     *     @ORM\JoinColumn(name="role_id", referencedColumnName="id")
+     *     @ORM\JoinColumn(name="role_id", referencedColumnName="id", nullable=false)
      * })
      */
     private $role;
