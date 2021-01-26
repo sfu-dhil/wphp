@@ -72,7 +72,8 @@ title:
     checked: Limit results to titles that have been hand-verified or not hand-verified
     colophon: Search the colophon of the title
     dateOfFirstPublication: Search by date of first publication by entering year (eg <kbd>1795</kbd>) or range of years (<kbd>1790-1800</kbd>) or a partial range of years (<kbd>*-1800</kbd>)
-    edition: Search by edition number in arabic numberals or by edition statement (eg. First Irish Edition)
+    editionNumber: Search by edition number in arabic numberals
+    editionStatement: Search by edition statement (eg. First Irish Edition)
     format: Search by the title's format
     finalattempt: Limit results to titles that we have attempted to verify or for which we have not attempted verification
     finalcheck: Limit results to titles that have been verified or not verified
