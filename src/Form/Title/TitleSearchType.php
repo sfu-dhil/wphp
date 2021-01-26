@@ -155,11 +155,18 @@ class TitleSearchType extends AbstractType {
                 'help_block' => 'title.search.dateOfFirstPublication',
             ],
         ]);
-        $builder->add('edition', TextType::class, [
-            'label' => 'Edition',
+        $builder->add('editionNumber', TextType::class, [
+            'label' => 'Edition Number',
             'required' => false,
             'attr' => [
-                'help_block' => 'title.search.edition',
+                'help_block' => 'title.search.editionNumber',
+            ],
+        ]);
+        $builder->add('editionStatement', TextType::class, [
+            'label' => 'Edition Statement',
+            'required' => false,
+            'attr' => [
+                'help_block' => 'title.search.editionStatement',
             ],
         ]);
         $builder->add('imprint', TextType::class, [
