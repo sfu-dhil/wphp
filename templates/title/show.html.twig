@@ -227,6 +227,49 @@
         </div>
     </div>
 
+    {% if is_granted('ROLE_USER') and (title.sourceTitles|length + title.relatedTitles|length) > 0 %}
+        <div class="container">
+            <h3>Related Titles</h3>
+            <table class="table table-bordered table-condensed table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th>Relationship</th>
+                        <th>Title</th>
+                        <th>Edition Statement<br/> (Edition Number)</th>
+                        <th>Year</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for source in title.sourceTitles %}
+                    {% set related = source.relatedTitle %}
+                    <tr>
+                        <td>{{ source.titleRelationship }}</td>
+                        <td>
+                            <a href='{{ path('title_show', {'id': related.id}) }}'>{{ related.title }}</a></td>
+                        <td>{{ related.edition }}
+                            {% if related.editionNumber %}({{ related.editionNumber }}){% endif %}
+                        </td>
+                        <td>{{ related.pubDate }}</td>
+                    </tr>
+                {% endfor %}
+
+                {% for source in title.relatedTitles %}
+                    {% set related = source.sourceTitle %}
+                    <tr>
+                        <td>{{ source.titleRelationship }}</td>
+                        <td>
+                            <a href='{{ path('title_show', {'id': related.id}) }}'>{{ related.title }}</a></td>
+                        <td>{{ related.edition }}
+                            {% if related.editionNumber %}({{ related.editionNumber }}){% endif %}
+                        </td>
+                        <td>{{ related.pubDate }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+
     <div class="container">
         <h3>Bibliographic Entry</h3>
         <ul class="nav nav-tabs">

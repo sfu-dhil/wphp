@@ -266,6 +266,10 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
                 $ts->setTitle($title);
                 $em->persist($ts);
             }
+
+            foreach($title->getSourceTitles() as $st) {
+                $em->persist($st);
+            }
             $em->persist($title);
             $em->flush();
 
@@ -339,20 +343,23 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
     public function editAction(Request $request, Title $title, EntityManagerInterface $em) {
         // collect the titleFirmRole objects before modification.
         $titleFirmRoles = new ArrayCollection();
-
         foreach ($title->getTitleFirmroles() as $tfr) {
             $titleFirmRoles->add($tfr);
         }
 
         $titleRoles = new ArrayCollection();
-
         foreach ($title->getTitleroles() as $tr) {
             $titleRoles->add($tr);
         }
-        $titleSources = new ArrayCollection();
 
+        $titleSources = new ArrayCollection();
         foreach ($title->getTitleSources() as $ts) {
             $titleSources->add($ts);
+        }
+
+        $sourceTitles = new ArrayCollection();
+        foreach($title->getSourceTitles() as $st) {
+            $sourceTitles->add($st);
         }
 
         $editForm = $this->createForm(TitleType::class, $title);
@@ -379,6 +386,12 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
                 }
             }
 
+            foreach($sourceTitles as $st) {
+                if( ! $title->getSourceTitles()->contains($st)) {
+                    $em->remove($st);
+                }
+            }
+
             // check for new titleFirmRoles and persist them.
             foreach ($title->getTitleroles() as $tr) {
                 if ( ! $titleRoles->contains($tr)) {
@@ -400,6 +413,10 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
                     $ts->setTitle($title);
                     $em->persist($ts);
                 }
+            }
+
+            foreach($title->getSourceTitles() as $st) {
+                $em->persist($st);
             }
 
             $em->flush();

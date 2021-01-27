@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Title Relationship List{% endblock %}
+
+{% block pageheader %}
+    <h1>Title Relationship List</h1>
+    <p class="count">
+        Displaying {{ title_relationships|length }} title_relationships of {{ title_relationships.getTotalItemCount }} total.
+    </p>
+ {% endblock %}
+
+{% block body %}
+
+    <div class='btn-toolbar pull-right'>
+        <div class='btn-group'>
+            {% if is_granted('ROLE_CONTENT_ADMIN') %}
+            <a href="{{ path('title_relationship_new') }}" class="btn btn-default">
+                <span class="glyphicon glyphicon-plus"></span> New
+            </a>
+            {% endif %}
+        </div>
+    </div>
+
+    {% embed '@NinesUtil/term/partial/index.html.twig' with {
+        'terms': title_relationships,
+        'path': 'title_relationship_show',
+    } %}
+    {% endembed %}
+
+    <div class="navigation">
+        {{ knp_pagination_render(title_relationships) }}
+    </div>
+
+{% endblock %}

@@ -15,6 +15,7 @@ use App\Entity\Format;
 use App\Entity\Genre;
 use App\Entity\Geonames;
 use App\Entity\Title;
+use App\Form\RelatedTitleType;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -301,6 +302,22 @@ class TitleType extends AbstractType {
             'attr' => [
                 'class' => 'collection collection-complex',
                 'help_block' => 'title.form.titleSources',
+            ],
+        ]);
+        $builder->add('sourceTitles', CollectionType::class, [
+            'label' => 'Related Titles',
+            'required' => false,
+            'allow_add' => true,
+            'allow_delete' => true,
+            'delete_empty' => true,
+            'entry_type' => RelatedTitleType::class,
+            'entry_options' => [
+                'label' => false,
+            ],
+            'by_reference' => false,
+            'attr' => [
+                'class' => 'collection collection-complex',
+                'help_block' => '',
             ],
         ]);
         $builder->add('notes', null, [
