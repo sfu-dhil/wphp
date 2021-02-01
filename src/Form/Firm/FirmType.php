@@ -77,6 +77,16 @@ class FirmType extends AbstractType {
                 'help_block' => 'firm.form.endDate',
             ],
         ]);
+        $builder->add('relatedFirms', Select2EntityType::class, [
+            'label' => 'Related Firms',
+            'multiple' => true,
+            'remote_route' => 'firm_typeahead',
+            'class' => Firm::class,
+            'allow_clear' => true,
+            'attr' => [
+                'help_block' => 'person.form.relatedFirms',
+            ]
+        ]);
         $builder->add('finalcheck', ChoiceType::class, [
             'label' => 'Firm Finalcheck',
             'expanded' => true,

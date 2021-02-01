@@ -69,6 +69,25 @@
                 </td>
             </tr>
             {% endif %}
+
+            {% if (firm.relatedFirms|length + firm.firmsRelated|length) > 0 %}
+                <tr>
+                    <th data-toggle='popover' data-content='{{ 'firm.fields.relatedFirms'|trans }}'>Related Firms</th>
+                    <td>
+                        {% for firm in firm.relatedFirms %}
+                        <a href='{{ path('firm_show', {'id': firm.id}) }}'>
+                            {{ firm }}
+                        </a><br>
+                        {% endfor %}
+                        {% for firm in firm.firmsRelated %}
+                            <a href='{{ path('firm_show', {'id': firm.id}) }}'>
+                                {{ firm }}
+                            </a><br>
+                        {% endfor %}
+                    </td>
+                </tr>
+            {% endif %}
+
             {% if app.user %}
                 <tr>
                     <th data-toggle="popover" data-content="{{ 'firm.fields.finalCheck'|trans }}">Final Check</th>
@@ -99,7 +118,10 @@
                 <tr>
                     <td>{{tfr.firmrole.name}}</td>
                     <td><a href="{{ path('title_show', {'id': title.id}) }}">{{ title.title }}</a></td>
-                    <td>{% if authorRole %}{{ authorRole.person }}{% endif %}</td>
+                    <td>{% if authorRole %}
+                            <a href='{{ path('person_show', {'id': authorRole.person.id}) }}'>{{ authorRole.person }}</a>
+                        {% endif %}
+                    </td>
                     <td>{{ title.pubdate }}</td>
                 </tr>
             {% endfor %}

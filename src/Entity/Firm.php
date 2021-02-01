@@ -109,12 +109,26 @@ class Firm {
     private $relatedPeople;
 
     /**
+     * @var Collection|Firm[]
+     * @ORM\ManyToMany(targetEntity="Firm", inversedBy="firmsRelated")
+     */
+    private $relatedFirms;
+
+    /**
+     * @var Colection|Firm[]
+     * @ORM\ManyToMany(targetEntity="Firm", mappedBy="relatedFirms")
+     */
+    private $firmsRelated;
+
+    /**
      * Construct a new firm.
      */
     public function __construct() {
         $this->gender = self::UNKNOWN;
         $this->titleFirmroles = new ArrayCollection();
         $this->relatedPeople = new ArrayCollection();
+        $this->relatedFirms = new ArrayCollection();
+        $this->firmsRelated = new ArrayCollection();
     }
 
     /**
@@ -361,6 +375,57 @@ class Firm {
     public function removeRelatedPerson(Person $relatedPerson): self
     {
         $this->relatedPeople->removeElement($relatedPerson);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Firm[]
+     */
+    public function getRelatedFirms(): Collection
+    {
+        return $this->relatedFirms;
+    }
+
+    public function addRelatedFirm(Firm $relatedFirm): self
+    {
+        if (!$this->relatedFirms->contains($relatedFirm)) {
+            $this->relatedFirms[] = $relatedFirm;
+        }
+
+        return $this;
+    }
+
+    public function removeRelatedFirm(Firm $relatedFirm): self
+    {
+        $this->relatedFirms->removeElement($relatedFirm);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Firm[]
+     */
+    public function getFirmsRelated(): Collection
+    {
+        return $this->firmsRelated;
+    }
+
+    public function addFirmsRelated(Firm $firmsRelated): self
+    {
+        if (!$this->firmsRelated->contains($firmsRelated)) {
+            $this->firmsRelated[] = $firmsRelated;
+            $firmsRelated->addRelatedFirm($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFirmsRelated(Firm $firmsRelated): self
+    {
+        if ($this->firmsRelated->removeElement($firmsRelated)) {
+            $firmsRelated->removeRelatedFirm($this);
+        }
 
         return $this;
     }
