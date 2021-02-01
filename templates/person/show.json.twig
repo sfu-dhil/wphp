@@ -1,50 +1,45 @@
 {
-    "@context": "https://schema.org",
-    "@graph": [
-        {
-            "@type": "Person"
-            {% if person.firstname %},"givenName": "{{ person.firstName}}" {% endif %}
-            {% if person.lastName %},"familyName": "{{ person.lastName}}" {% endif %}
-        ,"gender": "{% include 'person/gender.html.twig' %}"
-            {% if (person.wikipediaUrl) or (person.viafUrl) %}
-        ,"sameAs": [
-            {% if person.wikipediaUrl %} "{{ person.wikipediaUrl}}"{% endif %}
-            {% if (person.wikipediaUrl) and (person.viafUrl) %} , {% endif %}
-            {% if person.viafUrl %} "{{ person.viafUrl}}" {% endif %}
-        ]
-            {% endif %}
-            {% if person.dob %},"birthDate": "{{person.dob}}" {% endif %}
-            {% if person.dod %}, "deathDate": "{{person.dod}}" {% endif %}
-            {% if person.cityOfBirth %},
-            "birthPlace": {
-                "@type": "Place",
-                "name": "{{person.cityOfBirth}}",
-                "@id": "{{ person.cityOfBirth.geonameid }}",
-                "geo": {
-                    "@type": "GeoCoordinates",
-                    "latitude": "{{person.cityOfBirth.latitude}}",
-                    "longitude": "{{person.cityOfBirth.longitude}}"
-                }
-            }
-            {% endif %}
-            {% if person.cityOfDeath %},
-            "deathPlace": {
-                "@type": "Place",
-                "name": "{{person.cityOfDeath}}",
-                "@id": "{{ person.cityOfDeath.geonameid }}",
-                "geo": {
-                    "@type": "GeoCoordinates",
-                    "latitude": "{{person.cityOfDeath.latitude}}",
-                    "longitude": "{{person.cityOfDeath.longitude}}"
-                }
-            }
-            {% endif %}
-        ,"@id": "{{ url('person_show', {'id':person.id}) }}"
+    "@context": "http://schema.org",
+    "@type": "Person"
+    {% if person.firstname %},"givenName": "{{ person.firstName}}" {% endif %}
+    {% if person.lastName %},"familyName": "{{ person.lastName}}" {% endif %}
+,"gender": "{% include 'person/gender.html.twig' %}"
+    {% if person.viafUrl %}
+,"sameAs": "{{ person.viafUrl}}"
+    {% endif %}
+    {% if person.dob %},"birthDate": "{{person.dob}}" {% endif %}
+    {% if person.dod %}, "deathDate": "{{person.dod}}" {% endif %}
+    {% if person.cityOfBirth %},
+    "birthPlace": {
+        "@type": "Place",
+        "name": "{{person.cityOfBirth}}",
+        "@id": "{{ url('geonames_show', {'id': person.cityOfBirth.geonameid}) }}",
+        "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": "{{person.cityOfBirth.latitude}}",
+            "longitude": "{{person.cityOfBirth.longitude}}"
         }
+    }
+    {% endif %}
+    {% if person.cityOfDeath %},
+    "deathPlace": {
+        "@type": "Place",
+        "name": "{{person.cityOfDeath}}",
+        "@id": "{{ url('geonames_show', {'id': person.cityOfDeath.geonameid}) }}",
+        "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": "{{person.cityOfDeath.latitude}}",
+            "longitude": "{{person.cityOfDeath.longitude}}"
+        }
+    }
+    {% endif %}
+,"@id": "{{ url('person_show', {'id':person.id}) }}",
+
+    "@graph": [
         {% for titleRole in person.getTitleRoles %}
         {% if titleRole.Role.Name == "Author" %}
         {% set book = titleRole.title %}
-    ,{
+    {
             "@type": "Book",
             "@id": "{{ url('title_show', {'id':book.id}) }}" ,
             "name": "{{book.title}}"
@@ -89,6 +84,7 @@
             ]
         }
         {% endif %}
+        {% if not loop.last %},{% endif %}
         {% endfor %}
     ]
 }
