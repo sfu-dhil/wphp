@@ -1,42 +1,41 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\Controller;
 
 use App\Entity\TitleRelationship;
 use App\Form\TitleRelationshipType;
 use App\Repository\TitleRelationshipRepository;
-
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Nines\UtilBundle\Controller\PaginatorTrait;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/title_relationship")
  * @IsGranted("ROLE_USER")
  */
-class TitleRelationshipController extends AbstractController implements PaginatorAwareInterface
-{
+class TitleRelationshipController extends AbstractController implements PaginatorAwareInterface {
     use PaginatorTrait;
 
     /**
      * @Route("/", name="title_relationship_index", methods={"GET"})
-     * @param Request $request
-     * @param TitleRelationshipRepository $titleRelationshipRepository
      *
-     * @Template()
-     *
-     * @return array
+     * @Template
      */
-    public function index(Request $request, TitleRelationshipRepository $titleRelationshipRepository) : array
-    {
+    public function index(Request $request, TitleRelationshipRepository $titleRelationshipRepository) : array {
         $query = $titleRelationshipRepository->indexQuery();
         $pageSize = $this->getParameter('page_size');
         $page = $request->query->getint('page', 1);
@@ -57,10 +56,11 @@ class TitleRelationshipController extends AbstractController implements Paginato
             return new JsonResponse([]);
         }
         $data = [];
+
         foreach ($titleRelationshipRepository->typeaheadQuery($q) as $result) {
             $data[] = [
                 'id' => $result->getId(),
-                'text' => (string)$result,
+                'text' => (string) $result,
             ];
         }
 
@@ -68,10 +68,9 @@ class TitleRelationshipController extends AbstractController implements Paginato
     }
 
     /**
-     * @Route("/new", name="title_relationship_new", methods={"GET","POST"})
-     * @Template()
+     * @Route("/new", name="title_relationship_new", methods={"GET", "POST"})
+     * @Template
      * @IsGranted("ROLE_CONTENT_ADMIN")
-     * @param Request $request
      *
      * @return array|RedirectResponse
      */
@@ -96,10 +95,9 @@ class TitleRelationshipController extends AbstractController implements Paginato
     }
 
     /**
-     * @Route("/new_popup", name="title_relationship_new_popup", methods={"GET","POST"})
-     * @Template()
+     * @Route("/new_popup", name="title_relationship_new_popup", methods={"GET", "POST"})
+     * @Template
      * @IsGranted("ROLE_CONTENT_ADMIN")
-     * @param Request $request
      *
      * @return array|RedirectResponse
      */
@@ -109,8 +107,7 @@ class TitleRelationshipController extends AbstractController implements Paginato
 
     /**
      * @Route("/{id}", name="title_relationship_show", methods={"GET"})
-     * @Template()
-     * @param TitleRelationship $titleRelationship
+     * @Template
      *
      * @return array
      */
@@ -122,11 +119,9 @@ class TitleRelationshipController extends AbstractController implements Paginato
 
     /**
      * @IsGranted("ROLE_CONTENT_ADMIN")
-     * @Route("/{id}/edit", name="title_relationship_edit", methods={"GET","POST"})
-     * @param Request $request
-     * @param TitleRelationship $titleRelationship
+     * @Route("/{id}/edit", name="title_relationship_edit", methods={"GET", "POST"})
      *
-     * @Template()
+     * @Template
      *
      * @return array|RedirectResponse
      */
@@ -143,15 +138,13 @@ class TitleRelationshipController extends AbstractController implements Paginato
 
         return [
             'title_relationship' => $titleRelationship,
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ];
     }
 
     /**
      * @IsGranted("ROLE_CONTENT_ADMIN")
      * @Route("/{id}", name="title_relationship_delete", methods={"DELETE"})
-     * @param Request $request
-     * @param TitleRelationship $titleRelationship
      *
      * @return RedirectResponse
      */

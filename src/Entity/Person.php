@@ -493,22 +493,19 @@ class Person {
     /**
      * @return Collection|Firm[]
      */
-    public function getRelatedFirms(): Collection
-    {
+    public function getRelatedFirms() : Collection {
         return $this->relatedFirms;
     }
 
-    public function addRelatedFirm(Firm $relatedFirm): self
-    {
-        if (!$this->relatedFirms->contains($relatedFirm)) {
+    public function addRelatedFirm(Firm $relatedFirm) : self {
+        if ( ! $this->relatedFirms->contains($relatedFirm)) {
             $this->relatedFirms[] = $relatedFirm;
         }
 
         return $this;
     }
 
-    public function removeRelatedFirm(Firm $relatedFirm): self
-    {
+    public function removeRelatedFirm(Firm $relatedFirm) : self {
         $this->relatedFirms->removeElement($relatedFirm);
 
         return $this;

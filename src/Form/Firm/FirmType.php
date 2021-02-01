@@ -85,7 +85,7 @@ class FirmType extends AbstractType {
             'allow_clear' => true,
             'attr' => [
                 'help_block' => 'person.form.relatedFirms',
-            ]
+            ],
         ]);
         $builder->add('finalcheck', ChoiceType::class, [
             'label' => 'Firm Finalcheck',

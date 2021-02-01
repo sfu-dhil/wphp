@@ -358,22 +358,19 @@ class Firm {
     /**
      * @return Collection|Person[]
      */
-    public function getRelatedPeople(): Collection
-    {
+    public function getRelatedPeople() : Collection {
         return $this->relatedPeople;
     }
 
-    public function addRelatedPerson(Person $relatedPerson): self
-    {
-        if (!$this->relatedPeople->contains($relatedPerson)) {
+    public function addRelatedPerson(Person $relatedPerson) : self {
+        if ( ! $this->relatedPeople->contains($relatedPerson)) {
             $this->relatedPeople[] = $relatedPerson;
         }
 
         return $this;
     }
 
-    public function removeRelatedPerson(Person $relatedPerson): self
-    {
+    public function removeRelatedPerson(Person $relatedPerson) : self {
         $this->relatedPeople->removeElement($relatedPerson);
 
         return $this;
@@ -382,22 +379,19 @@ class Firm {
     /**
      * @return Collection|Firm[]
      */
-    public function getRelatedFirms(): Collection
-    {
+    public function getRelatedFirms() : Collection {
         return $this->relatedFirms;
     }
 
-    public function addRelatedFirm(Firm $relatedFirm): self
-    {
-        if (!$this->relatedFirms->contains($relatedFirm)) {
+    public function addRelatedFirm(self $relatedFirm) : self {
+        if ( ! $this->relatedFirms->contains($relatedFirm)) {
             $this->relatedFirms[] = $relatedFirm;
         }
 
         return $this;
     }
 
-    public function removeRelatedFirm(Firm $relatedFirm): self
-    {
+    public function removeRelatedFirm(self $relatedFirm) : self {
         $this->relatedFirms->removeElement($relatedFirm);
 
         return $this;
@@ -406,14 +400,12 @@ class Firm {
     /**
      * @return Collection|Firm[]
      */
-    public function getFirmsRelated(): Collection
-    {
+    public function getFirmsRelated() : Collection {
         return $this->firmsRelated;
     }
 
-    public function addFirmsRelated(Firm $firmsRelated): self
-    {
-        if (!$this->firmsRelated->contains($firmsRelated)) {
+    public function addFirmsRelated(self $firmsRelated) : self {
+        if ( ! $this->firmsRelated->contains($firmsRelated)) {
             $this->firmsRelated[] = $firmsRelated;
             $firmsRelated->addRelatedFirm($this);
         }
@@ -421,8 +413,7 @@ class Firm {
         return $this;
     }
 
-    public function removeFirmsRelated(Firm $firmsRelated): self
-    {
+    public function removeFirmsRelated(self $firmsRelated) : self {
         if ($this->firmsRelated->removeElement($firmsRelated)) {
             $firmsRelated->removeRelatedFirm($this);
         }
