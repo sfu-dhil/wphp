@@ -265,10 +265,36 @@ class Title {
     private $titleFirmroles;
 
     /**
+     * Title sources are where the bibliographic information comes from. It's
+     * poorly named with respect to sourceTitles which records different
+     * information.
+     *
      * @var Collection|TitleRole[]
      * @ORM\OneToMany(targetEntity="TitleSource", mappedBy="title")
      */
     private $titleSources;
+
+    /**
+     * Titles are in a directed many-to-many relationship with themselves via the
+     * TitleRelationship entity. This field represents the owning side of the
+     * relationship and records the fact that this title is related to another.
+     *
+     * This field is poorly named with respect to titleSources, which does a
+     * very different thing.
+     *
+     * @var Collection|RelatedTitle[]
+     * @ORM\OneToMany(targetEntity="App\Entity\RelatedTitle", mappedBy="sourceTitle")
+     */
+    private $sourceTitles;
+
+    /**
+     * Titles are in a directed many-to-many relationship with themselves via the
+     * TitleRelationship entity.
+     *
+     * @var Collection|RelatedTitle[]
+     * @ORM\OneToMany(targetEntity="App\Entity\RelatedTitle", mappedBy="relatedTitle")
+     */
+    private $relatedTitles;
 
     /**
      * Constructor.
@@ -278,6 +304,8 @@ class Title {
         $this->titleRoles = new ArrayCollection();
         $this->titleFirmroles = new ArrayCollection();
         $this->titleSources = new ArrayCollection();
+        $this->sourceTitles = new ArrayCollection();
+        $this->relatedTitles = new ArrayCollection();
     }
 
     /**
@@ -1047,6 +1075,66 @@ class Title {
 
     public function setOtherCurrency(?Currency $otherCurrency) : self {
         $this->otherCurrency = $otherCurrency;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|RelatedTitle[]
+     */
+    public function getSourceTitles(): Collection
+    {
+        return $this->sourceTitles;
+    }
+
+    public function addSourceTitle(RelatedTitle $sourceTitle): self
+    {
+        if (!$this->sourceTitles->contains($sourceTitle)) {
+            $this->sourceTitles[] = $sourceTitle;
+            $sourceTitle->setSourceTitle($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSourceTitle(RelatedTitle $sourceTitle): self
+    {
+        if ($this->sourceTitles->removeElement($sourceTitle)) {
+            // set the owning side to null (unless already changed)
+            if ($sourceTitle->getSourceTitle() === $this) {
+                $sourceTitle->setSourceTitle(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|RelatedTitle[]
+     */
+    public function getRelatedTitles(): Collection
+    {
+        return $this->relatedTitles;
+    }
+
+    public function addRelatedTitle(RelatedTitle $relatedTitle): self
+    {
+        if (!$this->relatedTitles->contains($relatedTitle)) {
+            $this->relatedTitles[] = $relatedTitle;
+            $relatedTitle->setRelatedTitle($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRelatedTitle(RelatedTitle $relatedTitle): self
+    {
+        if ($this->relatedTitles->removeElement($relatedTitle)) {
+            // set the owning side to null (unless already changed)
+            if ($relatedTitle->getRelatedTitle() === $this) {
+                $relatedTitle->setRelatedTitle(null);
+            }
+        }
 
         return $this;
     }

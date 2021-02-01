@@ -145,11 +145,18 @@ class Person {
     private $titleRoles;
 
     /**
+     * @var Collection|Firm[]
+     * @ORM\ManyToMany(targetEntity="Firm", inversedBy="relatedPeople")
+     */
+    private $relatedFirms;
+
+    /**
      * Construct the person entity.
      */
     public function __construct() {
         $this->gender = self::UNKNOWN;
         $this->titleRoles = new ArrayCollection();
+        $this->relatedFirms = new ArrayCollection();
     }
 
     /**
@@ -481,5 +488,29 @@ class Person {
      */
     public function getImageUrl() {
         return $this->imageUrl;
+    }
+
+    /**
+     * @return Collection|Firm[]
+     */
+    public function getRelatedFirms(): Collection
+    {
+        return $this->relatedFirms;
+    }
+
+    public function addRelatedFirm(Firm $relatedFirm): self
+    {
+        if (!$this->relatedFirms->contains($relatedFirm)) {
+            $this->relatedFirms[] = $relatedFirm;
+        }
+
+        return $this;
+    }
+
+    public function removeRelatedFirm(Firm $relatedFirm): self
+    {
+        $this->relatedFirms->removeElement($relatedFirm);
+
+        return $this;
     }
 }

@@ -10,8 +10,10 @@ declare(strict_types=1);
 
 namespace App\Form\Person;
 
+use App\Entity\Firm;
 use App\Entity\Geonames;
 use App\Entity\Person;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
@@ -99,6 +101,16 @@ class PersonType extends AbstractType {
             'attr' => [
                 'help_block' => 'person.form.cityOfDeath',
             ],
+        ]);
+        $builder->add('relatedFirms', Select2EntityType::class, [
+            'label' => 'Related Firms',
+            'multiple' => true,
+            'remote_route' => 'firm_typeahead',
+            'class' => Firm::class,
+            'allow_clear' => true,
+            'attr' => [
+                'help_block' => 'person.form.relatedFirms',
+            ]
         ]);
         $builder->add('viafUrl', UrlType::class, [
             'label' => 'VIAF URI',
