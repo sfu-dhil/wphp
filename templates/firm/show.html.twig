@@ -57,6 +57,22 @@
                 <th data-toggle="popover" data-content="{{ 'firm.fields.endDate'|trans }}">End Date</th>
                 <td>{{ firm.endDate }}</td>
             </tr>
+            {% if firm.relatedPeople|length %}
+            <tr>
+                <th data-toggle='popover' data-content='{{ 'firm.fields.relatedPeople'|trans }}'>Related People</th>
+                <td>
+                        <ul>
+                            {% for person in firm.relatedPeople %}
+                                <li>
+                                    <a href='{{ path('person_show', {'id': person.id}) }}'>
+                                        {{ person }}
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                </td>
+            </tr>
+            {% endif %}
             {% if app.user %}
                 <tr>
                     <th data-toggle="popover" data-content="{{ 'firm.fields.finalCheck'|trans }}">Final Check</th>

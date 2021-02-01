@@ -103,11 +103,18 @@ class Firm {
     private $titleFirmroles;
 
     /**
+     * @var Collection|Person[]
+     * @ORM\ManyToMany(targetEntity="Person", mappedBy="relatedFirms")
+     */
+    private $relatedPeople;
+
+    /**
      * Construct a new firm.
      */
     public function __construct() {
         $this->gender = self::UNKNOWN;
         $this->titleFirmroles = new ArrayCollection();
+        $this->relatedPeople = new ArrayCollection();
     }
 
     /**
@@ -332,5 +339,29 @@ class Firm {
      */
     public function getGender() {
         return $this->gender;
+    }
+
+    /**
+     * @return Collection|Person[]
+     */
+    public function getRelatedPeople(): Collection
+    {
+        return $this->relatedPeople;
+    }
+
+    public function addRelatedPerson(Person $relatedPerson): self
+    {
+        if (!$this->relatedPeople->contains($relatedPerson)) {
+            $this->relatedPeople[] = $relatedPerson;
+        }
+
+        return $this;
+    }
+
+    public function removeRelatedPerson(Person $relatedPerson): self
+    {
+        $this->relatedPeople->removeElement($relatedPerson);
+
+        return $this;
     }
 }
