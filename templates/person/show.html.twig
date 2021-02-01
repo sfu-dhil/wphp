@@ -79,15 +79,11 @@
             <tr>
                 <th data-toggle='popover' data-content='{{ 'person.fields.relatedFirms'|trans }}'>Related Firms</th>
                 <td>
-                        <ul>
-                            {% for firm in person.relatedFirms %}
-                            <li>
-                                <a href='{{ path('firm_show', {'id': firm.id}) }}'>
-                                    {{ firm }}
-                                </a>
-                            </li>
-                            {% endfor %}
-                        </ul>
+                {% for firm in person.relatedFirms %}
+                    <a href='{{ path('firm_show', {'id': firm.id}) }}'>
+                        {{ firm }}
+                    </a>{% if not loop.last %}<br/>{% endif %}
+                {% endfor %}
                 </td>
             </tr>
             {% endif %}
