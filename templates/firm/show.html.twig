@@ -1,5 +1,10 @@
 {% extends 'base.html.twig' %}
 
+{% block htmlhead %}
+    <link href='{{ path('firm_show', {'id': firm.id, '_format': 'xml'}) }}' type='application/rdf+xml' rel='alternate'/>
+    <link href='{{ path('firm_show', {'id': firm.id, '_format': 'json'}) }}' type='application/ld+json' rel='alternate'/>
+{% endblock %}
+
 {% block pageheader %}
     <h1>{{ firm.name }}</h1>
 {% endblock %}
