@@ -1,7 +1,8 @@
 {% extends 'base.html.twig' %}
 
 {% block htmlhead %}
-    <link rel="alternate" type="application/rdf+xml" href="{{ url('person_show', {'id': person.id, '_format': 'rdf'}) }}"/>
+    <link href='{{ path('person_show', {'id': person.id, '_format': 'xml'}) }}' type='application/rdf+xml' rel='alternate'/>
+    <link href='{{ path('person_show', {'id': person.id, '_format': 'json'}) }}' type='application/ld+json' rel='alternate'/>
 {% endblock %}
 
 {% block pageheader %}
@@ -79,15 +80,11 @@
             <tr>
                 <th data-toggle='popover' data-content='{{ 'person.fields.relatedFirms'|trans }}'>Related Firms</th>
                 <td>
-                        <ul>
-                            {% for firm in person.relatedFirms %}
-                            <li>
-                                <a href='{{ path('firm_show', {'id': firm.id}) }}'>
-                                    {{ firm }}
-                                </a>
-                            </li>
-                            {% endfor %}
-                        </ul>
+                {% for firm in person.relatedFirms %}
+                    <a href='{{ path('firm_show', {'id': firm.id}) }}'>
+                        {{ firm }}
+                    </a>{% if not loop.last %}<br/>{% endif %}
+                {% endfor %}
                 </td>
             </tr>
             {% endif %}

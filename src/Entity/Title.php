@@ -1082,14 +1082,12 @@ class Title {
     /**
      * @return Collection|RelatedTitle[]
      */
-    public function getSourceTitles(): Collection
-    {
+    public function getSourceTitles() : Collection {
         return $this->sourceTitles;
     }
 
-    public function addSourceTitle(RelatedTitle $sourceTitle): self
-    {
-        if (!$this->sourceTitles->contains($sourceTitle)) {
+    public function addSourceTitle(RelatedTitle $sourceTitle) : self {
+        if ( ! $this->sourceTitles->contains($sourceTitle)) {
             $this->sourceTitles[] = $sourceTitle;
             $sourceTitle->setSourceTitle($this);
         }
@@ -1097,8 +1095,7 @@ class Title {
         return $this;
     }
 
-    public function removeSourceTitle(RelatedTitle $sourceTitle): self
-    {
+    public function removeSourceTitle(RelatedTitle $sourceTitle) : self {
         if ($this->sourceTitles->removeElement($sourceTitle)) {
             // set the owning side to null (unless already changed)
             if ($sourceTitle->getSourceTitle() === $this) {
@@ -1112,14 +1109,12 @@ class Title {
     /**
      * @return Collection|RelatedTitle[]
      */
-    public function getRelatedTitles(): Collection
-    {
+    public function getRelatedTitles() : Collection {
         return $this->relatedTitles;
     }
 
-    public function addRelatedTitle(RelatedTitle $relatedTitle): self
-    {
-        if (!$this->relatedTitles->contains($relatedTitle)) {
+    public function addRelatedTitle(RelatedTitle $relatedTitle) : self {
+        if ( ! $this->relatedTitles->contains($relatedTitle)) {
             $this->relatedTitles[] = $relatedTitle;
             $relatedTitle->setRelatedTitle($this);
         }
@@ -1127,8 +1122,7 @@ class Title {
         return $this;
     }
 
-    public function removeRelatedTitle(RelatedTitle $relatedTitle): self
-    {
+    public function removeRelatedTitle(RelatedTitle $relatedTitle) : self {
         if ($this->relatedTitles->removeElement($relatedTitle)) {
             // set the owning side to null (unless already changed)
             if ($relatedTitle->getRelatedTitle() === $this) {

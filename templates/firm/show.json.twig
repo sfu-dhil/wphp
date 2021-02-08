@@ -1,23 +1,23 @@
 {
-    "@context": "https://schema.org",
+    "@context": "http://schema.org",
+    "@type": "Organization"
+    {% if firm.name %},"name": "{{firm.name}}" {% endif %}
+    {% if firm.startDate %}, "foundingDate": "{{ firm.startDate }}" {% endif %}
+    {% if firm.endDate %} ,"dissolutionDate": "{{ firm.endDate }}" {% endif %},
+    "@id": "{{ url('firm_show', {'id':firm.id}) }}",
+    "address": {
+        "@type": "PostalAddress"
+        {% if firm.city %},"addressLocality": "{{ firm.city }}" {% endif %}
+        {% if firm.streetAddress %}, "streetAddress": "{{ firm.streetAddress }}" {% endif %}
+    },
     "@graph": [
-        {
-            "@type": "Organization"
-            {% if firm.name %},"name": "{{firm.name}}" {% endif %}
-            {% if firm.startDate %}, "foundingDate": "{{ firm.startDate }}" {% endif %}
-            {% if firm.endDate %} ,"dissolutionDate": "{{ firm.endDate }}" {% endif %},
-            "@id": "{{ url('firm_show', {'id':firm.id}) }}",
-            "address": {
-                "@type": "PostalAddress"
-                {% if firm.city %},"addressLocality": "{{ firm.city }}" {% endif %}
-                {% if firm.streetAddress %}, "streetAddress": "{{ firm.streetAddress }}" {% endif %}
-            }
-        }
-        {% for titleFirmRole in firm.getTitleFirmRoles %}
-        {% if titleFirmRole.getFirmrole.getName == "Publisher" %}
+        {# the filter in this statement messes with the for loop.last variable
+           so we manually count the items in the list and then check for the last below #}
+        {% set titleFirmRoles = firm.getTitleFirmRoles|filter(tfr => tfr.getFirmrole.getName == "Publisher") %}
+        {% set count = titleFirmRoles|length %}
+        {% for titleFirmRole in titleFirmRoles %}
         {% set book = titleFirmRole.title %}
-        {% if book %}
-    ,{
+        {
             "@type": "Book",
             "@id": "{{ url('title_show', {'id':book.id}) }}",
             "name": "{{book.title}}"
@@ -26,7 +26,7 @@
             "locationCreated": {
                 "@type": "Place",
                 "name": "{{book.locationOfPrinting}}",
-                "@id": "{{ book.locationOfPrinting.geonameid }}",
+                "@id": "{{ url('geonames_show', {'id': book.locationOfPrinting.geonameid}) }}",
                 "geo": {
                     "@type": "GeoCoordinates",
                     "latitude": "{{book.locationOfPrinting.latitude}}",
@@ -34,29 +34,24 @@
                 }
             }
             {% endif %}
-        ,"author": [
+            ,"author": [
                 {% for titleRole in book.getTitleRoles("Author") %}{% set author = titleRole.person %}
                 {
                     "@type": "Person"
-                ,"name": "{{ author }}",
+                    ,"name": "{{ author }}",
                     "@id": "{{ url('person_show', {'id':author.id}) }}"
-                }
-                {% if not loop.last %},
-                {% endif %}
+                } {% if not loop.last %},{% endif %}
                 {% endfor %}
             ],
             "publisher": [
                 {% for titleFirmrole in book.getTitleFirmroles("Publisher") %}{% set publisher = titleFirmrole.firm %}
                 {
                     "@id": "{{ url('firm_show', {'id':publisher.id}) }} "
-                }
-                {% if not loop.last %},
-                {% endif %}
+                }{% if not loop.last %},{% endif %}
                 {% endfor %}
             ]
         }
-        {% endif %}
-        {% endif %}
+        {% if loop.index != count %},{% endif %}
         {% endfor %}
     ]
 }

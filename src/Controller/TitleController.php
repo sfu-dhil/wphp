@@ -267,7 +267,7 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
                 $em->persist($ts);
             }
 
-            foreach($title->getSourceTitles() as $st) {
+            foreach ($title->getSourceTitles() as $st) {
                 $em->persist($st);
             }
             $em->persist($title);
@@ -343,22 +343,26 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
     public function editAction(Request $request, Title $title, EntityManagerInterface $em) {
         // collect the titleFirmRole objects before modification.
         $titleFirmRoles = new ArrayCollection();
+
         foreach ($title->getTitleFirmroles() as $tfr) {
             $titleFirmRoles->add($tfr);
         }
 
         $titleRoles = new ArrayCollection();
+
         foreach ($title->getTitleroles() as $tr) {
             $titleRoles->add($tr);
         }
 
         $titleSources = new ArrayCollection();
+
         foreach ($title->getTitleSources() as $ts) {
             $titleSources->add($ts);
         }
 
         $sourceTitles = new ArrayCollection();
-        foreach($title->getSourceTitles() as $st) {
+
+        foreach ($title->getSourceTitles() as $st) {
             $sourceTitles->add($st);
         }
 
@@ -386,8 +390,8 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
                 }
             }
 
-            foreach($sourceTitles as $st) {
-                if( ! $title->getSourceTitles()->contains($st)) {
+            foreach ($sourceTitles as $st) {
+                if ( ! $title->getSourceTitles()->contains($st)) {
                     $em->remove($st);
                 }
             }
@@ -415,7 +419,7 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
                 }
             }
 
-            foreach($title->getSourceTitles() as $st) {
+            foreach ($title->getSourceTitles() as $st) {
                 $em->persist($st);
             }
 

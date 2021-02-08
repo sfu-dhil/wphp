@@ -153,8 +153,8 @@ class TitleRepository extends ServiceEntityRepository {
             $qb->setParameter('id', $data['id']);
         }
         if (isset($data['editionNumber']) && $data['editionNumber']) {
-                $qb->andWhere('e.editionNumber = :editionNumber');
-                $qb->setParameter('editionNumber', $data['editionNumber']);
+            $qb->andWhere('e.editionNumber = :editionNumber');
+            $qb->setParameter('editionNumber', $data['editionNumber']);
         }
         if (isset($data['editionStatement']) && $data['editionStatement']) {
             $qb->andWhere('MATCH(e.edition) AGAINST(:editionStatement) > 0');

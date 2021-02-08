@@ -1,5 +1,10 @@
 {% extends 'base.html.twig' %}
 
+{% block htmlhead %}
+    <link href='{{ path('firm_show', {'id': firm.id, '_format': 'xml'}) }}' type='application/rdf+xml' rel='alternate'/>
+    <link href='{{ path('firm_show', {'id': firm.id, '_format': 'json'}) }}' type='application/ld+json' rel='alternate'/>
+{% endblock %}
+
 {% block pageheader %}
     <h1>{{ firm.name }}</h1>
 {% endblock %}
@@ -61,18 +66,33 @@
             <tr>
                 <th data-toggle='popover' data-content='{{ 'firm.fields.relatedPeople'|trans }}'>Related People</th>
                 <td>
-                        <ul>
-                            {% for person in firm.relatedPeople %}
-                                <li>
-                                    <a href='{{ path('person_show', {'id': person.id}) }}'>
-                                        {{ person }}
-                                    </a>
-                                </li>
-                            {% endfor %}
-                        </ul>
+                {% for person in firm.relatedPeople %}
+                        <a href='{{ path('person_show', {'id': person.id}) }}'>
+                            {{ person }}
+                        </a>{% if not loop.last %}<br/>{% endif %}
+                {% endfor %}
                 </td>
             </tr>
             {% endif %}
+
+            {% if (firm.relatedFirms|length + firm.firmsRelated|length) > 0 %}
+                <tr>
+                    <th data-toggle='popover' data-content='{{ 'firm.fields.relatedFirms'|trans }}'>Related Firms</th>
+                    <td>
+                        {% for firm in firm.relatedFirms %}
+                        <a href='{{ path('firm_show', {'id': firm.id}) }}'>
+                            {{ firm }}
+                        </a><br>
+                        {% endfor %}
+                        {% for firm in firm.firmsRelated %}
+                            <a href='{{ path('firm_show', {'id': firm.id}) }}'>
+                                {{ firm }}
+                            </a><br>
+                        {% endfor %}
+                    </td>
+                </tr>
+            {% endif %}
+
             {% if app.user %}
                 <tr>
                     <th data-toggle="popover" data-content="{{ 'firm.fields.finalCheck'|trans }}">Final Check</th>
@@ -103,7 +123,10 @@
                 <tr>
                     <td>{{tfr.firmrole.name}}</td>
                     <td><a href="{{ path('title_show', {'id': title.id}) }}">{{ title.title }}</a></td>
-                    <td>{% if authorRole %}{{ authorRole.person }}{% endif %}</td>
+                    <td>{% if authorRole %}
+                            <a href='{{ path('person_show', {'id': authorRole.person.id}) }}'>{{ authorRole.person }}</a>
+                        {% endif %}
+                    </td>
                     <td>{{ title.pubdate }}</td>
                 </tr>
             {% endfor %}

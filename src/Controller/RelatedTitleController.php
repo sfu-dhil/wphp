@@ -1,42 +1,38 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\Controller;
 
 use App\Entity\RelatedTitle;
-use App\Form\RelatedTitleType;
 use App\Repository\RelatedTitleRepository;
-
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Nines\UtilBundle\Controller\PaginatorTrait;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route("/related_title")
  * @IsGranted("ROLE_USER")
  */
-class RelatedTitleController extends AbstractController implements PaginatorAwareInterface
-{
+class RelatedTitleController extends AbstractController implements PaginatorAwareInterface {
     use PaginatorTrait;
 
     /**
      * @Route("/", name="related_title_index", methods={"GET"})
-     * @param Request $request
-     * @param RelatedTitleRepository $relatedTitleRepository
      *
-     * @Template()
-     *
-     * @return array
+     * @Template
      */
-    public function index(Request $request, RelatedTitleRepository $relatedTitleRepository) : array
-    {
+    public function index(Request $request, RelatedTitleRepository $relatedTitleRepository) : array {
         $query = $relatedTitleRepository->indexQuery();
         $pageSize = $this->getParameter('page_size');
         $page = $request->query->getint('page', 1);
@@ -48,8 +44,7 @@ class RelatedTitleController extends AbstractController implements PaginatorAwar
 
     /**
      * @Route("/{id}", name="related_title_show", methods={"GET"})
-     * @Template()
-     * @param RelatedTitle $relatedTitle
+     * @Template
      *
      * @return array
      */
@@ -58,5 +53,4 @@ class RelatedTitleController extends AbstractController implements PaginatorAwar
             'related_title' => $relatedTitle,
         ];
     }
-
 }

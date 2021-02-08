@@ -8,7 +8,7 @@
     "locationCreated": {
         "@type": "Place",
         "name": "{{title.locationOfPrinting}}" {% endif %},
-        "@id": "{{ title.locationOfPrinting.geonameid }}",
+        "@id": "{{ url('geonames_show', {'id': title.locationOfPrinting.geonameid}) }}",
         "geo": {
             "@type": "GeoCoordinates",
             "latitude": "{{title.locationOfPrinting.latitude}}",
