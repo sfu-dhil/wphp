@@ -5,15 +5,21 @@
 @mixin link($color, $hover_color) {
   a {
     color: $color;
+    text-decoration:none;
+    border-bottom: 1px solid $color_link_border;
+    transition: border-bottom-color 0.2s ease-in-out;
     &:link,
     &:visited {
       color: $color;
+      text-decoration:none;
     }
 
     &:active,
     &:focus,
     &:hover {
       color: $hover_color;
+      text-decoration:none;
+      border-bottom-color: $color_link_border_hover;
     }
   }
 }

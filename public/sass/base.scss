@@ -1,20 +1,34 @@
+@import 'fonts';
 @import 'variables';
 @import 'mixins';
+@import '../yarn/dhilux/scss/dhilux.scss';
+
+
+:root, html{
+  font-size: unset;
+}
 
 html {
   position: relative;
   min-height: 100vh;
 }
 
+*{
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
 body {
   // background: $color_body_background;
-  background-image: linear-gradient(0deg, $color_body_background_start 0%, $color_body_background_end 100%);
+  background: $color_body_background;
   color: $color_text;
-
   font: $body_font;
+  font-size:1rem;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  line-height:1.4;
   margin-bottom: 0;
   font-family: $lato;
 
@@ -32,26 +46,27 @@ h4,
 h5 {
   font-family: $heading_font;
   color: $heading_color;
+  font-weight: 600;
 }
 
 @include link($color_link, $color_link_hover);
 
-em,
 strong {
-  font: $body_font_bold;
+  font-weight: 700;
 }
 
 .container p {
-  // font-size: 1.25em;
-  font-size: 1.5em;
   font-family: $cormorant_garamond;
+  font-size: 1.3rem;
+  font-weight: 500;
+  line-height:1.5;
+
 }
 
 .container table p,
 .container .panel p {
-  font-size: 1em;
   font-family: $lato;
-
+  font-size:inherit;
   &:last-child {
     margin-bottom: 0;
   }
@@ -78,13 +93,12 @@ strong {
 
   p {
     margin: 0;
-    font-family: $cormorant_garamond_bold;
-    font-size: 16px;
+    font-weight:bold;
   }
 
   strong {
     font-weight: normal;
-    font-size: 22px;
+    font-size: 1.4rem;
     margin-bottom: 0.5rem;
   }
 
@@ -95,7 +109,7 @@ strong {
 .social-icons{
   list-style:none;
   display:flex;
-  font-size: 35px;
+  font-size: 2.1rem;
   justify-content:space-evenly;
   a{
     padding:0 1rem;
@@ -199,7 +213,31 @@ label {
 /* tables */
 table {
   color: $color_black;
+  font-size: 0.88rem;
 }
+
+.title-grid{
+  display:grid;
+  grid-template-columns: 3fr 2fr;
+  column-gap: 2rem;
+}
+
+.title-grid > div{
+  grid-column: span 2;
+  @include desktop(){
+    &.title-metadata-main{
+      grid-column-start:1;
+      grid-column-end:1;
+    }
+    &.title-metadata-bibliographic{
+      grid-column-start:2;
+      grid-column-end: 2;
+    }
+  }
+}
+
+
+
 table thead th {
   color: $table_head_color;
   background: $table_head_background_color;
@@ -208,6 +246,48 @@ table thead th {
 
   a {
     color: $table_head_color !important;
+  }
+}
+
+
+
+h1{
+    letter-spacing: -1px;
+    margin-right: 0.5rem;
+}
+
+.tbl-container{
+  overflow-x:auto;
+  tr > th{
+    text-align:left;
+  }
+  tr:first-of-type > *{
+    border-top:none;
+  }
+
+
+}
+
+
+
+
+
+
+body[class *= '_blog_']{
+  p{
+    line-height: 1.6;
+    margin-bottom: ms(1);
+  }
+
+  & > .container{
+    max-width: 45rem;
+  }
+
+  blockquote{
+    font-family: $cormorant_garamond;
+    font-size: 1.15rem;
+    line-height: 1.4;
+    border-left-color: #2e3436;
   }
 }
 
@@ -224,9 +304,6 @@ table thead th {
     &:focus {
       background: $color_table_background_hover_even;
     }
-    a {
-      color: $color_2_darker_brown;
-    }
   }
 }
 
@@ -237,6 +314,22 @@ td {
     width:0.1%;
     white-space: nowrap;
   }
+}
+
+td ul{
+  list-style-type:none;
+  padding-left:0;
+  margin-left:0;
+  li + li{
+    margin-top: .25rem;
+  }
+  &.double-list{
+    columns: 2;
+
+  }
+
+
+
 }
 
 table.tablesorter thead tr {
@@ -385,6 +478,18 @@ p.help-block {
     font-family: $panel_heading_font;
     font-size: $panel_heading_font_size;
   }
+
+
+}
+
+.panel-title{
+  &.comment-expand{
+    .btn{
+      // Make sure text wraps properly
+      white-space: normal;
+      width: 100%;
+    }
+  }
 }
 
 .blog-panel {
@@ -427,7 +532,7 @@ p.help-block {
 
 .panel-body {
   background: $panel_background;
-  font-size: 16px;
+  font-size: 1rem;
   font-family: $lato;
 }
 
@@ -562,7 +667,7 @@ a.btn-primary {
   color: header_color;
   border: 0;
   font-family: $cormorant_garamond;
-  font-weight: 300;
+  font-weight: 600;
   font-size: 20px;
   box-shadow: 0 2px 4px 0 $color_grey_translucent;
   margin: 0;

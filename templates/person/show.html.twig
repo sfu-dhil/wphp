@@ -104,8 +104,8 @@
                     {% endif %}
                 </td>
             </tr>
-            <tr data-toggle="popover" data-content="{{ 'person.fields.imageUrl'|trans }}">
-                <th>Image URL</th>
+            <tr>
+                <th data-toggle="popover" data-content="{{ 'person.fields.imageUrl'|trans }}">Image URL</th>
                 <td>
                     {% if person.imageUrl %}
                         <a href="{{person.imageUrl }}">{{ person.imageUrl }}</a>
@@ -121,37 +121,20 @@
         </tbody>
     </table>
 
-    <h2>Titles</h2>
-    <p class="count">
-        Displaying {{ pagination|length }} titles of {{ pagination.getTotalItemCount }} total.
-    </p>
-    <div class="navigation">
-        {{ knp_pagination_render(pagination) }}
+    <div id="person_titles">
+        <h2>Titles</h2>
+        <div id="person_title_table" class="table-fragment">
+            {% include 'person/partial/titles.html.twig' %}
+        </div>
     </div>
-    <table class="table table-bordered table-condensed table-hover table-striped tablesorter" id="titleRoles">
-        <thead>
-            <tr>
-                <th>Role</th>
-                <th>Title</th>
-                <th>Date</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for tr in pagination %}
-                {% set title = tr.title %}
-                <tr>
-                    <td>{{ tr.role.name }}</td>
-                    <td><a href="{{ path('title_show', {'id': title.id}) }}">{{ title.title }}</a></td>
-                    <td>{{ title.pubdate }}</td>
-                </tr>
-            {% endfor %}
-    </table>
 
-    {% include 'partials/export.html.twig' with {'path': 'person_export', 'parameters': {'id': person.id}} %}
 
-    <div class="navigation">
-        {{ knp_pagination_render(pagination) }}
-    </div>
+
+
+
+
+
+
 
     {{ include('partials/citation.html.twig', {
         'title': '"' ~ person ~ '"',
