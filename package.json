@@ -8,6 +8,7 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.14.0",
     "bootstrap3": "^3.3.5",
+    "dhilux": "https://github.com/joeytakeda/dhilux",
     "jquery": "^3.4.1",
     "jquery-ui-dist": "^1.12.1",
     "lato-font": "^3.0.0",

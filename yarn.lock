@@ -12,6 +12,12 @@ bootstrap3@^3.3.5:
   resolved "https://registry.yarnpkg.com/bootstrap3/-/bootstrap3-3.3.5.tgz#496a4ef6c087214fa96838196d60de645e82591a"
   integrity sha1-SWpO9sCHIU+paDgZbWDeZF6CWRo=
 
+"dhilux@https://github.com/joeytakeda/dhilux":
+  version "0.2.0"
+  resolved "https://github.com/joeytakeda/dhilux#3a926decde14ac7cc4cf85b9d3fd4a3f4a9f4e43"
+  dependencies:
+    modularscale-sass "^3.0.10"
+
 jquery-ui-dist@^1.12.1:
   version "1.12.1"
   resolved "https://registry.yarnpkg.com/jquery-ui-dist/-/jquery-ui-dist-1.12.1.tgz#5c0815d3cc6f90ff5faaf5b268a6e23b4ca904fa"
@@ -31,6 +37,11 @@ lato-font@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/lato-font/-/lato-font-3.0.0.tgz#91b837e2374b668fb7331d44c894d37a2d9f8e11"
   integrity sha1-kbg34jdLZo+3Mx1EyJTTei2fjhE=
+
+modularscale-sass@^3.0.10:
+  version "3.0.10"
+  resolved "https://registry.yarnpkg.com/modularscale-sass/-/modularscale-sass-3.0.10.tgz#3a596b090360129dd2375bee81b9318085cb47b3"
+  integrity sha512-ppbMfcXC+ESpqk1s8BfqsuY85DTAJdoPLxrYFohAUjg3r9eh2CBm2Wn7+JAh26DbRpAHynRt3a8ma2FOfk7JGA==
 
 select2-bootstrap-css@^1.4.6:
   version "1.4.6"
