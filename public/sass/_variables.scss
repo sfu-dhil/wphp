@@ -26,10 +26,11 @@ $color_2_brown: #73685B;
 $color_2_darker_brown: #5c5349;
 $color_2_tan: #CCB9A4;
 $color_2_green: #D9DDCC;
+
 $color_2_green_light: #EEF2E1;
 $color_2_green_lighter: mix($color_2_green, $color_2_green_light, 50%);
 $color_2_salmon: rgb(234, 168, 154);
-$color_black: #010101;
+$color_black: #050505;
 
 
 // override settings from first set of colors.
@@ -46,10 +47,10 @@ $color_body_background_start: $color_2_green_light;
 $color_body_background_end: $color_2_green_light;
 $color_body_link: #A9695B;
 
-$color_link: #9a5343;
-$color_link_hover: #9a5343;
+$color_link: #7b1f0a;
+$color_link_hover: #2b0a04;
 $color_link_border: rgba(169, 105, 91, 0.4);
-$color_link_border_hover: rgba(169, 105, 91, 1);
+$color_link_border_hover: #2b0a04;
 $footer_color: $color_white;
 $footer_background: $color_2_darker_brown;
 $footer_link: $color_white;

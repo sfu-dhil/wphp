@@ -201,10 +201,17 @@
                 <tr>
                     <th data-toggle="popover"  data-content="{{ 'title.fields.titleSources'|trans }}">Sources</th>
                     <td>
-                        {% for titleSource in title.titleSources %}
-                            {% include "title/partials/source-link.html.twig"
-                                with {'source': titleSource.source, 'sourceId': titleSource.identifier} %}
-                        {% endfor %}
+                        <ul>
+                            {% for titleSource in title.titleSources %}
+                                <li>
+                                    {% include "title/partials/source-link.html.twig"
+                                        with {'source': titleSource.source, 'sourceId': titleSource.identifier} %}
+                                </li>
+
+                            {% endfor %}
+
+                        </ul>
+
                     </td>
                 </tr>
                 <tr>

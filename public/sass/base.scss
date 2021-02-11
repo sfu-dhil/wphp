@@ -13,7 +13,7 @@ html {
   min-height: 100vh;
 }
 
-*{
+h1,h2,h3,h4,h5{
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
@@ -55,13 +55,8 @@ strong {
   font-weight: 700;
 }
 
-.container p {
-  font-family: $cormorant_garamond;
-  font-size: 1.3rem;
-  font-weight: 500;
-  line-height:1.5;
 
-}
+
 
 .container table p,
 .container .panel p {
@@ -273,12 +268,18 @@ h1{
 
 
 
-body[class *= '_blog_']{
-  p{
-    line-height: 1.6;
+body[class *= '_blog_'],
+body[class = 'page__']{
+  p {
+    font-family: $cormorant_garamond;
+    line-height: 1.45;
+    font-weight: 400;
+    font-size: 1.3rem;
     margin-bottom: ms(1);
   }
+}
 
+body[class *= '_blog_'] {
   & > .container{
     max-width: 45rem;
   }
@@ -289,6 +290,7 @@ body[class *= '_blog_']{
     line-height: 1.4;
     border-left-color: #2e3436;
   }
+
 }
 
 .table-striped > tbody > tr {
@@ -332,6 +334,16 @@ td ul{
 
 }
 
+tr{
+  th{
+    //Bold table headers for horizontal tables
+    font-weight:700;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+}
+
 table.tablesorter thead tr {
   white-space: nowrap;
 }
@@ -356,8 +368,8 @@ th.sorted.desc:after, a.desc:after {
 div.tab-content {
   // min-height: 200px;
   p {
-    font-size: 14px;
     font-family: $lato;
+    font-size: 0.9rem;
   }
 }
 
@@ -664,10 +676,10 @@ a.btn-primary {
 
 .navbar-default {
   background: $header_background;
-  color: header_color;
+  color: $header_color;
   border: 0;
   font-family: $cormorant_garamond;
-  font-weight: 600;
+  font-weight: 800;
   font-size: 20px;
   box-shadow: 0 2px 4px 0 $color_grey_translucent;
   margin: 0;
@@ -700,6 +712,7 @@ a.btn-primary {
       align-items: center;
       justify-content: center;
       display: flex;
+      border-bottom:none;
       padding: 20px 10px 20px 10px;
     }
   }
@@ -707,10 +720,12 @@ a.btn-primary {
 .navbar-default .navbar-nav > li > a {
   color: $header_link_color;
   height: 75px;
+  border-bottom:none;
 }
 
 .navbar-default a {
   color: $header_link_color;
+  border-bottom:none;
 }
 
 a.dropdown-toggle::after {
@@ -729,12 +744,13 @@ a.dropdown-toggle::after {
 .navbar-default .navbar-nav > .open > a:hover {
   background: $header_link_background_hover;
   color: $header_link_color_hover;
+  border-bottom:none;
 }
 
 .navbar-brand, .navbar-nav > li > a {
   text-shadow: none;
   font-size: 18px;
-
+  border-bottom:none;
   @media (max-width: 1000px) {
     font-size: 15px;
   }
