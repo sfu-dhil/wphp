@@ -37,6 +37,7 @@
             <thead>
                 <tr>
                     <th>ID</th>
+                    <th>Imported</th>
                     <th>Author</th>
                     <th>Title</th>
                 </tr>
@@ -49,6 +50,7 @@
                             {{ estcMarc.titleId }}
                         </a>
                     </td>
+                    <td>{% if manager.isImported(estcMarc) %} Yes {% else %} No {% endif %}</td>
                     <td>{{ manager.getAuthor(estcMarc) }}</td>
                     <td>{{ manager.getTitle(estcMarc) }}</td>
                 </tr>
