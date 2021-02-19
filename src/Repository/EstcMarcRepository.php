@@ -45,16 +45,21 @@ class EstcMarcRepository extends ServiceEntityRepository {
      * @return mixed
      */
     public function searchQuery($q) {
-        $dql = <<<'ENDSQL'
-SELECT e.titleId
-FROM App:EstcMarc e
-WHERE MATCH (e.fieldData) AGAINST (:q BOOLEAN) > 0 AND e.field IN ('245' , '100')
-group by e.titleId 
-ENDSQL;
-        $query = $this->_em->createQuery($dql);
-        $query->setParameter('q', $q);
+        $qb = $this->createQueryBuilder('e');
+        $qb->select('e.titleId');
+        $qb->addSelect('MAX(MATCH(e.fieldData) AGAINST (:q BOOLEAN)) AS HIDDEN score');
+        $qb->andWhere('e.field IN (\'245\', \'100\')');
+        $qb->andHaving('score > 0');
+        $qb->groupBy('e.titleId');
+        $qb->orderBy('score', 'DESC');
+        $qb->setParameter('q', $q);
 
-        return $query->execute();
+        $matches = [];
+        if(preg_match('/^"(.*?)"$/', $q, $matches)) {
+            $qb->andWhere('e.fieldData LIKE :text');
+            $qb->setParameter('text', '%' . $matches[1] . '%');
+        }
+        return $qb->getQuery()->execute();
     }
 
     /**
