@@ -15,8 +15,6 @@ use App\DataFixtures\PersonFixtures;
 use App\DataFixtures\RoleFixtures;
 use App\DataFixtures\SourceFixtures;
 use App\Entity\EstcMarc;
-use App\Entity\Person;
-use App\Entity\Title;
 use App\Repository\EstcMarcRepository;
 use App\Repository\TitleRepository;
 use App\Repository\TitleSourceRepository;

@@ -12,15 +12,12 @@ namespace App\Services;
 
 use App\Entity\EstcMarc;
 use App\Entity\Format;
-use App\Entity\Person;
 use App\Entity\Role;
 use App\Entity\Source;
 use App\Entity\Title;
-use App\Entity\TitleRole;
 use App\Entity\TitleSource;
 use App\Repository\EstcMarcRepository;
 use App\Repository\FormatRepository;
-use App\Repository\PersonRepository;
 use App\Repository\RoleRepository;
 use App\Repository\SourceRepository;
 use App\Repository\TitleRepository;
@@ -163,7 +160,7 @@ class EstcMarcImporter {
      */
     public function guessFormat($fields) {
         if ( ! isset($fields['300c']) || null === $fields['300c']->getFieldData()) {
-            return null;
+            return;
         }
         $data = $fields['300c']->getFieldData();
         $matches = [];
