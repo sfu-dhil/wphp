@@ -88,7 +88,7 @@ class PersonRepository extends ServiceEntityRepository {
         $qb->addOrderBy('e.dob');
         if (isset($data['name']) && $data['name']) {
             $matches = [];
-            if(preg_match('/^"(.*?)"$/', $data['name'], $matches)) {
+            if (preg_match('/^"(.*?)"$/', $data['name'], $matches)) {
                 $qb->andWhere('CONCAT(e.firstName, \' \', e.lastName) LIKE :name');
                 $qb->setParameter('name', $matches[1]);
             } else {

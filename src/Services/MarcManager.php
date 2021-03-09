@@ -60,17 +60,18 @@ class MarcManager {
             'titleId' => $object->getTitleId(),
             'field' => '001',
         ]);
+
         return $field->getFieldData();
     }
 
     /**
-     * @param string|EstcMarc $record
+     * @param EstcMarc|string $record
      *
      * @return bool
      */
     public function isImported($record) {
         $controlId = null;
-        if($record instanceof EstcMarc) {
+        if ($record instanceof EstcMarc) {
             $controlId = $this->getControlId($record);
         } elseif (is_string($record)) {
             $controlId = $record;
@@ -82,6 +83,7 @@ class MarcManager {
             'source' => $source,
             'identifier' => $controlId,
         ]);
+
         return count($ts) > 0;
     }
 

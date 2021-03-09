@@ -55,10 +55,11 @@ class EstcMarcRepository extends ServiceEntityRepository {
         $qb->setParameter('q', $q);
 
         $matches = [];
-        if(preg_match('/^"(.*?)"$/', $q, $matches)) {
+        if (preg_match('/^"(.*?)"$/', $q, $matches)) {
             $qb->andWhere('e.fieldData LIKE :text');
             $qb->setParameter('text', '%' . $matches[1] . '%');
         }
+
         return $qb->getQuery()->execute();
     }
 
@@ -81,10 +82,11 @@ class EstcMarcRepository extends ServiceEntityRepository {
         $qb->setParameter('q', $q);
 
         $matches = [];
-        if(preg_match('/^"(.*?)"$/', $q, $matches)) {
+        if (preg_match('/^"(.*?)"$/', $q, $matches)) {
             $qb->andWhere('e.fieldData LIKE :text');
             $qb->setParameter('text', '%' . $matches[1] . '%');
         }
+
         return $qb->getQuery()->execute();
     }
 }
