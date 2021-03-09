@@ -77,8 +77,6 @@ class FirmSearchType extends AbstractType {
             'required' => false,
             'expanded' => true,
             'multiple' => true,
-            'empty_data' => null,
-            'data' => null,
         ]);
 
         $builder->add('address', TextType::class, [
