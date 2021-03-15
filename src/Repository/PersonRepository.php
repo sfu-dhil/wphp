@@ -87,8 +87,14 @@ class PersonRepository extends ServiceEntityRepository {
         $qb->addOrderBy('e.firstName');
         $qb->addOrderBy('e.dob');
         if (isset($data['name']) && $data['name']) {
-            $qb->andWhere('MATCH (e.lastName, e.firstName, e.title) AGAINST (:name BOOLEAN) > 0');
-            $qb->setParameter('name', $data['name']);
+            $matches = [];
+            if (preg_match('/^"(.*?)"$/', $data['name'], $matches)) {
+                $qb->andWhere('CONCAT(e.firstName, \' \', e.lastName) LIKE :name');
+                $qb->setParameter('name', $matches[1]);
+            } else {
+                $qb->andWhere('MATCH (e.lastName, e.firstName, e.title) AGAINST (:name BOOLEAN) > 0');
+                $qb->setParameter('name', $data['name']);
+            }
         }
         if (isset($data['order']) && $data['order']) {
             switch ($data['order']) {

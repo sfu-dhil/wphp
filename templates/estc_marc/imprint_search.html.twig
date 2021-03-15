@@ -37,6 +37,7 @@
             <thead>
                 <tr>
                     <th>ID</th>
+                    <th>Imported</th>
                     <th>Title</th>
                     <th>Imprint</th>
                 </tr>
@@ -49,6 +50,7 @@
                             {{ estcMarc.titleId }}
                         </a>
                     </td>
+                    <td>{% if manager.isImported(estcMarc) %} Yes {% else %} No {% endif %}</td>
                     <td>{{ manager.getTitle(estcMarc) }}</td>
                     <td>{{ manager.getFieldValues(estcMarc, '260')|join(" ") }}</td>
                 </tr>

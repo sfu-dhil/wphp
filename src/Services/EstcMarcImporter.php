@@ -12,15 +12,12 @@ namespace App\Services;
 
 use App\Entity\EstcMarc;
 use App\Entity\Format;
-use App\Entity\Person;
 use App\Entity\Role;
 use App\Entity\Source;
 use App\Entity\Title;
-use App\Entity\TitleRole;
 use App\Entity\TitleSource;
 use App\Repository\EstcMarcRepository;
 use App\Repository\FormatRepository;
-use App\Repository\PersonRepository;
 use App\Repository\RoleRepository;
 use App\Repository\SourceRepository;
 use App\Repository\TitleRepository;
@@ -40,11 +37,6 @@ class EstcMarcImporter {
      * @var EstcMarcRepository
      */
     private $estcRepo;
-
-    /**
-     * @var PersonRepository
-     */
-    private $personRepo;
 
     /**
      * @var TitleRepository
@@ -82,7 +74,6 @@ class EstcMarcImporter {
     public function __construct(EntityManagerInterface $em) {
         $this->em = $em;
         $this->estcRepo = $this->em->getRepository(EstcMarc::class);
-        $this->personRepo = $this->em->getRepository(Person::class);
         $this->titleRepo = $this->em->getRepository(Title::class);
         $this->roleRepo = $this->em->getRepository(Role::class);
         $this->sourceRepo = $this->em->getRepository(Source::class);
@@ -158,55 +149,6 @@ class EstcMarcImporter {
         $this->messages[] = 'Cannot parse author dates: ' . $data . '. Author information may be incorrect.';
 
         return [null, null];
-    }
-
-    /**
-     * Attempt to fetch a person record based on a MARC record.
-     *
-     * @param array $fields
-     *
-     * @return Person
-     */
-    public function getPerson($fields) {
-        $fullName = preg_replace('/[^a-zA-Z0-9]*$/', '', $fields['100a']->getFieldData());
-        list($last, $first) = explode(', ', $fullName);
-        list($dob, $dod) = $this->getDates($fields);
-
-        $people = $this->personRepo->findByNameDates($first, $last, $dob, $dod);
-
-        if (0 === count($people)) {
-            $this->messages[] = 'No person record found for ' . $fullName . '. You may need to edit the person record after importing this title.';
-            $person = new Person();
-            $person->setLastName($last);
-            $person->setFirstName($first);
-            $person->setDob($dob);
-            $person->setDod($dod);
-            $this->em->persist($person);
-            $this->em->flush();
-
-            return $person;
-        }
-        if (count($people) > 1) {
-            $this->messages[] = 'More than one person record found for ' . $fullName . '. Check that this is the correct person.';
-        }
-
-        return $people[0];
-    }
-
-    /**
-     * Add the person to a title as an author.
-     */
-    public function addAuthor(Title $title, Person $person) : void {
-        if ( ! $person) {
-            return;
-        }
-        $role = $this->roleRepo->findOneBy(['name' => 'Author']);
-        $titleRole = new TitleRole();
-        $titleRole->setPerson($person);
-        $titleRole->setRole($role);
-        $titleRole->setTitle($title);
-        $title->addTitleRole($titleRole);
-        $this->em->persist($titleRole);
     }
 
     /**
@@ -293,11 +235,6 @@ class EstcMarcImporter {
             $title->setPubdate(preg_replace('/\\.$/', '', $fields['260c']->getFieldData()));
         }
 
-        if (isset($fields['100a'])) {
-            $person = $this->getPerson($fields);
-            $this->addAuthor($title, $person);
-        }
-
         $titleSource = new TitleSource();
         $titleSource->setSource($this->sourceRepo->findOneBy(['name' => 'ESTC']));
         $titleSource->setTitle($title);
@@ -333,10 +270,6 @@ class EstcMarcImporter {
 
     public function setEstcRepo(EstcMarcRepository $estcRepo) : void {
         $this->estcRepo = $estcRepo;
-    }
-
-    public function setPersonRepo(PersonRepository $personRepo) : void {
-        $this->personRepo = $personRepo;
     }
 
     public function setTitleRepo(TitleRepository $titleRepo) : void {

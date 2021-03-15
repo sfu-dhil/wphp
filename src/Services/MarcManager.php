@@ -10,9 +10,12 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Entity\EstcMarc;
 use App\Entity\MarcSubfieldStructure;
 use App\Entity\MarcTagStructure;
 use App\Entity\OsborneMarc;
+use App\Entity\Source;
+use App\Entity\TitleSource;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -49,6 +52,39 @@ class MarcManager {
         ]);
 
         return implode("\n", array_map(function ($row) {return $row->getFieldData(); }, $rows));
+    }
+
+    public function getControlId($object) {
+        $repo = $this->em->getRepository(get_class($object));
+        $field = $repo->findOneBy([
+            'titleId' => $object->getTitleId(),
+            'field' => '001',
+        ]);
+
+        return $field->getFieldData();
+    }
+
+    /**
+     * @param EstcMarc|string $record
+     *
+     * @return bool
+     */
+    public function isImported($record) {
+        $controlId = null;
+        if ($record instanceof EstcMarc) {
+            $controlId = $this->getControlId($record);
+        } elseif (is_string($record)) {
+            $controlId = $record;
+        }
+        // ESTC Source ID is 2.
+        $source = $this->em->find(Source::class, 2);
+        $repo = $this->em->getRepository(TitleSource::class);
+        $ts = $repo->findBy([
+            'source' => $source,
+            'identifier' => $controlId,
+        ]);
+
+        return count($ts) > 0;
     }
 
     /**

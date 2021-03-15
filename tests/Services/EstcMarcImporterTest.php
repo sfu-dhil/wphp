@@ -15,8 +15,6 @@ use App\DataFixtures\PersonFixtures;
 use App\DataFixtures\RoleFixtures;
 use App\DataFixtures\SourceFixtures;
 use App\Entity\EstcMarc;
-use App\Entity\Person;
-use App\Entity\Title;
 use App\Repository\EstcMarcRepository;
 use App\Repository\TitleRepository;
 use App\Repository\TitleSourceRepository;
@@ -116,77 +114,6 @@ class EstcMarcImporterTest extends ControllerBaseCase {
             ['1603', null, '1602 or 1603-'],
             ['1605', null, '1605-'],
         ];
-    }
-
-    public function testGetPerson() : void {
-        $f1 = new EstcMarc();
-        $f1->setField('100')->setSubfield('a')->setFieldData('LastName 1, FirstName 1.');
-        $f2 = new EstcMarc();
-        $f2->setField('100d')->setSubfield('d')->setFieldData('1751-1801.');
-
-        $personCount = $this->entityManager->getRepository(Person::class)->count([]);
-        $this->entityManager->clear();
-
-        $person = $this->importer->getPerson(['100a' => $f1, '100d' => $f2]);
-        $this->assertInstanceOf(Person::class, $person);
-        $this->assertSame($personCount, $this->entityManager->getRepository(Person::class)->count([]));
-        $this->assertCount(0, $this->importer->getMessages());
-        $this->assertSame('LastName 1', $person->getLastName());
-    }
-
-    public function testGetPersonNoDates() : void {
-        $f1 = new EstcMarc();
-        $f1->setField('100')->setSubfield('a')->setFieldData('LastName 1, FirstName 1.');
-        $personCount = $this->entityManager->getRepository(Person::class)->count([]);
-        $this->entityManager->clear();
-
-        $person = $this->importer->getPerson(['100a' => $f1]);
-        $this->assertInstanceOf(Person::class, $person);
-        $this->assertSame($personCount, $this->entityManager->getRepository(Person::class)->count([]));
-        $this->assertSame('LastName 1', $person->getLastName());
-    }
-
-    public function testGetPersonMultiple() : void {
-        $person = new Person();
-        $person->setLastName('LastName 1');
-        $person->setFirstName('FirstName 1');
-        $this->entityManager->persist($person);
-        $this->entityManager->flush();
-
-        $f1 = new EstcMarc();
-        $f1->setField('100')->setSubfield('a')->setFieldData('LastName 1, FirstName 1.');
-        $personCount = $this->entityManager->getRepository(Person::class)->count([]);
-        $this->entityManager->clear();
-
-        $found = $this->importer->getPerson(['100a' => $f1]);
-        $this->assertInstanceOf(Person::class, $found);
-        $this->assertSame($personCount, $this->entityManager->getRepository(Person::class)->count([]));
-        $this->assertSame('LastName 1', $found->getLastName());
-        $this->assertCount(1, $this->importer->getMessages());
-    }
-
-    public function testGetNewPerson() : void {
-        $f1 = new EstcMarc();
-        $f1->setField('100')->setSubfield('a')->setFieldData('Doolittle, Eliza');
-        $f2 = new EstcMarc();
-        $f2->setField('100d')->setSubfield('d')->setFieldData('1701-1761.');
-        $personCount = $this->entityManager->getRepository(Person::class)->count([]);
-        $this->entityManager->clear();
-
-        $person = $this->importer->getPerson(['100a' => $f1, '100d' => $f2]);
-        $this->assertInstanceOf(Person::class, $person);
-        $this->assertSame($personCount + 1, $this->entityManager->getRepository(Person::class)->count([]));
-        $this->assertSame('Doolittle', $person->getLastName());
-    }
-
-    public function testAddAuthor() : void {
-        $title = new Title();
-        $person = new Person();
-        $this->importer->addAuthor($title, $person);
-        $this->assertCount(1, $title->getTitleRoles());
-        $roles = $title->getTitleRoles();
-        $this->assertNotNull($roles[0]);
-        $this->assertSame('Author', $roles[0]->getRole()->getName());
     }
 
     /**

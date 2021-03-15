@@ -83,8 +83,6 @@ class PersonSearchType extends AbstractType {
             'required' => false,
             'expanded' => true,
             'multiple' => true,
-            'empty_data' => null,
-            'data' => null,
         ]);
 
         $builder->add('dob', TextType::class, [
