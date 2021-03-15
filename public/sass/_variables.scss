@@ -9,6 +9,7 @@ $prod_or_dev_path: $dev_path;
 
 $lato: 'Lato', sans-serif;
 $cormorant_garamond: 'Cormorant Garamond', serif;
+$eb-garamond: 'EB Garamond', serif;
 
 // First set of colors
 $color_red: rgb(166, 46, 63);
@@ -104,8 +105,8 @@ $color_table_background_even: $color_2_green_light;
 $color_table_background_hover_odd: $color_table_background_odd;
 $color_table_background_hover_even: $color_table_background_even;
 
-$heading_font: $cormorant_garamond;
-$body_font: $lato;
+$serif: $eb-garamond;
+$sans: $lato;
 
 
 

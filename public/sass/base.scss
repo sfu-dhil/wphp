@@ -271,7 +271,7 @@ h1{
 body[class *= '_blog_'],
 body[class = 'page__']{
   p {
-    font-family: $cormorant_garamond;
+    font-family: $serif;
     line-height: 1.45;
     font-weight: 400;
     font-size: 1.3rem;
@@ -285,7 +285,7 @@ body[class *= '_blog_'] {
   }
 
   blockquote{
-    font-family: $cormorant_garamond;
+    font-family: $serif;
     font-size: 1.15rem;
     line-height: 1.4;
     border-left-color: #2e3436;
@@ -368,7 +368,7 @@ th.sorted.desc:after, a.desc:after {
 div.tab-content {
   // min-height: 200px;
   p {
-    font-family: $lato;
+    font-family: $sans;
     font-size: 0.9rem;
   }
 }
@@ -460,7 +460,7 @@ span.select2 {
 
 p.help-block {
   font-size: 16px;
-  font-family: $lato;
+  font-family: $sans;
   // color: $color_;
 
   a {
@@ -545,7 +545,7 @@ p.help-block {
 .panel-body {
   background: $panel_background;
   font-size: 1rem;
-  font-family: $lato;
+  font-family: $sans;
 }
 
 .table-bordered > tbody > tr > td,
@@ -621,7 +621,7 @@ a.btn-primary {
   background: $color_red;
   border: 1px solid $color_brown;
   /* Submit button exampl: */
-  font-family: $lato;
+  font-family: $sans;
   line-height: 1em;
   // font-weight: 500;
   font-size: 14px;
@@ -678,7 +678,7 @@ a.btn-primary {
   background: $header_background;
   color: $header_color;
   border: 0;
-  font-family: $cormorant_garamond;
+  font-family: $serif;
   font-weight: 800;
   font-size: 20px;
   box-shadow: 0 2px 4px 0 $color_grey_translucent;
@@ -781,7 +781,7 @@ a.dropdown-toggle::after {
   background-color: $color_dropdown_background;
   border: 0;
   border-radius: 0;
-  font-family: $lato;
+  font-family: $sans;
 
   > li {
     // @include link($color_dropdown_link, $color_dropdown_link_hover);

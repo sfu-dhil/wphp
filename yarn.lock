@@ -2,6 +2,21 @@
 # yarn lockfile v1
 
 
+"@fontsource/cormorant-garamond@^4.2.2":
+  version "4.2.2"
+  resolved "https://registry.yarnpkg.com/@fontsource/cormorant-garamond/-/cormorant-garamond-4.2.2.tgz#b58b7862a8168b7d60d482556773495797aa13a9"
+  integrity sha512-F8OrxGa+MHu5SH8pFaWFJfj3nod3Tv7BbiOYNAdPcfhmNSyC5VXwnBVYGGDJ28EIZyKUQIYr49t6TcT6m1vVaQ==
+
+"@fontsource/eb-garamond@^4.2.2":
+  version "4.2.2"
+  resolved "https://registry.yarnpkg.com/@fontsource/eb-garamond/-/eb-garamond-4.2.2.tgz#fc7ea03bf0e05fb69ad5fe6d91df08c2fe507919"
+  integrity sha512-9N9jSnH32Jh8i+EyCyzAxsdsoZZQIiGbIROZbwEh8h2xwr0RKCSX3QQeni7eBD/mRb0e1jqgEb2CXUzl9fwjRg==
+
+"@fontsource/lato@^4.2.2":
+  version "4.2.2"
+  resolved "https://registry.yarnpkg.com/@fontsource/lato/-/lato-4.2.2.tgz#e0e592180bf7f2276190b4448aea2feaac888d1f"
+  integrity sha512-ZE5WvqZQZinXpH8MaEiM9klDsUOfCHVQJ/tZKpNVQhi8mHt9WqPCROu500oI5jC3s6jaJuWsM7LfJ1zyEeW+XA==
+
 "@fortawesome/fontawesome-free@^5.14.0":
   version "5.15.2"
   resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-free/-/fontawesome-free-5.15.2.tgz#218cd7276ab4f9ab57cc3d2efa2697e6a579f25d"
@@ -32,11 +47,6 @@ jquery@>=1.2.6, jquery@>=1.7, jquery@^3.4.1:
   version "3.6.0"
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.6.0.tgz#c72a09f15c1bdce142f49dbf1170bdf8adac2470"
   integrity sha512-JVzAR/AjBvVt2BmYhxRCSYysDsPcssdmTFnzyLEts9qNwmjmu4JTAMYubEfwVOSwpQ1I1sKKFcxhZCI2buerfw==
-
-lato-font@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/lato-font/-/lato-font-3.0.0.tgz#91b837e2374b668fb7331d44c894d37a2d9f8e11"
-  integrity sha1-kbg34jdLZo+3Mx1EyJTTei2fjhE=
 
 modularscale-sass@^3.0.10:
   version "3.0.10"
@@ -72,8 +82,3 @@ tinymce@^5.4.0:
   version "5.7.0"
   resolved "https://registry.yarnpkg.com/tinymce/-/tinymce-5.7.0.tgz#bc565877e4041db83848a330dfa7916993110cba"
   integrity sha512-WikgMpJbqYPaucV3lfstCj+Y4NquZlK61gyuJ2eqDUBlSU+4fFh6rpwnelVTxuvtEyJsAVOl8HZmbzBfDJiLsQ==
-
-typeface-cormorant-garamond@^0.0.72:
-  version "0.0.72"
-  resolved "https://registry.yarnpkg.com/typeface-cormorant-garamond/-/typeface-cormorant-garamond-0.0.72.tgz#86e1564b87f2d89599ae27cf0b762bae95c99798"
-  integrity sha512-SOImWwsy5h0Vtj8oWMY2KjEnalkA86I7c98UMXplZQ9cTKoq4kfojc/R2B55kzJGhg0uEz0GcbDtFcyQzxTOqg==

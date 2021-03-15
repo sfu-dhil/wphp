@@ -6,17 +6,18 @@
   "license": "GPL-v2-or-later",
   "private": true,
   "dependencies": {
+    "@fontsource/cormorant-garamond": "^4.2.2",
+    "@fontsource/eb-garamond": "^4.2.2",
+    "@fontsource/lato": "^4.2.2",
     "@fortawesome/fontawesome-free": "^5.14.0",
     "bootstrap3": "^3.3.5",
     "dhilux": "https://github.com/joeytakeda/dhilux",
     "jquery": "^3.4.1",
     "jquery-ui-dist": "^1.12.1",
-    "lato-font": "^3.0.0",
     "select2": "^4.0.12",
     "select2-bootstrap-css": "^1.4.6",
     "symfony-collection": "^2.1.30",
     "tablesorter": "^2.31.3",
-    "tinymce": "^5.4.0",
-    "typeface-cormorant-garamond": "^0.0.72"
+    "tinymce": "^5.4.0"
   }
 }
