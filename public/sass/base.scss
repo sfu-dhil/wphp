@@ -30,7 +30,7 @@ body {
   min-height: 100vh;
   line-height:1.4;
   margin-bottom: 0;
-  font-family: $lato;
+  font-family: $sans;
 
   > .container {
     flex: 1;
@@ -44,9 +44,8 @@ h2,
 h3,
 h4,
 h5 {
-  font-family: $heading_font;
+  font-family: $serif;
   color: $heading_color;
-  font-weight: 600;
 }
 
 @include link($color_link, $color_link_hover);
@@ -266,32 +265,6 @@ h1{
 
 
 
-
-
-body[class *= '_blog_'],
-body[class = 'page__']{
-  p {
-    font-family: $serif;
-    line-height: 1.45;
-    font-weight: 400;
-    font-size: 1.3rem;
-    margin-bottom: ms(1);
-  }
-}
-
-body[class *= '_blog_'] {
-  & > .container{
-    max-width: 45rem;
-  }
-
-  blockquote{
-    font-family: $serif;
-    font-size: 1.15rem;
-    line-height: 1.4;
-    border-left-color: #2e3436;
-  }
-
-}
 
 .table-striped > tbody > tr {
   background: $color_table_background_odd;
@@ -946,3 +919,6 @@ img{
     white-space: normal;
   }
 }
+
+
+@import 'homepage';

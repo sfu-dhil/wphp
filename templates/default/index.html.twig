@@ -1,33 +1,31 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-
-    <div class='row'>
-        <div class="col-sm-12">
-
+    <div class="hero">
+        <div class="content container">
             {% if homepage %}
                 {{ homepage.content|raw }}
             {% endif %}
 
-            <h2>Spotlights</h2>
         </div>
     </div>
-
-    <div class='row'>
-
+    <div class="gallery">
         {% for spotlight in spotlights %}
-            <div class="col-sm-4 blog-panel">
-                {% if spotlight is not null %}
-                    <div class="panel panel-default">
-                        <a href="{{ path('nines_blog_post_show', {'id': spotlight.id}) }}">
-                            <div class="panel-heading">{{ spotlight.title }}</div>
-                        </a>
-                        <div class='panel-body'>{{ spotlight.excerpt|raw }}</div>
-                    </div>
-                {% endif %}
-            </div>
+            {% embed 'partials/card.html.twig' %}
+                {% set link = path('nines_blog_post_show', {'id': spotlight.id}) %}
+                {% block excerpt %}
+                    {{ spotlight.excerpt|raw }}
+                {% endblock %}
+                {% block heading %}
+                    {{ spotlight.title }}
+                {% endblock %}
+                {% block caption %}
+                    <a href="{{ path('nines_blog_post_category_show', {'id': spotlight.category.id}) }}" class="link link__label">
+                        {{ spotlight.category }}
+                    </a>
+                {% endblock %}
+            {% endembed %}
         {% endfor %}
-
     </div>
 
 {% endblock %}
