@@ -1,8 +1,11 @@
 {% extends '@!NinesBlog/post/show.html.twig' %}
 
+
 {% block body %}
         <div class="blog-content">
+            <div class="page-header">
+                {{ block('pageheader') }}
+            </div>
             {{ post.content|raw }}
         </div>
-    </div>
 {% endblock %}

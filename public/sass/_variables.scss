@@ -8,13 +8,15 @@ $prod_or_dev_path: $dev_path;
 
 
 $lato: 'Lato', sans-serif;
+$inter: 'Inter', sans-serif;
 $cormorant_garamond: 'Cormorant Garamond', serif;
 $eb-garamond: 'EB Garamond', serif;
 
 // First set of colors
 $color_red: rgb(166, 46, 63);
 $color_red_dark: rgb(98, 54, 55);
-$color_white: #fff;
+// New variables to override the top ones l8r
+$color_white: #FCFCFC;
 $color_brown: rgb(48, 35, 22);
 $color_salmon: rgb(234, 168, 154);
 $color_beige: rgb(225, 216, 183);
@@ -91,17 +93,21 @@ $color_dropdown_link: $color_white;
 $color_dropdown_link_hover: $color_2_darker_brown;
 $color_dropdown_background_hover: $color_2_salmon;
 
+$color_grey_light: #FAFAFA;
+
 // tables
 $table_head_color: $color_white;
 $table_head_background_color: $color_2_darker_brown;
 $table_head_border_color: $color_2_darker_brown;
-$table_body_border_color: $color_2_green;
+$table_body_border_color: $color_grey_light;
 
 $table_body_link_color: $color_link;
 $table_body_link_color_hover: $color_link_hover;
 
-$color_table_background_odd: $color_2_green_lighter;
-$color_table_background_even: $color_2_green_light;
+
+
+$color_table_background_odd: #EFEFEF;
+$color_table_background_even: $color_grey_light;
 $color_table_background_hover_odd: $color_table_background_odd;
 $color_table_background_hover_even: $color_table_background_even;
 
@@ -111,3 +117,12 @@ $sans: $lato;
 
 
 $desktop-width: 970px;
+
+
+
+
+$box-shadow-sm: 0px 4px 8px rgba(0, 0, 0, 0.04),
+0px 0px 2px rgba(0, 0, 0, 0.06),
+0px 0px 1px rgba(0, 0, 0, 0.04);
+
+

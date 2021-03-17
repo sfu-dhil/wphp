@@ -5,7 +5,7 @@
 
 
 :root, html{
-  font-size: unset;
+  font-size: 1em;
 }
 
 html {
@@ -24,7 +24,7 @@ body {
   background: $color_body_background;
   color: $color_text;
   font: $body_font;
-  font-size:1rem;
+  font-size:1em;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
