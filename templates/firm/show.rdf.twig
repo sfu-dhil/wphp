@@ -10,10 +10,10 @@
         <schema:location rdf:resource="http://sws.geonames.org/{{ firm.city.geonameid }}/about.rdf"/>
         {% if firm.startDate %}
             <schema:foundingDate>{{ firm.startDate }}</schema:foundingDate>
-            {% endif %}
-            {% if firm.endDate %}
+        {% endif %}
+        {% if firm.endDate %}
             <schema:dissolutionDate>{{ firm.endDate }}</schema:dissolutionDate>
-            {% endif %}
+        {% endif %}
         <wphp:Contributions>
             <rdf:Bag>
                 {% for tfr in firm.getTitleFirmroles %}

@@ -15,7 +15,9 @@
                     <span class="glyphicon glyphicon-edit"></span> Edit </a>
             </div>
             <div class='btn-group'>
-                <form class='delete-form' method="post" action="{{ path('title_relationship_delete', {'id': title_relationship.id }) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                <form class='delete-form' method="post"
+                      action="{{ path('title_relationship_delete', {'id': title_relationship.id }) }}"
+                      onsubmit="return confirm('Are you sure you want to delete this item?');">
                     <input type="hidden" name="_method" value="DELETE">
                     <input type="hidden" name="_token" value="{{ csrf_token("delete" ~ title_relationship.id) }}">
                     <button class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Delete</button>
@@ -30,15 +32,15 @@
     {% endembed %}
 
     <h3>Related Titles</h3>
-    <table class="table table-hover table-striped">
-        <thead>
+    {% embed 'partials/table.html.twig' %}
+        {% block thead %}
             <tr>
                 <th>Title</th>
                 <th>Relationship</th>
                 <th>Title</th>
             </tr>
-        </thead>
-        <tbody>
+        {% endblock %}
+        {% block tbody %}
             {% for related in title_relationship.relatedTitles %}
                 <tr>
                     <td>
@@ -52,6 +54,6 @@
                     </td>
                 </tr>
             {% endfor %}
-        </tbody>
-    </table>
+        {% endblock %}
+    {% endembed %}
 {% endblock %}

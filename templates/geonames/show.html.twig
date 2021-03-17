@@ -6,7 +6,6 @@
 
 {% block body %}
     {#
-
     <div class="btn-toolbar">
         <div class="btn-group pull-right">
             <a href="{{ path('geonames_index') }}" class="btn btn-default">
@@ -14,11 +13,10 @@
             </a>
         </div>
     </div>
-
     #}
 
-    <table class="table">
-        <tbody>
+    {% embed 'partials/table.html.twig' %}
+        {% block tbody %}
             <tr>
                 <th data-toggle="popover" data-content="{{ 'geonames.fields.geonameid'|trans }}">Geoname ID</th>
                 <td>{{ geoname.geonameid }}</td>
@@ -83,7 +81,7 @@
                 <th data-toggle="popover" data-content="{{ 'geonames.field.admin4'|trans }}">Admin 4</th>
                 <td>{{ geoname.admin4 }}</td>
             </tr>
-        </tbody>
-    </table>
+        {% endblock %}
+    {% endembed %}
 
 {% endblock %}

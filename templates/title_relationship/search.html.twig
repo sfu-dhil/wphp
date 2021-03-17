@@ -2,13 +2,14 @@
 
 {% block title %}Title Relationship Search{% endblock %}
 
- {% block pageheader %} 
-    <h1>Title Relationship Search</h1>
-    {% if title_relationships|length %}
-    <p class="count">
-        Displaying {{ title_relationships|length }} title_relationships of {{ title_relationships.getTotalItemCount }} total.
-    </p>
-	{% endif %}
+ {% block pageheader %}
+     <h1>Title Relationship Search</h1>
+     {% if title_relationships|length %}
+         <p class="count">
+             Displaying {{ title_relationships|length }} title_relationships
+             of {{ title_relationships.getTotalItemCount }} total.
+         </p>
+     {% endif %}
  {% endblock %} 
 
 {% block body %}
@@ -30,7 +31,7 @@
                     </div>
                 </div>
             </div>
-            <p>	Full text searching options, if available:</p>
+            <p> Full text searching options, if available:</p>
             <ul>
                 <li><code>shakespeare</code> - shakespeare should be present, but might not be</li>
                 <li><code>shakes*</code> - words starting with shakes should be present</li>
@@ -42,15 +43,15 @@
         </fieldset>
     </form>
 
-	{% if title_relationships|length %}
+    {% if title_relationships|length %}
 
-  {% embed 'title_relationship/partial/table.html.twig' %}
-  {% endembed %}
+        {% embed 'title_relationship/partial/table.html.twig' %}
+        {% endembed %}
 
-    <div class="navigation">
-        {{ knp_pagination_render(title_relationships) }}
-    </div>
-	{% endif %}
+        <div class="navigation">
+            {{ knp_pagination_render(title_relationships) }}
+        </div>
+    {% endif %}
 
 {% endblock %}
 

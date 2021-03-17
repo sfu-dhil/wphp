@@ -1,14 +1,24 @@
 {
     "@context": "http://schema.org",
     "@type": "Organization"
-    {% if firm.name %},"name": "{{firm.name}}" {% endif %}
-    {% if firm.startDate %}, "foundingDate": "{{ firm.startDate }}" {% endif %}
-    {% if firm.endDate %} ,"dissolutionDate": "{{ firm.endDate }}" {% endif %},
+    {% if firm.name %},
+    "name": "{{firm.name}}"
+    {% endif %}
+    {% if firm.startDate %},
+    "foundingDate": "{{ firm.startDate }}"
+    {% endif %}
+    {% if firm.endDate %},
+    "dissolutionDate": "{{ firm.endDate }}"
+    {% endif %},
     "@id": "{{ url('firm_show', {'id':firm.id}) }}",
     "address": {
         "@type": "PostalAddress"
-        {% if firm.city %},"addressLocality": "{{ firm.city }}" {% endif %}
-        {% if firm.streetAddress %}, "streetAddress": "{{ firm.streetAddress }}" {% endif %}
+        {% if firm.city %},
+        "addressLocality": "{{ firm.city }}"
+        {% endif %}
+        {% if firm.streetAddress %},
+        "streetAddress": "{{ firm.streetAddress }}"
+        {% endif %}
     },
     "@graph": [
         {# the filter in this statement messes with the for loop.last variable
@@ -21,7 +31,9 @@
             "@type": "Book",
             "@id": "{{ url('title_show', {'id':book.id}) }}",
             "name": "{{book.title}}"
-            {% if book.pubdate %}, "datePublished": "{{ book.pubdate }}" {% endif %}
+            {% if book.pubdate %},
+            "datePublished": "{{ book.pubdate }}"
+            {% endif %}
             {% if book.locationOfPrinting %},
             "locationCreated": {
                 "@type": "Place",
@@ -33,25 +45,30 @@
                     "longitude": "{{book.locationOfPrinting.longitude}}"
                 }
             }
-            {% endif %}
-            ,"author": [
+            {% endif %},
+            "author": [
                 {% for titleRole in book.getTitleRoles("Author") %}{% set author = titleRole.person %}
                 {
-                    "@type": "Person"
-                    ,"name": "{{ author }}",
+                    "@type": "Person",
+                    "name": "{{ author }}",
                     "@id": "{{ url('person_show', {'id':author.id}) }}"
-                } {% if not loop.last %},{% endif %}
+                }
+                {% if not loop.last %},
+                {% endif %}
                 {% endfor %}
             ],
             "publisher": [
                 {% for titleFirmrole in book.getTitleFirmroles("Publisher") %}{% set publisher = titleFirmrole.firm %}
                 {
                     "@id": "{{ url('firm_show', {'id':publisher.id}) }} "
-                }{% if not loop.last %},{% endif %}
+                }
+                {% if not loop.last %},
+                {% endif %}
                 {% endfor %}
             ]
         }
-        {% if loop.index != count %},{% endif %}
+        {% if loop.index != count %},
+        {% endif %}
         {% endfor %}
     ]
 }

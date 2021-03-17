@@ -14,15 +14,15 @@
             </a>
         </div>
     </div>
-    <table class="table table-hover table-striped">
+    {% embed 'partials/table.html.twig' %}
         {% set data = manager.getData(osborneMarc) %}
-        <tbody>
+        {% block tbody %}
             {% for field in data %}
                 <tr>
                     <th>{{ manager.getFieldName(field) }}</th>
                     <td>{{ field.getFieldData() }}</td>
                 </tr>
             {% endfor %}
-        </tbody>
-    </table>
+        {% endblock %}
+    {% endembed %}
 {% endblock %}

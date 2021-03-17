@@ -17,15 +17,15 @@
             {% endif %}
         </div>
     </div>
-    <table class="table table-hover table-striped">
-        <thead>
+    {% embed 'partials/table.html.twig' %}
+        {% block thead %}
             <tr>
                 <th>Name</th>
                 <th>Description</th>
                 <th>Persons</th>
             </tr>
-        </thead>
-        <tbody>
+        {% endblock %}
+        {% block tbody %}
             {% for role in roles %}
                 <tr>
                     <td>
@@ -41,8 +41,8 @@
                     </td>
                 </tr>
             {% endfor %}
-        </tbody>
-    </table>
+        {% endblock %}
+    {% endembed %}
 
     <div class="navigation">
         {{ knp_pagination_render(roles) }}

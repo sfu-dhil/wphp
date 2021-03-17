@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block pageheader %} 
+{% block pageheader %}
     <h1>Geonames</h1>
 {% endblock %} 
 
@@ -11,16 +11,16 @@
 
     <h2>People</h2>
 
-    <table class="table table-hover table-striped">
-        <thead>
+    {% embed 'partials/table.html.twig' %}
+        {% block thead %}
             <tr>
                 <th>ID</th>
                 <th>Last name</th>
                 <th>First name</th>
                 <th>Date</th>
             </tr>
-        </thead>
-        <tbody>
+        {% endblock %}
+        {% block tbody %}
             {% for person in people %}
                 <tr>
                     <td>
@@ -48,8 +48,8 @@
                     </td>
                 </tr>
             {% endfor %}
-        </tbody>
-    </table>
+        {% endblock %}
+    {% endembed %}
 
 
 {% endblock %}

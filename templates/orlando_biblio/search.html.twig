@@ -5,9 +5,10 @@
 {% block pageheader %}
     <h1>Search Orlando Bibliography</h1>
     {% if orlandoBiblios|length %}
-    <p class="count">
-        Displaying {{ orlandoBiblios|length }} Orlando Bibliography records of {{ orlandoBiblios.getTotalItemCount }} total.
-    </p>
+        <p class="count">
+            Displaying {{ orlandoBiblios|length }} Orlando Bibliography records
+            of {{ orlandoBiblios.getTotalItemCount }} total.
+        </p>
     {% endif %}
 {% endblock %}
 
@@ -32,47 +33,47 @@
         </fieldset>
     </form>
 
-{% if orlandoBiblios|length %}
-    <table class="table table-hover table-striped">
-        <thead>
-        <tr>
-            <th>Orlando ID</th>
-            <th>Author</th>
-            <th>Analytic Standard Title</th>
-            <th>Monographic Standard Title</th>
-            <th>Imprint Date of Publication</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for orlandoBiblio in orlandoBiblios %}
-            <tr>
-                <td>
-                    <a href="{{ path('resource_orlando_biblio_show', { 'id': orlandoBiblio.id }) }}">
-                        {{ orlandoBiblio.orlandoId }}
-                    </a>
-                </td>
-                <td>
-                    {% set fields = manager.getField(orlandoBiblio.author) %}
-                    {% if fields|length > 1 %}
-                        <ul>
-                            {% for field in fields %}
-                                <li>{{ field }}</li>
-                            {% endfor %}
-                        </ul>
-                    {% elseif fields | length == 1 %}
-                        {{ fields[0] }}
-                    {% endif %}
-                </td>
-                <td>{{ orlandoBiblio.analyticStandardTitle }}</td>
-                <td>{{ orlandoBiblio.monographicStandardTitle }}</td>
-                <td>{{ orlandoBiblio.imprintDateOfPublication }}</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    {% if orlandoBiblios|length %}
+        {% embed 'partials/table.html.twig' %}
+            {% block thead %}
+                <tr>
+                    <th>Orlando ID</th>
+                    <th>Author</th>
+                    <th>Analytic Standard Title</th>
+                    <th>Monographic Standard Title</th>
+                    <th>Imprint Date of Publication</th>
+                </tr>
+            {% endblock %}
+            {% block tbody %}
+                {% for orlandoBiblio in orlandoBiblios %}
+                    <tr>
+                        <td>
+                            <a href="{{ path('resource_orlando_biblio_show', { 'id': orlandoBiblio.id }) }}">
+                                {{ orlandoBiblio.orlandoId }}
+                            </a>
+                        </td>
+                        <td>
+                            {% set fields = manager.getField(orlandoBiblio.author) %}
+                            {% if fields|length > 1 %}
+                                <ul>
+                                    {% for field in fields %}
+                                        <li>{{ field }}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% elseif fields | length == 1 %}
+                                {{ fields[0] }}
+                            {% endif %}
+                        </td>
+                        <td>{{ orlandoBiblio.analyticStandardTitle }}</td>
+                        <td>{{ orlandoBiblio.monographicStandardTitle }}</td>
+                        <td>{{ orlandoBiblio.imprintDateOfPublication }}</td>
+                    </tr>
+                {% endfor %}
+            {% endblock %}
+        {% endembed %}
 
-    <div class="navigation">
-        {{ knp_pagination_render(orlandoBiblios) }}
-    </div>
-{% endif %}
+        <div class="navigation">
+            {{ knp_pagination_render(orlandoBiblios) }}
+        </div>
+    {% endif %}
 {% endblock %}

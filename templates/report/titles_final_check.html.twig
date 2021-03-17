@@ -17,8 +17,8 @@
             {{ knp_pagination_render(titles) }}
         </div>
 
-        <table class="table table-hover table-striped">
-            <thead>
+        {% embed 'partials/table.html.twig' %}
+            {% block thead %}
                 <tr>
                     <th>ID</th>
                     <th>Title</th>
@@ -27,8 +27,8 @@
                     <th>Pub Date</th>
                     <th>First Pub Date</th>
                 </tr>
-            </thead>
-            <tbody>
+            {% endblock %}
+            {% block tbody %}
                 {% for title in titles %}
                     <tr>
                         <td>
@@ -47,8 +47,8 @@
                         <td>{{ title.dateOfFirstPublication }}</td>
                     </tr>
                 {% endfor %}
-            </tbody>
-        </table>
+            {% endblock %}
+        {% endembed %}
 
         <div class="navigation">
             {{ knp_pagination_render(titles) }}

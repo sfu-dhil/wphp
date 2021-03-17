@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block pageheader %} 
+{% block pageheader %}
     <h1>Geonames List</h1>
     <p class="count">
         Displaying {{ geonames|length }} geonames of {{ geonames.getTotalItemCount }} total.
@@ -19,16 +19,16 @@
             </a>
         </div>
     </div>
-    <table class="table table-hover table-striped">
-        <thead>
+    {% embed 'partials/table.html.twig' %}
+        {% block thead %}
             <tr>
                 <th>Geoname ID</th>
                 <th>Name</th>
                 <th>Alternate names</th>
                 <th>Country</th>
             </tr>
-        </thead>
-        <tbody>
+        {% endblock %}
+        {% block tbody %}
             {% for geoname in geonames %}
                 <tr>
                     <td>
@@ -41,8 +41,8 @@
                     <td>{{ geoname.country }}</td>
                 </tr>
             {% endfor %}
-        </tbody>
-    </table>
+        {% endblock %}
+    {% endembed %}
 
     <div class="navigation">
         {{ knp_pagination_render(geonames) }}

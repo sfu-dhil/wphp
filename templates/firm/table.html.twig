@@ -1,5 +1,5 @@
-<table class="table table-hover table-striped">
-    <thead>
+{% embed 'partials/table.html.twig' %}
+    {% block thead %}
         <tr>
             {% include 'partials/sortable.html.twig' with {
                 'pagination': firms,
@@ -28,8 +28,8 @@
                 'field': ['e.endDate', 'e.name'],
             } %}
         </tr>
-    </thead>
-    <tbody>
+    {% endblock %}
+    {% block tbody %}
         {% for firm in firms %}
             <tr>
                 <td>{{ firm.id }}</td>
@@ -38,11 +38,11 @@
                         {{ firm.name }}
                     </a>
                 </td>
-                <td>{{ firm.streetAddress }}</td>    
+                <td>{{ firm.streetAddress }}</td>
                 <td>{{ firm.city }}</td>
                 <td>{{ firm.startDate }}</td>
                 <td>{{ firm.endDate }}</td>
             </tr>
         {% endfor %}
-    </tbody>
-</table>
+    {% endblock %}
+{% endembed %}

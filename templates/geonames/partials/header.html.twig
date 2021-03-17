@@ -1,6 +1,4 @@
-
 {#
-
 <div class="btn-toolbar">
     <div class="btn-group pull-right">
         <a href="javascript: history.go(-1)" class="btn btn-default">
@@ -8,11 +6,10 @@
         </a>
     </div>
 </div>
-
 #}
 
-<table class="table">
-    <tbody>
+{% embed 'partials/table.html.twig' %}
+    {% block tbody %}
         <tr>
             <th>Geoname ID</th>
             <td>{{ geoname.geonameid }}</td>
@@ -45,5 +42,5 @@
                 </a>
             </td>
         </tr>
-    </tbody>
-</table>
+    {% endblock %}
+{% endembed %}

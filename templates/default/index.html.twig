@@ -20,7 +20,8 @@
                     {{ spotlight.title }}
                 {% endblock %}
                 {% block caption %}
-                    <a href="{{ path('nines_blog_post_category_show', {'id': spotlight.category.id}) }}" class="link link__label">
+                    <a href="{{ path('nines_blog_post_category_show', {'id': spotlight.category.id}) }}"
+                       class="link link__label">
                         {{ spotlight.category }}
                     </a>
                 {% endblock %}

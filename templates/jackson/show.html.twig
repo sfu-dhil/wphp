@@ -14,8 +14,8 @@
             </a>
         </div>
     </div>
-    <table class="table">
-        <tbody>
+    {% embed 'partials/table.html.twig' %}
+        {% block tbody %}
             <tr>
                 <th>Jackson ID</th>
                 <td>{{ jackson.jbid }}</td>
@@ -84,6 +84,6 @@
                 <th>Exam Note</th>
                 <td>{{ jackson.examnote }}</td>
             </tr>
-        </tbody>
-    </table>
+        {% endblock %}
+    {% endembed %}
 {% endblock %}

@@ -2,13 +2,13 @@
 
 {% block title %}Currency Search{% endblock %}
 
- {% block pageheader %} 
-    <h1>Currency Search</h1>
-    {% if currencies|length %}
-    <p class="count">
-        Displaying {{ currencies|length }} currencies of {{ currencies.getTotalItemCount }} total.
-    </p>
-	{% endif %}
+ {% block pageheader %}
+     <h1>Currency Search</h1>
+     {% if currencies|length %}
+         <p class="count">
+             Displaying {{ currencies|length }} currencies of {{ currencies.getTotalItemCount }} total.
+         </p>
+     {% endif %}
  {% endblock %} 
 
 {% block body %}
@@ -30,7 +30,7 @@
                     </div>
                 </div>
             </div>
-            <p>	Full text searching options, if available:</p>
+            <p> Full text searching options, if available:</p>
             <ul>
                 <li><code>shakespeare</code> - shakespeare should be present, but might not be</li>
                 <li><code>shakes*</code> - words starting with shakes should be present</li>
@@ -42,15 +42,15 @@
         </fieldset>
     </form>
 
-	{% if currencies|length %}
+    {% if currencies|length %}
 
-  {% embed 'currency/partial/table.html.twig' %}
-  {% endembed %}
+        {% embed 'currency/partial/table.html.twig' %}
+        {% endembed %}
 
-    <div class="navigation">
-        {{ knp_pagination_render(currencies) }}
-    </div>
-	{% endif %}
+        <div class="navigation">
+            {{ knp_pagination_render(currencies) }}
+        </div>
+    {% endif %}
 
 {% endblock %}
 

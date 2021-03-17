@@ -19,15 +19,15 @@
         </div>
     </div>
 
-    <table class="table table-hover table-striped">
-        <thead>
+    {% embed 'partials/table.html.twig' %}
+        {% block thead %}
             <tr>
                 <th>Title ID</th>
                 <th>Title</th>
                 <th>Author</th>
             </tr>
-        </thead>
-        <tbody>
+        {% endblock %}
+        {% block tbody %}
             {% for osborneMarc in osborneMarcs %}
                 <tr>
                     <td>
@@ -39,8 +39,8 @@
                     <td>{{ manager.getAuthor(osborneMarc) }}</td>
                 </tr>
             {% endfor %}
-        </tbody>
-    </table>
+        {% endblock %}
+    {% endembed %}
 
     <div class="navigation">
         {{ knp_pagination_render(osborneMarcs) }}

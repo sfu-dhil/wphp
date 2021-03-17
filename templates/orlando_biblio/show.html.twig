@@ -14,8 +14,8 @@
             </a>
         </div>
     </div>
-    <table class="table">
-        <tbody>
+    {% embed 'partials/table.html.twig' %}
+        {% block tbody %}
             <tr>
                 <th>Orlando ID</th>
                 <td>{{ orlandoBiblio.orlandoId }}</td>
@@ -32,7 +32,7 @@
                         <ul>
                             {% for field in fields %}
                                 <li>{{ field }}</li>
-                                {% endfor %}
+                            {% endfor %}
                         </ul>
                     {% elseif fields | length == 1 %}
                         {{ fields[0] }}
@@ -47,7 +47,7 @@
                         <ul>
                             {% for field in fields %}
                                 <li>{{ field }}</li>
-                                {% endfor %}
+                            {% endfor %}
                         </ul>
                     {% elseif fields | length == 1 %}
                         {{ fields[0] }}
@@ -62,7 +62,7 @@
                         <ul>
                             {% for field in fields %}
                                 <li>{{ field }}</li>
-                                {% endfor %}
+                            {% endfor %}
                         </ul>
                     {% elseif fields | length == 1 %}
                         {{ fields[0] }}
@@ -77,7 +77,7 @@
                         <ul>
                             {% for field in fields %}
                                 <li>{{ field }}</li>
-                                {% endfor %}
+                            {% endfor %}
                         </ul>
                     {% elseif fields | length == 1 %}
                         {{ fields[0] }}
@@ -92,7 +92,7 @@
                         <ul>
                             {% for field in fields %}
                                 <li>{{ field }}</li>
-                                {% endfor %}
+                            {% endfor %}
                         </ul>
                     {% elseif fields | length == 1 %}
                         {{ fields[0] }}
@@ -107,7 +107,7 @@
                         <ul>
                             {% for field in fields %}
                                 <li>{{ field }}</li>
-                                {% endfor %}
+                            {% endfor %}
                         </ul>
                     {% elseif fields | length == 1 %}
                         {{ fields[0] }}
@@ -202,6 +202,6 @@
                 <th>Research Notes</th>
                 <td>{{ orlandoBiblio.researchnotes }}</td>
             </tr>
-        </tbody>
-    </table>
+        {% endblock %}
+    {% endembed %}
 {% endblock %}

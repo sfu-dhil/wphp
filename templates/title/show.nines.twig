@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rdf:RDF
-      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-      xmlns:dc="http://purl.org/dc/elements/1.1/"
-      xmlns:dcterms="http://purl.org/dc/terms/"
-      xmlns:collex="http://www.collex.org/schema#"
-      xmlns:ra="http://www.rossettiarchive.org/schema#"
-      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
-      xmlns:role="http://www.loc.gov/loc.terms/relators/"
-      xmlns:wphp="http://dhil.lib.sfu.ca/wphp/">
+        xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+        xmlns:dc="http://purl.org/dc/elements/1.1/"
+        xmlns:dcterms="http://purl.org/dc/terms/"
+        xmlns:collex="http://www.collex.org/schema#"
+        xmlns:ra="http://www.rossettiarchive.org/schema#"
+        xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+        xmlns:role="http://www.loc.gov/loc.terms/relators/"
+        xmlns:wphp="http://dhil.lib.sfu.ca/wphp/">
 
-   <wphp:title rdf:about="{{url('title_show', {'id': title.id}) }}">
+    <wphp:title rdf:about="{{ url('title_show', {'id': title.id}) }}">
 
-<!-- choose your federation: multiples are also allowed. -->
+        <!-- choose your federation: multiples are also allowed. -->
 
-      <collex:federation>NINES</collex:federation>
-      <collex:federation>18thConnect</collex:federation>
-      
-      <collex:archive>Women's Print History Project</collex:archive>
+        <collex:federation>NINES</collex:federation>
+        <collex:federation>18thConnect</collex:federation>
 
-      <dc:title>{{ title.title }}</dc:title>
+        <collex:archive>Women's Print History Project</collex:archive>
+
+        <dc:title>{{ title.title }}</dc:title>
         {% if title.source and title.source.name != 'unknown' and title.source.name != 'None' %}
             <dc:source>{{ title.source.name }} {{ title.sourceId }}</dc:source>
         {% endif %}
@@ -26,7 +26,7 @@
         {% if title.source2 and title.source2.name != 'unknown' and title.source2.name != 'None' %}
             <dc:source>{{ title.source2.name }} {{ title.source2Id }}</dc:source>
         {% endif %}
-        
+
         {% for tr in title.titleRoles %}
             {% if tr.role.name == 'Author' %}
                 <role:AUT rdf:resource="{{ url('person_show', {'id': tr.person.id}) }}"/>
@@ -43,22 +43,22 @@
             {% endif %}
         {% endfor %}
 
-      <dc:type>Dataset</dc:type>
+        <dc:type>Dataset</dc:type>
 
-      <collex:discipline>Literature</collex:discipline>
-      <collex:discipline>History</collex:discipline>
-      
-      {% for genre in title.genre %}
-          <collex:genre>{{ genre }}</collex:genre>
-      {% endfor %}
+        <collex:discipline>Literature</collex:discipline>
+        <collex:discipline>History</collex:discipline>
 
-      <collex:freeculture>TRUE</collex:freeculture>
-      <collex:ocr>FALSE</collex:ocr>
-      <collex:fulltext>FALSE</collex:fulltext>
+        {% for genre in title.genre %}
+            <collex:genre>{{ genre }}</collex:genre>
+        {% endfor %}
 
-      <dc:language>eng</dc:language>
+        <collex:freeculture>TRUE</collex:freeculture>
+        <collex:ocr>FALSE</collex:ocr>
+        <collex:fulltext>FALSE</collex:fulltext>
 
-      <dc:date>{{ title.date }}</dc:date>
-   </wphp:title>
+        <dc:language>eng</dc:language>
+
+        <dc:date>{{ title.date }}</dc:date>
+    </wphp:title>
 
 </rdf:RDF>

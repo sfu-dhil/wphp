@@ -3,11 +3,11 @@
 <div class="form-group">
     <div class="col-sm-2"></div>
     <div class="col-sm-10">
-        <input type="submit" value="Save" class="btn btn-primary" />
+        <input type="submit" value="Save" class="btn btn-primary"/>
         {% if title_relationship.id is null %}
-        <a href="{{ path('title_relationship_index') }}" class="btn btn-warning">
-            Cancel
-        </a>
+            <a href="{{ path('title_relationship_index') }}" class="btn btn-warning">
+                Cancel
+            </a>
         {% else %}
             <a href="{{ path('title_relationship_show', { 'id': title_relationship.id }) }}" class="btn btn-warning">
                 Cancel

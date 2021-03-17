@@ -5,18 +5,19 @@
 {% block pageheader %}
     <h1>Title Relationship List</h1>
     <p class="count">
-        Displaying {{ title_relationships|length }} title_relationships of {{ title_relationships.getTotalItemCount }} total.
+        Displaying {{ title_relationships|length }} title_relationships of {{ title_relationships.getTotalItemCount }}
+        total.
     </p>
- {% endblock %}
+{% endblock %}
 
 {% block body %}
 
     <div class='btn-toolbar pull-right'>
         <div class='btn-group'>
             {% if is_granted('ROLE_CONTENT_ADMIN') %}
-            <a href="{{ path('title_relationship_new') }}" class="btn btn-default">
-                <span class="glyphicon glyphicon-plus"></span> New
-            </a>
+                <a href="{{ path('title_relationship_new') }}" class="btn btn-default">
+                    <span class="glyphicon glyphicon-plus"></span> New
+                </a>
             {% endif %}
         </div>
     </div>

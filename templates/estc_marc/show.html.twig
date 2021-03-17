@@ -19,22 +19,23 @@
 
     <details>
         <summary>Control Info</summary>
-        <table class="table">
-            <tbody>
+        {% embed 'partials/table.html.twig' %}
+            {% block tbody %}
                 {% for field in data|filter(f => f.field < 100) %}
                     <tr>
-                        <th style='white-space: normal' data-toggle="popover" data-content='{{ manager.getFieldName(field) }}'>
+                        <th style='white-space: normal' data-toggle="popover"
+                            data-content='{{ manager.getFieldName(field) }}'>
                             {{ manager.getFieldName(field)|u.truncate(20, '...', false) }} ({{ field }})
                         </th>
                         <td>{{ field.getFieldData() }}</td>
                     </tr>
                 {% endfor %}
-            </tbody>
-        </table>
+            {% endblock %}
+        {% endembed %}
     </details>
 
-    <table class="table">
-        <tbody>
+    {% embed 'partials/table.html.twig' %}
+        {% block tbody %}
             <tr>
                 <th>Control ID</th>
                 <td>
@@ -51,12 +52,13 @@
             </tr>
             {% for field in data|filter(f => f.field >= 100) %}
                 <tr>
-                    <th style='white-space: normal' data-toggle="popover" data-content='{{ manager.getFieldName(field) }}'>
+                    <th style='white-space: normal' data-toggle="popover"
+                        data-content='{{ manager.getFieldName(field) }}'>
                         {{ manager.getFieldName(field)|u.truncate(20, '...', false) }} ({{ field }})
                     </th>
                     <td>{{ field.getFieldData() }}</td>
                 </tr>
             {% endfor %}
-        </tbody>
-    </table>
+        {% endblock %}
+    {% endembed %}
 {% endblock %}

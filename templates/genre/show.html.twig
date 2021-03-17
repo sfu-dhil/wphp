@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block pageheader %} 
+{% block pageheader %}
     <h1>Genre</h1>
 {% endblock %} 
 
@@ -15,14 +15,15 @@
                 <a href="{{ path('genre_edit', { 'id': genre.id }) }}" class="btn btn-default">
                     <span class='glyphicon glyphicon-edit'></span> Edit Genre
                 </a>
-                <a href="{{ path('genre_delete', { 'id': genre.id }) }}" class="btn btn-default" data-confirm="Are you sure you want to delete this Genre?">
+                <a href="{{ path('genre_delete', { 'id': genre.id }) }}" class="btn btn-default"
+                   data-confirm="Are you sure you want to delete this Genre?">
                     <span class='glyphicon glyphicon-remove'></span> Delete Genre
                 </a>
             {% endif %}
         </div>
     </div>
-    <table class="table">
-        <tbody>
+    {% embed 'partials/table.html.twig' %}
+        {% block tbody %}
             <tr>
                 <th>Name</th>
                 <td>{{ genre.name }}</td>
@@ -31,10 +32,10 @@
                 <th>Description</th>
                 <td>{{ genre.description|raw }}</td>
             </tr>
-        </tbody>
-    </table>
+        {% endblock %}
+    {% endembed %}
 
     {% embed 'title/partials/page.html.twig' with {'titles': titles} %}
-    {% endembed %}                
+    {% endembed %}
 
 {% endblock %}

@@ -4,24 +4,25 @@
 <div class="navigation">
     {{ knp_pagination_render(pagination) }}
 </div>
-<table class="table table-hover table-striped tablesorter" id="titleRoles">
-    <thead>
-    <tr>
-        <th>Role</th>
-        <th>Title</th>
-        <th>Date</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for tr in pagination %}
-        {% set title = tr.title %}
+{% embed 'partials/table.html.twig' %}
+    {% block thead %}
         <tr>
-            <td>{{ tr.role.name }}</td>
-            <td><a href="{{ path('title_show', {'id': title.id}) }}">{{ title.title }}</a></td>
-            <td>{{ title.pubdate }}</td>
+            <th>Role</th>
+            <th>Title</th>
+            <th>Date</th>
         </tr>
-    {% endfor %}
-</table>
+    {% endblock %}
+    {% block tbody %}
+        {% for tr in pagination %}
+            {% set title = tr.title %}
+            <tr>
+                <td>{{ tr.role.name }}</td>
+                <td><a href="{{ path('title_show', {'id': title.id}) }}">{{ title.title }}</a></td>
+                <td>{{ title.pubdate }}</td>
+            </tr>
+        {% endfor %}
+    {% endblock %}
+{% endembed %}
 {% include 'partials/export.html.twig' with {'path': 'person_export', 'parameters': {'id': person.id}} %}
 <div class="navigation">
     {{ knp_pagination_render(pagination) }}

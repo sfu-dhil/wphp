@@ -22,16 +22,16 @@
         </div>
     </div>
 
-    <table class="table table-hover table-striped">
-        <thead>
+    {% embed 'partials/table.html.twig' %}
+        {% block thead %}
             <tr>
                 <th>Title ID</th>
                 <th>Imported</th>
                 <th>Title</th>
                 <th>Author</th>
             </tr>
-        </thead>
-        <tbody>
+        {% endblock %}
+        {% block tbody %}
             {% for estcMarc in estcMarcs %}
                 <tr>
                     <td>
@@ -44,8 +44,8 @@
                     <td>{{ manager.getAuthor(estcMarc) }}</td>
                 </tr>
             {% endfor %}
-        </tbody>
-    </table>
+        {% endblock %}
+    {% endembed %}
 
     <div class="navigation">
         {{ knp_pagination_render(estcMarcs) }}

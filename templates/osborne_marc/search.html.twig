@@ -33,28 +33,28 @@
     </form>
 
     {% if osborneMarcs|length %}
-        <table class="table table-hover table-striped">
-            <thead>
+        {% embed 'partials/table.html.twig' %}
+            {% block thead %}
                 <tr>
                     <th>ID</th>
                     <th>Author</th>
                     <th>Title</th>
                 </tr>
-            </thead>
-            <tbody>
-            {% for osborneMarc in osborneMarcs %}
-                <tr>
-                    <td>
-                        <a href="{{ path('resource_osborne_show', { 'id': osborneMarc.titleId }) }}">
-                            {{ osborneMarc.titleId }}
-                        </a>
-                    </td>
-                    <td>{{ manager.getAuthor(osborneMarc) }}</td>
-                    <td>{{ manager.getTitle(osborneMarc) }}</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+            {% endblock %}
+            {% block tbody %}
+                {% for osborneMarc in osborneMarcs %}
+                    <tr>
+                        <td>
+                            <a href="{{ path('resource_osborne_show', { 'id': osborneMarc.titleId }) }}">
+                                {{ osborneMarc.titleId }}
+                            </a>
+                        </td>
+                        <td>{{ manager.getAuthor(osborneMarc) }}</td>
+                        <td>{{ manager.getTitle(osborneMarc) }}</td>
+                    </tr>
+                {% endfor %}
+            {% endblock %}
+        {% endembed %}
 
         <div class="navigation">
             {{ knp_pagination_render(titleIds) }}

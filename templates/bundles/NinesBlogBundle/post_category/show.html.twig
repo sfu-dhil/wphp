@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block pageheader %} 
+{% block pageheader %}
     <h1>{{ postCategory.label }}</h1>
 {% endblock %}
 
@@ -16,7 +16,8 @@
                     {{ post.title }}
                 {% endblock %}
                 {% block caption %}
-                    <a href="{{ path('nines_blog_post_category_show', {'id': post.category.id}) }}" class="link link__label">
+                    <a href="{{ path('nines_blog_post_category_show', {'id': post.category.id}) }}"
+                       class="link link__label">
                         {{ post.category }}
                     </a>
                     {% if is_granted('ROLE_BLOG_ADMIN') %}

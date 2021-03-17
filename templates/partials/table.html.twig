@@ -1,0 +1,25 @@
+{# Partial for creating a basic table. #}
+
+{% set isHorizontal = block('thead') is not defined %}
+
+<div class="tbl-container">
+    {% if block('pagination') is defined %}
+        {{ block('pagination') }}
+    {% endif %}
+    <table class="table{% if not(isHorizontal) %} table-hover table-striped{% endif %}">
+        {% if block('thead') is defined %}
+            <thead>
+            {{ block('thead') }}
+            </thead>
+        {% endif %}
+        {% if block('tbody') is defined %}
+            <tbody>
+            {{ block('tbody') }}
+            </tbody>
+        {% endif %}
+    </table>
+    {% if block('pagination') is defined %}
+        {{ block('pagination') }}
+    {% endif %}
+</div>
+

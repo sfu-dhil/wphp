@@ -1,9 +1,9 @@
 {#
-    quick search form.
-    parameters: 
-        quick_route: name of the route for the quick search action
-        full_route: name of the route for the full search action. Optional.
-        input_name: the name of the input widget to use. Optional.
+quick search form.
+parameters:
+    quick_route: name of the route for the quick search action
+    full_route: name of the route for the full search action. Optional.
+    input_name: the name of the input widget to use. Optional.
 #}
 {% if input_name is not defined %}
     {% set input_name = 'q' %}
@@ -26,7 +26,7 @@
             </div>
         </div>
         {% if full_route is defined %}
-            <p class="help-block">Use this form to quickly search by name. 
+            <p class="help-block">Use this form to quickly search by name.
                 An <a href="{{ path(full_route) }}">advanced search</a> with more options is also available.
             </p>
         {% endif %}

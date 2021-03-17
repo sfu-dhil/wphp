@@ -1,5 +1,5 @@
-<table class="table table-hover table-striped">
-    <thead>
+{% embed 'partials/table.html.twig' %}
+    {% block thead %}
         <tr>
             {% include 'partials/sortable.html.twig' with {
                 'pagination': people,
@@ -32,8 +32,8 @@
                 'field': ['e.dod', 'e.lastName', 'e.firstName'],
             } %}
         </tr>
-    </thead>
-    <tbody>
+    {% endblock %}
+    {% block tbody %}
         {% for person in people %}
             <tr>
                 <td>
@@ -56,5 +56,5 @@
                 <td>{% if person.dod %}{{ person.dod|replace({'-00': ''}) }}{% endif %}</td>
             </tr>
         {% endfor %}
-    </tbody>
-</table>
+    {% endblock %}
+{% endembed %}

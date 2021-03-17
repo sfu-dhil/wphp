@@ -3,7 +3,7 @@
 {% block pageheader %}
     <h1>Search Persons</h1>
     {% if submitted %}
-       Displaying {{ people|length }} people of {{ people.getTotalItemCount }} total.
+        Displaying {{ people|length }} people of {{ people.getTotalItemCount }} total.
     {% endif %}
 {% endblock %}
 
@@ -20,8 +20,9 @@
         <div class="col-sm-2"></div>
 
         <div class="col-sm-10">
-            <input type="submit" value="Search" class="btn btn-primary" />
-            <a class="btn btn-primary" id="advanced_search" role="button" data-toggle="collapse" href="#controls" aria-expanded="false" aria-controls="collapseExample">Advanced Search</a>
+            <input type="submit" value="Search" class="btn btn-primary"/>
+            <a class="btn btn-primary" id="advanced_search" role="button" data-toggle="collapse" href="#controls"
+               aria-expanded="false" aria-controls="collapseExample">Advanced Search</a>
             {% if submitted %}
                 <a class="btn btn-default" href="{{ path('person_search') }}">Reset</a>
                 <a class="btn btn-default" href="{{ path('person_index') }}">Cancel</a>
@@ -56,8 +57,8 @@
 
 {% block javascripts %}
     <script>
-        $(document).ready(function(){
-            $("#advanced_search").click(function(){
+        $(document).ready(function () {
+            $("#advanced_search").click(function () {
                 $(this).hide();
             });
         });

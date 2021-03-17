@@ -33,15 +33,15 @@
     </form>
 
     {% if jacksons|length %}
-        <table class="table table-hover table-striped">
-            <thead>
+        {% embed 'partials/table.html.twig' %}
+            {% block thead %}
                 <tr>
                     <th>Jackson ID</th>
                     <th>Author</th>
                     <th>Title</th>
                 </tr>
-            </thead>
-            <tbody>
+            {% endblock %}
+            {% block tbody %}
                 {% for jackson in jacksons %}
                     <tr>
                         <td>
@@ -53,8 +53,8 @@
                         <td>{{ jackson.title }}</td>
                     </tr>
                 {% endfor %}
-            </tbody>
-        </table>
+            {% endblock %}
+        {% endembed %}
 
         <div class="navigation">
             {{ knp_pagination_render(jacksons) }}
