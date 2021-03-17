@@ -34,7 +34,7 @@
     {% endif %}
     <div class="container title-grid">
         <div class="title-metadata title-metadata-main table-container">
-            <table class="table table-bordered table-condensed table-hover table-striped">
+            <table class="table">
                 <tbody>
                 <tr>
                     <th data-toggle="popover" data-content="{{ 'title.fields.id'|trans }}">ID</th>
@@ -140,7 +140,7 @@
             </table>
         </div>
         <div class="title-metadata title-metadata-bibliographic table-container">
-            <table class="table table-bordered table-condensed table-hover table-striped">
+            <table class="table">
                 <tbody>
                 <tr>
                     <th data-toggle="popover"  data-content="{{ 'title.fields.format'|trans }}">Format</th>
@@ -246,7 +246,7 @@
         {% if is_granted('ROLE_USER') and (title.sourceTitles|length + title.relatedTitles|length) > 0 %}
             <div class="titles-related-titles">
                 <h3>Related Titles</h3>
-                <table class="table table-bordered table-condensed table-hover table-striped">
+                <table class="table table-hover table-striped">
                     <thead>
                     <tr>
                         <th>Relationship</th>
