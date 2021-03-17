@@ -1,0 +1,137 @@
+
+
+
+/* tables */
+table {
+  color: $color_black;
+  font-size: 0.88rem;
+}
+
+
+table thead th {
+  color: $table_head_color;
+  background: $table_head_background_color;
+  border: $table_head_border_color;
+  font-weight: normal;
+
+  a {
+    color: $table_head_color !important;
+  }
+}
+
+
+
+
+
+.tbl-container{
+  overflow-x:auto;
+  tr > th{
+    text-align:left;
+  }
+  tr:first-of-type > *{
+    border-top:none;
+  }
+
+
+}
+
+
+
+
+
+.table-striped > tbody > tr {
+  background: $color_table_background_odd;
+
+  &:hover,
+  &:focus {
+    background: $color_table_background_hover_odd;
+  }
+  &:nth-of-type(2n+1) {
+    background: $color_table_background_even;
+    &:hover,
+    &:focus {
+      background: $color_table_background_hover_even;
+    }
+  }
+}
+
+// This collapses the leftmost fields as much as possible.
+th,
+td {
+  &:first-child {
+    width:0.1%;
+    white-space: nowrap;
+  }
+}
+
+td ul{
+  list-style-type:none;
+  padding-left:0;
+  margin-left:0;
+  li + li{
+    margin-top: .25rem;
+  }
+  &.double-list{
+    columns: 2;
+
+  }
+
+
+
+}
+
+tr{
+  th{
+    //Bold table headers for horizontal tables
+    font-weight:700;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+}
+
+table.tablesorter thead tr {
+  white-space: nowrap;
+}
+table.tablesorter thead tr .header:after {
+  content: '↕';
+}
+table.tablesorter thead tr .headerSortUp:after {
+  content: '↑';
+}
+table.tablesorter thead tr .headerSortDown:after {
+  content: '↓';
+}
+
+th.sorted.asc:after, a.asc:after {
+  content: '↓';
+}
+
+th.sorted.desc:after, a.desc:after {
+  content: '↑';
+}
+
+
+.table-bordered > tbody > tr > td,
+.table-bordered > tbody > tr > th,
+.table-bordered > tfoot > tr > td,
+.table-bordered > tfoot > tr > th,
+.table-bordered > thead > tr > td,
+.table-bordered > thead > tr > th {
+  border: 1px solid $table_body_border_color !important;
+}
+
+thead > tr > th {
+  text-align: left;
+  white-space: nowrap;
+}
+
+.table-bordered > tbody > tr > td {
+  @include link($table_body_link_color, $table_body_link_color_hover);
+}
+
+
+
+th {
+  text-align: right;
+}

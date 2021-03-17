@@ -1,0 +1,63 @@
+
+/* Footer */
+.footer {
+  // height: 60px;
+  padding: 20px;
+  background-color: $footer_background;
+  color: $footer_color;
+
+  .container {
+    display:flex;
+    justify-content: space-between;
+
+    &:before, &:after{
+      content:unset;
+    }
+  }
+
+  @include link_underline($footer_link, $footer_link_hover);
+
+  p {
+    margin: 0;
+    font-weight:bold;
+  }
+
+  strong {
+    font-weight: normal;
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+  }
+
+}
+
+/* Social icons stuff */
+
+.social-icons{
+  list-style:none;
+  display:flex;
+  font-size: 2.1rem;
+  justify-content:space-evenly;
+  a{
+    padding:0 1rem;
+    &:hover{
+      i {
+        transition: color 0.2s ease-in-out
+      }
+
+      /* facebook, twitter, and instagram colours
+        Thanks to this gist: https://gist.github.com/pololee/c13213df6f560cfd2075 */
+      .fa-facebook-square { color: #5d70c1; }
+      .fa-twitter-square{ color: #4099FF;}
+      .fa-instagram-square { color: #E1306C;}
+
+      .fa-podcast{ color: rgb(178, 81, 224);  }
+
+      /* Spotify green from Branding Guidelines:
+      https://developer.spotify.com/branding-guidelines/ */
+      .fa-spotify{ color: #1DB954; }
+
+
+    }
+  }
+}
+

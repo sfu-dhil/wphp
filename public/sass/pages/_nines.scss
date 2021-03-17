@@ -1,0 +1,34 @@
+
+.nines_blog_post_show, .nines_blog_page_show{
+  .container > .page-header{
+    display:none;
+  }
+  .page-header{
+    margin:0;
+    text-align:center;
+  }
+  .blog-content{
+    max-width: 55rem;
+    margin:0 auto;
+    font-family: $serif;
+    background: $color_grey_light;
+    border: 1px solid #F2F2F2;
+    box-shadow: $box-shadow-sm;
+    padding-top: 1.5rem;
+    padding-right: 2rem;
+    padding-left: 2rem;
+    padding-bottom: 4.5rem;
+  }
+  p{
+    font-size: 1.175rem;
+    line-height: 1.6;
+    font-weight:400;
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+.navbar-nav > li > a {
+  font-weight:400;
+  font-variant: all-small-caps;
+  font-size: 1.5rem;
+}

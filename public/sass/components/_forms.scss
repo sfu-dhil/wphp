@@ -1,0 +1,32 @@
+
+/* make the search form checkboxes less bad. */
+div.checkbox, div.radio {
+  width: 30%;
+  float: left;
+}
+
+div.collection-complex > div:not(:last-child) {
+  padding-top: 15px;
+  border: 1px solid rgba(128, 128, 128, 0.31);
+}
+
+div.embedded-form {
+  border: 1px solid lightgrey;
+  padding-top: 15px;
+  padding-right: 15px;
+}
+
+/* Select2 typeaheads are a bit short. */
+span.select2 {
+  width: 100%!important;
+}
+
+p.help-block {
+  font-size: 16px;
+  font-family: $sans;
+  // color: $color_;
+
+  a {
+    text-decoration: underline;
+  }
+}

@@ -67,69 +67,6 @@ strong {
 }
 
 
-/* Footer */
-.footer {
-  // height: 60px;
-  padding: 20px;
-  background-color: $footer_background;
-  color: $footer_color;
-
-  .container {
-    display:flex;
-    justify-content: space-between;
-
-    &:before, &:after{
-      content:unset;
-    }
-  }
-
-  @include link_underline($footer_link, $footer_link_hover);
-
-  p {
-    margin: 0;
-    font-weight:bold;
-  }
-
-  strong {
-    font-weight: normal;
-    font-size: 1.4rem;
-    margin-bottom: 0.5rem;
-  }
-
-}
-
-/* Social icons stuff */
-
-.social-icons{
-  list-style:none;
-  display:flex;
-  font-size: 2.1rem;
-  justify-content:space-evenly;
-  a{
-    padding:0 1rem;
-    &:hover{
-      i {
-        transition: color 0.2s ease-in-out
-      }
-
-      /* facebook, twitter, and instagram colours
-        Thanks to this gist: https://gist.github.com/pololee/c13213df6f560cfd2075 */
-      .fa-facebook-square { color: #5d70c1; }
-      .fa-twitter-square{ color: #4099FF;}
-      .fa-instagram-square { color: #E1306C;}
-
-      .fa-podcast{ color: rgb(178, 81, 224);  }
-
-      /* Spotify green from Branding Guidelines:
-      https://developer.spotify.com/branding-guidelines/ */
-      .fa-spotify{ color: #1DB954; }
-
-
-    }
-  }
-}
-
-
 
 .nav-tabs > li > a {
   margin-right: 2px;
@@ -168,22 +105,6 @@ strong {
   }
 }
 
-
-
-
-
-
-// collapsable form
-h3.panel-title > a {
-
-}
-
-
-
-
-
-
-
 /* Custom app styles */
 label {
   font-weight: normal;
@@ -195,26 +116,21 @@ label {
   }
 }
 
-.well {
-  background-image: linear-gradient(to bottom,$well_color_start 0,$well_color_end 100%);
+h1{
+  letter-spacing: -1px;
+  margin-right: 0.5rem;
 }
 
 
-
-
-
-
-/* tables */
-table {
-  color: $color_black;
-  font-size: 0.88rem;
-}
 
 .title-grid{
   display:grid;
   grid-template-columns: 3fr 2fr;
   column-gap: 2rem;
 }
+
+
+
 
 .title-grid > div{
   grid-column: span 2;
@@ -231,113 +147,6 @@ table {
 }
 
 
-
-table thead th {
-  color: $table_head_color;
-  background: $table_head_background_color;
-  border: $table_head_border_color;
-  font-weight: normal;
-
-  a {
-    color: $table_head_color !important;
-  }
-}
-
-
-
-h1{
-    letter-spacing: -1px;
-    margin-right: 0.5rem;
-}
-
-.tbl-container{
-  overflow-x:auto;
-  tr > th{
-    text-align:left;
-  }
-  tr:first-of-type > *{
-    border-top:none;
-  }
-
-
-}
-
-
-
-
-
-.table-striped > tbody > tr {
-  background: $color_table_background_odd;
-
-  &:hover,
-  &:focus {
-    background: $color_table_background_hover_odd;
-  }
-  &:nth-of-type(2n+1) {
-    background: $color_table_background_even;
-    &:hover,
-    &:focus {
-      background: $color_table_background_hover_even;
-    }
-  }
-}
-
-// This collapses the leftmost fields as much as possible.
-th,
-td {
-  &:first-child {
-    width:0.1%;
-    white-space: nowrap;
-  }
-}
-
-td ul{
-  list-style-type:none;
-  padding-left:0;
-  margin-left:0;
-  li + li{
-    margin-top: .25rem;
-  }
-  &.double-list{
-    columns: 2;
-
-  }
-
-
-
-}
-
-tr{
-  th{
-    //Bold table headers for horizontal tables
-    font-weight:700;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-rendering: optimizeLegibility;
-  }
-}
-
-table.tablesorter thead tr {
-  white-space: nowrap;
-}
-table.tablesorter thead tr .header:after {
-  content: '↕';
-}
-table.tablesorter thead tr .headerSortUp:after {
-  content: '↑';
-}
-table.tablesorter thead tr .headerSortDown:after {
-  content: '↓';
-}
-
-th.sorted.asc:after, a.asc:after {
-  content: '↓';
-}
-
-th.sorted.desc:after, a.desc:after {
-  content: '↑';
-}
-
 div.tab-content {
   // min-height: 200px;
   p {
@@ -346,169 +155,11 @@ div.tab-content {
   }
 }
 
-ul.columnated {
-    list-style: none;
-}
-
-ul.columnated li {
-  -webkit-column-break-inside: avoid; /* Chrome, Safari, Opera */
-  page-break-inside: avoid; /* Firefox */
-  break-inside: avoid; /* IE 10+ */
-  position: relative;
-  margin-left: 1em;
-}
-
-ul.columnated li:before {
-  content: '•';
-  position: absolute;
-  left: -1em;
-}
-
-@media (max-width: 480px) {
-  ul.columnated {
-    -moz-column-count: 1;
-    -webkit-column-count: 1;
-    column-count: 1;
-  }
-}
-
-/* Small devices (tablets, 768px and up) */
-@media (min-width: 481px) and (max-width: 768px) {
-  ul.columnated {
-    -moz-column-count: 2;
-    -webkit-column-count: 2;
-    column-count: 2;
-  }
-}
-
-/* Medium devices (desktops, 992px and up) */
-@media (min-width: 769px) and (max-width: 992px) {
-  ul.columnated {
-    list-style: none;
-    -moz-column-count: 3;
-    -webkit-column-count: 3;
-    column-count: 3;
-  }
-}
-
-/* Large devices (large desktops, 1200px and up) */
-@media (min-width: 993px) {
-  ul.columnated {
-    -moz-column-count: 4;
-    -webkit-column-count: 4;
-    column-count: 4;
-  }
-}
-
-div.homepage {
-  margin: 0 auto;
-  max-width: 80ex;
-}
-
-div.homepage img {
-  max-width: 100%;
-}
-
-/* make the search form checkboxes less bad. */
-div.checkbox, div.radio {
-  width: 30%;
-  float: left;
-}
-
-div.collection-complex > div:not(:last-child) {
-  padding-top: 15px;
-  border: 1px solid rgba(128, 128, 128, 0.31);
-}
-
-div.embedded-form {
-  border: 1px solid lightgrey;
-  padding-top: 15px;
-  padding-right: 15px;
-}
-
-/* Select2 typeaheads are a bit short. */
-span.select2 {
-  width: 100%!important;
-}
-
-p.help-block {
-  font-size: 16px;
-  font-family: $sans;
-  // color: $color_;
-
-  a {
-    text-decoration: underline;
-  }
-}
-
-
-// when there isn't a page title.
-.container > .panel:first-child {
-  margin-top: 80px;
-}
 
 .container > .alert:first-child {
   margin-top: 20px;
 }
 
-
-
-/* Start panels and tables */
-.panel-default {
-  border: 5px $color_2_green !important;;
-
-  > .panel-heading {
-    background: $panel_header_background;
-    color: $panel_header_color;
-    font-family: $panel_heading_font;
-    font-size: $panel_heading_font_size;
-  }
-
-
-}
-
-.panel-title{
-  &.comment-expand{
-    .btn{
-      // Make sure text wraps properly
-      white-space: normal;
-      width: 100%;
-    }
-  }
-}
-
-.blog-panel {
-
-  img {
-    max-width: 100%;
-    height: auto !important;
-  }
-
-  a {
-    display: block;
-    width: 100%;
-
-    .panel-default {
-      background: $panel_image_background;
-    }
-
-    .panel-heading {
-      background: $panel_header_background;
-      color: $panel_header_color;
-      font-family: $panel_heading_font;
-      font-size: $panel_heading_font_size;
-    }
-
-    &:active,
-    &:focus,
-    &:hover {
-      .panel-heading {
-        background: $panel_header_background_hover;
-        color: black;
-      }
-    }
-  }
-}
 
 .page-header {
   margin-bottom: 0;
@@ -521,29 +172,8 @@ p.help-block {
   font-family: $sans;
 }
 
-.table-bordered > tbody > tr > td,
-.table-bordered > tbody > tr > th,
-.table-bordered > tfoot > tr > td,
-.table-bordered > tfoot > tr > th,
-.table-bordered > thead > tr > td,
-.table-bordered > thead > tr > th {
-  border: 1px solid $table_body_border_color !important;
-}
-
-thead > tr > th {
-  text-align: left;
-  white-space: nowrap;
-}
-
-.table-bordered > tbody > tr > td {
-  @include link($table_body_link_color, $table_body_link_color_hover);
-}
 
 
-
-th {
- text-align: right;
-}
 
 // .col-sm-6 {
 //   width: auto;
@@ -566,352 +196,6 @@ th {
 .row {
   display: flex;
 }
-/* End tables and panels */
-
-
-
-// buttons start
-.btn-toolbar {
-  margin-bottom: 1em;
-
-  > .btn,
-  > .btn-group,
-  > .input-group {
-    margin-left: 0;
-  }
-}
-
-/*.btn-group {
-  box-shadow: 0 0 1px rgba(0, 0, 0, 0.5)
-      border-radius: 4px;
-}*/
-
-input.btn-default,
-input.btn-primary,
-a.btn-default,
-a.btn-primary {
-  /* Rectangle 10: */
-  background: $color_red;
-  border: 1px solid $color_brown;
-  /* Submit button exampl: */
-  font-family: $sans;
-  line-height: 1em;
-  // font-weight: 500;
-  font-size: 14px;
-  text-shadow: none;
-  color: $color_white;
-  text-align: left;
-  border-radius: 4px;
-  box-shadow: none;
-  padding-top: 10px;
-  padding-bottom: 8px;
-  transition: 0.125s ease-in-out all;
-
-  &:link,
-  &:visited {
-    color: $color_white;
-  }
-
-  &:hover,
-  &:focus,
-  &:active:focus,
-  &:active {
-    color: $color_white;
-    background-color: #1f1f1f ;
-  }
-}
-
-.open > .dropdown-toggle.btn-default,
-.open > .dropdown-toggle.btn-default:hover {
-  color: $color_white;
-  background-color: #1f1f1f ;
-}
-// buttons end
-
-
-
-
-/* Start navbar (header) */
-
-// @media (max-width: 480px) {
-//   .navbar-toggle {
-//     display: none;
-//   }
-// }
-
-#navbar {
-  @include desktop {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-}
-
-.navbar-default {
-  background: $header_background;
-  color: $header_color;
-  border: 0;
-  font-family: $serif;
-  font-weight: 800;
-  font-size: 20px;
-  box-shadow: 0 2px 4px 0 $color_grey_translucent;
-  margin: 0;
-  border-radius: 0;
-
-  .navbar-toggle {
-    &:active,
-    &:hover,
-    &:focus {
-      background-color: $header_color;
-      .icon-bar {
-        background-color: $color_red_dark !important;
-      }
-    }
-    .icon-bar {
-      background-color: $header_color;
-    }
-  }
-}
-
-.navbar-nav > li {
-  @include desktop {
-    display: flex;
-    flex-grow: 1;
-    align-items: center;
-    justify-content: center;
-
-    > a {
-      flex-grow: 1;
-      align-items: center;
-      justify-content: center;
-      display: flex;
-      border-bottom:none;
-      padding: 20px 10px 20px 10px;
-    }
-  }
-}
-.navbar-default .navbar-nav > li > a {
-  color: $header_link_color;
-  height: 75px;
-  border-bottom:none;
-}
-
-.navbar-default a {
-  color: $header_link_color;
-  border-bottom:none;
-}
-
-a.dropdown-toggle::after {
-  content: "▾";
-  padding-left: 0.3em;
-  font-size: small;
-}
-
-
-// Header menu items that are active or hover.
-.navbar-default .navbar-nav > li > a:active,
-.navbar-default .navbar-nav > li > a:focus,
-.navbar-default .navbar-nav > li > a:hover,
-.navbar-default .navbar-nav > .open > a,
-.navbar-default .navbar-nav > .open > a:focus,
-.navbar-default .navbar-nav > .open > a:hover {
-  background: $header_link_background_hover;
-  color: $header_link_color_hover;
-  border-bottom:none;
-}
-
-.navbar-brand, .navbar-nav > li > a {
-  text-shadow: none;
-  font-size: 18px;
-  border-bottom:none;
-  @media (max-width: 1000px) {
-    font-size: 15px;
-  }
-}
-
-.navbar-default .navbar-collapse {
-  margin: 0;
-}
-
-.navbar-nav:first-child > li > a {
-  padding: 10px 20px 10px 0;
-  > img {
-    max-width: 220px;
-    @media (max-width: 1000px) {
-      max-width: 180px;
-    }
-  }
-}
-
-.navbar-default .navbar-nav:first-child > li > a:active,
-.navbar-default .navbar-nav:first-child > li > a:focus,
-.navbar-default .navbar-nav:first-child > li > a:hover {
-  background-color: transparent;
-}
-
-
-.dropdown-menu {
-  background-color: $color_dropdown_background;
-  border: 0;
-  border-radius: 0;
-  font-family: $sans;
-
-  > li {
-    // @include link($color_dropdown_link, $color_dropdown_link_hover);
-    a,
-    a:link,
-    a:visited {
-      color: $color_dropdown_link !important;
-    }
-
-    a:active,
-    a:focus,
-    a:hover {
-      color: $color_dropdown_link !important;
-    }
-
-    &.divider {
-      // height: 1px;
-      // margin: 9px 0;
-      // overflow: hidden;
-      background-color: $color_white;
-    }
-
-    a {
-      &:active,
-      &:focus,
-      &:hover {
-        background-image: none;
-        background-color: $color_dropdown_background_hover;
-      }
-    }
-  }
-}
-
-@media (max-width: 768px) {
-  #navbar {
-    display: block;
-  }
-  #navbar[aria-expanded='false'] > ul.nav{
-    display:none;
-  }
-  .navbar-default .navbar-nav {
-    float: none;
-    width: 100%;
-    // padding: 0;
-
-    > li > a {
-      padding: 0 !important;
-      height: auto;
-    }
-  }
-}
-/* End navbar */
-
-
-
-.pagination > li {
-  > a,
-  > span {
-    position: relative;
-    float: left;
-    padding: 8px 12px 6px;
-    margin-left: -1px;
-    line-height: 1.42857143;
-    // color: #337ab7;
-    text-decoration: none;
-    // background-color: #fff;
-    // border: 1px solid #ddd;
-    height: 35px;
-    background: $color_2_tan;
-    border: 1px solid $color_2_darker_brown;
-    color: black;
-    &:active,
-    &:focus,
-    &:hover {
-      background: $color_2_salmon;
-      border: $color_2_darker_brown 1px solid;
-      color: $color_white;
-    }
-  }
-
-  &.disabled {
-    span {
-      background-color: $color_2_darker_brown;
-      color: $color_2_tan;
-      border: 1px solid $color_2_brown;
-
-      &:focus,
-      &:hover {
-        background-color: $color_2_darker_brown;
-        color: $color_2_tan;
-        border: 1px solid $color_2_brown;
-      }
-    }
-  }
-}
-
-.pagination > .active > a,
-.pagination > .active > a:focus,
-.pagination > .active > a:hover,
-.pagination > .active > span,
-.pagination > .active > span:focus,
-.pagination > .active > span:hover {
-  background: $color_2_salmon;
-  border: $color_2_brown 1px solid;
-  color: black;
-}
-
-// Banner on home page
-.splash_image img {
-  display: block;
-  filter: grayscale(50%);
-}
-
-// All images should be responsive; added by JT 2020.
-
-img{
-  width:100%;
-  height:100%;
-}
-
-// front-page blog-1
-.panel-image {
-  height: 150px;
-  background-size: cover;
-  mix-blend-mode: multiply;
-}
-.blog-1 .panel-image {
-  background-image: url("../images/Mother-Shipton.jpg");
-  background-position: center;
-}
-.blog-2 .panel-image {
-  background-image: url("../images/hardcoded_blog_2.png");
-}
-.blog-3 .panel-image {
-  background-image: url("../images/hardcoded_blog_3.png");
-  background-position-x: center;
-  background-position-y: 38%;
-}
-
-.blog-1,
-.blog-2,
-.blog-3 {
-  > .panel-default {
-    background-color: $color_2_green_lighter;
-  }
-
-  a {
-    &:active,
-    &:focus,
-    &:hover {
-      text-decoration: none;
-    }
-  }
-  // @include link($color_white, black);
-}
-
-
 
 // Comments panels
 .comments-expand {
@@ -921,4 +205,17 @@ img{
 }
 
 
-@import 'homepage';
+
+@import 'components/buttons';
+@import 'components/footer';
+@import 'components/forms';
+@import 'components/headings';
+@import 'components/images';
+@import 'components/lists';
+@import 'components/navbar';
+@import 'components/pagination';
+@import 'components/tables';
+
+
+@import 'pages/homepage';
+@import 'pages/nines';
