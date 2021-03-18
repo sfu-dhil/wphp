@@ -1,56 +1,74 @@
 
-
-
 /* tables */
+
+
+
+.tbl-container{
+  overflow-x:auto;
+}
+
 table {
   color: $color_black;
-  font-size: 0.88rem;
+  font-size:0.925rem;
 }
+
+
+// We could try replicating with grid...
+
+
 
 
 table thead th {
   color: $table_head_color;
   background: $table_head_background_color;
   border: $table_head_border_color;
-  font-weight: normal;
-
   a {
     color: $table_head_color !important;
   }
 }
 
-
-
-
-
-.tbl-container{
-  overflow-x:auto;
-  tr > th{
-    text-align:left;
-  }
-  tr:first-of-type > *{
+// Normal, fully formed tables.
+.table > thead + tbody{
+  td{
     border-top:none;
+    max-width: 25rem;
   }
-
-
 }
 
 
 
 
 
-.table-striped > tbody > tr {
-  background: $color_table_background_odd;
 
-  &:hover,
-  &:focus {
-    background: $color_table_background_hover_odd;
+
+
+.tbl-container > .table tr{
+  padding:0 ms(-1);
+  & > td,
+  th{
+    padding: ms(-1) ms(0);
   }
-  &:nth-of-type(2n+1) {
-    background: $color_table_background_even;
+}
+
+td > a[href *= 'title/']{
+  display:inline;
+  width:auto;
+}
+
+
+
+.table-striped > tbody > tr {
+  background: $color_table_background_even;
+   &:hover,
+   &:focus {
+     background: $color_table_background_hover_even;
+   }
+  &:nth-of-type(odd) {
+    background: $color_table_background_odd;
+    border:none;
     &:hover,
     &:focus {
-      background: $color_table_background_hover_even;
+      background: $color_table_background_hover_odd;
     }
   }
 }
@@ -59,7 +77,7 @@ table thead th {
 th,
 td {
   &:first-child {
-    width:0.1%;
+    width: 0.1%;
     white-space: nowrap;
   }
 }
@@ -73,21 +91,19 @@ td ul{
   }
   &.double-list{
     columns: 2;
-
   }
-
-
-
 }
 
-tr{
-  th{
-    //Bold table headers for horizontal tables
-    font-weight:700;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-rendering: optimizeLegibility;
-  }
+
+
+th {
+  text-align: right;
+}
+
+
+th{
+  //Bold table headers for horizontal tables
+  font-weight:700;
 }
 
 table.tablesorter thead tr {
@@ -111,14 +127,12 @@ th.sorted.desc:after, a.desc:after {
   content: '↑';
 }
 
-
-.table-bordered > tbody > tr > td,
-.table-bordered > tbody > tr > th,
-.table-bordered > tfoot > tr > td,
-.table-bordered > tfoot > tr > th,
-.table-bordered > thead > tr > td,
-.table-bordered > thead > tr > th {
-  border: 1px solid $table_body_border_color !important;
+.table{
+  tbody > tr:first-child{
+    th, td{
+      border-top:none;
+    }
+  }
 }
 
 thead > tr > th {
@@ -132,6 +146,24 @@ thead > tr > th {
 
 
 
-th {
-  text-align: right;
+.title-index{
+   & > div{
+     background:white;
+     padding:1rem;
+     border:1px solid black;
+     margin: 1rem;
+     display:grid;
+     grid-template-areas:
+     "id . . ."
+     "title title title title"
+     "editionNumber editionNumber pubdate pubdate"
+     "contributors contributors contributors contributors"
+     "firms firms firms firms";
+   }
+   $classes: id, title, editionNumber, pubdate, contributors, firms;
+   @each $class in $classes{
+     .#{$class} {
+       grid-area: $class;
+     }
+   }
 }

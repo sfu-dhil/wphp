@@ -69,18 +69,6 @@ $header_link_background_hover: $color_2_salmon;
 
 $heading_color: $color_black;
 
-$panel_heading_font: $cormorant_garamond;
-$panel_heading_font_size: 20px;
-$panel_header_color: darken($color_2_brown, 50);
-$panel_header_background: $color_2_green;
-
-$panel_header_background_hover: $color_2_salmon;
-
-$panel_image_background: $color_2_green_lighter;
-$panel_background: $color_2_green_lighter;
-$panel_color: $color_2_darker_brown;
-$panel_link_color: $color_2_brown;
-
 
 $color_label: $color_2_darker_brown;
 $well_color_start: $color_2_green;
@@ -97,8 +85,8 @@ $color_grey_light: #FAFAFA;
 
 // tables
 
-$color_table_background_odd: #EFEFEF;
-$color_table_background_even: $color_grey_light;
+$color_table_background_odd:  #F9FAFA;
+$color_table_background_even: white;
 
 $table_head_color: $color_black;
 $table_head_background_color: $color_table_background_even;
@@ -108,12 +96,10 @@ $table_body_border_color: $color_grey_light;
 $table_body_link_color: $color_link;
 $table_body_link_color_hover: $color_link_hover;
 
-
-
-
 $color_table_background_hover_odd: darken($color_table_background_odd, 5%);
 $color_table_background_hover_even: darken($color_table_background_even, 5%);
 
+$heading-font: $eb-garamond;
 $serif: $eb-garamond;
 $sans: $lato;
 
