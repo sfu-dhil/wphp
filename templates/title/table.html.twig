@@ -12,18 +12,21 @@
                 'header': 'Title',
                 'field': ['e.title', 'e.pubdate'],
             } %}
+            <th>Contributors</th>
+            <th>Firms</th>
             {% include 'partials/sortable.html.twig' with {
                 'pagination': titles,
                 'header': 'Year',
                 'field': ['e.pubdate', 'e.title'],
+                'class': 'numeric'
             } %}
             {% include 'partials/sortable.html.twig' with {
                 'pagination': titles,
                 'header': 'Edition',
                 'field': ['e.editionNumber', 'e.pubdate', 'e.title'],
+                'class': 'numeric'
             } %}
-            <th>Contributors</th>
-            <th>Firms</th>
+
         </tr>
     {% endblock %}
     {% block tbody %}
@@ -39,8 +42,6 @@
                         {{ title.title }}
                     </a>
                 </td>
-                <td>{{ title.pubdate }}</td>
-                <td>{{ title.editionNumber }}</td>
                 <td>
                     {% for tr in title.titleRoles|slice(0,title_index_authors) %}
                         {% set person = tr.person %}
@@ -60,6 +61,8 @@
                     {% endfor %}
                     {% if title.titleFirmRoles|length > title_index_authors %}and {{ title.titleFirmRoles|length - title_index_authors }} more.{% endif %}
                 </td>
+                <td class="numeric">{{ title.pubdate }}</td>
+                <td class="numeric">{{ title.editionNumber }}</td>
             </tr>
         {% endfor %}
     {% endblock %}

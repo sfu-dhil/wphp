@@ -1,0 +1,48 @@
+
+@include dhil-modal();
+
+dialog[open] .list-group{
+  user-select: all;
+  box-shadow:none;
+  border:1px dashed #C9C9C9;
+  background:$color_grey_light;
+  .list-group-item{
+    border:none;
+    padding: ms(-1) ms(1) ms(-2) ms(1);
+    margin-left: 1.5rem;
+    text-indent: -1.5rem;
+    background:inherit;
+  }
+}
+
+.loader-ctr{
+    height:50vh;
+    display:grid;
+    place-items:center;
+}
+.loader {
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+  &:after {
+    content: " ";
+    display: block;
+    width: 64px;
+    height: 64px;
+    margin: 8px;
+    border-radius: 50%;
+    border: 6px solid $color_2_green;
+    border-color: $color_2_green transparent $color_2_green transparent;
+    animation: lds-dual-ring 1.2s linear infinite;
+  }
+}
+
+
+@keyframes lds-dual-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

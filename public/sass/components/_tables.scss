@@ -1,84 +1,128 @@
 
-/* tables */
 
+/* Selectors are nested to have higher specificity so that
+they stand a chance at winning against the highly specific selectors
+for bootstrap tables
+ */
 
 
 .tbl-container{
   overflow-x:auto;
-}
+  .table {
+    color: $color_black;
+    font-size:0.925rem;
 
-table {
-  color: $color_black;
-  font-size:0.925rem;
-}
-
-
-// We could try replicating with grid...
-
-
-
-
-table thead th {
-  color: $table_head_color;
-  background: $table_head_background_color;
-  border: $table_head_border_color;
-  a {
-    color: $table_head_color !important;
-  }
-}
-
-// Normal, fully formed tables.
-.table > thead + tbody{
-  td{
-    border-top:none;
-    max-width: 25rem;
-  }
-}
-
-
-
-
-
-
-
-
-.tbl-container > .table tr{
-  padding:0 ms(-1);
-  & > td,
-  th{
-    padding: ms(-1) ms(0);
-  }
-}
-
-td > a[href *= 'title/']{
-  display:inline;
-  width:auto;
-}
-
-
-
-.table-striped > tbody > tr {
-  background: $color_table_background_even;
-   &:hover,
-   &:focus {
-     background: $color_table_background_hover_even;
-   }
-  &:nth-of-type(odd) {
-    background: $color_table_background_odd;
-    border:none;
-    &:hover,
-    &:focus {
-      background: $color_table_background_hover_odd;
+    //striped tables.
+    &.table-striped{
+      & > tbody > tr{
+        background: $color_table_background_even;
+        &:hover,
+        &:focus {
+          background: $color_table_background_hover_even;
+        }
+        &:nth-of-type(odd) {
+          background: $color_table_background_odd;
+          border:none;
+          &:hover,
+          &:focus {
+            background: $color_table_background_hover_odd;
+          }
+        }
+      }
     }
-  }
-}
+    // table head
+    thead{
+      th{
+        color: $table_head_color;
+        background: $table_head_background_color;
+        border: $table_head_border_color;
+        a {
+          color: $table_head_color;
+        }
+      }
+      // Regular data tables
+      & + tbody{
+        td{
+          border-top:none;
+          max-width: 25rem;
+        }
+      }
 
-// This collapses the leftmost fields as much as possible.
-th,
-td {
-  &:first-child {
-    width: 0.1%;
-    white-space: nowrap;
+      // Sortable table headings
+      th.sortable > a {
+        border-bottom:none;
+        &:after {
+          content: "↕";
+          opacity: 0.4;
+          margin-left: 0.3rem;
+          display: inline-block;
+          margin-top: 3px;
+          position:relative;
+          top:1px;
+        }
+
+        &.asc, &.desc {
+          &:after {
+            opacity: 1;
+            font-size:0.9em;
+            top: 0px;
+          }
+        }
+        &:hover{
+          &:after{
+            opacity:0.8;
+            transition: opacity 0.2s ease-in-out;
+          }
+        }
+
+        &.asc {
+          &:after {
+            content: "↓";
+          }
+        }
+
+        &.desc {
+          &:after {
+            content: "↑"
+          }
+        }
+      }
+    }
+
+    // table body
+    tbody{
+      & > tr:first-child{
+        th, td{
+          border-top:none;
+        }
+      }
+      th{
+        text-align:right;
+      }
+    }
+
+
+    // table row
+    tr{
+      padding:0 ms(-1);
+      & > td, th{
+        padding: ms(-1) ms(0);
+        &:first-child{
+          width: 0.1%;
+          white-space: nowrap;
+        }
+      }
+    }
+
+    th{
+      text-align: left;
+      white-space: nowrap;
+    }
+    th, td{
+      &.numeric{
+        text-align:right;
+      }
+    }
   }
 }
 
@@ -92,78 +136,4 @@ td ul{
   &.double-list{
     columns: 2;
   }
-}
-
-
-
-th {
-  text-align: right;
-}
-
-
-th{
-  //Bold table headers for horizontal tables
-  font-weight:700;
-}
-
-table.tablesorter thead tr {
-  white-space: nowrap;
-}
-table.tablesorter thead tr .header:after {
-  content: '↕';
-}
-table.tablesorter thead tr .headerSortUp:after {
-  content: '↑';
-}
-table.tablesorter thead tr .headerSortDown:after {
-  content: '↓';
-}
-
-th.sorted.asc:after, a.asc:after {
-  content: '↓';
-}
-
-th.sorted.desc:after, a.desc:after {
-  content: '↑';
-}
-
-.table{
-  tbody > tr:first-child{
-    th, td{
-      border-top:none;
-    }
-  }
-}
-
-thead > tr > th {
-  text-align: left;
-  white-space: nowrap;
-}
-
-.table-bordered > tbody > tr > td {
-  @include link($table_body_link_color, $table_body_link_color_hover);
-}
-
-
-
-.title-index{
-   & > div{
-     background:white;
-     padding:1rem;
-     border:1px solid black;
-     margin: 1rem;
-     display:grid;
-     grid-template-areas:
-     "id . . ."
-     "title title title title"
-     "editionNumber editionNumber pubdate pubdate"
-     "contributors contributors contributors contributors"
-     "firms firms firms firms";
-   }
-   $classes: id, title, editionNumber, pubdate, contributors, firms;
-   @each $class in $classes{
-     .#{$class} {
-       grid-area: $class;
-     }
-   }
 }

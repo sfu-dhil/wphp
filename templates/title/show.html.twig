@@ -1,4 +1,5 @@
 {% extends 'base.html.twig' %}
+{% import 'partials/trim-title.html.twig' as str %}
 
 {% block htmlhead %}
     <link href='{{ path('title_show', {'id': title.id, '_format': 'xml'}) }}' type='application/rdf+xml'
@@ -8,7 +9,7 @@
 {% endblock %}
 
 {% block pageheader %}
-    <h1>{{ title.title }}</h1>
+    <h1>{{ title.title|u.truncate(80, '...', true) }}</h1>
 {% endblock %}
 
 {% block body %}
