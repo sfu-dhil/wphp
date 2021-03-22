@@ -90,7 +90,7 @@ class Builder implements ContainerAwareInterface {
      */
     private function getUser() {
         if ( ! $this->hasRole('ROLE_USER')) {
-            return;
+            return null;
         }
 
         return $this->tokenStorage->getToken()->getUser();
