@@ -27,7 +27,6 @@ class WPHPModals extends Modals{
         document.body.appendChild(this.tmpDialog);
         this.tmpDialog.setAttribute('open','');
         this.tmpDialog.innerHTML = `<div class="loader-ctr"><div class="loader"></div></div>`;
-        this.active = true;
         return super.getDialog(link);
     }
 

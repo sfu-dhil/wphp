@@ -1,33 +1,20 @@
-<!--Sets variables to be used in all styles-->
-{% set authors = title.getTitleRoles('Author') %}
-{% set authorCount = authors|length %}
+{% import 'partials/citation/macros.html.twig' as cit %}
 
 <!--Author(s)-->
-{% if authorCount == 0 %}
-{% elseif authorCount == 1 %}
-    <a href="{{ path("person_show", {"id": authors[0].person.id}) }}">{{ authors[0].person.lastName }}
-        , {{ authors[0].person.firstName -}}</a>
-    {%- if authors[0].person.firstName|last != "." %}.{% endif %}
-{% elseif authorCount == 2 %}
-    <a href="{{ path("person_show", {"id": authors[0].person.id}) }}">{{ authors[0].person.lastName }}
-        , {{ authors[0].person.firstName }}</a> and <a
-        href="{{ path("person_show", {"id": authors[1].person.id}) }}">{{ authors[1].person.firstName }} {{ authors[1].person.lastName -}}</a>.
-{% else %}
-    <a href="{{ path("person_show", {"id": authors[0].person.id}) }}">{{ authors[0].person.lastName }}
-        , {{ authors[0].person.firstName -}}</a>, et al.
-{%- endif %}
-<!--Title-->
-<em><a href="{{ path("title_show", {"id": title.id}) }}">{{ title.title }}</a></em>
-{%- if title.title matches '{[^[:punct:]]$}' %}.{% endif %}
-<!--Location-->
-{% if title.locationOfPrinting %}{{ title.locationOfPrinting.name }}:{% endif %}
-<!--Publisher-->
-{% for tfr in title.titleFirmRoles %}
-    {% if tfr.firmrole.name == 'Publisher' %}
-        {% set firm = tfr.firm %}
-        {{ firm.name }},
-    {% endif %}
-{% endfor %}
-<!--Publication date-->
-{% set pubdate = title.pubdate %}
-{{ pubdate }}{% if not(pubdate ends with '.') %}.{% endif %}
+
+
+{% set authors = cit.formatAuthors(title.getTitleRoles('Author')|map(tr => tr.person)) %}
+{%- set citTitle -%}<em>{{ title.title }}</em>{%- endset -%}
+{% set location = title.locationOfPrinting.name ?? null %}
+{% set publisher = title.titleFirmRoles is defined
+    ? title.titleFirmRoles|filter(tfr => (tfr.firmrole.name == 'Publisher'))|map(tfr => tfr.firm.name)|join(', ')
+    : null %}
+{% set date = title.pubdate %}
+
+
+
+{% set arr = [cit.print(authors,'.'), cit.print(citTitle,'.'), cit.print(location,','), cit.print(publisher, ','), cit.print(date,'')] %}
+{% set citation = arr|join(' ') ~ '.' %}
+{{ citation|raw }}
+
+

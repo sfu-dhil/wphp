@@ -323,24 +323,24 @@
                 <li><a data-toggle="tab" href="#bibtex">BibTex</a></li>
             </ul>
 
-            <div class="tab-content">
+            <div class="tab-content" class="citation-container">
                 <div id="mla" class="tab-pane fade in active">
-                    <div class="well">
-                        <p>{% include "partials/citation/mla.html.twig" with {'title': title} %}</p>
+                    <div>
+                        <p class="citation">{% include "partials/citation/mla.html.twig" with {'title': title} %}</p>
                     </div>
                 </div>
                 <div id="apa" class="tab-pane fade">
-                    <div class="well">
-                        <p>{% include "partials/citation/apa.html.twig" with {'title': title} %}</p>
+                    <div>
+                        <p class="citation">{% include "partials/citation/apa.html.twig" with {'title': title} %}</p>
                     </div>
                 </div>
                 <div id="chicago" class="tab-pane fade">
-                    <div class="well">
-                        <p>{% include "partials/citation/chicago.html.twig" with {'title': title} %}</p>
+                    <div>
+                        <p class="citation">{% include "partials/citation/chicago.html.twig" with {'title': title} %}</p>
                     </div>
                 </div>
                 <div id="bibtex" class="tab-pane fade">
-                    <div class="well">
+                    <div>
                         <pre>{% include "partials/citation/bibtex.html.twig" with {'title': title} %}</pre>
                     </div>
                 </div>
