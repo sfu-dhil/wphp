@@ -1,5 +1,8 @@
 {% embed 'partials/table.html.twig' %}
 
+    {% set pagination = titles %}
+    {% set paginate = true %}
+
     {% block thead %}
         <tr>
             {% include 'partials/sortable.html.twig' with {
@@ -67,50 +70,6 @@
         {% endfor %}
     {% endblock %}
 {% endembed %}
-
-{#
-<section class="title-index">
-    {% for title in titles %}
-    <div>
-        <div class="id">
-            <a href="{{ path('title_show', { 'id': title.id }) }}">
-                {{ title.id }}
-            </a>
-        </div>
-        <div class="title">
-                <a style="font-family: 'EB Garamond'; font-size: 1.2rem;" href="{{ path('title_show', { 'id': title.id }) }}">
-                    {{ title }}
-                </a>
-        </div>
-        <div class="pubdate">
-            {{ title.pubdate }}
-        </div>
-        <div class="editionNumber">
-            {{ title.editionNumber }}
-        </div>
-        <div class="contributors">
-            {% for tr in title.titleRoles|slice(0,title_index_authors) %}
-                {% set person = tr.person %}
-                <a href="{{ path('person_show', {'id': person.id}) }}">{{ person.lastName }}
-                    , {{ person.firstName }}</a>
-                ({{ tr.role }})
-                <br/>
-            {% endfor %}
-            {% if title.titleRoles|length > title_index_authors %}and {{ title.titleRoles|length - title_index_authors }} more.{% endif %}
-        </div>
-        <div class="firms">
-            {% for tfr in title.titleFirmRoles|slice(0,title_index_authors) %}
-                {% set firm = tfr.firm %}
-                <a href="{{ path('firm_show', {'id': firm.id}) }}">{{ firm.name }}</a>
-                ({{ tfr.firmrole }})
-                <br/>
-            {% endfor %}
-            {% if title.titleFirmRoles|length > title_index_authors %}and {{ title.titleFirmRoles|length - title_index_authors }} more.{% endif %}
-
-        </div>
-    </div>
-        {% endfor %} #}
-
 
 </section>
 

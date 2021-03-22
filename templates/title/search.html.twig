@@ -32,10 +32,6 @@
     {{ form_end(search_form) }}
 
     {% if titles|length > 0 %}
-        <div class="navigation">
-            {{ knp_pagination_render(titles) }}
-        </div>
-
         <div class='btn-toolbar pull-right'>
             <div class='btn-group'>
                 {% if is_granted('ROLE_CONTENT_ADMIN') %}
@@ -45,11 +41,8 @@
                 {% endif %}
             </div>
         </div>
-        {{ include('title/table.html.twig') }}
 
-        <div class="navigation">
-            {{ knp_pagination_render(titles) }}
-        </div>
+        {{ include('title/table.html.twig') }}
     {% endif %}
 
 {% endblock %}

@@ -2,24 +2,38 @@
 
 {% set isHorizontal = block('thead') is not defined %}
 
+{% if pagination is defined and paginate is defined and paginate %}
+    {% set tblPagination %}
+        {% include 'partials/count.html.twig' %}
+        <div class="navigation">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+    {% endset %}
+{% endif %}
+
+
 <div class="tbl-container">
-    {% if block('pagination') is defined %}
-        {{ block('pagination') }}
-    {% endif %}
+    <div class="tbl-info tbl-info-header">
+        {{ tblPagination ?? null }}
+    </div>
     <table class="table{% if not(isHorizontal) %} table-hover table-striped{% endif %}">
         {% if block('thead') is defined %}
             <thead>
-            {{ block('thead') }}
+                {{ block('thead') }}
             </thead>
         {% endif %}
         {% if block('tbody') is defined %}
             <tbody>
-            {{ block('tbody') }}
+                {{ block('tbody') }}
             </tbody>
         {% endif %}
     </table>
-    {% if block('pagination') is defined %}
-        {{ block('pagination') }}
-    {% endif %}
+
+    <div class="tbl-info tbl-info-footer">
+        {% if export is defined %}
+            {{ export|raw }}
+        {% endif %}
+        {{ tblPagination ?? null }}
+    </div>
 </div>
 

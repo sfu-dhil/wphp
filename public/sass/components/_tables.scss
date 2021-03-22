@@ -5,13 +5,51 @@ they stand a chance at winning against the highly specific selectors
 for bootstrap tables
  */
 
+// tables
+
+$color_table_background_odd:  #F9FAFA;
+$color_table_background_even: white;
+
+$table_head_color: $color_black;
+$table_head_background_color: #e2dbd3;
+$table_head_border_color: #e2dbd3;
+$table_body_border_color: $color_grey_light;
+
+$table_body_link_color: $color_link;
+$table_body_link_color_hover: $color_link_hover;
+
+$color_table_background_hover_odd: darken($color_table_background_odd, 5%);
+$color_table_background_hover_even: darken($color_table_background_even, 5%);
 
 .tbl-container{
   overflow-x:auto;
+
+  margin-bottom: ms(0);
+  & > .tbl-info{
+    display:flex;
+    justify-content:space-between;
+    padding: ms(-1) 0;
+    border-left:none;
+    border-right:none;
+    font-size: 0.925em;
+    &.tbl-info-footer{
+      border-bottom:none;
+    }
+    &.tbl-info-header{
+      border-top:none;
+    }
+  }
+  p.count{
+    margin:0;
+    color: $color_grey_translucent;
+    align-self:center;
+  }
+
   .table {
     color: $color_black;
     font-size:0.925rem;
-
+    margin-bottom:0;
+    border: 1px solid $color_grey_light;
     //striped tables.
     &.table-striped{
       & > tbody > tr{
@@ -123,6 +161,10 @@ for bootstrap tables
         text-align:right;
       }
     }
+  }
+
+  .pagination{
+    margin:0;
   }
 }
 
