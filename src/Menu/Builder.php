@@ -90,7 +90,7 @@ class Builder implements ContainerAwareInterface {
      */
     private function getUser() {
         if ( ! $this->hasRole('ROLE_USER')) {
-            return;
+            return null;
         }
 
         return $this->tokenStorage->getToken()->getUser();
@@ -443,18 +443,6 @@ class Builder implements ContainerAwareInterface {
             ]);
         }
 
-        $menu['announcements']->addChild('divider', [
-            'label' => '',
-        ]);
-        $menu['announcements']['divider']->setAttributes([
-            'role' => 'separator',
-            'class' => 'divider',
-        ]);
-
-        $menu['announcements']->addChild('All Announcements', [
-            'route' => 'nines_blog_post_index',
-        ]);
-
         if ($this->hasRole('ROLE_BLOG_ADMIN')) {
             $menu['announcements']->addChild('divider', [
                 'label' => '',
@@ -462,6 +450,10 @@ class Builder implements ContainerAwareInterface {
             $menu['announcements']['divider']->setAttributes([
                 'role' => 'separator',
                 'class' => 'divider',
+            ]);
+
+            $menu['announcements']->addChild('All Announcements', [
+                'route' => 'nines_blog_post_index',
             ]);
 
             $menu['announcements']->addChild('post_category', [
