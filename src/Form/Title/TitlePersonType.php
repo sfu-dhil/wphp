@@ -26,6 +26,7 @@ class TitlePersonType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) : void {
         $builder->add('person', Select2EntityType::class, [
             'multiple' => false,
+            'text_property' => 'getFormId',
             'remote_route' => 'person_typeahead',
             'class' => Person::class,
             'primary_key' => 'id',

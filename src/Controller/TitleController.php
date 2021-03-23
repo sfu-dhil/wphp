@@ -89,7 +89,7 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
         foreach ($repo->typeaheadQuery($q) as $result) {
             $data[] = [
                 'id' => $result->getId(),
-                'text' => $result->getTitle(),
+                'text' => $result->getFormId(),
             ];
         }
 

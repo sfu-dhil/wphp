@@ -346,6 +346,10 @@ class Title {
         return $this->title;
     }
 
+    public function getFormId() {
+        return "({$this->id}) {$this->title}";
+    }
+
     /**
      * Set signedAuthor.
      *

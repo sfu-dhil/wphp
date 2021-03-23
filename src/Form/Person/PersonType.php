@@ -103,6 +103,7 @@ class PersonType extends AbstractType {
         ]);
         $builder->add('relatedFirms', Select2EntityType::class, [
             'label' => 'Related Firms',
+            'text_property' => 'getFormId',
             'multiple' => true,
             'remote_route' => 'firm_typeahead',
             'class' => Firm::class,

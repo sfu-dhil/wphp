@@ -166,6 +166,10 @@ class Person {
         return implode(', ', array_filter([$this->lastName, $this->firstName]));
     }
 
+    public function getFormId() {
+        return "({$this->id}) " . implode(', ', array_filter([$this->lastName, $this->firstName]));
+    }
+
     /**
      * Get id.
      *

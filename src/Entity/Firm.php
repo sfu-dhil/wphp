@@ -138,6 +138,10 @@ class Firm {
         return $this->name;
     }
 
+    public function getFormId() {
+        return "({$this->id}) {$this->name}";
+    }
+
     /**
      * Get id.
      *
