@@ -6,7 +6,7 @@
 #}
 {% if parameters is not defined %}{% set parameters={} %}{% endif %}
 {% set query %}{% if app.request.queryString %}?{{ app.request.queryString }}{% else %}{% endif %}{% endset %}
-<div class="btn-group pull-right">
+<div class="btn-group">
     {% if csvOnly is defined and csvOnly %}
         <a type="button" class="btn btn-default"
            href='{{ path(path, parameters|merge({'format': 'csv'})) }}{{ query }}'>

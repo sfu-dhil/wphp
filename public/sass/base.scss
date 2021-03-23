@@ -26,11 +26,13 @@ body {
   font-family: $sans;
   display:flex;
   flex-direction:column;
+  overflow-x:hidden;
 }
 
 main{
   margin-top: 1rem;
   margin-bottom: 5rem;
+  width:100%;
 }
 
 @include link($color_link, $color_link_hover);

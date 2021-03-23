@@ -173,6 +173,14 @@ class WPHPModals extends Modals{
                 }
             }
         }
+        try{
+            console.log('REPLACING!?!?')
+            replaceText(document.querySelector('main'));
+            return true;
+        } catch(e) {
+            return false;
+            console.log(`${e}`);
+        }
     }
 
 })();

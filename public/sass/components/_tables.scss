@@ -22,7 +22,6 @@ $color_table_background_hover_odd: darken($color_table_background_odd, 5%);
 $color_table_background_hover_even: darken($color_table_background_even, 5%);
 
 .tbl-container{
-  overflow-x:auto;
 
   margin-bottom: ms(0);
   & > .tbl-info{
@@ -32,12 +31,18 @@ $color_table_background_hover_even: darken($color_table_background_even, 5%);
     border-left:none;
     border-right:none;
     font-size: 0.925em;
+    flex-wrap:wrap;
     &.tbl-info-footer{
       border-bottom:none;
     }
     &.tbl-info-header{
       border-top:none;
     }
+  }
+
+  .tbl-overflow{
+    max-width:100%;
+    overflow-x:auto;
   }
   p.count{
     margin:0;
@@ -82,7 +87,7 @@ $color_table_background_hover_even: darken($color_table_background_even, 5%);
       & + tbody{
         td{
           border-top:none;
-          max-width: 25rem;
+        //  max-width: 25rem;
         }
       }
 
@@ -136,6 +141,12 @@ $color_table_background_hover_even: darken($color_table_background_even, 5%);
       }
       th{
         text-align:right;
+        .help{
+          text-align:left;
+          margin-top:1rem;
+          font-size: 0.8rem;
+          font-weight: 300;
+        }
       }
     }
 
@@ -146,17 +157,18 @@ $color_table_background_hover_even: darken($color_table_background_even, 5%);
       & > td, th{
         padding: ms(-1) ms(0);
         &:first-child{
-          width: 0.1%;
-          white-space: nowrap;
+       //   width: 0.1%;
+        //  white-space: nowrap;
         }
       }
     }
 
     th{
       text-align: left;
-      white-space: nowrap;
+     white-space: nowrap;
     }
     th, td{
+      min-width: 4rem;
       &.numeric{
         text-align:right;
       }
@@ -167,6 +179,11 @@ $color_table_background_hover_even: darken($color_table_background_even, 5%);
     margin:0;
   }
 }
+
+th[data-toggle="popover"]{
+  cursor: help;
+}
+
 
 td ul{
   list-style-type:none;
