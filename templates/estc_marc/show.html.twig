@@ -9,8 +9,6 @@
 {% block body %}
     <div class="btn-toolbar">
         <div class="btn-group pull-right">
-            <a href="{{ path('resource_estc_index') }}" class="btn btn-default">
-                <span class="glyphicon glyphicon-arrow-left"></span> Back </a>
             <a href="{{ path('title_marc_import', {'id': estcMarc.titleId}) }}" class="btn btn-default" target="_blank">
                 <span class="glyphicon glyphicon-save"></span> Import </a>
         </div>

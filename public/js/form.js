@@ -82,8 +82,10 @@
         $("*[data-confirm]").each(confirm);
         $('[data-toggle="popover"]').popover({
             container: 'body',
-            trigger: 'hover',
-            placement: 'bottom',
+            trigger: 'click',
+            placement: function(p, el){
+               return el.getAttribute('data-placement') ? el.getAttribute('data-placement') : 'bottom';
+            }
         }); //add this line to enable bootstrap popover
         if (typeof $().collection === 'function') {
             simpleCollection();

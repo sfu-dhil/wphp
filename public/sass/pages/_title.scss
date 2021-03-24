@@ -5,3 +5,30 @@
   }
 }
 
+
+
+
+.title-grid{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 100%));
+  column-gap: 2rem;
+}
+
+
+
+
+.title-grid > div{
+  grid-column: span 2;
+  @include desktop(){
+    &.title-metadata-main{
+      grid-column-start:1;
+      grid-column-end:1;
+    }
+    &.title-metadata-bibliographic{
+      grid-column-start:2;
+      grid-column-end: 2;
+    }
+  }
+}
+
+

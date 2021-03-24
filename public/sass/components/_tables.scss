@@ -21,6 +21,8 @@ $table_body_link_color_hover: $color_link_hover;
 $color_table_background_hover_odd: darken($color_table_background_odd, 5%);
 $color_table_background_hover_even: darken($color_table_background_even, 5%);
 
+@import '../../yarn/dhilux/scss/a11y_tables';
+
 .tbl-container{
 
   margin-bottom: ms(0);
@@ -54,9 +56,9 @@ $color_table_background_hover_even: darken($color_table_background_even, 5%);
     color: $color_black;
     font-size:0.925rem;
     margin-bottom:0;
-    border: 1px solid $color_grey_light;
     //striped tables.
     &.table-striped{
+      border: 1px solid $color_grey_light;
       & > tbody > tr{
         background: $color_table_background_even;
         &:hover,
@@ -79,6 +81,7 @@ $color_table_background_hover_even: darken($color_table_background_even, 5%);
         color: $table_head_color;
         background: $table_head_background_color;
         border: $table_head_border_color;
+        white-space: nowrap;
         a {
           color: $table_head_color;
         }
@@ -140,7 +143,7 @@ $color_table_background_hover_even: darken($color_table_background_even, 5%);
         }
       }
       th{
-        text-align:right;
+        max-width: 7.5%;
         .help{
           text-align:left;
           margin-top:1rem;
@@ -163,10 +166,6 @@ $color_table_background_hover_even: darken($color_table_background_even, 5%);
       }
     }
 
-    th{
-      text-align: left;
-     white-space: nowrap;
-    }
     th, td{
       min-width: 4rem;
       &.numeric{
@@ -178,6 +177,10 @@ $color_table_background_hover_even: darken($color_table_background_even, 5%);
   .pagination{
     margin:0;
   }
+}
+
+.table p{
+  margin:0;
 }
 
 th[data-toggle="popover"]{
@@ -196,3 +199,5 @@ td ul{
     columns: 2;
   }
 }
+
+

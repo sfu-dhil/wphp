@@ -109,30 +109,6 @@ h1{
 
 
 
-.title-grid{
-  display:grid;
-  grid-template-columns: 3fr 2fr;
-  column-gap: 2rem;
-}
-
-
-
-
-.title-grid > div{
-  grid-column: span 2;
-  @include desktop(){
-    &.title-metadata-main{
-      grid-column-start:1;
-      grid-column-end:1;
-    }
-    &.title-metadata-bibliographic{
-      grid-column-start:2;
-      grid-column-end: 2;
-    }
-  }
-}
-
-
 div.tab-content {
   // min-height: 200px;
   p {

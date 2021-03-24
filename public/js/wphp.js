@@ -5,9 +5,12 @@
 "use strict";
 
 import Modals from '../yarn/dhilux/js/modals.bundle.js';
+import A11YTables from '../yarn/dhilux/js/A11Y_tables.js';
 
 
 const myParser = new DOMParser();
+const accessibleTables = new A11YTables;
+accessibleTables.init();
 
 class WPHPModals extends Modals{
     constructor(selector){

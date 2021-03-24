@@ -7,13 +7,7 @@
 {% endblock %}
 
 {% block body %}
-    <div class="btn-toolbar">
-        <div class="btn-group pull-right">
-            <a href="{{ path('resource_osborne_index') }}" class="btn btn-default">
-                <span class="glyphicon glyphicon-arrow-left"></span> Back
-            </a>
-        </div>
-    </div>
+
     {% embed 'partials/table.html.twig' %}
         {% set data = manager.getData(osborneMarc) %}
         {% block tbody %}
