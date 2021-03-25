@@ -125,10 +125,12 @@
         {% endblock %}
     {% endembed %}
 
-    <div id="person_titles">
-        <h2>Titles</h2>
-        {% include 'person/partial/titles.html.twig' %}
-    </div>
+    {% if pagination|length > 0 %}
+        <div id="person_titles">
+            <h2>Titles</h2>
+            {% include 'person/partial/titles.html.twig' %}
+        </div>
+    {% endif %}
 
 
     {% include 'partials/citation.html.twig' with {

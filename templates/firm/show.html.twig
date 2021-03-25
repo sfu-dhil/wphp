@@ -104,37 +104,39 @@
         {% endblock %}
     {% endembed %}
 
-    <h2>Titles</h2>
-    {% embed 'partials/table.html.twig' %}
-        {% set entities = pagination %}
-        {% block thead %}
-            <tr>
-                <th>Firm&nbsp;Role</th>
-                <th>Title</th>
-                <th>Author</th>
-                <th>Date</th>
-            </tr>
-        {% endblock %}
-        {% block tbody %}
-            {% for tfr in pagination %}
-                {% set title = tfr.title %}
-                {% set authorRole = title.getTitleRoles('Author')|first %}
-                <tr>
-                    <td>{{ tfr.firmrole.name }}</td>
-                    <td><a href="{{ path('title_show', {'id': title.id}) }}">{{ title.title }}</a></td>
-                    <td>{% if authorRole %}
-                            <a href='{{ path('person_show', {'id': authorRole.person.id}) }}'>{{ authorRole.person }}</a>
-                        {% endif %}
-                    </td>
-                    <td>{{ title.pubdate }}</td>
-                </tr>
-            {% endfor %}
-        {% endblock %}
-    {% endembed %}
+    {% if pagination|length > 0 %}
+        <div>
+            <h2>Titles</h2>
+            {% embed 'partials/table.html.twig' %}
+                {% set entities = pagination %}
+                {% set export = include('partials/export.html.twig', {'path': 'firm_export', 'parameters': {'id': firm.id}}) %}
 
-    {% include 'partials/export.html.twig' with {'path': 'firm_export', 'parameters': {'id': firm.id}} %}
-
-    <div class="clearfix"></div>
+                {% block thead %}
+                    <tr>
+                        <th>Firm&nbsp;Role</th>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>Date</th>
+                    </tr>
+                {% endblock %}
+                {% block tbody %}
+                    {% for tfr in pagination %}
+                        {% set title = tfr.title %}
+                        {% set authorRole = title.getTitleRoles('Author')|first %}
+                        <tr>
+                            <td>{{ tfr.firmrole.name }}</td>
+                            <td><a href="{{ path('title_show', {'id': title.id}) }}">{{ title.title }}</a></td>
+                            <td>{% if authorRole %}
+                                    <a href='{{ path('person_show', {'id': authorRole.person.id}) }}'>{{ authorRole.person }}</a>
+                                {% endif %}
+                            </td>
+                            <td>{{ title.pubdate }}</td>
+                        </tr>
+                    {% endfor %}
+                {% endblock %}
+            {% endembed %}
+        </div>
+    {% endif %}
 
 
 
@@ -144,8 +146,6 @@
         'type': 'Firm',
         'url': url('firm_show', {'id': firm.id})
     }) }}
-
-    <div class="clearfix"></div>
 
     {% include '@NinesFeedback/comment/comment-interface.html.twig' with { 'entity': firm } %}
 
