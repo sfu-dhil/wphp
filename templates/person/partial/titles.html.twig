@@ -1,5 +1,6 @@
 
 {% embed 'partials/table.html.twig' %}
+    {% set entities = pagination %}
     {% block thead %}
         <tr>
             <th>Role</th>
@@ -17,7 +18,6 @@
             </tr>
         {% endfor %}
     {% endblock %}
-    {% set paginate = true %}
     {% set export %}
         {% include 'partials/export.html.twig' with {'path': 'person_export', 'parameters': {'id': person.id}} %}
     {% endset %}

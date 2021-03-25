@@ -20,6 +20,7 @@
         </div>
     </div>
     {% embed 'partials/table.html.twig' %}
+        {% set entities = formats %}
         {% block thead %}
             <tr>
                 <th>Name</th>
@@ -47,9 +48,5 @@
             {% endfor %}
         {% endblock %}
     {% endembed %}
-
-    <div class="navigation">
-        {{ knp_pagination_render(formats) }}
-    </div>
 
 {% endblock %}

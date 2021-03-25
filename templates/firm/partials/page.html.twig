@@ -4,6 +4,7 @@
 </p>
 
 {% embed 'partials/table.html.twig' %}
+    {% set entities = firms %}
     {% block thead %}
         <tr>
             <th>ID</th>
@@ -31,7 +32,3 @@
         {% endfor %}
     {% endblock %}
 {% endembed %}
-
-<div class="navigation">
-    {{ knp_pagination_render(firms) }}
-</div>

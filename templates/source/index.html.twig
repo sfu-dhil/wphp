@@ -19,6 +19,7 @@
     </div>
 
     {% embed 'partials/table.html.twig' %}
+        {% set entities = sources %}
         {% block thead %}
             <tr>
                 <th>Name</th>
@@ -45,8 +46,5 @@
         {% endblock %}
     {% endembed %}
 
-    <div class="navigation">
-        {{ knp_pagination_render(sources) }}
-    </div>
 
 {% endblock %}

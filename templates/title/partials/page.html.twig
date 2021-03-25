@@ -1,9 +1,7 @@
 <h1>Title List</h1>
-<p class="count">
-    Displaying {{ titles|length }} titles of {{ titles.getTotalItemCount }} total.
-</p>
 
 {% embed 'partials/table.html.twig' %}
+    {% set entities = titles %}
     {% block thead %}
         <tr>
             <th>ID</th>
@@ -48,6 +46,3 @@
     {% endblock %}
 {% endembed %}
 
-<div class="navigation">
-    {{ knp_pagination_render(titles) }}
-</div>

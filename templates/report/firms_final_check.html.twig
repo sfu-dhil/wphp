@@ -13,15 +13,7 @@
     <p class="explanation">These firms have not been final checked.</p>
 
     {% if firms|length > 0 %}
-        <div class="navigation">
-            {{ knp_pagination_render(firms) }}
-        </div>
-
         {% include 'firm/table.html.twig' with {'firms': firms} %}
-
-        <div class="navigation">
-            {{ knp_pagination_render(firms) }}
-        </div>
     {% endif %}
 
 {% endblock %}

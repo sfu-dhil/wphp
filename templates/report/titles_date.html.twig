@@ -13,10 +13,8 @@
 {% block body %}
     <p class="explanation">All publication dates for titles should be properly formed dates.</p>
     {% if titles|length > 0 %}
-        <div class="navigation">
-            {{ knp_pagination_render(titles) }}
-        </div>
         {% embed 'partials/table.html.twig' %}
+            {% set entities = titles %}
             {% block thead %}
                 <tr>
                     <th>ID</th>
@@ -47,10 +45,6 @@
                 {% endfor %}
             {% endblock %}
         {% endembed %}
-
-        <div class="navigation">
-            {{ knp_pagination_render(titles) }}
-        </div>
     {% endif %}
 
 {% endblock %}

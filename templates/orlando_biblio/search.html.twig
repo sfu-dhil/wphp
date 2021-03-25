@@ -35,6 +35,7 @@
 
     {% if orlandoBiblios|length %}
         {% embed 'partials/table.html.twig' %}
+            {% set entities = orlandoBiblios %}
             {% block thead %}
                 <tr>
                     <th>Orlando ID</th>
@@ -71,9 +72,5 @@
                 {% endfor %}
             {% endblock %}
         {% endembed %}
-
-        <div class="navigation">
-            {{ knp_pagination_render(orlandoBiblios) }}
-        </div>
     {% endif %}
 {% endblock %}

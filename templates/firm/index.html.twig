@@ -39,14 +39,7 @@
     <div class="clear-fix"></div>
 
     {% if firms|length > 0 %}
-        <div class="navigation">
-            {{ knp_pagination_render(firms) }}
-        </div>
-
         {{ include('firm/table.html.twig') }}
 
-        <div class="navigation">
-            {{ knp_pagination_render(firms) }}
-        </div>
     {% endif %}
 {% endblock %}

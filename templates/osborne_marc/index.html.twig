@@ -20,6 +20,7 @@
     </div>
 
     {% embed 'partials/table.html.twig' %}
+        {% set entities = osborneMarcs %}
         {% block thead %}
             <tr>
                 <th>Title ID</th>
@@ -41,9 +42,5 @@
             {% endfor %}
         {% endblock %}
     {% endembed %}
-
-    <div class="navigation">
-        {{ knp_pagination_render(osborneMarcs) }}
-    </div>
 
 {% endblock %}

@@ -34,6 +34,7 @@
 
     {% if jacksons|length %}
         {% embed 'partials/table.html.twig' %}
+            {% set entities = jacksons %}
             {% block thead %}
                 <tr>
                     <th>Jackson ID</th>
@@ -55,10 +56,6 @@
                 {% endfor %}
             {% endblock %}
         {% endembed %}
-
-        <div class="navigation">
-            {{ knp_pagination_render(jacksons) }}
-        </div>
     {% endif %}
 
 {% endblock %}

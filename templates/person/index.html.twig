@@ -44,15 +44,7 @@
         </div>
     </div>
     {% if people|length %}
-        <div class="navigation">
-            {{ knp_pagination_render(people) }}
-        </div>
-
         {{ include('person/table.html.twig') }}
-
-        <div class="navigation">
-            {{ knp_pagination_render(people) }}
-        </div>
     {% endif %}
 
 {% endblock %}

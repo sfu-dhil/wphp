@@ -33,10 +33,6 @@
     {{ form_end(search_form) }}
 
     {% if people|length %}
-        <div class="navigation">
-            {{ knp_pagination_render(people) }}
-        </div>
-
         <div class='btn-toolbar pull-right'>
             <div class='btn-group'>
                 {% if is_granted('ROLE_CONTENT_ADMIN') %}
@@ -48,9 +44,6 @@
         </div>
         {{ include('person/table.html.twig') }}
 
-        <div class="navigation">
-            {{ knp_pagination_render(people) }}
-        </div>
     {% endif %}
 
 {% endblock %}

@@ -36,6 +36,7 @@
 
     <h2>Persons</h2>
     {% embed 'partials/table.html.twig' %}
+        {% set entities = titleRoles %}
         {% block thead %}
             <tr>
                 <th>Person</th>
@@ -60,9 +61,6 @@
         {% endblock %}
     {% endembed %}
 
-    <div class="navigation">
-        {{ knp_pagination_render(titleRoles) }}
-    </div>
 
 
 {% endblock %}

@@ -35,10 +35,6 @@
 
     {% if people|length > 0 %}
         {{ include('person/table.html.twig') }}
-
-        <div class="navigation">
-            {{ knp_pagination_render(people) }}
-        </div>
     {% endif %}
 
 {% endblock %}

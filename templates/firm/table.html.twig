@@ -1,4 +1,5 @@
 {% embed 'partials/table.html.twig' %}
+    {% set entities = firms %}
     {% block thead %}
         <tr>
             {% include 'partials/sortable.html.twig' with {

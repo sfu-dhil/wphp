@@ -30,9 +30,6 @@
     {{ form_end(search_form) }}
 
     {% if firms|length > 0 %}
-        <div class="navigation">
-            {{ knp_pagination_render(firms) }}
-        </div>
 
         <div class='btn-toolbar pull-right'>
             <div class='btn-group'>
@@ -44,10 +41,6 @@
             </div>
         </div>
         {{ include('firm/table.html.twig') }}
-
-        <div class="navigation">
-            {{ knp_pagination_render(firms) }}
-        </div>
     {% endif %}
 {% endblock %}
 

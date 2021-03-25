@@ -12,6 +12,7 @@
     <h2>People</h2>
 
     {% embed 'partials/table.html.twig' %}
+        {% set entities = people %}
         {% block thead %}
             <tr>
                 <th>ID</th>

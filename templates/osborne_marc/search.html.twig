@@ -34,6 +34,7 @@
 
     {% if osborneMarcs|length %}
         {% embed 'partials/table.html.twig' %}
+            {% set entities = titleIds %}
             {% block thead %}
                 <tr>
                     <th>ID</th>
@@ -55,10 +56,6 @@
                 {% endfor %}
             {% endblock %}
         {% endembed %}
-
-        <div class="navigation">
-            {{ knp_pagination_render(titleIds) }}
-        </div>
     {% endif %}
 
 {% endblock %}

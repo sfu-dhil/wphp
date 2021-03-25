@@ -20,9 +20,10 @@
     </div>
 
     {% embed 'partials/table.html.twig' %}
+        {% set entities = orlandoBiblios %}
         {% block thead %}
             <tr>
-                <th>Bi ID</th>
+                <th>ID</th>
                 <th>Author</th>
                 <th>Analytic Standard Title</th>
                 <th>Monographic Standard Title</th>
@@ -56,9 +57,5 @@
             {% endfor %}
         {% endblock %}
     {% endembed %}
-
-    <div class="navigation">
-        {{ knp_pagination_render(orlandoBiblios) }}
-    </div>
 
 {% endblock %}
