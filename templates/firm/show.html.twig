@@ -28,7 +28,7 @@
             </div>
         </div>
     {% endif %}
-    {% embed 'partials/table.html.twig' %}
+    {% embed 'partial/table.html.twig' %}
         {% block tbody %}
             <tr>
                 <th data-toggle="popover" data-content="{{ 'firm.fields.id'|trans }}">ID</th>
@@ -40,7 +40,7 @@
             </tr>
             <tr>
                 <th data-toggle="popover" data-content="{{ 'firm.fields.gender'|trans }}">Gender</th>
-                <td>{% include 'firm/partials/gender.html.twig' %}</td>
+                <td>{% include 'firm/partial/gender.html.twig' %}</td>
             </tr>
             <tr>
                 <th data-toggle="popover" data-content="{{ 'firm.fields.streetAddress'|trans }}">Street Address</th>
@@ -107,9 +107,9 @@
     {% if pagination|length > 0 %}
         <div>
             <h2>Titles</h2>
-            {% embed 'partials/table.html.twig' %}
+            {% embed 'partial/table.html.twig' %}
                 {% set entities = pagination %}
-                {% set export = include('partials/export.html.twig', {'path': 'firm_export', 'parameters': {'id': firm.id}}) %}
+                {% set export = include('partial/export.html.twig', {'path': 'firm_export', 'parameters': {'id': firm.id}}) %}
 
                 {% block thead %}
                     <tr>
@@ -140,7 +140,7 @@
 
 
 
-    {{ include('partials/citation.html.twig', {
+    {{ include('partial/citation.html.twig', {
         'title': '"' ~ firm ~ '"',
         'record': firm,
         'type': 'Firm',

@@ -1,29 +1,29 @@
-{% embed 'partials/table.html.twig' %}
+{% embed 'partial/table.html.twig' %}
     {% set entities = firms %}
     {% block thead %}
         <tr>
-            {% include 'partials/sortable.html.twig' with {
+            {% include 'partial/sortable.html.twig' with {
                 'pagination': firms,
                 'header': 'ID',
                 'field': 'e.id',
             } %}
-            {% include 'partials/sortable.html.twig' with {
+            {% include 'partial/sortable.html.twig' with {
                 'pagination': firms,
                 'header': 'Name',
                 'field': ['e.name', 'e.startDate'],
             } %}
             <th>Street Address</th>
-            {% include 'partials/sortable.html.twig' with {
+            {% include 'partial/sortable.html.twig' with {
                 'pagination': firms,
                 'header': 'City',
                 'field': ['g.name', 'e.name'],
             } %}
-            {% include 'partials/sortable.html.twig' with {
+            {% include 'partial/sortable.html.twig' with {
                 'pagination': firms,
                 'header': 'Start Date',
                 'field': ['e.startDate', 'e.name'],
             } %}
-            {% include 'partials/sortable.html.twig' with {
+            {% include 'partial/sortable.html.twig' with {
                 'pagination': firms,
                 'header': 'End date',
                 'field': ['e.endDate', 'e.name'],

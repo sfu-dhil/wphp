@@ -19,7 +19,7 @@
         </div>
     {% endif %}
 
-    {% embed 'partials/table.html.twig' %}
+    {% embed 'partial/table.html.twig' %}
         {% block tbody %}
             <tr>
                 <th>Name</th>
@@ -32,5 +32,5 @@
         {% endblock %}
     {% endembed %}
 
-    {% include 'title/partials/page.html.twig' with {'titles': titles} %}
+    {% include 'title/partial/page.html.twig' with {'titles': titles} %}
 {% endblock %}

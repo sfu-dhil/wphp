@@ -1,5 +1,5 @@
 
-{% embed 'partials/table.html.twig' %}
+{% embed 'partial/table.html.twig' %}
     {% set entities = pagination %}
     {% block thead %}
         <tr>
@@ -19,6 +19,6 @@
         {% endfor %}
     {% endblock %}
     {% set export %}
-        {% include 'partials/export.html.twig' with {'path': 'person_export', 'parameters': {'id': person.id}} %}
+        {% include 'partial/export.html.twig' with {'path': 'person_export', 'parameters': {'id': person.id}} %}
     {% endset %}
 {% endembed %}

@@ -1,6 +1,6 @@
 <div id="{{ app.request.attributes.get('_route') ~ '_titles' }}">
     <h2>Titles</h2>
-    {% embed 'partials/table.html.twig' %}
+    {% embed 'partial/table.html.twig' %}
         {% set entities = titles %}
         {% block thead %}
             <tr>

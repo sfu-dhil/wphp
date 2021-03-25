@@ -4,7 +4,7 @@
 
 {% if entities is defined %}
     {% set tblPagination %}
-        {% include 'partials/count.html.twig' %}
+        {% include 'partial/count.html.twig' %}
         <div class="navigation">
             {{ knp_pagination_render(entities) }}
         </div>

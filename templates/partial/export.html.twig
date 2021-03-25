@@ -2,7 +2,7 @@
     path (name of the Symfony controller action
     parameters (any parameters necessary for the path).
 
-    {% include 'partials/export.html.twig' with {'path': 'person_export', 'parameters': {'id': person.id}} %}
+    {% include 'partial/export.html.twig' with {'path': 'person_export', 'parameters': {'id': person.id}} %}
 #}
 {% if parameters is not defined %}{% set parameters={} %}{% endif %}
 {% set query %}{% if app.request.queryString %}?{{ app.request.queryString }}{% else %}{% endif %}{% endset %}

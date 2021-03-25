@@ -7,7 +7,7 @@
 {% block body %}
     <div class="list-group">
         {% for title in titles %}
-            <div class="list-group-item">{{ include('partials/citation/' ~ format ~ '.html.twig') }}</div>
+            <div class="list-group-item">{{ include('partial/citation/' ~ format ~ '.html.twig') }}</div>
         {% endfor %}
     </div>
 {% endblock %}

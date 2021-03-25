@@ -1,33 +1,33 @@
-{% embed 'partials/table.html.twig' %}
+{% embed 'partial/table.html.twig' %}
     {% set entities = people %}
     {% block thead %}
         <tr>
-            {% include 'partials/sortable.html.twig' with {
+            {% include 'partial/sortable.html.twig' with {
                 'pagination': people,
                 'header': 'ID',
                 'field': 'e.id',
             } %}
-            {% include 'partials/sortable.html.twig' with {
+            {% include 'partial/sortable.html.twig' with {
                 'pagination': people,
                 'header': 'Last name',
                 'field': ['e.lastName', 'e.firstName', 'e.dob'],
             } %}
-            {% include 'partials/sortable.html.twig' with {
+            {% include 'partial/sortable.html.twig' with {
                 'pagination': people,
                 'header': 'First name',
                 'field': ['e.firstName', 'e.lastName', 'e.dob'],
             } %}
-            {% include 'partials/sortable.html.twig' with {
+            {% include 'partial/sortable.html.twig' with {
                 'pagination': people,
                 'header': 'Gender',
                 'field': ['e.gender', 'e.lastName', 'e.firstName', 'e.dob'],
             } %}
-            {% include 'partials/sortable.html.twig' with {
+            {% include 'partial/sortable.html.twig' with {
                 'pagination': people,
                 'header': 'Date of Birth',
                 'field': ['e.dob', 'e.lastName', 'e.firstName'],
             } %}
-            {% include 'partials/sortable.html.twig' with {
+            {% include 'partial/sortable.html.twig' with {
                 'pagination': people,
                 'header': 'Date of Death',
                 'field': ['e.dod', 'e.lastName', 'e.firstName'],

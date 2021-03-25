@@ -3,7 +3,7 @@
     Displaying {{ firms|length }} firms of {{ firms.getTotalItemCount }} total.
 </p>
 
-{% embed 'partials/table.html.twig' %}
+{% embed 'partial/table.html.twig' %}
     {% set entities = firms %}
     {% block thead %}
         <tr>

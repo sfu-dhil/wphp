@@ -9,7 +9,7 @@
     <div class="list-group">
         {% for tfr in firmRoles %}
             {% set title = tfr.title %}
-            <div class="list-group-item">{{ include('partials/citation/' ~ format ~ '.html.twig', {'title': title}) }}</div>
+            <div class="list-group-item">{{ include('partial/citation/' ~ format ~ '.html.twig', {'title': title}) }}</div>
         {% endfor %}
     </div>
 {% endblock %}

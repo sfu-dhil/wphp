@@ -34,7 +34,7 @@
     </div>
 
     {% if titles|length > 0 %}
-        {% include 'title/table.html.twig' with {'export': include('partials/export.html.twig', {'path': 'title_export', 'csvOnly': true})} %}
+        {% include 'title/table.html.twig' with {'export': include('partial/export.html.twig', {'path': 'title_export', 'csvOnly': true})} %}
     {% endif %}
 
 {% endblock %}

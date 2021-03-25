@@ -17,7 +17,7 @@
 
     <details>
         <summary>Control Info</summary>
-        {% embed 'partials/table.html.twig' %}
+        {% embed 'partial/table.html.twig' %}
             {% block tbody %}
                 {% for field in data|filter(f => f.field < 100) %}
                     <tr>
@@ -32,7 +32,7 @@
         {% endembed %}
     </details>
 
-    {% embed 'partials/table.html.twig' %}
+    {% embed 'partial/table.html.twig' %}
         {% block tbody %}
             <tr>
                 <th>Control ID</th>

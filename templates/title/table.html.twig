@@ -1,28 +1,28 @@
-{% embed 'partials/table.html.twig' %}
+{% embed 'partial/table.html.twig' %}
 
     {% set entities = titles %}
 
     {% block thead %}
         <tr>
-            {% include 'partials/sortable.html.twig' with {
+            {% include 'partial/sortable.html.twig' with {
                 'pagination': titles,
                 'header': 'ID',
                 'field': 'e.id',
             } %}
-            {% include 'partials/sortable.html.twig' with {
+            {% include 'partial/sortable.html.twig' with {
                 'pagination': titles,
                 'header': 'Title',
                 'field': ['e.title', 'e.pubdate'],
             } %}
             <th>Contributors</th>
             <th>Firms</th>
-            {% include 'partials/sortable.html.twig' with {
+            {% include 'partial/sortable.html.twig' with {
                 'pagination': titles,
                 'header': 'Year',
                 'field': ['e.pubdate', 'e.title'],
                 'class': 'numeric'
             } %}
-            {% include 'partials/sortable.html.twig' with {
+            {% include 'partial/sortable.html.twig' with {
                 'pagination': titles,
                 'header': 'Edition',
                 'field': ['e.editionNumber', 'e.pubdate', 'e.title'],

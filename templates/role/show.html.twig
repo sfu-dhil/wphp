@@ -21,7 +21,7 @@
                 </div>
             {% endif %}
 
-    {% embed 'partials/table.html.twig' %}
+    {% embed 'partial/table.html.twig' %}
         {% block tbody %}
             <tr>
                 <th>Name</th>
@@ -35,7 +35,7 @@
     {% endembed %}
 
     <h2>Persons</h2>
-    {% embed 'partials/table.html.twig' %}
+    {% embed 'partial/table.html.twig' %}
         {% set entities = titleRoles %}
         {% block thead %}
             <tr>

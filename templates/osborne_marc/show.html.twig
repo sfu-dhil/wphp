@@ -8,7 +8,7 @@
 
 {% block body %}
 
-    {% embed 'partials/table.html.twig' %}
+    {% embed 'partial/table.html.twig' %}
         {% set data = manager.getData(osborneMarc) %}
         {% block tbody %}
             {% for field in data %}

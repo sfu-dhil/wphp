@@ -25,7 +25,7 @@
                aria-controls="collapseExample" id="advanced_search">Advanced Search</a>
             {% if submitted %}
                 <a class="btn btn-default" href="{{ path('title_search') }}">Reset</a>
-                {% include 'partials/export.html.twig' with {'path': 'title_search_export' } %}
+                {% include 'partial/export.html.twig' with {'path': 'title_search_export' } %}
             {% endif %}
         </div>
     </div>

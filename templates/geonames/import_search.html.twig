@@ -30,7 +30,7 @@
             <fieldset>
                 <legend>Select one or more records to import</legend>
                 <input type="hidden" name="q" value="{{ q }}"/>
-                {% embed 'partials/table.html.twig' %}
+                {% embed 'partial/table.html.twig' %}
                     {% for result in results %}
                         <tr>
                             <td><input type="checkbox" name="geonameid[]" value="{{ result.geonameId }}"/></td>

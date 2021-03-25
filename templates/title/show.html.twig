@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-{% import 'partials/trim-title.html.twig' as str %}
+{% import 'partial/trim-title.html.twig' as str %}
 
 {% block htmlhead %}
     <link href='{{ path('title_show', {'id': title.id, '_format': 'xml'}) }}' type='application/rdf+xml'
@@ -36,7 +36,7 @@
     {% endif %}
     <div class="container title-grid">
         <div class="title-metadata title-metadata-main">
-            {% embed 'partials/table.html.twig' %}
+            {% embed 'partial/table.html.twig' %}
                 {% block tbody %}
                     <tr>
                         <th data-toggle="popover" data-content="{{ 'title.fields.id'|trans }}">ID</th>
@@ -160,7 +160,7 @@
         </div>
         <div class="title-metadata title-metadata-bibliographic">
 
-            {% embed 'partials/table.html.twig' %}
+            {% embed 'partial/table.html.twig' %}
                 {% block tbody %}
                     <tr>
                         <th data-toggle="popover" data-content="{{ 'title.fields.format'|trans }}">Format</th>
@@ -230,7 +230,7 @@
                             <ul>
                                 {% for titleSource in title.titleSources %}
                                     <li>
-                                        {% include "title/partials/source-link.html.twig"
+                                        {% include "title/partial/source-link.html.twig"
                                             with {'source': titleSource.source, 'sourceId': titleSource.identifier} %}
                                     </li>
 
@@ -274,7 +274,7 @@
         {% if is_granted('ROLE_USER') and (title.sourceTitles|length + title.relatedTitles|length) > 0 %}
             <div class="titles-related-titles">
                 <h3>Related Titles</h3>
-                {% embed 'partials/table.html.twig' %}
+                {% embed 'partial/table.html.twig' %}
                     {% block thead %}
                         <tr>
                             <th>Relationship</th>
@@ -321,22 +321,22 @@
             <div class="tab-content" class="citation-container">
                 <div id="mla" class="tab-pane fade in active">
                     <div>
-                        <p class="citation">{% include "partials/citation/mla.html.twig" with {'title': title} %}</p>
+                        <p class="citation">{% include "partial/citation/mla.html.twig" with {'title': title} %}</p>
                     </div>
                 </div>
                 <div id="apa" class="tab-pane fade">
                     <div>
-                        <p class="citation">{% include "partials/citation/apa.html.twig" with {'title': title} %}</p>
+                        <p class="citation">{% include "partial/citation/apa.html.twig" with {'title': title} %}</p>
                     </div>
                 </div>
                 <div id="chicago" class="tab-pane fade">
                     <div>
-                        <p class="citation">{% include "partials/citation/chicago.html.twig" with {'title': title} %}</p>
+                        <p class="citation">{% include "partial/citation/chicago.html.twig" with {'title': title} %}</p>
                     </div>
                 </div>
                 <div id="bibtex" class="tab-pane fade">
                     <div>
-                        <pre>{% include "partials/citation/bibtex.html.twig" with {'title': title} %}</pre>
+                        <pre>{% include "partial/citation/bibtex.html.twig" with {'title': title} %}</pre>
                     </div>
                 </div>
             </div>
@@ -345,7 +345,7 @@
         <div class="title-citation">
             {% set roles = title.titleRoles('Author') %}
             {% set authorString %}{% for role in roles %}{{ role.person }}{% if not loop.last %}, {% endif %}{% endfor %}{% endset %}
-            {{ include('partials/citation.html.twig', {
+            {{ include('partial/citation.html.twig', {
                 'title': authorString ~ '. "' ~ title ~ '"',
                 'record': title,
                 'type': 'title',

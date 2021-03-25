@@ -7,7 +7,7 @@
 {% block body %}
     <div class="gallery">
         {% for post in posts %}
-            {% embed 'partials/card.html.twig' %}
+            {% embed 'partial/card.html.twig' %}
                 {% set link = path('nines_blog_post_show', {'id': post.id}) %}
                 {% block excerpt %}
                     {{ post.excerpt|raw }}

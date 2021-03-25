@@ -11,7 +11,7 @@
     </div>
     <div class="gallery">
         {% for spotlight in spotlights %}
-            {% embed 'partials/card.html.twig' %}
+            {% embed 'partial/card.html.twig' %}
                 {% set link = path('nines_blog_post_show', {'id': spotlight.id}) %}
                 {% block excerpt %}
                     {{ spotlight.excerpt|raw }}

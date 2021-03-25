@@ -6,12 +6,12 @@
 
 {% block body %}
 
-    {% embed 'geonames/partials/header.html.twig' %}
+    {% embed 'geonames/partial/header.html.twig' %}
     {% endembed %}
 
     <h2>People</h2>
 
-    {% embed 'partials/table.html.twig' %}
+    {% embed 'partial/table.html.twig' %}
         {% set entities = people %}
         {% block thead %}
             <tr>

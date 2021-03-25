@@ -30,7 +30,7 @@
         </div>
     {% endif %}
 
-    {% embed 'partials/table.html.twig' %}
+    {% embed 'partial/table.html.twig' %}
         {% block tbody %}
             <tr>
                 <th data-toggle="popover" data-content="{{ 'person.fields.id'|trans }}">ID</th>
@@ -133,7 +133,7 @@
     {% endif %}
 
 
-    {% include 'partials/citation.html.twig' with {
+    {% include 'partial/citation.html.twig' with {
         'title': '"' ~ person ~ '"',
         'record': person,
         'type': 'Person',
