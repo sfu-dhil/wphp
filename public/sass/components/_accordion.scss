@@ -1,0 +1,24 @@
+@include dhil-details-accordion(true) {
+  details.accordion {
+    summary {
+      font-variant:none;
+      text-transform:none;
+      display:flex;
+      align-content:center;
+      svg{
+        transform: rotate(0);
+        font-size: 1.5rem;
+        margin-right: 1rem;
+        transition: all var(--accordion-easing) var(--accordion-duration);
+      }
+    }
+    &[aria-expanded='true'] svg{
+      transform: rotate(90deg);
+    }
+  }
+}
+
+.accordion__content{
+  margin-top:1rem;
+}
+

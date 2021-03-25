@@ -10,7 +10,7 @@
 
 .title-grid{
   display:grid;
-  grid-template-columns: repeat(auto-fit, minmax(15rem, 100%));
+  grid-template-columns: repeat(2, minmax(45%, 100%));
   column-gap: 2rem;
 }
 

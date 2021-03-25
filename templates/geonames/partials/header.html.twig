@@ -14,7 +14,7 @@
             <th>Titles</th>
             <td>
                 <a href="{{ path('geonames_titles', {'id': geoname.geonameid}) }}">
-                    {{ titles.getTotalItemCount }}
+                    {{ geoname.titles|length }}
                 </a>
             </td>
         </tr>

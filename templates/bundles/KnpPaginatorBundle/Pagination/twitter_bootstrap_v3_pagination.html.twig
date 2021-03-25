@@ -29,7 +29,7 @@
 
 {% set disabledItem %}
     <li class="page-item disabled">
-        <a class="page-link" data-toggle="popover" data-placement="top" title="Choose page" data-html="true" data-content="<form><input></input></form>">
+        <a class="page-link" data-toggle="popover" data-placement="top" title="Choose page" data-html="true" data-content="<form><input name='page' type='number' min='1' max='{{ pageCount }}'></input></form>">
             &hellip;
         </a>
     </li>

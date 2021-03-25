@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block pageheader %}
-    <h1>Format</h1>
+    <h1>{{ format }}</h1>
 {% endblock %}
 
 {% block body %}
@@ -38,7 +38,7 @@
         {% endblock %}
     {% endembed %}
 
-    {{ include('title/table.html.twig') }}
+    {% include 'title/partials/page.html.twig' with {'titles': titles} %}
 
 
 {% endblock %}

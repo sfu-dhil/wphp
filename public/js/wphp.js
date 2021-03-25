@@ -6,19 +6,24 @@
 
 import Modals from '../yarn/dhilux/js/modals.bundle.js';
 import A11YTables from '../yarn/dhilux/js/A11Y_tables.js';
+import Accordion from '../yarn/dhilux/js/accordion.js';
 
 
 const myParser = new DOMParser();
-const accessibleTables = new A11YTables;
-accessibleTables.init();
+let citationType;
 
 class WPHPModals extends Modals{
     constructor(selector){
         super(selector);
     }
 
+    citationType(link){
+        return link.href.split('/').reverse()[0];
+
+    }
+
     modalURI(link){
-        return link.href;
+        return link.href
     }
     async getDialog(link){
         if (this.index.has(this.modalURI(link))) {
@@ -28,6 +33,7 @@ class WPHPModals extends Modals{
         }
         this.tmpDialog = document.createElement('dialog');
         document.body.appendChild(this.tmpDialog);
+        citationType = this.citationType(link);
         this.tmpDialog.setAttribute('open','');
         this.tmpDialog.innerHTML = `<div class="loader-ctr"><div class="loader"></div></div>`;
         return super.getDialog(link);
@@ -35,7 +41,6 @@ class WPHPModals extends Modals{
 
     getDialogFromText(text){
         let DOM = myParser.parseFromString(text, 'text/html');
-        console.log(this.renderDialog(DOM));
         let dialog = this.renderDialog(DOM);
         return dialog;
     }
@@ -49,7 +54,7 @@ class WPHPModals extends Modals{
         <header>
             <div class="dialog-content">
                 <div class="dialog-heading">
-                    <div class="dialog-label">CITATION STYLE</div>
+                    <div class="dialog-label">${citationType}</div>
                     <h3>Titles</h3>
                 </div>
                 <div class="dialog-closer">
@@ -100,8 +105,9 @@ class WPHPModals extends Modals{
 
     breakLinksAtSlash();
     makeModals();
-
-
+    const accessibleTables = new A11YTables;
+    accessibleTables.init();
+    const accordions = [...document.querySelectorAll('details')].map(detail => new Accordion(detail));
 
     function makeModals(){
         let btnSelector = 'a[href*="/export/"]';

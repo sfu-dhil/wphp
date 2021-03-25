@@ -7,6 +7,8 @@
         Transgender
     {% elseif person.gender == constant('App\\Entity\\Person::UNKNOWN') %}
         Unknown
+    {% elseif person.gender == "" %}
+        Unknown
     {% else %}
         Unknown ({{ person.gender }})
     {% endif %}

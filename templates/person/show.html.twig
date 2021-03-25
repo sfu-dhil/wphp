@@ -29,6 +29,7 @@
             </div>
         </div>
     {% endif %}
+
     {% embed 'partials/table.html.twig' %}
         {% block tbody %}
             <tr>
@@ -126,25 +127,17 @@
 
     <div id="person_titles">
         <h2>Titles</h2>
-        <div id="person_title_table" class="table-fragment">
-            {% include 'person/partial/titles.html.twig' %}
-        </div>
+        {% include 'person/partial/titles.html.twig' %}
     </div>
 
 
-
-
-
-
-
-
-
-    {{ include('partials/citation.html.twig', {
+    {% include 'partials/citation.html.twig' with {
         'title': '"' ~ person ~ '"',
         'record': person,
         'type': 'Person',
         'url': url('person_show', {'id': person.id})
-    }) }}
+
+    } %}
 
     {% include '@NinesFeedback/comment/comment-interface.html.twig' with { 'entity': person } %}
 
