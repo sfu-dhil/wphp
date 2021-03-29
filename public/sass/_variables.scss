@@ -32,7 +32,7 @@ $color_2_green: #D9DDCC;
 
 $color_2_green_light: #F6F8F5;
 $color_2_green_lighter: mix($color_2_green, $color_2_green_light, 50%);
-$color_2_salmon: rgb(234, 168, 154);
+$color_2_salmon: #DC8E7E;
 $color_black: #050505;
 
 
@@ -48,24 +48,15 @@ $color_text: $color_black;
 $color_body_background: $color_2_green_light;
 $color_body_background_start: $color_2_green_light;
 $color_body_background_end: $color_2_green_light;
-$color_body_link: #A9695B;
 
-$color_link: #7b1f0a;
-$color_link_hover: #2b0a04;
-$color_link_border: rgba(169, 105, 91, 0.4);
-$color_link_border_hover: #2b0a04;
-$footer_color: $color_white;
-$footer_background: $color_2_darker_brown;
-$footer_link: $color_white;
-$footer_link_hover: $color_white;
+$color_body_link: #8E3827;
+$color_link: #8E3827;
+$color_link_hover: #4F1F16;
+$color_link_border: rgba($color_link, 0.4);
+$color_link_border_hover: $color_link_hover;
 
-$header_background: $color_2_darker_brown;
-$header_color: $color_white;
-$header_link_color: $color_white;
-$header_link_background: transparent;
 
-$header_link_color_hover: $color_2_darker_brown;
-$header_link_background_hover: $color_2_salmon;
+
 
 $heading_color: $color_black;
 
@@ -93,11 +84,14 @@ $sans: $lato;
 
 $desktop-width: 970px;
 
+$color_dark_bg: #1C160F;
 
 
 
 $box-shadow-sm: 0px 4px 8px rgba(0, 0, 0, 0.04),
 0px 0px 2px rgba(0, 0, 0, 0.06),
 0px 0px 1px rgba(0, 0, 0, 0.04);
+
+
 
 

@@ -1,11 +1,27 @@
+// First, import bootstrap
+
+@import '../yarn/bootstrap3/dist/css/bootstrap.min.css';
+
 @import 'fonts';
 @import 'variables';
 @import 'mixins';
-@import '../yarn/dhilux/scss/dhilux.scss';
 
+// Import externals
+@import '../yarn/dhilux/scss/dhilux.scss';
+@import '../yarn/leaflet/dist/leaflet.css';
 
 :root, html{
   font-size: 1em;
+  --container_width: 100%;
+  @media (min-width: 768px) and (max-width: 991px){
+    --container_width: 750px;
+  }
+  @media (min-width: 992px) and (max-width: 1199px){
+    --container_width: 970px;
+  }
+  @media (min-width: 1200px){
+    --container_width: 1170px;
+  }
 }
 
 html {
@@ -29,8 +45,27 @@ body {
   overflow-x:hidden;
 }
 
+
+@import 'components/accordion';
+@import 'components/buttons';
+@import 'components/footer';
+@import 'components/forms';
+@import 'components/headings';
+@import 'components/images';
+@import 'components/lists';
+@import 'components/modals';
+@import 'components/navbar';
+@import 'components/pagination';
+@import 'components/tables';
+
+
+@import 'pages/homepage';
+@import 'pages/nines';
+@import 'pages/title';
+@import 'pages/geonames';
+
 main{
-  margin-top: 1rem;
+  margin-top: ($header_height + 1rem);
   margin-bottom: 5rem;
   width:100%;
 }
@@ -161,19 +196,4 @@ div.tab-content {
 }
 
 
-@import 'components/accordion';
-@import 'components/buttons';
-@import 'components/footer';
-@import 'components/forms';
-@import 'components/headings';
-@import 'components/images';
-@import 'components/lists';
-@import 'components/modals';
-@import 'components/navbar';
-@import 'components/pagination';
-@import 'components/tables';
 
-
-@import 'pages/homepage';
-@import 'pages/nines';
-@import 'pages/title';

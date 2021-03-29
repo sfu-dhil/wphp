@@ -1,17 +1,44 @@
 
-
-.hero{
-  //Temp fix to remove the image from the blogpost.
-  height: 80vh;
-  background-image: url('../../images/bg.png');
-  background-size: cover;
-  color:white;
-  @include full-width-in-container;
-  img{
-    display:none;
-  }
-  margin-bottom: 3rem;
+:root{
+  --hero-height: 65vh;
 }
+
+
+.homepage{
+
+  main.container{
+    margin-top:0;
+  }
+
+  .hero{
+    //Temp fix to remove the image from the blogpost.
+    height: var(--hero-height);
+    background-image: url('../../images/bg.png');
+    background-size: cover;
+    color:white;
+    @include full-width-in-container;
+    img{
+      display:none;
+    }
+    margin-bottom: 3rem;
+    display:flex;
+    & > .container{
+      max-height: calc(var(--hero-height) - #{$header_height});
+      align-self:center;
+      background: rgba($header_background, 0.8);
+      padding:1rem;
+      max-width: 50rem;
+      font-family: $serif;
+      font-size: ms(1);
+    }
+
+  }
+
+
+
+}
+
+
 
 .gallery{
   display: grid;
@@ -36,11 +63,14 @@
   display:flex;
 }
 
-img{
-  max-width:100%;
-  height:auto;
-  margin: auto;
+.card {
+  img{
+    max-width:100%;
+    height:auto;
+    margin: auto;
+  }
 }
+
 
 .card_bottom{
   display: flex;
