@@ -288,7 +288,8 @@
                         {% for source in title.sourceTitles %}
                             {% set related = source.relatedTitle %}
                             <tr>
-                                <a href='{{ path('title_show', {'id': related.id}) }}'>{{ related.title }}</a></td>
+                                <td>{{ source.titleRelationship }}</td>
+                                <td><a href='{{ path('title_show', {'id': related.id}) }}'>{{ related.title }}</a></td>
                                 <td>{{ related.edition }}</td>
                                 <td>{{ related.editionNumber }}</td>
                                 <td>{{ related.pubDate }}</td>
@@ -298,7 +299,8 @@
                         {% for source in title.relatedTitles %}
                             {% set related = source.sourceTitle %}
                             <tr>
-                                <a href='{{ path('title_show', {'id': related.id}) }}'>{{ related.title }}</a></td>
+                                <td>{{ source.titleRelationship }}</td>
+                                <td><a href='{{ path('title_show', {'id': related.id}) }}'>{{ related.title }}</a></td>
                                 <td>{{ related.edition }}</td>
                                 <td>{{ related.editionNumber }}</td>
                                 <td>{{ related.pubDate }}</td>

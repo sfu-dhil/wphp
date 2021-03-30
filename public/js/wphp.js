@@ -105,10 +105,11 @@ class WPHPModals extends Modals{
         }
     });
 
-    breakLinksAtSlash();
+
     makeModals();
     const accessibleTables = new A11YTables;
     accessibleTables.init();
+    breakLinksAtSlash();
     const accordions = [...document.querySelectorAll('details')].map(detail => new Accordion(detail));
 
     function makeModals(){
@@ -177,7 +178,7 @@ class WPHPModals extends Modals{
                         replaceText(child);
                         break;
                     case 3:
-                        child.data = child.data.replace(/\//g, '/\u200B');
+                        child.data = child.data.replace(/([\/\?#=])/g, '\u200B$1');
                         break;
                     default:
                         break;
@@ -185,7 +186,6 @@ class WPHPModals extends Modals{
             }
         }
         try{
-            console.log('REPLACING!?!?')
             replaceText(document.querySelector('main'));
             return true;
         } catch(e) {
