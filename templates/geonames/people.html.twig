@@ -6,51 +6,53 @@
 
 {% block body %}
 
-    {% embed 'geonames/partial/header.html.twig' %}
-    {% endembed %}
+    <div>
+        {% embed 'geonames/partial/header.html.twig' %}
+        {% endembed %}
+    </div>
 
-    <h2>People</h2>
-
-    {% embed 'partial/table.html.twig' %}
-        {% set entities = people %}
-        {% block thead %}
-            <tr>
-                <th>ID</th>
-                <th>Last name</th>
-                <th>First name</th>
-                <th>Date</th>
-            </tr>
-        {% endblock %}
-        {% block tbody %}
-            {% for person in people %}
+    <div>
+        <h2>People</h2>
+        {% embed 'partial/table.html.twig' %}
+            {% set entities = people %}
+            {% block thead %}
                 <tr>
-                    <td>
-                        <a href="{{ path('person_show', { 'id': person.id }) }}">
-                            {{ person.id }}
-                        </a>
-                    </td>
-                    <td>
-                        <a href="{{ path('person_show', { 'id': person.id }) }}">
-                            {{ person.lastName }}
-                        </a>
-                    </td>
-                    <td>
-                        <a href="{{ path('person_show', { 'id': person.id }) }}">
-                            {{ person.firstName }}
-                        </a>
-                    </td>
-                    <td>
-                        {% if person.cityOfBirth == geoname %}
-                            Born: {{ person.dob }}
-                        {% endif %}
-                        {% if person.cityOfDeath == geoname %}
-                            Deceased: {{ person.dod }}
-                        {% endif %}
-                    </td>
+                    <th>ID</th>
+                    <th>Last name</th>
+                    <th>First name</th>
+                    <th>Date</th>
                 </tr>
-            {% endfor %}
-        {% endblock %}
-    {% endembed %}
-
+            {% endblock %}
+            {% block tbody %}
+                {% for person in people %}
+                    <tr>
+                        <td>
+                            <a href="{{ path('person_show', { 'id': person.id }) }}">
+                                {{ person.id }}
+                            </a>
+                        </td>
+                        <td>
+                            <a href="{{ path('person_show', { 'id': person.id }) }}">
+                                {{ person.lastName }}
+                            </a>
+                        </td>
+                        <td>
+                            <a href="{{ path('person_show', { 'id': person.id }) }}">
+                                {{ person.firstName }}
+                            </a>
+                        </td>
+                        <td>
+                            {% if person.cityOfBirth == geoname %}
+                                Born: {{ person.dob }}
+                            {% endif %}
+                            {% if person.cityOfDeath == geoname %}
+                                Deceased: {{ person.dod }}
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% endblock %}
+        {% endembed %}
+    </div>
 
 {% endblock %}

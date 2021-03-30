@@ -1,0 +1,67 @@
+<footer class="footer">
+    <div class="container">
+        <div class="footer_top">
+            <div class="footer_menus">
+                {{ _self.footer_menu_render('nines_blog_pages') }}
+                {{ _self.footer_menu_render('main') }}
+                {{ _self.footer_menu_render('research') }}
+                {{ _self.footer_menu_render('spotlight') }}
+            </div>
+            <div class="footer_social">
+                <ul class="social-icons">
+                    <li>
+                        <a href="https://www.facebook.com/WomensPrintHistoryProject/" aria-label="Facebook link">
+                            <i class="fab fa-facebook-square"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://twitter.com/TheWPHP" aria-label="Twitter link">
+                            <i class="fab fa-twitter-square"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.instagram.com/womensprinthistoryproject" aria-label="Instagram link">
+                            <i class="fab fa-instagram-square"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://podcasts.apple.com/ca/podcast/the-wphp-monthly-mercury/id1518332180"
+                           aria-label="Apple Podcasts link">
+                            <i class="fas fa-podcast"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://open.spotify.com/show/5bwh8e6OdHFs3GSbGTzb7z?si=sj5KgzzdSmCqD6cCMOjKIg"
+                           aria-label="Spotify link">
+                            <i class="fab fa-spotify"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer_bottom">
+
+
+
+        </div>
+    </div>
+</footer>
+
+
+{% macro footer_menu_render(name) %}
+    {% set menu = name is iterable ? name : knp_menu_get(name) %}
+    {% set key = menu.children|keys[0] %}
+    {% set children = menu.children[key].children %}
+    {% set go = true %}
+    <ul id="footer_{{ key }}" class="list-unstyled">
+        {% for child in children %}
+            {% set go = go ? not(child.attributes.role is defined and child.attributes.class == 'divider') : go %}
+            {% if go %}
+                {% set text = child.label ?? child.name %}
+                <li>
+                    <a href="{{ child.uri }}">{{ text }}</a>
+                </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+{% endmacro %}

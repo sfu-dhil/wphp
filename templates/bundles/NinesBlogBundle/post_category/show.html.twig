@@ -20,12 +20,13 @@
                        class="link link__label">
                         {{ post.category }}
                     </a>
-                    {% if is_granted('ROLE_BLOG_ADMIN') %}
-                        <span class="status-label">{{ post.status.label }}</span>
-                    {% endif %}
+
                 {% endblock %}
                 {% block footer %}
-                    <p>Posted {{ post.created|date('Y-m-d H:i:s') }} by {{ post.user.fullname }}</p>
+                    {% if is_granted('ROLE_BLOG_ADMIN') %}
+                        <span class="badge">{{ post.status.label }}</span>
+                    {% endif %}
+                    <p>Posted {{ post.created|date('M j, Y') }} by {{ post.user.fullname }}</p>
                 {% endblock %}
             {% endembed %}
         {% endfor %}

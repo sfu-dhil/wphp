@@ -82,7 +82,7 @@
         $("*[data-confirm]").each(confirm);
         $('[data-toggle="popover"]').popover({
             container: 'body',
-            trigger: 'click',
+            trigger: 'hover',
             placement: function(p, el){
                return el.getAttribute('data-placement') ? el.getAttribute('data-placement') : 'bottom';
             }

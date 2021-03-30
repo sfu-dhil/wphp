@@ -1,14 +1,14 @@
 // First, import bootstrap
 
-@import '../yarn/bootstrap3/dist/css/bootstrap.min.css';
-
+@use '../yarn/bootstrap3/dist/css/bootstrap.min.css';
+@use '../yarn/leaflet/dist/leaflet.css';
 @import 'fonts';
 @import 'variables';
 @import 'mixins';
 
 // Import externals
 @import '../yarn/dhilux/scss/dhilux.scss';
-@import '../yarn/leaflet/dist/leaflet.css';
+
 
 :root, html{
   font-size: 1em;
@@ -48,6 +48,7 @@ body {
 
 @import 'components/accordion';
 @import 'components/buttons';
+@import 'components/card';
 @import 'components/footer';
 @import 'components/forms';
 @import 'components/headings';

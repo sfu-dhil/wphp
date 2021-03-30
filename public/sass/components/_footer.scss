@@ -7,33 +7,70 @@ $footer_link_hover: $color_white;
 /* Footer */
 .footer {
   margin-top:auto;
-  padding: 20px;
   background-color: $footer_background;
   color: $footer_color;
-
-  .container {
-    display:flex;
-    justify-content: space-between;
-
-    &:before, &:after{
-      content:unset;
+  font-family: $serif;
+  font-size: 1rem;
+  padding: ms(0) ms(-1);
+  a{
+    &:link, &:visited, &:active{
+      color:transparentize($color_white, 0.2);
+      border-bottom:none;
+    }
+    &:hover{
+      color: $color_white;
     }
   }
-
-  @include link_underline($footer_link, $footer_link_hover);
-
-  p {
-    margin: 0;
-    font-weight:bold;
+  .container {
+    max-width:1400px;
+    width:unset;
+    padding:0;
+    &:before, &:after {
+      content: unset;
+    }
   }
-
-  strong {
-    font-weight: normal;
-    font-size: 1.4rem;
-    margin-bottom: 0.5rem;
-  }
-
 }
+
+.footer_top,
+.footer_bottom,
+.footer_menus{
+  display:flex;
+  flex-direction:row;
+}
+
+.footer_top,
+.footer_bottom{
+  justify-content:space-between;
+  padding:ms(-1) 0;
+}
+
+.footer_bottom{
+  border-top:1px solid $color_white;
+  &:after{
+    content:"";
+    height:15rem;
+    width:100%;
+    display:block;
+    background:purple;
+  }
+}
+
+.footer_menus{
+  flex: 1;
+  ul{
+    margin-left: ms(0);
+    li{
+      padding: 0 0.1rem;
+      & + li{
+        margin-top: ms(-3);
+      }
+    }
+  }
+}
+
+
+
+
 
 /* Social icons stuff */
 

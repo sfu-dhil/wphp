@@ -2,14 +2,9 @@
 
 {% block pageheader %}
     <h1>Explore Formats</h1>
-    <p class="count">
-        Displaying {{ formats|length }} formats of {{ formats.getTotalItemCount }} total.
-    </p>
 {% endblock %}
 
 {% block body %}
-
-
     <div class='btn-toolbar pull-right'>
         <div class='btn-group'>
             {% if is_granted('ROLE_CONTENT_ADMIN') %}

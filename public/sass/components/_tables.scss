@@ -44,6 +44,7 @@ $color_table_background_hover_even: darken($color_table_background_even, 5%);
 
   .tbl-overflow{
     max-width:100%;
+    width:100%;
     overflow-x:auto;
   }
   p.count{

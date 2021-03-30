@@ -2,31 +2,35 @@
 
 {% block body %}
     <div class="hero">
-        <div class="content container">
+        <div class="container">
             {% if homepage %}
                 {{ homepage.content|raw }}
             {% endif %}
 
         </div>
     </div>
-    <div class="gallery">
-        {% for spotlight in spotlights %}
-            {% embed 'partial/card.html.twig' %}
-                {% set link = path('nines_blog_post_show', {'id': spotlight.id}) %}
-                {% block excerpt %}
-                    {{ spotlight.excerpt|raw }}
-                {% endblock %}
-                {% block heading %}
-                    {{ spotlight.title }}
-                {% endblock %}
-                {% block caption %}
-                    <a href="{{ path('nines_blog_post_category_show', {'id': spotlight.category.id}) }}"
-                       class="link link__label">
-                        {{ spotlight.category }}
-                    </a>
-                {% endblock %}
-            {% endembed %}
-        {% endfor %}
+    <div class="content">
+        <div class="gallery">
+            {% for spotlight in spotlights %}
+                {% embed 'partial/card.html.twig' %}
+                    {% set link = path('nines_blog_post_show', {'id': spotlight.id}) %}
+                    {% block excerpt %}
+                        {{ spotlight.excerpt|raw }}
+                    {% endblock %}
+                    {% block heading %}
+                        {{ spotlight.title }}
+                    {% endblock %}
+                    {% block caption %}
+                        <a href="{{ path('nines_blog_post_category_show', {'id': spotlight.category.id}) }}"
+                           class="link link__label">
+                            {{ spotlight.category }}
+                        </a>
+                    {% endblock %}
+                {% endembed %}
+            {% endfor %}
+        </div>
+
     </div>
+
 
 {% endblock %}

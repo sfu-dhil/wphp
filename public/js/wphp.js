@@ -7,10 +7,12 @@
 import Modals from '../yarn/dhilux/js/modals.bundle.js';
 import A11YTables from '../yarn/dhilux/js/A11Y_tables.js';
 import Accordion from '../yarn/dhilux/js/accordion.js';
+import * as L from '../yarn/leaflet/dist/leaflet-src.esm.js';
 
 
 const myParser = new DOMParser();
 let citationType;
+
 
 class WPHPModals extends Modals{
     constructor(selector){
@@ -191,13 +193,21 @@ class WPHPModals extends Modals{
             console.log(`${e}`);
         }
     }
+    const mapDiv = document.querySelector('#map');
+
+    if (mapDiv){
+        let map = L.map(mapDiv, {
+            center: [parseFloat(mapDiv.dataset.latitude), parseFloat(mapDiv.dataset.longitude)],
+            zoom: 12,
+            minZoom: 5
+        });
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+    }
+
 
 })();
 
-
-function renderDialog(dom){
-
-
-}
 
 
