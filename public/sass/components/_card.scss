@@ -24,6 +24,14 @@
   height:22rem;
   padding: 6px;
   display:flex;
+  overflow: hidden;
+  img {
+    object-fit: cover;
+    object-position:top;
+    &.placeholder{
+      filter: grayscale(.5);
+    }
+  }
 }
 
 
@@ -39,7 +47,7 @@
 .card_footer{
   margin-top: auto;
   padding-top:.5rem;
-  margin: 0 -0.5rem -0.5rem -0.5rem;
+  margin: auto -0.5rem -0.5rem -0.5rem;
   width:100%;
   display:flex;
   p{
@@ -54,20 +62,6 @@
     color: $color_grey_translucent;
   }
 }
-
-
-.card_top {
-  overflow-y: hidden;
-
-  img {
-    object-fit: cover;
-    object-position:top;
-    &.placeholder{
-      filter: grayscale(.5);
-    }
-  }
-}
-
 
 .link__label{
   font-size:0.7rem;

@@ -100,10 +100,18 @@ class WPHPModals extends Modals{
         if (/[\w]/g.test(para.innerText)){
             return;
         }
-        if (para.innerText.trim() === ''){
+        if (para.innerText.trim() === '' && !para.querySelector('img')){
             para.parentElement.removeChild(para);
         }
     });
+
+    let excerptImg = document.querySelector('.excerpt.hidden img');
+    console.log(excerptImg);
+    if (excerptImg){
+        document.documentElement.style.setProperty('--background-image',
+            `url(${excerptImg.src})`);
+        document.querySelector('.page-header').classList.add('hasHero');
+    }
 
 
     makeModals();
@@ -148,11 +156,13 @@ class WPHPModals extends Modals{
             ['width', 'height'].forEach(att => {
                 if (el.hasAttribute(att)) el.removeAttribute(att);
                 if (style[att]) {
-                    style.setProperty(`max-${att}`, style[att]);
+                    if (!el.closest('.card')){
+                        style.setProperty(`max-${att}`, style[att]);
+                    }
                     style.removeProperty(att);
                 }
             });
-            return
+            return el
         }
         for (const key of Object.keys(style)){
             if (['text-align'].includes(key)){

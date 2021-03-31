@@ -68,6 +68,7 @@ main{
   margin-top: ($header_height + 1rem);
   margin-bottom: 5rem;
   width:100%;
+  min-height:75vh;
 }
 
 @include link($color_link, $color_link_hover);

@@ -1,20 +1,23 @@
 
 @include dhil-modal();
 
-dialog[open]{
-  transform:unset!important;
-  top:0;
-  left:0;
-  bottom:0;
-  right:0;
-  display:flex;
-  flex-direction:column;
+body.dialog-active{
 }
 
-body.dialog-active{
-  justify-content: center;
-  align-items: center;
+dialog[open]{
+  transform:unset!important;
+  top:15vh;
+  left:revert!important;
+  right:revert!important;
+  bottom:unset;
+  right:unset;
+  margin:auto;
+  display:flex;
+  flex-direction:column;
+  max-height:80vh;
+  align-self:center;
 }
+
 
 
 dialog[open] .list-group{

@@ -1,31 +1,32 @@
+$hero-img-height: 40vh;
 
 .nines_blog_post_show, .nines_blog_page_show{
 
-  // Hide the main page header, since we move it
-  // into the article content
-  .container > .page-header{
-    display:none;
-  }
-
+  // Regular page header
   .page-header{
-    margin:0;
-    text-align:center;
-    max-width: 80%;
-    margin:0 auto;
+    display:flex;
+    flex-direction:column;
+    & > *{
+      width: 100%;
+      max-width: 55rem;
+      text-align: center;
+      margin-left: auto;
+      margin-right:auto;
+    }
   }
 
+// Standard content block
   .blog-content{
     max-width: 55rem;
-    margin:0 auto;
     font-family: $serif;
-    background: $color_grey_light;
-    border: 1px solid #F2F2F2;
-    box-shadow: $box-shadow-sm;
-    padding-top: 1.5rem;
-    padding-right: 2rem;
-    padding-left: 2rem;
+    margin:0 auto;
+    //  background: $color_grey_light;
+    //  border: 1px solid #F2F2F2;
+    // box-shadow: $box-shadow-sm;
     padding-bottom: 4.5rem;
   }
+
+  // Normal paragraphs
 
   p{
     font-size: 1.175rem;
@@ -33,5 +34,43 @@
     font-weight:400;
     -webkit-font-smoothing: antialiased;
   }
+
+
+
+  // Hero page header
+  .page-header.hasHero{
+    // Make this full width
+    margin:0;
+    margin:0 auto;
+    padding-bottom:0;
+    background:
+            linear-gradient(0deg,
+                    rgba(0, 0, 0, 0.70) 30%,
+                    rgba(255,255,255, 0.44) 100%
+    ), var(--background-image);
+    background-position:top 20% left 50%;
+   // background-attachment: fixed;
+    background-size: cover;
+    @include full-width-in-container;
+    height: calc(#{$hero-img-height} + #{$header_height});
+    position:absolute;
+    top:0;
+    & > *{
+      color: $color_white;
+      &:first-child{
+        margin-top:auto;
+      }
+      &:last-child{
+        margin-bottom:calc((#{$hero-img-height} * 1/3) - 2rem);
+      }
+    }
+    // Move the blog content to adjust for hero header
+    ~ .blog-content{
+      margin: calc(#{$hero-img-height} + 1rem) auto 0 auto;
+    }
+  }
+
+
+
 }
 

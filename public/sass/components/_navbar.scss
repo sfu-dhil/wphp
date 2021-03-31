@@ -35,8 +35,7 @@ nav.navbar, .navbar-nav, .navbar-collapse, .nav-container, .navbar-right{
 
 // Colours / overrides etc
 .navbar-default {
-  background: rgba($header_background, 0.75);
-  backdrop-filter: blur(4px);
+  @include dhil-background-blur($background-color: $header_background, $opacity: 0.75);
   color: $header_color;
   border: 0;
   font-family: $serif;
