@@ -138,7 +138,7 @@ class WPHPModals extends Modals{
         }
 
         excerptImg.addEventListener('error', replaceWithPlaceholder);
-        contentDiv.replaceChild(excerptImg, excerpt);
+        contentDiv.replaceChild(cleanStyles(excerptImg), excerpt);
     }
 
 

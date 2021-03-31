@@ -71,7 +71,7 @@ nav.navbar, .navbar-nav, .navbar-collapse, .nav-container, .navbar-right{
   padding: .125rem 1rem .125rem 1rem;
   a{
     border-bottom:none;
-    display:block;
+    display:flex;
     text-decoration:none;
     height:100%;
     &:hover{

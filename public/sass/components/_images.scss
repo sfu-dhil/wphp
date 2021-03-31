@@ -1,5 +1,14 @@
 
 img{
   max-width:100%;
+  height:auto;
+}
+
+a.img-container{
+  display:block;
   height:100%;
+  width:100%;
+  &:link, &:hover, &:active, &:focus{
+    border-bottom:none;
+  }
 }
