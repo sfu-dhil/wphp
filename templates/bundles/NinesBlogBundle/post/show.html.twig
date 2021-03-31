@@ -1,11 +1,22 @@
 {% extends '@!NinesBlog/post/show.html.twig' %}
 
 
+{% set titleParts = post.title|split(':', 2) %}
+{% set multiTitle = titleParts|length > 1 %}
+
+{% block pageheader %}
+    <h1>{{ titleParts[0] }}{% if multiTitle %}:{% endif %}</h1>
+    {% if titleParts|length > 1 %}
+        <h2>{{ titleParts[1] }}</h2>
+    {% endif %}
+{% endblock %}
+
 {% block body %}
+    <div class="excerpt hidden">
+        {{ post.excerpt|raw }}
+    </div>
     <div class="blog-content">
-        <div class="page-header">
-            {{ block('pageheader') }}
-        </div>
         {{ post.content|raw }}
     </div>
 {% endblock %}
+

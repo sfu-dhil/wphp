@@ -4,11 +4,7 @@
 
 {% block pageheader %}
     <h1>Osborne MARC Search</h1>
-    {% if osborneMarcs|length %}
-        <p class="count">
-            Displaying {{ osborneMarcs|length }} search results of {{ titleIds.getTotalItemCount }} total.
-        </p>
-    {% endif %}
+
 {% endblock %}
 
 {% block body %}

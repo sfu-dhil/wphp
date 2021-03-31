@@ -4,12 +4,6 @@
 
  {% block pageheader %}
      <h1>Title Relationship Search</h1>
-     {% if title_relationships|length %}
-         <p class="count">
-             Displaying {{ title_relationships|length }} title_relationships
-             of {{ title_relationships.getTotalItemCount }} total.
-         </p>
-     {% endif %}
  {% endblock %} 
 
 {% block body %}

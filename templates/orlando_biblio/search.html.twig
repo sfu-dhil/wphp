@@ -4,12 +4,6 @@
 
 {% block pageheader %}
     <h1>Search Orlando Bibliography</h1>
-    {% if orlandoBiblios|length %}
-        <p class="count">
-            Displaying {{ orlandoBiblios|length }} Orlando Bibliography records
-            of {{ orlandoBiblios.getTotalItemCount }} total.
-        </p>
-    {% endif %}
 {% endblock %}
 
 {% block body %}

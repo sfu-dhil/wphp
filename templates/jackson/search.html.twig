@@ -4,11 +4,6 @@
 
 {% block pageheader %}
     <h1>Jackson Bibliography List</h1>
-    {% if jacksons|length %}
-        <p class="count">
-            Displaying {{ jacksons|length }} entries of {{ jacksons.getTotalItemCount }} total.
-        </p>
-    {% endif %}
 {% endblock %}
 
 {% block body %}

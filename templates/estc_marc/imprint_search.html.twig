@@ -4,11 +4,6 @@
 
 {% block pageheader %}
     <h1>ESTC Marc Record Search</h1>
-    {% if estcMarcs|length %}
-        <p class="count">
-            Displaying {{ estcMarcs|length }} search results of {{ titleIds.getTotalItemCount }} total.
-        </p>
-    {% endif %}
 {% endblock %}
 
 {% block body %}

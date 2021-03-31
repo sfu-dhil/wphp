@@ -1,7 +1,9 @@
 {% set cardClass = class is defined and not null ? 'card ' ~ class : 'card' %}
 
+{% set excerpt = block('excerpt') %}
 
 <div class="{{ cardClass }}">
+    {% if excerpt is defined and '<img'  in excerpt %}
     <a href="{{ link }}" class="link link__block">
         <div class="card_top">
             <div class="excerpt">
@@ -9,6 +11,7 @@
             </div>
         </div>
     </a>
+    {% endif %}
     <div class="card_bottom">
         <div class="card_header">
             <div class="card_caption">
@@ -18,7 +21,6 @@
             <h3>
                 <a href="{{ link }}" class="link link__block">
                     {% block heading %}
-
                     {% endblock %}
                 </a>
             </h3>

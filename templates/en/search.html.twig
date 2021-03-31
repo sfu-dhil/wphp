@@ -4,11 +4,6 @@
 
 {% block pageheader %}
     <h1>Search the English Novel Bibliography</h1>
-    {% if ens|length %}
-        <p class="count">
-            Displaying {{ ens|length }} entries of {{ ens.getTotalItemCount }} total.
-        </p>
-    {% endif %}
 {% endblock %}
 
 {% block body %}
