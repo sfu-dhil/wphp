@@ -6,9 +6,9 @@
   "license": "GPL-v2-or-later",
   "private": true,
   "scripts": {
-    "webpack": "webpack --entry \"./public/js/test.js\" -o \"./public/js/dist\"",
+    "webpack": "webpack --entry \"./public/js/wphp.js\" -o \"./public/js/dist\"",
     "postinstall": "yarn run webpack",
-    "watch": "webpack watch --entry \"./public/js/test.js\" -o \"./public/js/dist\""
+    "watch": "webpack watch --entry \"./public/js/wphp.js\" -o \"./public/js/dist\""
   },
   "dependencies": {
     "@fontsource/cormorant-garamond": "^4.2.2",

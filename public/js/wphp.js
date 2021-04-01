@@ -4,7 +4,14 @@
 
 "use strict";
 
+import "./modules/utils"
+import "./modules/tables";
+import "./modules/modals";
+import "./modules/map";
+import "./modules/accordion";
 
+
+/*
 (function(){
     const utils = {
         capitalize: function(str){
@@ -77,13 +84,13 @@
             style.removeProperty(key);
         }
         return el;
-    }
+    } */
 
     /**
      * Adds a zero-width space at all '/' in links to make them break
      * at smaller widths
      */
-    function breakLinksAtSlash() {
+ /*   function breakLinksAtSlash() {
         const replaceText = (el) => {
             if (!/\//.test(el.innerText)) {
                 return;
@@ -111,7 +118,7 @@
     }
 
 
-})();
+})(); */
 
 
 
