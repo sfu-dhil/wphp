@@ -20,7 +20,7 @@
         <table class="table{% if not(isHorizontal) %} table-hover table-striped{% endif %}">
             {% if block('thead') is defined %}
                 <thead>
-                {{ block('thead') }}
+                    {{ block('thead') }}
                 </thead>
             {% endif %}
             {% if block('tbody') is defined %}
@@ -39,4 +39,3 @@
         {{ tblPagination ?? null }}
     </div>
 </div>
-

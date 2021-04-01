@@ -1,4 +1,5 @@
 $hero-img-height: 40vh;
+$reading-width: 50rem;
 
 .nines_blog_post_show, .nines_blog_page_show{
 
@@ -8,7 +9,7 @@ $hero-img-height: 40vh;
     flex-direction:column;
     & > *{
       width: 100%;
-      max-width: 55rem;
+      max-width: $reading-width;
       text-align: center;
       margin-left: auto;
       margin-right:auto;
@@ -17,7 +18,7 @@ $hero-img-height: 40vh;
 
 // Standard content block
   .blog-content{
-    max-width: 55rem;
+    max-width: $reading-width;
     font-family: $serif;
     margin:0 auto;
     //  background: $color_grey_light;
@@ -29,10 +30,13 @@ $hero-img-height: 40vh;
   // Normal paragraphs
 
   p{
-    font-size: 1.175rem;
+    font-size: 1.25rem;
     line-height: 1.6;
     font-weight:400;
     -webkit-font-smoothing: antialiased;
+    & + p{
+      margin-top: ms(1);
+    }
   }
 
 
@@ -61,7 +65,7 @@ $hero-img-height: 40vh;
         margin-top:auto;
       }
       &:last-child{
-        margin-bottom:calc((#{$hero-img-height} * 1/3) - 2rem);
+        margin-bottom:1.5em;
       }
     }
     // Move the blog content to adjust for hero header

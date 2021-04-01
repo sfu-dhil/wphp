@@ -1,12 +1,9 @@
 
 @include dhil-modal();
 
-body.dialog-active{
-}
-
 dialog[open]{
   transform:unset!important;
-  top:15vh;
+  top:8.5vh;
   left:revert!important;
   right:revert!important;
   bottom:unset;
