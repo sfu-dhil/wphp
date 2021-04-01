@@ -1,4 +1,4 @@
-import A11YTables from '../../yarn/dhilux/js/A11Y_tables.js';
+import A11YTables from '../../yarn/dhilux/js/a11Y_tables.js';
 import Swup from "../../yarn/swup/dist/swup.min.js";
 import SwupPreloadPlugin from "../../yarn/@swup/preload-plugin/dist/SwupPreloadPlugin.min.js";
 
