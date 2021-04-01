@@ -7,7 +7,7 @@
   "private": true,
   "scripts": {
     "webpack": "webpack --entry \"./public/js/test.js\" -o \"./public/js/dist\"",
-    "postinstall": "webpack",
+    "postinstall": "yarn run webpack",
     "watch": "webpack watch --entry \"./public/js/test.js\" -o \"./public/js/dist\""
   },
   "dependencies": {
