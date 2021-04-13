@@ -21,7 +21,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * A search form for firms.
  */
-class FirmSearchType extends AbstractType {
+class FirmSearchType extends AbstractType
+{
     /**
      * Build the form.
      */

@@ -20,7 +20,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Currency form.
  */
-class CurrencyType extends AbstractType {
+class CurrencyType extends AbstractType
+{
     /**
      * Add form fields to $builder.
      */

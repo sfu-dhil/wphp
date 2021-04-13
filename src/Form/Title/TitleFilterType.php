@@ -23,7 +23,8 @@ use Symfony\Component\Form\FormBuilderInterface;
  * Form to filter search results by title. The form is registered as a symfony
  * service to have the doctrine registry injected as a dependency.
  */
-class TitleFilterType extends AbstractType {
+class TitleFilterType extends AbstractType
+{
     /**
      * @var EntityManager
      */

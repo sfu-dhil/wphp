@@ -28,7 +28,8 @@ use Symfony\Component\Routing\Annotation\Route;
  * @Security("is_granted('ROLE_USER')")
  * @Route("/resource/orlando_biblio")
  */
-class OrlandoBiblioController extends AbstractController implements PaginatorAwareInterface {
+class OrlandoBiblioController extends AbstractController implements PaginatorAwareInterface
+{
     use PaginatorTrait;
 
     /**

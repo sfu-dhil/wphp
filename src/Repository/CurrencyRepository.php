@@ -22,7 +22,8 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Currency[]    findAll()
  * @method Currency[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class CurrencyRepository extends ServiceEntityRepository {
+class CurrencyRepository extends ServiceEntityRepository
+{
     public function __construct(ManagerRegistry $registry) {
         parent::__construct($registry, Currency::class);
     }

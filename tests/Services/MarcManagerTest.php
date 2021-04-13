@@ -19,7 +19,8 @@ use App\Entity\OsborneMarc;
 use App\Services\MarcManager;
 use Nines\UtilBundle\Tests\ControllerBaseCase;
 
-class MarcManagerTest extends ControllerBaseCase {
+class MarcManagerTest extends ControllerBaseCase
+{
     private $manager;
 
     protected function fixtures() : array {

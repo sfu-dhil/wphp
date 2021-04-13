@@ -21,7 +21,8 @@ use Tetranz\Select2EntityBundle\Form\Type\Select2EntityType;
 /**
  * Form definition for the firm class.
  */
-class FirmType extends AbstractType {
+class FirmType extends AbstractType
+{
     public function buildForm(FormBuilderInterface $builder, array $options) : void {
         $builder->add('name', null, [
             'label' => 'Name',

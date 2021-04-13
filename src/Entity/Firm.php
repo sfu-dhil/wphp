@@ -28,7 +28,8 @@ use Doctrine\ORM\Mapping as ORM;
  * )
  * @ORM\Entity(repositoryClass="App\Repository\FirmRepository")
  */
-class Firm {
+class Firm
+{
     public const MALE = 'M';
 
     public const FEMALE = 'F';

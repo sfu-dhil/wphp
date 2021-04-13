@@ -22,7 +22,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * Check each title and update the ESTC source ID attribute if applicable.
  */
-class UpdateEstcCommand extends Command {
+class UpdateEstcCommand extends Command
+{
     public const BATCH_SIZE = 100;
 
     public const ESTC_ID = 2;

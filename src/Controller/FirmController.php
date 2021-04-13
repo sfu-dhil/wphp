@@ -34,7 +34,8 @@ use Symfony\Component\Routing\Annotation\Route;
  *
  * @Route("/firm")
  */
-class FirmController extends AbstractController implements PaginatorAwareInterface {
+class FirmController extends AbstractController implements PaginatorAwareInterface
+{
     use PaginatorTrait;
 
     /**

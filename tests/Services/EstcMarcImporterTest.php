@@ -20,7 +20,8 @@ use App\Repository\TitleRepository;
 use App\Repository\TitleSourceRepository;
 use Nines\UtilBundle\Tests\ControllerBaseCase;
 
-class EstcMarcImporterTest extends ControllerBaseCase {
+class EstcMarcImporterTest extends ControllerBaseCase
+{
     /**
      * @var EstcMarcImporter
      */

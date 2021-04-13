@@ -22,7 +22,8 @@ use Tetranz\Select2EntityBundle\Form\Type\Select2EntityType;
 /**
  * Subform definition for assigning firms to titles with roles.
  */
-class TitleFirmType extends AbstractType {
+class TitleFirmType extends AbstractType
+{
     public function buildForm(FormBuilderInterface $builder, array $options) : void {
         $builder->add('firm', Select2EntityType::class, [
             'multiple' => false,

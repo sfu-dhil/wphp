@@ -22,7 +22,8 @@ use Tetranz\Select2EntityBundle\Form\Type\Select2EntityType;
 /**
  * Subform definition for assigning persons to titles with roles.
  */
-class TitlePersonType extends AbstractType {
+class TitlePersonType extends AbstractType
+{
     public function buildForm(FormBuilderInterface $builder, array $options) : void {
         $builder->add('person', Select2EntityType::class, [
             'multiple' => false,

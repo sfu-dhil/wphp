@@ -23,7 +23,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Search form for titles.
  */
-class TitleSearchType extends AbstractType {
+class TitleSearchType extends AbstractType
+{
     /**
      * @var FormatRepository
      */

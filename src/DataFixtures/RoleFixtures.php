@@ -18,7 +18,8 @@ use Doctrine\Persistence\ObjectManager;
 /**
  * Load some test role data.
  */
-class RoleFixtures extends Fixture implements FixtureGroupInterface {
+class RoleFixtures extends Fixture implements FixtureGroupInterface
+{
     /**
      * {@inheritdoc}
      */

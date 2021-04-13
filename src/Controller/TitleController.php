@@ -37,7 +37,8 @@ use Symfony\Component\Routing\Annotation\Route;
  *
  * @Route("/title")
  */
-class TitleController extends AbstractController implements PaginatorAwareInterface {
+class TitleController extends AbstractController implements PaginatorAwareInterface
+{
     use PaginatorTrait;
 
     /**

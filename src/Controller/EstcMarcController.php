@@ -28,7 +28,8 @@ use Symfony\Component\Routing\Annotation\Route;
  * @Security("is_granted('ROLE_USER')")
  * @Route("/resource/estc")
  */
-class EstcMarcController extends AbstractController implements PaginatorAwareInterface {
+class EstcMarcController extends AbstractController implements PaginatorAwareInterface
+{
     use PaginatorTrait;
 
     /**

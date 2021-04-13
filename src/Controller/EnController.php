@@ -27,7 +27,8 @@ use Symfony\Component\Routing\Annotation\Route;
  * @Security("is_granted('ROLE_USER')")
  * @Route("/resource/en")
  */
-class EnController extends AbstractController implements PaginatorAwareInterface {
+class EnController extends AbstractController implements PaginatorAwareInterface
+{
     use PaginatorTrait;
 
     /**

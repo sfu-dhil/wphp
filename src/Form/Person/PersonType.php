@@ -23,7 +23,8 @@ use Tetranz\Select2EntityBundle\Form\Type\Select2EntityType;
 /**
  * Form definition for the person class.
  */
-class PersonType extends AbstractType {
+class PersonType extends AbstractType
+{
     public function buildForm(FormBuilderInterface $builder, array $options) : void {
         $builder->add('lastName', null, [
             'label' => 'Last Name',

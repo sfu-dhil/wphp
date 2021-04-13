@@ -22,7 +22,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 /**
  * PersonFilterType is a subform used in the title search form.
  */
-class PersonFilterType extends AbstractType {
+class PersonFilterType extends AbstractType
+{
     /**
      * @var EntityManager
      */

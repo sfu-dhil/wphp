@@ -33,7 +33,8 @@ use Doctrine\ORM\Mapping as ORM;
  *     @ORM\Entity(repositoryClass="App\Repository\TitleRepository")
  *     @ORM\HasLifecycleCallbacks
  */
-class Title {
+class Title
+{
     /**
      * @var int
      *

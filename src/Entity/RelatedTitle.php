@@ -17,7 +17,8 @@ use Nines\UtilBundle\Entity\AbstractEntity;
 /**
  * @ORM\Entity(repositoryClass=RelatedTitleRepository::class)
  */
-class RelatedTitle extends AbstractEntity {
+class RelatedTitle extends AbstractEntity
+{
     /**
      * @var Title
      * @ORM\ManyToOne(targetEntity="App\Entity\Title", inversedBy="sourceTitles")

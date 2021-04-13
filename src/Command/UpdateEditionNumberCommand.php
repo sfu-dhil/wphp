@@ -19,7 +19,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * UpdateEditionNumberCommand command.
  */
-class UpdateEditionNumberCommand extends Command {
+class UpdateEditionNumberCommand extends Command
+{
     public const BATCH_SIZE = 100;
 
     /**

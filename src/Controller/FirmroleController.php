@@ -29,7 +29,8 @@ use Symfony\Component\Routing\Annotation\Route;
  *
  * @Route("/firmrole")
  */
-class FirmroleController extends AbstractController implements PaginatorAwareInterface {
+class FirmroleController extends AbstractController implements PaginatorAwareInterface
+{
     use PaginatorTrait;
 
     /**

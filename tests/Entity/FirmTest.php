@@ -18,7 +18,8 @@ use PHPUnit\Framework\TestCase;
 /**
  * Description of FirmTest.
  */
-class FirmTest extends TestCase {
+class FirmTest extends TestCase
+{
     /**
      * @dataProvider getStartDateData
      *

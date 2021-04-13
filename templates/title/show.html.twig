@@ -257,7 +257,10 @@
                     {% set related = source.sourceTitle %}
                     <tr>
                         <td>{{ source.titleRelationship }}</td>
-                        <td><a href='{{ path('title_show', {'id': related.id}) }}'>{{ related.title }}</a></td>
+                        <td>
+                            <a href='{{ path('title_show', {'id': related.id}) }}'>{{ related.title }}</a>
+                            {% if is_granted('ROLE_CONTENT_ADMIN') %}*{% endif %}
+                        </td>
                         <td>{{ related.edition }}</td>
                         <td>{{ related.editionNumber }}</td>
                         <td>{{ related.pubDate }}</td>

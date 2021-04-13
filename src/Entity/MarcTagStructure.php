@@ -22,7 +22,8 @@ use Doctrine\ORM\Mapping as ORM;
  * )
  * @ORM\Entity(repositoryClass="App\Repository\MarcTagStructureRepository")
  */
-class MarcTagStructure {
+class MarcTagStructure
+{
     /**
      * @var int
      *

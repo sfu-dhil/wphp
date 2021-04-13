@@ -14,7 +14,8 @@ use App\DataFixtures\GeonamesFixtures;
 use Nines\UserBundle\DataFixtures\UserFixtures;
 use Nines\UtilBundle\Tests\ControllerBaseCase;
 
-class GeonamesControllerTest extends ControllerBaseCase {
+class GeonamesControllerTest extends ControllerBaseCase
+{
     protected function fixtures() : array {
         return [
             UserFixtures::class,

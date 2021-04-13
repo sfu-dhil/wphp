@@ -17,7 +17,8 @@ use App\Entity\TitleFirmrole;
 use App\Entity\TitleRole;
 use PHPUnit\Framework\TestCase;
 
-class TitleTest extends TestCase {
+class TitleTest extends TestCase
+{
     /**
      * @dataProvider getTotalPriceData
      *

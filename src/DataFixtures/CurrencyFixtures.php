@@ -14,7 +14,8 @@ use App\Entity\Currency;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
-class CurrencyFixtures extends Fixture {
+class CurrencyFixtures extends Fixture
+{
     /**
      * {@inheritdoc}
      */

@@ -18,7 +18,8 @@ use Doctrine\Persistence\ObjectManager;
 /**
  * Load some test format data.
  */
-class FormatFixtures extends Fixture implements FixtureGroupInterface {
+class FormatFixtures extends Fixture implements FixtureGroupInterface
+{
     public const DATA = [
         ['folio', 'fo'],
         ['quarto', '4to'],
