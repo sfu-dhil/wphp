@@ -20,7 +20,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="genre")
  * @ORM\Entity(repositoryClass="App\Repository\GenreRepository")
  */
-class Genre {
+class Genre
+{
     /**
      * @var bool
      *

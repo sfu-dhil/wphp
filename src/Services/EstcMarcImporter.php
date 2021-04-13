@@ -27,7 +27,8 @@ use Doctrine\ORM\EntityManagerInterface;
 /**
  * Import MARC records from ESTC.
  */
-class EstcMarcImporter {
+class EstcMarcImporter
+{
     /**
      * @var EntityManagerInterface
      */

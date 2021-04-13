@@ -21,7 +21,8 @@ use Tetranz\Select2EntityBundle\Form\Type\Select2EntityType;
 /**
  * Form definition for the firm class.
  */
-class FirmType extends AbstractType {
+class FirmType extends AbstractType
+{
     public function buildForm(FormBuilderInterface $builder, array $options) : void {
         $builder->add('name', null, [
             'label' => 'Name',
@@ -79,6 +80,7 @@ class FirmType extends AbstractType {
         ]);
         $builder->add('relatedFirms', Select2EntityType::class, [
             'label' => 'Related Firms',
+            'text_property' => 'getFormId',
             'multiple' => true,
             'remote_route' => 'firm_typeahead',
             'class' => Firm::class,

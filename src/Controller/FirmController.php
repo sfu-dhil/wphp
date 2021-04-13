@@ -34,7 +34,8 @@ use Symfony\Component\Routing\Annotation\Route;
  *
  * @Route("/firm")
  */
-class FirmController extends AbstractController implements PaginatorAwareInterface {
+class FirmController extends AbstractController implements PaginatorAwareInterface
+{
     use PaginatorTrait;
 
     /**
@@ -83,7 +84,7 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
         foreach ($repo->typeaheadQuery($q) as $result) {
             $data[] = [
                 'id' => $result->getId(),
-                'text' => $result->getName() . ' (#' . $result->getId() . ')',
+                'text' => $result->getFormId(),
             ];
         }
 

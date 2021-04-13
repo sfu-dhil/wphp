@@ -18,7 +18,8 @@ use Nines\BlogBundle\Entity\PostCategory;
 /**
  * Load some test spotlight categories.
  */
-class SpotlightCategoriesFixtures extends Fixture implements FixtureGroupInterface {
+class SpotlightCategoriesFixtures extends Fixture implements FixtureGroupInterface
+{
     public const DATA = [
         [
             'name' => 'person',

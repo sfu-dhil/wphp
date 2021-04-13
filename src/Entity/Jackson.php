@@ -23,7 +23,8 @@ use Doctrine\ORM\Mapping as ORM;
  * )
  * @ORM\Entity(repositoryClass="App\Repository\JacksonRepository")
  */
-class Jackson {
+class Jackson
+{
     /**
      * @var int
      *

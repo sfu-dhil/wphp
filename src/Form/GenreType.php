@@ -18,7 +18,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Form definition for the genre class.
  */
-class GenreType extends AbstractType {
+class GenreType extends AbstractType
+{
     public function buildForm(FormBuilderInterface $builder, array $options) : void {
         $builder->add('name', null, [
             'label' => 'Name',

@@ -18,7 +18,8 @@ use Doctrine\Persistence\ObjectManager;
 /**
  * Load some English Novel test data.
  */
-class EnFixtures extends Fixture implements FixtureGroupInterface {
+class EnFixtures extends Fixture implements FixtureGroupInterface
+{
     /**
      * {@inheritdoc}
      */

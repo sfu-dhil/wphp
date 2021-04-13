@@ -21,7 +21,8 @@ use Tetranz\Select2EntityBundle\Form\Type\Select2EntityType;
 /**
  * RelatedTitle form.
  */
-class RelatedTitleType extends AbstractType {
+class RelatedTitleType extends AbstractType
+{
     /**
      * Add form fields to $builder.
      */
@@ -38,6 +39,7 @@ class RelatedTitleType extends AbstractType {
 
         $builder->add('relatedTitle', Select2EntityType::class, [
             'label' => 'Title',
+            'text_property' => 'getFormId',
             'class' => Title::class,
             'remote_route' => 'title_typeahead',
             'allow_clear' => true,

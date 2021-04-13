@@ -22,7 +22,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass="App\Repository\FeedbackRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class Feedback {
+class Feedback
+{
     /**
      * @var int
      *

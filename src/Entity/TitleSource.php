@@ -22,7 +22,8 @@ use Doctrine\ORM\Mapping as ORM;
  *     })
  *     @ORM\Entity
  */
-class TitleSource {
+class TitleSource
+{
     /**
      * @var int
      *

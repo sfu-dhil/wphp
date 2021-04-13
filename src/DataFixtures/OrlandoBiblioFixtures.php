@@ -18,7 +18,8 @@ use Doctrine\Persistence\ObjectManager;
 /**
  * Load some test Orlando data.
  */
-class OrlandoBiblioFixtures extends Fixture implements FixtureGroupInterface {
+class OrlandoBiblioFixtures extends Fixture implements FixtureGroupInterface
+{
     /**
      * {@inheritdoc}
      */

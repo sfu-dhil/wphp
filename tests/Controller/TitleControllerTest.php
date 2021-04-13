@@ -16,7 +16,8 @@ use App\Repository\TitleRepository;
 use Nines\UserBundle\DataFixtures\UserFixtures;
 use Nines\UtilBundle\Tests\ControllerBaseCase;
 
-class TitleControllerTest extends ControllerBaseCase {
+class TitleControllerTest extends ControllerBaseCase
+{
     protected function fixtures() : array {
         return [
             UserFixtures::class,

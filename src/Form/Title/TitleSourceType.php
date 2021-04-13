@@ -21,7 +21,8 @@ use Tetranz\Select2EntityBundle\Form\Type\Select2EntityType;
 /**
  * Subform definition for assigning sources to titles.
  */
-class TitleSourceType extends AbstractType {
+class TitleSourceType extends AbstractType
+{
     public function buildForm(FormBuilderInterface $builder, array $options) : void {
         $builder->add('source', Select2EntityType::class, [
             'multiple' => false,

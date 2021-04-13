@@ -19,7 +19,8 @@ use Doctrine\Persistence\ObjectManager;
 /**
  * Load some test Geonames data.
  */
-class GeonamesFixtures extends Fixture implements FixtureGroupInterface {
+class GeonamesFixtures extends Fixture implements FixtureGroupInterface
+{
     /**
      * {@inheritdoc}
      */

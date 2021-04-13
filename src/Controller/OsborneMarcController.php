@@ -28,7 +28,8 @@ use Symfony\Component\Routing\Annotation\Route;
  * @Security("is_granted('ROLE_USER')")
  * @Route("/resource/osborne")
  */
-class OsborneMarcController extends AbstractController implements PaginatorAwareInterface {
+class OsborneMarcController extends AbstractController implements PaginatorAwareInterface
+{
     use PaginatorTrait;
 
     /**

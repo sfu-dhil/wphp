@@ -13,7 +13,8 @@ namespace App\Services;
 /**
  * Manage Orlando records.
  */
-class OrlandoManager {
+class OrlandoManager
+{
     public const DELIM = ' || ';
 
     /**

@@ -15,7 +15,8 @@ use App\Repository\JacksonRepository;
 use Nines\UserBundle\DataFixtures\UserFixtures;
 use Nines\UtilBundle\Tests\ControllerBaseCase;
 
-class JacksonControllerTest extends ControllerBaseCase {
+class JacksonControllerTest extends ControllerBaseCase
+{
     protected function fixtures() : array {
         return [
             UserFixtures::class,

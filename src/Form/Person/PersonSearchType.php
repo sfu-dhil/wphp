@@ -22,7 +22,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Search form for person entities.
  */
-class PersonSearchType extends AbstractType {
+class PersonSearchType extends AbstractType
+{
     /**
      * Build the form.
      */

@@ -23,7 +23,8 @@ use RuntimeException;
  * @method RelatedTitle[]    findAll()
  * @method RelatedTitle[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class RelatedTitleRepository extends ServiceEntityRepository {
+class RelatedTitleRepository extends ServiceEntityRepository
+{
     public function __construct(ManagerRegistry $registry) {
         parent::__construct($registry, RelatedTitle::class);
     }

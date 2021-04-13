@@ -9,6 +9,7 @@
         "ext-iconv": "*",
         "aternus/geonames-client": "^1.0",
         "doctrine/common": "^2.13",
+        "doctrine/doctrine-migrations-bundle": "3.0.*",
         "ninsuo/symfony-collection": "^2.1",
         "sensio/framework-extra-bundle": "^5.1",
         "symfony/asset": "4.4.*",

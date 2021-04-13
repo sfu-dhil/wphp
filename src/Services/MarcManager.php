@@ -22,7 +22,8 @@ use Doctrine\ORM\EntityManagerInterface;
 /**
  * Manage MARC records.
  */
-class MarcManager {
+class MarcManager
+{
     /**
      * @var EntityManagerInterface
      */

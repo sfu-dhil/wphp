@@ -14,7 +14,8 @@ use App\Entity\Firm;
 use App\Entity\Person;
 use App\Entity\Title;
 
-class CsvExporter {
+class CsvExporter
+{
     public function firmHeaders() {
         return ['Firm ID', 'Name', 'Gender', 'Street Address', 'City', 'Start Date', 'End Date'];
     }

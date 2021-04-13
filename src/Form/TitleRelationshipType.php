@@ -18,7 +18,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * TitleRelationship form.
  */
-class TitleRelationshipType extends TermType {
+class TitleRelationshipType extends TermType
+{
     /**
      * Add form fields to $builder.
      */

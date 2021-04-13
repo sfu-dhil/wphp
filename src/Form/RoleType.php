@@ -18,7 +18,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Form definition for the role class.
  */
-class RoleType extends AbstractType {
+class RoleType extends AbstractType
+{
     public function buildForm(FormBuilderInterface $builder, array $options) : void {
         $builder->add('name', null, [
             'label' => 'Name',

@@ -18,7 +18,8 @@ use Doctrine\Persistence\ObjectManager;
 /**
  * Load some test Jackson Bibliography data.
  */
-class JacksonFixtures extends Fixture implements FixtureGroupInterface {
+class JacksonFixtures extends Fixture implements FixtureGroupInterface
+{
     /**
      * {@inheritdoc}
      */

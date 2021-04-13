@@ -19,7 +19,8 @@ use Doctrine\Persistence\ObjectManager;
 /**
  * Load some test persons.
  */
-class PersonFixtures extends Fixture implements DependentFixtureInterface, FixtureGroupInterface {
+class PersonFixtures extends Fixture implements DependentFixtureInterface, FixtureGroupInterface
+{
     /**
      * {@inheritdoc}
      */

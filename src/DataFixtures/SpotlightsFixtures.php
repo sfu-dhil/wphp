@@ -22,7 +22,8 @@ use Nines\BlogBundle\Entity\PostStatus;
 /**
  * Load some test spotlights.
  */
-class SpotlightsFixtures extends Fixture implements DependentFixtureInterface, FixtureGroupInterface {
+class SpotlightsFixtures extends Fixture implements DependentFixtureInterface, FixtureGroupInterface
+{
     /**
      * {@inheritdoc}
      */

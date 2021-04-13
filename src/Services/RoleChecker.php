@@ -16,7 +16,8 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 /**
  * Service to check the current user's roles.
  */
-class RoleChecker {
+class RoleChecker
+{
     /**
      * @var AuthorizationCheckerInterface
      */

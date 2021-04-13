@@ -33,7 +33,8 @@ use Doctrine\ORM\Mapping as ORM;
  *     @ORM\Entity(repositoryClass="App\Repository\TitleRepository")
  *     @ORM\HasLifecycleCallbacks
  */
-class Title {
+class Title
+{
     /**
      * @var int
      *
@@ -344,6 +345,10 @@ class Title {
      */
     public function getTitle() {
         return $this->title;
+    }
+
+    public function getFormId() {
+        return "({$this->id}) {$this->title}";
     }
 
     /**

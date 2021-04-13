@@ -27,7 +27,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     })
  *     @ORM\Entity(repositoryClass="App\Repository\PersonRepository")
  */
-class Person {
+class Person
+{
     public const MALE = 'M';
 
     public const FEMALE = 'F';
@@ -164,6 +165,10 @@ class Person {
      */
     public function __toString() : string {
         return implode(', ', array_filter([$this->lastName, $this->firstName]));
+    }
+
+    public function getFormId() {
+        return "({$this->id}) " . implode(', ', array_filter([$this->lastName, $this->firstName]));
     }
 
     /**

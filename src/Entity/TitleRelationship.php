@@ -19,7 +19,8 @@ use Nines\UtilBundle\Entity\AbstractTerm;
 /**
  * @ORM\Entity(repositoryClass=TitleRelationshipRepository::class)
  */
-class TitleRelationship extends AbstractTerm {
+class TitleRelationship extends AbstractTerm
+{
     /**
      * @var Collection|RelatedTitle[]
      * @ORM\OneToMany(targetEntity="App\Entity\RelatedTitle", mappedBy="titleRelationship")

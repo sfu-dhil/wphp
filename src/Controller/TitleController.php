@@ -37,7 +37,8 @@ use Symfony\Component\Routing\Annotation\Route;
  *
  * @Route("/title")
  */
-class TitleController extends AbstractController implements PaginatorAwareInterface {
+class TitleController extends AbstractController implements PaginatorAwareInterface
+{
     use PaginatorTrait;
 
     /**
@@ -89,7 +90,7 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
         foreach ($repo->typeaheadQuery($q) as $result) {
             $data[] = [
                 'id' => $result->getId(),
-                'text' => $result->getTitle(),
+                'text' => $result->getFormId(),
             ];
         }
 

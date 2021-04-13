@@ -20,7 +20,8 @@ use NumberFormatter;
 /**
  * @ORM\Entity(repositoryClass=CurrencyRepository::class)
  */
-class Currency extends AbstractEntity {
+class Currency extends AbstractEntity
+{
     /**
      * The 3-letter ISO 4217 currency code indicating the currency to use.
      *

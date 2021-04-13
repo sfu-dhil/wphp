@@ -16,7 +16,8 @@ use PHPUnit\Framework\TestCase;
 /**
  * Description of PersonTest.
  */
-class CurrencyTest extends TestCase {
+class CurrencyTest extends TestCase
+{
     //put your code here
 
     public function getData() {

@@ -25,7 +25,8 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 /**
  * Menu builder for the navigation and search menus.
  */
-class Builder implements ContainerAwareInterface {
+class Builder implements ContainerAwareInterface
+{
     use ContainerAwareTrait;
 
     /**
@@ -90,7 +91,7 @@ class Builder implements ContainerAwareInterface {
      */
     private function getUser() {
         if ( ! $this->hasRole('ROLE_USER')) {
-            return null;
+            return;
         }
 
         return $this->tokenStorage->getToken()->getUser();
