@@ -21,8 +21,7 @@ use Tetranz\Select2EntityBundle\Form\Type\Select2EntityType;
 /**
  * RelatedTitle form.
  */
-class RelatedTitleType extends AbstractType
-{
+class RelatedTitleType extends AbstractType {
     /**
      * Add form fields to $builder.
      */

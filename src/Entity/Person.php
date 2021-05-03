@@ -27,8 +27,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     })
  *     @ORM\Entity(repositoryClass="App\Repository\PersonRepository")
  */
-class Person
-{
+class Person {
     public const MALE = 'M';
 
     public const FEMALE = 'F';

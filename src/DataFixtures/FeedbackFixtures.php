@@ -18,8 +18,7 @@ use Doctrine\Persistence\ObjectManager;
 /**
  * Load some test feedback data.
  */
-class FeedbackFixtures extends Fixture implements FixtureGroupInterface
-{
+class FeedbackFixtures extends Fixture implements FixtureGroupInterface {
     /**
      * {@inheritdoc}
      */

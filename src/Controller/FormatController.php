@@ -29,8 +29,7 @@ use Symfony\Component\Routing\Annotation\Route;
  *
  * @Route("/format")
  */
-class FormatController extends AbstractController implements PaginatorAwareInterface
-{
+class FormatController extends AbstractController implements PaginatorAwareInterface {
     use PaginatorTrait;
 
     /**

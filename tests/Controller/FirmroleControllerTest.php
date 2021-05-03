@@ -16,8 +16,7 @@ use App\Entity\Firmrole;
 use Nines\UserBundle\DataFixtures\UserFixtures;
 use Nines\UtilBundle\Tests\ControllerBaseCase;
 
-class FirmroleControllerTest extends ControllerBaseCase
-{
+class FirmroleControllerTest extends ControllerBaseCase {
     protected function fixtures() : array {
         return [
             UserFixtures::class,

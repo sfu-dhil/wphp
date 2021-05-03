@@ -23,8 +23,7 @@ use Doctrine\ORM\Mapping as ORM;
  * )
  * @ORM\Entity(repositoryClass="App\Repository\OrlandoBiblioRepository")
  */
-class OrlandoBiblio
-{
+class OrlandoBiblio {
     /**
      * @var int
      *

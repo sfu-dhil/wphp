@@ -16,8 +16,7 @@ use App\Services\MarcManager;
 use Nines\UserBundle\DataFixtures\UserFixtures;
 use Nines\UtilBundle\Tests\ControllerBaseCase;
 
-class OsborneMarcControllerTest extends ControllerBaseCase
-{
+class OsborneMarcControllerTest extends ControllerBaseCase {
     protected function fixtures() : array {
         return [
             UserFixtures::class,

@@ -19,8 +19,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Form definition for the source class.
  */
-class SourceType extends AbstractType
-{
+class SourceType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) : void {
         $builder->add('name', null, [
             'label' => 'Name',

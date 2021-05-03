@@ -27,8 +27,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * @Security("is_granted('ROLE_USER')")
  * @Route("/resource/jackson")
  */
-class JacksonController extends AbstractController implements PaginatorAwareInterface
-{
+class JacksonController extends AbstractController implements PaginatorAwareInterface {
     use PaginatorTrait;
 
     /**

@@ -25,8 +25,7 @@ use Doctrine\ORM\Mapping as ORM;
  *     })
  *     @ORM\Entity(repositoryClass="App\Repository\GeonamesRepository")
  */
-class Geonames
-{
+class Geonames {
     /**
      * @var int
      *

@@ -15,8 +15,7 @@ use App\Entity\Genre;
 use Nines\UserBundle\DataFixtures\UserFixtures;
 use Nines\UtilBundle\Tests\ControllerBaseCase;
 
-class GenreControllerTest extends ControllerBaseCase
-{
+class GenreControllerTest extends ControllerBaseCase {
     protected function fixtures() : array {
         return [
             UserFixtures::class,

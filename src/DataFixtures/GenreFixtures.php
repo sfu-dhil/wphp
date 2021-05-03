@@ -18,8 +18,7 @@ use Doctrine\Persistence\ObjectManager;
 /**
  * Load some test genres.
  */
-class GenreFixtures extends Fixture implements FixtureGroupInterface
-{
+class GenreFixtures extends Fixture implements FixtureGroupInterface {
     /**
      * {@inheritdoc}
      */

@@ -21,8 +21,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="source")
  * @ORM\Entity(repositoryClass="App\Repository\SourceRepository")
  */
-class Source
-{
+class Source {
     /**
      * @var bool
      *

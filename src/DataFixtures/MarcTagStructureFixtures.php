@@ -18,8 +18,7 @@ use Doctrine\Persistence\ObjectManager;
 /**
  * Load some MARC tag definitions for testing.
  */
-class MarcTagStructureFixtures extends Fixture implements FixtureGroupInterface
-{
+class MarcTagStructureFixtures extends Fixture implements FixtureGroupInterface {
     /**
      * {@inheritdoc}
      */

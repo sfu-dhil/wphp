@@ -18,8 +18,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 /**
  * Price form definitions.
  */
-class PriceType extends AbstractType
-{
+class PriceType extends AbstractType {
     /**
      * Build the form.
      */

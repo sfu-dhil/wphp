@@ -22,8 +22,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 /**
  * Construct links to various sources.
  */
-class SourceLinker
-{
+class SourceLinker {
     /**
      * @var EntityManagerInterface
      */

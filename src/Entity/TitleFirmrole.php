@@ -18,8 +18,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="title_firmrole")
  * @ORM\Entity
  */
-class TitleFirmrole
-{
+class TitleFirmrole {
     /**
      * @var int
      *

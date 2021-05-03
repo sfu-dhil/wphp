@@ -24,8 +24,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * @Route("/related_title")
  * @IsGranted("ROLE_USER")
  */
-class RelatedTitleController extends AbstractController implements PaginatorAwareInterface
-{
+class RelatedTitleController extends AbstractController implements PaginatorAwareInterface {
     use PaginatorTrait;
 
     /**

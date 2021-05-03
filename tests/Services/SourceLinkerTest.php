@@ -20,8 +20,7 @@ use App\Services\RoleChecker;
 use App\Services\SourceLinker;
 use Nines\UtilBundle\Tests\ControllerBaseCase;
 
-class SourceLinkerTest extends ControllerBaseCase
-{
+class SourceLinkerTest extends ControllerBaseCase {
     /**
      * @var SourceLinker
      */

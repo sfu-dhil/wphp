@@ -15,8 +15,7 @@ use App\Entity\Format;
 use Nines\UserBundle\DataFixtures\UserFixtures;
 use Nines\UtilBundle\Tests\ControllerBaseCase;
 
-class FormatControllerTest extends ControllerBaseCase
-{
+class FormatControllerTest extends ControllerBaseCase {
     protected function fixtures() : array {
         return [
             UserFixtures::class,

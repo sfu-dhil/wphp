@@ -19,8 +19,7 @@ use Doctrine\Persistence\ObjectManager;
 /**
  * Load some test ESTC MARC data.
  */
-class EstcMarcFixtures extends Fixture implements DependentFixtureInterface, FixtureGroupInterface
-{
+class EstcMarcFixtures extends Fixture implements DependentFixtureInterface, FixtureGroupInterface {
     /**
      * {@inheritdoc}
      */
