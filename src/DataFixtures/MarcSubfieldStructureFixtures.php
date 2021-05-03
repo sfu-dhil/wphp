@@ -18,8 +18,7 @@ use Doctrine\Persistence\ObjectManager;
 /**
  * Load some test MARC subfield data for testing.
  */
-class MarcSubfieldStructureFixtures extends Fixture implements FixtureGroupInterface
-{
+class MarcSubfieldStructureFixtures extends Fixture implements FixtureGroupInterface {
     /**
      * {@inheritdoc}
      */

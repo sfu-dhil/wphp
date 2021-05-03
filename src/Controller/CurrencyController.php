@@ -26,8 +26,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/currency")
  */
-class CurrencyController extends AbstractController implements PaginatorAwareInterface
-{
+class CurrencyController extends AbstractController implements PaginatorAwareInterface {
     use PaginatorTrait;
 
     /**

@@ -19,8 +19,7 @@ use Doctrine\Persistence\ObjectManager;
 /**
  * Load some test Osborne MARC data.
  */
-class OsborneMarcFixtures extends Fixture implements DependentFixtureInterface, FixtureGroupInterface
-{
+class OsborneMarcFixtures extends Fixture implements DependentFixtureInterface, FixtureGroupInterface {
     /**
      * {@inheritdoc}
      */

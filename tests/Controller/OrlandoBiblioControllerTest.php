@@ -15,8 +15,7 @@ use App\Repository\OrlandoBiblioRepository;
 use Nines\UserBundle\DataFixtures\UserFixtures;
 use Nines\UtilBundle\Tests\ControllerBaseCase;
 
-class OrlandoBiblioControllerTest extends ControllerBaseCase
-{
+class OrlandoBiblioControllerTest extends ControllerBaseCase {
     protected function fixtures() : array {
         return [
             UserFixtures::class,

@@ -18,8 +18,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="firmrole")
  * @ORM\Entity(repositoryClass="App\Repository\FirmroleRepository")
  */
-class Firmrole
-{
+class Firmrole {
     /**
      * @var bool
      *

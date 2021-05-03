@@ -19,8 +19,7 @@ use Doctrine\Persistence\ObjectManager;
 /**
  * Load some test firm roles.
  */
-class TitleFirmroleFixtures extends Fixture implements DependentFixtureInterface, FixtureGroupInterface
-{
+class TitleFirmroleFixtures extends Fixture implements DependentFixtureInterface, FixtureGroupInterface {
     /**
      * {@inheritdoc}
      */

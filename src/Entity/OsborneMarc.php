@@ -30,8 +30,7 @@ use Doctrine\ORM\Mapping as ORM;
  * )
  * @ORM\Entity(repositoryClass="App\Repository\OsborneMarcRepository")
  */
-class OsborneMarc
-{
+class OsborneMarc {
     /**
      * @var int
      *

@@ -14,8 +14,7 @@ use App\Entity\TitleRelationship;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
-class TitleRelationshipFixtures extends Fixture
-{
+class TitleRelationshipFixtures extends Fixture {
     /**
      * {@inheritDoc}
      */

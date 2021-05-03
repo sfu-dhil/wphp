@@ -19,8 +19,7 @@ use Doctrine\Persistence\ObjectManager;
 /**
  * Load some test title sources.
  */
-class TitleSourceFixtures extends Fixture implements DependentFixtureInterface, FixtureGroupInterface
-{
+class TitleSourceFixtures extends Fixture implements DependentFixtureInterface, FixtureGroupInterface {
     /**
      * {@inheritdoc}
      */

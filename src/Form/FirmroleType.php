@@ -19,8 +19,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Form definition for the firm role entity.
  */
-class FirmroleType extends AbstractType
-{
+class FirmroleType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) : void {
         $builder->add('name', TextType::class, [
             'label' => 'Name',

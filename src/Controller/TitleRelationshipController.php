@@ -27,8 +27,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * @Route("/title_relationship")
  * @IsGranted("ROLE_USER")
  */
-class TitleRelationshipController extends AbstractController implements PaginatorAwareInterface
-{
+class TitleRelationshipController extends AbstractController implements PaginatorAwareInterface {
     use PaginatorTrait;
 
     /**

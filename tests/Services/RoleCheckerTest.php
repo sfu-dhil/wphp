@@ -16,8 +16,7 @@ use Nines\UtilBundle\Tests\ControllerBaseCase;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
-class RoleCheckerTest extends ControllerBaseCase
-{
+class RoleCheckerTest extends ControllerBaseCase {
     /**
      * @var RoleChecker
      */

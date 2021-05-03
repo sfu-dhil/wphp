@@ -21,8 +21,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Search form for person entities.
  */
-class TitleSourceFilterType extends AbstractType
-{
+class TitleSourceFilterType extends AbstractType {
     /**
      * Build the form.
      */

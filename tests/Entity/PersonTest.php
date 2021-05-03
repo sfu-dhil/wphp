@@ -18,8 +18,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * Description of PersonTest.
  */
-class PersonTest extends TestCase
-{
+class PersonTest extends TestCase {
     //put your code here
 
     /**

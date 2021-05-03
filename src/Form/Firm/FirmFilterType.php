@@ -23,8 +23,7 @@ use Symfony\Component\Form\FormBuilderInterface;
  * registered as a service so that the doctrine registry is automatically
  * injected as a dependency.
  */
-class FirmFilterType extends AbstractType
-{
+class FirmFilterType extends AbstractType {
     /**
      * @var EntityManager
      */

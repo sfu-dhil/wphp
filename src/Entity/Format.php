@@ -20,8 +20,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="format")
  * @ORM\Entity(repositoryClass="App\Repository\FormatRepository")
  */
-class Format
-{
+class Format {
     /**
      * @var bool
      *

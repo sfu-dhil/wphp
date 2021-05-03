@@ -31,8 +31,7 @@ use Symfony\Component\Routing\Annotation\Route;
  *
  * @Route("/geonames")
  */
-class GeonamesController extends AbstractController implements PaginatorAwareInterface
-{
+class GeonamesController extends AbstractController implements PaginatorAwareInterface {
     use PaginatorTrait;
 
     /**

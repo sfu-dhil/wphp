@@ -18,8 +18,7 @@ use Doctrine\Persistence\ObjectManager;
 /**
  * Load some test sources.
  */
-class SourceFixtures extends Fixture implements FixtureGroupInterface
-{
+class SourceFixtures extends Fixture implements FixtureGroupInterface {
     /**
      * {@inheritdoc}
      */

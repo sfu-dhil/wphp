@@ -26,8 +26,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * @Route("/report")
  * @Security("is_granted('ROLE_CONTENT_ADMIN')")
  */
-class ReportController extends AbstractController implements PaginatorAwareInterface
-{
+class ReportController extends AbstractController implements PaginatorAwareInterface {
     use PaginatorTrait;
 
     /**
