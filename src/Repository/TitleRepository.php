@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
  * This source file is subject to the GPL v2, bundled
  * with this source code in the file LICENSE.
  */
@@ -109,37 +109,44 @@ class TitleRepository extends ServiceEntityRepository {
                     $qb->addOrderBy('e.pubdate');
 
                     break;
+
                 case 'title_desc':
                     $qb->orderBy('e.title', 'DESC');
                     $qb->addOrderBy('e.pubdate');
 
                     break;
+
                 case 'pubdate_asc':
                     $qb->orderBy('e.pubdate', 'ASC');
                     $qb->addOrderBy('e.title');
 
                     break;
+
                 case 'pubdate_desc':
                     $qb->orderBy('e.pubdate', 'DESC');
                     $qb->addOrderBy('e.title');
 
                     break;
+
                 case 'first_pubdate_asc':
                     $qb->orderBy('e.dateOfFirstPublication', 'ASC');
                     $qb->addOrderBy('e.title');
 
                     break;
+
                 case 'first_pubdate_desc':
                     $qb->orderBy('e.dateOfFirstPublication', 'DESC');
                     $qb->addOrderBy('e.title');
 
                     break;
+
                 case 'edition_asc':
                     $qb->orderBy('e.editionNumber', 'ASC');
                     $qb->orderBy('e.edition', 'ASC');
                     $qb->addOrderBy('e.title');
 
                     break;
+
                 case 'edition_desc':
                     $qb->orderBy('e.editionNumber', 'DESC');
                     $qb->orderBy('e.edition', 'DESC');
@@ -246,15 +253,18 @@ class TitleRepository extends ServiceEntityRepository {
                 + $data['price_filter']['price_shilling'] * 12
                 + $data['price_filter']['price_pence'];
             $operator = '<';
+
             switch ($data['price_filter']['price_comparison']) {
                 case 'eq':
                     $operator = '=';
 
                     break;
+
                 case 'lt':
                     $operator = '<';
 
                     break;
+
                 case 'gt':
                     $operator = '>';
 

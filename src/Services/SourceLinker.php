@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
  * This source file is subject to the GPL v2, bundled
  * with this source code in the file LICENSE.
  */
@@ -191,20 +191,27 @@ class SourceLinker {
         if (preg_match('/https?:/', $data)) {
             return $data;
         }
+
         switch ($source->getName()) {
             case 'ESTC':
                 return $this->estc($data);
+
             case 'Orlando':
                 return $this->orlando($data);
+
             case 'Jackson Bibliography':
                 return $this->jackson($data);
+
             case 'The English Novel 1770-1829':
             case 'The English Novel 1830-1836':
                 return $this->en($data);
+
             case "Osborne Collection of Early Children's Books":
                 return $this->osborne($data);
+
             case 'ECCO':
                 return $this->ecco($data);
+
             default:
                 return;
         }

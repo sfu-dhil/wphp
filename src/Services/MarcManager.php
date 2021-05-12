@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
  * This source file is subject to the GPL v2, bundled
  * with this source code in the file LICENSE.
  */
@@ -51,7 +51,7 @@ class MarcManager {
             'field' => 'ASC', 'subfield' => 'ASC',
         ]);
 
-        return implode("\n", array_map(function ($row) {return $row->getFieldData(); }, $rows));
+        return implode("\n", array_map(fn ($row) => $row->getFieldData(), $rows));
     }
 
     public function getControlId($object) {
@@ -124,9 +124,7 @@ class MarcManager {
             'field' => 'ASC', 'subfield' => 'ASC',
         ]);
 
-        return array_map(function ($row) {
-            return $row->getFieldData();
-        }, $rows);
+        return array_map(fn ($row) => $row->getFieldData(), $rows);
     }
 
     /**

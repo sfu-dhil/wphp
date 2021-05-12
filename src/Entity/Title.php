@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
  * This source file is subject to the GPL v2, bundled
  * with this source code in the file LICENSE.
  */
@@ -914,9 +914,7 @@ class Title {
         if (null === $roleName) {
             return $this->titleRoles;
         }
-        $roles = $this->titleRoles->filter(function (TitleRole $titleRole) use ($roleName) {
-            return $titleRole->getRole()->getName() === $roleName;
-        });
+        $roles = $this->titleRoles->filter(fn (TitleRole $titleRole) => $titleRole->getRole()->getName() === $roleName);
 
         return $roles->getValues();
     }
@@ -954,9 +952,7 @@ class Title {
             return $this->titleFirmroles;
         }
 
-        return $this->titleFirmroles->filter(function (TitleFirmrole $titleFirmrole) use ($roleName) {
-            return $titleFirmrole->getFirmrole()->getName() === $roleName;
-        });
+        return $this->titleFirmroles->filter(fn (TitleFirmrole $titleFirmrole) => $titleFirmrole->getFirmrole()->getName() === $roleName);
     }
 
     /**
