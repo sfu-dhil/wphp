@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
  * This source file is subject to the GPL v2, bundled
  * with this source code in the file LICENSE.
  */
@@ -179,12 +179,8 @@ class TitleType extends AbstractType {
         ]);
         $builder->add('format', EntityType::class, [
             'class' => Format::class,
-            'query_builder' => function (ServiceEntityRepository $repo) {
-                return $repo->createQueryBuilder('u')->orderBy('u.name', 'ASC');
-            },
-            'choice_label' => function (Format $format) {
-                return "{$format->getName()} ({$format->getAbbreviation()})";
-            },
+            'query_builder' => fn (ServiceEntityRepository $repo) => $repo->createQueryBuilder('u')->orderBy('u.name', 'ASC'),
+            'choice_label' => fn (Format $format) => "{$format->getName()} ({$format->getAbbreviation()})",
             'multiple' => false,
             'expanded' => false,
             'required' => false,
