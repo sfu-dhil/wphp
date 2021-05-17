@@ -149,13 +149,6 @@ class TitleType extends AbstractType {
                 'help_block' => 'title.form.imprint',
             ],
         ]);
-        $builder->add('copyright', null, [
-            'label' => 'Copyright Statement',
-            'required' => false,
-            'attr' => [
-                'help_block' => 'title.form.copyright',
-            ],
-        ]);
         $builder->add('colophon', TextareaType::class, [
             'label' => 'Colophon',
             'required' => false,
@@ -163,7 +156,13 @@ class TitleType extends AbstractType {
                 'help_block' => 'title.form.colophon',
             ],
         ]);
-
+        $builder->add('copyright', null, [
+            'label' => 'Copyright Statement',
+            'required' => false,
+            'attr' => [
+                'help_block' => 'title.form.copyright',
+            ],
+        ]);
         $builder->add('locationOfPrinting', Select2EntityType::class, [
             'multiple' => false,
             'remote_route' => 'geonames_typeahead',

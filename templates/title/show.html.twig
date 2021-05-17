@@ -108,12 +108,12 @@
                             <td>{{ title.imprint }}</td>
                         </tr>
                         <tr>
-                            <th data-toggle="popover"  data-content="{{ 'title.fields.copyright'|trans }}">Copyright Statement</th>
-                            <td>{{ title.copyright }}</td>
-                        </tr>
-                        <tr>
                             <th data-toggle="popover"  data-content="{{ 'title.fields.colophon'|trans }}">Colophon</th>
                             <td>{{ title.colophon }}</td>
+                        </tr>
+                        <tr>
+                            <th data-toggle="popover"  data-content="{{ 'title.fields.copyright'|trans }}">Copyright Statement</th>
+                            <td>{{ title.copyright }}</td>
                         </tr>
                         <tr>
                             <th data-toggle="popover"  data-content="{{ 'title.fields.locationOfPrinting'|trans }}">Location of Printing</th>
@@ -214,12 +214,12 @@
                             <td>{% if title.checked %}Yes{% else %}No{% endif %}</td>
                         </tr>
                         <tr>
-                            <th data-toggle="popover"  data-content="{{ 'title.fields.finalattempt'|trans }}">Attempted Verification</th>
-                            <td>{% if title.finalattempt %}Yes{% else %}No{% endif %}</td>
-                        </tr>
-                        <tr>
                             <th data-toggle="popover"  data-content="{{ 'title.fields.finalcheck'|trans }}">Verified</th>
                             <td>{% if title.finalcheck %}Yes{% else %}No{% endif %}</td>
+                        </tr>
+                        <tr>
+                            <th data-toggle="popover"  data-content="{{ 'title.fields.finalattempt'|trans }}">Attempted Verification</th>
+                            <td>{% if title.finalattempt %}Yes{% else %}No{% endif %}</td>
                         </tr>
                     </tbody>
                 </table>

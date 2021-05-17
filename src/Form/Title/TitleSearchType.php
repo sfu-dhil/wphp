@@ -176,18 +176,18 @@ class TitleSearchType extends AbstractType {
                 'help_block' => 'title.search.imprint',
             ],
         ]);
-        $builder->add('copyright', null, [
-            'label' => 'Copyright Statement',
-            'required' => false,
-            'attr' => [
-                'help_block' => 'title.search.copyright',
-            ],
-        ]);
         $builder->add('colophon', null, [
             'label' => 'Colophon',
             'required' => false,
             'attr' => [
                 'help_block' => 'title.search.colophon',
+            ],
+        ]);
+        $builder->add('copyright', null, [
+            'label' => 'Copyright Statement',
+            'required' => false,
+            'attr' => [
+                'help_block' => 'title.search.copyright',
             ],
         ]);
         $builder->add('location', TextType::class, [
