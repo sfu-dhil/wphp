@@ -123,7 +123,7 @@ class SourceLinkerTest extends ControllerBaseCase {
         $source->method('getName')->willReturn($name);
         $actual = $this->linker->url($source, $data);
         if ($expected) {
-            $this->assertRegExp($expected, $actual);
+            $this->assertMatchesRegularExpression($expected, $actual);
         } else {
             $this->assertNull($actual);
         }
