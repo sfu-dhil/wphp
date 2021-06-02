@@ -260,11 +260,11 @@ class TitleType extends AbstractType {
             ],
         ]);
 
-        $builder->add('genre', EntityType::class, [
+        $builder->add('genres', EntityType::class, [
             'class' => Genre::class,
             'choice_label' => 'name',
             'expanded' => false,
-            'multiple' => false,
+            'multiple' => true,
             'required' => false,
             'placeholder' => 'Unknown',
             'query_builder' => function (ServiceEntityRepository $er) {

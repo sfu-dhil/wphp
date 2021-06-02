@@ -53,7 +53,7 @@ class GenreRepository extends ServiceEntityRepository {
     public function countTitles(Genre $genre, ?User $user = null) {
         $qb = $this->_em->createQueryBuilder();
         $qb->select('count(title.id)');
-        $qb->andWhere('title.genre = :genre');
+        $qb->andWhere(':genre MEMBER OF title.genres');
         if ( ! $user) {
             $qb->andWhere('title.finalattempt = 1 OR title.finalcheck = 1');
         }

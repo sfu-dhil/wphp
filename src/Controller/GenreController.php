@@ -113,7 +113,7 @@ class GenreController extends AbstractController implements PaginatorAwareInterf
      * @return array
      */
     public function showAction(Request $request, Genre $genre, EntityManagerInterface $em) {
-        $dql = 'SELECT t FROM App:Title t WHERE t.genre = :genre';
+        $dql = 'SELECT t FROM App:Title t WHERE :genre MEMBER OF t.genres';
         if (null === $this->getUser()) {
             $dql .= ' AND (t.finalcheck = 1 OR t.finalattempt = 1)';
         }
