@@ -12,8 +12,10 @@ namespace App\Form\Firm;
 
 use App\Entity\Firm;
 use App\Entity\Geonames;
+use App\Form\Title\TitleSourceType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Tetranz\Select2EntityBundle\Form\Type\Select2EntityType;
@@ -77,6 +79,23 @@ class FirmType extends AbstractType {
                 'help_block' => 'firm.form.endDate',
             ],
         ]);
+        $builder->add('firmSources', CollectionType::class, [
+            'label' => 'Firm Sources',
+            'required' => false,
+            'allow_add' => true,
+            'allow_delete' => true,
+            'delete_empty' => true,
+            'entry_type' => FirmSourceType::class,
+            'entry_options' => [
+                'label' => false,
+            ],
+            'by_reference' => false,
+            'attr' => [
+                'class' => 'collection collection-complex',
+                'help_block' => 'firm.form.firmSources',
+            ],
+        ]);
+
         $builder->add('relatedFirms', Select2EntityType::class, [
             'label' => 'Related Firms',
             'text_property' => 'getFormId',
