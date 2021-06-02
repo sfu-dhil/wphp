@@ -266,7 +266,7 @@ class Title {
      * poorly named with respect to sourceTitles which records different
      * information.
      *
-     * @var Collection|TitleRole[]
+     * @var Collection|TitleSource[]
      * @ORM\OneToMany(targetEntity="TitleSource", mappedBy="title")
      */
     private $titleSources;

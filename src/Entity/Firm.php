@@ -103,6 +103,14 @@ class Firm {
     private $titleFirmroles;
 
     /**
+     * Firm sources are where the bibliographic information comes from.
+     *
+     * @var Collection|FirmSource[]
+     * @ORM\OneToMany(targetEntity="FirmSource", mappedBy="firm")
+     */
+    private $firmSources;
+
+    /**
      * @var Collection|Person[]
      * @ORM\ManyToMany(targetEntity="Person", mappedBy="relatedFirms")
      */
@@ -115,7 +123,7 @@ class Firm {
     private $relatedFirms;
 
     /**
-     * @var Colection|Firm[]
+     * @var Collection|Firm[]
      * @ORM\ManyToMany(targetEntity="Firm", mappedBy="relatedFirms")
      */
     private $firmsRelated;
@@ -357,6 +365,45 @@ class Firm {
      */
     public function getGender() {
         return $this->gender;
+    }
+
+
+    /**
+     * Set the sources for this firm.
+     *
+     * @param array|Collection|FirmSource[] $firmSources
+     */
+    public function setFirmSources($firmSources) : void {
+        $this->firmSources = $firmSources;
+    }
+
+    /**
+     * Add firmSource.
+     *
+     * @return Firm
+     */
+    public function addFirmSource(FirmSource $firmSource) {
+        $this->firmSources[] = $firmSource;
+
+        return $this;
+    }
+
+    /**
+     * Remove firmSource.
+     *
+     * @return bool TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeFirmSource(FirmSource $firmSource) {
+        return $this->firmSources->removeElement($firmSource);
+    }
+
+    /**
+     * Get firmSources.
+     *
+     * @return array|Collection|FirmSource[]
+     */
+    public function getFirmSources() {
+        return $this->firmSources;
     }
 
     /**

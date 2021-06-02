@@ -16,6 +16,7 @@ use App\Form\Firm\FirmSearchType;
 use App\Form\Firm\FirmType;
 use App\Repository\FirmRepository;
 use App\Services\CsvExporter;
+use App\Services\SourceLinker;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Nines\UtilBundle\Controller\PaginatorTrait;
@@ -201,8 +202,13 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($firm);
-            $em->flush();
 
+            foreach ($firm->getFirmSources() as $ts) {
+                $ts->setFirm($firm);
+                $em->persist($ts);
+            }
+
+            $em->flush();
             $this->addFlash('success', 'The new firm was created.');
 
             return $this->redirectToRoute('firm_show', ['id' => $firm->getId()]);
@@ -254,7 +260,7 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
      *
      * @return array
      */
-    public function showAction(Request $request, Firm $firm) {
+    public function showAction(Request $request, Firm $firm, SourceLinker $linker) {
         $firmRoles = $firm->getTitleFirmroles(true);
         if ( ! $this->getUser()) {
             $firmRoles = $firmRoles->filter(function (TitleFirmrole $tfr) {
@@ -268,6 +274,7 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
         return [
             'firm' => $firm,
             'pagination' => $pagination,
+            'linker' => $linker,
         ];
     }
 
@@ -349,9 +356,14 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
+
+            foreach ($firm->getFirmSources() as $ts) {
+                $ts->setFirm($firm);
+                $em->persist($ts);
+            }
+
             $em->flush();
             $this->addFlash('success', 'The firm has been updated.');
-
             return $this->redirectToRoute('firm_show', ['id' => $firm->getId()]);
         }
 
