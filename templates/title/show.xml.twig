@@ -13,7 +13,7 @@
         <dc:title>
             {{ title.title }}
         </dc:title>
-        
+
         {% if title.source and title.source.name != 'unknown' and title.source.name != 'None' %}
             <dc:source>
                 {{ title.source.name }} {{ title.sourceId }}
@@ -33,7 +33,7 @@
                 {% endfor %}
             </rdf:Bag>
         </wphp:contributors>
-            
+
         <wphp:firms>
             <rdf:Bag>
                 {% for tfr in title.titleFirmRoles %}
@@ -42,12 +42,12 @@
             </rdf:Bag>
         </wphp:firms>
 
-        {% for genre in title.genre %}
+        {% for genre in title.genres %}
             <dc:genre>
                 {{ genre }}
             </dc:genre>
         {% endfor %}
-        
+
         {% if title.sizeL or title.sizeW %}
             <dc:format>
                 {{ title.sizeL }} x {{ title.sizeW }} cm.

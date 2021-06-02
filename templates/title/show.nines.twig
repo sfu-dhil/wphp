@@ -15,7 +15,7 @@
 
       <collex:federation>NINES</collex:federation>
       <collex:federation>18thConnect</collex:federation>
-      
+
       <collex:archive>Women's Print History Project</collex:archive>
 
       <dc:title>{{ title.title }}</dc:title>
@@ -26,7 +26,7 @@
         {% if title.source2 and title.source2.name != 'unknown' and title.source2.name != 'None' %}
             <dc:source>{{ title.source2.name }} {{ title.source2Id }}</dc:source>
         {% endif %}
-        
+
         {% for tr in title.titleRoles %}
             {% if tr.role.name == 'Author' %}
                 <role:AUT rdf:resource="{{ url('person_show', {'id': tr.person.id}) }}"/>
@@ -47,8 +47,8 @@
 
       <collex:discipline>Literature</collex:discipline>
       <collex:discipline>History</collex:discipline>
-      
-      {% for genre in title.genre %}
+
+      {% for genre in title.genres %}
           <collex:genre>{{ genre }}</collex:genre>
       {% endfor %}
 

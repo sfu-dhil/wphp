@@ -181,11 +181,10 @@
                         <tr>
                             <th data-toggle="popover"  data-content="{{ 'title.fields.genre'|trans }}">Genre</th>
                             <td>
-                                {% if title.genre %}
-                                    <a href="{{ path('genre_show', {'id': title.genre.id}) }}">
-                                        {{ title.genre.name }}
-                                    </a>
-                                {% endif %}
+                                {% for genre in title.genres %}
+                                    <a href='{{ path('genre_show', {'id': genre.id}) }}'>
+                                        {{ genre }}</a>{% if not loop.last %}, {% endif %}
+                                {% endfor %}
                             </td>
                         </tr>
                         <tr>

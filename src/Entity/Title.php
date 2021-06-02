@@ -239,12 +239,9 @@ class Title {
     /**
      * @var Genre
      *
-     * @ORM\ManyToOne(targetEntity="Genre", inversedBy="titles")
-     * @ORM\JoinColumns({
-     *     @ORM\JoinColumn(name="genre_id", referencedColumnName="id")
-     * })
+     * @ORM\ManyToMany(targetEntity="Genre", inversedBy="titles")
      */
-    private $genre;
+    private $genres;
 
     /**
      * @var Currency
@@ -301,6 +298,7 @@ class Title {
      */
     public function __construct() {
         $this->totalPrice = 0;
+        $this->genres = new ArrayCollection();
         $this->titleRoles = new ArrayCollection();
         $this->titleFirmroles = new ArrayCollection();
         $this->titleSources = new ArrayCollection();
@@ -855,34 +853,36 @@ class Title {
     }
 
     /**
+     * @return Collection|Genre[]
+     */
+    public function getGenres(): Collection
+    {
+        return $this->genres;
+    }
+
+    public function addGenre(Genre $genre): self
+    {
+        if (!$this->genres->contains($genre)) {
+            $this->genres[] = $genre;
+        }
+
+        return $this;
+    }
+
+    public function removeGenre(Genre $genre): self
+    {
+        $this->genres->removeElement($genre);
+
+        return $this;
+    }
+
+    /**
      * Get format.
      *
      * @return Format
      */
     public function getFormat() {
         return $this->format;
-    }
-
-    /**
-     * Set genre.
-     *
-     * @param Genre $genre
-     *
-     * @return Title
-     */
-    public function setGenre(?Genre $genre = null) {
-        $this->genre = $genre;
-
-        return $this;
-    }
-
-    /**
-     * Get genre.
-     *
-     * @return Genre
-     */
-    public function getGenre() {
-        return $this->genre;
     }
 
     /**
@@ -1132,4 +1132,5 @@ class Title {
 
         return $this;
     }
+
 }

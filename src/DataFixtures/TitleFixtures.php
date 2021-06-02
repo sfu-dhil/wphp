@@ -56,7 +56,7 @@ class TitleFixtures extends Fixture implements DependentFixtureInterface, Fixtur
             $fixture->setNotes('Notes ' . $i);
             $fixture->setLocationofprinting($this->getReference('geonames.1'));
             $fixture->setFormat($this->getReference('format.1'));
-            $fixture->setGenre($this->getReference('genre.1'));
+            $fixture->addGenre($this->getReference('genre.1'));
 
             $manager->persist($fixture);
             $this->setReference('title.' . $i, $fixture);

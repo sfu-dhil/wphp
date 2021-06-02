@@ -45,7 +45,7 @@ class Genre {
 
     /**
      * @var Collection|Title[]
-     * @ORM\OneToMany(targetEntity="Title", mappedBy="genre")
+     * @ORM\ManyToMany(targetEntity="Title", mappedBy="genres")
      */
     private $titles;
 

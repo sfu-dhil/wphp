@@ -11,7 +11,7 @@ title:
     finalattempt: Indicates that an attempt has been made to identify two sources to verify the title information but that only one source has been found
     finalcheck: Indicates that either two sources have been consulted to verify title information or the title has been hand-verified
     format: The way that sheets have been folded and gathered
-    genre: Category that the title falls into
+    genre: Categories that the title falls into
     imprint: Information about printers, publishers, booksellers as shown on the title page
     copyright: Copyright statement as printed in the book
     locationOfPrinting: Location of printing as indicated by the imprint
@@ -44,7 +44,7 @@ title:
     finalattempt: Select yes if an attempt has been made to identify two sources to verify the title information but only one source has been found
     finalcheck: Select yes if either two sources have been consulted to verify title information or the title has been hand-verified
     format: Select the format for the title, signifying the way that sheets have been folded and gathered
-    genre: Select the category that the title falls into
+    genre: Select the categories that the title falls into; hold command key (Mac OS) or control key (Windows) to select multiple genres
     imprint: Enter information about printers, publishers, booksellers as shown on the title page
     locationOfPrinting: Enter the location of printing as indicated by the imprint
     notes: Include any other important information about the title that doesn't fit into one of the other fields
