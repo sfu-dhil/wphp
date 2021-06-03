@@ -36,7 +36,6 @@ class TitleFixtures extends Fixture implements DependentFixtureInterface, Fixtur
             $fixture->setTitle('Title ' . $i);
             $fixture->setEditionNumber($i + 1);
             $fixture->setSignedAuthor('SignedAuthor ' . $i);
-            $fixture->setSurrogate('Surrogate ' . $i);
             $fixture->setPseudonym('Pseudonym ' . $i);
             $fixture->setImprint('Imprint ' . $i);
             $fixture->setSelfpublished(0 === $i % 2);
