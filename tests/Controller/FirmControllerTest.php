@@ -109,6 +109,7 @@ class FirmControllerTest extends ControllerBaseCase {
             'firm[startDate]' => '1972',
             'firm[endDate]' => '1999',
             'firm[finalcheck]' => 1,
+            'firm[notes]' => 'New Notes',
         ])
         ;
 
@@ -144,8 +145,8 @@ class FirmControllerTest extends ControllerBaseCase {
             'firm[startDate]' => '1972',
             'firm[endDate]' => '1999',
             'firm[finalcheck]' => 1,
-        ])
-        ;
+            'firm[notes]' => 'New Notes',
+        ]);
 
         $this->client->submit($form);
         $this->assertTrue($this->client->getResponse()->isRedirect());
