@@ -42,6 +42,7 @@ class PersonFixtures extends Fixture implements DependentFixtureInterface, Fixtu
             $fixture->setFinalcheck(0 === $i % 2);
             $fixture->setCityofbirth($this->getReference('geonames.1'));
             $fixture->setCityofdeath($this->getReference('geonames.1'));
+            $fixture->setNotes("<p>Person Notes {$i}</p>");
 
             $manager->persist($fixture);
             $this->setReference('person.' . $i, $fixture);

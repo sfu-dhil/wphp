@@ -133,6 +133,13 @@ class PersonType extends AbstractType {
                 'help_block' => 'person.form.imageUrl',
             ],
         ]);
+        $builder->add('notes', null, [
+            'label' => 'Notes',
+            'required' => false,
+            'attr' => [
+                'help_block' => 'person.form.notes',
+            ],
+        ]);
         $builder->add('finalcheck', ChoiceType::class, [
             'label' => 'Verified',
             'expanded' => true,

@@ -40,7 +40,7 @@ class FirmFixtures extends Fixture implements DependentFixtureInterface, Fixture
             $fixture->setFinalcheck(0 === $i % 2);
             $fixture->setGender('U');
             $fixture->setCity($this->getReference('geonames.1'));
-
+            $fixture->setNotes("<p>Firm Notes {$i}</p>");
             $manager->persist($fixture);
             $this->setReference('firm.' . $i, $fixture);
         }

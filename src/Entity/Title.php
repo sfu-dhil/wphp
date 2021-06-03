@@ -371,28 +371,6 @@ class Title {
     }
 
     /**
-     * Set surrogate.
-     *
-     * @param string $surrogate
-     *
-     * @return Title
-     */
-    public function setSurrogate($surrogate) {
-        $this->surrogate = $surrogate;
-
-        return $this;
-    }
-
-    /**
-     * Get surrogate.
-     *
-     * @return string
-     */
-    public function getSurrogate() {
-        return $this->surrogate;
-    }
-
-    /**
      * Set pseudonym.
      *
      * @param string $pseudonym

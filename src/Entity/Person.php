@@ -112,6 +112,13 @@ class Person {
     private $imageUrl;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="notes", type="text", nullable=true)
+     */
+    private $notes;
+
+    /**
      * @var bool
      *
      * @ORM\Column(name="finalcheck", type="boolean", nullable=false)
@@ -317,6 +324,28 @@ class Person {
         }
 
         return $this->dod;
+    }
+
+    /**
+     * Set notes.
+     *
+     * @param string $notes
+     *
+     * @return Title
+     */
+    public function setNotes($notes) {
+        $this->notes = $notes;
+
+        return $this;
+    }
+
+    /**
+     * Get notes.
+     *
+     * @return string
+     */
+    public function getNotes() {
+        return $this->notes;
     }
 
     /**

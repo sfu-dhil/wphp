@@ -107,6 +107,13 @@ class FirmType extends AbstractType {
                 'help_block' => 'person.form.relatedFirms',
             ],
         ]);
+        $builder->add('notes', null, [
+            'label' => 'Notes',
+            'required' => false,
+            'attr' => [
+                'help_block' => 'person.form.notes',
+            ],
+        ]);
         $builder->add('finalcheck', ChoiceType::class, [
             'label' => 'Firm Finalcheck',
             'expanded' => true,
