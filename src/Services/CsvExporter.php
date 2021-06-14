@@ -70,6 +70,7 @@ class CsvExporter {
             'Price Pound',
             'Price Shilling',
             'Price Pence',
+            'Other Price',
             'Genre',
             'Shelf mark',
         ];
@@ -98,7 +99,7 @@ class CsvExporter {
             $title->getPriceShilling(),
             $title->getPricePence(),
             ($title->getOtherPrice() ? $title->getOtherCurrency()->format($title->getOtherPrice()) : ''),
-            ($title->getGenre() ? $title->getGenre()->getName() : ''),
+            implode("; ", $title->getGenres()->toArray()),
             $title->getShelfmark(),
         ];
     }
