@@ -106,6 +106,7 @@ firm:
     relatedPeople: People related to this firm in some way
     startDate: Year, month, and day in which firm began operations at given address, if known
     streetAddress: Street address of the firm as stated in the imprint or colophon
+    firmSources: Sources consulted to populate the firm fields
   form:
     <<: *firm_fields
     city: Enter the city/town/village in which the firm is located
@@ -188,12 +189,12 @@ person:
 source:
   fields: &source_fields
     identifier: A unique identifier used by the source
-    name: An archive, institution or resource that provides information for a title record
+    name: An archive, institution or resource that provides information for a record
   form:
     <<: *source_fields
     identifier: Enter the unique identifier used by the source
-    name: Select from the drop down menu the archive, institution or resource that provides information for a title record
+    name: Select from the drop down menu the archive, institution or resource that provides information for a record
   search:
     <<: *source_fields
     identifier: Search by the unique identifier used by the source
-    name: Search by the archive, institution or resource that provides information for a title record
+    name: Search by the archive, institution or resource that provides information for a record
