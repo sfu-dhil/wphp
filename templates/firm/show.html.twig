@@ -95,7 +95,7 @@
                         {% endfor %}
                         {% for firm in firm.firmsRelated %}
                             <a href='{{ path('firm_show', {'id': firm.id}) }}'>
-                                {{ firm }}
+                                {{ firm }} {% if is_granted('ROLE_USER') %}*{% endif %}
                             </a><br>
                         {% endfor %}
                     </td>
