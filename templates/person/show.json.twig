@@ -42,8 +42,11 @@
     {
             "@type": "Book",
             "@id": "{{ url('title_show', {'id':book.id}) }}" ,
-            "name": "{{book.title}}"
-            {% if book.genre %} ,"genre": "{{book.genre}}" {% endif %}
+            "name": "{{book.title}}",
+            "genre": [
+            {% for genre in book.genres %} "{{ genre }}" {% if not loop.last %},
+                {% endif %} {% endfor %}
+            ]
             {% if book.pubdate %},"datePublished": "{{book.pubdate}}" {% endif %}
             {% if book.locationOfPrinting %},
             "locationCreated": {
