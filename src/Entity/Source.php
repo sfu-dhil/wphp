@@ -216,7 +216,6 @@ class Source {
         return $this->titleSources;
     }
 
-
     /**
      * Add firmSource.
      *
