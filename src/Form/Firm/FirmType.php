@@ -12,7 +12,6 @@ namespace App\Form\Firm;
 
 use App\Entity\Firm;
 use App\Entity\Geonames;
-use App\Form\Title\TitleSourceType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
