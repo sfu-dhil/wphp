@@ -203,7 +203,7 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
         if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($firm);
 
-            if($firm->getFirmSources()) {
+            if ($firm->getFirmSources()) {
                 foreach ($firm->getFirmSources() as $ts) {
                     $ts->setFirm($firm);
                     $em->persist($ts);
@@ -358,8 +358,7 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-
-            if($firm->getFirmSources()) {
+            if ($firm->getFirmSources()) {
                 foreach ($firm->getFirmSources() as $ts) {
                     $ts->setFirm($firm);
                     $em->persist($ts);
@@ -368,6 +367,7 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
 
             $em->flush();
             $this->addFlash('success', 'The firm has been updated.');
+
             return $this->redirectToRoute('firm_show', ['id' => $firm->getId()]);
         }
 

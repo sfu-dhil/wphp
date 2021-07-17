@@ -396,7 +396,6 @@ class Firm {
         return $this->gender;
     }
 
-
     /**
      * Set the sources for this firm.
      *

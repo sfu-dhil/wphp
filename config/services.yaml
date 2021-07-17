@@ -22,6 +22,7 @@ parameters:
         - spotlight_titles
         - spotlight_person
         - spotlight_firms
+        - miscellaneous-spotlights
 
     wphp.title_index_authors: 3
 

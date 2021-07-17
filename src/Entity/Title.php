@@ -833,22 +833,19 @@ class Title {
     /**
      * @return Collection|Genre[]
      */
-    public function getGenres(): Collection
-    {
+    public function getGenres() : Collection {
         return $this->genres;
     }
 
-    public function addGenre(Genre $genre): self
-    {
-        if (!$this->genres->contains($genre)) {
+    public function addGenre(Genre $genre) : self {
+        if ( ! $this->genres->contains($genre)) {
             $this->genres[] = $genre;
         }
 
         return $this;
     }
 
-    public function removeGenre(Genre $genre): self
-    {
+    public function removeGenre(Genre $genre) : self {
         $this->genres->removeElement($genre);
 
         return $this;
@@ -1110,5 +1107,4 @@ class Title {
 
         return $this;
     }
-
 }
