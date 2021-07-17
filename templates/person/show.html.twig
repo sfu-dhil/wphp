@@ -157,6 +157,10 @@
         {{ knp_pagination_render(pagination) }}
     </div>
 
+    <div id="timeline-div" style="height: 800px; width:100%">
+
+    </div>
+
     {{ include('partials/citation.html.twig', {
         'title': '"' ~ person ~ '"',
         'record': person,
@@ -169,6 +173,103 @@
 
 {% endblock %}
 
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ asset('yarn/@knight-lab/timelinejs/dist/css/timeline.css') }}">
+
+{% endblock %}
+
+
 {% block javascripts %}
     <script src="{{ asset('yarn/tablesorter/dist/js/jquery.tablesorter.min.js') }}"></script>
+    <script src="{{ asset('yarn/@knight-lab/timelinejs/dist/js/timeline-min.js') }}"></script>
+    <script>
+    let url ='{{ path('person_show', {'id': person.id, '_format': 'json'}) }}'
+    function buildEvents (books,birthDate, deathDate, birthPlace, deathPlace){
+        var events = [];
+        var birth=birthDate.split('-')[0];
+        books.forEach( function(b) {
+            var caption;
+            if (b.datePublished>deathDate.split('-')[0]){
+                caption="Published posthumously";
+            }
+            else {
+                caption="Age: " + (b.datePublished - birth);
+            }
+
+                events.push(
+            {
+                start_date: {
+                    year: b.datePublished,
+                }
+            ,
+                group:b.genre[0],
+                text:
+                {
+                    headline:`<span data-genre="${b.genre[0]}">${b.name}</span>`,
+                {#    headline: "<span data-genre=\ " + b.genre[0] + "\>" + b.name + "</span>" ,
+                #}
+                    text: caption,
+
+                }
+            ,
+            });});
+
+        events.push(
+            {
+                 start_date: {
+                    day:birthDate.split('-')[2],
+                    month:birthDate.split('-')[1],
+                    year: birthDate.split('-')[0]
+                },
+                text:{
+                    headline:"Birth",
+                    text:"<p>Location:" +birthPlace.name + "</p>"
+
+                },
+            }
+        )
+        events.push(
+                {start_date: {
+                    day:deathDate.split('-')[2],
+                    month:deathDate.split('-')[1],
+                    year: deathDate.split('-')[0]
+                },
+                text:{
+                    headline:"Death",
+                    text:"<p>Location:" +deathPlace.name + "</p>"
+                }
+            }
+        )
+
+        return events;
+    }
+
+    $.getJSON(url, function(data) {
+       
+        var myObject = {
+            title: {
+                text:{
+                    headline:data.givenName+" "+data.familyName ,
+                    text:"S.TH for now",
+                }
+                },
+                events:buildEvents(data['@graph'],data.birthDate, data.deathDate,data.birthPlace,data.deathPlace),
+
+
+            }
+
+        console.log(myObject)
+        {# instantiate timeline #}
+          window.timeline = new TL.Timeline('timeline-div', myObject)
+
+
+
+
+    });
+
+    </script>
+
+
+
 {% endblock %}
