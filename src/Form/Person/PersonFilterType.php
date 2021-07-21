@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
  * This source file is subject to the GPL v2, bundled
  * with this source code in the file LICENSE.
  */
@@ -75,9 +75,7 @@ class PersonFilterType extends AbstractType {
 
         $builder->add('person_role', ChoiceType::class, [
             'choices' => $roles,
-            'choice_label' => function ($value, $key, $index) {
-                return $value->getName();
-            },
+            'choice_label' => fn ($value, $key, $index) => $value->getName(),
             'choice_value' => function ($value) {
                 if ($value) {
                     return $value->getId();

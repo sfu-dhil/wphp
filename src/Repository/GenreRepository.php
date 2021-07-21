@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
  * This source file is subject to the GPL v2, bundled
  * with this source code in the file LICENSE.
  */
@@ -53,7 +53,7 @@ class GenreRepository extends ServiceEntityRepository {
     public function countTitles(Genre $genre, ?User $user = null) {
         $qb = $this->_em->createQueryBuilder();
         $qb->select('count(title.id)');
-        $qb->andWhere('title.genre = :genre');
+        $qb->andWhere(':genre MEMBER OF title.genres');
         if ( ! $user) {
             $qb->andWhere('title.finalattempt = 1 OR title.finalcheck = 1');
         }

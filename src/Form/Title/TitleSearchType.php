@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
  * This source file is subject to the GPL v2, bundled
  * with this source code in the file LICENSE.
  */
@@ -176,18 +176,18 @@ class TitleSearchType extends AbstractType {
                 'help_block' => 'title.search.imprint',
             ],
         ]);
-        $builder->add('copyright', null, [
-            'label' => 'Copyright Statement',
-            'required' => false,
-            'attr' => [
-                'help_block' => 'title.search.copyright',
-            ],
-        ]);
         $builder->add('colophon', null, [
             'label' => 'Colophon',
             'required' => false,
             'attr' => [
                 'help_block' => 'title.search.colophon',
+            ],
+        ]);
+        $builder->add('copyright', null, [
+            'label' => 'Copyright Statement',
+            'required' => false,
+            'attr' => [
+                'help_block' => 'title.search.copyright',
             ],
         ]);
         $builder->add('location', TextType::class, [
@@ -199,12 +199,8 @@ class TitleSearchType extends AbstractType {
         ]);
         $builder->add('format', ChoiceType::class, [
             'choices' => $formats,
-            'choice_label' => function ($value, $key, $index) {
-                return $value->getName();
-            },
-            'choice_value' => function ($value) {
-                return $value->getId();
-            },
+            'choice_label' => fn ($value, $key, $index) => $value->getName(),
+            'choice_value' => fn ($value) => $value->getId(),
             'label' => 'Format',
             'required' => false,
             'expanded' => true,
@@ -237,12 +233,8 @@ class TitleSearchType extends AbstractType {
 
         $builder->add('genre', ChoiceType::class, [
             'choices' => $genres,
-            'choice_label' => function ($value, $key, $index) {
-                return $value->getName();
-            },
-            'choice_value' => function ($value) {
-                return $value->getId();
-            },
+            'choice_label' => fn ($value, $key, $index) => $value->getName(),
+            'choice_value' => fn ($value) => $value->getId(),
             'label' => 'Genre',
             'required' => false,
             'expanded' => true,

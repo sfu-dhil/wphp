@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
  * This source file is subject to the GPL v2, bundled
  * with this source code in the file LICENSE.
  */
@@ -42,6 +42,7 @@ class PersonFixtures extends Fixture implements DependentFixtureInterface, Fixtu
             $fixture->setFinalcheck(0 === $i % 2);
             $fixture->setCityofbirth($this->getReference('geonames.1'));
             $fixture->setCityofdeath($this->getReference('geonames.1'));
+            $fixture->setNotes("<p>Person Notes {$i}</p>");
 
             $manager->persist($fixture);
             $this->setReference('person.' . $i, $fixture);

@@ -13,8 +13,10 @@
 
         <!-- choose your federation: multiples are also allowed. -->
 
-        <collex:federation>NINES</collex:federation>
-        <collex:federation>18thConnect</collex:federation>
+      <collex:federation>NINES</collex:federation>
+      <collex:federation>18thConnect</collex:federation>
+
+      <collex:archive>Women's Print History Project</collex:archive>
 
         <collex:archive>Women's Print History Project</collex:archive>
 
@@ -45,12 +47,12 @@
 
         <dc:type>Dataset</dc:type>
 
-        <collex:discipline>Literature</collex:discipline>
-        <collex:discipline>History</collex:discipline>
+      <collex:discipline>Literature</collex:discipline>
+      <collex:discipline>History</collex:discipline>
 
-        {% for genre in title.genre %}
-            <collex:genre>{{ genre }}</collex:genre>
-        {% endfor %}
+      {% for genre in title.genres %}
+          <collex:genre>{{ genre }}</collex:genre>
+      {% endfor %}
 
         <collex:freeculture>TRUE</collex:freeculture>
         <collex:ocr>FALSE</collex:ocr>

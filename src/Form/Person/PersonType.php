@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
  * This source file is subject to the GPL v2, bundled
  * with this source code in the file LICENSE.
  */
@@ -103,6 +103,7 @@ class PersonType extends AbstractType {
         ]);
         $builder->add('relatedFirms', Select2EntityType::class, [
             'label' => 'Related Firms',
+            'text_property' => 'getFormId',
             'multiple' => true,
             'remote_route' => 'firm_typeahead',
             'class' => Firm::class,
@@ -130,6 +131,13 @@ class PersonType extends AbstractType {
             'required' => false,
             'attr' => [
                 'help_block' => 'person.form.imageUrl',
+            ],
+        ]);
+        $builder->add('notes', null, [
+            'label' => 'Notes',
+            'required' => false,
+            'attr' => [
+                'help_block' => 'person.form.notes',
             ],
         ]);
         $builder->add('finalcheck', ChoiceType::class, [

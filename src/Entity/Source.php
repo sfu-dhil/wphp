@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
  * This source file is subject to the GPL v2, bundled
  * with this source code in the file LICENSE.
  */
@@ -66,10 +66,17 @@ class Source {
     private $titleSources;
 
     /**
+     * @var Collection|FirmSource[]
+     * @ORM\OneToMany(targetEntity="FirmSource", mappedBy="source")
+     */
+    private $firmSources;
+
+    /**
      * Source constructor.
      */
     public function __construct() {
         $this->titleSources = new ArrayCollection();
+        $this->firmSources = new ArrayCollection();
     }
 
     /**
@@ -207,5 +214,38 @@ class Source {
      */
     public function getTitleSources() {
         return $this->titleSources;
+    }
+
+    /**
+     * Add firmSource.
+     *
+     * @param \App\Entity\FirmSource $firmSource
+     *
+     * @return Source
+     */
+    public function addFirmSource(FirmSource $firmSource) {
+        $this->firmSources[] = $firmSource;
+
+        return $this;
+    }
+
+    /**
+     * Remove firmSource.
+     *
+     * @param \App\Entity\FirmSource $firmSource
+     *
+     * @return bool TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeFirmSource(FirmSource $firmSource) {
+        return $this->firmSources->removeElement($firmSource);
+    }
+
+    /**
+     * Get firmSources.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getFirmSources() {
+        return $this->firmSources;
     }
 }

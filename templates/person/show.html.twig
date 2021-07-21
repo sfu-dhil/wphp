@@ -116,6 +116,10 @@
                     {% endif %}
                 </td>
             </tr>
+            <tr>
+                <th data-toggle="popover"  data-content="{{ 'person.fields.notes'|trans }}">Notes</th>
+                <td>{{ person.notes }}</td>
+            </tr>
             {% if is_granted('ROLE_USER') %}
                 <tr data-toggle="popover" data-content="{{ 'person.fields.finalCheck'|trans }}">
                     <th>Verified</th>

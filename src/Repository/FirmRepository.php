@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
  * This source file is subject to the GPL v2, bundled
  * with this source code in the file LICENSE.
  */
@@ -67,11 +67,13 @@ class FirmRepository extends ServiceEntityRepository {
                     $qb->addOrderBy('e.startDate');
 
                     break;
+
                 case 'name_desc':
                     $qb->orderBy('e.name', 'DESC');
                     $qb->addOrderBy('e.startDate');
 
                     break;
+
                 case 'city_asc':
                     $qb->innerJoin('e.city', 'c');
                     $qb->orderBy('c.name', 'ASC');
@@ -79,6 +81,7 @@ class FirmRepository extends ServiceEntityRepository {
                     $qb->addOrderBy('e.startDate');
 
                     break;
+
                 case 'city_desc':
                     $qb->innerJoin('e.city', 'c');
                     $qb->orderBy('c.name', 'DESC');
@@ -86,21 +89,25 @@ class FirmRepository extends ServiceEntityRepository {
                     $qb->addOrderBy('e.startDate');
 
                     break;
+
                 case 'start_asc':
                     $qb->orderBy('e.startDate');
                     $qb->addOrderBy('e.name', 'ASC');
 
                     break;
+
                 case 'start_desc':
                     $qb->orderBy('e.startDate', 'DESC');
                     $qb->addOrderBy('e.name', 'ASC');
 
                     break;
+
                 case 'end_asc':
                     $qb->orderBy('e.endDate', 'ASC');
                     $qb->addOrderBy('e.name', 'ASC');
 
                     break;
+
                 case 'end_desc':
                     $qb->orderBy('e.endDate', 'DESC');
                     $qb->addOrderBy('e.name', 'ASC');

@@ -4,11 +4,12 @@
     "type": "project",
     "license": "GPL-2.0-or-later",
     "require": {
-        "php": "^7.4",
+        "php": "^7.4 || ^8.0",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "aternus/geonames-client": "^1.0",
         "doctrine/common": "^2.13",
+        "doctrine/doctrine-migrations-bundle": "3.0.*",
         "ninsuo/symfony-collection": "^2.1",
         "sensio/framework-extra-bundle": "^5.1",
         "symfony/asset": "4.4.*",
@@ -32,7 +33,7 @@
         "symfony/validator": "4.4.*",
         "symfony/web-link": "4.4.*",
         "symfony/yaml": "4.4.*",
-        "tetranz/select2entity-bundle": "^2.9",
+        "tetranz/select2entity-bundle": "^3.1",
         "twig/string-extra": "^3.0",
         "ubermichael/nines": "~4.x-dev"
     },

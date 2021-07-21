@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
  * This source file is subject to the GPL v2, bundled
  * with this source code in the file LICENSE.
  */
@@ -123,7 +123,7 @@ class SourceLinkerTest extends ControllerBaseCase {
         $source->method('getName')->willReturn($name);
         $actual = $this->linker->url($source, $data);
         if ($expected) {
-            $this->assertRegExp($expected, $actual);
+            $this->assertMatchesRegularExpression($expected, $actual);
         } else {
             $this->assertNull($actual);
         }

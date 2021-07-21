@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
  * This source file is subject to the GPL v2, bundled
  * with this source code in the file LICENSE.
  */
@@ -239,12 +239,9 @@ class Title {
     /**
      * @var Genre
      *
-     * @ORM\ManyToOne(targetEntity="Genre", inversedBy="titles")
-     * @ORM\JoinColumns({
-     *     @ORM\JoinColumn(name="genre_id", referencedColumnName="id")
-     * })
+     * @ORM\ManyToMany(targetEntity="Genre", inversedBy="titles")
      */
-    private $genre;
+    private $genres;
 
     /**
      * @var Currency
@@ -269,7 +266,7 @@ class Title {
      * poorly named with respect to sourceTitles which records different
      * information.
      *
-     * @var Collection|TitleRole[]
+     * @var Collection|TitleSource[]
      * @ORM\OneToMany(targetEntity="TitleSource", mappedBy="title")
      */
     private $titleSources;
@@ -301,6 +298,7 @@ class Title {
      */
     public function __construct() {
         $this->totalPrice = 0;
+        $this->genres = new ArrayCollection();
         $this->titleRoles = new ArrayCollection();
         $this->titleFirmroles = new ArrayCollection();
         $this->titleSources = new ArrayCollection();
@@ -346,6 +344,10 @@ class Title {
         return $this->title;
     }
 
+    public function getFormId() {
+        return "({$this->id}) {$this->title}";
+    }
+
     /**
      * Set signedAuthor.
      *
@@ -366,28 +368,6 @@ class Title {
      */
     public function getSignedAuthor() {
         return $this->signedAuthor;
-    }
-
-    /**
-     * Set surrogate.
-     *
-     * @param string $surrogate
-     *
-     * @return Title
-     */
-    public function setSurrogate($surrogate) {
-        $this->surrogate = $surrogate;
-
-        return $this;
-    }
-
-    /**
-     * Get surrogate.
-     *
-     * @return string
-     */
-    public function getSurrogate() {
-        return $this->surrogate;
     }
 
     /**
@@ -851,34 +831,33 @@ class Title {
     }
 
     /**
+     * @return Collection|Genre[]
+     */
+    public function getGenres() : Collection {
+        return $this->genres;
+    }
+
+    public function addGenre(Genre $genre) : self {
+        if ( ! $this->genres->contains($genre)) {
+            $this->genres[] = $genre;
+        }
+
+        return $this;
+    }
+
+    public function removeGenre(Genre $genre) : self {
+        $this->genres->removeElement($genre);
+
+        return $this;
+    }
+
+    /**
      * Get format.
      *
      * @return Format
      */
     public function getFormat() {
         return $this->format;
-    }
-
-    /**
-     * Set genre.
-     *
-     * @param Genre $genre
-     *
-     * @return Title
-     */
-    public function setGenre(?Genre $genre = null) {
-        $this->genre = $genre;
-
-        return $this;
-    }
-
-    /**
-     * Get genre.
-     *
-     * @return Genre
-     */
-    public function getGenre() {
-        return $this->genre;
     }
 
     /**
@@ -910,9 +889,7 @@ class Title {
         if (null === $roleName) {
             return $this->titleRoles;
         }
-        $roles = $this->titleRoles->filter(function (TitleRole $titleRole) use ($roleName) {
-            return $titleRole->getRole()->getName() === $roleName;
-        });
+        $roles = $this->titleRoles->filter(fn (TitleRole $titleRole) => $titleRole->getRole()->getName() === $roleName);
 
         return $roles->getValues();
     }
@@ -950,9 +927,7 @@ class Title {
             return $this->titleFirmroles;
         }
 
-        return $this->titleFirmroles->filter(function (TitleFirmrole $titleFirmrole) use ($roleName) {
-            return $titleFirmrole->getFirmrole()->getName() === $roleName;
-        });
+        return $this->titleFirmroles->filter(fn (TitleFirmrole $titleFirmrole) => $titleFirmrole->getFirmrole()->getName() === $roleName);
     }
 
     /**

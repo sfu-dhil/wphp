@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
  * This source file is subject to the GPL v2, bundled
  * with this source code in the file LICENSE.
  */
@@ -109,6 +109,7 @@ class FirmControllerTest extends ControllerBaseCase {
             'firm[startDate]' => '1972',
             'firm[endDate]' => '1999',
             'firm[finalcheck]' => 1,
+            'firm[notes]' => 'New Notes',
         ])
         ;
 
@@ -144,8 +145,8 @@ class FirmControllerTest extends ControllerBaseCase {
             'firm[startDate]' => '1972',
             'firm[endDate]' => '1999',
             'firm[finalcheck]' => 1,
-        ])
-        ;
+            'firm[notes]' => 'New Notes',
+        ]);
 
         $this->client->submit($form);
         $this->assertTrue($this->client->getResponse()->isRedirect());

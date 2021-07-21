@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
  * This source file is subject to the GPL v2, bundled
  * with this source code in the file LICENSE.
  */
@@ -16,6 +16,7 @@ use App\Form\Firm\FirmSearchType;
 use App\Form\Firm\FirmType;
 use App\Repository\FirmRepository;
 use App\Services\CsvExporter;
+use App\Services\SourceLinker;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Nines\UtilBundle\Controller\PaginatorTrait;
@@ -83,7 +84,7 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
         foreach ($repo->typeaheadQuery($q) as $result) {
             $data[] = [
                 'id' => $result->getId(),
-                'text' => $result->getName() . ' (#' . $result->getId() . ')',
+                'text' => $result->getFormId(),
             ];
         }
 
@@ -137,7 +138,7 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
                 $paramValue = $param->getValue();
                 $value = '';
                 if (is_array($paramValue)) {
-                    $value = implode('-', array_map(function ($e) { return (string) $e; }, $paramValue));
+                    $value = implode('-', array_map(fn ($e) => (string) $e, $paramValue));
                 } else {
                     $value = $paramValue;
                 }
@@ -201,8 +202,15 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($firm);
-            $em->flush();
 
+            if ($firm->getFirmSources()) {
+                foreach ($firm->getFirmSources() as $ts) {
+                    $ts->setFirm($firm);
+                    $em->persist($ts);
+                }
+            }
+
+            $em->flush();
             $this->addFlash('success', 'The new firm was created.');
 
             return $this->redirectToRoute('firm_show', ['id' => $firm->getId()]);
@@ -254,7 +262,7 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
      *
      * @return array
      */
-    public function showAction(Request $request, Firm $firm) {
+    public function showAction(Request $request, Firm $firm, SourceLinker $linker) {
         $firmRoles = $firm->getTitleFirmroles(true);
         if ( ! $this->getUser()) {
             $firmRoles = $firmRoles->filter(function (TitleFirmrole $tfr) {
@@ -268,6 +276,7 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
         return [
             'firm' => $firm,
             'pagination' => $pagination,
+            'linker' => $linker,
         ];
     }
 
@@ -349,6 +358,13 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
+            if ($firm->getFirmSources()) {
+                foreach ($firm->getFirmSources() as $ts) {
+                    $ts->setFirm($firm);
+                    $em->persist($ts);
+                }
+            }
+
             $em->flush();
             $this->addFlash('success', 'The firm has been updated.');
 

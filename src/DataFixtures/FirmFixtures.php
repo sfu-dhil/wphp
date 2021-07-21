@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
  * This source file is subject to the GPL v2, bundled
  * with this source code in the file LICENSE.
  */
@@ -40,7 +40,7 @@ class FirmFixtures extends Fixture implements DependentFixtureInterface, Fixture
             $fixture->setFinalcheck(0 === $i % 2);
             $fixture->setGender('U');
             $fixture->setCity($this->getReference('geonames.1'));
-
+            $fixture->setNotes("<p>Firm Notes {$i}</p>");
             $manager->persist($fixture);
             $this->setReference('firm.' . $i, $fixture);
         }

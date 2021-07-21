@@ -60,35 +60,196 @@
                                                 , {{ person.firstName }}</a> ({{ tr.role.name }})
                                         </li>
 
-                                    {% endfor %}
-                                </ul>
+    <div class="container">
+        <div class="row">
+
+            <div class="col-sm-7">
+                <table class="table table-bordered table-condensed table-hover table-striped">
+                    <tbody>
+                         <tr>
+                            <th data-toggle="popover" data-content="{{ 'title.fields.id'|trans }}">ID</th>
+                            <td>{{ title.id }}</td>
+                        </tr>
+                        <tr>
+                            <th data-toggle="popover"  data-content="{{ 'title.fields.title'|trans }}">Title</th>
+                            <td>{{ title.title }}</td>
+                        </tr>
+                        <tr>
+                            <th data-toggle="popover"  data-content="{{ 'title.fields.contributors'|trans }}">Contributors</th>
+                            <td>
+                                {% for tr in title.titleRoles %}
+                                    {% set person = tr.person %}
+                                    <a href="{{ path('person_show', {'id': person.id}) }}">{{ person.lastName }}, {{ person.firstName }}</a> ({{ tr.role.name }})
+                                        {%- if not loop.last %}; {% endif %}
+                                {% endfor %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th data-toggle="popover"  data-content="{{ 'title.fields.signedAuthor'|trans }}">Signed Author</th>
+                            <td>{{ title.signedAuthor }}</td>
+                        </tr>
+                         <tr>
+                            <th data-toggle="popover"  data-content="{{ 'title.fields.psuedonym'|trans }}">Pseudonym</th>
+                            <td>{{ title.pseudonym }}</td>
+                        </tr>
+                        <tr>
+                            <th data-toggle="popover"  data-content="{{ 'title.fields.titleFirmRoles'|trans }}">Firms</th>
+                            <td>
+                                {% for tfr in title.titleFirmRoles %}
+                                    {% set firm = tfr.firm %}
+                                    <a href="{{ path('firm_show', {'id': firm.id}) }}">{{ firm.name }}</a> ({{ tfr.firmrole }})
+                                    {%- if not loop.last %}; {% endif %}
+                                {% endfor %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th data-toggle="popover"  data-content="{{ 'title.fields.selfPublished'|trans }}">Self-published</th>
+                            <td>{% if title.selfpublished is null %}Unknown{% elseif title.selfpublished %}Yes{% else %}No{% endif %}</td>
+                        </tr>
+                        <tr>
+                            <th data-toggle="popover"  data-content="{{ 'title.fields.volumes'|trans }}">Volumes</th>
+                            <td>{{ title.volumes }}</td>
+                        </tr>
+                        <tr>
+                            <th data-toggle="popover"  data-content="{{ 'title.fields.pagination'|trans }}">Pagination</th>
+                            <td>{{ title.pagination }}</td>
+                        </tr>
+                       <tr>
+                            <th data-toggle="popover"  data-content="{{ 'title.fields.pubDate'|trans }}">Date of Publication</th>
+                            <td>{{ title.pubdate }}</td>
+                        </tr>
+                        <tr>
+                            <th data-toggle="popover"  data-content="{{ 'title.fields.edition'|trans }}">Edition Statement</th>
+                            <td>{{ title.edition }}</td>
+                        </tr>
+                        <tr>
+                            <th data-toggle="popover"  data-content="{{ 'title.fields.editionNumber'|trans }}">Edition Number</th>
+                            <td>{{ title.editionNumber }}</td>
+                        </tr>
+                        <tr>
+                            <th data-toggle="popover"  data-content="{{ 'title.fields.dateOfFirstPublication'|trans }}">Date of First Publication</th>
+                            <td>{{ title.dateOfFirstPublication }}</td>
+                        </tr>
+                        <tr>
+                            <th data-toggle="popover"  data-content="{{ 'title.fields.imprint'|trans }}">Imprint</th>
+                            <td>{{ title.imprint }}</td>
+                        </tr>
+                        <tr>
+                            <th data-toggle="popover"  data-content="{{ 'title.fields.colophon'|trans }}">Colophon</th>
+                            <td>{{ title.colophon }}</td>
+                        </tr>
+                        <tr>
+                            <th data-toggle="popover"  data-content="{{ 'title.fields.copyright'|trans }}">Copyright Statement</th>
+                            <td>{{ title.copyright }}</td>
+                        </tr>
+                        <tr>
+                            <th data-toggle="popover"  data-content="{{ 'title.fields.locationOfPrinting'|trans }}">Location of Printing</th>
+                            <td>
+                                {% if title.locationOfPrinting %}
+                                    <a href="{{ path('geonames_show', {'id': title.locationOfPrinting.geonameid}) }}">
+                                        {{ title.locationOfPrinting.name }} {{ title.locationOfPrinting.country }}
+                                    </a>
+                                </td>
                             {% endif %}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th data-toggle="popover" data-content="{{ 'title.fields.signedAuthor'|trans }}">Signed Author
-                        </th>
-                        <td>{{ title.signedAuthor }}</td>
-                    </tr>
-                    <tr>
-                        <th data-toggle="popover" data-content="{{ 'title.fields.psuedonym'|trans }}">Pseudonym</th>
-                        <td>{{ title.pseudonym }}</td>
-                    </tr>
-                    <tr>
-                        <th data-toggle="popover" data-content="{{ 'title.fields.titleFirmRoles'|trans }}">Firms</th>
-                        <td>
-                            {% set firmCount = title.titleFirmRoles|length %}
-                            {% if firmCount > 0 %}
-                                <ul{% if firmCount > 8 %} class="double-list"{% endif %}>
-                                    {% for tfr in title.titleFirmRoles %}
-                                        {% set firm = tfr.firm %}
-                                        <li>
-                                            <a href="{{ path('firm_show', {'id': firm.id}) }}">{{ firm.name }}</a>
-                                            ({{ tfr.firmrole }})
-                                        </li>
-                                    {% endfor %}
-                                </ul>
-                            {% endif %}
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col-sm-5">
+                <table class="table table-bordered table-condensed table-hover table-striped">
+                    <tbody>
+                        <tr>
+                            <th data-toggle="popover"  data-content="{{ 'title.fields.format'|trans }}">Format</th>
+                            <td>
+                                {% if title.format %}
+                                    <a href="{{ path('format_show', {'id': title.format.id}) }}">
+                                        {{ title.format.name }} ({{ title.format.abbreviation }})
+                                    </a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th data-toggle="popover"  data-content="{{ 'title.fields.sizeL'|trans }}">Length (cm)</th>
+                            <td>{{ title.sizeL }}</td>
+                        </tr>
+                        <tr>
+                            <th data-toggle="popover"  data-content="{{ 'title.fields.sizeW'|trans }}">Width (cm)</th>
+                            <td>{{ title.sizeW }}</td>
+                        </tr>
+                        <tr>
+                            <th data-toggle="popover"  data-content="{{ 'title.fields.pricePound'|trans }}">Price (pound)</th>
+                            <td>{{ title.pricePound }}</td>
+                        </tr>
+                        <tr>
+                            <th data-toggle="popover"  data-content="{{ 'title.fields.priceShilling'|trans }}">Price (shilling)</th>
+                            <td>{{ title.priceShilling }}</td>
+                        </tr>
+                        <tr>
+                            <th data-toggle="popover"  data-content="{{ 'title.fields.pricePence'|trans }}">Price (pence)</th>
+                            <td>{{ title.pricePence }}</td>
+                        </tr>
+                        <tr>
+                            <th data-toggle="popover" data-content="{{ 'title.fields.totalPrice'|trans }}">Total Price (in pence)</th>
+                            <td>
+                                {% if title.totalPrice > 0 %}
+                                    {{ title.totalPrice }}
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th data-toggle="popover"  data-content="{{ 'title.fields.otherPrice'|trans }}">Non-UK Price</th>
+                            <td>
+                                {% if title.otherPrice %}
+                                    {{ title.otherCurrency.format(title.otherPrice) }}
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th data-toggle="popover"  data-content="{{ 'title.fields.genre'|trans }}">Genre</th>
+                            <td>
+                                {% for genre in title.genres %}
+                                    <a href='{{ path('genre_show', {'id': genre.id}) }}'>
+                                        {{ genre }}</a>{% if not loop.last %}, {% endif %}
+                                {% endfor %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th data-toggle="popover"  data-content="{{ 'title.fields.titleSources'|trans }}">Sources</th>
+                            <td>
+                                {% for titleSource in title.titleSources %}
+                                    {% include "title/partials/source-link.html.twig"
+                                        with {'source': titleSource.source, 'sourceId': titleSource.identifier} %}
+                                {% endfor %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th data-toggle="popover"  data-content="{{ 'title.fields.shelfmark'|trans }}">Shelfmarks</th>
+                            <td>
+                                {% for mark in title.shelfmark|split(';') %}
+                                    {{ mark }}<br/>
+                                {% endfor %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th data-toggle="popover"  data-content="{{ 'title.fields.notes'|trans }}">Notes</th>
+                            <td>{{ title.notes }}</td>
+                        </tr>
+                        <tr>
+                            <th data-toggle="popover"  data-content="{{ 'title.fields.checked'|trans }}">Hand-Verified</th>
+                            <td>{% if title.checked %}Yes{% else %}No{% endif %}</td>
+                        </tr>
+                        <tr>
+                            <th data-toggle="popover"  data-content="{{ 'title.fields.finalcheck'|trans }}">Verified</th>
+                            <td>{% if title.finalcheck %}Yes{% else %}No{% endif %}</td>
+                        </tr>
+                        <tr>
+                            <th data-toggle="popover"  data-content="{{ 'title.fields.finalattempt'|trans }}">Attempted Verification</th>
+                            <td>{% if title.finalattempt %}Yes{% else %}No{% endif %}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
                         </td>
                     </tr>
@@ -160,69 +321,28 @@
         </div>
         <div class="title-metadata title-metadata-bibliographic">
 
-            {% embed 'partial/table.html.twig' %}
-                {% block tbody %}
+    {% if is_granted('ROLE_USER') and (title.sourceTitles|length + title.relatedTitles|length) > 0 %}
+        <div class="container">
+            <h3>Related Titles</h3>
+            <table class="table table-bordered table-condensed table-hover table-striped">
+                <thead>
                     <tr>
-                        <th data-toggle="popover" data-content="{{ 'title.fields.format'|trans }}">Format</th>
-                        <td>
-                            {% if title.format %}
-                                <a href="{{ path('format_show', {'id': title.format.id}) }}">
-                                    {{ title.format.name }} ({{ title.format.abbreviation }})
-                                </a>
-                            {% endif %}
-                        </td>
+                        <th>Relationship</th>
+                        <th>Title</th>
+                        <th>Edition Statement</th>
+                        <th>Edition Number</th>
+                        <th>Year</th>
                     </tr>
+                </thead>
+                <tbody>
+                {% for source in title.sourceTitles %}
+                    {% set related = source.relatedTitle %}
                     <tr>
-                        <th data-toggle="popover" data-content="{{ 'title.fields.sizeL'|trans }}">Length (cm)</th>
-                        <td>{{ title.sizeL }}</td>
-                    </tr>
-                    <tr>
-                        <th data-toggle="popover" data-content="{{ 'title.fields.sizeW'|trans }}">Width (cm)</th>
-                        <td>{{ title.sizeW }}</td>
-                    </tr>
-                    <tr>
-                        <th data-toggle="popover" data-content="{{ 'title.fields.pricePound'|trans }}">Price (pound)
-                        </th>
-                        <td>{{ title.pricePound }}</td>
-                    </tr>
-                    <tr>
-                        <th data-toggle="popover" data-content="{{ 'title.fields.priceShilling'|trans }}">Price
-                            (shilling)
-                        </th>
-                        <td>{{ title.priceShilling }}</td>
-                    </tr>
-                    <tr>
-                        <th data-toggle="popover" data-content="{{ 'title.fields.pricePence'|trans }}">Price (pence)
-                        </th>
-                        <td>{{ title.pricePence }}</td>
-                    </tr>
-                    <tr>
-                        <th data-toggle="popover" data-content="{{ 'title.fields.totalPrice'|trans }}">Total Price (in
-                            pence)
-                        </th>
-                        <td>
-                            {% if title.totalPrice > 0 %}
-                                {{ title.totalPrice }}
-                            {% endif %}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th data-toggle="popover" data-content="{{ 'title.fields.otherPrice'|trans }}">Non-UK Price</th>
-                        <td>
-                            {% if title.otherPrice %}
-                                {{ title.otherCurrency.format(title.otherPrice) }}
-                            {% endif %}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th data-toggle="popover" data-content="{{ 'title.fields.genre'|trans }}">Genre</th>
-                        <td>
-                            {% if title.genre %}
-                                <a href="{{ path('genre_show', {'id': title.genre.id}) }}">
-                                    {{ title.genre.name }}
-                                </a>
-                            {% endif %}
-                        </td>
+                        <td>{{ source.titleRelationship }}</td>
+                        <td><a href='{{ path('title_show', {'id': related.id}) }}'>{{ related.title }}</a></td>
+                        <td>{{ related.edition }}</td>
+                        <td>{{ related.editionNumber }}</td>
+                        <td>{{ related.pubDate }}</td>
                     </tr>
                     <tr>
                         <th data-toggle="popover" data-content="{{ 'title.fields.titleSources'|trans }}">Sources</th>
@@ -243,10 +363,12 @@
                     <tr>
                         <th data-toggle="popover" data-content="{{ 'title.fields.shelfmark'|trans }}">Shelfmarks</th>
                         <td>
-                            {% for mark in title.shelfmark|split(';') %}
-                                {{ mark }}<br/>
-                            {% endfor %}
+                            <a href='{{ path('title_show', {'id': related.id}) }}'>{{ related.title }}</a>
+                            {% if is_granted('ROLE_CONTENT_ADMIN') %}*{% endif %}
                         </td>
+                        <td>{{ related.edition }}</td>
+                        <td>{{ related.editionNumber }}</td>
+                        <td>{{ related.pubDate }}</td>
                     </tr>
                     <tr>
                         <th data-toggle="popover" data-content="{{ 'title.fields.notes'|trans }}">Notes</th>

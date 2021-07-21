@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
  * This source file is subject to the GPL v2, bundled
  * with this source code in the file LICENSE.
  */
@@ -116,6 +116,7 @@ class PersonControllerTest extends ControllerBaseCase {
             'person[cityOfBirth]' => 1,
             'person[dod]' => '1999',
             'person[cityOfDeath]' => 1,
+            'person[notes]' => 'New Notes',
             'person[finalcheck]' => 1,
         ]);
 
@@ -152,6 +153,7 @@ class PersonControllerTest extends ControllerBaseCase {
             'person[cityOfBirth]' => '',
             'person[dod]' => '1999',
             'person[cityOfDeath]' => '',
+            'person[notes]' => 'New Notes',
             'person[finalcheck]' => 1,
         ]);
 

@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
  * This source file is subject to the GPL v2, bundled
  * with this source code in the file LICENSE.
  */
@@ -112,6 +112,13 @@ class Person {
     private $imageUrl;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="notes", type="text", nullable=true)
+     */
+    private $notes;
+
+    /**
      * @var bool
      *
      * @ORM\Column(name="finalcheck", type="boolean", nullable=false)
@@ -164,6 +171,10 @@ class Person {
      */
     public function __toString() : string {
         return implode(', ', array_filter([$this->lastName, $this->firstName]));
+    }
+
+    public function getFormId() {
+        return "({$this->id}) " . implode(', ', array_filter([$this->lastName, $this->firstName]));
     }
 
     /**
@@ -313,6 +324,28 @@ class Person {
         }
 
         return $this->dod;
+    }
+
+    /**
+     * Set notes.
+     *
+     * @param string $notes
+     *
+     * @return Title
+     */
+    public function setNotes($notes) {
+        $this->notes = $notes;
+
+        return $this;
+    }
+
+    /**
+     * Get notes.
+     *
+     * @return string
+     */
+    public function getNotes() {
+        return $this->notes;
     }
 
     /**

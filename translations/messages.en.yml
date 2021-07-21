@@ -11,7 +11,7 @@ title:
     finalattempt: Indicates that an attempt has been made to identify two sources to verify the title information but that only one source has been found
     finalcheck: Indicates that either two sources have been consulted to verify title information or the title has been hand-verified
     format: The way that sheets have been folded and gathered
-    genre: Category that the title falls into
+    genre: Categories that the title falls into
     imprint: Information about printers, publishers, booksellers as shown on the title page
     copyright: Copyright statement as printed in the book
     locationOfPrinting: Location of printing as indicated by the imprint
@@ -44,7 +44,7 @@ title:
     finalattempt: Select yes if an attempt has been made to identify two sources to verify the title information but only one source has been found
     finalcheck: Select yes if either two sources have been consulted to verify title information or the title has been hand-verified
     format: Select the format for the title, signifying the way that sheets have been folded and gathered
-    genre: Select the category that the title falls into
+    genre: Select the categories that the title falls into; hold command key (Mac OS) or control key (Windows) to select multiple genres
     imprint: Enter information about printers, publishers, booksellers as shown on the title page
     locationOfPrinting: Enter the location of printing as indicated by the imprint
     notes: Include any other important information about the title that doesn't fit into one of the other fields
@@ -101,16 +101,19 @@ firm:
     finalCheck: Indicates the final attempt to find further information about the firm
     gender: Indicated as female if at least one woman is known to have worked in the firm
     name: Most complete name of the firm known
+    notes: Any other important information
     role: The firm's involvement in publishing a title
     relatedPeople: People related to this firm in some way
     startDate: Year, month, and day in which firm began operations at given address, if known
     streetAddress: Street address of the firm as stated in the imprint or colophon
+    firmSources: Sources consulted to populate the firm fields
   form:
     <<: *firm_fields
     city: Enter the city/town/village in which the firm is located
     endDate: Enter the year, month, and day in which firm ceased operations at given address, if known
     gender: Check female if at least one woman is known to have worked in the firm; enter male if the firm is known to be all male; defaulty is unknown
     name: Enter the most complete name of the firm known
+    notes: Include any other important information about the title that doesn't fit into one of the other fields
     role: Select the role played by the firm in publishing a title
     startDate: Enter the year, month, and day in which firm began operations at given address, if known
     streetAddress: Enter the street address of the firm as stated in the imprint or colophon
@@ -152,6 +155,7 @@ person:
     gender: Person's gender, if known
     imageUrl: Link to an image of the person
     lastName: Person’s last name by which he or she is most commonly known
+    notes: Any other important information
     relatedFirms: Firms connected to a person in some way
     role: The person's contribution to the intellectual content of the title or, if a woman, to the title's production
     title: Person's aristocratic title
@@ -166,6 +170,7 @@ person:
     firstName: Enter a person’s first name, middle name; Mrs., Mr., Lady or Madame may also be included, especially if the first name is not known, and where appropriate
     imageUrl: Enter a link to an image of the person if available; make sure the licensing on the image is permissive
     lastName: Enter the person’s last name by which he or she is most commonly known (we mostly include a woman’s maiden name, though we will provide a married name for well-known writers known by their married name)
+    notes: Include any other important information about the title that doesn't fit into one of the other fields
     relatedFirms: Select firms related to this person
     title: Enter the person's aristocratic title, where appropriate
     viafUrl: Enter the link to a person's Virtual International Authority File if available
@@ -184,12 +189,12 @@ person:
 source:
   fields: &source_fields
     identifier: A unique identifier used by the source
-    name: An archive, institution or resource that provides information for a title record
+    name: An archive, institution or resource that provides information for a record
   form:
     <<: *source_fields
     identifier: Enter the unique identifier used by the source
-    name: Select from the drop down menu the archive, institution or resource that provides information for a title record
+    name: Select from the drop down menu the archive, institution or resource that provides information for a record
   search:
     <<: *source_fields
     identifier: Search by the unique identifier used by the source
-    name: Search by the archive, institution or resource that provides information for a title record
+    name: Search by the archive, institution or resource that provides information for a record

@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
  * This source file is subject to the GPL v2, bundled
  * with this source code in the file LICENSE.
  */
@@ -27,6 +27,7 @@ class TitleFirmType extends AbstractType {
         $builder->add('firm', Select2EntityType::class, [
             'multiple' => false,
             'remote_route' => 'firm_typeahead',
+            'text_property' => 'getFormId',
             'class' => Firm::class,
             'primary_key' => 'id',
             'page_limit' => 10,

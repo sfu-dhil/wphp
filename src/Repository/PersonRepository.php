@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
  * This source file is subject to the GPL v2, bundled
  * with this source code in the file LICENSE.
  */
@@ -104,24 +104,28 @@ class PersonRepository extends ServiceEntityRepository {
                     $qb->addOrderBy('year(e.dob)');
 
                     break;
+
                 case 'lastname_desc':
                     $qb->orderBy('e.lastName', 'DESC');
                     $qb->addOrderBy('e.firstName', 'ASC');
                     $qb->addOrderBy('year(e.dob)');
 
                     break;
+
                 case 'firstname_asc':
                     $qb->orderBy('e.firstName', 'ASC');
                     $qb->addOrderBy('e.lastName', 'ASC');
                     $qb->addOrderBy('year(e.dob)');
 
                     break;
+
                 case 'firstname_desc':
                     $qb->orderBy('e.firstName', 'DESC');
                     $qb->addOrderBy('e.lastName', 'ASC');
                     $qb->addOrderBy('year(e.dob)');
 
                     break;
+
                 case 'gender_asc':
                     $qb->orderBy('e.gender', 'ASC');
                     $qb->addOrderBy('e.lastName', 'ASC');
@@ -129,6 +133,7 @@ class PersonRepository extends ServiceEntityRepository {
                     $qb->addOrderBy('year(e.dob)');
 
                     break;
+
                 case 'gender_desc':
                     $qb->orderBy('e.gender', 'DESC');
                     $qb->addOrderBy('e.lastName', 'ASC');
@@ -136,24 +141,28 @@ class PersonRepository extends ServiceEntityRepository {
                     $qb->addOrderBy('year(e.dob)');
 
                     break;
+
                 case 'birth_asc':
                     $qb->orderBy('year(e.dob)', 'ASC');
                     $qb->addOrderBy('e.lastName', 'ASC');
                     $qb->addOrderBy('e.firstName', 'ASC');
 
                     break;
+
                 case 'birth_desc':
                     $qb->orderBy('year(e.dob)', 'DESC');
                     $qb->addOrderBy('e.lastName', 'ASC');
                     $qb->addOrderBy('e.firstName', 'ASC');
 
                     break;
+
                 case 'death_asc':
                     $qb->orderBy('year(e.dod)', 'ASC');
                     $qb->addOrderBy('e.lastName', 'ASC');
                     $qb->addOrderBy('e.firstName', 'ASC');
 
                     break;
+
                 case 'death_desc':
                     $qb->orderBy('year(e.dod)', 'DESC');
                     $qb->addOrderBy('e.lastName', 'ASC');

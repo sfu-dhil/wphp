@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
  * This source file is subject to the GPL v2, bundled
  * with this source code in the file LICENSE.
  */
@@ -36,7 +36,6 @@ class TitleFixtures extends Fixture implements DependentFixtureInterface, Fixtur
             $fixture->setTitle('Title ' . $i);
             $fixture->setEditionNumber($i + 1);
             $fixture->setSignedAuthor('SignedAuthor ' . $i);
-            $fixture->setSurrogate('Surrogate ' . $i);
             $fixture->setPseudonym('Pseudonym ' . $i);
             $fixture->setImprint('Imprint ' . $i);
             $fixture->setSelfpublished(0 === $i % 2);
@@ -56,7 +55,7 @@ class TitleFixtures extends Fixture implements DependentFixtureInterface, Fixtur
             $fixture->setNotes('Notes ' . $i);
             $fixture->setLocationofprinting($this->getReference('geonames.1'));
             $fixture->setFormat($this->getReference('format.1'));
-            $fixture->setGenre($this->getReference('genre.1'));
+            $fixture->addGenre($this->getReference('genre.1'));
 
             $manager->persist($fixture);
             $this->setReference('title.' . $i, $fixture);

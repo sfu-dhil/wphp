@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
  * This source file is subject to the GPL v2, bundled
  * with this source code in the file LICENSE.
  */
@@ -46,11 +46,11 @@ class OsborneMarcRepository extends ServiceEntityRepository {
      */
     public function searchQuery($q) {
         $dql = <<<'ENDSQL'
-SELECT e.titleId, max(MATCH (e.fieldData) AGAINST (:q BOOLEAN)) as HIDDEN score
-FROM App:OsborneMarc e
-WHERE MATCH (e.fieldData) AGAINST (:q BOOLEAN) > 0 AND e.field IN ('245' , '100')
-group by e.titleId order by score desc
-ENDSQL;
+            SELECT e.titleId, max(MATCH (e.fieldData) AGAINST (:q BOOLEAN)) as HIDDEN score
+            FROM App:OsborneMarc e
+            WHERE MATCH (e.fieldData) AGAINST (:q BOOLEAN) > 0 AND e.field IN ('245' , '100')
+            group by e.titleId order by score desc
+            ENDSQL;
         $query = $this->_em->createQuery($dql);
         $query->setParameter('q', $q);
 

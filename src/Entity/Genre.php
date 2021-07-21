@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
  * This source file is subject to the GPL v2, bundled
  * with this source code in the file LICENSE.
  */
@@ -45,7 +45,7 @@ class Genre {
 
     /**
      * @var Collection|Title[]
-     * @ORM\OneToMany(targetEntity="Title", mappedBy="genre")
+     * @ORM\ManyToMany(targetEntity="Title", mappedBy="genres")
      */
     private $titles;
 

@@ -64,6 +64,15 @@
                 <th data-toggle="popover" data-content="{{ 'firm.fields.endDate'|trans }}">End Date</th>
                 <td>{{ firm.endDate }}</td>
             </tr>
+            <tr>
+                <th data-toggle="popover"  data-content="{{ 'firm.fields.firmSources'|trans }}">Sources</th>
+                <td>
+                    {% for firmSource in firm.firmSources %}
+                        {% include "firm/partials/source-link.html.twig"
+                            with {'source': firmSource.source, 'sourceId': firmSource.identifier} %}
+                    {% endfor %}
+                </td>
+            </tr>
             {% if firm.relatedPeople|length %}
                 <tr>
                     <th data-toggle='popover' data-content='{{ 'firm.fields.relatedPeople'|trans }}'>Related People</th>
@@ -88,13 +97,16 @@
                         {% endfor %}
                         {% for firm in firm.firmsRelated %}
                             <a href='{{ path('firm_show', {'id': firm.id}) }}'>
-                                {{ firm }}
+                                {{ firm }} {% if is_granted('ROLE_USER') %}*{% endif %}
                             </a><br>
                         {% endfor %}
                     </td>
                 </tr>
             {% endif %}
-
+            <tr>
+                <th data-toggle="popover"  data-content="{{ 'firm.fields.notes'|trans }}">Notes</th>
+                <td>{{ firm.notes }}</td>
+            </tr>
             {% if app.user %}
                 <tr>
                     <th data-toggle="popover" data-content="{{ 'firm.fields.finalCheck'|trans }}">Final Check</th>
