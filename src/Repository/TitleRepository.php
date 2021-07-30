@@ -15,6 +15,7 @@ use App\Entity\TitleSource;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Query;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -98,6 +99,7 @@ class TitleRepository extends ServiceEntityRepository {
      * @return Query
      */
     public function buildSearchQuery($data = [], $user = null) {
+        dump($data);
         $qb = $this->createQueryBuilder('e');
         $qb->orderBy('e.pubdate');
         $qb->addOrderBy('e.title');
@@ -275,7 +277,16 @@ class TitleRepository extends ServiceEntityRepository {
             $qb->setParameter('total', $total);
         }
 
-        $this->arrayPart($qb, $data, 'genre', 'genre');
+        if(isset($data['genre']) && count($data['genre']) > 0) {
+            $conditions = [];
+            foreach($data['genre'] as $idx => $genre) {
+                $alias = 'g_' . $idx;
+                $qb->innerJoin('e.genres', $alias);
+                $conditions[] = $qb->expr()->orX($alias . '.id = :genre_' . $idx);
+                $qb->setParameter('genre_' . $idx, $genre);
+            }
+            $qb->andWhere($qb->expr()->orX(...$conditions));
+        }
 
         $this->fulltextPart($qb, $data, 'signedAuthor', 'signed_author');
         $this->fulltextPart($qb, $data, 'imprint', 'imprint');
