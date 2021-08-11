@@ -11,6 +11,8 @@
         margin-right: 1rem;
         transition: all var(--accordion-easing) var(--accordion-duration);
       }
+      @extend h3;
+      background-color:inherit!important;
     }
     &[aria-expanded='true'] svg{
       transform: rotate(90deg);

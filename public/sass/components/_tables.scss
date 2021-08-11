@@ -144,7 +144,7 @@ $color_table_background_hover_even: darken($color_table_background_even, 5%);
         }
       }
       th{
-        max-width: 7.5%;
+        width:12rem;
         .help{
           text-align:left;
           margin-top:1rem;

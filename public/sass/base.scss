@@ -48,6 +48,7 @@ body {
 @import 'components/accordion';
 @import 'components/buttons';
 @import 'components/card';
+@import 'components/citations';
 @import 'components/footer';
 @import 'components/forms';
 @import 'components/headings';
@@ -141,16 +142,6 @@ label {
 h1{
   letter-spacing: -1px;
   margin-right: 0.5rem;
-}
-
-
-
-div.tab-content {
-  // min-height: 200px;
-  p {
-    font-family: $sans;
-    font-size: 0.9rem;
-  }
 }
 
 

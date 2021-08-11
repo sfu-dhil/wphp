@@ -1,9 +1,40 @@
-<div>
-    <h2>Recommended Citation</h2>
-    <div class="citation-container">
-        <p class="citation">
-            {{ title }} <i>The Women's Print History Project</i>, 2019,
-            {{ type }} ID {{ record.id }} <a href='{{ url }}'>{{ url }}</a>. Accessed {{ null|date('Y-m-d') }}.
-        </p>
+{# Requires
+    title
+    record
+    type
+    url
+    all?
+#}
+{% set isTitle = type == 'title' %}
+
+{% set allStyles = {
+    'wphp': 'WPHP',
+    'mla': 'MLA',
+    'apa': 'APA',
+    'chicago': 'Chicago/Turabian',
+    'bibtex': 'BibTex'
+} %}
+
+{% set stylesToUse = isTitle ? allStyles : allStyles|first %}
+
+<div class="title-bibliographies">
+    <h2>Citations</h2>
+    <ul class="nav nav-tabs">
+        {% for style in stylesToUse|keys %}
+            <li{% if loop.first %} class="active"{% endif %}>
+                <a data-toggle="tab" href="#{{ style }}">{{ stylesToUse[style] }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+    <div class="tab-content citations">
+        {% for style in stylesToUse|keys %}
+            <div id="{{ style }}" class="tab-pane fade{% if loop.first %} in active{% endif %}">
+                <div>
+                    <p class="citation">
+                        {% include 'partial/citation/' ~ style ~ '.html.twig' %}
+                    </p>
+                </div>
+            </div>
+        {% endfor %}
     </div>
 </div>
