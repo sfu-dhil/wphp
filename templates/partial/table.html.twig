@@ -12,7 +12,7 @@
 {% endif %}
 
 
-<div class="tbl-container">
+<div class="tbl-container {% if isHorizontal %}htable{% else %}vtable{% endif %}">
     <div class="tbl-info tbl-info-header">
         {{ tblPagination ?? null }}
     </div>

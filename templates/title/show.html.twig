@@ -256,7 +256,7 @@
 
         {% if is_granted('ROLE_USER') and (title.sourceTitles|length + title.relatedTitles|length) > 0 %}
             <div class="titles-related-titles">
-                <h3>Related Titles</h3>
+                <h2>Related Titles</h2>
                 {% embed 'partial/table.html.twig' %}
                     {% block thead %}
                         <tr>
@@ -293,16 +293,16 @@
                 {% endembed %}
             </div>
         {% endif %}
-
         {% set roles = title.titleRoles('Author') %}
-
-        {% include 'partial/citation.html.twig' with {
+        {% embed 'partial/citation.html.twig' with {
             'author_string': roles|map(role => role.person)|join(', '),
-            'citation_title': title.title,
             'record': title,
             'type': 'title',
             'url': url('title_show', {'id': title.id})
         } %}
+        {% endembed %}
+
+
 
         <div class="title-comment">
             {# Comment interface #}
