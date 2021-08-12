@@ -73,7 +73,7 @@ class WPHPModals extends Modals{
     }
 }
 
-function makeModals(){
+export const makeModals = () => {
     let btnSelector = 'a[href*="/export/"]';
     let btns = document.querySelectorAll(btnSelector);
     if (btns){
@@ -84,7 +84,5 @@ function makeModals(){
     }
 }
 
-(function(){
-    makeModals();
-})();
+makeModals();
 

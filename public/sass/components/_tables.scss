@@ -26,6 +26,16 @@ $color_table_background_hover_even: darken($color_table_background_even, 5%);
 .tbl-container{
 
   margin-bottom: ms(0);
+  &.vtable .tbl-overflow{
+    // The height here is more-or-less
+    // a magic number: the tbl-overflow doesn't account for
+    // the tbl-info (heading, footer), so it's a best attempt
+    // at getting the table to fit comfortably into the viewport
+    max-height: 76.5vh;
+    resize: vertical;
+    // When the resize triggers, unset the max-height
+
+  }
   & > .tbl-info{
     display:flex;
     justify-content:space-between;
@@ -46,7 +56,9 @@ $color_table_background_hover_even: darken($color_table_background_even, 5%);
     max-width:100%;
     width:100%;
     overflow-x:auto;
+
   }
+
   p.count{
     margin:0;
     color: $color_grey_translucent;
@@ -78,6 +90,10 @@ $color_table_background_hover_even: darken($color_table_background_even, 5%);
     }
     // table head
     thead{
+      & > tr{
+        position:sticky;
+        top:-1px;
+      }
       th{
         color: $table_head_color;
         background: $table_head_background_color;
@@ -168,7 +184,7 @@ $color_table_background_hover_even: darken($color_table_background_even, 5%);
     }
 
     th, td{
-      min-width: 4rem;
+      min-width: 6rem;
       &.numeric{
         text-align:right;
       }

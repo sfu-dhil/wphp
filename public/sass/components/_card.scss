@@ -4,12 +4,14 @@
   gap: 1rem;
 }
 
-.card{
-  /* white */
+.card, .cardlike{
   background: $color_white;
   border: 1px solid $color_grey_light;
   border-radius:4px;
   box-shadow: $box-shadow-sm;
+}
+
+.card{
   display:flex;
   flex-direction:column;
   padding: .5rem;
@@ -30,6 +32,7 @@
     object-position:top;
     &.placeholder{
       filter: grayscale(.5);
+      height:100%;
     }
   }
 }

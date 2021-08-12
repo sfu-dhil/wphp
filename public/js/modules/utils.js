@@ -1,34 +1,34 @@
 "use strict";
 
-(function(){
-    const utils = {
-        capitalize: function(str){
-            return str.slice(1, 1).toUpperCase() + str.slice(2);
-        }
+
+
+    function removeExcerpts() {
+        let cards = document.querySelectorAll('.card');
+        cards.forEach(removeExcerpt);
     }
 
-    let cards = document.querySelectorAll('.card');
-    let paras = document.querySelectorAll('p');
-
-    cards.forEach(removeExcerpt);
-    paras.forEach(para => {
-        if (/[\w]/g.test(para.innerText)){
-            return;
-        }
-        if (para.innerText.trim() === '' && !para.querySelector('img')){
-            para.parentElement.removeChild(para);
-        }
-    });
-
-    let excerptImg = document.querySelector('.excerpt.hidden img');
-    console.log(excerptImg);
-    if (excerptImg){
-        document.documentElement.style.setProperty('--background-image',
-            `url(${excerptImg.src})`);
-        document.querySelector('.page-header').classList.add('hasHero');
+    function cleanUpParas() {
+        let paras = document.querySelectorAll('p');
+        paras.forEach(para => {
+            if (/[\w]/g.test(para.innerText)){
+                return;
+            }
+            if (para.innerText.trim() === '' && !para.querySelector('img')){
+                para.parentElement.removeChild(para);
+            }
+        });
     }
-    breakLinksAtSlash();
 
+    function localizeLinks() {
+        let links = [...document.querySelectorAll('.blog-content a')];
+        links.forEach(link => {
+            // Get the href attribute NOT the href prop
+            let rawHref = link.getAttribute('href');
+            if (/(womensprinthistoryproject\.com|dhil.lib.sfu.ca\/wphp)/gi.test(rawHref)) {
+                link.setAttribute('href', new URL(rawHref).pathname);
+            }
+        });
+    }
 
 
 
@@ -39,15 +39,18 @@
             e.target.classList.add('placeholder');
             e.target.removeEventListener('error', replaceWithPlaceholder);
         }
-        let contentDiv = card.querySelector('.card_top');
-        let excerpt = contentDiv.querySelector('.excerpt');
-        let excerptImg = excerpt.querySelector('img');
-        if (!excerptImg){
-            excerptImg = document.createElement('img');
+        if (card.querySelector('.card_top .excerpt img')){
+            let contentDiv = card.querySelector('.card_top');
+            let excerpt = contentDiv.querySelector('.excerpt');
+            let excerptImg = excerpt.querySelector('img');
+            if (!excerptImg){
+                excerptImg = document.createElement('img');
+            }
+
+            excerptImg.addEventListener('error', replaceWithPlaceholder);
+            contentDiv.replaceChild(cleanStyles(excerptImg), excerpt);
         }
 
-        excerptImg.addEventListener('error', replaceWithPlaceholder);
-        contentDiv.replaceChild(cleanStyles(excerptImg), excerpt);
     }
 
 
@@ -78,7 +81,7 @@
      * Adds a zero-width space at all '/' in links to make them break
      * at smaller widths
      */
-    function breakLinksAtSlash() {
+    export function breakLinksAtSlash(root = document.querySelector('main')) {
         const replaceText = (el) => {
             if (!/\//.test(el.innerText)) {
                 return;
@@ -96,14 +99,19 @@
                 }
             }
         }
-        try{
-            replaceText(document.querySelector('main'));
+        try {
+            replaceText(root);
             return true;
-        } catch(e) {
+        } catch (e) {
             return false;
             console.log(`${e}`);
         }
     }
 
 
+(function(){
+    localizeLinks();
+    cleanUpParas();
+    removeExcerpts();
+    breakLinksAtSlash();
 })();

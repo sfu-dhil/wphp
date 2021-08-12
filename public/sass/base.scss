@@ -58,12 +58,14 @@ body {
 @import 'components/navbar';
 @import 'components/pagination';
 @import 'components/tables';
+@import 'components/tabs';
 
-
+@import 'pages/geonames';
 @import 'pages/homepage';
 @import 'pages/nines';
+@import 'pages/person';
 @import 'pages/title';
-@import 'pages/geonames';
+
 
 main{
   margin-top: ($header_height + 1rem);
@@ -89,44 +91,6 @@ strong {
   }
 }
 
-
-
-.nav-tabs > li > a {
-  margin-right: 2px;
-  line-height: 1.42857143;
-  border: 1px solid transparent;
-  border-top-color: transparent;
-  border-right-color: transparent;
-  border-bottom-color: transparent;
-  border-left-color: transparent;
-  border-radius: 4px 4px 0 0;
-  background-color: $color_red_dark;
-  color: $color_white;
-
-  &:active,
-  &:focus,
-  &:hover {
-    border-color: #eee #eee #ddd;
-    text-decoration: none;
-    background-color: $color_red;
-    color: $color_white;
-  }
-}
-
-.nav-tabs > li.active > a {
-  // border-color: #eee #eee #ddd;
-  text-decoration: none;
-  background-color: $color_red;
-  color: $color_white;
-  &:active,
-  &:focus,
-  &:hover {
-    // border-color: #eee #eee #ddd;
-    text-decoration: none;
-    background-color: $color_red;
-    color: $color_white;
-  }
-}
 
 /* Custom app styles */
 label {
