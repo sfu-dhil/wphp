@@ -99,7 +99,6 @@ class TitleRepository extends ServiceEntityRepository {
      * @return Query
      */
     public function buildSearchQuery($data = [], $user = null) {
-        dump($data);
         $qb = $this->createQueryBuilder('e');
         $qb->orderBy('e.pubdate');
         $qb->addOrderBy('e.title');
