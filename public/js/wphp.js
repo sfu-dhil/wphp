@@ -117,8 +117,6 @@ import "./modules/modals";
 /* Table handling (accessibility, etc) */
 import "./modules/tables";
 
-
-
 /* Accordion for detail elements */
 import "./modules/accordion";
 

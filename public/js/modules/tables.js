@@ -1,6 +1,7 @@
 import A11YTables from '../../yarn/dhilux/js/a11Y_tables.js';
 import Swup from "../../yarn/swup/dist/swup.min.js";
 import SwupPreloadPlugin from "../../yarn/@swup/preload-plugin/dist/SwupPreloadPlugin.min.js";
+import StickyElements from "../../yarn/dhilux/js/sticky_elements.js";
 import { makeModals } from "./modals.js";
 import { breakLinksAtSlash } from "./utils.js";
 
@@ -28,6 +29,7 @@ function makeTables(){
                 overflow.style.maxHeight = tblHeight + 3 + "px";
             } else {
                 overflow.dataset.maxHeight = tblHeight + "px";
+                tbl.classList.add('resizable');
                 new MutationObserver(checkResize).observe(overflow, {
                     attributes: true,
                     attributesFilter: ['style']
@@ -83,4 +85,5 @@ function initSwup(){
 (function(){
     initSwup();
     makeTables();
+    new StickyElements('.table > thead > tr');
 }());
