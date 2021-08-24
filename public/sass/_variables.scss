@@ -92,6 +92,27 @@ $box-shadow-sm: 0px 4px 8px rgba(0, 0, 0, 0.04),
 0px 0px 2px rgba(0, 0, 0, 0.06),
 0px 0px 1px rgba(0, 0, 0, 0.04);
 
+$header_background: $color_dark_bg; ;
+$header_color: $color_white;
+$header_link_color: $color_white;
+$header_link_background: transparent;
+
+$header_link_color_hover: $color_2_darker_brown;
+$header_link_background_hover: rgba($color_2_salmon, 0.88);
+$header_height : 4.25rem;
+
+
+$nav_breakpoint: 991px;
+
+
+
+/* Add hamburger for nav bar */
+// Only include the squeeze type
+$hamburger-types: squeeze;
+
+$hamburger-layer-color: $header_color;
+$hamburger-active-layer-color: $header_color;
+
 
 
 

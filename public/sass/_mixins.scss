@@ -7,7 +7,7 @@
     color: $color;
     text-decoration:none;
     border-bottom: 1px solid $color_link_border;
-    transition: all 0.2s ease-in-out;
+    transition: border-bottom 0.2s ease-in-out;
     &:link,
     &:visited {
       color: $color;

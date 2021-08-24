@@ -1,4 +1,14 @@
 
+/* Custom app styles */
+label {
+  font-weight: normal;
+  color: $color_label;
+  &.required::after {
+    content: ' *';
+    color: red;
+    font-weight: bold;
+  }
+}
 /* make the search form checkboxes less bad. */
 div.checkbox, div.radio {
   width: 30%;

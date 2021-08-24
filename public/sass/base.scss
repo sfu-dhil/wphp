@@ -1,6 +1,4 @@
-// First, import bootstrap
-
-@use '../yarn/leaflet/dist/leaflet.css';
+// Variables
 @import 'fonts';
 @import 'variables';
 @import 'mixins';
@@ -8,44 +6,12 @@
 // Import externals
 @import '../yarn/dhilux/scss/dhilux.scss';
 
+//Structure
+@import 'structure';
 
-:root, html{
-  font-size: 1em;
-  --container_width: 100%;
-  @media (min-width: 768px) and (max-width: 991px){
-    --container_width: 750px;
-  }
-  @media (min-width: 992px) and (max-width: 1199px){
-    --container_width: 970px;
-  }
-  @media (min-width: 1200px){
-    --container_width: 1170px;
-  }
-}
-
-html {
-  position: relative;
-  min-height: 100vh;
-}
-
-
-body {
-  // background: $color_body_background;
-  background: $color_body_background;
-  color: $color_text;
-  font: $body_font;
-  font-size:1em;
-  min-height: 100vh;
-  line-height:1.4;
-  margin-bottom: 0;
-  font-family: $sans;
-  display:flex;
-  flex-direction:column;
-  overflow-x:hidden;
-}
-
-
+//Components
 @import 'components/accordion';
+@import 'components/alert';
 @import 'components/buttons';
 @import 'components/card';
 @import 'components/citations';
@@ -60,96 +26,11 @@ body {
 @import 'components/tables';
 @import 'components/tabs';
 
+// Pages
 @import 'pages/geonames';
 @import 'pages/homepage';
 @import 'pages/nines';
 @import 'pages/person';
 @import 'pages/title';
-
-
-main{
-  margin-top: ($header_height + 1rem);
-  margin-bottom: 5rem;
-  width:100%;
-  min-height:75vh;
-}
-
-@include link($color_link, $color_link_hover);
-
-strong {
-  font-weight: 700;
-}
-
-
-
-
-.container table p{
-  font-family: $lato;
-  font-size:inherit;
-  &:last-child {
-    margin-bottom: 0;
-  }
-}
-
-
-/* Custom app styles */
-label {
-  font-weight: normal;
-  color: $color_label;
-  &.required::after {
-    content: ' *';
-    color: red;
-    font-weight: bold;
-  }
-}
-
-h1{
-  letter-spacing: -1px;
-  margin-right: 0.5rem;
-}
-
-
-.container > .alert:first-child {
-  margin-top: 20px;
-}
-
-
-.page-header {
-  margin-bottom: 0;
-  border-bottom: 0;
-}
-
-
-
-
-// .col-sm-6 {
-//   width: auto;
-// }
-// .col-sm-6:first-child {
-//   /* width: 800px; */
-//   /* white-space: nowrap; */
-//   width: 110%;
-// }
-//
-// .col-sm-6:first-child td:last-child {
-//   padding-right: 1em;
-// }
-//
-// .col-sm-6:last-child {
-//   /* width: 300px; */
-//   flex-grow: 4;
-// }
-
-.row {
-  display: flex;
-}
-
-// Comments panels
-.comments-expand {
-  .btn {
-    white-space: normal;
-  }
-}
-
 
 

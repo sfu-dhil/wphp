@@ -1,6 +1,37 @@
 
+
+@mixin highlight($color: yellow, $hover: false, $hover-color: yellow){
+  --start: #{rgba($color, 0.1)};
+  --middle: #{rgba($color, 0.7)};
+  --end: #{rgba($color, 0.3)};
+  margin: 0 -0.4em;
+  padding: 0.1em 0.4em;
+  border-radius: 0.8em 0.3em;
+  border:1px solid transparent!important;
+  background-image: linear-gradient(
+                  to right,
+                  var(--start),
+                  var(--middle) 4%,
+                  var(--end)
+  );
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  @if ($hover){
+    &:hover{
+      --start: #{rgba($hover-color, 0.1)};
+      --middle: #{rgba($hover-color, 0.7)};
+      --end: #{rgba($hover-color, 0.3)};
+      border:1px solid transparent!important;
+      transition: background 0.2s ease-in-out;
+    }
+
+  }
+
+}
+
 :root{
-  --hero-height: 65vh;
+  --hero-height: clamp(70vh, calc(300vw/2), min(800px, 80vh));
+  --hero-width: min(100vw, 1920px);
 }
 
 
@@ -15,21 +46,47 @@
     height: var(--hero-height);
     background-image: url('../../images/bg.png');
     background-size: cover;
+    background-position: 30% 50%;
     color:white;
     @include full-width-in-container;
+
+    width: var(--hero-width);
+    margin-left: calc(-1 * (var(--hero-width) / 2));
+    margin-right: calc(-1 * (var(--hero-width) / 2));
     img{
       display:none;
     }
     margin-bottom: 3rem;
     display:flex;
     & > .container{
-      max-height: calc(var(--hero-height) - #{$header_height});
+      &:before, &:after{
+        content:unset;
+      }
+      align-self:center;
+    }
+    .homepage-info-block{
+      // max-height: calc(var(--hero-height) - #{$header_height});
       align-self:center;
       background: rgba($header_background, 0.8);
-      padding:1rem;
-      max-width: 50rem;
+      // Adding padding in ems.
+      padding:ms(-1) ms(0);
+      // And now set the font-size to response
+      font-size: clamp(ms(1), 1.2vw, ms(2));
+      max-width: 40rem;
       font-family: $serif;
-      font-size: ms(1);
+      margin-left:auto;
+      line-height:1.6;
+      a{
+        color: inherit;
+        background: transparent;
+        @include highlight(lighten($color_link, 20%), true, $color_link);
+        margin:0;
+        padding-top:0;
+        padding-bottom:0;
+      }
+      p{
+        margin: 0;
+      }
     }
 
   }
@@ -40,6 +97,7 @@
     margin-top:0;
   }
 }
+
 
 
 

@@ -1,40 +1,43 @@
-.wiki_api{
+.person-meta-grid{
   display: grid;
-  /* grid-column-gap: 3rem; */
-  grid-template-columns: 10fr 1fr;
+   grid-column-gap: 3rem;
+  grid-template-columns: 2fr 1fr;
   grid-template-rows: auto auto auto;
   > .tbl-container{
     grid-column-start: 1;
   }
-  > .wiki_image{
-    grid-column: span 1 / end;
-    grid-row-start: 1;
-    grid-row-end: end;
-    img{
-      max-width: calc(var(--container_width) * 0.3);
-      position: sticky;
-      top: 75px;
+  .person-info-card{
+
+  }
+  .person-info-card > div{
+    padding: ms(-1) ms(-2);
+    & + div{
+      border-top:1px solid $color_grey_translucent;
     }
   }
-  > .wiki_extract{
-    font-family: "EB Garamond";
-    font-size: 1.15rem;
-    color: rgba(0,0,0,0.6);
-    background: rgba(255, 255, 255, 0.78);
-    border: 2px solid #efefef;
-    border-radius: 4px;
-    padding: 1rem;
-    line-height:1.5;
-    box-shadow: $box-shadow-sm;
+
+  .heading{
+    @extend th;
   }
-  .wiki_attribution{
-    float: right;
-    clear: both;
-    margin-left: 1rem;
-    width: 3rem;
-    > a{
-      border-bottom:none;
-    }
-  }
+  //> .wiki_extract{
+  //  font-family: "EB Garamond";
+  //  font-size: 1.15rem;
+  //  color: rgba(0,0,0,0.6);
+  //  background: rgba(255, 255, 255, 0.78);
+  //  border: 2px solid #efefef;
+  //  border-radius: 4px;
+  //  padding: 1rem;
+  //  line-height:1.5;
+  //  box-shadow: $box-shadow-sm;
+  //}
+  //.wiki_attribution{
+  //  float: right;
+  //  clear: both;
+  //  margin-left: 1rem;
+  //  width: 3rem;
+  //  > a{
+  //    border-bottom:none;
+  //  }
+  //}
 }
 

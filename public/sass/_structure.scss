@@ -1,0 +1,46 @@
+
+:root, html{
+  font-size: 1em;
+  --container_width: 100%;
+  @media (min-width: 768px) and (max-width: 991px){
+    --container_width: 750px;
+  }
+  @media (min-width: 992px) and (max-width: 1199px){
+    --container_width: 970px;
+  }
+  @media (min-width: 1200px){
+    --container_width: 1170px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100vh;
+}
+
+
+body {
+  // background: $color_body_background;
+  background: $color_body_background;
+  color: $color_text;
+  font: $body_font;
+  font-size:1em;
+  min-height: 100vh;
+  line-height:1.4;
+  margin-bottom: 0;
+  font-family: $sans;
+  display:flex;
+  flex-direction:column;
+  overflow-x:hidden;
+}
+
+main{
+  margin-top: ($header_height + 1rem);
+  margin-bottom: 5rem;
+  width:100%;
+  min-height:75vh;
+}
+
+.row {
+  display: flex;
+}

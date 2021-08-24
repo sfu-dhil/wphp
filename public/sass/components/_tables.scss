@@ -224,5 +224,14 @@ td ul{
   }
 }
 
+.container table p{
+  font-family: $lato;
+  font-size:inherit;
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+
 
 

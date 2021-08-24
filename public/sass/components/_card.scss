@@ -69,11 +69,10 @@
 .link__label{
   font-size:0.7rem;
   text-transform:uppercase;
-  color: rgba(138, 8, 8, 0.8);
-  border-bottom:none;
+  color: rgba($color_link, 0.8);
   font-weight:500;
   &:hover{
-    color:inherit;
+    color: $color_link;
   }
 }
 
