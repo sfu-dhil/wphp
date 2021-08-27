@@ -234,7 +234,7 @@ class TitleSearchType extends AbstractType {
         $builder->add('genre', ChoiceType::class, [
             'choices' => $genres,
             'choice_label' => fn ($value, $key, $index) => $value->getName(),
-            'choice_value' => fn ($value) => $value->getId(),
+            'choice_value' => fn ($value) => $value ? $value->getid() : null,
             'label' => 'Genre',
             'required' => false,
             'expanded' => true,

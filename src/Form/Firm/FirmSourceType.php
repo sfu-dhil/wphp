@@ -10,8 +10,8 @@ declare(strict_types=1);
 
 namespace App\Form\Firm;
 
-use App\Entity\Source;
 use App\Entity\FirmSource;
+use App\Entity\Source;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
