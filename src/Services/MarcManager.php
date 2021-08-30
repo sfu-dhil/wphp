@@ -38,7 +38,7 @@ class MarcManager {
     /**
      * Get the title of a MARC record.
      *
-     * @param EstcMarc | OsborneMarc $object
+     * @param EstcMarc|OsborneMarc $object
      *
      * @return string
      */
@@ -90,7 +90,7 @@ class MarcManager {
     /**
      * Get the author of a MARC record.
      *
-     * @param EstcMarc | OsborneMarc $object
+     * @param EstcMarc|OsborneMarc $object
      *
      * @return string
      */
@@ -130,7 +130,7 @@ class MarcManager {
     /**
      * Get the rows of a MARC record.
      *
-     * @param EstcMarc | OsborneMarc $object
+     * @param EstcMarc|OsborneMarc $object
      *
      * @return Collection|EstcMarc[]|OsborneMarc[]
      */
