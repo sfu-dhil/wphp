@@ -1,5 +1,6 @@
 @include dhil-details-accordion(true) {
   details.accordion {
+    @extend .cardlike;
     summary {
       font-variant:none;
       text-transform:none;
@@ -7,11 +8,10 @@
       align-content:center;
       svg{
         transform: rotate(0);
-        font-size: 1.5rem;
+        font-size: 1em;
         margin-right: 1rem;
         transition: all var(--accordion-easing) var(--accordion-duration);
       }
-      @extend h3;
       background-color:inherit!important;
     }
     &[aria-expanded='true'] svg{
@@ -21,7 +21,11 @@
 }
 
 .accordion__content{
-  margin-top:1rem;
+  margin:1rem;
+}
+
+.comment-interface{
+  margin-top: ms(1);
 }
 
 

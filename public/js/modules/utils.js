@@ -20,7 +20,7 @@
     }
 
     function localizeLinks() {
-        let links = [...document.querySelectorAll('.blog-content a')];
+        let links = [...document.querySelectorAll('.blog-content a, .homepage-info-block a')];
         links.forEach(link => {
             // Get the href attribute NOT the href prop
             let rawHref = link.getAttribute('href');
@@ -114,4 +114,9 @@
     cleanUpParas();
     removeExcerpts();
     breakLinksAtSlash();
+    let blogContent = document.querySelector('.blog-content');
+    if (blogContent){
+        blogContent.querySelectorAll('img').forEach(cleanStyles);
+    }
+
 })();

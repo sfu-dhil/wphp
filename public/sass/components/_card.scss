@@ -1,6 +1,9 @@
 .gallery{
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(18.5rem, 1fr));
+  @media (max-width: #{$breakpoint_sm}){
+    grid-template-columns: 1fr;
+  }
   gap: 1rem;
 }
 
@@ -15,6 +18,20 @@
   display:flex;
   flex-direction:column;
   padding: .5rem;
+  @media (max-width: #{$breakpoint_sm}){
+    flex-direction:row;
+    justify-content:space-between;
+    & > .card_top_link{
+      order:2;
+      width:45%;
+      & + .card_bottom{
+        width:45%;
+      }
+    }
+    & > .card_bottom:first-child{
+      width:100%;
+    }
+  }
   img{
     max-width:100%;
     height:auto;
@@ -70,6 +87,7 @@
   font-size:0.7rem;
   text-transform:uppercase;
   color: rgba($color_link, 0.8);
+  border-bottom:none;
   font-weight:500;
   &:hover{
     color: $color_link;

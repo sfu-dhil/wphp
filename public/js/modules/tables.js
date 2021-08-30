@@ -83,7 +83,9 @@ function initSwup(){
 
 
 (function(){
-    initSwup();
-    makeTables();
-    new StickyElements('.table > thead > tr');
+    if (document.querySelectorAll('.tbl-container').length > 0){
+        initSwup();
+        makeTables();
+        new StickyElements('.table > thead > tr');
+    }
 }());

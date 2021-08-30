@@ -3,10 +3,11 @@
 {% block body %}
     <div class="hero">
         <div class="container">
-            {% if homepage %}
-                {{ homepage.content|raw }}
-            {% endif %}
-
+            <div class="homepage-info-block">
+                {% if homepage %}
+                    {{ homepage.content|raw }}
+                {% endif %}
+            </div>
         </div>
     </div>
     <div class="content">

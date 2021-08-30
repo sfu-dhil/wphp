@@ -79,7 +79,7 @@ $color_grey_light: #fafafa;
 $heading-font: $eb-garamond;
 $serif: $eb-garamond;
 $sans: $lato;
-
+$reading-width: 62rem;
 
 
 $desktop-width: 970px;
@@ -101,6 +101,13 @@ $header_link_color_hover: $color_2_darker_brown;
 $header_link_background_hover: rgba($color_2_salmon, 0.88);
 $header_height : 4.25rem;
 
+$breakpoint_sm: 768px;
+$breakpoint_md: 992px;
+$breakpoint_lg: 1200px;
+$container_width_sm: 750px;
+$container_width_md: 970px;
+$container_width_lg: 1170px;
+$container_width_max: 1900px;
 
 $nav_breakpoint: 991px;
 

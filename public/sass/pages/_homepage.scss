@@ -1,94 +1,12 @@
-
-
-@mixin highlight($color: yellow, $hover: false, $hover-color: yellow){
-  --start: #{rgba($color, 0.1)};
-  --middle: #{rgba($color, 0.7)};
-  --end: #{rgba($color, 0.3)};
-  margin: 0 -0.4em;
-  padding: 0.1em 0.4em;
-  border-radius: 0.8em 0.3em;
-  border:1px solid transparent!important;
-  background-image: linear-gradient(
-                  to right,
-                  var(--start),
-                  var(--middle) 4%,
-                  var(--end)
-  );
-  -webkit-box-decoration-break: clone;
-  box-decoration-break: clone;
-  @if ($hover){
-    &:hover{
-      --start: #{rgba($hover-color, 0.1)};
-      --middle: #{rgba($hover-color, 0.7)};
-      --end: #{rgba($hover-color, 0.3)};
-      border:1px solid transparent!important;
-      transition: background 0.2s ease-in-out;
-    }
-
-  }
-
-}
-
 :root{
-  --hero-height: clamp(70vh, calc(300vw/2), min(800px, 80vh));
-  --hero-width: min(100vw, 1920px);
+  --hero-height: clamp(60vh, calc(300vw/2), min(800px, 70vh));
+  --hero-width: min(100vw, #{$container_width_max});
 }
 
-
+// Everything is wrapped in homepage
 .homepage{
-
   main.container{
     margin-top:0;
-  }
-
-  .hero{
-    //Temp fix to remove the image from the blogpost.
-    height: var(--hero-height);
-    background-image: url('../../images/bg.png');
-    background-size: cover;
-    background-position: 30% 50%;
-    color:white;
-    @include full-width-in-container;
-
-    width: var(--hero-width);
-    margin-left: calc(-1 * (var(--hero-width) / 2));
-    margin-right: calc(-1 * (var(--hero-width) / 2));
-    img{
-      display:none;
-    }
-    margin-bottom: 3rem;
-    display:flex;
-    & > .container{
-      &:before, &:after{
-        content:unset;
-      }
-      align-self:center;
-    }
-    .homepage-info-block{
-      // max-height: calc(var(--hero-height) - #{$header_height});
-      align-self:center;
-      background: rgba($header_background, 0.8);
-      // Adding padding in ems.
-      padding:ms(-1) ms(0);
-      // And now set the font-size to response
-      font-size: clamp(ms(1), 1.2vw, ms(2));
-      max-width: 40rem;
-      font-family: $serif;
-      margin-left:auto;
-      line-height:1.6;
-      a{
-        color: inherit;
-        background: transparent;
-        @include highlight(lighten($color_link, 20%), true, $color_link);
-        margin:0;
-        padding-top:0;
-        padding-bottom:0;
-      }
-      p{
-        margin: 0;
-      }
-    }
-
   }
   p{
     margin: 1.5rem 1rem;
@@ -97,6 +15,61 @@
     margin-top:0;
   }
 }
+
+.hero{
+  height: var(--hero-height);
+  background-image: url('../../images/bg.png');
+  background-size: cover;
+  background-position: 30% 50%;
+  color:$color_white;
+  @include full-width-in-container;
+  width: var(--hero-width);
+  margin-left: calc(-1 * (var(--hero-width) / 2));
+  margin-right: calc(-1 * (var(--hero-width) / 2));
+  img{
+    display:none;
+  }
+  margin-bottom: 3rem;
+  display:flex;
+  & > .container{
+    align-self:center;
+    &:before, &:after{
+      content:unset;
+    }
+  }
+}
+
+.homepage-info-block{
+  align-self:center;
+  background: rgba($header_background, 0.8);
+  border:1px solid rgba($header_background, 0.95);
+  padding:ms(0) ms(1);
+  font-size: ms(1);
+  max-width: 40rem;
+  font-family: $serif;
+  line-height: 1.5;
+  margin-left:auto;
+  backdrop-filter: blur(1px);
+  box-shadow: $box-shadow-sm;
+  @media (max-width: $breakpoint_lg){
+    margin-right:auto;
+  }
+  a{
+    color: inherit;
+    background: transparent;
+    border-bottom: 0.2em solid rgba($color_link, 0.7);
+    margin:0;
+    padding-top:0;
+    padding-bottom:0;
+    &:hover{
+      border-bottom-color: $color_link;
+    }
+  }
+  p{
+    margin: 0;
+  }
+}
+
 
 
 

@@ -76,10 +76,9 @@ class WPHPModals extends Modals{
 export const makeModals = () => {
     let btnSelector = 'a[href*="/export/"]';
     let btns = document.querySelectorAll(btnSelector);
-    if (btns){
-        console.log('BUTTONS!!!');
+    if (btns && btns.length > 0){
         let exportModals = new WPHPModals(btnSelector);
-        exportModals.debug = true;
+        exportModals.debug = false;
         exportModals.init();
     }
 }

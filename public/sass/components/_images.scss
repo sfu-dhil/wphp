@@ -4,6 +4,11 @@ img{
   height:auto;
 }
 
+// Hack for making images responsive in blog content.
+.blog-content img{
+  width:100%;
+}
+
 a.img-container{
   display:block;
   height:100%;

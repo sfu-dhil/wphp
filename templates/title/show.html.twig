@@ -56,8 +56,7 @@
                                     {% for tr in title.titleRoles %}
                                         {% set person = tr.person %}
                                         <li>
-                                            <a href="{{ path('person_show', {'id': person.id}) }}">{{ person.lastName }}
-                                                , {{ person.firstName }}</a> ({{ tr.role.name }})
+                                            <a href="{{ path('person_show', {'id': person.id}) }}">{{ person }}</a> ({{ tr.role.name }})
                                         </li>
                                     {% endfor %}
                                 </ul>

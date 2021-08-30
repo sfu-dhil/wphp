@@ -1,7 +1,5 @@
 @import 'variables';
 
-
-
 @mixin link($color, $hover_color) {
   a {
     color: $color;
@@ -43,20 +41,31 @@
   }
 }
 
-@mixin tablet {
-  @media (min-width: #{$tablet-width}) {
-    @content;
-  }
-}
+@mixin highlight($color: yellow, $hover: false, $hover-color: yellow){
+  --start: #{rgba($color, 0.1)};
+  --middle: #{rgba($color, 0.7)};
+  --end: #{rgba($color, 0.3)};
+  margin: 0 -0.4em;
+  padding: 0.1em 0.4em;
+  border-radius: 0.8em 0.3em;
+  border:1px solid transparent!important;
+  background-image: linear-gradient(
+                  to right,
+                  var(--start),
+                  var(--middle) 4%,
+                  var(--end)
+  );
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  @if ($hover){
+    &:hover{
+      --start: #{rgba($hover-color, 0.1)};
+      --middle: #{rgba($hover-color, 0.7)};
+      --end: #{rgba($hover-color, 0.3)};
+      border:1px solid transparent!important;
+      transition: background 0.2s ease-in-out;
+    }
 
-@mixin tablet-only {
-  @media (min-width: #{$tablet-width}) and (max-width: #{$desktop-width - 1px}) {
-    @content;
   }
-}
 
-@mixin desktop {
-  @media (min-width: #{$desktop-width}) {
-    @content;
-  }
 }

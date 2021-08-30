@@ -5,7 +5,8 @@
 }
 
 .tab-container{
-  @extend .cardlike;
+  background: $color_white;
+  border-radius:4px;
 }
 
 .citation{

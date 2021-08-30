@@ -2,14 +2,14 @@
 :root, html{
   font-size: 1em;
   --container_width: 100%;
-  @media (min-width: 768px) and (max-width: 991px){
-    --container_width: 750px;
+  @media (min-width: $breakpoint_sm) and (max-width: #{$breakpoint_md - 1px}){
+    --container_width: #{$container_width_sm};
   }
-  @media (min-width: 992px) and (max-width: 1199px){
-    --container_width: 970px;
+  @media (min-width: $breakpoint_md) and (max-width: #{$breakpoint_lg - 1px}){
+    --container_width: #{$container_width_md};
   }
-  @media (min-width: 1200px){
-    --container_width: 1170px;
+  @media (min-width: $breakpoint_lg){
+    --container_width: #{$container_width_lg};
   }
 }
 

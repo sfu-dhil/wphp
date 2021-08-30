@@ -27,7 +27,6 @@ nav.navbar, .navbar-nav, .navbar-collapse, .nav-container, .navbar-right{
   min-height: unset;
   height: $header_height;
   z-index:999;
-
   @media (max-width: $nav_breakpoint){
     min-height: $header_height;
     height:auto;
@@ -46,7 +45,7 @@ nav.navbar, .navbar-nav, .navbar-collapse, .nav-container, .navbar-right{
   height: $header_height;
   display:flex;
   align-items:center;
-  justify-content:center;
+  margin-left:auto;
   padding: .125rem 1rem .125rem 1rem;
   a{
     border-bottom:none;
@@ -67,6 +66,7 @@ nav.navbar, .navbar-nav, .navbar-collapse, .nav-container, .navbar-right{
   display:grid;
   align-items:center;
   width:100%;
+  max-width: $container_width_max;
   height: $header_height;
   grid-column-gap: ms(-2);
   grid-template-columns: minmax(11.5rem, calc( (100vw - var(--container_width)) * 0.5))  minmax(auto, var(--container_width));
