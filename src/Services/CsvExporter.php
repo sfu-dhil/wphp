@@ -78,9 +78,8 @@ class CsvExporter {
     }
 
     public function titleRow(Title $title) {
-
         $sources = [];
-        foreach($title->getTitleSources() as $source) {
+        foreach ($title->getTitleSources() as $source) {
             $sources[] = $source->getSource()->getName() . ' ' . $source->getIdentifier();
         }
 
