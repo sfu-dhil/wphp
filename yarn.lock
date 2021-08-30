@@ -23,9 +23,9 @@
   integrity sha512-ZE5WvqZQZinXpH8MaEiM9klDsUOfCHVQJ/tZKpNVQhi8mHt9WqPCROu500oI5jC3s6jaJuWsM7LfJ1zyEeW+XA==
 
 "@fortawesome/fontawesome-free@^5.14.0":
-  version "5.15.3"
-  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-free/-/fontawesome-free-5.15.3.tgz#c36ffa64a2a239bf948541a97b6ae8d729e09a9a"
-  integrity sha512-rFnSUN/QOtnOAgqFRooTA3H57JLDm0QEG/jPdk+tLQNL/eWd+Aok8g3qCI+Q1xuDPWpGW/i9JySpJVsq8Q0s9w==
+  version "5.15.4"
+  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-free/-/fontawesome-free-5.15.4.tgz#ecda5712b61ac852c760d8b3c79c96adca5554e5"
+  integrity sha512-eYm8vijH/hpzr/6/1CJ/V/Eb1xQFW2nnUKArb3z+yUWv7HTwj6M7SP957oMjfZjAHU6qpoNc2wQvIxBLWYa/Jg==
 
 "@swup/plugin@^1.0.0":
   version "1.0.1"
@@ -581,9 +581,9 @@ terser@^5.5.1:
     source-map-support "~0.5.19"
 
 tinymce@^5.4.0:
-  version "5.8.2"
-  resolved "https://registry.yarnpkg.com/tinymce/-/tinymce-5.8.2.tgz#54eb8160b697796c3b52282e648d9d12b1a7399a"
-  integrity sha512-qfWThBrSzbj4DoUk+lgGeDoP2GzLDSWrfvVUxf40HZhTzsG15X2nZ4N49IFqwaVgRl5AyFDtuWiEH/lCmiAcRA==
+  version "5.9.1"
+  resolved "https://registry.yarnpkg.com/tinymce/-/tinymce-5.9.1.tgz#95100cd6748bbe5a5dfaaf8353f129756a0a5372"
+  integrity sha512-GaG15OhQB1zR2L63fywhEAViTxkAlhX5JbA+48+O0zCo1FwDuQ8iUVi/FzaOX9Uo7ULp+Y2gu4r3P4ZNueDVPQ==
 
 tslib@^1.9.0:
   version "1.14.1"

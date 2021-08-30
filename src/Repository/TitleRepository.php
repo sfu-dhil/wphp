@@ -275,7 +275,16 @@ class TitleRepository extends ServiceEntityRepository {
             $qb->setParameter('total', $total);
         }
 
-        $this->arrayPart($qb, $data, 'genre', 'genre');
+        if (isset($data['genre']) && count($data['genre']) > 0) {
+            $conditions = [];
+            foreach ($data['genre'] as $idx => $genre) {
+                $alias = 'g_' . $idx;
+                $qb->innerJoin('e.genres', $alias);
+                $conditions[] = $qb->expr()->orX($alias . '.id = :genre_' . $idx);
+                $qb->setParameter('genre_' . $idx, $genre);
+            }
+            $qb->andWhere($qb->expr()->orX(...$conditions));
+        }
 
         $this->fulltextPart($qb, $data, 'signedAuthor', 'signed_author');
         $this->fulltextPart($qb, $data, 'imprint', 'imprint');

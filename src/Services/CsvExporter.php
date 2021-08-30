@@ -67,6 +67,7 @@ class CsvExporter {
             'Edition',
             'Volumes',
             'Pagination',
+            'Sources',
             'Price Pound',
             'Price Shilling',
             'Price Pence',
@@ -77,6 +78,11 @@ class CsvExporter {
     }
 
     public function titleRow(Title $title) {
+        $sources = [];
+        foreach ($title->getTitleSources() as $source) {
+            $sources[] = $source->getSource()->getName() . ' ' . $source->getIdentifier();
+        }
+
         return [
             $title->getId(),
             $title->getTitle(),
@@ -95,6 +101,7 @@ class CsvExporter {
             $title->getEdition(),
             $title->getVolumes(),
             $title->getPagination(),
+            implode('; ', $sources),
             $title->getPricePound(),
             $title->getPriceShilling(),
             $title->getPricePence(),
