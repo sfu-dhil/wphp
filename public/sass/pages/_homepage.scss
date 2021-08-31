@@ -51,7 +51,7 @@
   margin-left:auto;
   backdrop-filter: blur(1px);
   box-shadow: $box-shadow-sm;
-  @media (max-width: $breakpoint_lg){
+  @media (max-width: $breakpoint_sm){
     margin-right:auto;
   }
   a{

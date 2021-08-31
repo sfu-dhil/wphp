@@ -82,17 +82,55 @@
      * at smaller widths
      */
     export function breakLinksAtSlash(root = document.querySelector('main')) {
+        let frags = [];
+        const handleSlashes = (node) => {
+            let text = node.data;
+            let el = document.createElement('span');
+            if (text.indexOf('/') == -1){
+                el.innerText = text;
+                return el;
+            }
+            let doubleSlashTokens = text.split('//');
+            // Split the tokens on "//" since those shouldn't be replaced
+            doubleSlashTokens.forEach((bit, idx) => {
+                let slashBits = bit.split('/');
+                if (idx > 0){
+                    // Mimic join
+                    el.insertAdjacentText('beforeend', '//');
+                }
+                // If there are no slash tokens, then just append the bit
+                if (slashBits.length == 1){
+                    el.insertAdjacentText('beforeend', bit);
+                } else {
+                    // If there are slash tokens, then add a wbr before each one
+                    slashBits.forEach((sb, sbidx) => {
+                        if (sbidx > 0){
+                            el.insertAdjacentHTML('beforeend', `<wbr>/`);
+                        }
+                        // And add the text back in
+                        el.insertAdjacentText('beforeend', sb);
+                    });
+                }
+            });
+            return el;
+        };
         const replaceText = (el) => {
-            if (!/\//.test(el.innerText)) {
+            console.log(el);
+            if (el.textContent.indexOf('/') == -1) {
+                console.log(el.textContent);
                 return;
             }
             for (let child of el.childNodes) {
+                console.log(child);
                 switch (child.nodeType) {
                     case 1:
                         replaceText(child);
                         break;
                     case 3:
-                        child.data = child.data.replace(/([\/\?#=])/g, '\u200B$1');
+                        if (child.data.trim().length > 0){
+                            let frag = handleSlashes(child);
+                            el.replaceChild(frag, child);
+                        }
                         break;
                     default:
                         break;
@@ -100,11 +138,13 @@
             }
         }
         try {
-            replaceText(root);
+            console.log(root);
+          //  replaceText(root);
             return true;
         } catch (e) {
-            return false;
             console.log(`${e}`);
+            return false;
+
         }
     }
 
