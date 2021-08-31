@@ -1,22 +1,14 @@
 {
     "@context": "http://schema.org",
     "@type": "Person"
-    {% if person.firstname %},
-    "givenName": "{{ person.firstName}}"
+    {% if person.firstname %},"givenName": "{{ person.firstName}}" {% endif %}
+    {% if person.lastName %},"familyName": "{{ person.lastName}}" {% endif %}
+,"gender": "{% include 'person/gender.html.twig' %}"
+    {% if person.viafUrl %}
+,"sameAs": "{{ person.viafUrl}}"
     {% endif %}
-    {% if person.lastName %},
-    "familyName": "{{ person.lastName}}"
-    {% endif %},
-    "gender": "{% include 'person/gender.html.twig' %}"
-    {% if person.viafUrl %},
-    "sameAs": "{{ person.viafUrl}}"
-    {% endif %}
-    {% if person.dob %},
-    "birthDate": "{{person.dob}}"
-    {% endif %}
-    {% if person.dod %},
-    "deathDate": "{{person.dod}}"
-    {% endif %}
+    {% if person.dob %},"birthDate": "{{person.dob}}" {% endif %}
+    {% if person.dod %}, "deathDate": "{{person.dod}}" {% endif %}
     {% if person.cityOfBirth %},
     "birthPlace": {
         "@type": "Place",
@@ -40,13 +32,14 @@
             "longitude": "{{person.cityOfDeath.longitude}}"
         }
     }
-    {% endif %},
-    "@id": "{{ url('person_show', {'id':person.id}) }}",
+    {% endif %}
+,"@id": "{{ url('person_show', {'id':person.id}) }}",
+
     "@graph": [
-        {% for titleRole in person.getTitleRoles %}
+        {% for titleRole in person.getTitleRoles | sort((a,b) => a.title.pubDate <=> b.title.pubDate) %}
         {% if titleRole.Role.Name == "Author" %}
         {% set book = titleRole.title %}
-        {
+    {
             "@type": "Book",
             "@id": "{{ url('title_show', {'id':book.id}) }}" ,
             "name": "{{book.title}}",
@@ -66,29 +59,26 @@
                     "longitude": "{{book.locationOfPrinting.longitude}}"
                 }
             }
-            {% endif %},
-            "author": [
+            {% endif %}
+        ,"author": [
                 {% for titleRole in book.getTitleRoles("Author") %}{% set author = titleRole.person %}
                 {
-                    "type": "person",
+                    "type":"person",
                     "@id": "{{ url('person_show', {'id':author.id}) }}"
                 }
                 {% if not loop.last %},
                 {% endif %}
 
                 {% endfor %}
-            ],
-            "publisher": [
+            ]
+
+        ,"publisher": [
                 {% for titleFirmrole in book.getTitleFirmroles("Publisher") %}{% set firm = titleFirmrole.firm %}
                 {
                     "@type": "Organization"
-                    {% if firm.name %},
-                    "name": "{{firm.name}}"
-                    {% endif %},
+                    {% if firm.name %}, "name": "{{firm.name}}" {% endif %},
                     "@id": "{{ url('firm_show', {'id':firm.id}) }}"
-                    {% if firm.streetAddress %},
-                    "address": "{{ firm.streetAddress }}"
-                    {% endif %}
+                    {% if firm.streetAddress %}, "address": "{{ firm.streetAddress }}" {% endif %}
                 }
                 {% if not loop.last %},
                 {% endif %}
@@ -96,8 +86,7 @@
                 {% endfor %}
             ]
         }
-        {% endif %}
-        {% if not loop.last %},
+        {% if not loop.last %},{% endif %}
         {% endif %}
         {% endfor %}
     ]
