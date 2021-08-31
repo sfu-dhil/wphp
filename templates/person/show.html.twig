@@ -194,4 +194,9 @@
 
 {% block javascripts %}
     <script src="{{ asset('yarn/tablesorter/dist/js/jquery.tablesorter.min.js') }}"></script>
+    <script src="{{ asset('yarn/@knight-lab/timelinejs/dist/js/timeline-min.js') }}"></script>
+    <script>
+        let url = '{{ path('person_show', {'id': person.id, '_format': 'json'}) }}'
+    </script>
+    <script src="{{ asset('js/timeline.js') }}"></script>
 {% endblock %}
