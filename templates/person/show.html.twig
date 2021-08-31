@@ -1,8 +1,10 @@
 {% extends 'base.html.twig' %}
 
 {% block htmlhead %}
-    <link href='{{ path('person_show', {'id': person.id, '_format': 'xml'}) }}' type='application/rdf+xml' rel='alternate'/>
-    <link href='{{ path('person_show', {'id': person.id, '_format': 'json'}) }}' type='application/ld+json' rel='alternate'/>
+    <link href='{{ path('person_show', {'id': person.id, '_format': 'xml'}) }}' type='application/rdf+xml'
+          rel='alternate'/>
+    <link href='{{ path('person_show', {'id': person.id, '_format': 'json'}) }}' type='application/ld+json'
+          rel='alternate'/>
 {% endblock %}
 
 {% block pageheader %}
@@ -20,7 +22,8 @@
                 <a href="{{ path('person_edit', { 'id': person.id }) }}" class="btn btn-default">
                     <span class='glyphicon glyphicon-edit'></span> Edit Person
                 </a>
-                <a href="{{ path('person_delete', { 'id': person.id }) }}" class="btn btn-default" data-confirm="Are you sure you want to delete this Person?">
+                <a href="{{ path('person_delete', { 'id': person.id }) }}" class="btn btn-default"
+                   data-confirm="Are you sure you want to delete this Person?">
                     <span class='glyphicon glyphicon-remove'></span> Delete Person
                 </a>
             </div>
@@ -28,100 +31,100 @@
     {% endif %}
     <table class="table table-bordered table-condensed table-hover table-striped">
         <tbody>
-            <tr>
-                <th data-toggle="popover" data-content="{{ 'person.fields.id'|trans }}">ID</th>
-                <td>{{ person.id }}</td>
-            </tr>
-            <tr>
-                <th data-toggle="popover" data-content="{{ 'person.fields.lastName'|trans }}">Last Name</th>
-                <td>{{ person.lastName }}</td>
-            </tr>
-            <tr>
-                <th data-toggle="popover" data-content="{{ 'person.fields.firstName'|trans }}">First Name</th>
-                <td>{{ person.firstName }}</td>
-            </tr>
-            <tr>
-                <th data-toggle="popover" data-content="{{ 'person.fields.title'|trans }}">Title</th>
-                <td>{{ person.title }}</td>
-            </tr>
-            <tr>
-                <th data-toggle="popover" data-content="{{ 'person.fields.gender'|trans }}">Gender</th>
-                <td>{% include 'person/gender.html.twig' %}</td>
-            </tr>
-            <tr>
-                <th data-toggle="popover" data-content="{{ 'person.fields.dob'|trans }}">Date of Birth</th>
-                <td>{% if person.dob %}{{ person.dob|replace({'-00': ''}) }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th data-toggle="popover" data-content="{{ 'person.fields.dod'|trans }}">Date of Death</th>
-                <td>{% if person.dod %}{{ person.dod|replace({'-00': ''}) }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th data-toggle="popover" data-content="{{ 'person.fields.cityOfBirth'|trans }}">Place of Birth</th>
-                <td>
-                    {% if person.cityOfBirth %}
-                        <a href="{{path('geonames_show', {'id': person.cityOfBirth.geonameid}) }}">
-                            {{ person.cityOfBirth.name }}
-                        </a>
-                    {% endif %}
-                </td>
-            </tr>
-            <tr>
-                <th data-toggle="popover" data-content="{{ 'person.fields.cityOfDeath'|trans }}">Place of Death</th>
-                <td>
-                    {% if person.cityOfDeath %}
-                        <a href="{{ path('geonames_show', {'id': person.cityOfDeath.geonameid}) }}">
-                            {{ person.cityOfDeath.name }}
-                        </a>
-                    {% endif %}
-                </td>
-            </tr>
-            {% if person.relatedFirms|length %}
+        <tr>
+            <th data-toggle="popover" data-content="{{ 'person.fields.id'|trans }}">ID</th>
+            <td>{{ person.id }}</td>
+        </tr>
+        <tr>
+            <th data-toggle="popover" data-content="{{ 'person.fields.lastName'|trans }}">Last Name</th>
+            <td>{{ person.lastName }}</td>
+        </tr>
+        <tr>
+            <th data-toggle="popover" data-content="{{ 'person.fields.firstName'|trans }}">First Name</th>
+            <td>{{ person.firstName }}</td>
+        </tr>
+        <tr>
+            <th data-toggle="popover" data-content="{{ 'person.fields.title'|trans }}">Title</th>
+            <td>{{ person.title }}</td>
+        </tr>
+        <tr>
+            <th data-toggle="popover" data-content="{{ 'person.fields.gender'|trans }}">Gender</th>
+            <td>{% include 'person/gender.html.twig' %}</td>
+        </tr>
+        <tr>
+            <th data-toggle="popover" data-content="{{ 'person.fields.dob'|trans }}">Date of Birth</th>
+            <td>{% if person.dob %}{{ person.dob|replace({'-00': ''}) }}{% endif %}</td>
+        </tr>
+        <tr>
+            <th data-toggle="popover" data-content="{{ 'person.fields.dod'|trans }}">Date of Death</th>
+            <td>{% if person.dod %}{{ person.dod|replace({'-00': ''}) }}{% endif %}</td>
+        </tr>
+        <tr>
+            <th data-toggle="popover" data-content="{{ 'person.fields.cityOfBirth'|trans }}">Place of Birth</th>
+            <td>
+                {% if person.cityOfBirth %}
+                    <a href="{{ path('geonames_show', {'id': person.cityOfBirth.geonameid}) }}">
+                        {{ person.cityOfBirth.name }}
+                    </a>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th data-toggle="popover" data-content="{{ 'person.fields.cityOfDeath'|trans }}">Place of Death</th>
+            <td>
+                {% if person.cityOfDeath %}
+                    <a href="{{ path('geonames_show', {'id': person.cityOfDeath.geonameid}) }}">
+                        {{ person.cityOfDeath.name }}
+                    </a>
+                {% endif %}
+            </td>
+        </tr>
+        {% if person.relatedFirms|length %}
             <tr>
                 <th data-toggle='popover' data-content='{{ 'person.fields.relatedFirms'|trans }}'>Related Firms</th>
                 <td>
-                {% for firm in person.relatedFirms %}
+                    {% for firm in person.relatedFirms %}
                     <a href='{{ path('firm_show', {'id': firm.id}) }}'>
                         {{ firm }}
-                    </a>{% if not loop.last %}<br/>{% endif %}
-                {% endfor %}
+                        </a>{% if not loop.last %}<br/>{% endif %}
+                    {% endfor %}
                 </td>
             </tr>
-            {% endif %}
-            <tr>
-                <th data-toggle="popover" data-content="{{ 'person.fields.viafUrl'|trans }}">VIAF URI</th>
-                <td>
-                    {% if person.viafUrl %}
-                        <a href="{{person.viafUrl }}">{{ person.viafUrl }}</a>
-                    {% endif %}
-                </td>
+        {% endif %}
+        <tr>
+            <th data-toggle="popover" data-content="{{ 'person.fields.viafUrl'|trans }}">VIAF URI</th>
+            <td>
+                {% if person.viafUrl %}
+                    <a href="{{ person.viafUrl }}">{{ person.viafUrl }}</a>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th data-toggle="popover" data-content="{{ 'person.fields.wikipediaUrl'|trans }}">Wikipedia Entry</th>
+            <td>
+                {% if person.wikipediaUrl %}
+                    <a href="{{ person.wikipediaUrl }}">{{ person.wikipediaUrl }}</a>
+                {% endif %}
+            </td>
+        </tr>
+        <tr data-toggle="popover" data-content="{{ 'person.fields.imageUrl'|trans }}">
+            <th>Image URL</th>
+            <td>
+                {% if person.imageUrl %}
+                    <a href="{{ person.imageUrl }}">{{ person.imageUrl }}</a>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th data-toggle="popover" data-content="{{ 'person.fields.notes'|trans }}">Notes</th>
+            <td>{{ person.notes }}</td>
+        </tr>
+        {% if is_granted('ROLE_USER') %}
+            <tr data-toggle="popover" data-content="{{ 'person.fields.finalCheck'|trans }}">
+                <th>Verified</th>
+                <td>{% if person.finalCheck %}Yes{% else %}No{% endif %}</td>
             </tr>
-            <tr>
-                <th data-toggle="popover" data-content="{{ 'person.fields.wikipediaUrl'|trans }}">Wikipedia Entry</th>
-                <td>
-                    {% if person.wikipediaUrl %}
-                        <a href="{{person.wikipediaUrl }}">{{ person.wikipediaUrl }}</a>
-                    {% endif %}
-                </td>
-            </tr>
-            <tr data-toggle="popover" data-content="{{ 'person.fields.imageUrl'|trans }}">
-                <th>Image URL</th>
-                <td>
-                    {% if person.imageUrl %}
-                        <a href="{{person.imageUrl }}">{{ person.imageUrl }}</a>
-                    {% endif %}
-                </td>
-            </tr>
-            <tr>
-                <th data-toggle="popover"  data-content="{{ 'person.fields.notes'|trans }}">Notes</th>
-                <td>{{ person.notes }}</td>
-            </tr>
-            {% if is_granted('ROLE_USER') %}
-                <tr data-toggle="popover" data-content="{{ 'person.fields.finalCheck'|trans }}">
-                    <th>Verified</th>
-                    <td>{% if person.finalCheck %}Yes{% else %}No{% endif %}</td>
-                </tr>
-            {% endif %}
+        {% endif %}
         </tbody>
     </table>
 
@@ -134,21 +137,21 @@
     </div>
     <table class="table table-bordered table-condensed table-hover table-striped tablesorter" id="titleRoles">
         <thead>
-            <tr>
-                <th>Role</th>
-                <th>Title</th>
-                <th>Date</th>
-            </tr>
+        <tr>
+            <th>Role</th>
+            <th>Title</th>
+            <th>Date</th>
+        </tr>
         </thead>
         <tbody>
-            {% for tr in pagination %}
-                {% set title = tr.title %}
-                <tr>
-                    <td>{{ tr.role.name }}</td>
-                    <td><a href="{{ path('title_show', {'id': title.id}) }}">{{ title.title }}</a></td>
-                    <td>{{ title.pubdate }}</td>
-                </tr>
-            {% endfor %}
+        {% for tr in pagination %}
+            {% set title = tr.title %}
+            <tr>
+                <td>{{ tr.role.name }}</td>
+                <td><a href="{{ path('title_show', {'id': title.id}) }}">{{ title.title }}</a></td>
+                <td>{{ title.pubdate }}</td>
+            </tr>
+        {% endfor %}
     </table>
 
     {% include 'partials/export.html.twig' with {'path': 'person_export', 'parameters': {'id': person.id}} %}
@@ -162,13 +165,27 @@
         'record': person,
         'type': 'Person',
         'url': url('person_show', {'id': person.id})
-    })
-    }}
+    }) }}
 
     {% include '@NinesFeedback/comment/comment-interface.html.twig' with { 'entity': person } %}
 
 {% endblock %}
 
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ asset('yarn/@knight-lab/timelinejs/dist/css/timeline.css') }}">
+
+{% endblock %}
+
+
 {% block javascripts %}
     <script src="{{ asset('yarn/tablesorter/dist/js/jquery.tablesorter.min.js') }}"></script>
+    <script src="{{ asset('yarn/@knight-lab/timelinejs/dist/js/timeline-min.js') }}"></script>
+    <script>
+        let url = '{{ path('person_show', {'id': person.id, '_format': 'json'}) }}'
+    </script>
+    <script src="{{ asset('js/timeline.js') }}"></script>
+
+
+
 {% endblock %}
