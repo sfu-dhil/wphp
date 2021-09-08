@@ -115,13 +115,10 @@
             return el;
         };
         const replaceText = (el) => {
-            console.log(el);
             if (el.textContent.indexOf('/') == -1) {
-                console.log(el.textContent);
                 return;
             }
             for (let child of el.childNodes) {
-                console.log(child);
                 switch (child.nodeType) {
                     case 1:
                         replaceText(child);
@@ -138,8 +135,7 @@
             }
         }
         try {
-            console.log(root);
-          //  replaceText(root);
+            replaceText(root);
             return true;
         } catch (e) {
             console.log(`${e}`);
