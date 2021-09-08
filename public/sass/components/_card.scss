@@ -70,16 +70,25 @@
   margin: auto -0.5rem -0.5rem -0.5rem;
   width:100%;
   display:flex;
+  @media (max-width: #{$breakpoint_sm}){
+    flex-direction:column;
+  }
   p{
     margin: 0 0 0 auto;
     text-align:right;
+
     opacity: 0.8;
     font-size: 0.8rem;
     font-family: $sans;
+    @media (max-width: #{$breakpoint_sm}){
+      text-align:left;
+      margin-top: ms(-2);
+    }
   }
   .badge{
     background-color: #efefef;
     color: $color_grey_translucent;
+    align-self:baseline;
   }
 }
 

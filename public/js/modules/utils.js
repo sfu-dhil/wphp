@@ -82,12 +82,11 @@
      * at smaller widths
      */
     export function breakLinksAtSlash(root = document.querySelector('main')) {
-        let frags = [];
         const handleSlashes = (node) => {
             let text = node.data;
             let el = document.createElement('span');
             if (text.indexOf('/') == -1){
-                el.innerText = text;
+                el.innerHTML = text;
                 return el;
             }
             let doubleSlashTokens = text.split('//');
@@ -100,7 +99,7 @@
                 }
                 // If there are no slash tokens, then just append the bit
                 if (slashBits.length == 1){
-                    el.insertAdjacentText('beforeend', bit);
+                    el.insertAdjacentText('beforeend', bit.replace('/\n+/gi',' '));
                 } else {
                     // If there are slash tokens, then add a wbr before each one
                     slashBits.forEach((sb, sbidx) => {
@@ -108,7 +107,7 @@
                             el.insertAdjacentHTML('beforeend', `<wbr>/`);
                         }
                         // And add the text back in
-                        el.insertAdjacentText('beforeend', sb);
+                        el.insertAdjacentText('beforeend', sb.replace('/\n+/gi',' '));
                     });
                 }
             });

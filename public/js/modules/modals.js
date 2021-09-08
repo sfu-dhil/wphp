@@ -9,7 +9,8 @@ class WPHPModals extends Modals{
     }
 
     citationType(link){
-        return link.href.split('/').reverse()[0];
+        let uri = new URL(link.href);
+        return uri.pathname.split('/').reverse()[0];
 
     }
 

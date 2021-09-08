@@ -57,7 +57,7 @@
   a{
     color: inherit;
     background: transparent;
-    border-bottom: 0.2em solid rgba($color_link, 0.7);
+    border-bottom: 0.2em solid rgba(lighten($color_link, 20%), 0.8);
     margin:0;
     padding-top:0;
     padding-bottom:0;

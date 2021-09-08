@@ -9,7 +9,9 @@
       svg{
         transform: rotate(0);
         font-size: 1em;
+        min-width:1em;
         margin-right: 1rem;
+        align-self:center;
         transition: all var(--accordion-easing) var(--accordion-duration);
       }
       background-color:inherit!important;
