@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="google" content="notranslate"/>
     <title>{% block title %}WPHP{% endblock %}</title>
+    <link rel="icon" href="{{ asset('images/favicon.ico') }}" sizes="any"/>
+    <link rel="icon" href="{{ asset('images/favicon.svg') }}" type="image/svg+xml"/>
+
     <link rel="stylesheet" href="{{ asset('yarn/@fortawesome/fontawesome-free/css/all.css') }}">
     <link rel="stylesheet" href="{{ asset('yarn/bootstrap3/dist/css/bootstrap.min.css') }}"/>
     <link rel="stylesheet" href="{{ asset('css/base.css') }}">
@@ -79,7 +82,6 @@
 {% block javascripts %}
 {% endblock %}
 <script src="{{ asset('js/dist/main.js') }}" type="module"></script>
-<script src="{{ asset('js/test-cite.js') }}"></script>
 {% if matomo_enabled %}
     {% include '@NinesUtil/matomo.html.twig' %}
 {% endif %}
