@@ -48,10 +48,11 @@
                 {% endblock %}
             {% endembed %}
         {% endfor %}
+        <div class="navigation">
+            {{ knp_pagination_render(pages) }}
+        </div>
     </div>
 
-    <div class="navigation">
-        {{ knp_pagination_render(pages) }}
-    </div>
+
 
 {% endblock %}

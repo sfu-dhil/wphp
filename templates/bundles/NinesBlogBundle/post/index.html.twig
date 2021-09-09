@@ -1,0 +1,53 @@
+{% extends '@!NinesBlog/post/index.html.twig' %}
+
+{% block pageheader %}
+    <div class='btn-toolbar pull-right'>
+        <div class='btn-group'>
+            {% if is_granted('ROLE_BLOG_ADMIN') %}
+                <a href="{{ path('nines_blog_post_new') }}" class="btn btn-default">
+                    <span class="glyphicon glyphicon-plus"></span> New
+                </a>
+            {% endif %}
+            <a href="{{ path('nines_blog_post_search') }}" class="btn btn-default">
+                <span class="glyphicon glyphicon-search"></span> Search
+            </a>
+        </div>
+    </div>
+    <h1>All Announcements</h1>
+{% endblock %}
+
+{% block body %}
+    <div class="gallery">
+        {% for post in posts %}
+            {% embed 'partial/card.html.twig' %}
+                {% set link = path('nines_blog_post_show', {'id': post.id}) %}
+                {% block excerpt %}
+                    {{ post.excerpt|raw }}
+                {% endblock %}
+                {% block caption %}
+                    <a class="link link__label" href="{{ path('nines_blog_post_category_show', {'id': post.category.id }) }}">
+                        {{ post.category -}}
+                    </a>
+                {% endblock %}
+                {% block heading %}
+                    {{ post.title }}
+                {% endblock %}
+
+                {% block footer %}
+                    {% if is_granted('ROLE_BLOG_ADMIN') %}
+                        <span class="badge">
+                             {{ post.status.label }}
+                        </span>
+                        <p>Posted {{ post.created|date('M j, Y') }} by {{ post.user.fullname }}</p>
+                    {% endif %}
+                {% endblock %}
+            {% endembed %}
+        {% endfor %}
+        <div class="navigation">
+            {{ knp_pagination_render(posts) }}
+        </div>
+    </div>
+
+
+
+{% endblock %}

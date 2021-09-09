@@ -46,7 +46,7 @@
             if (!excerptImg){
                 excerptImg = document.createElement('img');
             }
-
+            excerptImg.setAttribute('loading','lazy');
             excerptImg.addEventListener('error', replaceWithPlaceholder);
             contentDiv.replaceChild(cleanStyles(excerptImg), excerpt);
         }
@@ -145,9 +145,9 @@
 
 
 (function(){
+    removeExcerpts();
     localizeLinks();
     cleanUpParas();
-    removeExcerpts();
     breakLinksAtSlash();
     let blogContent = document.querySelector('.blog-content');
     if (blogContent){
