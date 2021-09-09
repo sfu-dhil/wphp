@@ -8,17 +8,13 @@
     <title>{% block title %}WPHP{% endblock %}</title>
     <link rel="icon" href="{{ asset('images/favicon.ico') }}" sizes="any"/>
     <link rel="icon" href="{{ asset('images/favicon.svg') }}" type="image/svg+xml"/>
-
     <link rel="stylesheet" href="{{ asset('yarn/@fortawesome/fontawesome-free/css/all.css') }}">
     <link rel="stylesheet" href="{{ asset('yarn/bootstrap3/dist/css/bootstrap.min.css') }}"/>
-    <link rel="stylesheet" href="{{ asset('css/base.css') }}">
-
+    <link rel="stylesheet" href="{{ asset('css/base.css') }}"/>
     <script src="{{ asset('yarn/jquery/dist/jquery.min.js') }}"></script>
-
     <script src="{{ asset('yarn/select2/dist/js/select2.full.min.js') }}"></script>
     <link href="{{ asset('yarn/select2/dist/css/select2.min.css') }}" rel="stylesheet">
     <link href="{{ asset('yarn/select2-bootstrap-css/select2-bootstrap.min.css') }}" rel="stylesheet">
-
     <script src="{{ asset('bundles/tetranzselect2entity/js/select2entity.js') }}"></script>
     <script src="{{ asset('yarn/symfony-collection/jquery.collection.js') }}"></script>
     <script src="{{ asset('js/form.js') }}"></script>
@@ -30,7 +26,7 @@
     <div class="nav-container">
         <div class="nav-brand">
             <a href="{{ path('homepage') }}">
-                    <img src="{{ asset('images/logo_white_2.svg') }}" alt="Home page"/>
+                <img src="{{ asset('images/logo_white_2.svg') }}" alt="Home page"/>
             </a>
         </div>
         <div class="navbar-header nav-toggle">
@@ -76,8 +72,6 @@
 
 {% include 'partial/footer.html.twig' %}
 
-
-
 <script src="{{ asset('yarn/bootstrap3/dist/js/bootstrap.min.js') }}"></script>
 {% block javascripts %}
 {% endblock %}
@@ -85,6 +79,5 @@
 {% if matomo_enabled %}
     {% include '@NinesUtil/matomo.html.twig' %}
 {% endif %}
-
 </body>
 </html>
