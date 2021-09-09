@@ -1,20 +1,26 @@
-$dev_path: "/wphp/web";
-$prod_path: "/wphp";
-$prod_or_dev_path: $dev_path;
-//
-// @if $prod_or_dev == "prod" {
-//   $prod_or_dev_path: $prod_path;
-// }
-
-
+// Fonts
 $lato: 'Lato', sans-serif;
-$inter: 'Inter', sans-serif;
-$cormorant_garamond: 'Cormorant Garamond', serif;
 $eb-garamond: 'EB Garamond', serif;
+$heading-font: $eb-garamond;
+$serif: $eb-garamond;
+$sans: $lato;
+
+// Sizes
+$reading-width: 62rem;
+$desktop-width: 970px;
+$breakpoint_sm: 768px;
+$breakpoint_md: 992px;
+$breakpoint_lg: 1200px;
+$container_width_sm: 750px;
+$container_width_md: 970px;
+$container_width_lg: 1170px;
+$container_width_max: 1600px;
+$nav_breakpoint: 991px;
 
 // First set of colors
 $color_red: rgb(166, 46, 63);
 $color_red_dark: rgb(98, 54, 55);
+
 // New variables to override the top ones l8r
 $color_white: #fcfcfc;
 $color_brown: rgb(48, 35, 22);
@@ -23,103 +29,62 @@ $color_beige: rgb(225, 216, 183);
 $color_beige_light: rgb(243, 239, 226);
 $color_grey_translucent: rgba(0, 0, 0, 0.5);
 
-
 // Second set of colors
 $color_2_brown: #73685B;
 $color_2_darker_brown: #5c5349;
 $color_2_tan: #ccb9a4;
 $color_2_green: #D9DDCC;
-
 $color_2_green_light: #F6F8F5;
 $color_2_green_lighter: mix($color_2_green, $color_2_green_light, 50%);
 $color_2_salmon: #DC8E7E;
 $color_black: #050505;
 
-
 // override settings from first set of colors.
 $color_red: $color_2_brown;
 $color_red_dark: $color_2_brown;
-// $color_salmon: $color_2_darker_brown;
 $color_beige: $color_2_tan;
+$color_grey_light: #fafafa;
+$color_dark_bg: #1C160F;
 
-
-
+// Text colours
 $color_text: $color_black;
 $color_body_background: $color_2_green_light;
 $color_body_background_start: $color_2_green_light;
 $color_body_background_end: $color_2_green_light;
-
 $color_body_link: #8E3827;
 $color_link: #8E3827;
 $color_link_hover: #4F1F16;
 $color_link_border: rgba($color_link, 0.4);
 $color_link_border_hover: $color_link_hover;
 
-
-
-
+// Heading colours
 $heading_color: $color_black;
 
-
+//Labels
 $color_label: $color_2_darker_brown;
-$well_color_start: $color_2_green;
-$well_color_end: $color_2_green_light;
 
 // dropdowns
 $color_dropdown_background: $color_2_brown;
 $color_dropdown_link: $color_white;
-
 $color_dropdown_link_hover: $color_2_darker_brown;
 $color_dropdown_background_hover: $color_2_salmon;
 
-$color_grey_light: #fafafa;
-
-
-
-$heading-font: $eb-garamond;
-$serif: $eb-garamond;
-$sans: $lato;
-$reading-width: 62rem;
-
-
-$desktop-width: 970px;
-
-$color_dark_bg: #1C160F;
-
-
-
-$box-shadow-sm: 0px 4px 8px rgba(0, 0, 0, 0.04),
-0px 0px 2px rgba(0, 0, 0, 0.06),
-0px 0px 1px rgba(0, 0, 0, 0.04);
-
-$header_background: $color_dark_bg; ;
+//Header
+$header_background: $color_dark_bg;
 $header_color: $color_white;
 $header_link_color: $color_white;
 $header_link_background: transparent;
-
 $header_link_color_hover: $color_2_darker_brown;
 $header_link_background_hover: rgba($color_2_salmon, 0.88);
 $header_height : 4.25rem;
 
-$breakpoint_sm: 768px;
-$breakpoint_md: 992px;
-$breakpoint_lg: 1200px;
-$container_width_sm: 750px;
-$container_width_md: 970px;
-$container_width_lg: 1170px;
-$container_width_max: 1600px;
-
-$nav_breakpoint: 991px;
-
-
+// Styles
+$box-shadow-sm: 0px 4px 8px rgba(0, 0, 0, 0.04),
+0px 0px 2px rgba(0, 0, 0, 0.06),
+0px 0px 1px rgba(0, 0, 0, 0.04);
 
 /* Add hamburger for nav bar */
 // Only include the squeeze type
 $hamburger-types: squeeze;
-
 $hamburger-layer-color: $header_color;
 $hamburger-active-layer-color: $header_color;
-
-
-
-
