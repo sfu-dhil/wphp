@@ -7,13 +7,10 @@
   "private": true,
   "scripts": {
     "webpack": "webpack --entry \"./public/js/wphp.js\" -o \"./public/js/dist\"",
-    "postinstall": "yarn run webpack",
     "watch": "webpack watch --entry \"./public/js/wphp.js\" -o \"./public/js/dist\""
   },
   "dependencies": {
     "@fontsource/cormorant-garamond": "^4.2.2",
-    "@fontsource/eb-garamond": "^4.2.2",
-    "@fontsource/inter": "^4.2.2",
     "@fontsource/lato": "^4.2.2",
     "@fortawesome/fontawesome-free": "^5.14.0",
     "@swup/preload-plugin": "^1.0.3",
