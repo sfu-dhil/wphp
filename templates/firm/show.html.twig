@@ -68,7 +68,7 @@
                 <th data-toggle="popover"  data-content="{{ 'firm.fields.firmSources'|trans }}">Sources</th>
                 <td>
                     {% for firmSource in firm.firmSources %}
-                        {% include "firm/partials/source-link.html.twig"
+                        {% include "firm/partial/source-link.html.twig"
                             with {'source': firmSource.source, 'sourceId': firmSource.identifier} %}
                     {% endfor %}
                 </td>
