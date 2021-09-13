@@ -61,7 +61,7 @@
 {% macro footer_menu_render(name) %}
     {% set menu = name is iterable ? name : knp_menu_get(name) %}
     {% set key = menu.children|keys|first %}
-    {% set children = menu.children %}
+    {% set children = menu.children[key].children %}
     {% set go = true %}
     <ul id="footer_{{ key }}" class="list-unstyled">
         {% for child in children %}
