@@ -9,5 +9,7 @@
     {% endif %}
 {%- endset -%}
 
+{% apply spaceless %}
 {{ authored}} {{ out_title }} <i>The Women's Print History Project</i>, 2019,
 {{ type }} ID {{ record.id }}, <a href='{{ url }}'>{{ url }}</a>. Accessed {{ null|date('Y-m-d') }}.
+{% endapply %}
