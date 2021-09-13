@@ -1,5 +1,17 @@
+/**
+ * @description Module for progressive enhancing accordions
+ * @author Joey Takeda
+ */
+
+"use strict";
+
 import Accordion from "../../yarn/dhilux/js/accordion";
 
+/**
+ * IIFE to make accordions happen
+ */
 (function(){
-   const accordions = [...document.querySelectorAll('details')].map(detail => new Accordion(detail));
+   // Make the accordions work by passing each details element
+   const accordions = [...document.querySelectorAll('details')]
+                        .map(detail => new Accordion(detail));
 }());

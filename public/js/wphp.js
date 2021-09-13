@@ -1,5 +1,6 @@
 /**
- * UI/UX Javascript for the Women's Print History Project
+ * @description UI/UX Javascript for the Women's Print History Project
+ * @author Joey Takeda
  */
 
 "use strict";
@@ -15,4 +16,3 @@ import "./modules/tables";
 
 /* Accordion for detail elements */
 import "./modules/accordion";
-
