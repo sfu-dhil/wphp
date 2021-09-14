@@ -86,7 +86,6 @@ class WPHPModals extends Modals{
      */
     renderDialog(dom){
         let content = `
-    <dialog>
         <header>
             <div class="dialog-content">
                 <div class="dialog-heading">
@@ -110,8 +109,7 @@ class WPHPModals extends Modals{
             <div class="dialog-content">
                 ${dom.querySelector('.list-group').outerHTML}
             </div>
-        </section>
-    </dialog>`;
+        </section>`;
         this.tmpDialog.innerHTML = content;
         return this.tmpDialog;
     }
