@@ -51,7 +51,7 @@
                         <td>
                             {% set roleCount = title.titleRoles|length %}
                             {% if roleCount > 0 %}
-                                <ul{% if roleCount > 8 %} class="double-list"{% endif %}>
+                                <ul>
                                     {% for tr in title.titleRoles %}
                                         {% set person = tr.person %}
                                         <li>

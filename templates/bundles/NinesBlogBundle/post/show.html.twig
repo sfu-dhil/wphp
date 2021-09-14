@@ -23,7 +23,7 @@
     {% endif %}
 
     <h1>{{ titleParts[0] }}{% if multiTitle %}:{% endif %}</h1>
-    {% if titleParts|length > 1 %}
+    {% if multiTitle %}
         <h2>{{ titleParts[1] }}</h2>
     {% endif %}
 {% endblock %}

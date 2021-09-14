@@ -176,12 +176,10 @@ export function breakLinksAtSlash(root = document.querySelector('main')) {
         // Step through the children
         for (let child of el.childNodes) {
             switch (child.nodeType) {
-                // 1 = Element: Recurse
-                case 1:
+                case Node.ELEMENT_NODE:
                     replaceText(child);
                     break;
-                // 3 = Text node: Test
-                case 3:
+                case Node.TEXT_NODE:
                     // Only do this if there's meaningful content
                     if (child.data.trim().length > 0){
                         // Create a fragment from handleSlashes

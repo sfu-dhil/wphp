@@ -16,8 +16,7 @@
             {% endif %}
         </div>
     </div>
-    {% embed 'partial/table.html.twig' %}
-        {% set entities = firmroles %}
+    {% embed 'partial/table.html.twig' with {'entities': firmroles} %}
         {% block thead %}
             <tr>
                 <th>Name</th>

@@ -17,7 +17,7 @@
         {{ tblPagination ?? null }}
     </div>
     <div class="tbl-overflow">
-        <table class="table{% if not(isHorizontal) %} table-hover table-striped{% endif %}">
+        <table class="table{% if not isHorizontal %} table-hover table-striped{% endif %}">
             {% if block('thead') is defined %}
                 <thead>
                     {{ block('thead') }}

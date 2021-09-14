@@ -30,7 +30,6 @@
 {% block body %}
 
     <div class="person-meta">
-        <h2 class="sr-only">Metadata</h2>
         <div>
             {% embed 'partial/table.html.twig' %}
                 {% block tbody %}
@@ -130,41 +129,6 @@
                     {% endif %}
                 {% endblock %}
             {% endembed %}
-            {#<div class="person-info-block">
-                {% set hasImage = person.imageUrl|length > 0 %}
-                {% set hasWiki = person.wikipediaUrl|length > 0 %}
-                {% set hasViaf = person.viafUrl|length > 0 %}
-                {% if hasImage or hasWiki or hasViaf %}
-                    <div class="person-info-card cardlike">
-                        {% if hasImage %}
-                        <div class="person-info-image">
-                            <div class="heading" data-toggle="popover" data-content="{{ 'person.fields.imageUrl'|trans }}">Image URL</div>
-                            <div>
-                                <a href="{{ person.imageUrl }}" class="image_url">Image</a>
-                            </div>
-                        </div>
-                        {% endif %}
-                        {% if hasViaf %}
-                        <div class="person-info-viaf">
-                            <div class="heading" data-toggle="popover" data-content="{{ 'person.fields.viafUrl'|trans }}">VIAF URI</div>
-                            <div>
-                                <a href="{{ person.viafUrl }}">VIAF</a>
-                            </div>
-                        </div>
-                        {% endif %}
-                        {% if hasWiki %}
-                        <div class="person-info-wiki">
-                            <div class="heading" data-toggle="popover" data-content="{{ 'person.fields.wikipediaUrl'|trans }}">Wikipedia Entry</div>
-                            <div>
-                                <a href="{{ person.wikipediaUrl }}" class="wikipedia_url">Wikipedia</a>
-                            </div>
-                        </div>
-                        {% endif %}
-                    </div>
-                {% endif %}
-
-            </div>#}
-
         </div>
 
 
