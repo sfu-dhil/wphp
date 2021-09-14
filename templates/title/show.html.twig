@@ -1,5 +1,4 @@
 {% extends 'base.html.twig' %}
-{% import 'partial/trim-title.html.twig' as str %}
 
 {% block htmlhead %}
     <link href='{{ path('title_show', {'id': title.id, '_format': 'xml'}) }}' type='application/rdf+xml'
