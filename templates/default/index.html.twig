@@ -26,7 +26,7 @@
     </div>
     <div class="content">
         <div class="gallery">
-            {% for spotlight in spotlights %}
+            {% for spotlight in spotlights|filter(v => v is not null) %}
                 {% embed 'partial/card.html.twig' %}
                     {% set link = path('nines_blog_post_show', {'id': spotlight.id}) %}
                     {% block excerpt %}
