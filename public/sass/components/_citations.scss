@@ -14,12 +14,20 @@
   padding: ms(-1) ms(1) ms(-2) ms(1);
   margin-left: 1.5rem;
   text-indent: -1.5rem;
+
 }
 
-// Small adjustment for hacking the bibtex citation
+// Special bibtex handling, since it's a codeblock
 
 #bibtex > div{
+  // Adjust the padding in the Cite this Page view
   padding: ms(-1) ms(1) ms(-2) ms(1);
+}
+
+// Remove hanging indent that causes scroll issues
+.citation > pre{
+  text-indent:0;
+  margin-left: -1.5rem;
 }
 
 
