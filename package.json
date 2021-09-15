@@ -11,10 +11,11 @@
   },
   "dependencies": {
     "@fontsource/cormorant-garamond": "^4.2.2",
+    "@fontsource/eb-garamond": "^4.5.0",
     "@fontsource/lato": "^4.2.2",
     "@fortawesome/fontawesome-free": "^5.14.0",
-    "@swup/preload-plugin": "^1.0.3",
     "@knight-lab/timelinejs": "^3.8.18",
+    "@swup/preload-plugin": "^1.0.3",
     "bootstrap3": "^3.3.5",
     "dhilux": "https://github.com/joeytakeda/dhilux",
     "hamburgers": "^1.1.3",
