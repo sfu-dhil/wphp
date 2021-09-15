@@ -7,22 +7,16 @@
 {% endblock %}
 
 {% block body %}
-    <div class="btn-toolbar">
-        <div class="btn-group pull-right">
-            <a href="{{ path('resource_osborne_index') }}" class="btn btn-default">
-                <span class="glyphicon glyphicon-arrow-left"></span> Back
-            </a>
-        </div>
-    </div>
-    <table class="table table-bordered table-condensed table-hover table-striped">
+
+    {% embed 'partial/table.html.twig' %}
         {% set data = manager.getData(osborneMarc) %}
-        <tbody>
+        {% block tbody %}
             {% for field in data %}
                 <tr>
                     <th>{{ manager.getFieldName(field) }}</th>
                     <td>{{ field.getFieldData() }}</td>
                 </tr>
             {% endfor %}
-        </tbody>
-    </table>
+        {% endblock %}
+    {% endembed %}
 {% endblock %}

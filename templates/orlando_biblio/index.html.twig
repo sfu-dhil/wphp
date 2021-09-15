@@ -4,9 +4,6 @@
 
 {% block pageheader %}
     <h1>Orlando Records List</h1>
-    <p class="count">
-        Displaying {{ orlandoBiblios|length }} orlandoBiblios of {{ orlandoBiblios.getTotalItemCount }} total.
-    </p>
 {% endblock %}
 
 {% block body %}
@@ -19,17 +16,18 @@
         </div>
     </div>
 
-    <table class="table table-bordered table-condensed table-hover table-striped">
-        <thead>
+    {% embed 'partial/table.html.twig' %}
+        {% set entities = orlandoBiblios %}
+        {% block thead %}
             <tr>
-                <th>Bi ID</th>
+                <th>ID</th>
                 <th>Author</th>
                 <th>Analytic Standard Title</th>
                 <th>Monographic Standard Title</th>
                 <th>Imprint Date of Publication</th>
             </tr>
-        </thead>
-        <tbody>
+        {% endblock %}
+        {% block tbody %}
             {% for orlandoBiblio in orlandoBiblios %}
                 <tr>
                     <td>
@@ -43,7 +41,7 @@
                             <ul>
                                 {% for field in fields %}
                                     <li>{{ field }}</li>
-                                    {% endfor %}
+                                {% endfor %}
                             </ul>
                         {% elseif fields | length == 1 %}
                             {{ fields[0] }}
@@ -54,11 +52,7 @@
                     <td>{{ orlandoBiblio.imprintDateOfPublication }}</td>
                 </tr>
             {% endfor %}
-        </tbody>
-    </table>
-
-    <div class="navigation">
-        {{ knp_pagination_render(orlandoBiblios) }}
-    </div>
+        {% endblock %}
+    {% endembed %}
 
 {% endblock %}

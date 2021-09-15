@@ -1,15 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block pageheader %} 
-    <h1>Geonames</h1>
+{% block pageheader %}
+    <h1> {{ geoname }} </h1>
 {% endblock %} 
 
 {% block body %}
 
-    {% embed 'geonames/partials/header.html.twig' %}
+    {% embed 'geonames/partial/header.html.twig' %}
     {% endembed %}
 
-    {% embed 'title/partials/page.html.twig' with {'titles': titles } %}
+    {% embed 'title/partial/page.html.twig' with {'titles': titles } %}
     {% endembed %}
 
 {% endblock %}

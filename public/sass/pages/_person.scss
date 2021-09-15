@@ -1,0 +1,40 @@
+.person-meta-grid{
+  display: grid;
+   grid-column-gap: 3rem;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: auto auto auto;
+  > .tbl-container{
+    grid-column-start: 1;
+  }
+  .person-info-card > div{
+    padding: ms(-1) ms(-2);
+    & + div{
+      border-top:1px solid $color_grey_translucent;
+    }
+  }
+
+  .heading{
+    @extend th;
+  }
+  //> .wiki_extract{
+  //  font-family: "EB Garamond";
+  //  font-size: 1.15rem;
+  //  color: rgba(0,0,0,0.6);
+  //  background: rgba(255, 255, 255, 0.78);
+  //  border: 2px solid #efefef;
+  //  border-radius: 4px;
+  //  padding: 1rem;
+  //  line-height:1.5;
+  //  box-shadow: $box-shadow-sm;
+  //}
+  //.wiki_attribution{
+  //  float: right;
+  //  clear: both;
+  //  margin-left: 1rem;
+  //  width: 3rem;
+  //  > a{
+  //    border-bottom:none;
+  //  }
+  //}
+}
+

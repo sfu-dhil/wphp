@@ -2,7 +2,7 @@
 
 {% block pageheader %}
     <h1>Search Firms</h1>
-    {%  if submitted %}
+    {% if submitted %}
         Displaying {{ firms|length }} firms of {{ firms.getTotalItemCount }} total.
     {% endif %}
 {% endblock %}
@@ -18,8 +18,9 @@
         <div class="col-sm-2"></div>
 
         <div class="col-sm-10">
-            <input type="submit" value="Search" class="btn btn-primary" />
-            <a class="btn btn-primary" id="advanced_search" role="button" data-toggle="collapse" href="#controls" aria-expanded="false" aria-controls="collapseExample">Advanced Search</a>
+            <input type="submit" value="Search" class="btn btn-primary"/>
+            <a class="btn btn-primary" id="advanced_search" role="button" data-toggle="collapse" href="#controls"
+               aria-expanded="false" aria-controls="collapseExample">Advanced Search</a>
             {% if submitted %}
                 <a class="btn btn-default" href="{{ path('firm_search') }}">Reset</a>
                 <a class="btn btn-default" href="{{ path('firm_search_export', app.request.query.all) }}">Export</a>
@@ -29,9 +30,6 @@
     {{ form_end(search_form) }}
 
     {% if firms|length > 0 %}
-        <div class="navigation">
-            {{ knp_pagination_render(firms) }}
-        </div>
 
         <div class='btn-toolbar pull-right'>
             <div class='btn-group'>
@@ -43,10 +41,6 @@
             </div>
         </div>
         {{ include('firm/table.html.twig') }}
-
-        <div class="navigation">
-            {{ knp_pagination_render(firms) }}
-        </div>
     {% endif %}
 {% endblock %}
 

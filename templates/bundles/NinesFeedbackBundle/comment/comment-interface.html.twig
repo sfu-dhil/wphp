@@ -1,16 +1,13 @@
-<h3 class="panel-title comment-expand">
-    <a href="#commentWidgets" class="btn btn-default" data-toggle='collapse' data-target='#commentWidgets' aria-expanded='false' aria-controls='commentWidgets'>
-        Suggestions and Comments for <i>{{ entity|u.trim(60) }}</i>
-    </a>
-</h3>
-
-<div id='commentWidgets' class='collapse'>
-    <div class='well'>
+<div class="comment-interface">
+    <details class="accordion">
+        <summary><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+            </svg><span>Suggestions and Comments for <i>{{  entity|u.trim(60) }}</i></span></summary>
         {% include '@NinesFeedback/comment/comment-form.html.twig' with { 'entity': entity } %}
         {% if is_granted('ROLE_COMMENT_ADMIN') %}
             {% include '@NinesFeedback/comment/comments-admin.html.twig' %}
         {% else %}
             {% include '@NinesFeedback/comment/comments-view.html.twig' %}
         {% endif %}
-    </div>
+    </details>
 </div>

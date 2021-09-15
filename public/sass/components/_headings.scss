@@ -1,0 +1,39 @@
+$ms-ratio: $minor-third;
+$modscale-start: 6;
+
+// Add the modular scale headings
+@include dhil-headers;
+
+.page-header{
+  margin-top:0;
+  margin-bottom: 0;
+  border-bottom: 0;
+}
+
+h1,h2,h3,h4,h5{
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+.page-header > *{
+  margin-bottom: ms(0);
+  letter-spacing: -1px;
+}
+
+h2,h3,h4,h5{
+  margin-top: ms(-3);
+  margin-bottom:ms(-1);
+}
+
+:is(h1, h2, h3, h4, h5) + :is(h1,h2,h3,h4,h5){
+  margin-top:0;
+}
+
+.page-header > h1:not(:last-child){
+  margin-bottom:ms(-4);
+}
+
+h1{
+  letter-spacing: -1px;
+  margin-right: 0.5rem;
+}

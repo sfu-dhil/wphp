@@ -1,0 +1,13 @@
+{% if source %}
+    <li>
+        <a href="{{ path('source_show', {'id': source.id}) }}">{{ source.name }}</a>:
+        {% if sourceId %}
+            {% set url=linker.url(source, sourceId) %}
+            {% if url %}
+                <a href="{{ url }}">{{ sourceId }}</a>
+            {% elseif sourceId %}
+                {{ sourceId }}
+            {% endif %}
+        {% endif %}
+    </li>
+{% endif %}

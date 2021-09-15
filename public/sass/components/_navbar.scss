@@ -1,0 +1,266 @@
+
+// Now import the library
+@import '../../yarn/hamburgers/_sass/hamburgers/hamburgers';
+
+
+// Structural overrides
+
+nav.navbar, .navbar-nav, .navbar-collapse, .nav-container, .navbar-right{
+  float:none!important;
+  &:before, &:after{
+    content:unset;
+  }
+}
+
+
+// Colours / overrides etc
+.navbar-default {
+  @include dhil-background-blur($background-color: $header_background, $opacity: 0.75);
+  color: $header_color;
+  border: 0;
+  font-family: $serif;
+  font-weight: 800;
+  font-size: 20px;
+  box-shadow: 0 2px 4px 0 $color_grey_translucent;
+  margin: 0;
+  border-radius: 0;
+  min-height: unset;
+  height: $header_height;
+  z-index:999;
+  @media (max-width: $nav_breakpoint){
+    min-height: $header_height;
+    height:auto;
+  }
+
+
+}
+
+.navbar-toggle{
+  &:hover, &:focus{
+    background-color:transparent;
+  }
+}
+
+.nav-brand{
+  height: $header_height;
+  display:flex;
+  align-items:center;
+  margin-left:auto;
+  padding: .125rem 1rem .125rem 1rem;
+  a{
+    border-bottom:none;
+    display:flex;
+    text-decoration:none;
+    height:100%;
+    &:hover{
+      border-bottom:none;
+    }
+    img{
+      vertical-align:top;
+    }
+  }
+}
+
+
+.nav-container{
+  display:grid;
+  align-items:center;
+  width:100%;
+  max-width: $container_width_max;
+  height: $header_height;
+  grid-column-gap: ms(-2);
+  grid-template-columns: minmax(11.5rem, calc( (100vw - var(--container_width)) * 0.5))  minmax(auto, var(--container_width));
+  @media (max-width: $nav_breakpoint){
+    height:auto;
+    min-height: $header_height;
+  }
+  & > #navbar{
+    //We have to wrap this in a media query
+    // to win against precedence wars
+    @media (min-width: $nav_breakpoint){
+      height:100%!important;
+      display:flex!important;
+      align-items:center;
+      justify-content:center;
+    }
+    @media (max-width: $nav_breakpoint){
+      width:100%;
+      grid-column: span 2;
+      background: rgba($header_background, 0.4);
+      border-bottom:2px solid rgba($header_background, 0.8);
+    }
+    .navbar-nav{
+      height:100%;
+      display:flex;
+      flex-direction:row;
+
+      & > li {
+        float:none;
+        display:flex;
+        @media (max-width: $nav_breakpoint){
+          flex-direction: column;
+          width:100%;
+        }
+        & > a{
+          color:$header_color;
+          border-bottom:none;
+          text-shadow:none;
+          font-weight:400;
+          font-variant: all-small-caps;
+          font-size: 1.5rem;
+          @media (min-width: $nav_breakpoint){
+            display:block;
+            height:100%;
+            padding: 0 ms(-2);
+            display:flex;
+            align-items:center;
+          }
+        }
+      }
+      &.navbar-right{
+        @media(min-width: $nav_breakpoint){
+          margin-left:auto;
+          margin-right: 1rem;
+        }
+      }
+    }
+  }
+
+  & > .nav-toggle{
+      float:none!important;
+      &:before, &:after{
+        content:unset;
+      }
+      @media (min-width: $nav_breakpoint){
+        display:none;
+      }
+  }
+
+  // Collapse override to reset the breakpoint
+  .navbar-collapse.collapse{
+    @media (max-width: $nav_breakpoint){
+      &:not(.in){
+        display:none!important;
+      }
+      overflow-y: auto!important;
+      overflow-x: hidden!important;
+    }
+  }
+}
+
+// Hover etc
+
+.navbar-default .navbar-nav li {
+  &.open {
+    & > a {
+      background: $header_link_background_hover;
+      color: $header_link_color_hover;
+
+      &:hover, &:focus, &:active, &.active {
+        background: $header_link_background_hover;
+        color: $header_link_color_hover;
+      }
+    }
+  }
+
+  & > a {
+    &:hover, &:focus, &:active, &.active {
+      background: $header_link_background_hover;
+      color: $header_link_color_hover;
+    }
+  }
+
+  @media (max-width: $nav_breakpoint) {
+    .dropdown-menu > li {
+      a {
+        &:hover, &:focus, &.active, &:active {
+          background-color: $header_link_background_hover !important;
+          color: $header_link_color_hover;
+        }
+      }
+    }
+  }
+}
+
+
+.navbar-default #navbar li > .dropdown-menu{
+
+
+  // Overrides for height, width to prevent overflowing
+  // menu items
+  @media (min-width: $nav_breakpoint) {
+    max-height: calc(98vh - #{$header_height});
+    overflow-y: auto;
+    width: max-content;
+    // This value is arbitrary
+    max-width: 22.5vw;
+    padding: 0;
+    margin: 0;
+    border-radius: 0;
+    box-shadow: $tw-box-shadow;
+  }
+  @media (max-width: $nav_breakpoint) {
+    position: static;
+    float: none;
+    width: auto;
+    background-color: transparent;
+  }
+
+
+  li {
+    font-size: 1rem;
+  }
+  a {
+    white-space: normal;
+    border-bottom: none;
+    font-size: 0.95em;
+    padding: ms(-1) ms(-1);
+    height: 100%;
+    display: block;
+    @media (max-width: $nav_breakpoint){
+      color: $color_white !important;
+    }
+  }
+
+  li.first > a {
+    padding-top: ms(0);
+  }
+
+  li:not(.divider) + li:not(.divider) {
+    border-top: 1px solid rgba($header_link_background_hover, 0.4);
+
+    &:hover {
+      border-top-color: $header_link_background;
+    }
+  }
+
+  .divider {
+    background: #ccc;
+    margin: 0;
+    padding: 0;
+    height: 3px;
+    // Make things beyond the divider a slightly different color, to make it clear
+    // that they're admin only
+    & ~ li:not(.divider) {
+      border-top-color: #e5e5e5 !important;
+      background: rgba(#e5e5e5, 0.1);
+    }
+  }
+
+  @media (max-width: $nav_breakpoint) {
+    li {
+      border-top: 1px solid $color_white !important;
+      width: 100%;
+      & > a {
+        padding-left: 1em;
+      }
+    }
+  }
+}
+
+
+// Extend the standard .hamburger.hamburger--squeeze.is-active to
+// avoid adding extra JS handling.
+.hamburger[aria-expanded='true']{
+  @extend .hamburger, .hamburger--squeeze, .is-active,
+}

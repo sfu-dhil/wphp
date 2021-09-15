@@ -4,11 +4,6 @@
 
 {% block pageheader %}
     <h1>Search the English Novel Bibliography</h1>
-    {% if ens|length %}
-        <p class="count">
-            Displaying {{ ens|length }} entries of {{ ens.getTotalItemCount }} total.
-        </p>
-    {% endif %}
 {% endblock %}
 
 {% block body %}
@@ -33,16 +28,17 @@
     </form>
 
     {% if ens|length %}
-        <table class="table table-bordered table-condensed table-hover table-striped">
-            <thead>
+        {% embed 'partial/table.html.twig' %}
+            {% set entities = ens %}
+            {% block thead %}
                 <tr>
                     <th>ID</th>
                     <th>Year</th>
                     <th>Author</th>
                     <th>Title</th>
                 </tr>
-            </thead>
-            <tbody>
+            {% endblock %}
+            {% block tbody %}
                 {% for en in ens %}
                     <tr>
                         <td>
@@ -55,12 +51,8 @@
                         <td>{{ en.title }}</td>
                     </tr>
                 {% endfor %}
-            </tbody>
-        </table>
-
-        <div class="navigation">
-            {{ knp_pagination_render(ens) }}
-        </div>
+            {% endblock %}
+        {% endembed %}
     {% endif %}
 
 {% endblock %}

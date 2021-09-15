@@ -1,33 +1,51 @@
 {% extends 'base.html.twig' %}
 
+{% set hero_image = asset('images/hero.jpg') %}
+
+{% block htmlhead %}
+<link rel="preload" href="{{ hero_image }}" as="image"/>
+{% endblock %}
+
+{% block styles %}
+<style>
+    :root{
+        --hero-image: url({{ hero_image }});
+    }
+</style>
+{% endblock %}
+
 {% block body %}
-
-    <div class='row'>
-        <div class="col-sm-12">
-
-            {% if homepage %}
-                {{ homepage.content|raw }}
-            {% endif %}
-
-            <h2>Spotlights</h2>
-        </div>
-    </div>
-
-    <div class='row'>
-
-        {% for spotlight in spotlights %}
-            <div class="col-sm-4 blog-panel">
-                {% if spotlight is not null %}
-                    <div class="panel panel-default">
-                        <a href="{{ path('nines_blog_post_show', {'id': spotlight.id}) }}">
-                            <div class="panel-heading">{{ spotlight.title }}</div>
-                        </a>
-                        <div class='panel-body'>{{ spotlight.excerpt|raw }}</div>
-                    </div>
+    <div class="hero">
+        <div class="container">
+            <div class="homepage-info-block">
+                {% if homepage %}
+                    {{ homepage.content|raw }}
                 {% endif %}
             </div>
-        {% endfor %}
+        </div>
+    </div>
+    <div class="content">
+        <div class="gallery">
+            {% for spotlight in spotlights|filter(v => v is not null) %}
+                {% embed 'partial/card.html.twig' %}
+                    {% set link = path('nines_blog_post_show', {'id': spotlight.id}) %}
+                    {% block excerpt %}
+                        {{ spotlight.excerpt|raw }}
+                    {% endblock %}
+                    {% block heading %}
+                        {{ spotlight.title }}
+                    {% endblock %}
+                    {% block caption %}
+                        <a href="{{ path('nines_blog_post_category_show', {'id': spotlight.category.id}) }}"
+                           class="link link__label">
+                            {{ spotlight.category }}
+                        </a>
+                    {% endblock %}
+                {% endembed %}
+            {% endfor %}
+        </div>
 
     </div>
+
 
 {% endblock %}

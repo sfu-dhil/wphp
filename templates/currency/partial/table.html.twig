@@ -1,39 +1,41 @@
-  <table class="table table-bordered table-condensed table-hover table-striped">
-      <thead>
-          <tr>
-              <th>ID</th>                                       <th>Code</th>
-                                                         <th>Name</th>
-                                                         <th>Symbol</th>
-                                                         <th>Description</th>
-                  
-          </tr>
-      </thead>
-      <tbody>
-      {% for currency in currencies %}
-          <tr>
-              <td>
-                  <a href="{{ path('currency_show', { 'id': currency.id }) }}">
-                      {{ currency.id }}
-                  </a>
-              </td>
-              <td>
-                  {{ currency.code }}
-              </td>
-          
-              <td>
-                  {{ currency.name }}
-              </td>
-          
-              <td>
-                  {{ currency.symbol }}
-              </td>
-          
-              <td>
-                  {{ currency.description|raw }}
-              </td>
-          
-          </tr>
-      {% endfor %}
-      </tbody>
-  </table>
+{% embed 'partial/table.html.twig' %}
+    {% set entities = currencies %}
+    {% block thead %}
+        <tr>
+            <th>ID</th>
+            <th>Code</th>
+            <th>Name</th>
+            <th>Symbol</th>
+            <th>Description</th>
+        </tr>
+    {% endblock %}
+
+    {% block tbody %}
+        {% for currency in currencies %}
+            <tr>
+                <td>
+                    <a href="{{ path('currency_show', { 'id': currency.id }) }}">
+                        {{ currency.id }}
+                    </a>
+                </td>
+                <td>
+                    {{ currency.code }}
+                </td>
+
+                <td>
+                    {{ currency.name }}
+                </td>
+
+                <td>
+                    {{ currency.symbol }}
+                </td>
+
+                <td>
+                    {{ currency.description|raw }}
+                </td>
+
+            </tr>
+        {% endfor %}
+    {% endblock %}
+{% endembed %}
   

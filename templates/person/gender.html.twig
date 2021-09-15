@@ -5,7 +5,9 @@
         Male
     {% elseif person.gender == constant('App\\Entity\\Person::TRANS') %}
         Transgender
-    {% elseif person.gender == constant('App\\Entity\\Person::UNKNOWN')%}
+    {% elseif person.gender == constant('App\\Entity\\Person::UNKNOWN') %}
+        Unknown
+    {% elseif person.gender == "" %}
         Unknown
     {% else %}
         Unknown ({{ person.gender }})

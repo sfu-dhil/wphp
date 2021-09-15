@@ -1,0 +1,47 @@
+
+
+.nines_blog_post_show, .nines_blog_page_show{
+  // Regular page header
+  .page-header{
+    display:flex;
+    flex-direction:column;
+    & > *{
+      width: 100%;
+      max-width: $reading-width;
+      text-align: center;
+      margin-left: auto;
+      margin-right:auto;
+    }
+  }
+
+// Standard content block
+  .blog-content{
+    max-width: $reading-width;
+    font-family: $serif;
+    margin:0 auto;
+      background: $color_white;
+      border: 1px solid #F2F2F2;
+     box-shadow: $box-shadow-sm;
+    padding: 2rem 5rem 4.5rem 5rem;
+    @media (max-width: $breakpoint_sm){
+      padding-left: 2rem;
+      padding-right:2rem;
+    }
+    & > * + *{
+      margin-top:ms(1);
+    }
+  }
+
+  // Normal paragraphs
+  p{
+    font-size: 1.3rem;
+    @media (max-width: $breakpoint_sm){
+      font-size:1.2rem;
+      line-height: 1.5;
+    }
+    line-height: 1.6;
+    font-weight:400;
+    -webkit-font-smoothing: antialiased;
+  }
+}
+

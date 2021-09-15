@@ -4,9 +4,6 @@
 
 {% block pageheader %}
     <h1>Osborne Marc List</h1>
-    <p class="count">
-        Displaying {{ osborneMarcs|length }} Osborne MARC records of {{ osborneMarcs.getTotalItemCount }} total.
-    </p>
 {% endblock %}
 
 {% block body %}
@@ -19,15 +16,16 @@
         </div>
     </div>
 
-    <table class="table table-bordered table-condensed table-hover table-striped">
-        <thead>
+    {% embed 'partial/table.html.twig' %}
+        {% set entities = osborneMarcs %}
+        {% block thead %}
             <tr>
                 <th>Title ID</th>
                 <th>Title</th>
                 <th>Author</th>
             </tr>
-        </thead>
-        <tbody>
+        {% endblock %}
+        {% block tbody %}
             {% for osborneMarc in osborneMarcs %}
                 <tr>
                     <td>
@@ -39,11 +37,7 @@
                     <td>{{ manager.getAuthor(osborneMarc) }}</td>
                 </tr>
             {% endfor %}
-        </tbody>
-    </table>
-
-    <div class="navigation">
-        {{ knp_pagination_render(osborneMarcs) }}
-    </div>
+        {% endblock %}
+    {% endembed %}
 
 {% endblock %}

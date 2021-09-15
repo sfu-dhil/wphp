@@ -2,9 +2,6 @@
 
 {% block pageheader %}
     <h1>Explore Firms</h1>
-    <p class="count">
-        Displaying {{ firms|length }} firms of {{ firms.getTotalItemCount }} total.
-    </p>
 {% endblock %}
 
 {% block body %}
@@ -19,9 +16,10 @@
         <div class="col-sm-2"></div>
 
         <div class="col-sm-10">
-            <input type="submit" value="Search" class="btn btn-primary" />
-            <a class="btn btn-primary" role="button" data-toggle="collapse" href="#controls" aria-expanded="false" aria-controls="collapseExample">Advanced Search</a>
-            {% include 'partials/export.html.twig' with {'path': 'firm_export_all', 'csvOnly': true} %}
+            <input type="submit" value="Search" class="btn btn-primary"/>
+            <a class="btn btn-primary" role="button" data-toggle="collapse" href="#controls" aria-expanded="false"
+               aria-controls="collapseExample">Advanced Search</a>
+            {% include 'partial/export.html.twig' with {'path': 'firm_export_all', 'csvOnly': true} %}
         </div>
     </div>
     {{ form_end(search_form) }}
@@ -38,14 +36,7 @@
     <div class="clear-fix"></div>
 
     {% if firms|length > 0 %}
-        <div class="navigation">
-            {{ knp_pagination_render(firms) }}
-        </div>
-
         {{ include('firm/table.html.twig') }}
 
-        <div class="navigation">
-            {{ knp_pagination_render(firms) }}
-        </div>
     {% endif %}
 {% endblock %}

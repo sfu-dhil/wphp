@@ -1,0 +1,58 @@
+
+
+// buttons start
+.btn-toolbar {
+  margin-bottom: 1em;
+
+  > .btn,
+  > .btn-group,
+  > .input-group {
+    margin-left: 0;
+  }
+}
+
+/*.btn-group {
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.5)
+      border-radius: 4px;
+}*/
+
+input.btn-default,
+input.btn-primary,
+a.btn-default,
+a.btn-primary {
+  /* Rectangle 10: */
+  background: $color_red;
+  border: 1px solid $color_brown;
+  /* Submit button exampl: */
+  font-family: $sans;
+  line-height: 1em;
+  // font-weight: 500;
+  font-size: 14px;
+  text-shadow: none;
+  color: $color_white;
+  text-align: left;
+  border-radius: 4px;
+  box-shadow: none;
+  padding-top: 10px;
+  padding-bottom: 8px;
+  transition: 0.125s ease-in-out all;
+
+  &:link,
+  &:visited {
+    color: $color_white;
+  }
+
+  &:hover,
+  &:focus,
+  &:active:focus,
+  &:active {
+    color: $color_white;
+    background-color: #1f1f1f ;
+  }
+}
+
+.open > .dropdown-toggle.btn-default,
+.open > .dropdown-toggle.btn-default:hover {
+  color: $color_white;
+  background-color: #1f1f1f ;
+}

@@ -1,0 +1,35 @@
+
+<div>
+    <h2>Firms</h2>
+    {% embed 'partial/table.html.twig' %}
+        {% set entities = firms %}
+        {% block thead %}
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Street Address</th>
+                <th>City</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+            </tr>
+        {% endblock %}
+        {% block tbody %}
+            {% for firm in firms %}
+                <tr>
+                    <td>{{ firm.id }}</td>
+                    <td>
+                        <a href="{{ path('firm_show', { 'id': firm.id }) }}">
+                            {{ firm.name }}
+                        </a>
+                    </td>
+                    <td>{{ firm.streetAddress }}</td>
+                    <td>{{ firm.city }}</td>
+                    <td>{% if firm.startDate %}{{ firm.startDate|date('Y') }}{% endif %}</td>
+                    <td>{% if firm.endDate %}{{ firm.endDate|date('Y') }}{% endif %}</td>
+                </tr>
+            {% endfor %}
+        {% endblock %}
+    {% endembed %}
+
+</div>
+

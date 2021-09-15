@@ -13,15 +13,10 @@
     <p class="explanation">These persons have not been final checked.</p>
 
     {% if persons|length > 0 %}
-        <div class="navigation">
-            {{ knp_pagination_render(persons) }}
-        </div>
+
 
         {% include 'person/table.html.twig' with {'people': persons} %}
 
-        <div class="navigation">
-            {{ knp_pagination_render(persons) }}
-        </div>
     {% endif %}
 
 {% endblock %}

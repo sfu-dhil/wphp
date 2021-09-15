@@ -1,0 +1,78 @@
+:root{
+  --hero-height: clamp(60vh, calc(300vw/2), min(800px, 70vh));
+  --hero-width: min(100vw, #{$container_width_max});
+  --hero-image: url(../../images/hero.jpg);
+}
+
+// Everything is wrapped in homepage
+.homepage{
+  main.container{
+    margin-top:0;
+  }
+  p{
+    margin: 1.5rem 1rem;
+  }
+  main{
+    margin-top:0;
+  }
+}
+
+.hero{
+  height: var(--hero-height);
+  background-image: var(--hero-image);
+  background-size: cover;
+  background-position: 30% 50%;
+  color:$color_white;
+  @include full-width-in-container;
+  width: var(--hero-width);
+  margin-left: calc(-1 * (var(--hero-width) / 2));
+  margin-right: calc(-1 * (var(--hero-width) / 2));
+  img{
+    display:none;
+  }
+  margin-bottom: 3rem;
+  display:flex;
+  & > .container{
+    align-self:center;
+    &:before, &:after{
+      content:unset;
+    }
+  }
+}
+
+.homepage-info-block{
+  align-self:center;
+  background: rgba($header_background, 0.8);
+  border:1px solid rgba($header_background, 0.95);
+  padding:ms(0) ms(1);
+  font-size: ms(1);
+  max-width: 40rem;
+  font-family: $serif;
+  line-height: 1.5;
+  margin-left:auto;
+  backdrop-filter: blur(1px);
+  box-shadow: $box-shadow-sm;
+  @media (max-width: $breakpoint_sm){
+    margin-right:auto;
+  }
+  a{
+    color: inherit;
+    background: transparent;
+    border-bottom: 0.2em solid rgba(lighten($color_link, 20%), 0.8);
+    margin:0;
+    padding-top:0;
+    padding-bottom:0;
+    &:hover{
+      border-bottom-color: $color_link;
+    }
+  }
+  p{
+    margin: 0;
+  }
+}
+
+
+
+
+
+

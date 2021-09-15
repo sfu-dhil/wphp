@@ -13,12 +13,9 @@
 {% block body %}
 
     {% if titles|length > 0 %}
-        <div class="navigation">
-            {{ knp_pagination_render(titles) }}
-        </div>
-
-        <table class="table table-bordered table-condensed table-hover table-striped">
-            <thead>
+        {% embed 'partial/table.html.twig' %}
+            {% set entities = titles %}
+            {% block thead %}
                 <tr>
                     <th>ID</th>
                     <th>Title</th>
@@ -27,8 +24,8 @@
                     <th>Pub Date</th>
                     <th>First Pub Date</th>
                 </tr>
-            </thead>
-            <tbody>
+            {% endblock %}
+            {% block tbody %}
                 {% for title in titles %}
                     <tr>
                         <td>
@@ -47,12 +44,8 @@
                         <td>{{ title.dateOfFirstPublication }}</td>
                     </tr>
                 {% endfor %}
-            </tbody>
-        </table>
-
-        <div class="navigation">
-            {{ knp_pagination_render(titles) }}
-        </div>
+            {% endblock %}
+        {% endembed %}
     {% endif %}
 
 {% endblock %}

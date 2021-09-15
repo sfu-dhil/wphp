@@ -97,7 +97,9 @@
         $('[data-toggle="popover"]').popover({
             container: 'body',
             trigger: 'hover',
-            placement: 'bottom',
+            placement: function(p, el){
+               return el.getAttribute('data-placement') ? el.getAttribute('data-placement') : 'bottom';
+            }
         }); //add this line to enable bootstrap popover
         if (typeof $().collection === 'function') {
             simpleCollection();

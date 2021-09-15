@@ -17,10 +17,10 @@
             <schema:gender>{{ person.gender }}</schema:gender>
         {% endif %}
         {% if person.cityOfBirth and person.cityOfBirth.geonameid != 0 %}
-        <schema:birthPlace rdf:resource="http://sws.geonames.org/{{ person.cityOfBirth.geonameid }}/about.rdf"/>
+            <schema:birthPlace rdf:resource="http://sws.geonames.org/{{ person.cityOfBirth.geonameid }}/about.rdf"/>
         {% endif %}
         {% if person.cityOfDeath and person.cityOfDeath.geonameid != 0 %}
-        <schema:deathPlace rdf:resource="http://sws.geonames.org/{{ person.cityOfDeath.geonameid }}/about.rdf"/>
+            <schema:deathPlace rdf:resource="http://sws.geonames.org/{{ person.cityOfDeath.geonameid }}/about.rdf"/>
         {% endif %}
         <wphp:Contributions>
             <rdf:Bag>

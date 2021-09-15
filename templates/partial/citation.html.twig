@@ -1,0 +1,43 @@
+{# Requires
+    title
+    record
+    type
+    url
+    all?
+#}
+{% set isTitle = (type == 'title') %}
+
+{% set allStyles = {
+    'wphp': 'WPHP',
+    'mla': 'MLA',
+    'apa': 'APA',
+    'chicago': 'Chicago/Turabian',
+    'bibtex': 'BibTex'
+} %}
+
+{% set stylesToUse = isTitle ? allStyles : {'wphp': 'WPHP'} %}
+<div class="citations_card {% block classes %}{% endblock %}">
+    <h2>{% block heading %}Cite this Page{% endblock %}</h2>
+    <div class="tab-container citations">
+        {% if stylesToUse|length > 1 %}
+        <ul class="nav nav-pills">
+            {% for style in stylesToUse|keys %}
+                <li{% if loop.first %} class="active"{% endif %}>
+                    <a data-toggle="tab" href="#{{ style }}">{{ stylesToUse[style] }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        <div class="tab-content">
+            {% for style in stylesToUse|keys %}
+                <div id="{{ style }}" class="tab-pane fade{% if loop.first %} in active{% endif %}">
+                    <div>
+                        <p{% if not (style == 'bibtext') %} class="citation"{% endif %}>
+                            {% include 'partial/citation/' ~ style ~ '.html.twig' %}
+                        </p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>

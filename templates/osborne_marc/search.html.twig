@@ -4,11 +4,7 @@
 
 {% block pageheader %}
     <h1>Osborne MARC Search</h1>
-    {% if osborneMarcs|length %}
-        <p class="count">
-            Displaying {{ osborneMarcs|length }} search results of {{ titleIds.getTotalItemCount }} total.
-        </p>
-    {% endif %}
+
 {% endblock %}
 
 {% block body %}
@@ -33,32 +29,29 @@
     </form>
 
     {% if osborneMarcs|length %}
-        <table class="table table-bordered table-condensed table-hover table-striped">
-            <thead>
+        {% embed 'partial/table.html.twig' %}
+            {% set entities = titleIds %}
+            {% block thead %}
                 <tr>
                     <th>ID</th>
                     <th>Author</th>
                     <th>Title</th>
                 </tr>
-            </thead>
-            <tbody>
-            {% for osborneMarc in osborneMarcs %}
-                <tr>
-                    <td>
-                        <a href="{{ path('resource_osborne_show', { 'id': osborneMarc.titleId }) }}">
-                            {{ osborneMarc.titleId }}
-                        </a>
-                    </td>
-                    <td>{{ manager.getAuthor(osborneMarc) }}</td>
-                    <td>{{ manager.getTitle(osborneMarc) }}</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-
-        <div class="navigation">
-            {{ knp_pagination_render(titleIds) }}
-        </div>
+            {% endblock %}
+            {% block tbody %}
+                {% for osborneMarc in osborneMarcs %}
+                    <tr>
+                        <td>
+                            <a href="{{ path('resource_osborne_show', { 'id': osborneMarc.titleId }) }}">
+                                {{ osborneMarc.titleId }}
+                            </a>
+                        </td>
+                        <td>{{ manager.getAuthor(osborneMarc) }}</td>
+                        <td>{{ manager.getTitle(osborneMarc) }}</td>
+                    </tr>
+                {% endfor %}
+            {% endblock %}
+        {% endembed %}
     {% endif %}
 
 {% endblock %}

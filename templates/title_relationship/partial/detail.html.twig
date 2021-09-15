@@ -1,50 +1,49 @@
-
-<table class='table table-bordered table-condensed table-hover table-striped'>
-    <tbody>
+<table class='table table-hover table-striped'>
+    {% block tbody %}
         <tr>
             <th>Name</th>
             <td>
-                                                            {{ title_relationship.name }}
-                                  </td>
-          </tr>
-          <tr>
+                {{ title_relationship.name }}
+            </td>
+        </tr>
+        <tr>
             <th>Label</th>
             <td>
-                                                            {{ title_relationship.label }}
-                                  </td>
-          </tr>
-          <tr>
+                {{ title_relationship.label }}
+            </td>
+        </tr>
+        <tr>
             <th>Description</th>
             <td>
-                                                            {{ title_relationship.description|raw }}
-                                  </td>
-          </tr>
-          
-                                                                  <tr>
-                <th>RelatedTitle</th>
-                <td>
-                  {% if title_relationship.relatedTitles|length > 0 %}
-                  <ul>
-                      {% for related_title in title_relationship.relatedTitles %} 
-                      <li>
-                          <a href='{{ path("related_title_show", {"id":related_title.id }) }}'>
-                              {{ related_title }}
-                          </a>
-                      </li>
-                      {% endfor %}
-                  </ul>
-                  {% endif %}
-                </td>
-              </tr>
-          <tr>
-        <th>Created</th>
-        <td>{{ title_relationship.created|date }}</td>
-    </tr>
-    <tr>
-        <th>Updated</th>
-        <td>{{ title_relationship.updated|date }}</td>
-    </tr>
-    </tbody>
-</table>
+                {{ title_relationship.description|raw }}
+            </td>
+        </tr>
+
+        <tr>
+            <th>RelatedTitle</th>
+            <td>
+                {% if title_relationship.relatedTitles|length > 0 %}
+                    <ul>
+                        {% for related_title in title_relationship.relatedTitles %}
+                            <li>
+                                <a href='{{ path("related_title_show", {"id":related_title.id }) }}'>
+                                    {{ related_title }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th>Created</th>
+            <td>{{ title_relationship.created|date }}</td>
+        </tr>
+        <tr>
+            <th>Updated</th>
+            <td>{{ title_relationship.updated|date }}</td>
+        </tr>
+    {% endblock %}
+    {% endembed %}
 
 
