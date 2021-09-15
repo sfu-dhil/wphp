@@ -76,7 +76,8 @@ class WPHPModals extends Modals{
      * @returns {boolean}
      */
     defaultLinkFilter(link){
-        return (!(/csv$/gi.test(link)));
+        let url = new URL(link.href);
+        return (!(/csv$/gi.test(url.pathname)));
     }
 
     /**
