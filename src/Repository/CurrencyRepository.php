@@ -60,7 +60,7 @@ class CurrencyRepository extends ServiceEntityRepository {
         $qb = $this->createQueryBuilder('currency');
         $qb->andWhere('currency.name LIKE :q');
         $qb->orderBy('currency.name', 'ASC');
-        $qb->setParameter('q', "{$q}%");
+        $qb->setParameter('q', "%{$q}%");
 
         return $qb->getQuery()->execute();
     }
