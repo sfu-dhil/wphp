@@ -4,11 +4,6 @@
 
 {% block pageheader %}
     <h1>ESTC Marc Record Search</h1>
-    {% if estcMarcs|length %}
-        <p class="count">
-            Displaying {{ estcMarcs|length }} search results of {{ titleIds.getTotalItemCount }} total.
-        </p>
-    {% endif %}
 {% endblock %}
 
 {% block body %}
@@ -33,34 +28,31 @@
     </form>
 
     {% if estcMarcs|length %}
-        <table class="table table-bordered table-condensed table-hover table-striped">
-            <thead>
+        {% embed 'partial/table.html.twig' %}
+            {% set entities = titleIds %}
+            {% block thead %}
                 <tr>
                     <th>ID</th>
                     <th>Imported</th>
                     <th>Title</th>
                     <th>Imprint</th>
                 </tr>
-            </thead>
-            <tbody>
-            {% for estcMarc in estcMarcs %}
-                <tr>
-                    <td>
-                        <a href="{{ path('resource_estc_show', { 'id': estcMarc.titleId }) }}">
-                            {{ estcMarc.titleId }}
-                        </a>
-                    </td>
-                    <td>{% if manager.isImported(estcMarc) %} Yes {% else %} No {% endif %}</td>
-                    <td>{{ manager.getTitle(estcMarc) }}</td>
-                    <td>{{ manager.getFieldValues(estcMarc, '260')|join(" ") }}</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-
-        <div class="navigation">
-            {{ knp_pagination_render(titleIds) }}
-        </div>
+            {% endblock %}
+            {% block tbody %}
+                {% for estcMarc in estcMarcs %}
+                    <tr>
+                        <td>
+                            <a href="{{ path('resource_estc_show', { 'id': estcMarc.titleId }) }}">
+                                {{ estcMarc.titleId }}
+                            </a>
+                        </td>
+                        <td>{% if manager.isImported(estcMarc) %} Yes {% else %} No {% endif %}</td>
+                        <td>{{ manager.getTitle(estcMarc) }}</td>
+                        <td>{{ manager.getFieldValues(estcMarc, '260')|join(" ") }}</td>
+                    </tr>
+                {% endfor %}
+            {% endblock %}
+        {% endembed %}
     {% endif %}
 
 {% endblock %}

@@ -1,0 +1,28 @@
+{# parameters for this partial:
+    path (name of the Symfony controller action
+    parameters (any parameters necessary for the path).
+
+    {% include 'partial/export.html.twig' with {'path': 'person_export', 'parameters': {'id': person.id}} %}
+#}
+{% if parameters is not defined %}{% set parameters={} %}{% endif %}
+{% set query %}{% if app.request.queryString %}?{{ app.request.queryString }}{% else %}{% endif %}{% endset %}
+<div class="btn-group">
+    {% if csvOnly is defined and csvOnly %}
+        <a type="button" class="btn btn-default"
+           href='{{ path(path, parameters|merge({'format': 'csv'})) }}{{ query }}'>
+            Export CSV
+        </a>
+    {% else %}
+        <a type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+           aria-expanded="false">
+            Export
+        </a>
+        <ul class="dropdown-menu">
+            <li><a href="{{ path(path, parameters|merge({'format': 'mla'})) }}{{ query }}">MLA</a></li>
+            <li><a href="{{ path(path, parameters|merge({'format': 'chicago'})) }}{{ query }}">Chicago</a></li>
+            <li><a href="{{ path(path, parameters|merge({'format': 'apa'})) }}{{ query }}">APA</a></li>
+            <li><a href="{{ path(path, parameters|merge({'format': 'bibtex'})) }}{{ query }}">BibTex</a></li>
+            <li><a href="{{ path(path, parameters|merge({'format': 'csv'})) }}{{ query }}">CSV</a></li>
+        </ul>
+    {% endif %}
+</div>

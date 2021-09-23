@@ -1,0 +1,33 @@
+.title-grid{
+  display:grid;
+  grid-template-columns: repeat(2, minmax(45%, 100%));
+  column-gap: 2rem;
+  table{
+    background:inherit;
+  }
+}
+
+.title-grid > div{
+  grid-column: span 2;
+  padding: ms(1) 0;
+  &.title-comment{
+    padding-top:0;
+  }
+  h2{
+    margin-top:0;
+  }
+  @media (min-width: $breakpoint_md){
+    &.title-metadata-main{
+      grid-column-start:1;
+      grid-column-end:1;
+      border-top:none;
+    }
+    &.title-metadata-bibliographic{
+      grid-column-start:2;
+      grid-column-end: 2;
+      border-top:none;
+    }
+  }
+}
+
+

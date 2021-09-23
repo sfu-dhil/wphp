@@ -1,0 +1,15 @@
+
+{% set authored = (author_string is defined and author_string is not null) ? author_string ~ '.' : '' %}
+{%- set out_title -%}
+    {% if type == 'title' %}
+        <em>{{ record }}</em>
+        {%- if record matches '{[^[\.,!\?]]$}' %}.{% endif %}
+    {% else %}
+        "{{ record }}{%- if record matches '{[^[\.,!\?]]$}' %}.{% endif %}"
+    {% endif %}
+{%- endset -%}
+
+{% apply spaceless %}
+{{ authored}} {{ out_title }} <i>The Women's Print History Project</i>, 2019,
+{{ type }} ID {{ record.id }}, <a href='{{ url }}'>{{ url }}</a>. Accessed {{ null|date('Y-m-d') }}.
+{% endapply %}

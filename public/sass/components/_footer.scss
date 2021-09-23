@@ -1,0 +1,233 @@
+$footer_color: transparentize($color_white, 0.2);
+$footer_background: $color_dark_bg;
+$footer_link: $color_white;
+$footer_link_hover: $color_white;
+
+$footer_divider: 2px solid rgba($color_white, 0.5);
+
+/* Footer */
+footer.footer {
+  margin-top:auto;
+  background-color: $footer_background;
+  color: $footer_color;
+  font-family: $serif;
+  font-size: 1rem;
+  padding: ms(0) ms(-1);
+  a{
+    &:link, &:visited, &:active{
+      border-bottom:none;
+      color: $footer_color;
+    }
+    &:hover{
+      color: $color_white;
+    }
+  }
+  p{
+    margin:ms(-2) 0;
+    font-size: 0.9em;
+    line-height: 1.4;
+  }
+}
+
+.footer_container{
+    max-width:1400px;
+    width:unset;
+    padding:0;
+    display:grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: 1fr 1fr auto;
+    &:before, &:after {
+      content: unset;
+    }
+}
+
+
+
+
+
+
+.footer_logo{
+  grid-column: 1 / 2;
+  max-width: 100%;
+  grid-row: 1;
+  margin-left:auto;
+  min-width: 18.5rem;
+}
+
+.footer_social{
+  grid-column: 1 / 2;
+  grid-row:1;
+  margin-top:auto;
+}
+
+.footer_menus{
+  grid-column: 3 / end;
+  grid-row: 1 / 3;
+  padding: ms(1) 0;
+  display:flex;
+  justify-content: space-between;
+
+  > *{
+    padding:0 ms(-1);
+  }
+  li + li{
+    margin-top: ms(-2);
+  }
+}
+
+.footer_sponsor{
+  grid-column: span 6;
+  grid-row: end;
+  border-top: $footer-divider;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  & > .sshrc{
+    flex: 1 1 40%;
+    max-width: 30rem;
+    min-width: 25rem;
+    padding: 0.5em 0;
+    & > div{
+      font-size: 0.95em;
+      line-height: 1.4;
+    }
+    img{
+      padding: 1em 0;
+    }
+  }
+  & > .dhil{
+    flex: 0 0 30%;
+
+    a{
+      text-align:right;
+      img{
+        filter: saturate(50%) sepia(70%);
+        transition: filter 0.3s ease-in-out;
+      }
+      &:hover{
+        img{
+          filter: revert;
+        }
+      }
+    }
+  }
+}
+
+
+
+/* Social icons stuff */
+
+.social-icons-list{
+  list-style:none;
+  display:flex;
+  justify-content:space-between;
+  li + li{
+    padding-left: clamp(0.5em, 2vw, 1em);
+  }
+}
+
+.fab, .fas{
+  font-size: clamp(1rem, calc(0.8722rem + 1.6790vw), 2.1rem);
+  transition: color 0.3s ease-in-out;
+}
+
+.social-icon {
+  &:hover{
+    /* facebook, twitter, and instagram colours
+      Thanks to this gist: https://gist.github.com/pololee/c13213df6f560cfd2075 */
+    .fa-facebook-square { color: #5d70c1; }
+    .fa-twitter-square{ color: #4099FF;}
+    .fa-instagram-square { color: #E1306C;}
+
+    .fa-podcast{ color: rgb(178, 81, 224);  }
+
+    /* Spotify green from Branding Guidelines:
+    https://developer.spotify.com/branding-guidelines/ */
+    .fa-spotify{ color: #1DB954; }
+  }
+}
+
+
+
+
+@media (max-width: 991px){
+  .footer_container{
+    grid-template-rows:auto;
+  }
+
+  .footer_logo{
+      grid-column: 1 / 4;
+      margin-right:auto;
+      margin-left:0;
+      grid-row: 1;
+    margin-top: -8px;
+    margin-bottom: 1em;
+    max-width:15rem;
+
+  }
+
+  .footer_social{
+    grid-column: 5 / end;
+    grid-row: 1;
+    margin: auto 0;
+  }
+
+  .footer_menus{
+    border-top: $footer_divider;
+    grid-column: span 6;
+    grid-row: 2 / end;
+    justify-content:space-between;
+  }
+}
+
+@media (max-width: 768px){
+  .footer_menus{
+    display:grid;
+    grid-template-columns: repeat(auto-fit, 11rem);
+  }
+
+  .footer_sponsor{
+    justify-content:center;
+    .dhil{
+      flex: 1 1 auto;
+      a.img-container{
+        display:flex;
+        justify-content:center;
+        text-align:left;
+      }
+
+    }
+  }
+
+
+}
+
+@media (max-width: 500px){
+    .footer_container{
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      > div:not(:first-child){
+        border-top: $footer-divider;
+        padding-top: 1em;
+        padding-bottom: 0.5em;
+      }
+    }
+
+  .footer_logo{
+    max-width:50%;
+    margin:0 auto 1em auto;
+  }
+
+  .social-icons-list{
+    justify-content:space-around;
+  }
+}
+
+
+
+
+
+
+

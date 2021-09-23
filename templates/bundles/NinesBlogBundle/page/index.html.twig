@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block pageheader %}
+    <div class='btn-toolbar pull-right'>
+        <div class='btn-group'>
+            {% if is_granted('ROLE_BLOG_ADMIN') %}
+                <a href="{{ path('nines_blog_page_new') }}" class="btn btn-default">
+                    <span class="glyphicon glyphicon-plus"></span> New
+                </a>
+                <a href="{{ path('nines_blog_page_sort') }}" class="btn btn-default">
+                    <span class="glyphicon glyphicon-sort"></span> Sort
+                </a>
+            {% endif %}
+            <a href="{{ path('nines_blog_page_search') }}" class="btn btn-default">
+                <span class="glyphicon glyphicon-search"></span> Search
+            </a>
+        </div>
+    </div>
+    <h1>Page List</h1>
+    <p class="count">
+        Displaying {{ pages|length }} pages of {{ pages.getTotalItemCount }} total.
+    </p>
+{% endblock %}
+
+{% block body %}
+    <div class="gallery">
+        {% for page in pages %}
+            {% embed 'partial/card.html.twig' %}
+                {% set link = path('nines_blog_page_show', {'id': page.id}) %}
+                {% block excerpt %}
+                    {{ page.excerpt|raw }}
+                {% endblock %}
+                {% block heading %}
+                    {{ page.title }}
+                {% endblock %}
+
+                {% block footer %}
+                    {% if is_granted('ROLE_BLOG_ADMIN') %}
+                        <span class="badge">
+                               {% if page.public %}Public{% else %}Private{% endif %}
+                        </span>
+                        <span class="badge">
+                              {% if page.inMenu %}In Menu{% else %}Not In Menu{% endif %}
+                        </span>
+
+                    <p>Posted {{ page.created|date('M j, Y') }} by {{ page.user.fullname }}</p>
+                    {% endif %}
+                {% endblock %}
+            {% endembed %}
+        {% endfor %}
+        <div class="navigation">
+            {{ knp_pagination_render(pages) }}
+        </div>
+    </div>
+
+
+
+{% endblock %}

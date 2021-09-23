@@ -2,11 +2,6 @@
 
 {% block pageheader %}
     <h1>Explore Titles</h1>
-    {% if titles|length > 0 %}
-        <p class="count">
-            Displaying {{ titles|length }} titles of {{ titles.getTotalItemCount }} total.
-        </p>
-    {% endif %}
 {% endblock %}
 
 {% block body %}
@@ -21,9 +16,9 @@
         <div class="col-sm-2"></div>
 
         <div class="col-sm-10">
-            <input type="submit" value="Search" class="btn btn-primary" />
-            <a class="btn btn-primary" role="button" data-toggle="collapse" href="#controls" aria-expanded="false" aria-controls="collapseExample">Advanced Search</a>
-            <a class="btn btn-primary" role="button" href="{{ path('title_export') }}">Export All Titles</a>
+            <input type="submit" value="Search" class="btn btn-primary"/>
+            <a class="btn btn-primary" role="button" data-toggle="collapse" href="#controls" aria-expanded="false"
+               aria-controls="collapseExample">Advanced Search</a>
         </div>
     </div>
     {{ form_end(search_form) }}
@@ -37,16 +32,9 @@
             {% endif %}
         </div>
     </div>
-    {% if titles|length > 0 %}
-        <div class="navigation">
-            {{ knp_pagination_render(titles) }}
-        </div>
-        
-        {{ include('title/table.html.twig') }}
 
-        <div class="navigation">
-            {{ knp_pagination_render(titles) }}
-        </div>
+    {% if titles|length > 0 %}
+        {% include 'title/table.html.twig' with {'export': include('partial/export.html.twig', {'path': 'title_export', 'csvOnly': true})} %}
     {% endif %}
 
 {% endblock %}

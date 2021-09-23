@@ -1,0 +1,39 @@
+@include dhil-details-accordion(true) {
+  details.accordion {
+    @extend .cardlike;
+    summary {
+      font-variant:none;
+      text-transform:none;
+      display:flex;
+      align-content:center;
+      svg{
+        transform: rotate(0);
+        font-size: 1em;
+        min-width:1em;
+        margin-right: 1rem;
+        align-self:center;
+        transition: all var(--accordion-easing) var(--accordion-duration);
+      }
+      background-color:inherit!important;
+    }
+    &[aria-expanded='true'] svg{
+      transform: rotate(90deg);
+    }
+  }
+}
+
+.accordion__content{
+  margin:1rem;
+}
+
+.comment-interface{
+  margin-top: ms(1);
+}
+
+
+// Comments panels
+.comments-expand {
+  .btn {
+    white-space: normal;
+  }
+}

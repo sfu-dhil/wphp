@@ -102,22 +102,6 @@ class PersonController extends AbstractController implements PaginatorAwareInter
         $form->handleRequest($request);
         $persons = [];
 
-        $name = '';
-        if ($form->isSubmitted()) {
-            $query = $repo->buildSearchQuery($form->getData());
-
-            foreach ($query->getParameters() as $param) {
-                $paramValue = $param->getValue();
-                $value = '';
-                if (is_array($paramValue)) {
-                    $value = implode('-', array_map(fn ($e) => (string) $e, $paramValue));
-                } else {
-                    $value = $paramValue;
-                }
-                $name .= '-' . preg_replace('/[^a-zA-Z0-9-]*/', '', $value);
-            }
-            $persons = $query->execute();
-        }
         $tmpPath = tempnam(sys_get_temp_dir(), 'wphp-export-');
         $fh = fopen($tmpPath, 'w');
         fputcsv($fh, $exporter->personHeaders());
@@ -128,7 +112,7 @@ class PersonController extends AbstractController implements PaginatorAwareInter
 
         fclose($fh);
         $response = new BinaryFileResponse($tmpPath);
-        $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'wphp-search-persons' . $name . '.csv');
+        $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'wphp-search-persons.csv');
         $response->deleteFileAfterSend(true);
 
         return $response;

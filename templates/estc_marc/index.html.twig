@@ -4,9 +4,6 @@
 
 {% block pageheader %}
     <h1>ESTC Marc Record List</h1>
-    <p class="count">
-        Displaying {{ estcMarcs|length }} ESTC Marcs of {{ estcMarcs.getTotalItemCount }} total.
-    </p>
 {% endblock %}
 
 {% block body %}
@@ -22,16 +19,17 @@
         </div>
     </div>
 
-    <table class="table table-bordered table-condensed table-hover table-striped">
-        <thead>
+    {% embed 'partial/table.html.twig' %}
+        {% set entities = estcMarcs %}
+        {% block thead %}
             <tr>
                 <th>Title ID</th>
                 <th>Imported</th>
                 <th>Title</th>
                 <th>Author</th>
             </tr>
-        </thead>
-        <tbody>
+        {% endblock %}
+        {% block tbody %}
             {% for estcMarc in estcMarcs %}
                 <tr>
                     <td>
@@ -44,11 +42,7 @@
                     <td>{{ manager.getAuthor(estcMarc) }}</td>
                 </tr>
             {% endfor %}
-        </tbody>
-    </table>
-
-    <div class="navigation">
-        {{ knp_pagination_render(estcMarcs) }}
-    </div>
+        {% endblock %}
+    {% endembed %}
 
 {% endblock %}

@@ -1,0 +1,34 @@
+{% set cardClass = class is defined and not null ? 'card ' ~ class : 'card' %}
+
+{% set excerpt = block('excerpt') %}
+
+<div class="{{ cardClass }}">
+    {% if excerpt is defined and '<img'  in excerpt %}
+    <a href="{{ link }}" class="link link__block card_top_link">
+        <div class="card_top">
+            <div class="excerpt">
+                {% block excerpt %}{% endblock %}
+            </div>
+        </div>
+    </a>
+    {% endif %}
+    <div class="card_bottom">
+        <div class="card_header">
+            <div class="card_caption">
+                {% block caption %}
+                {% endblock %}
+            </div>
+            <h3>
+                <a href="{{ link }}" class="link link__block">
+                    {% block heading %}
+                    {% endblock %}
+                </a>
+            </h3>
+        </div>
+        {% if block('footer') is defined %}
+            <div class="card_footer">
+                {{ block('footer') }}
+            </div>
+        {% endif %}
+    </div>
+</div>

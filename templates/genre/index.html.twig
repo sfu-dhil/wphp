@@ -2,9 +2,6 @@
 
 {% block pageheader %}
     <h1>Explore Genres</h1>
-    <p class="count">
-        Displaying {{ genres|length }} genres of {{ genres.getTotalItemCount }} total.
-    </p>
 {% endblock %}
 
 {% block body %}
@@ -17,15 +14,16 @@
             {% endif %}
         </div>
     </div>
-    <table class="table table-bordered table-condensed table-hover table-striped">
-        <thead>
+    {% embed 'partial/table.html.twig' %}
+        {% set entities = genres %}
+        {% block thead %}
             <tr>
                 <th>Name</th>
                 <th>Description</th>
                 <th>Titles</th>
             </tr>
-        </thead>
-        <tbody>
+        {% endblock %}
+        {% block tbody %}
             {% for genre in genres %}
                 <tr>
                     <td>
@@ -41,11 +39,8 @@
                     </td>
                 </tr>
             {% endfor %}
-        </tbody>
-    </table>
+        {% endblock %}
+    {% endembed %}
 
-    <div class="navigation">
-        {{ knp_pagination_render(genres) }}
-    </div>
 
 {% endblock %}

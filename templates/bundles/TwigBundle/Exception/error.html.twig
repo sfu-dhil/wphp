@@ -7,8 +7,9 @@
 {% block body %}
 
     <p><strong>{{ exception.class }}</strong> <br>
-        {{ exception.getStatusCode() }} - {{ exception.message }}<br> 
+        {{ exception.getStatusCode() }} - {{ exception.message }}<br>
     </p>
-
-    <p><button class="btn btn-default" onclick="window.history.go(-1)">Back</button>
+    <p>
+        <button class="btn btn-default" onclick="window.history.go(-1)">Back</button>
+    </p>
 {% endblock %}

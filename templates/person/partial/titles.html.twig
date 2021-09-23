@@ -1,0 +1,24 @@
+
+{% embed 'partial/table.html.twig' %}
+    {% set entities = pagination %}
+    {% block thead %}
+        <tr>
+            <th>Role</th>
+            <th>Title</th>
+            <th>Date</th>
+        </tr>
+    {% endblock %}
+    {% block tbody %}
+        {% for tr in pagination %}
+            {% set title = tr.title %}
+            <tr>
+                <td>{{ tr.role.name }}</td>
+                <td><a href="{{ path('title_show', {'id': title.id}) }}">{{ title.title }}</a></td>
+                <td>{{ title.pubdate }}</td>
+            </tr>
+        {% endfor %}
+    {% endblock %}
+    {% set export %}
+        {% include 'partial/export.html.twig' with {'path': 'person_export', 'parameters': {'id': person.id}} %}
+    {% endset %}
+{% endembed %}

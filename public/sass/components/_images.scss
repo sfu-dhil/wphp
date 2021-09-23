@@ -1,0 +1,19 @@
+
+img{
+  max-width:100%;
+  height:auto;
+}
+
+// Hack for making images responsive in blog content.
+.blog-content img{
+  width:100%;
+}
+
+a.img-container{
+  display:block;
+  height:100%;
+  width:100%;
+  &:link, &:hover, &:active, &:focus{
+    border-bottom:none;
+  }
+}

@@ -1,0 +1,110 @@
+{#
+/**
+ * @file
+ * Derived from twitter Bootstrap v3 Sliding pagination control implementation.
+ *
+ * Original:
+ * View that can be used with the pagination module
+ * from the Twitter Bootstrap CSS Toolkit
+ * https://getbootstrap.com/docs/3.4/components/#pagination
+ *
+ * @author Pablo Díez <pablodip@gmail.com>
+ * @author Jan Sorgalla <jsorgalla@gmail.com>
+ * @author Artem Ponomarenko <imenem@inbox.ru>
+ * @author Artem Zabelin <artjomzabelin@gmail.com>
+ */
+#}
+
+{% set prevIcon %}
+    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+    </svg>
+{% endset %}
+
+{% set nextIcon %}
+    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+    </svg>
+{% endset %}
+
+{% set disabledItem %}
+    <li class="page-item disabled">
+        <a class="page-link">
+            &hellip;
+        </a>
+    </li>
+{% endset %}
+
+{% if pageCount > 1 %}
+    <ul class="pagination justify-content-center">
+
+        {% if previous is defined %}
+            <li class="page-item">
+                <a class="page-link" rel="prev" href="{{ path(route, query|merge({(pageParameterName): previous})) }}">
+                    {{ prevIcon|raw }}
+                </a>
+            </li>
+        {% else %}
+            <li class="disabled page-item">
+                <a class="page-link">
+                    {{ prevIcon|raw }}
+                </a>
+            </li>
+        {% endif %}
+
+        {% if startPage > 1 %}
+            <li class="page-item">
+                <a class="page-link" href="{{ path(route, query|merge({(pageParameterName): 1})) }}">1</a>
+            </li>
+            {% if startPage == 3 %}
+                <li class="page-item">
+                    <a class="page-link" href="{{ path(route, query|merge({(pageParameterName): 2})) }}">2</a>
+                </li>
+            {% elseif startPage != 2 %}
+                {{ disabledItem|raw }}
+            {% endif %}
+        {% endif %}
+
+        {% for page in pagesInRange %}
+            {% if page != current %}
+                <li class="page-item">
+                    <a class="page-link" href="{{ path(route, query|merge({(pageParameterName): page})) }}">{{ page }}</a>
+                </li>
+            {% else %}
+                <li class="active">
+                    <a class="page-link">{{ page }}</a>
+                </li>
+            {% endif %}
+
+        {% endfor %}
+
+        {% if pageCount > endPage %}
+            {% if pageCount > (endPage + 1) %}
+                {% if pageCount > (endPage + 2) %}
+                    {{ disabledItem|raw }}
+                {% else %}
+                    <li class="page-item">
+                        <a class="page-link" href="{{ path(route, query|merge({(pageParameterName): (pageCount - 1)})) }}">{{ pageCount -1 }}</a>
+                    </li>
+                {% endif %}
+            {% endif %}
+            <li class="page-item">
+                <a class="page-link" href="{{ path(route, query|merge({(pageParameterName): pageCount})) }}">{{ pageCount }}</a>
+            </li>
+        {% endif %}
+
+        {% if next is defined %}
+            <li class="page-item">
+                <a class="page-link" rel="next" href="{{ path(route, query|merge({(pageParameterName): next})) }}">
+                    {{ nextIcon|raw }}
+                </a>
+            </li>
+        {% else %}
+            <li class="disabled page-item">
+                <a class="page-link">
+                    {{ nextIcon|raw }}
+                </a>
+            </li>
+        {% endif %}
+    </ul>
+{% endif %}

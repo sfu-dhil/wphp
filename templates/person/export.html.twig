@@ -6,10 +6,10 @@
 
 {% block body %}
     <p>There are {{ titles|length }} titles associated with this person.<p>
-    <div class="list-group">
+    <div class="list-group citations">
         {% for tr in titles %}
             {% set title = tr.title %}
-            <div class="list-group-item">{{ include('partials/citation/' ~ format ~ '.html.twig', {'title': title}) }}</div>
-            {% endfor %}
+            <div class="list-group-item citation">{{ include('partial/citation/' ~ format ~ '.html.twig', {'title': title}) }}</div>
+        {% endfor %}
     </div>
 {% endblock %}

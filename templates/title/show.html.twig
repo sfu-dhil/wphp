@@ -1,62 +1,67 @@
 {% extends 'base.html.twig' %}
 
 {% block htmlhead %}
-    <link href='{{ path('title_show', {'id': title.id, '_format': 'xml'}) }}' type='application/rdf+xml' rel='alternate'/>
-    <link href='{{ path('title_show', {'id': title.id, '_format': 'json'}) }}' type='application/ld+json' rel='alternate'/>
+    <link href='{{ path('title_show', {'id': title.id, '_format': 'xml'}) }}' type='application/rdf+xml'
+          rel='alternate'/>
+    <link href='{{ path('title_show', {'id': title.id, '_format': 'json'}) }}' type='application/ld+json'
+          rel='alternate'/>
 {% endblock %}
 
 {% block pageheader %}
-    <div class="container">
-        <h1>{{ title.title }}</h1>
-    </div>
+    <h1>{{ title.title }}</h1>
 {% endblock %}
 
 {% block body %}
     {% if is_granted('ROLE_CONTENT_ADMIN') %}
-    <div class="container">
-        <div class="btn-toolbar">
-            <div class="btn-group pull-right">
-                <a href="{{ path('title_new') }}" class="btn btn-default">
-                    <span class='glyphicon glyphicon-plus'></span> Add Title
-                </a>
-                <a href="{{ path('title_copy', {'id': title.id}) }}" class="btn btn-default">
-                    <span class='glyphicon glyphicon-copy'></span> Copy Title
-                </a>
-                <a href="{{ path('title_edit', { 'id': title.id }) }}" class="btn btn-default">
-                    <span class='glyphicon glyphicon-edit'></span> Edit Title
-                </a>
-                <a href="{{ path('title_delete', { 'id': title.id }) }}" class="btn btn-default" data-confirm="Are you sure you want to delete this Title?">
-                    <span class='glyphicon glyphicon-remove'></span> Delete Title
-                </a>
+        <div class="container">
+            <div class="btn-toolbar">
+                <div class="btn-group pull-right">
+                    <a href="{{ path('title_new') }}" class="btn btn-default">
+                        <span class='glyphicon glyphicon-plus'></span> Add Title
+                    </a>
+                    <a href="{{ path('title_copy', {'id': title.id}) }}" class="btn btn-default">
+                        <span class='glyphicon glyphicon-copy'></span> Copy Title
+                    </a>
+                    <a href="{{ path('title_edit', { 'id': title.id }) }}" class="btn btn-default">
+                        <span class='glyphicon glyphicon-edit'></span> Edit Title
+                    </a>
+                    <a href="{{ path('title_delete', { 'id': title.id }) }}" class="btn btn-default"
+                       data-confirm="Are you sure you want to delete this Title?">
+                        <span class='glyphicon glyphicon-remove'></span> Delete Title
+                    </a>
+                </div>
             </div>
         </div>
-    </div>
     {% endif %}
-
-    <div class="container">
-        <div class="row">
-
-            <div class="col-sm-7">
-                <table class="table table-bordered table-condensed table-hover table-striped">
-                    <tbody>
-                         <tr>
-                            <th data-toggle="popover" data-content="{{ 'title.fields.id'|trans }}">ID</th>
-                            <td>{{ title.id }}</td>
-                        </tr>
-                        <tr>
-                            <th data-toggle="popover"  data-content="{{ 'title.fields.title'|trans }}">Title</th>
-                            <td>{{ title.title }}</td>
-                        </tr>
-                        <tr>
-                            <th data-toggle="popover"  data-content="{{ 'title.fields.contributors'|trans }}">Contributors</th>
-                            <td>
-                                {% for tr in title.titleRoles %}
-                                    {% set person = tr.person %}
-                                    <a href="{{ path('person_show', {'id': person.id}) }}">{{ person.lastName }}, {{ person.firstName }}</a> ({{ tr.role.name }})
-                                        {%- if not loop.last %}; {% endif %}
-                                {% endfor %}
-                            </td>
-                        </tr>
+    <div class="container title-grid">
+        <div class="title-metadata title-metadata-main">
+            {% embed 'partial/table.html.twig' %}
+                {% block tbody %}
+                    <tr>
+                        <th data-toggle="popover" data-content="{{ 'title.fields.id'|trans }}">ID</th>
+                        <td>{{ title.id }}</td>
+                    </tr>
+                    <tr>
+                        <th data-toggle="popover" data-content="{{ 'title.fields.title'|trans }}">Title</th>
+                        <td>{{ title.title }}</td>
+                    </tr>
+                    <tr>
+                        <th data-toggle="popover" data-content="{{ 'title.fields.contributors'|trans }}">Contributors
+                        </th>
+                        <td>
+                            {% set roleCount = title.titleRoles|length %}
+                            {% if roleCount > 0 %}
+                                <ul>
+                                    {% for tr in title.titleRoles %}
+                                        {% set person = tr.person %}
+                                        <li>
+                                            <a href="{{ path('person_show', {'id': person.id}) }}">{{ person }}</a> ({{ tr.role.name }})
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        </td>
+                    </tr>
                         <tr>
                             <th data-toggle="popover"  data-content="{{ 'title.fields.signedAuthor'|trans }}">Signed Author</th>
                             <td>{{ title.signedAuthor }}</td>
@@ -68,11 +73,17 @@
                         <tr>
                             <th data-toggle="popover"  data-content="{{ 'title.fields.titleFirmRoles'|trans }}">Firms</th>
                             <td>
-                                {% for tfr in title.titleFirmRoles %}
-                                    {% set firm = tfr.firm %}
-                                    <a href="{{ path('firm_show', {'id': firm.id}) }}">{{ firm.name }}</a> ({{ tfr.firmrole }})
-                                    {%- if not loop.last %}; {% endif %}
-                                {% endfor %}
+                                {% if title.titleFirmRoles|length > 0 %}
+                                    <ul>
+                                        {% for tfr in title.titleFirmRoles %}
+                                            {% set firm = tfr.firm %}
+                                            <li>
+                                                <a href="{{ path('firm_show', {'id': firm.id}) }}">{{ firm.name }}</a>
+                                                ({{ tfr.firmrole }})
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
                             </td>
                         </tr>
                         <tr>
@@ -125,195 +136,175 @@
                                 </td>
                             {% endif %}
                         </tr>
-                    </tbody>
-                </table>
+                    {% endblock %}
+                {% endembed %}
             </div>
 
-            <div class="col-sm-5">
-                <table class="table table-bordered table-condensed table-hover table-striped">
-                    <tbody>
-                        <tr>
-                            <th data-toggle="popover"  data-content="{{ 'title.fields.format'|trans }}">Format</th>
-                            <td>
-                                {% if title.format %}
-                                    <a href="{{ path('format_show', {'id': title.format.id}) }}">
-                                        {{ title.format.name }} ({{ title.format.abbreviation }})
-                                    </a>
-                                {% endif %}
-                            </td>
-                        </tr>
-                        <tr>
-                            <th data-toggle="popover"  data-content="{{ 'title.fields.sizeL'|trans }}">Length (cm)</th>
-                            <td>{{ title.sizeL }}</td>
-                        </tr>
-                        <tr>
-                            <th data-toggle="popover"  data-content="{{ 'title.fields.sizeW'|trans }}">Width (cm)</th>
-                            <td>{{ title.sizeW }}</td>
-                        </tr>
-                        <tr>
-                            <th data-toggle="popover"  data-content="{{ 'title.fields.pricePound'|trans }}">Price (pound)</th>
-                            <td>{{ title.pricePound }}</td>
-                        </tr>
-                        <tr>
-                            <th data-toggle="popover"  data-content="{{ 'title.fields.priceShilling'|trans }}">Price (shilling)</th>
-                            <td>{{ title.priceShilling }}</td>
-                        </tr>
-                        <tr>
-                            <th data-toggle="popover"  data-content="{{ 'title.fields.pricePence'|trans }}">Price (pence)</th>
-                            <td>{{ title.pricePence }}</td>
-                        </tr>
-                        <tr>
-                            <th data-toggle="popover" data-content="{{ 'title.fields.totalPrice'|trans }}">Total Price (in pence)</th>
-                            <td>
-                                {% if title.totalPrice > 0 %}
-                                    {{ title.totalPrice }}
-                                {% endif %}
-                            </td>
-                        </tr>
-                        <tr>
-                            <th data-toggle="popover"  data-content="{{ 'title.fields.otherPrice'|trans }}">Non-UK Price</th>
-                            <td>
-                                {% if title.otherPrice %}
-                                    {{ title.otherCurrency.format(title.otherPrice) }}
-                                {% endif %}
-                            </td>
-                        </tr>
-                        <tr>
-                            <th data-toggle="popover"  data-content="{{ 'title.fields.genre'|trans }}">Genre</th>
-                            <td>
-                                {% for genre in title.genres %}
+        <div class="title-metadata title-metadata-bibliographic">
+            {% embed 'partial/table.html.twig' %}
+            {% block tbody %}
+                <tr>
+                    <th data-toggle="popover"  data-content="{{ 'title.fields.format'|trans }}">Format</th>
+                    <td>
+                        {% if title.format %}
+                            <a href="{{ path('format_show', {'id': title.format.id}) }}">
+                                {{ title.format.name }} ({{ title.format.abbreviation }})
+                            </a>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th data-toggle="popover"  data-content="{{ 'title.fields.sizeL'|trans }}">Length (cm)</th>
+                    <td>{{ title.sizeL }}</td>
+                </tr>
+                <tr>
+                    <th data-toggle="popover"  data-content="{{ 'title.fields.sizeW'|trans }}">Width (cm)</th>
+                    <td>{{ title.sizeW }}</td>
+                </tr>
+                <tr>
+                    <th data-toggle="popover"  data-content="{{ 'title.fields.pricePound'|trans }}">Price (pound)</th>
+                    <td>{{ title.pricePound }}</td>
+                </tr>
+                <tr>
+                    <th data-toggle="popover"  data-content="{{ 'title.fields.priceShilling'|trans }}">Price (shilling)</th>
+                    <td>{{ title.priceShilling }}</td>
+                </tr>
+                <tr>
+                    <th data-toggle="popover"  data-content="{{ 'title.fields.pricePence'|trans }}">Price (pence)</th>
+                    <td>{{ title.pricePence }}</td>
+                </tr>
+                <tr>
+                    <th data-toggle="popover" data-content="{{ 'title.fields.totalPrice'|trans }}">Total Price (in pence)</th>
+                    <td>
+                        {% if title.totalPrice > 0 %}
+                            {{ title.totalPrice }}
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th data-toggle="popover"  data-content="{{ 'title.fields.otherPrice'|trans }}">Non-UK Price</th>
+                    <td>
+                        {% if title.otherPrice %}
+                            {{ title.otherCurrency.format(title.otherPrice) }}
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th data-toggle="popover"  data-content="{{ 'title.fields.genre'|trans }}">Genre</th>
+                    <td>
+                        {% if title.genres %}
+                        <ul>
+                            {% for genre in title.genres %}
+                                <li>
                                     <a href='{{ path('genre_show', {'id': genre.id}) }}'>
-                                        {{ genre }}</a>{% if not loop.last %}, {% endif %}
-                                {% endfor %}
-                            </td>
-                        </tr>
-                        <tr>
-                            <th data-toggle="popover"  data-content="{{ 'title.fields.titleSources'|trans }}">Sources</th>
-                            <td>
-                                {% for titleSource in title.titleSources %}
-                                    {% include "title/partials/source-link.html.twig"
-                                        with {'source': titleSource.source, 'sourceId': titleSource.identifier} %}
-                                {% endfor %}
-                            </td>
-                        </tr>
-                        <tr>
-                            <th data-toggle="popover"  data-content="{{ 'title.fields.shelfmark'|trans }}">Shelfmarks</th>
-                            <td>
+                                        {{ genre }}</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+
+                    </td>
+                </tr>
+                <tr>
+                    <th data-toggle="popover"  data-content="{{ 'title.fields.titleSources'|trans }}">Sources</th>
+                    <td>
+                        {% if title.titleSources %}
+                        <ul>
+                            {% for titleSource in title.titleSources %}
+                                {% include "title/partial/source-link.html.twig"
+                                    with {'source': titleSource.source, 'sourceId': titleSource.identifier} %}
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th data-toggle="popover"  data-content="{{ 'title.fields.shelfmark'|trans }}">Shelfmarks</th>
+                    <td>
+                        {% if title.shelfmark %}
+                            <ul>
                                 {% for mark in title.shelfmark|split(';') %}
-                                    {{ mark }}<br/>
+                                    <li>{{ mark }}</li>
                                 {% endfor %}
-                            </td>
-                        </tr>
-                        <tr>
-                            <th data-toggle="popover"  data-content="{{ 'title.fields.notes'|trans }}">Notes</th>
-                            <td>{{ title.notes }}</td>
-                        </tr>
-                        <tr>
-                            <th data-toggle="popover"  data-content="{{ 'title.fields.checked'|trans }}">Hand-Verified</th>
-                            <td>{% if title.checked %}Yes{% else %}No{% endif %}</td>
-                        </tr>
-                        <tr>
-                            <th data-toggle="popover"  data-content="{{ 'title.fields.finalcheck'|trans }}">Verified</th>
-                            <td>{% if title.finalcheck %}Yes{% else %}No{% endif %}</td>
-                        </tr>
-                        <tr>
-                            <th data-toggle="popover"  data-content="{{ 'title.fields.finalattempt'|trans }}">Attempted Verification</th>
-                            <td>{% if title.finalattempt %}Yes{% else %}No{% endif %}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
+                            </ul>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th data-toggle="popover"  data-content="{{ 'title.fields.notes'|trans }}">Notes</th>
+                    <td>{{ title.notes }}</td>
+                </tr>
+                <tr>
+                    <th data-toggle="popover"  data-content="{{ 'title.fields.checked'|trans }}">Hand-Verified</th>
+                    <td>{% if title.checked %}Yes{% else %}No{% endif %}</td>
+                </tr>
+                <tr>
+                    <th data-toggle="popover"  data-content="{{ 'title.fields.finalcheck'|trans }}">Verified</th>
+                    <td>{% if title.finalcheck %}Yes{% else %}No{% endif %}</td>
+                </tr>
+                <tr>
+                    <th data-toggle="popover"  data-content="{{ 'title.fields.finalattempt'|trans }}">Attempted Verification</th>
+                    <td>{% if title.finalattempt %}Yes{% else %}No{% endif %}</td>
+                </tr>
+            {% endblock %}
+            {% endembed %}
         </div>
-    </div>
 
-    {% if is_granted('ROLE_USER') and (title.sourceTitles|length + title.relatedTitles|length) > 0 %}
-        <div class="container">
-            <h3>Related Titles</h3>
-            <table class="table table-bordered table-condensed table-hover table-striped">
-                <thead>
-                    <tr>
-                        <th>Relationship</th>
-                        <th>Title</th>
-                        <th>Edition Statement</th>
-                        <th>Edition Number</th>
-                        <th>Year</th>
-                    </tr>
-                </thead>
-                <tbody>
-                {% for source in title.sourceTitles %}
-                    {% set related = source.relatedTitle %}
-                    <tr>
-                        <td>{{ source.titleRelationship }}</td>
-                        <td><a href='{{ path('title_show', {'id': related.id}) }}'>{{ related.title }}</a></td>
-                        <td>{{ related.edition }}</td>
-                        <td>{{ related.editionNumber }}</td>
-                        <td>{{ related.pubDate }}</td>
-                    </tr>
-                {% endfor %}
 
-                {% for source in title.relatedTitles %}
-                    {% set related = source.sourceTitle %}
-                    <tr>
-                        <td>{{ source.titleRelationship }}</td>
-                        <td>
-                            <a href='{{ path('title_show', {'id': related.id}) }}'>{{ related.title }}</a>
-                            {% if is_granted('ROLE_CONTENT_ADMIN') %}*{% endif %}
-                        </td>
-                        <td>{{ related.edition }}</td>
-                        <td>{{ related.editionNumber }}</td>
-                        <td>{{ related.pubDate }}</td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+
+        {% if is_granted('ROLE_USER') and (title.sourceTitles|length + title.relatedTitles|length) > 0 %}
+            <div class="titles-related-titles">
+                <h2>Related Titles</h2>
+                {% embed 'partial/table.html.twig' %}
+                    {% block thead %}
+                        <tr>
+                            <th>Relationship</th>
+                            <th>Title</th>
+                            <th>Edition Statement</th>
+                            <th>Edition Number</th>
+                            <th>Year</th>
+                        </tr>
+                    {% endblock %}
+                    {% block tbody %}
+                        {% for source in title.sourceTitles %}
+                            {% set related = source.relatedTitle %}
+                            <tr>
+                                <td>{{ source.titleRelationship }}</td>
+                                <td><a href='{{ path('title_show', {'id': related.id}) }}'>{{ related.title }}</a></td>
+                                <td>{{ related.edition }}</td>
+                                <td>{{ related.editionNumber }}</td>
+                                <td>{{ related.pubDate }}</td>
+                            </tr>
+                        {% endfor %}
+
+                        {% for source in title.relatedTitles %}
+                            {% set related = source.sourceTitle %}
+                            <tr>
+                                <td>{{ source.titleRelationship }}</td>
+                                <td><a href='{{ path('title_show', {'id': related.id}) }}'>{{ related.title }}</a></td>
+                                <td>{{ related.edition }}</td>
+                                <td>{{ related.editionNumber }}</td>
+                                <td>{{ related.pubDate }}</td>
+                            </tr>
+                        {% endfor %}
+                    {% endblock %}
+                {% endembed %}
+            </div>
+        {% endif %}
+        {% set roles = title.titleRoles('Author') %}
+        {% embed 'partial/citation.html.twig' with {
+            'author_string': roles|map(role => role.person)|join(', '),
+            'record': title,
+            'type': 'title',
+            'url': url('title_show', {'id': title.id})
+        } %}
+        {% endembed %}
+
+
+
+        <div class="title-comment">
+            {# Comment interface #}
+            {% include '@NinesFeedback/comment/comment-interface.html.twig' with { 'entity': title } %}
         </div>
-    {% endif %}
-
-    <div class="container">
-        <h3>Bibliographic Entry</h3>
-        <ul class="nav nav-tabs">
-            <li class="active"><a data-toggle="tab" href="#mla">MLA</a></li>
-            <li><a data-toggle="tab" href="#apa">APA</a></li>
-            <li><a data-toggle="tab" href="#chicago">Chicago/Turabian</a></li>
-            <li><a data-toggle="tab" href="#bibtex">BibTex</a></li>
-        </ul>
-
-        <div class="tab-content">
-            <div id="mla" class="tab-pane fade in active">
-                <div class="well">
-                    <p>{% include "partials/citation/mla.html.twig" with {'title': title} %}</p>
-                </div>
-            </div>
-            <div id="apa" class="tab-pane fade">
-                <div class="well">
-                    <p>{% include "partials/citation/apa.html.twig" with {'title': title} %}</p>
-                </div>
-            </div>
-            <div id="chicago" class="tab-pane fade">
-                <div class="well">
-                    <p>{% include "partials/citation/chicago.html.twig" with {'title': title} %}</p>
-                </div>
-            </div>
-            <div id="bibtex" class="tab-pane fade">
-                <div class="well">
-                    <pre>{% include "partials/citation/bibtex.html.twig" with {'title': title} %}</pre>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    {% set roles = title.titleRoles('Author') %}
-    {% set authorString %}{% for role in roles %}{{ role.person }}{% if not loop.last %}, {% endif %}{% endfor %}{% endset %}
-    {{ include('partials/citation.html.twig', {
-        'title': authorString ~ '. "' ~ title ~ '"',
-        'record': title,
-        'type': 'title',
-        'url': url('title_show', {'id': title.id})
-    })
-    }}
-
-    <div class="container">
-        {% include '@NinesFeedback/comment/comment-interface.html.twig' with { 'entity': title } %}
     </div>
 {% endblock %}

@@ -2,9 +2,6 @@
 
 {% block pageheader %}
     <h1>Explore Firm Roles</h1>
-    <p class="count">
-        Displaying {{ firmroles|length }} firm roles of {{ firmroles.getTotalItemCount }} total.
-    </p>
 {% endblock %}
 
 {% block body %}
@@ -19,15 +16,15 @@
             {% endif %}
         </div>
     </div>
-    <table class="table table-bordered table-condensed table-hover table-striped">
-        <thead>
+    {% embed 'partial/table.html.twig' with {'entities': firmroles} %}
+        {% block thead %}
             <tr>
                 <th>Name</th>
                 <th>Description</th>
                 <th>Firms</th>
             </tr>
-        </thead>
-        <tbody>
+        {% endblock %}
+        {% block tbody %}
             {% for firmrole in firmroles %}
                 <tr>
                     <td>
@@ -45,11 +42,8 @@
                     </td>
                 </tr>
             {% endfor %}
-        </tbody>
-    </table>
+        {% endblock %}
+    {% endembed %}
 
-    <div class="navigation">
-        {{ knp_pagination_render(firmroles) }}
-    </div>
 
 {% endblock %}

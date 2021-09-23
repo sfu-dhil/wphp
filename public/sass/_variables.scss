@@ -1,161 +1,90 @@
-$dev_path: "/wphp/web";
-$prod_path: "/wphp";
-$prod_or_dev_path: $dev_path;
-//
-// @if $prod_or_dev == "prod" {
-//   $prod_or_dev_path: $prod_path;
-// }
+// Fonts
+$lato: 'Lato', sans-serif;
+$eb-garamond: 'EB Garamond', serif;
+$heading-font: $eb-garamond;
+$serif: $eb-garamond;
+$sans: $lato;
 
-
-$lato: 'LatoLatinWeb', sans-serif;
-$lato_black: 'LatoLatinWebBlack', sans-serif;
-$cormorant_garamond: 'CormorantGaramond-SemiBold', serif;
-$cormorant_garamond_bold: 'CormorantGaramond-SemiBold', serif;
-
-/* Webfont: LatoLatin-Black */
-@font-face {
- font-family: 'LatoLatinWebBlack';
- src: url('/yarn/lato-font/fonts/lato-black/lato-black.woff2') format('woff2'),
-      url('/yarn/lato-font/fonts/lato-black/lato-black.woff') format('woff'); /* Modern Browsers */
- font-style: normal;
- font-weight: normal;
- text-rendering: optimizeLegibility;
-}
-
-/* Webfont: LatoLatin-Regular */
-@font-face {
- font-family: 'LatoLatinWeb';
- src: url('/yarn/lato-font/fonts/lato-normal/lato-normal.woff2') format('woff2'),
-      url('/yarn/lato-font/fonts/lato-normal/lato-normal.woff') format('woff'); /* Modern Browsers */
- font-style: normal;
- font-weight: normal;
- text-rendering: optimizeLegibility;
-}
-
-/* Webfont: Cormorant Garamond SemiBold */
-/* cormorant-garamond-600normal - latin */
-@font-face {
-  font-family: 'CormorantGaramond-SemiBold';
-  font-style: normal;
-  font-display: swap;
-  font-weight: normal;
-  src:
-    local('Cormorant Garamond SemiBold '),
-    local('Cormorant Garamond-SemiBold'),
-    url('/yarn/typeface-cormorant-garamond/files/cormorant-garamond-latin-600.woff2') format('woff2'), /* Super Modern Browsers */
-    url('/yarn/typeface-cormorant-garamond/cormorant-garamond-latin-600.woff') format('woff'); /* Modern Browsers */
-}
-
-/* cormorant-garamond-700normal - latin */
-@font-face {
-  font-family: 'CormorantGaramond-Bold';
-  font-style: normal;
-  font-display: swap;
-  font-weight: normal;
-  src:
-    local('Cormorant Garamond Bold '),
-    local('Cormorant Garamond-Bold'),
-    url('/yarn/typeface-cormorant-garamond/cormorant-garamond-latin-700.woff2') format('woff2'), /* Super Modern Browsers */
-    url('/yarn/typeface-cormorant-garamond/cormorant-garamond-latin-700.woff') format('woff'); /* Modern Browsers */
-}
-
-
+// Sizes
+$reading-width: 62rem;
+$desktop-width: 970px;
+$breakpoint_sm: 768px;
+$breakpoint_md: 992px;
+$breakpoint_lg: 1200px;
+$container_width_sm: 750px;
+$container_width_md: 970px;
+$container_width_lg: 1170px;
+$container_width_max: 1600px;
+$nav_breakpoint: 991px;
 
 // First set of colors
 $color_red: rgb(166, 46, 63);
 $color_red_dark: rgb(98, 54, 55);
-$color_white: #fff;
+
+// New variables to override the top ones l8r
+$color_white: #fcfcfc;
 $color_brown: rgb(48, 35, 22);
 $color_salmon: rgb(234, 168, 154);
 $color_beige: rgb(225, 216, 183);
 $color_beige_light: rgb(243, 239, 226);
-$color_grey_translucent: rgba(0,0,0,0.50);
-
+$color_grey_translucent: rgba(0, 0, 0, 0.5);
 
 // Second set of colors
 $color_2_brown: #73685B;
 $color_2_darker_brown: #5c5349;
-$color_2_tan: #CCB9A4;
+$color_2_tan: #ccb9a4;
 $color_2_green: #D9DDCC;
-$color_2_green_light: #EEF2E1;
+$color_2_green_light: #F6F8F5;
 $color_2_green_lighter: mix($color_2_green, $color_2_green_light, 50%);
-$color_2_salmon: rgb(234, 168, 154);
-$color_black: black;
-
+$color_2_salmon: #DC8E7E;
+$color_black: #050505;
 
 // override settings from first set of colors.
 $color_red: $color_2_brown;
 $color_red_dark: $color_2_brown;
-// $color_salmon: $color_2_darker_brown;
 $color_beige: $color_2_tan;
+$color_grey_light: #fafafa;
+$color_dark_bg: #1C160F;
 
-
-
-$color_text: $color_2_darker_brown;
+// Text colours
+$color_text: $color_black;
 $color_body_background: $color_2_green_light;
 $color_body_background_start: $color_2_green_light;
 $color_body_background_end: $color_2_green_light;
-$color_body_link: #A9695B;
+$color_body_link: #8E3827;
+$color_link: #8E3827;
+$color_link_hover: #4F1F16;
+$color_link_border: rgba($color_link, 0.4);
+$color_link_border_hover: $color_link_hover;
 
-$color_link: #A9695B;
-$color_link_hover: #A9695B;
-$footer_color: $color_white;
-$footer_background: $color_2_darker_brown;
-$footer_link: $color_white;
-$footer_link_hover: $color_white;
+// Heading colours
+$heading_color: $color_black;
 
-$header_background: $color_2_darker_brown;
-$header_color: $color_white;
-$header_link_color: $color_white;
-$header_link_background: transparent;
-
-$header_link_color_hover: $color_2_darker_brown;
-$header_link_background_hover: $color_2_salmon;
-
-$heading_color: $color_2_darker_brown;
-
-$panel_heading_font: $cormorant_garamond;
-$panel_heading_font_size: 20px;
-$panel_header_color: darken($color_2_brown, 50);
-$panel_header_background: $color_2_green;
-
-$panel_header_background_hover: $color_2_salmon;
-
-$panel_image_background: $color_2_green_lighter;
-$panel_background: $color_2_green_lighter;
-$panel_color: $color_2_darker_brown;
-$panel_link_color: $color_2_brown;
-
-
+//Labels
 $color_label: $color_2_darker_brown;
-$well_color_start: $color_2_green;
-$well_color_end: $color_2_green_light;
 
 // dropdowns
 $color_dropdown_background: $color_2_brown;
 $color_dropdown_link: $color_white;
-
 $color_dropdown_link_hover: $color_2_darker_brown;
 $color_dropdown_background_hover: $color_2_salmon;
 
-// tables
-$table_head_color: $color_white;
-$table_head_background_color: $color_2_darker_brown;
-$table_head_border_color: $color_2_darker_brown;
-$table_body_border_color: $color_2_green;
+//Header
+$header_background: $color_dark_bg;
+$header_color: $color_white;
+$header_link_color: $color_white;
+$header_link_background: transparent;
+$header_link_color_hover: $color_2_darker_brown;
+$header_link_background_hover: rgba($color_2_salmon, 0.88);
+$header_height : 4.25rem;
 
-$table_body_link_color: #A9695B;
-$table_body_link_color_hover: $color_2_darker_brown;
+// Styles
+$box-shadow-sm: 0px 4px 8px rgba(0, 0, 0, 0.04),
+0px 0px 2px rgba(0, 0, 0, 0.06),
+0px 0px 1px rgba(0, 0, 0, 0.04);
 
-$color_table_background_odd: $color_2_green_lighter;
-$color_table_background_even: $color_2_green_light;
-$color_table_background_hover_odd: $color_table_background_odd;
-$color_table_background_hover_even: $color_table_background_even;
-
-$heading_font: $cormorant_garamond;
-$body_font: $lato;
-$body_font_bold: $lato_black;
-
-
-
-$desktop-width: 970px;
+/* Add hamburger for nav bar */
+// Only include the squeeze type
+$hamburger-types: squeeze;
+$hamburger-layer-color: $header_color;
+$hamburger-active-layer-color: $header_color;

@@ -4,9 +4,6 @@
 
 {% block pageheader %}
     <h1>Related Title List</h1>
-    <p class="count">
-        Displaying {{ related_titles|length }} related_titles of {{ related_titles.getTotalItemCount }} total.
-    </p>
 {% endblock %}
 
 {% block body %}
@@ -14,8 +11,5 @@
     {% embed 'related_title/partial/table.html.twig' %}
     {% endembed %}
 
-    <div class="navigation">
-        {{ knp_pagination_render(related_titles) }}
-    </div>
 
 {% endblock %}

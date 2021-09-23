@@ -1,0 +1,14 @@
+{% apply spaceless %}
+    {% if sortable is defined and sortable == true %}
+        {% if field is iterable %}
+            {% set fieldQ = field|join('+') %}
+        {% else %}
+            {% set fieldQ = field %}
+        {% endif %}
+        <th class="sortable{% if class is defined %} {{ class }}{% endif %}">
+            {{ knp_pagination_sortable(pagination, header, fieldQ) }}
+        </th>
+    {% else %}
+        <th>{{ header }}</th>
+    {% endif %}
+{% endapply %}

@@ -1,0 +1,46 @@
+
+:root, html{
+  font-size: 1em;
+  --container_width: 100%;
+  @media (min-width: $breakpoint_sm) and (max-width: #{$breakpoint_md - 1px}){
+    --container_width: #{$container_width_sm};
+  }
+  @media (min-width: $breakpoint_md) and (max-width: #{$breakpoint_lg - 1px}){
+    --container_width: #{$container_width_md};
+  }
+  @media (min-width: $breakpoint_lg){
+    --container_width: #{$container_width_lg};
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100vh;
+}
+
+
+body {
+  // background: $color_body_background;
+  background: $color_body_background;
+  color: $color_text;
+  font: $body_font;
+  font-size:1em;
+  min-height: 100vh;
+  line-height:1.4;
+  margin-bottom: 0;
+  font-family: $sans;
+  display:flex;
+  flex-direction:column;
+  overflow-x:hidden;
+}
+
+main{
+  margin-top: ($header_height + 1rem);
+  margin-bottom: 5rem;
+  width:100%;
+  min-height:75vh;
+}
+
+.row {
+  display: flex;
+}
