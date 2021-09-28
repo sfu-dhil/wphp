@@ -169,8 +169,9 @@ export function breakLinksAtSlash(root = document.querySelector('main')) {
      * @param el
      */
     const replaceText = (el) => {
-        // If there's no / at all in the content, break
-        if (el.textContent.indexOf('/') == -1) {
+        // If there's no slash at all in the content or we're trying
+        // to process a form, then bail
+        if (el.textContent.indexOf('/') == -1 || el.tagName == 'FORM') {
             return;
         }
         // Step through the children
@@ -180,7 +181,7 @@ export function breakLinksAtSlash(root = document.querySelector('main')) {
                     replaceText(child);
                     break;
                 case Node.TEXT_NODE:
-                    // Only do this if there's meaningful content
+                    // Only process if there's meaningful content
                     if (child.data.trim().length > 0){
                         // Create a fragment from handleSlashes
                         // and replace the content with it
@@ -201,7 +202,6 @@ export function breakLinksAtSlash(root = document.querySelector('main')) {
     } catch (e) {
         console.log(`${e}`);
         return false;
-
     }
 }
 
@@ -209,6 +209,11 @@ export function breakLinksAtSlash(root = document.querySelector('main')) {
  * Driver
  */
 (function(){
+    /* Only run the utilities for standard,
+    * public pages, not editor pages */
+    if (/\/(edit|new|sort|copy)(\/|$)/gi.test(window.location.pathname)){
+        return;
+    }
     removeExcerpts();
     localizeLinks();
     cleanUpParas();
