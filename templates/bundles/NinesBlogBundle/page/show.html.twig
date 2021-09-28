@@ -1,5 +1,8 @@
 {% extends '@!NinesBlog/page/show.html.twig' %}
 
+{% set titleParts = page.title|split(':', 2) %}
+{% set multiTitle = titleParts|length > 1 %}
+
 {% block pageheader %}
     {% if is_granted('ROLE_BLOG_ADMIN') %}
         <div class="btn-toolbar">
@@ -16,6 +19,11 @@
             </div>
         </div>
         <div class="clearfix"></div>
+    {% endif %}
+
+    <h1>{{ titleParts[0] }}{% if multiTitle %}:{% endif %}</h1>
+    {% if multiTitle %}
+        <h2>{{ titleParts[1] }}</h2>
     {% endif %}
 {% endblock %}
 
