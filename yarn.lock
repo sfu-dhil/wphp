@@ -7,15 +7,10 @@
   resolved "https://registry.yarnpkg.com/@fontsource/cormorant-garamond/-/cormorant-garamond-4.5.0.tgz#cf1dc54aeb937f35ed699bcdd3e4aea4c206c666"
   integrity sha512-8Uo7+B/a0399xahIAxqQT+OP2s5wwgQ7f8348RYMhG+DNI2pQKPPYP3u5JX3vqRXeQg2S/WYnympi1sNe3BqEA==
 
-"@fontsource/eb-garamond@^4.2.2":
+"@fontsource/eb-garamond@^4.5.0":
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/@fontsource/eb-garamond/-/eb-garamond-4.5.0.tgz#01669e9ff98493b7fc4c149befb9254fb89ffc79"
   integrity sha512-mTECLbyBCVpdozxhEBLukDfij5aQE/6zE5yqms4kvO1I2DL7xiSGNiokFbFFYjPcAAVYqnhRWko2EEY5XI2RPg==
-
-"@fontsource/inter@^4.2.2":
-  version "4.5.0"
-  resolved "https://registry.yarnpkg.com/@fontsource/inter/-/inter-4.5.0.tgz#b99e49fa178e4086250fb3df2ed6a7366c9a0cb5"
-  integrity sha512-2efK8Ru0LkuOYrEpiHPlV02YkTdIKGbezlxVNeA8/3c+tNt7P2aQPuiYYkVy7N4GA5LWSUVcLL/91MpCIjinOw==
 
 "@fontsource/lato@^4.2.2":
   version "4.5.0"
@@ -413,11 +408,6 @@ json-schema-traverse@^0.4.1:
   version "0.4.1"
   resolved "https://registry.yarnpkg.com/json-schema-traverse/-/json-schema-traverse-0.4.1.tgz#69f6a87d9513ab8bb8fe63bdb0979c448e684660"
   integrity sha512-xbbCH5dCYU5T8LcEhhuh7HJ88HXuW3qsI3Y0zOZFKfZEHcpWiHU/Jxzk629Brsab/mMiHQti9wMP+845RPe3Vg==
-
-leaflet@^1.7.1:
-  version "1.7.1"
-  resolved "https://registry.yarnpkg.com/leaflet/-/leaflet-1.7.1.tgz#10d684916edfe1bf41d688a3b97127c0322a2a19"
-  integrity sha512-/xwPEBidtg69Q3HlqPdU3DnrXQOvQU/CCHA1tcDQVzOwm91YMYaILjNp7L4Eaw5Z4sOYdbBz6koWyibppd8Zqw==
 
 loader-runner@^4.2.0:
   version "4.2.0"
