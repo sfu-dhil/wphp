@@ -41,7 +41,10 @@
         "symfony/web-link": "4.4.*",
         "symfony/yaml": "4.4.*",
         "tetranz/select2entity-bundle": "^3.1",
+        "twig/cssinliner-extra": "^3.3",
         "twig/extra-bundle": "^2.12|^3.0",
+        "twig/inky-extra": "^3.3",
+        "twig/markdown-extra": "^3.3",
         "twig/string-extra": "^3.0",
         "twig/twig": "^2.12|^3.0",
         "ubermichael/nines": "~4.x-dev"

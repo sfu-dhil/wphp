@@ -1,4 +1,4 @@
-<table class='table table-hover table-striped'>
+{% embed 'partial/table.html.twig' %}
     {% block tbody %}
         <tr>
             <th>Name</th>
@@ -18,7 +18,6 @@
                 {{ title_relationship.description|raw }}
             </td>
         </tr>
-
         <tr>
             <th>RelatedTitle</th>
             <td>
@@ -44,6 +43,6 @@
             <td>{{ title_relationship.updated|date }}</td>
         </tr>
     {% endblock %}
-    {% endembed %}
+{% endembed %}
 
 
