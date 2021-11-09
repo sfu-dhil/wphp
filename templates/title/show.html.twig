@@ -235,6 +235,10 @@
                     <td>{{ title.notes }}</td>
                 </tr>
                 <tr>
+                    <th data-toggle="popover"  data-content="{{ 'title.fields.editionChecked'|trans }}">Edition Checked</th>
+                    <td>{% if title.editionChecked %}Yes{% else %}No{% endif %}</td>
+                </tr>
+                <tr>
                     <th data-toggle="popover"  data-content="{{ 'title.fields.checked'|trans }}">Hand-Verified</th>
                     <td>{% if title.checked %}Yes{% else %}No{% endif %}</td>
                 </tr>

@@ -364,6 +364,20 @@ class TitleType extends AbstractType {
                 'help_block' => 'title.form.finalattempt',
             ],
         ]);
+        $builder->add('editionChecked', ChoiceType::class, [
+            'label' => 'Edition Checked',
+            'expanded' => true,
+            'multiple' => false,
+            'choices' => [
+                'Yes' => true,
+                'No' => false,
+            ],
+            'required' => true,
+            'placeholder' => false,
+            'attr' => [
+                'help_block' => 'title.form.editionChecked',
+            ],
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver) : void {

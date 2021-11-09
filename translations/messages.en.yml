@@ -7,6 +7,7 @@ title:
     contributors: All persons who have contributed to the intellectual content of the title and all women involved in the title's production
     dateOfFirstPublication: Date (year) that the title was first published
     edition: Edition as it appears on the title page
+    editionChecked: Indicates the edition has been checked
     editionNumber: Edition number translated into arabic numberals
     finalattempt: Indicates that an attempt has been made to identify two sources to verify the title information but that only one source has been found
     finalcheck: Indicates that either two sources have been consulted to verify title information or the title has been hand-verified

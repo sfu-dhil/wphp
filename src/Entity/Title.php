@@ -210,6 +210,13 @@ class Title {
     private $finalattempt = '0';
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="edition_checked", type="boolean", nullable=false)
+     */
+    private $editionChecked = '0';
+
+    /**
      * @var string
      *
      * @ORM\Column(name="notes", type="text", nullable=true)
@@ -1104,6 +1111,16 @@ class Title {
                 $relatedTitle->setRelatedTitle(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getEditionChecked() {
+        return $this->editionChecked;
+    }
+
+    public function setEditionChecked(bool $editionChecked) : self {
+        $this->editionChecked = $editionChecked;
 
         return $this;
     }

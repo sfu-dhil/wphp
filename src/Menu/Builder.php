@@ -197,6 +197,9 @@ class Builder implements ContainerAwareInterface {
             $browse->addChild('Persons to Check', [
                 'route' => 'report_persons_fc',
             ]);
+            $browse->addChild('Editions to Check', [
+                'route' => 'report_editions_to_check',
+            ]);
         }
 
         return $menu;
