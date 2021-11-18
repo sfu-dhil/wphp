@@ -150,6 +150,9 @@ class Builder implements ContainerAwareInterface {
                 'role' => 'separator',
                 'class' => 'divider',
             ]);
+            $browse->addChild('AAS', [
+                'route' => 'resource_aas_index',
+            ]);
             $browse->addChild('Currencies', [
                 'route' => 'currency_index',
             ]);
