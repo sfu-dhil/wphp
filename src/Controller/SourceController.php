@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Entity\Source;
+use App\Entity\TitleSource;
 use App\Form\SourceType;
 use App\Repository\SourceRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -41,6 +42,17 @@ class SourceController extends AbstractController implements PaginatorAwareInter
      * @return array
      */
     public function indexAction(Request $request, EntityManagerInterface $em, SourceRepository $repo) {
+        $qb = $em->createQueryBuilder();
+        $qb->select('IDENTITY(ts.source) as srcId, COUNT(DISTINCT(ts.title)) as cnt');
+        $qb->from(TitleSource::class, 'ts');
+        $qb->groupBy('ts.source');
+        $qb->orderBy('ts.source');
+        $counts = [];
+        foreach($qb->getQuery()->getResult() as $result) {
+            $counts[$result['srcId']] = $result['cnt'];
+        }
+        dump($counts);
+
         $dql = 'SELECT e FROM App:Source e ORDER BY e.name';
         $query = $em->createQuery($dql);
         $sources = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
@@ -48,6 +60,7 @@ class SourceController extends AbstractController implements PaginatorAwareInter
         return [
             'sources' => $sources,
             'repo' => $repo,
+            'counts' => $counts,
         ];
     }
 
