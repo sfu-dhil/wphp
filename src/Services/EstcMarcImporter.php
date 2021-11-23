@@ -156,11 +156,11 @@ class EstcMarcImporter {
      *
      * @param array $fields
      *
-     * @return null|object
+     * @return null|Format
      */
     public function guessFormat($fields) {
         if ( ! isset($fields['300c']) || null === $fields['300c']->getFieldData()) {
-            return;
+            return null;
         }
         $data = $fields['300c']->getFieldData();
         $matches = [];
