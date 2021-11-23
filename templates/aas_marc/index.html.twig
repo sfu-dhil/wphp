@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}AAS Marc Record List{% endblock %}
+
+{% block pageheader %}
+    <h1>AAS Marc Record List</h1>
+{% endblock %}
+
+{% block body %}
+
+    <div class='btn-toolbar pull-right'>
+        <div class='btn-group'>
+            <a href="{{ path('resource_aas_search') }}" class="btn btn-default">
+                <span class="glyphicon glyphicon-search"></span> Title Search
+            </a>
+            <a href="{{ path('resource_aas_search_imprint') }}" class="btn btn-default">
+                <span class="glyphicon glyphicon-search"></span> Imprint Search
+            </a>
+        </div>
+    </div>
+
+    {% embed 'partial/table.html.twig' %}
+        {% set entities = aasMarcs %}
+        {% block thead %}
+            <tr>
+                <th>Title ID</th>
+                <th>Imported</th>
+                <th>Title</th>
+                <th>Author</th>
+            </tr>
+        {% endblock %}
+        {% block tbody %}
+            {% for aasMarc in aasMarcs %}
+                <tr>
+                    <td>
+                        <a href="{{ path('resource_aas_show', { 'id': aasMarc.titleId }) }}">
+                            {{ aasMarc.titleId }}
+                        </a>
+                    </td>
+                    <td>{% if manager.isImported(aasMarc) %} Yes {% else %} No {% endif %}</td>
+                    <td>{{ manager.getTitle(aasMarc) }}</td>
+                    <td>{{ manager.getAuthor(aasMarc) }}</td>
+                </tr>
+            {% endfor %}
+        {% endblock %}
+    {% endembed %}
+
+{% endblock %}

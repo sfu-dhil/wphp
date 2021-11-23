@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Entity\AasMarc;
 use App\Entity\En;
 use App\Entity\EstcMarc;
 use App\Entity\Jackson;
@@ -74,6 +75,30 @@ class SourceLinker {
 
         if ($record) {
             return $this->generator->generate('resource_estc_show', [
+                'id' => $record->getTitleId(),
+            ]);
+        }
+    }
+
+    /**
+     * Generate an AAS link. The link will be internal if the user is logged in or to the AAS website
+     * otherwise.
+     *
+     * @param string $data
+     *
+     * @return null|string
+     */
+    public function aas($data) {
+        if ( ! $this->checker->hasRole('ROLE_USER')) {
+            return 'https://catalog.mwa.org/vwebv/holdingsInfo?bibId=' . $data;
+        }
+        $repo = $this->em->getRepository(AasMarc::class);
+        $record = $repo->findOneBy([
+            'fieldData' => $data,
+            'field' => '001',
+        ]);
+        if ($record) {
+            return $this->generator->generate('resource_aas_show', [
                 'id' => $record->getTitleId(),
             ]);
         }
@@ -211,6 +236,9 @@ class SourceLinker {
 
             case 'ECCO':
                 return $this->ecco($data);
+
+            case 'American Antiquarian Society':
+                return $this->aas($data);
 
             default:
                 return;

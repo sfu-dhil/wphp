@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}AAS Marc Record{% endblock %}
+
+{% block pageheader %}
+    <h1>AAS Marc Record</h1>
+{% endblock %}
+
+{% block body %}
+    {% set data = manager.getData(aasMarc) %}
+
+    <details>
+        <summary>Control Info</summary>
+        {% embed 'partial/table.html.twig' %}
+            {% block tbody %}
+                {% for field in data|filter(f => f.field < 100) %}
+                    <tr>
+                        <th style='white-space: normal' data-toggle="popover"
+                            data-content='{{ manager.getFieldName(field) }}'>
+                            {{ manager.getFieldName(field)|u.truncate(20, '...', false) }} ({{ field }})
+                        </th>
+                        <td>{{ field.getFieldData() }}</td>
+                    </tr>
+                {% endfor %}
+            {% endblock %}
+        {% endembed %}
+    </details>
+
+    {% embed 'partial/table.html.twig' %}
+        {% block tbody %}
+            <tr>
+                <th>Control ID</th>
+                <td>
+                    {% set controlId = manager.getControlId(data|first) %}
+                    {{ controlId }}
+                </td>
+            </tr>
+            <tr>
+                <th>Imported</th>
+                <td>
+                    {% set controlId = manager.getControlId(data|first) %}
+                    {% if manager.isImported(controlId) %}Yes{% else %}No{% endif %}
+                </td>
+            </tr>
+            {% for field in data|filter(f => f.field >= 100) %}
+                <tr>
+                    <th style='white-space: normal' data-toggle="popover"
+                        data-content='{{ manager.getFieldName(field) }}'>
+                        {{ manager.getFieldName(field)|u.truncate(20, '...', false) }} ({{ field }})
+                    </th>
+                    <td>{{ field.getFieldData() }}</td>
+                </tr>
+            {% endfor %}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

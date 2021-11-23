@@ -125,4 +125,27 @@ class ReportController extends AbstractController implements PaginatorAwareInter
             'titles' => $titles,
         ];
     }
+
+    /**
+     * List firms that have not been checked.
+     *
+     * @Route("/editions_check", name="report_editions_to_check", methods={"GET"})
+     * @Template
+     *
+     * @return array
+     */
+    public function editionsToCheckAction(Request $request, EntityManagerInterface $em) {
+        $qb = $em->createQueryBuilder();
+        $qb->select('title')
+            ->from(Title::class, 'title')
+            ->where('title.editionChecked = 0')
+            ->orderBy('title.id', 'ASC')
+        ;
+
+        $titles = $this->paginator->paginate($qb, $request->query->getInt('page', 1), 25);
+
+        return [
+            'titles' => $titles,
+        ];
+    }
 }

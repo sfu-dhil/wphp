@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}AAS Marc Record Search{% endblock %}
+
+{% block pageheader %}
+    <h1>AAS Marc Record Search</h1>
+{% endblock %}
+
+{% block body %}
+
+    <form method="get" class="form-horizontal">
+        <fieldset>
+            <legend>Search the AAS Marc records</legend>
+            <div class="form-group">
+                <label class='col-sm-2 control-label' for='q'>Search term</label>
+                <div class='input-group'>
+                    <input type='text' name='q' id='q' class='form-control' value='{{ q }}'>
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary" type="submit">
+                            <span class='glyphicon glyphicon-search'></span>
+                            Search
+                        </button>
+                    </span>
+                </div>
+                <p class="help-block col-sm-offset-2">Search the records by imprint.</p>
+            </div>
+        </fieldset>
+    </form>
+
+    {% if aasMarcs|length %}
+        {% embed 'partial/table.html.twig' %}
+            {% set entities = titleIds %}
+            {% block thead %}
+                <tr>
+                    <th>ID</th>
+                    <th>Imported</th>
+                    <th>Title</th>
+                    <th>Imprint</th>
+                </tr>
+            {% endblock %}
+            {% block tbody %}
+                {% for aasMarc in aasMarcs %}
+                    <tr>
+                        <td>
+                            <a href="{{ path('resource_aas_show', { 'id': aasMarc.titleId }) }}">
+                                {{ aasMarc.titleId }}
+                            </a>
+                        </td>
+                        <td>{% if manager.isImported(aasMarc) %} Yes {% else %} No {% endif %}</td>
+                        <td>{{ manager.getTitle(aasMarc) }}</td>
+                        <td>{{ manager.getFieldValues(aasMarc, '260')|join(" ") }}</td>
+                    </tr>
+                {% endfor %}
+            {% endblock %}
+        {% endembed %}
+    {% endif %}
+
+{% endblock %}

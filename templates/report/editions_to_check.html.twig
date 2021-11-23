@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block pageheader %}
+    <h1>Titles to Final Check</h1>
+    {% if titles|length > 0 %}
+        Displaying {{ titles|length }} titles of {{ titles.getTotalItemCount }} total
+        where the edition field contains a number or the words "Irish" or "American."
+    {% else %}
+        No titles to display.
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+
+    {% if titles|length > 0 %}
+
+        {% embed 'partial/table.html.twig' %}
+            {% set entities = titles %}
+            {% block thead %}
+                <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Edition Statement</th>
+                    <th>Edition Number</th>
+                </tr>
+            {% endblock %}
+            {% block tbody %}
+                {% for title in titles %}
+                    <tr>
+                        <td>
+                            <a href="{{ path('title_show', { 'id': title.id }) }}">
+                                {{ title.id }}
+                            </a>
+                        </td>
+                        <td>
+                            <a href="{{ path('title_show', { 'id': title.id }) }}">
+                                {{ title.title }}
+                            </a>
+                        </td>
+                        <td>{{ title.edition }}</td>
+                        <td>{{ title.editionNumber }}</td>
+                    </tr>
+                {% endfor %}
+            {% endblock %}
+        {% endembed %}
+
+        <div class="navigation">
+            {{ knp_pagination_render(titles) }}
+        </div>
+    {% endif %}
+
+{% endblock %}
