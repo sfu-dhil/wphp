@@ -97,7 +97,7 @@ class SourceLinker {
             'fieldData' => $data,
             'field' => '001',
         ]);
-        if($record) {
+        if ($record) {
             return $this->generator->generate('resource_aas_show', [
                 'id' => $record->getTitleId(),
             ]);

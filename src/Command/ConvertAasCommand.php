@@ -32,7 +32,6 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\VarDumper\Dumper\CliDumper;
 
 class ConvertAasCommand extends Command {
     public const AAS = 99;
@@ -170,6 +169,8 @@ class ConvertAasCommand extends Command {
      * Field 100 is always considered to be an author.
      * Field 700 is a pseudonym if ind1 is 0.
      * Field 700 is a person if ind1 is not zero. The role is expressed in subfield e.
+     *
+     * @param ?Field $field
      */
     protected function addTitleRole(Title $title, ?Field $field) : void {
         if ( ! $field) {
@@ -192,7 +193,7 @@ class ConvertAasCommand extends Command {
         } else {
             $role = $this->findRole('Author');
         }
-        if($title->hasTitleRole($person, $role)) {
+        if ($title->hasTitleRole($person, $role)) {
             return;
         }
         $titleRole = new TitleRole();
@@ -251,6 +252,7 @@ class ConvertAasCommand extends Command {
                 } catch (Exception $e) {
                     $output->writeln("\nError processing record " . $this->n . ' id:' . $record->field('001')->data());
                     $output->writeln($e->getMessage());
+
                     return 1;
                 }
                 if ($limit && $this->n >= $limit) {

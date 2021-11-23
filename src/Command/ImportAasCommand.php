@@ -16,17 +16,16 @@ use PhpMarc\File;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Style\SymfonyStyle;
 
 class ImportAasCommand extends Command {
-    const AAS = 99;
+    public const AAS = 99;
+
+    private EntityManagerInterface $em;
 
     protected static $defaultName = 'wphp:import:aas';
 
     protected static $defaultDescription = 'Add a short description for your command';
-    private EntityManagerInterface $em;
 
     protected function configure() : void {
         $this->setDescription(self::$defaultDescription);
@@ -37,20 +36,20 @@ class ImportAasCommand extends Command {
         $this->em->getConnection()->getConfiguration()->setSQLLogger(null);
         $recordCount = 1;
         $n = 0;
-        foreach($input->getArgument('path') as $path) {
-            echo "\n$path\n";
+        foreach ($input->getArgument('path') as $path) {
+            echo "\n{$path}\n";
             $file = new File();
             $file->file($path);
-            while(($record = $file->next())) {
+            while (($record = $file->next())) {
                 $ldr = new AasMarc();
                 $ldr->setTitleId($recordCount);
                 $ldr->setField('ldr');
                 $ldr->setFieldData($record->ldr);
                 $this->em->persist($ldr);
 
-                foreach($record->fields() as $fields) {
-                    foreach($fields as $field) {
-                        if($field->is_control) {
+                foreach ($record->fields() as $fields) {
+                    foreach ($fields as $field) {
+                        if ($field->is_control) {
                             $ctrl = new AasMarc();
                             $ctrl->setTitleId($recordCount);
                             $ctrl->setField($field->tagno);
@@ -58,7 +57,7 @@ class ImportAasCommand extends Command {
                             $this->em->persist($ctrl);
                         }
 
-                        foreach($field->subfields as $subfield => $value) {
+                        foreach ($field->subfields as $subfield => $value) {
                             $aas = new AasMarc();
                             $aas->setTitleId($recordCount);
                             $aas->setField($field->tagno);
@@ -66,10 +65,10 @@ class ImportAasCommand extends Command {
                             $aas->setFieldData($value);
                             $this->em->persist($aas);
                             $n++;
-                            if($n % 20 === 0) {
+                            if (0 === $n % 20) {
                                 $this->em->flush();
                                 $this->em->clear();
-                                echo "\r$recordCount - $n";
+                                echo "\r{$recordCount} - {$n}";
                             }
                         }
                     }
@@ -79,15 +78,15 @@ class ImportAasCommand extends Command {
         }
         $this->em->flush();
         $this->em->clear();
-        echo "\r$recordCount - $n\n";
+        echo "\r{$recordCount} - {$n}\n";
+
         return 0;
     }
 
     /**
-     * @param EntityManagerInterface $em
      * @required
      */
-    public function setEntityManager(EntityManagerInterface $em) {
+    public function setEntityManager(EntityManagerInterface $em) : void {
         $this->em = $em;
     }
 }

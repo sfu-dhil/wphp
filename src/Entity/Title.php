@@ -868,11 +868,12 @@ class Title {
     }
 
     public function hasTitleRole(Person $person, Role $role) {
-        foreach($this->titleRoles as $tr) {
-            if($tr->getPerson() === $person && $tr->getRole() === $role) {
+        foreach ($this->titleRoles as $tr) {
+            if ($tr->getPerson() === $person && $tr->getRole() === $role) {
                 return true;
             }
         }
+
         return false;
     }
 
