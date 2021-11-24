@@ -35,7 +35,11 @@
                     <td>{{ source.description | raw }}</td>
                     <td>
                         <a href="{{ path('source_show', { 'id': source.id }) }}">
-                            {{ source.titleSources|length }}
+                            {% if counts[source.id] is defined %}
+                                {{ counts[source.id] }}
+                            {% else %}
+                                0
+                            {% endif %}
                         </a>
                     </td>
                 </tr>
