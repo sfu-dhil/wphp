@@ -51,7 +51,6 @@ class SourceController extends AbstractController implements PaginatorAwareInter
         foreach ($qb->getQuery()->getResult() as $result) {
             $counts[$result['srcId']] = $result['cnt'];
         }
-        dump($counts);
 
         $dql = 'SELECT e FROM App:Source e ORDER BY e.name';
         $query = $em->createQuery($dql);
