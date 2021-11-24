@@ -48,7 +48,7 @@ class SourceController extends AbstractController implements PaginatorAwareInter
         $qb->groupBy('ts.source');
         $qb->orderBy('ts.source');
         $counts = [];
-        foreach($qb->getQuery()->getResult() as $result) {
+        foreach ($qb->getQuery()->getResult() as $result) {
             $counts[$result['srcId']] = $result['cnt'];
         }
         dump($counts);
