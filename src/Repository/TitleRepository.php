@@ -390,6 +390,7 @@ class TitleRepository extends ServiceEntityRepository {
                 $qb->setParameter('identifier', $filter->getIdentifier());
             }
         }
+        $qb->groupBy('e.id');
 
         return $qb->getQuery();
     }
