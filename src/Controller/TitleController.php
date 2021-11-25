@@ -265,7 +265,7 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
                 $em->persist($ts);
             }
 
-            foreach ($title->getSourceTitles() as $st) {
+            foreach ($title->getTitlesRelated() as $st) {
                 $em->persist($st);
             }
             $em->persist($title);
@@ -358,12 +358,6 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
             $titleSources->add($ts);
         }
 
-        $sourceTitles = new ArrayCollection();
-
-        foreach ($title->getSourceTitles() as $st) {
-            $sourceTitles->add($st);
-        }
-
         $editForm = $this->createForm(TitleType::class, $title);
         $editForm->handleRequest($request);
 
@@ -388,12 +382,6 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
                 }
             }
 
-            foreach ($sourceTitles as $st) {
-                if ( ! $title->getSourceTitles()->contains($st)) {
-                    $em->remove($st);
-                }
-            }
-
             // check for new titleFirmRoles and persist them.
             foreach ($title->getTitleroles() as $tr) {
                 if ( ! $titleRoles->contains($tr)) {
@@ -415,10 +403,6 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
                     $ts->setTitle($title);
                     $em->persist($ts);
                 }
-            }
-
-            foreach ($title->getSourceTitles() as $st) {
-                $em->persist($st);
             }
 
             $em->flush();

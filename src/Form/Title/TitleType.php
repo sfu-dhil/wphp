@@ -299,21 +299,16 @@ class TitleType extends AbstractType {
                 'help_block' => 'title.form.titleSources',
             ],
         ]);
-        $builder->add('sourceTitles', CollectionType::class, [
+        $builder->add('relatedTitles', Select2EntityType::class, [
             'label' => 'Related Titles',
-            'required' => false,
-            'allow_add' => true,
-            'allow_delete' => true,
-            'delete_empty' => true,
-            'entry_type' => RelatedTitleType::class,
-            'entry_options' => [
-                'label' => false,
-            ],
-            'by_reference' => false,
+            'text_property' => 'getTitleId',
+            'multiple' => true,
+            'remote_route' => 'title_typeahead',
+            'class' => Title::class,
+            'allow_clear' => true,
             'attr' => [
-                'class' => 'collection collection-complex',
                 'help_block' => '',
-            ],
+            ]
         ]);
         $builder->add('notes', null, [
             'label' => 'Notes',

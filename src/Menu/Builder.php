@@ -174,12 +174,6 @@ class Builder implements ContainerAwareInterface {
             $browse->addChild('Osborne', [
                 'route' => 'resource_osborne_index',
             ]);
-            $browse->addChild('Title Relationships', [
-                'route' => 'title_relationship_index',
-            ]);
-            $browse->addChild('Related Titles', [
-                'route' => 'related_title_index',
-            ]);
             $divider = $browse->addChild('divider2', [
                 'label' => '',
             ]);
