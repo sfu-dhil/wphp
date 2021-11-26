@@ -279,26 +279,16 @@ class Title {
     private $titleSources;
 
     /**
-     * Titles are in a directed many-to-many relationship with themselves via the
-     * TitleRelationship entity. This field represents the owning side of the
-     * relationship and records the fact that this title is related to another.
-     *
-     * This field is poorly named with respect to titleSources, which does a
-     * very different thing.
-     *
-     * @var Collection|RelatedTitle[]
-     * @ORM\OneToMany(targetEntity="App\Entity\RelatedTitle", mappedBy="sourceTitle")
-     */
-    private $sourceTitles;
-
-    /**
-     * Titles are in a directed many-to-many relationship with themselves via the
-     * TitleRelationship entity.
-     *
-     * @var Collection|RelatedTitle[]
-     * @ORM\OneToMany(targetEntity="App\Entity\RelatedTitle", mappedBy="relatedTitle")
+     * @var Collection|Title[]
+     * @ORM\ManyToMany(targetEntity="App\Entity\Title", inversedBy="titlesRelated")
      */
     private $relatedTitles;
+
+    /**
+     * @var Collection|Title[]
+     * @ORM\ManyToMany(targetEntity="App\Entity\Title", mappedBy="relatedTitles")
+     */
+    private $titlesRelated;
 
     /**
      * Constructor.
@@ -309,7 +299,7 @@ class Title {
         $this->titleRoles = new ArrayCollection();
         $this->titleFirmroles = new ArrayCollection();
         $this->titleSources = new ArrayCollection();
-        $this->sourceTitles = new ArrayCollection();
+        $this->titlesRelated = new ArrayCollection();
         $this->relatedTitles = new ArrayCollection();
     }
 
@@ -318,6 +308,10 @@ class Title {
      */
     public function __toString() : string {
         return $this->title;
+    }
+
+    public function getTitleId() : string {
+        return "({$this->id}) {$this->title}";
     }
 
     /**
@@ -878,76 +872,6 @@ class Title {
     }
 
     /**
-     * Add titleRole.
-     *
-     * @return Title
-     */
-    public function addTitleRole(TitleRole $titleRole) {
-        $this->titleRoles[] = $titleRole;
-
-        return $this;
-    }
-
-    /**
-     * Remove titleRole.
-     */
-    public function removeTitleRole(TitleRole $titleRole) : void {
-        $this->titleRoles->removeElement($titleRole);
-    }
-
-    /**
-     * Get titleRoles, optionally filtered by role name.
-     *
-     * @param string $roleName
-     *
-     * @return Collection|TitleRole[]
-     */
-    public function getTitleRoles($roleName = null) {
-        if (null === $roleName) {
-            return $this->titleRoles;
-        }
-        $roles = $this->titleRoles->filter(fn (TitleRole $titleRole) => $titleRole->getRole()->getName() === $roleName);
-
-        return $roles->getValues();
-    }
-
-    /**
-     * Add titleFirmrole.
-     *
-     * @return Title
-     */
-    public function addTitleFirmrole(TitleFirmrole $titleFirmrole) {
-        $this->titleFirmroles[] = $titleFirmrole;
-
-        return $this;
-    }
-
-    /**
-     * Remove titleFirmrole.
-     */
-    public function removeTitleFirmrole(TitleFirmrole $titleFirmrole) : void {
-        $titleFirmrole->setTitle(null);
-        $titleFirmrole->setFirm(null);
-        $titleFirmrole->setFirmrole(null);
-        $this->titleFirmroles->removeElement($titleFirmrole);
-    }
-
-    /**
-     * Get titleFirmroles, optionally filtered by role name.
-     *
-     * @param string $roleName
-     *
-     * @return Collection
-     */
-    public function getTitleFirmroles($roleName = null) {
-        if (null === $roleName) {
-            return $this->titleFirmroles;
-        }
-
-        return $this->titleFirmroles->filter(fn (TitleFirmrole $titleFirmrole) => $titleFirmrole->getFirmrole()->getName() === $roleName);
-    }
-
-    /**
      * Set editionNumber.
      *
      * @param int $editionNumber
@@ -1013,44 +937,6 @@ class Title {
         return $this->colophon;
     }
 
-    /**
-     * Set the sources for this title.
-     *
-     * @param array|Collection|TitleSource[] $titleSources
-     */
-    public function setTitleSources($titleSources) : void {
-        $this->titleSources = $titleSources;
-    }
-
-    /**
-     * Add titleSource.
-     *
-     * @return Title
-     */
-    public function addTitleSource(TitleSource $titleSource) {
-        $this->titleSources[] = $titleSource;
-
-        return $this;
-    }
-
-    /**
-     * Remove titleSource.
-     *
-     * @return bool TRUE if this collection contained the specified element, FALSE otherwise.
-     */
-    public function removeTitleSource(TitleSource $titleSource) {
-        return $this->titleSources->removeElement($titleSource);
-    }
-
-    /**
-     * Get titleSources.
-     *
-     * @return array|Collection|TitleSource[]
-     */
-    public function getTitleSources() {
-        return $this->titleSources;
-    }
-
     public function getOtherPrice() : ?float {
         return (float) $this->otherPrice;
     }
@@ -1071,60 +957,6 @@ class Title {
         return $this;
     }
 
-    /**
-     * @return Collection|RelatedTitle[]
-     */
-    public function getSourceTitles() : Collection {
-        return $this->sourceTitles;
-    }
-
-    public function addSourceTitle(RelatedTitle $sourceTitle) : self {
-        if ( ! $this->sourceTitles->contains($sourceTitle)) {
-            $this->sourceTitles[] = $sourceTitle;
-            $sourceTitle->setSourceTitle($this);
-        }
-
-        return $this;
-    }
-
-    public function removeSourceTitle(RelatedTitle $sourceTitle) : self {
-        if ($this->sourceTitles->removeElement($sourceTitle)) {
-            // set the owning side to null (unless already changed)
-            if ($sourceTitle->getSourceTitle() === $this) {
-                $sourceTitle->setSourceTitle(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|RelatedTitle[]
-     */
-    public function getRelatedTitles() : Collection {
-        return $this->relatedTitles;
-    }
-
-    public function addRelatedTitle(RelatedTitle $relatedTitle) : self {
-        if ( ! $this->relatedTitles->contains($relatedTitle)) {
-            $this->relatedTitles[] = $relatedTitle;
-            $relatedTitle->setRelatedTitle($this);
-        }
-
-        return $this;
-    }
-
-    public function removeRelatedTitle(RelatedTitle $relatedTitle) : self {
-        if ($this->relatedTitles->removeElement($relatedTitle)) {
-            // set the owning side to null (unless already changed)
-            if ($relatedTitle->getRelatedTitle() === $this) {
-                $relatedTitle->setRelatedTitle(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getEditionChecked() {
         return $this->editionChecked;
     }
@@ -1134,4 +966,146 @@ class Title {
 
         return $this;
     }
+
+    /**
+     * @return Collection|TitleRole[]
+     */
+    public function getTitleRoles(): Collection
+    {
+        return $this->titleRoles;
+    }
+
+    public function addTitleRole(TitleRole $titleRole): self
+    {
+        if (!$this->titleRoles->contains($titleRole)) {
+            $this->titleRoles[] = $titleRole;
+            $titleRole->setTitle($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTitleRole(TitleRole $titleRole): self
+    {
+        if ($this->titleRoles->removeElement($titleRole)) {
+            // set the owning side to null (unless already changed)
+            if ($titleRole->getTitle() === $this) {
+                $titleRole->setTitle(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|TitleFirmrole[]
+     */
+    public function getTitleFirmroles(): Collection
+    {
+        return $this->titleFirmroles;
+    }
+
+    public function addTitleFirmrole(TitleFirmrole $titleFirmrole): self
+    {
+        if (!$this->titleFirmroles->contains($titleFirmrole)) {
+            $this->titleFirmroles[] = $titleFirmrole;
+            $titleFirmrole->setTitle($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTitleFirmrole(TitleFirmrole $titleFirmrole): self
+    {
+        if ($this->titleFirmroles->removeElement($titleFirmrole)) {
+            // set the owning side to null (unless already changed)
+            if ($titleFirmrole->getTitle() === $this) {
+                $titleFirmrole->setTitle(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|TitleSource[]
+     */
+    public function getTitleSources(): Collection
+    {
+        return $this->titleSources;
+    }
+
+    public function addTitleSource(TitleSource $titleSource): self
+    {
+        if (!$this->titleSources->contains($titleSource)) {
+            $this->titleSources[] = $titleSource;
+            $titleSource->setTitle($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTitleSource(TitleSource $titleSource): self
+    {
+        if ($this->titleSources->removeElement($titleSource)) {
+            // set the owning side to null (unless already changed)
+            if ($titleSource->getTitle() === $this) {
+                $titleSource->setTitle(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Title[]
+     */
+    public function getRelatedTitles(): Collection
+    {
+        return $this->relatedTitles;
+    }
+
+    public function addRelatedTitle(Title $relatedTitle): self
+    {
+        if (!$this->relatedTitles->contains($relatedTitle)) {
+            $this->relatedTitles[] = $relatedTitle;
+        }
+
+        return $this;
+    }
+
+    public function removeRelatedTitle(Title $relatedTitle): self
+    {
+        $this->relatedTitles->removeElement($relatedTitle);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Title[]
+     */
+    public function getTitlesRelated(): Collection
+    {
+        return $this->titlesRelated;
+    }
+
+    public function addTitlesRelated(Title $titlesRelated): self
+    {
+        if (!$this->titlesRelated->contains($titlesRelated)) {
+            $this->titlesRelated[] = $titlesRelated;
+            $titlesRelated->addRelatedTitle($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTitlesRelated(Title $titlesRelated): self
+    {
+        if ($this->titlesRelated->removeElement($titlesRelated)) {
+            $titlesRelated->removeRelatedTitle($this);
+        }
+
+        return $this;
+    }
+
 }

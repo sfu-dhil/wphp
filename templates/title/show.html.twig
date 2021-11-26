@@ -218,6 +218,23 @@
                         {% endif %}
                     </td>
                 </tr>
+
+                <tr>
+                    <th>Related Titles</th>
+                    <td>
+                        {% if title.relatedTitles|length > 0 %}
+                            <ul>
+                                {% for related in title.relatedTitles %}
+                                    <li>
+                                        <a href='{{ path('title_show', {'id': related.id}) }}'>{{ related }}</a><br/>
+                                        {{ related.edition }} {{ related.pubdate }}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </td>
+                </tr>
+
                 <tr>
                     <th data-toggle="popover"  data-content="{{ 'title.fields.shelfmark'|trans }}">Shelfmarks</th>
                     <td>
@@ -254,47 +271,6 @@
             {% endembed %}
         </div>
 
-
-
-        {% if is_granted('ROLE_USER') and (title.sourceTitles|length + title.relatedTitles|length) > 0 %}
-            <div class="titles-related-titles">
-                <h2>Related Titles</h2>
-                {% embed 'partial/table.html.twig' %}
-                    {% block thead %}
-                        <tr>
-                            <th>Relationship</th>
-                            <th>Title</th>
-                            <th>Edition Statement</th>
-                            <th>Edition Number</th>
-                            <th>Year</th>
-                        </tr>
-                    {% endblock %}
-                    {% block tbody %}
-                        {% for source in title.sourceTitles %}
-                            {% set related = source.relatedTitle %}
-                            <tr>
-                                <td>{{ source.titleRelationship }}</td>
-                                <td><a href='{{ path('title_show', {'id': related.id}) }}'>{{ related.title }}</a></td>
-                                <td>{{ related.edition }}</td>
-                                <td>{{ related.editionNumber }}</td>
-                                <td>{{ related.pubDate }}</td>
-                            </tr>
-                        {% endfor %}
-
-                        {% for source in title.relatedTitles %}
-                            {% set related = source.sourceTitle %}
-                            <tr>
-                                <td>{{ source.titleRelationship }}</td>
-                                <td><a href='{{ path('title_show', {'id': related.id}) }}'>{{ related.title }}</a></td>
-                                <td>{{ related.edition }}</td>
-                                <td>{{ related.editionNumber }}</td>
-                                <td>{{ related.pubDate }}</td>
-                            </tr>
-                        {% endfor %}
-                    {% endblock %}
-                {% endembed %}
-            </div>
-        {% endif %}
         {% set roles = title.titleRoles('Author') %}
         {% embed 'partial/citation.html.twig' with {
             'author_string': roles|map(role => role.person)|join(', '),
@@ -303,8 +279,6 @@
             'url': url('title_show', {'id': title.id})
         } %}
         {% endembed %}
-
-
 
         <div class="title-comment">
             {# Comment interface #}
