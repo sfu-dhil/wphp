@@ -12,6 +12,8 @@ namespace App\Repository;
 
 use App\Entity\AasMarc;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -27,10 +29,8 @@ class AasMarcRepository extends ServiceEntityRepository {
 
     /**
      * Create a query to return records for the index page.
-     *
-     * @return \Doctrine\ORM\Query
      */
-    public function indexQuery() {
+    public function indexQuery() : Query {
         $qb = $this->createQueryBuilder('m');
         $qb->where("m.field = 'ldr'");
 
@@ -40,11 +40,9 @@ class AasMarcRepository extends ServiceEntityRepository {
     /**
      * Execute a search query over the 245 and 100 fields.
      *
-     * @param string $q
-     *
-     * @return mixed
+     * @return AasMarc[]|Collection
      */
-    public function searchQuery($q) {
+    public function searchQuery(string $q) {
         $qb = $this->createQueryBuilder('e');
         $qb->select('e.titleId');
         $qb->addSelect('MAX(MATCH(e.fieldData) AGAINST (:q BOOLEAN)) AS HIDDEN score');
@@ -66,11 +64,9 @@ class AasMarcRepository extends ServiceEntityRepository {
     /**
      * Run a search query over the 260 field (imprint).
      *
-     * @param string $q
-     *
-     * @return mixed
+     * @return AasMarc[]|Collection
      */
-    public function imprintSearchQuery($q) {
+    public function imprintSearchQuery(string $q) {
         $qb = $this->createQueryBuilder('e');
         $qb->select('e.titleId');
         $qb->addSelect('MAX(MATCH(e.fieldData) AGAINST (:q BOOLEAN)) AS HIDDEN score');

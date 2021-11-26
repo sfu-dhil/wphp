@@ -34,15 +34,14 @@ class OsborneMarcController extends AbstractController implements PaginatorAware
     /**
      * Lists all OsborneMarc entities.
      *
-     * @return array
-     *
      * @Route("/", name="resource_osborne_index", methods={"GET"})
      *
      * @Template
      */
-    public function indexAction(Request $request, MarcManager $manager, OsborneMarcRepository $repo) {
+    public function indexAction(Request $request, MarcManager $manager, OsborneMarcRepository $repo) : array {
+        $pageSize = $this->getParameter('page_size');
         $query = $repo->indexQuery();
-        $osborneMarcs = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
+        $osborneMarcs = $this->paginator->paginate($query, $request->query->getInt('page', 1), $pageSize);
 
         return [
             'osborneMarcs' => $osborneMarcs,
@@ -55,14 +54,13 @@ class OsborneMarcController extends AbstractController implements PaginatorAware
      *
      * @Route("/search", name="resource_osborne_search", methods={"GET"})
      * @Template
-     *
-     * @return array
      */
-    public function searchAction(Request $request, MarcManager $manager, OsborneMarcRepository $repo) {
+    public function searchAction(Request $request, MarcManager $manager, OsborneMarcRepository $repo) : array {
+        $pageSize = $this->getParameter('page_size');
         $q = $request->query->get('q');
         if ($q) {
             $result = $repo->searchQuery($q);
-            $titleIds = $this->paginator->paginate($result, $request->query->getInt('page', 1), 25);
+            $titleIds = $this->paginator->paginate($result, $request->query->getInt('page', 1), $pageSize);
         } else {
             $titleIds = [];
         }
@@ -86,14 +84,12 @@ class OsborneMarcController extends AbstractController implements PaginatorAware
     /**
      * Finds and displays a OsborneMarc entity.
      *
-     * @return array
-     *
      * @Route("/{id}", name="resource_osborne_show", methods={"GET"})
      *
-     * @ParamConverter("osborneMarc", options={"mapping": {"id": "titleId"}})
+     * @ParamConverter("osborneMarc", options={"mapping" = {"id" = "titleId"}})
      * @Template
      */
-    public function showAction(OsborneMarc $osborneMarc, MarcManager $manager) {
+    public function showAction(OsborneMarc $osborneMarc, MarcManager $manager) : array {
         return [
             'osborneMarc' => $osborneMarc,
             'manager' => $manager,

@@ -20,10 +20,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class EditionsCommand extends Command {
     public const BATCH_SIZE = 100;
 
-    /**
-     * @var EntityManagerInterface
-     */
-    private $em;
+    private EntityManagerInterface $em;
 
     protected static $defaultName = 'wphp:check:editions';
 

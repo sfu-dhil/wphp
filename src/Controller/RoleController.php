@@ -37,13 +37,11 @@ class RoleController extends AbstractController implements PaginatorAwareInterfa
      *
      * @Route("/", name="role_index", methods={"GET"})
      * @Template
-     *
-     * @return array
      */
-    public function indexAction(Request $request, RoleRepository $repo, EntityManagerInterface $em) {
-        $dql = 'SELECT e FROM App:Role e ORDER BY e.name';
-        $query = $em->createQuery($dql);
-        $roles = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
+    public function indexAction(Request $request, RoleRepository $repo) : array {
+        $pageSize = $this->getParameter('page_size');
+        $query = $repo->indexQuery();
+        $roles = $this->paginator->paginate($query, $request->query->getInt('page', 1), $pageSize);
 
         return [
             'roles' => $roles,
@@ -54,10 +52,8 @@ class RoleController extends AbstractController implements PaginatorAwareInterfa
     /**
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
      * @Route("/typeahead", name="role_typeahead", methods={"GET"})
-     *
-     * @return JsonResponse
      */
-    public function typeaheadAction(Request $request, RoleRepository $repo) {
+    public function typeaheadAction(Request $request, RoleRepository $repo) : JsonResponse {
         $q = $request->query->get('q');
         if ( ! $q) {
             return new JsonResponse([]);
@@ -82,7 +78,7 @@ class RoleController extends AbstractController implements PaginatorAwareInterfa
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
      * @Template
      *
-     * @return array
+     * @return array|RedirectResponse
      */
     public function newAction(Request $request, EntityManagerInterface $em) {
         $role = new Role();
@@ -109,14 +105,11 @@ class RoleController extends AbstractController implements PaginatorAwareInterfa
      *
      * @Route("/{id}", name="role_show", methods={"GET"})
      * @Template
-     *
-     * @return array
      */
-    public function showAction(Request $request, Role $role, EntityManagerInterface $em) {
-        $dql = 'SELECT tr FROM App:TitleRole tr INNER JOIN tr.person p WHERE tr.role = :role ORDER BY p.lastName, p.firstName';
-        $query = $em->createQuery($dql);
-        $query->setParameter('role', $role);
-        $titleRoles = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
+    public function showAction(Request $request, Role $role, RoleRepository $repository) : array {
+        $pageSize = $this->getParameter('page_size');
+        $query = $repository->titleRoleQuery($role);
+        $titleRoles = $this->paginator->paginate($query, $request->query->getInt('page', 1), $pageSize);
 
         return [
             'role' => $role,
@@ -155,10 +148,8 @@ class RoleController extends AbstractController implements PaginatorAwareInterfa
      *
      * @Route("/{id}/delete", name="role_delete", methods={"GET"})
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
-     *
-     * @return RedirectResponse
      */
-    public function deleteAction(Request $request, Role $role, EntityManagerInterface $em) {
+    public function deleteAction(Request $request, Role $role, EntityManagerInterface $em) : RedirectResponse {
         $em->remove($role);
         $em->flush();
         $this->addFlash('success', 'The role was deleted.');

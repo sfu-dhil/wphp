@@ -12,6 +12,7 @@ namespace App\Repository;
 
 use App\Entity\EstcMarc;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -27,10 +28,8 @@ class EstcMarcRepository extends ServiceEntityRepository {
 
     /**
      * Create a query to return records for the index page.
-     *
-     * @return \Doctrine\ORM\Query
      */
-    public function indexQuery() {
+    public function indexQuery() : Query {
         $qb = $this->createQueryBuilder('m');
         $qb->where("m.field = 'ldr'");
 
@@ -40,11 +39,9 @@ class EstcMarcRepository extends ServiceEntityRepository {
     /**
      * Execute a search query over the 245 and 100 fields.
      *
-     * @param string $q
-     *
      * @return mixed
      */
-    public function searchQuery($q) {
+    public function searchQuery(string $q) {
         $qb = $this->createQueryBuilder('e');
         $qb->select('e.titleId');
         $qb->addSelect('MAX(MATCH(e.fieldData) AGAINST (:q BOOLEAN)) AS HIDDEN score');
@@ -66,11 +63,9 @@ class EstcMarcRepository extends ServiceEntityRepository {
     /**
      * Run a search query over the 260 field (imprint).
      *
-     * @param string $q
-     *
      * @return mixed
      */
-    public function imprintSearchQuery($q) {
+    public function imprintSearchQuery(string $q) {
         $qb = $this->createQueryBuilder('e');
         $qb->select('e.titleId');
         $qb->addSelect('MAX(MATCH(e.fieldData) AGAINST (:q BOOLEAN)) AS HIDDEN score');

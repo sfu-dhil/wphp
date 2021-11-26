@@ -24,10 +24,7 @@ use Symfony\Component\Form\FormBuilderInterface;
  * service to have the doctrine registry injected as a dependency.
  */
 class TitleFilterType extends AbstractType {
-    /**
-     * @var EntityManager
-     */
-    private $em;
+    private EntityManager $em;
 
     public function __construct(EntityManagerInterface $em) {
         $this->em = $em;
@@ -64,8 +61,8 @@ class TitleFilterType extends AbstractType {
 
         $builder->add('person_role', ChoiceType::class, [
             'choices' => $roles,
-            'choice_label' => fn ($value, $key, $index) => $value->getName(),
-            'choice_value' => function ($value) {
+            'choice_label' => fn($value, $key, $index) => $value->getName(),
+            'choice_value' => function($value) {
                 if ($value) {
                     return $value->getId();
                 }
@@ -89,8 +86,8 @@ class TitleFilterType extends AbstractType {
 
         $builder->add('genre', ChoiceType::class, [
             'choices' => $genres,
-            'choice_label' => fn ($value, $key, $index) => $value->getName(),
-            'choice_value' => fn ($value) => $value->getId(),
+            'choice_label' => fn($value, $key, $index) => $value->getName(),
+            'choice_value' => fn($value) => $value->getId(),
             'label' => 'Genre',
             'required' => false,
             'expanded' => true,

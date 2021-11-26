@@ -12,6 +12,7 @@ namespace App\Repository;
 
 use App\Entity\Jackson;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -25,14 +26,19 @@ class JacksonRepository extends ServiceEntityRepository {
         parent::__construct($registry, Jackson::class);
     }
 
+    public function indexQuery() : Query {
+        $qb = $this->createQueryBuilder('e');
+        $qb->orderBy('e.id');
+
+        return $qb->getQuery();
+    }
+
     /**
      * Do a name search on author and title for a typeahead query.
      *
-     * @param string $q
-     *
      * @return mixed
      */
-    public function searchQuery($q) {
+    public function searchQuery(string $q) {
         $qb = $this->createQueryBuilder('e');
         $qb->addSelect('MATCH (e.author, e.title) AGAINST(:q BOOLEAN) as HIDDEN score');
         $qb->where('MATCH (e.author, e.title) AGAINST(:q BOOLEAN) > 0');

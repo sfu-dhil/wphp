@@ -24,7 +24,7 @@ use Doctrine\ORM\Mapping as ORM;
  *     indexes={
  *         @ORM\Index(name="osborne_cid_idx", columns={"cid"}),
  *         @ORM\Index(name="osborne_fielddata_ft", columns={"field_data"}, flags={"fulltext"}),
- *         @ORM\Index(name="osborne_data_idx", columns={"field_data"}, options={"lengths": {24} }),
+ *         @ORM\Index(name="osborne_data_idx", columns={"field_data"}, options={"lengths" = {24} }),
  *         @ORM\Index(name="osborne_field_idx", columns={"field"})
  *     }
  * )
@@ -32,140 +32,77 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class OsborneMarc {
     /**
-     * @var int
-     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    private int $id;
 
     /**
-     * @var int
-     *
      * @ORM\Column(name="cid", type="integer")
      */
-    private $titleId;
+    private int $titleId;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="field", type="string", length=3)
      */
-    private $field;
+    private string $field;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="subfield", type="string", length=1, nullable=true)
      */
-    private $subfield;
+    private ?string $subfield = null;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="field_data", type="text")
      */
-    private $fieldData;
+    private string $fieldData;
 
     public function __toString() : string {
         return $this->fieldData;
     }
 
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId() {
+    public function getId() : ?int {
         return $this->id;
     }
 
-    /**
-     * Set titleId.
-     *
-     * @param int $titleId
-     *
-     * @return OsborneMarc
-     */
-    public function setTitleId($titleId) {
+    public function getTitleId() : ?int {
+        return $this->titleId;
+    }
+
+    public function setTitleId(int $titleId) : self {
         $this->titleId = $titleId;
 
         return $this;
     }
 
-    /**
-     * Get titleId.
-     *
-     * @return int
-     */
-    public function getTitleId() {
-        return $this->titleId;
+    public function getField() : ?string {
+        return $this->field;
     }
 
-    /**
-     * Set field.
-     *
-     * @param string $field
-     *
-     * @return OsborneMarc
-     */
-    public function setField($field) {
+    public function setField(string $field) : self {
         $this->field = $field;
 
         return $this;
     }
 
-    /**
-     * Get field.
-     *
-     * @return string
-     */
-    public function getField() {
-        return $this->field;
+    public function getSubfield() : ?string {
+        return $this->subfield;
     }
 
-    /**
-     * Set subfield.
-     *
-     * @param string $subfield
-     *
-     * @return OsborneMarc
-     */
-    public function setSubfield($subfield) {
+    public function setSubfield(?string $subfield) : self {
         $this->subfield = $subfield;
 
         return $this;
     }
 
-    /**
-     * Get subfield.
-     *
-     * @return string
-     */
-    public function getSubfield() {
-        return $this->subfield;
+    public function getFieldData() : ?string {
+        return $this->fieldData;
     }
 
-    /**
-     * Set fieldData.
-     *
-     * @param string $fieldData
-     *
-     * @return OsborneMarc
-     */
-    public function setFieldData($fieldData) {
+    public function setFieldData(string $fieldData) : self {
         $this->fieldData = $fieldData;
 
         return $this;
-    }
-
-    /**
-     * Get fieldData.
-     *
-     * @return string
-     */
-    public function getFieldData() {
-        return $this->fieldData;
     }
 }

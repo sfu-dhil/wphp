@@ -13,6 +13,7 @@ namespace App\Repository;
 use App\Entity\Genre;
 use App\Entity\Title;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 use Nines\UserBundle\Entity\User;
 
@@ -25,14 +26,33 @@ class GenreRepository extends ServiceEntityRepository {
         parent::__construct($registry, Genre::class);
     }
 
+    public function indexQuery() : Query {
+        $qb = $this->createQueryBuilder('e');
+        $qb->orderBy('e.name');
+
+        return $qb->getQuery();
+    }
+
+    public function titlesQuery(Genre $genre, ?User $user) : Query {
+        $qb = $this->_em->createQueryBuilder();
+        $qb->select('t');
+        $qb->from(Title::class, 't');
+        $qb->where(':genre MEMBER OF t.genres');
+        $qb->setParameter('genre', $genre);
+        if ( ! $user) {
+            $qb->andWhere('(t.finalcheck = 1) OR (t.finalattempt = 1)');
+        }
+        $qb->orderBy('t.title');
+
+        return $qb->getQuery();
+    }
+
     /**
      * Execute a name search for a typeahead widget.
      *
-     * @param string $q
-     *
      * @return mixed
      */
-    public function typeaheadQuery($q) {
+    public function typeaheadQuery(string $q) {
         $qb = $this->createQueryBuilder('e');
         $qb->andWhere('e.name LIKE :q');
         $qb->orderBy('e.name');

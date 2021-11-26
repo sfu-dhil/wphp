@@ -36,72 +36,54 @@ class Firm {
     public const UNKNOWN = 'U';
 
     /**
-     * @var int
-     *
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    private int $id;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="name", type="string", length=255, nullable=true)
      */
-    private $name;
+    private ?string $name = null;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="gender", type="string", length=1, nullable=false, options={"default": "U"})
+     * @ORM\Column(name="gender", type="string", length=1, nullable=false, options={"default" = "U"})
      */
-    private $gender;
+    private string $gender;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="street_address", type="text", nullable=true)
      */
-    private $streetAddress;
+    private ?string $streetAddress = null;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="start_date", type="string", length=4, nullable=true)
      */
-    private $startDate;
+    private ?string $startDate = null;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="end_date", type="string", length=4, nullable=true)
      */
-    private $endDate;
+    private ?string  $endDate = null;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="notes", type="text", nullable=true)
      */
-    private $notes;
+    private ?string $notes = null;
 
     /**
-     * @var bool
-     *
      * @ORM\Column(name="finalcheck", type="boolean", nullable=false)
      */
-    private $finalcheck = '0';
+    private bool $finalcheck = false;
 
     /**
-     * @var Geonames
-     *
      * @ORM\ManyToOne(targetEntity="Geonames", inversedBy="firms")
      * @ORM\JoinColumns({
      *     @ORM\JoinColumn(name="city_id", referencedColumnName="geonameid")
      * })
      */
-    private $city;
+    private ?Geonames $city = null;
 
     /**
      * @var Collection|TitleFirmrole[]
@@ -144,6 +126,7 @@ class Firm {
         $this->relatedPeople = new ArrayCollection();
         $this->relatedFirms = new ArrayCollection();
         $this->firmsRelated = new ArrayCollection();
+        $this->firmSources = new ArrayCollection();
     }
 
     /**
@@ -158,208 +141,15 @@ class Firm {
     }
 
     /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId() {
-        return $this->id;
-    }
-
-    /**
-     * Set name.
-     *
-     * @param string $name
-     *
-     * @return Firm
-     */
-    public function setName($name) {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * Get name.
-     *
-     * @return string
-     */
-    public function getName() {
-        return $this->name;
-    }
-
-    /**
-     * Set streetAddress.
-     *
-     * @param string $streetAddress
-     *
-     * @return Firm
-     */
-    public function setStreetAddress($streetAddress) {
-        $this->streetAddress = $streetAddress;
-
-        return $this;
-    }
-
-    /**
-     * Get streetAddress.
-     *
-     * @return string
-     */
-    public function getStreetAddress() {
-        return $this->streetAddress;
-    }
-
-    /**
-     * Set startDate.
-     *
-     * @param string $startDate
-     *
-     * @return Firm
-     */
-    public function setStartDate($startDate) {
-        $this->startDate = $startDate;
-
-        return $this;
-    }
-
-    /**
-     * Get startDate.
-     *
-     * @return string
-     */
-    public function getStartDate() {
-        if ('0000-00-00' === $this->startDate) {
-            return;
-        }
-
-        return $this->startDate;
-    }
-
-    /**
-     * Set endDate.
-     *
-     * @param string $endDate
-     *
-     * @return Firm
-     */
-    public function setEndDate($endDate) {
-        $this->endDate = $endDate;
-
-        return $this;
-    }
-
-    /**
-     * Get endDate.
-     *
-     * @return string
-     */
-    public function getEndDate() {
-        if ('0000-00-00' === $this->endDate) {
-            return;
-        }
-
-        return $this->endDate;
-    }
-
-    /**
-     * Set notes.
-     *
-     * @param string $notes
-     *
-     * @return Title
-     */
-    public function setNotes($notes) {
-        $this->notes = $notes;
-
-        return $this;
-    }
-
-    /**
-     * Get notes.
-     *
-     * @return string
-     */
-    public function getNotes() {
-        return $this->notes;
-    }
-
-    /**
-     * Set finalcheck.
-     *
-     * @param bool $finalcheck
-     *
-     * @return Firm
-     */
-    public function setFinalcheck($finalcheck) {
-        $this->finalcheck = $finalcheck;
-
-        return $this;
-    }
-
-    /**
-     * Get finalcheck.
-     *
-     * @return bool
-     */
-    public function getFinalcheck() {
-        return $this->finalcheck;
-    }
-
-    /**
-     * Set city.
-     *
-     * @param Geonames $city
-     *
-     * @return Firm
-     */
-    public function setCity(?Geonames $city = null) {
-        $this->city = $city;
-
-        return $this;
-    }
-
-    /**
-     * Get city.
-     *
-     * @return Geonames
-     */
-    public function getCity() {
-        return $this->city;
-    }
-
-    /**
-     * Add titleFirmrole.
-     *
-     * @return Firm
-     */
-    public function addTitleFirmrole(TitleFirmrole $titleFirmrole) {
-        $this->titleFirmroles[] = $titleFirmrole;
-
-        return $this;
-    }
-
-    /**
-     * Remove titleFirmrole.
-     */
-    public function removeTitleFirmrole(TitleFirmrole $titleFirmrole) : void {
-        $this->titleFirmroles->removeElement($titleFirmrole);
-    }
-
-    /**
      * Get titleFirmroles for the firm, optionally sorted by name.
-     *
-     * @param bool $sort
-     *
-     * @return Collection
      */
-    public function getTitleFirmroles($sort = false) {
+    public function getTitleFirmroles(bool $sort = false) : Collection {
         if ( ! $sort) {
             return $this->titleFirmroles;
         }
 
         $iterator = $this->titleFirmroles->getIterator();
-        $iterator->uasort(function (TitleFirmrole $a, TitleFirmrole $b) {
+        $iterator->uasort(function(TitleFirmrole $a, TitleFirmrole $b) {
             if ($a->getTitle()->getPubdate() === $b->getTitle()->getPubDate()) {
                 if ($a->getFirmrole()->getName() === $b->getFirmrole()->getName()) {
                     return strcasecmp($a->getTitle()->getTitle(), $b->getTitle()->getTitle());
@@ -374,64 +164,143 @@ class Firm {
         return new ArrayCollection(iterator_to_array($iterator));
     }
 
-    /**
-     * Set gender.
-     *
-     * @param null|string $gender
-     *
-     * @return Firm
-     */
-    public function setGender($gender = null) {
+    public function getId() : ?int {
+        return $this->id;
+    }
+
+    public function getName() : ?string {
+        return $this->name;
+    }
+
+    public function setName(?string $name) : self {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getGender() : ?string {
+        return $this->gender;
+    }
+
+    public function setGender(string $gender) : self {
         $this->gender = $gender;
 
         return $this;
     }
 
-    /**
-     * Get gender.
-     *
-     * @return null|string
-     */
-    public function getGender() {
-        return $this->gender;
+    public function getStreetAddress() : ?string {
+        return $this->streetAddress;
     }
 
-    /**
-     * Set the sources for this firm.
-     *
-     * @param array|Collection|FirmSource[] $firmSources
-     */
-    public function setFirmSources($firmSources) : void {
-        $this->firmSources = $firmSources;
+    public function setStreetAddress(?string $streetAddress) : self {
+        $this->streetAddress = $streetAddress;
+
+        return $this;
     }
 
-    /**
-     * Add firmSource.
-     *
-     * @return Firm
-     */
-    public function addFirmSource(FirmSource $firmSource) {
-        $this->firmSources[] = $firmSource;
+    public function getStartDate() : ?string {
+        if ('0000-00-00' === $this->startDate) {
+            return null;
+        }
+
+        return $this->startDate;
+    }
+
+    public function setStartDate(?string $startDate) : self {
+        $this->startDate = $startDate;
+
+        return $this;
+    }
+
+    public function getEndDate() : ?string {
+        if ('0000-00-00' === $this->endDate) {
+            return null;
+        }
+
+        return $this->endDate;
+    }
+
+    public function setEndDate(?string $endDate) : self {
+        $this->endDate = $endDate;
+
+        return $this;
+    }
+
+    public function getNotes() : ?string {
+        return $this->notes;
+    }
+
+    public function setNotes(?string $notes) : self {
+        $this->notes = $notes;
+
+        return $this;
+    }
+
+    public function getFinalcheck() : ?bool {
+        return $this->finalcheck;
+    }
+
+    public function setFinalcheck(bool $finalcheck) : self {
+        $this->finalcheck = $finalcheck;
+
+        return $this;
+    }
+
+    public function getCity() : ?Geonames {
+        return $this->city;
+    }
+
+    public function setCity(?Geonames $city) : self {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    public function addTitleFirmrole(TitleFirmrole $titleFirmrole) : self {
+        if ( ! $this->titleFirmroles->contains($titleFirmrole)) {
+            $this->titleFirmroles[] = $titleFirmrole;
+            $titleFirmrole->setFirm($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTitleFirmrole(TitleFirmrole $titleFirmrole) : self {
+        if ($this->titleFirmroles->removeElement($titleFirmrole)) {
+            // set the owning side to null (unless already changed)
+            if ($titleFirmrole->getFirm() === $this) {
+                $titleFirmrole->setFirm(null);
+            }
+        }
 
         return $this;
     }
 
     /**
-     * Remove firmSource.
-     *
-     * @return bool TRUE if this collection contained the specified element, FALSE otherwise.
+     * @return Collection|FirmSource[]
      */
-    public function removeFirmSource(FirmSource $firmSource) {
-        return $this->firmSources->removeElement($firmSource);
+    public function getFirmSources() : Collection {
+        return $this->firmSources;
     }
 
-    /**
-     * Get firmSources.
-     *
-     * @return array|Collection|FirmSource[]
-     */
-    public function getFirmSources() {
-        return $this->firmSources;
+    public function addFirmSource(FirmSource $firmSource) : self {
+        if ( ! $this->firmSources->contains($firmSource)) {
+            $this->firmSources[] = $firmSource;
+            $firmSource->setFirm($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFirmSource(FirmSource $firmSource) : self {
+        if ($this->firmSources->removeElement($firmSource)) {
+            // set the owning side to null (unless already changed)
+            if ($firmSource->getFirm() === $this) {
+                $firmSource->setFirm(null);
+            }
+        }
+
+        return $this;
     }
 
     /**
@@ -444,13 +313,16 @@ class Firm {
     public function addRelatedPerson(Person $relatedPerson) : self {
         if ( ! $this->relatedPeople->contains($relatedPerson)) {
             $this->relatedPeople[] = $relatedPerson;
+            $relatedPerson->addRelatedFirm($this);
         }
 
         return $this;
     }
 
     public function removeRelatedPerson(Person $relatedPerson) : self {
-        $this->relatedPeople->removeElement($relatedPerson);
+        if ($this->relatedPeople->removeElement($relatedPerson)) {
+            $relatedPerson->removeRelatedFirm($this);
+        }
 
         return $this;
     }

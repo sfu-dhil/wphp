@@ -110,8 +110,7 @@ class FirmControllerTest extends ControllerBaseCase {
             'firm[endDate]' => '1999',
             'firm[finalcheck]' => 1,
             'firm[notes]' => 'New Notes',
-        ])
-        ;
+        ]);
 
         $this->client->submit($form);
         $this->assertTrue($this->client->getResponse()->isRedirect('/firm/1'));
@@ -192,8 +191,7 @@ class FirmControllerTest extends ControllerBaseCase {
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $form = $formCrawler->selectButton('Search')->form([
             'firm_search[name]' => 'adventures',
-        ])
-        ;
+        ]);
 
         $responseCrawler = $this->client->submit($form);
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
@@ -211,8 +209,7 @@ class FirmControllerTest extends ControllerBaseCase {
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $form = $formCrawler->selectButton('Search')->form([
             'firm_search[name]' => 'adventures',
-        ])
-        ;
+        ]);
 
         $responseCrawler = $this->client->submit($form);
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
@@ -230,8 +227,7 @@ class FirmControllerTest extends ControllerBaseCase {
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $form = $formCrawler->selectButton('Search')->form([
             'firm_search[name]' => 'adventures',
-        ])
-        ;
+        ]);
 
         $responseCrawler = $this->client->submit($form);
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());

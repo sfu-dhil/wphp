@@ -10,9 +10,15 @@ declare(strict_types=1);
 
 namespace App\Repository;
 
+use App\Entity\Firm;
+use App\Entity\Genre;
 use App\Entity\Geonames;
+use App\Entity\Person;
+use App\Entity\Title;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
+use Nines\UserBundle\Entity\User;
 
 /**
  * PersonRepository.
@@ -25,14 +31,71 @@ class GeonamesRepository extends ServiceEntityRepository {
         parent::__construct($registry, Geonames::class);
     }
 
+    public function indexQuery() : Query {
+        $qb = $this->createQueryBuilder('e');
+        $qb->orderBy('e.geonameid');
+
+        return $qb->getQuery();
+    }
+
+    //    public function titlesQuery(Genre $genre, ?User $user) : Query {
+    //        $qb = $this->_em->createQueryBuilder();
+    //        $qb->select('t');
+    //        $qb->from(Title::class, 't');
+    //        $qb->where(':genre MEMBER OF t.genres');
+    //        $qb->setParameter('genre', $genre);
+    //        if( ! $user) {
+    //            $qb->andWhere('(t.finalcheck = 1) OR (t.finalattempt = 1)');
+    //        }
+    //        $qb->orderBy('t.title');
+    //        return $qb->getQuery();
+    //    }
+
+    public function titlesQuery(Geonames $geoname, ?User $user) : Query {
+        $qb = $this->_em->createQueryBuilder();
+        $qb->select('t');
+        $qb->from(Title::class, 't');
+        if ( ! $user) {
+            $qb->andWhere('(t.finalcheck = 1) OR (t.finalattempt = 1)');
+        }
+        $qb->where('t.locationOfPrinting = :geoname');
+        $qb->setParameter('geoname', $geoname);
+
+        return $qb->getQuery();
+    }
+
+    public function firmsQuery(Geonames $geoname, ?User $user) : Query {
+        $qb = $this->_em->createQueryBuilder();
+        $qb->select('f');
+        $qb->from(Firm::class, 'f');
+        if ( ! $user) {
+            $qb->andWhere('f.finalcheck = 1');
+        }
+        $qb->where('f.city = :geoname');
+        $qb->setParameter('geoname', $geoname);
+
+        return $qb->getQuery();
+    }
+
+    public function peopleQuery(Geonames $geoname, ?User $user) : Query {
+        $qb = $this->_em->createQueryBuilder();
+        $qb->select('p');
+        $qb->from(Person::class, 'p');
+        $qb->where('(p.cityOfBirth = :geoname OR p.cityOfDeath = :geoname)');
+        $qb->setParameter('geoname', $geoname);
+        if ( ! $user) {
+            $qb->andWhere('p.finalcheck = 1');
+        }
+
+        return $qb->getQuery();
+    }
+
     /**
      * Do a name search for a typeahead query.
      *
-     * @param string $q
-     *
      * @return mixed
      */
-    public function typeaheadQuery($q) {
+    public function typeaheadQuery(string $q) {
         $qb = $this->createQueryBuilder('e');
         $qb->andWhere('e.name LIKE :q');
         $qb->orderBy('e.name');
@@ -44,11 +107,9 @@ class GeonamesRepository extends ServiceEntityRepository {
     /**
      * Run a title search.
      *
-     * @param string $q
-     *
      * @return mixed
      */
-    public function searchQuery($q) {
+    public function searchQuery(string $q) {
         $qb = $this->createQueryBuilder('e');
         $qb->andWhere('e.name LIKE :q');
         $qb->orderBy('e.name');

@@ -25,10 +25,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\HeaderUtils;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -46,21 +49,17 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
      * @Route("/", name="title_index", methods={"GET"})
      *
      * @Template
-     *
-     * @return array
      */
-    public function indexAction(Request $request, EntityManagerInterface $em) {
-        $dql = 'SELECT e FROM App:Title e';
-        if (null === $this->getUser()) {
-            $dql .= ' WHERE (e.finalcheck = 1 OR e.finalattempt = 1)';
-        }
-        $query = $em->createQuery($dql);
+    public function indexAction(Request $request, TitleRepository $repository) : array {
+        $pageSize = $this->getParameter('page_size');
+        $user = $this->getUser();
+        $query = $repository->indexQuery($user);
 
         $form = $this->createForm(TitleSearchType::class, null, [
             'action' => $this->generateUrl('title_search'),
             'user' => $this->getUser(),
         ]);
-        $titles = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25, [
+        $titles = $this->paginator->paginate($query, $request->query->getInt('page', 1), $pageSize, [
             'defaultSortFieldName' => ['e.title', 'e.pubdate'],
             'defaultSortDirection' => 'asc',
         ]);
@@ -75,11 +74,10 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
     /**
      * Search for titles and return typeahead-widget-friendly JSON.
      *
-     * @return JsonResponse
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
      * @Route("/typeahead", name="title_typeahead", methods={"GET"})
      */
-    public function typeaheadAction(Request $request, TitleRepository $repo) {
+    public function typeaheadAction(Request $request, TitleRepository $repo) : JsonResponse {
         $q = $request->query->get('q');
         if ( ! $q) {
             return new JsonResponse([]);
@@ -89,7 +87,7 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
         foreach ($repo->typeaheadQuery($q) as $result) {
             $data[] = [
                 'id' => $result->getId(),
-                'text' => $result->getFormId(),
+                'text' => $result->getTitleId(),
             ];
         }
 
@@ -99,29 +97,32 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
     /**
      * Export a CSV with the titles.
      *
-     * @Route("/export", name="title_export", methods={"GET"})
+     * This seems to be broken in Firefox only.
      *
-     * @return BinaryFileResponse
+     * @Route("/export", name="title_export", methods={"GET"})
      */
-    public function exportAction(EntityManagerInterface $em, CsvExporter $exporter) {
-        $qb = $em->createQueryBuilder();
-        $qb->select('e')->from(Title::class, 'e');
-        if (null === $this->getUser()) {
-            $qb->where('e.finalcheck = 1 OR e.finalattempt = 1');
-        }
-        $qb->orderBy('e.id');
-        $iterator = $qb->getQuery()->iterate();
-        $tmpPath = tempnam(sys_get_temp_dir(), 'wphp-export-');
-        $fh = fopen($tmpPath, 'w');
-        fputcsv($fh, $exporter->titleHeaders());
+    public function exportAction(TitleRepository $repository, CsvExporter $exporter) : StreamedResponse {
+        $user = $this->getUser();
+        $query = $repository->indexQuery($user);
+        $iterator = $query->iterate();
 
-        foreach ($iterator as $row) {
-            fputcsv($fh, $exporter->titleRow($row[0]));
-        }
-        fclose($fh);
-        $response = new BinaryFileResponse($tmpPath);
-        $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'wphp-titles.csv');
-        $response->deleteFileAfterSend(true);
+        $disposition = HeaderUtils::makeDisposition(HeaderUtils::DISPOSITION_ATTACHMENT, 'wphp-titles.csv');
+        $response = new StreamedResponse(null, Response::HTTP_OK, [
+            'Content-Type' => 'application/octet-stream',
+            'Cache-Control' => 'max-age=0',
+            'Content-Disposition' => $disposition,
+        ]);
+        $response->setCallback(function() use ($exporter, $iterator) : void {
+            $fh = fopen('php://output', 'w');
+            fputcsv($fh, $exporter->titleHeaders());
+            foreach ($iterator as $row) {
+                fputcsv($fh, $exporter->titleRow($row[0]));
+                if (0 === $iterator->key() % 50) {
+                    flush();
+                }
+            }
+            fclose($fh);
+        });
 
         return $response;
     }
@@ -131,10 +132,9 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
      *
      * @Route("/search", name="title_search", methods={"GET"})
      * @Template
-     *
-     * @return array
      */
-    public function searchAction(Request $request, TitleRepository $repo) {
+    public function searchAction(Request $request, TitleRepository $repo) : array {
+        $pageSize = $this->getParameter('page_size');
         $form = $this->createForm(TitleSearchType::class, null, [
             'user' => $this->getUser(),
         ]);
@@ -147,7 +147,7 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
             if (count($data) > 2) {
                 $submitted = true;
                 $query = $repo->buildSearchQuery($data, $this->getUser());
-                $titles = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
+                $titles = $this->paginator->paginate($query, $request->query->getInt('page', 1), $pageSize);
             }
         }
 
@@ -161,12 +161,10 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
     /**
      * Full text search for Title entities.
      *
-     * @Route("/search/export/{format}", name="title_search_export_csv", methods={"GET"}, requirements={"format": "^csv$"})
+     * @Route("/search/export/{format}", name="title_search_export_csv", methods={"GET"}, requirements={"format" = "^csv$"})
      * @Template
-     *
-     * @return BinaryFileResponse
      */
-    public function searchExportCsvAction(Request $request, TitleRepository $repo, CsvExporter $exporter) {
+    public function searchExportCsvAction(Request $request, TitleRepository $repo, CsvExporter $exporter) : BinaryFileResponse {
         $form = $this->createForm(TitleSearchType::class, null, [
             'user' => $this->getUser(),
         ]);
@@ -181,7 +179,7 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
                 $paramValue = $param->getValue();
                 $value = '';
                 if (is_array($paramValue)) {
-                    $value = implode('-', array_map(fn ($e) => (string) $e, $paramValue));
+                    $value = implode('-', array_map(fn($e) => (string) $e, $paramValue));
                 } else {
                     $value = $paramValue;
                 }
@@ -212,10 +210,8 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
      * @Template
      *
      * @param mixed $format
-     *
-     * @return array
      */
-    public function searchExportAction(Request $request, TitleRepository $repo, $format) {
+    public function searchExportAction(Request $request, TitleRepository $repo, $format) : array {
         $form = $this->createForm(TitleSearchType::class, null, [
             'user' => $this->getUser(),
         ]);
@@ -285,14 +281,11 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
     /**
      * Build a new title form prepopulated with data from a MARC record.
      *
-     * @param string $id
-     *
-     * @return array
      * @Route("/import/{id}", name="title_marc_import", methods={"GET"})
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
      * @Template("title/new.html.twig")
      */
-    public function importMarcAction(Request $request, EstcMarcImporter $importer, $id) {
+    public function importMarcAction(Request $request, EstcMarcImporter $importer, string $id) : array {
         $title = $importer->import($id);
 
         foreach ($importer->getMessages() as $message) {
@@ -313,12 +306,10 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
     /**
      * Finds and displays a Title entity.
      *
-     * @Route("/{id}.{_format}", name="title_show", defaults={"_format": "html"}, methods={"GET"})
+     * @Route("/{id}.{_format}", name="title_show", defaults={"_format" = "html"}, methods={"GET"})
      * @Template
-     *
-     * @return array
      */
-    public function showAction(Title $title, SourceLinker $linker) {
+    public function showAction(Title $title, SourceLinker $linker) : array {
         if ( ! $this->getUser() && ! $title->getFinalattempt() && ! $title->getFinalcheck()) {
             throw new AccessDeniedHttpException('This title has not been verified and is not available to the public.');
         }
@@ -423,10 +414,8 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
      * @Route("/{id}/copy", name="title_copy", methods={"GET", "POST"})
      * @Template
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
-     *
-     * @return array
      */
-    public function copyAction(Request $request, Title $title, EntityManagerInterface $em) {
+    public function copyAction(Request $request, Title $title, EntityManagerInterface $em) : array {
         $form = $this->createForm(TitleType::class, $title, [
             'action' => $this->generateUrl('title_new'),
         ]);
@@ -442,10 +431,8 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
      *
      * @Route("/{id}/delete", name="title_delete", methods={"GET"})
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
-     *
-     * @return RedirectResponse
      */
-    public function deleteAction(Request $request, Title $title, EntityManagerInterface $em) {
+    public function deleteAction(Request $request, Title $title, EntityManagerInterface $em) : RedirectResponse {
         foreach ($title->getTitleFirmroles() as $tfr) {
             $em->remove($tfr);
         }

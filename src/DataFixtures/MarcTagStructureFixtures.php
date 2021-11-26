@@ -33,7 +33,7 @@ class MarcTagStructureFixtures extends Fixture implements FixtureGroupInterface 
         for ($i = 0; $i < 20; $i++) {
             $fixture = new MarcTagStructure();
             $fixture->setName('Tag ' . $i);
-            $fixture->setTagField(100 + $i);
+            $fixture->setTagField((string) (100 + $i));
             $manager->persist($fixture);
             $this->setReference('marctag.' . $i, $fixture);
         }

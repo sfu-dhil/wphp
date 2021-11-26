@@ -29,116 +29,70 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class TitleRole {
     /**
-     * @var int
-     *
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    private int $id;
 
     /**
-     * @var Title
-     *
      * @ORM\ManyToOne(targetEntity="Title", inversedBy="titleRoles")
      * @ORM\JoinColumns({
      *     @ORM\JoinColumn(name="title_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      * })
      */
-    private $title;
+    private ?Title $title = null;
 
     /**
-     * @var Person
-     *
      * @ORM\ManyToOne(targetEntity="Person", inversedBy="titleRoles")
      * @ORM\JoinColumns({
      *     @ORM\JoinColumn(name="person_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      * })
      */
-    private $person;
+    private ?Person $person = null;
 
     /**
-     * @var Role
-     *
      * @ORM\ManyToOne(targetEntity="Role")
      * @ORM\JoinColumns({
      *     @ORM\JoinColumn(name="role_id", referencedColumnName="id", nullable=false)
      * })
      */
-    private $role;
+    private ?Role $role = null;
 
     /**
      * Get id.
-     *
-     * @return int
      */
-    public function getId() {
+    public function getId() : int {
         return $this->id;
     }
 
-    /**
-     * Set title.
-     *
-     * @param Title $title
-     *
-     * @return TitleRole
-     */
-    public function setTitle(?Title $title = null) {
+    public function getTitle() : ?Title {
+        return $this->title;
+    }
+
+    public function setTitle(?Title $title) : self {
         $this->title = $title;
 
         return $this;
     }
 
-    /**
-     * Get title.
-     *
-     * @return Title
-     */
-    public function getTitle() {
-        return $this->title;
+    public function getPerson() : ?Person {
+        return $this->person;
     }
 
-    /**
-     * Set person.
-     *
-     * @param Person $person
-     *
-     * @return TitleRole
-     */
-    public function setPerson(?Person $person = null) {
+    public function setPerson(?Person $person) : self {
         $this->person = $person;
 
         return $this;
     }
 
-    /**
-     * Get person.
-     *
-     * @return Person
-     */
-    public function getPerson() {
-        return $this->person;
+    public function getRole() : ?Role {
+        return $this->role;
     }
 
-    /**
-     * Set role.
-     *
-     * @param Role $role
-     *
-     * @return TitleRole
-     */
-    public function setRole(?Role $role = null) {
+    public function setRole(?Role $role) : self {
         $this->role = $role;
 
         return $this;
-    }
-
-    /**
-     * Get role.
-     *
-     * @return Role
-     */
-    public function getRole() {
-        return $this->role;
     }
 }

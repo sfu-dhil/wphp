@@ -23,10 +23,7 @@ use Symfony\Component\Form\FormBuilderInterface;
  * PersonFilterType is a subform used in the title search form.
  */
 class PersonFilterType extends AbstractType {
-    /**
-     * @var EntityManager
-     */
-    private $em;
+    private EntityManager $em;
 
     public function __construct(EntityManagerInterface $em) {
         $this->em = $em;
@@ -75,8 +72,8 @@ class PersonFilterType extends AbstractType {
 
         $builder->add('person_role', ChoiceType::class, [
             'choices' => $roles,
-            'choice_label' => fn ($value, $key, $index) => $value->getName(),
-            'choice_value' => function ($value) {
+            'choice_label' => fn($value, $key, $index) => $value->getName(),
+            'choice_value' => function($value) {
                 if ($value) {
                     return $value->getId();
                 }

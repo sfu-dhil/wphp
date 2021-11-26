@@ -12,6 +12,7 @@ namespace App\Repository;
 
 use App\Entity\OsborneMarc;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -27,10 +28,8 @@ class OsborneMarcRepository extends ServiceEntityRepository {
 
     /**
      * Generate a query for the index page.
-     *
-     * @return \Doctrine\ORM\Query
      */
-    public function indexQuery() {
+    public function indexQuery() : Query {
         $qb = $this->createQueryBuilder('m');
         $qb->where("m.field = 'ldr'");
 
@@ -40,20 +39,16 @@ class OsborneMarcRepository extends ServiceEntityRepository {
     /**
      * Do a name search for a typeahead query.
      *
-     * @param string $q
-     *
      * @return mixed
      */
-    public function searchQuery($q) {
-        $dql = <<<'ENDSQL'
-            SELECT e.titleId, max(MATCH (e.fieldData) AGAINST (:q BOOLEAN)) as HIDDEN score
-            FROM App:OsborneMarc e
-            WHERE MATCH (e.fieldData) AGAINST (:q BOOLEAN) > 0 AND e.field IN ('245' , '100')
-            group by e.titleId order by score desc
-            ENDSQL;
-        $query = $this->_em->createQuery($dql);
-        $query->setParameter('q', $q);
+    public function searchQuery(string $q) {
+        $qb = $this->createQueryBuilder('e');
+        $qb->select('e.titleId');
+        $qb->addSelect($qb->expr()->max('MATCH(e.fieldData) AGAINST (:q)') . 'as HIDDEN score');
+        $qb->groupBy('e.titleId');
+        $qb->orderBy('score', 'desc');
+        $qb->setParameter('q', $q);
 
-        return $query->execute();
+        return $qb->getQuery();
     }
 }

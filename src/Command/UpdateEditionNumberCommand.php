@@ -22,10 +22,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class UpdateEditionNumberCommand extends Command {
     public const BATCH_SIZE = 100;
 
-    /**
-     * @var EntityManagerInterface
-     */
-    private $em;
+    private EntityManagerInterface $em;
 
     /**
      * UpdateEditionNumberCommand constructor.
@@ -41,17 +38,11 @@ class UpdateEditionNumberCommand extends Command {
     protected function configure() : void {
         $this
             ->setName('wphp:update:editions')
-            ->setDescription('Update title edition number from edition text.')
-        ;
+            ->setDescription('Update title edition number from edition text.');
     }
 
     /**
      * Execute the command.
-     *
-     * @param InputInterface $input
-     *                              Command input, as defined in the configure() method.
-     * @param OutputInterface $output
-     *                                Output destination.
      */
     protected function execute(InputInterface $input, OutputInterface $output) : void {
         $qb = $this->em->createQueryBuilder();

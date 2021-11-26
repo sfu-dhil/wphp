@@ -13,6 +13,9 @@ namespace App\Repository;
 use App\Entity\Role;
 use App\Entity\TitleRole;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -24,14 +27,19 @@ class RoleRepository extends ServiceEntityRepository {
         parent::__construct($registry, Role::class);
     }
 
+    public function indexQuery() : Query {
+        $qb = $this->createQueryBuilder('e');
+        $qb->orderBy('e.name');
+
+        return $qb->getQuery();
+    }
+
     /**
      * Do a name search for a typeahead query.
      *
-     * @param string $q
-     *
      * @return mixed
      */
-    public function typeaheadQuery($q) {
+    public function typeaheadQuery(string $q) {
         $qb = $this->createQueryBuilder('e');
         $qb->andWhere('e.name LIKE :q');
         $qb->orderBy('e.name');
@@ -40,10 +48,23 @@ class RoleRepository extends ServiceEntityRepository {
         return $qb->getQuery()->execute();
     }
 
+    public function titleRoleQuery(Role $role) : Query {
+        $qb = $this->_em->createQueryBuilder();
+        $qb->select('tr');
+        $qb->from(TitleRole::class, 'tr');
+        $qb->where('tr.role = :role');
+        $qb->setParameter('role', $role);
+        $qb->innerJoin('tr.person', 'p');
+        $qb->orderBy('p.lastName');
+        $qb->addOrderBy('p.firstName');
+
+        return $qb->getQuery();
+    }
+
     /**
      * Count the titles in a given role.
      *
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws NonUniqueResultException|NoResultException
      *
      * @return mixed
      */

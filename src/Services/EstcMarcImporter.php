@@ -10,15 +10,11 @@ declare(strict_types=1);
 
 namespace App\Services;
 
-use App\Entity\EstcMarc;
 use App\Entity\Format;
-use App\Entity\Role;
-use App\Entity\Source;
 use App\Entity\Title;
 use App\Entity\TitleSource;
 use App\Repository\EstcMarcRepository;
 use App\Repository\FormatRepository;
-use App\Repository\RoleRepository;
 use App\Repository\SourceRepository;
 use App\Repository\TitleRepository;
 use App\Repository\TitleSourceRepository;
@@ -28,68 +24,30 @@ use Doctrine\ORM\EntityManagerInterface;
  * Import MARC records from ESTC.
  */
 class EstcMarcImporter {
-    /**
-     * @var EntityManagerInterface
-     */
-    private $em;
+    private EstcMarcRepository $estcRepo;
 
-    /**
-     * @var EstcMarcRepository
-     */
-    private $estcRepo;
+    private TitleRepository $titleRepo;
 
-    /**
-     * @var TitleRepository
-     */
-    private $titleRepo;
+    private SourceRepository $sourceRepo;
 
-    /**
-     * @var RoleRepository
-     */
-    private $roleRepo;
+    private FormatRepository $formatRepo;
 
-    /**
-     * @var SourceRepository
-     */
-    private $sourceRepo;
+    private TitleSourceRepository $titleSourceRepository;
 
-    /**
-     * @var FormatRepository
-     */
-    private $formatRepo;
-
-    /**
-     * @var TitleSourceRepository
-     */
-    private $titleSourceRepository;
-
-    /**
-     * @var array
-     */
-    private $messages;
+    private array $messages;
 
     /**
      * EstcMarcImporter constructor.
      */
     public function __construct(EntityManagerInterface $em) {
         $this->em = $em;
-        $this->estcRepo = $this->em->getRepository(EstcMarc::class);
-        $this->titleRepo = $this->em->getRepository(Title::class);
-        $this->roleRepo = $this->em->getRepository(Role::class);
-        $this->sourceRepo = $this->em->getRepository(Source::class);
-        $this->formatRepo = $this->em->getRepository(Format::class);
-        $this->titleSourceRepository = $this->em->getRepository(TitleSource::class);
         $this->messages = [];
     }
 
     /**
      * Find the MARC fields for an ID.
-     *
-     * @param string $id
-     *
-     * @return array
      */
-    public function getFields($id) {
+    public function getFields(string $id) : array {
         $data = $this->estcRepo->findBy(['titleId' => $id]);
         $fields = [];
 
@@ -102,11 +60,8 @@ class EstcMarcImporter {
 
     /**
      * Check if the title has already been imported.
-     *
-     * @param string $fullTitle
-     * @param string $id
      */
-    public function checkTitle($fullTitle, $id) : void {
+    public function checkTitle(string $fullTitle, string $id) : void {
         if (count($this->titleRepo->findBy(['title' => $fullTitle]))) {
             $this->messages[] = 'This title may already exist in the database. Please check for it before saving the form.';
         }
@@ -121,12 +76,8 @@ class EstcMarcImporter {
 
     /**
      * Get the dates of a publication. Dates are not entered consistently in the ESTC, so success will vary.
-     *
-     * @param array $fields
-     *
-     * @return array
      */
-    public function getDates($fields) {
+    public function getDates(array $fields) : array {
         if ( ! isset($fields['100d']) || null === $fields['100d']->getFieldData()) {
             return [null, null];
         }
@@ -153,14 +104,10 @@ class EstcMarcImporter {
 
     /**
      * Guess the format of a title.
-     *
-     * @param array $fields
-     *
-     * @return null|Format
      */
-    public function guessFormat($fields) {
+    public function guessFormat(array $fields) : ?Format {
         if ( ! isset($fields['300c']) || null === $fields['300c']->getFieldData()) {
-            return;
+            return null;
         }
         $data = $fields['300c']->getFieldData();
         $matches = [];
@@ -182,12 +129,8 @@ class EstcMarcImporter {
 
     /**
      * Guess the dimensions of a title.
-     *
-     * @param array $fields
-     *
-     * @return array
      */
-    public function guessDimensions($fields) {
+    public function guessDimensions(array $fields) : array {
         if ( ! isset($fields['300c']) || null === $fields['300c']->getFieldData()) {
             return [null, null];
         }
@@ -208,12 +151,8 @@ class EstcMarcImporter {
 
     /**
      * Import one title. Does not persist the title.
-     *
-     * @param string $id
-     *
-     * @return Title
      */
-    public function import($id) {
+    public function import(string $id) : Title {
         $fields = $this->getFields($id);
 
         $fullTitle = $fields['245a']->getFieldData();
@@ -268,26 +207,37 @@ class EstcMarcImporter {
         $this->messages = [];
     }
 
+    /**
+     * @required
+     */
     public function setEstcRepo(EstcMarcRepository $estcRepo) : void {
         $this->estcRepo = $estcRepo;
     }
 
+    /**
+     * @required
+     */
     public function setTitleRepo(TitleRepository $titleRepo) : void {
         $this->titleRepo = $titleRepo;
     }
 
+    /**
+     * @required
+     */
     public function setTitleSourceRepo(TitleSourceRepository $titleSourceRepo) : void {
         $this->titleSourceRepository = $titleSourceRepo;
     }
 
-    public function setRoleRepo(RoleRepository $roleRepo) : void {
-        $this->roleRepo = $roleRepo;
-    }
-
+    /**
+     * @required
+     */
     public function setSourceRepo(SourceRepository $sourceRepo) : void {
         $this->sourceRepo = $sourceRepo;
     }
 
+    /**
+     * @required
+     */
     public function setFormatRepo(FormatRepository $formatRepo) : void {
         $this->formatRepo = $formatRepo;
     }

@@ -25,894 +25,467 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class OrlandoBiblio {
     /**
-     * @var int
-     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    private int $id;
 
     /**
-     * @var int
-     *
      * @ORM\Column(name="BI_ID", type="integer", nullable=false)
      */
-    private $orlandoId;
+    private int $orlandoId;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="WORKFORM", type="string", length=24, nullable=true)
      */
-    private $workform;
+    private ?string  $workform = null;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="AUTHOR", type="text", nullable=true)
      */
-    private $author;
+    private ?string  $author = null;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="EDITOR", type="text", nullable=true)
      */
-    private $editor;
+    private ?string $editor = null;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="INTRODUCTION", type="text", nullable=true)
      */
-    private $introduction;
+    private ?string  $introduction = null;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="TRANSLATOR", type="text", nullable=true)
      */
-    private $translator;
+    private ?string  $translator = null;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="ILLUSTRATOR", type="text", nullable=true)
      */
-    private $illustrator;
+    private ?string  $illustrator = null;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="COMPILER", type="text", nullable=true)
      */
-    private $compiler;
+    private ?string  $compiler = null;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="ANALYTIC_STANDARD_TITLE", type="string", length=200, nullable=true)
      */
-    private $analyticStandardTitle;
+    private ?string $analyticStandardTitle = null;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="ANALYTIC_ALTERNATE_TITLE", type="string", length=240, nullable=true)
      */
-    private $analyticAlternateTitle;
+    private ?string $analyticAlternateTitle = null;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="MONOGRAPHIC_STANDARD_TITLE", type="string", length=240, nullable=true)
      */
-    private $monographicStandardTitle;
+    private ?string $monographicStandardTitle = null;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="MONOGRAPHIC_ALTERNATE_TITLE", type="string", length=240, nullable=true)
      */
-    private $monographicAlternateTitle;
+    private ?string  $monographicAlternateTitle = null;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="IMPRINT_DATE_OF_PUBLICATION", type="string", length=30, nullable=true)
      */
-    private $imprintDateOfPublication;
+    private ?string  $imprintDateOfPublication = null;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="IMPRINT_DATE_OF_ORIGINAL_PUBLICATION", type="string", length=30, nullable=true)
      */
-    private $imprintDateOfOriginalPublication;
+    private ?string $imprintDateOfOriginalPublication = null;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="IMPRINT_PUBLISHER", type="string", length=200, nullable=true)
      */
-    private $imprintPublisher;
+    private ?string $imprintPublisher = null;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="IMPRINT_PLACE_OF_PUBLICATION", type="string", length=100, nullable=true)
      */
-    private $imprintPlaceOfPublication;
+    private ?string  $imprintPlaceOfPublication = null;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="IMPRINT_COVER_TITLE", type="text", nullable=true)
      */
-    private $imprintCoverTitle;
+    private ?string  $imprintCoverTitle = null;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="IMPRINT_EDITION", type="string", length=50, nullable=true)
      */
-    private $imprintEdition;
+    private ?string  $imprintEdition = null;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="IMPRINT_DATE_OF_ACCESS", type="string", length=20, nullable=true)
      */
-    private $imprintDateOfAccess;
+    private ?string  $imprintDateOfAccess = null;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="SERIES_STANDARD_TITLE", type="string", length=1000, nullable=true)
      */
-    private $seriesStandardTitle;
+    private ?string $seriesStandardTitle = null;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="SERIES_ALTERNATE_TITLE", type="string", length=200, nullable=true)
      */
-    private $seriesAlternateTitle;
+    private ?string  $seriesAlternateTitle = null;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="SERIES_VOLUME_ID", type="string", length=50, nullable=true)
      */
-    private $seriesVolumeId;
+    private ?string  $seriesVolumeId = null;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="SCOPE_MEDIUM", type="string", length=50, nullable=true)
      */
-    private $scopeMedium;
+    private ?string  $scopeMedium = null;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="SCOPE_ISSUE_ID", type="string", length=10, nullable=true)
      */
-    private $scopeIssueId;
+    private ?string  $scopeIssueId = null;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="SCOPE_PAGES", type="string", length=50, nullable=true)
      */
-    private $scopePages;
+    private ?string  $scopePages = null;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="SCOPE_VOLUME_COUNT", type="string", length=50, nullable=true)
      */
-    private $scopeVolumeCount;
+    private ?string  $scopeVolumeCount = null;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="LOCATION_URN", type="string", length=200, nullable=true)
      */
-    private $locationUrn;
+    private ?string $locationUrn = null;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="LOCATION_CALL_NO", type="string", length=200, nullable=true)
      */
-    private $locationCallNo;
+    private ?string  $locationCallNo = null;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="SCHOLARNOTES", type="text", nullable=true)
      */
-    private $scholarnotes;
+    private ?string  $scholarnotes = null;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="RESEARCHNOTES", type="text", nullable=true)
      */
-    private $researchnotes;
+    private ?string  $researchnotes = null;
 
     public function __toString() : string {
         return $this->analyticStandardTitle;
     }
 
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId() {
+    public function getId() : ?int {
         return $this->id;
     }
 
-    /**
-     * Set orlandoId.
-     *
-     * @param int $orlandoId
-     *
-     * @return OrlandoBiblio
-     */
-    public function setOrlandoId($orlandoId) {
+    public function getOrlandoId() : ?int {
+        return $this->orlandoId;
+    }
+
+    public function setOrlandoId(int $orlandoId) : self {
         $this->orlandoId = $orlandoId;
 
         return $this;
     }
 
-    /**
-     * Get orlandoId.
-     *
-     * @return int
-     */
-    public function getOrlandoId() {
-        return $this->orlandoId;
+    public function getWorkform() : ?string {
+        return $this->workform;
     }
 
-    /**
-     * Set workform.
-     *
-     * @param string $workform
-     *
-     * @return OrlandoBiblio
-     */
-    public function setWorkform($workform) {
+    public function setWorkform(?string $workform) : self {
         $this->workform = $workform;
 
         return $this;
     }
 
-    /**
-     * Get workform.
-     *
-     * @return string
-     */
-    public function getWorkform() {
-        return $this->workform;
+    public function getAuthor() : ?string {
+        return $this->author;
     }
 
-    /**
-     * Set author.
-     *
-     * @param string $author
-     *
-     * @return OrlandoBiblio
-     */
-    public function setAuthor($author) {
+    public function setAuthor(?string $author) : self {
         $this->author = $author;
 
         return $this;
     }
 
-    /**
-     * Get author.
-     *
-     * @return string
-     */
-    public function getAuthor() {
-        return $this->author;
+    public function getEditor() : ?string {
+        return $this->editor;
     }
 
-    /**
-     * Set editor.
-     *
-     * @param string $editor
-     *
-     * @return OrlandoBiblio
-     */
-    public function setEditor($editor) {
+    public function setEditor(?string $editor) : self {
         $this->editor = $editor;
 
         return $this;
     }
 
-    /**
-     * Get editor.
-     *
-     * @return string
-     */
-    public function getEditor() {
-        return $this->editor;
+    public function getIntroduction() : ?string {
+        return $this->introduction;
     }
 
-    /**
-     * Set introduction.
-     *
-     * @param string $introduction
-     *
-     * @return OrlandoBiblio
-     */
-    public function setIntroduction($introduction) {
+    public function setIntroduction(?string $introduction) : self {
         $this->introduction = $introduction;
 
         return $this;
     }
 
-    /**
-     * Get introduction.
-     *
-     * @return string
-     */
-    public function getIntroduction() {
-        return $this->introduction;
+    public function getTranslator() : ?string {
+        return $this->translator;
     }
 
-    /**
-     * Set translator.
-     *
-     * @param string $translator
-     *
-     * @return OrlandoBiblio
-     */
-    public function setTranslator($translator) {
+    public function setTranslator(?string $translator) : self {
         $this->translator = $translator;
 
         return $this;
     }
 
-    /**
-     * Get translator.
-     *
-     * @return string
-     */
-    public function getTranslator() {
-        return $this->translator;
+    public function getIllustrator() : ?string {
+        return $this->illustrator;
     }
 
-    /**
-     * Set illustrator.
-     *
-     * @param string $illustrator
-     *
-     * @return OrlandoBiblio
-     */
-    public function setIllustrator($illustrator) {
+    public function setIllustrator(?string $illustrator) : self {
         $this->illustrator = $illustrator;
 
         return $this;
     }
 
-    /**
-     * Get illustrator.
-     *
-     * @return string
-     */
-    public function getIllustrator() {
-        return $this->illustrator;
+    public function getCompiler() : ?string {
+        return $this->compiler;
     }
 
-    /**
-     * Set compiler.
-     *
-     * @param string $compiler
-     *
-     * @return OrlandoBiblio
-     */
-    public function setCompiler($compiler) {
+    public function setCompiler(?string $compiler) : self {
         $this->compiler = $compiler;
 
         return $this;
     }
 
-    /**
-     * Get compiler.
-     *
-     * @return string
-     */
-    public function getCompiler() {
-        return $this->compiler;
+    public function getAnalyticStandardTitle() : ?string {
+        return $this->analyticStandardTitle;
     }
 
-    /**
-     * Set analyticStandardTitle.
-     *
-     * @param string $analyticStandardTitle
-     *
-     * @return OrlandoBiblio
-     */
-    public function setAnalyticStandardTitle($analyticStandardTitle) {
+    public function setAnalyticStandardTitle(?string $analyticStandardTitle) : self {
         $this->analyticStandardTitle = $analyticStandardTitle;
 
         return $this;
     }
 
-    /**
-     * Get analyticStandardTitle.
-     *
-     * @return string
-     */
-    public function getAnalyticStandardTitle() {
-        return $this->analyticStandardTitle;
+    public function getAnalyticAlternateTitle() : ?string {
+        return $this->analyticAlternateTitle;
     }
 
-    /**
-     * Set analyticAlternateTitle.
-     *
-     * @param string $analyticAlternateTitle
-     *
-     * @return OrlandoBiblio
-     */
-    public function setAnalyticAlternateTitle($analyticAlternateTitle) {
+    public function setAnalyticAlternateTitle(?string $analyticAlternateTitle) : self {
         $this->analyticAlternateTitle = $analyticAlternateTitle;
 
         return $this;
     }
 
-    /**
-     * Get analyticAlternateTitle.
-     *
-     * @return string
-     */
-    public function getAnalyticAlternateTitle() {
-        return $this->analyticAlternateTitle;
+    public function getMonographicStandardTitle() : ?string {
+        return $this->monographicStandardTitle;
     }
 
-    /**
-     * Set monographicStandardTitle.
-     *
-     * @param string $monographicStandardTitle
-     *
-     * @return OrlandoBiblio
-     */
-    public function setMonographicStandardTitle($monographicStandardTitle) {
+    public function setMonographicStandardTitle(?string $monographicStandardTitle) : self {
         $this->monographicStandardTitle = $monographicStandardTitle;
 
         return $this;
     }
 
-    /**
-     * Get monographicStandardTitle.
-     *
-     * @return string
-     */
-    public function getMonographicStandardTitle() {
-        return $this->monographicStandardTitle;
+    public function getMonographicAlternateTitle() : ?string {
+        return $this->monographicAlternateTitle;
     }
 
-    /**
-     * Set monographicAlternateTitle.
-     *
-     * @param string $monographicAlternateTitle
-     *
-     * @return OrlandoBiblio
-     */
-    public function setMonographicAlternateTitle($monographicAlternateTitle) {
+    public function setMonographicAlternateTitle(?string $monographicAlternateTitle) : self {
         $this->monographicAlternateTitle = $monographicAlternateTitle;
 
         return $this;
     }
 
-    /**
-     * Get monographicAlternateTitle.
-     *
-     * @return string
-     */
-    public function getMonographicAlternateTitle() {
-        return $this->monographicAlternateTitle;
+    public function getImprintDateOfPublication() : ?string {
+        return $this->imprintDateOfPublication;
     }
 
-    /**
-     * Set imprintDateOfPublication.
-     *
-     * @param string $imprintDateOfPublication
-     *
-     * @return OrlandoBiblio
-     */
-    public function setImprintDateOfPublication($imprintDateOfPublication) {
+    public function setImprintDateOfPublication(?string $imprintDateOfPublication) : self {
         $this->imprintDateOfPublication = $imprintDateOfPublication;
 
         return $this;
     }
 
-    /**
-     * Get imprintDateOfPublication.
-     *
-     * @return string
-     */
-    public function getImprintDateOfPublication() {
-        return $this->imprintDateOfPublication;
+    public function getImprintDateOfOriginalPublication() : ?string {
+        return $this->imprintDateOfOriginalPublication;
     }
 
-    /**
-     * Set imprintDateOfOriginalPublication.
-     *
-     * @param string $imprintDateOfOriginalPublication
-     *
-     * @return OrlandoBiblio
-     */
-    public function setImprintDateOfOriginalPublication($imprintDateOfOriginalPublication) {
+    public function setImprintDateOfOriginalPublication(?string $imprintDateOfOriginalPublication) : self {
         $this->imprintDateOfOriginalPublication = $imprintDateOfOriginalPublication;
 
         return $this;
     }
 
-    /**
-     * Get imprintDateOfOriginalPublication.
-     *
-     * @return string
-     */
-    public function getImprintDateOfOriginalPublication() {
-        return $this->imprintDateOfOriginalPublication;
+    public function getImprintPublisher() : ?string {
+        return $this->imprintPublisher;
     }
 
-    /**
-     * Set imprintPublisher.
-     *
-     * @param string $imprintPublisher
-     *
-     * @return OrlandoBiblio
-     */
-    public function setImprintPublisher($imprintPublisher) {
+    public function setImprintPublisher(?string $imprintPublisher) : self {
         $this->imprintPublisher = $imprintPublisher;
 
         return $this;
     }
 
-    /**
-     * Get imprintPublisher.
-     *
-     * @return string
-     */
-    public function getImprintPublisher() {
-        return $this->imprintPublisher;
+    public function getImprintPlaceOfPublication() : ?string {
+        return $this->imprintPlaceOfPublication;
     }
 
-    /**
-     * Set imprintPlaceOfPublication.
-     *
-     * @param string $imprintPlaceOfPublication
-     *
-     * @return OrlandoBiblio
-     */
-    public function setImprintPlaceOfPublication($imprintPlaceOfPublication) {
+    public function setImprintPlaceOfPublication(?string $imprintPlaceOfPublication) : self {
         $this->imprintPlaceOfPublication = $imprintPlaceOfPublication;
 
         return $this;
     }
 
-    /**
-     * Get imprintPlaceOfPublication.
-     *
-     * @return string
-     */
-    public function getImprintPlaceOfPublication() {
-        return $this->imprintPlaceOfPublication;
+    public function getImprintCoverTitle() : ?string {
+        return $this->imprintCoverTitle;
     }
 
-    /**
-     * Set imprintCoverTitle.
-     *
-     * @param string $imprintCoverTitle
-     *
-     * @return OrlandoBiblio
-     */
-    public function setImprintCoverTitle($imprintCoverTitle) {
+    public function setImprintCoverTitle(?string $imprintCoverTitle) : self {
         $this->imprintCoverTitle = $imprintCoverTitle;
 
         return $this;
     }
 
-    /**
-     * Get imprintCoverTitle.
-     *
-     * @return string
-     */
-    public function getImprintCoverTitle() {
-        return $this->imprintCoverTitle;
+    public function getImprintEdition() : ?string {
+        return $this->imprintEdition;
     }
 
-    /**
-     * Set imprintEdition.
-     *
-     * @param string $imprintEdition
-     *
-     * @return OrlandoBiblio
-     */
-    public function setImprintEdition($imprintEdition) {
+    public function setImprintEdition(?string $imprintEdition) : self {
         $this->imprintEdition = $imprintEdition;
 
         return $this;
     }
 
-    /**
-     * Get imprintEdition.
-     *
-     * @return string
-     */
-    public function getImprintEdition() {
-        return $this->imprintEdition;
+    public function getImprintDateOfAccess() : ?string {
+        return $this->imprintDateOfAccess;
     }
 
-    /**
-     * Set imprintDateOfAccess.
-     *
-     * @param string $imprintDateOfAccess
-     *
-     * @return OrlandoBiblio
-     */
-    public function setImprintDateOfAccess($imprintDateOfAccess) {
+    public function setImprintDateOfAccess(?string $imprintDateOfAccess) : self {
         $this->imprintDateOfAccess = $imprintDateOfAccess;
 
         return $this;
     }
 
-    /**
-     * Get imprintDateOfAccess.
-     *
-     * @return string
-     */
-    public function getImprintDateOfAccess() {
-        return $this->imprintDateOfAccess;
+    public function getSeriesStandardTitle() : ?string {
+        return $this->seriesStandardTitle;
     }
 
-    /**
-     * Set seriesStandardTitle.
-     *
-     * @param string $seriesStandardTitle
-     *
-     * @return OrlandoBiblio
-     */
-    public function setSeriesStandardTitle($seriesStandardTitle) {
+    public function setSeriesStandardTitle(?string $seriesStandardTitle) : self {
         $this->seriesStandardTitle = $seriesStandardTitle;
 
         return $this;
     }
 
-    /**
-     * Get seriesStandardTitle.
-     *
-     * @return string
-     */
-    public function getSeriesStandardTitle() {
-        return $this->seriesStandardTitle;
+    public function getSeriesAlternateTitle() : ?string {
+        return $this->seriesAlternateTitle;
     }
 
-    /**
-     * Set seriesAlternateTitle.
-     *
-     * @param string $seriesAlternateTitle
-     *
-     * @return OrlandoBiblio
-     */
-    public function setSeriesAlternateTitle($seriesAlternateTitle) {
+    public function setSeriesAlternateTitle(?string $seriesAlternateTitle) : self {
         $this->seriesAlternateTitle = $seriesAlternateTitle;
 
         return $this;
     }
 
-    /**
-     * Get seriesAlternateTitle.
-     *
-     * @return string
-     */
-    public function getSeriesAlternateTitle() {
-        return $this->seriesAlternateTitle;
+    public function getSeriesVolumeId() : ?string {
+        return $this->seriesVolumeId;
     }
 
-    /**
-     * Set seriesVolumeId.
-     *
-     * @param string $seriesVolumeId
-     *
-     * @return OrlandoBiblio
-     */
-    public function setSeriesVolumeId($seriesVolumeId) {
+    public function setSeriesVolumeId(?string $seriesVolumeId) : self {
         $this->seriesVolumeId = $seriesVolumeId;
 
         return $this;
     }
 
-    /**
-     * Get seriesVolumeId.
-     *
-     * @return string
-     */
-    public function getSeriesVolumeId() {
-        return $this->seriesVolumeId;
+    public function getScopeMedium() : ?string {
+        return $this->scopeMedium;
     }
 
-    /**
-     * Set scopeMedium.
-     *
-     * @param string $scopeMedium
-     *
-     * @return OrlandoBiblio
-     */
-    public function setScopeMedium($scopeMedium) {
+    public function setScopeMedium(?string $scopeMedium) : self {
         $this->scopeMedium = $scopeMedium;
 
         return $this;
     }
 
-    /**
-     * Get scopeMedium.
-     *
-     * @return string
-     */
-    public function getScopeMedium() {
-        return $this->scopeMedium;
+    public function getScopeIssueId() : ?string {
+        return $this->scopeIssueId;
     }
 
-    /**
-     * Set scopeIssueId.
-     *
-     * @param string $scopeIssueId
-     *
-     * @return OrlandoBiblio
-     */
-    public function setScopeIssueId($scopeIssueId) {
+    public function setScopeIssueId(?string $scopeIssueId) : self {
         $this->scopeIssueId = $scopeIssueId;
 
         return $this;
     }
 
-    /**
-     * Get scopeIssueId.
-     *
-     * @return string
-     */
-    public function getScopeIssueId() {
-        return $this->scopeIssueId;
+    public function getScopePages() : ?string {
+        return $this->scopePages;
     }
 
-    /**
-     * Set scopePages.
-     *
-     * @param string $scopePages
-     *
-     * @return OrlandoBiblio
-     */
-    public function setScopePages($scopePages) {
+    public function setScopePages(?string $scopePages) : self {
         $this->scopePages = $scopePages;
 
         return $this;
     }
 
-    /**
-     * Get scopePages.
-     *
-     * @return string
-     */
-    public function getScopePages() {
-        return $this->scopePages;
+    public function getScopeVolumeCount() : ?string {
+        return $this->scopeVolumeCount;
     }
 
-    /**
-     * Set scopeVolumeCount.
-     *
-     * @param string $scopeVolumeCount
-     *
-     * @return OrlandoBiblio
-     */
-    public function setScopeVolumeCount($scopeVolumeCount) {
+    public function setScopeVolumeCount(?string $scopeVolumeCount) : self {
         $this->scopeVolumeCount = $scopeVolumeCount;
 
         return $this;
     }
 
-    /**
-     * Get scopeVolumeCount.
-     *
-     * @return string
-     */
-    public function getScopeVolumeCount() {
-        return $this->scopeVolumeCount;
+    public function getLocationUrn() : ?string {
+        return $this->locationUrn;
     }
 
-    /**
-     * Set locationUrn.
-     *
-     * @param string $locationUrn
-     *
-     * @return OrlandoBiblio
-     */
-    public function setLocationUrn($locationUrn) {
+    public function setLocationUrn(?string $locationUrn) : self {
         $this->locationUrn = $locationUrn;
 
         return $this;
     }
 
-    /**
-     * Get locationUrn.
-     *
-     * @return string
-     */
-    public function getLocationUrn() {
-        return $this->locationUrn;
+    public function getLocationCallNo() : ?string {
+        return $this->locationCallNo;
     }
 
-    /**
-     * Set locationCallNo.
-     *
-     * @param string $locationCallNo
-     *
-     * @return OrlandoBiblio
-     */
-    public function setLocationCallNo($locationCallNo) {
+    public function setLocationCallNo(?string $locationCallNo) : self {
         $this->locationCallNo = $locationCallNo;
 
         return $this;
     }
 
-    /**
-     * Get locationCallNo.
-     *
-     * @return string
-     */
-    public function getLocationCallNo() {
-        return $this->locationCallNo;
+    public function getScholarnotes() : ?string {
+        return $this->scholarnotes;
     }
 
-    /**
-     * Set scholarnotes.
-     *
-     * @param string $scholarnotes
-     *
-     * @return OrlandoBiblio
-     */
-    public function setScholarnotes($scholarnotes) {
+    public function setScholarnotes(?string $scholarnotes) : self {
         $this->scholarnotes = $scholarnotes;
 
         return $this;
     }
 
-    /**
-     * Get scholarnotes.
-     *
-     * @return string
-     */
-    public function getScholarnotes() {
-        return $this->scholarnotes;
+    public function getResearchnotes() : ?string {
+        return $this->researchnotes;
     }
 
-    /**
-     * Set researchnotes.
-     *
-     * @param string $researchnotes
-     *
-     * @return OrlandoBiblio
-     */
-    public function setResearchnotes($researchnotes) {
+    public function setResearchnotes(?string $researchnotes) : self {
         $this->researchnotes = $researchnotes;
 
         return $this;
-    }
-
-    /**
-     * Get researchnotes.
-     *
-     * @return string
-     */
-    public function getResearchnotes() {
-        return $this->researchnotes;
     }
 }

@@ -34,8 +34,8 @@ class EnControllerTest extends ControllerBaseCase {
     }
 
     /**
-     * @group user
      * @group index
+     * @group user
      */
     public function testUserIndex() : void {
         $this->login('user.user');
@@ -66,8 +66,8 @@ class EnControllerTest extends ControllerBaseCase {
     }
 
     /**
-     * @group user
      * @group show
+     * @group user
      */
     public function testUserShow() : void {
         $this->login('user.user');

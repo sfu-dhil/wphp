@@ -27,34 +27,29 @@ class Currency extends AbstractEntity {
      * @see https://en.wikipedia.org/wiki/ISO_4217
      * @see https://www.iso.org/iso-4217-currency-codes.html
      *
-     * @var string
      * @ORM\Column(type="string", length=3, nullable=true)
      */
-    private $code;
+    private ?string  $code = null;
 
     /**
-     * @var string
      * @ORM\Column(type="string", length=64, nullable=false)
      */
-    private $name;
+    private string $name;
 
     /**
-     * @var string
      * @ORM\Column(type="string", length=4, nullable=true)
      */
-    private $symbol;
+    private ?string  $symbol = null;
 
     /**
-     * @var string
      * @ORM\Column(type="text", nullable=true)
      */
-    private $description;
+    private ?string $description = null;
 
     /**
-     * @var Collection
      * @ORM\OneToMany(targetEntity="App\Entity\Title", mappedBy="otherCurrency")
      */
-    private $titles;
+    private Collection $titles;
 
     public function __construct() {
         parent::__construct();
@@ -139,8 +134,7 @@ class Currency extends AbstractEntity {
     }
 
     public function removeTitle(Title $title) : self {
-        if ($this->titles->contains($title)) {
-            $this->titles->removeElement($title);
+        if ($this->titles->removeElement($title)) {
             // set the owning side to null (unless already changed)
             if ($title->getOtherCurrency() === $this) {
                 $title->setOtherCurrency(null);

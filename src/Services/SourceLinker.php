@@ -24,20 +24,11 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  * Construct links to various sources.
  */
 class SourceLinker {
-    /**
-     * @var EntityManagerInterface
-     */
-    private $em;
+    private EntityManagerInterface $em;
 
-    /**
-     * @var UrlGeneratorInterface
-     */
-    private $generator;
+    private UrlGeneratorInterface $generator;
 
-    /**
-     * @var RoleChecker
-     */
-    private $checker;
+    private RoleChecker $checker;
 
     /**
      * SourceLinker constructor.
@@ -58,12 +49,8 @@ class SourceLinker {
     /**
      * Generate an ESTC link. The link will be internal if the user is logged in or to the ESTC website
      * otherwise.
-     *
-     * @param string $data
-     *
-     * @return null|string
      */
-    public function estc($data) {
+    public function estc(string $data) : ?string {
         if ( ! $this->checker->hasRole('ROLE_USER')) {
             return 'http://estc.bl.uk/' . $data;
         }
@@ -78,17 +65,15 @@ class SourceLinker {
                 'id' => $record->getTitleId(),
             ]);
         }
+
+        return null;
     }
 
     /**
      * Generate an AAS link. The link will be internal if the user is logged in or to the AAS website
      * otherwise.
-     *
-     * @param string $data
-     *
-     * @return null|string
      */
-    public function aas($data) {
+    public function aas(string $data) : ?string {
         if ( ! $this->checker->hasRole('ROLE_USER')) {
             return 'https://catalog.mwa.org/vwebv/holdingsInfo?bibId=' . $data;
         }
@@ -102,19 +87,17 @@ class SourceLinker {
                 'id' => $record->getTitleId(),
             ]);
         }
+
+        return null;
     }
 
     /**
      * Generate an Orlando link. The link will be internal if the user is logged in or to the Orlando website
      * otherwise.
-     *
-     * @param string $data
-     *
-     * @return null|string
      */
-    public function orlando($data) {
+    public function orlando(string $data) : ?string {
         if ( ! $this->checker->hasRole('ROLE_USER')) {
-            return;
+            return null;
         }
         $repo = $this->em->getRepository(OrlandoBiblio::class);
         $record = $repo->findOneBy([
@@ -125,16 +108,14 @@ class SourceLinker {
                 'id' => $record->getId(),
             ]);
         }
+
+        return null;
     }
 
     /**
      * Generate a Jackson link. The link will be internal if the user is logged in or null otherwise.
-     *
-     * @param string $data
-     *
-     * @return null|string
      */
-    public function jackson($data) {
+    public function jackson(string $data) : ?string {
         if ($this->checker->hasRole('ROLE_USER')) {
             $repo = $this->em->getRepository(Jackson::class);
             $record = $repo->findOneBy(['jbid' => $data]);
@@ -148,14 +129,10 @@ class SourceLinker {
 
     /**
      * Generate a English Novel link. The link will be internal if the user is logged in or null otherwise.
-     *
-     * @param string $data
-     *
-     * @return null|string
      */
-    public function en($data) {
+    public function en(string $data) : ?string {
         if ( ! $this->checker->hasRole('ROLE_USER')) {
-            return;
+            return null;
         }
         $repo = $this->em->getRepository(En::class);
         $record = $repo->findOneBy([
@@ -166,18 +143,16 @@ class SourceLinker {
                 'id' => $record->getId(),
             ]);
         }
+
+        return null;
     }
 
     /**
      * Generate an Osborne link. The link will be internal if the user is logged in or null otherwise.
-     *
-     * @param string $data
-     *
-     * @return null|string
      */
-    public function osborne($data) {
+    public function osborne(string $data) : ?string {
         if ( ! $this->checker->hasRole('ROLE_USER')) {
-            return;
+            return null;
         }
         $repo = $this->em->getRepository(OsborneMarc::class);
         $record = $repo->findOneBy([
@@ -189,16 +164,14 @@ class SourceLinker {
                 'id' => $record->getTitleId(),
             ]);
         }
+
+        return null;
     }
 
     /**
      * Generate a link to the ECCO website for all users.
-     *
-     * @param string $data
-     *
-     * @return string
      */
-    public function ecco($data) {
+    public function ecco(string $data) : string {
         // No role checking for this one.
         $id = substr_replace($data, '0', 2, 0);
 
@@ -207,12 +180,8 @@ class SourceLinker {
 
     /**
      * If the data matches https? it will be returned as is. Otherwise generate a URL based on the source.
-     *
-     * @param string $data
-     *
-     * @return null|string
      */
-    public function url(Source $source, $data) {
+    public function url(Source $source, string $data) : ?string {
         if (preg_match('/https?:/', $data)) {
             return $data;
         }
@@ -241,7 +210,7 @@ class SourceLinker {
                 return $this->aas($data);
 
             default:
-                return;
+                return null;
         }
     }
 }

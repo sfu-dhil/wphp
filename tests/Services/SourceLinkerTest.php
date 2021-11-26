@@ -21,10 +21,7 @@ use App\Services\SourceLinker;
 use Nines\UtilBundle\Tests\ControllerBaseCase;
 
 class SourceLinkerTest extends ControllerBaseCase {
-    /**
-     * @var SourceLinker
-     */
-    private $linker;
+    private SourceLinker $linker;
 
     private $checker;
 

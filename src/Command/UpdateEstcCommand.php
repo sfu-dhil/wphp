@@ -27,15 +27,9 @@ class UpdateEstcCommand extends Command {
 
     public const ESTC_ID = 2;
 
-    /**
-     * @var EntityManagerInterface
-     */
-    private $em;
+    private EntityManagerInterface $em;
 
-    /**
-     * @var MarcManager
-     */
-    private $manager;
+    private MarcManager $manager;
 
     /**
      * UpdateEstcCommand constructor.

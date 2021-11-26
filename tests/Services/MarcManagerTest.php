@@ -76,7 +76,7 @@ class MarcManagerTest extends ControllerBaseCase {
 
     public function testGetEstcFieldName() : void {
         $field = new EstcMarc();
-        $field->setField(100);
+        $field->setField('100');
         $name = $this->manager->getFieldName($field);
         $this->assertSame('Tag 0', $name);
     }
@@ -90,14 +90,14 @@ class MarcManagerTest extends ControllerBaseCase {
 
     public function testGetOsborneFieldName() : void {
         $field = new OsborneMarc();
-        $field->setField(100);
+        $field->setField('100');
         $name = $this->manager->getFieldName($field);
         $this->assertSame('Tag 0', $name);
     }
 
     public function testGetUnknownEstcSubfieldName() : void {
         $field = new EstcMarc();
-        $field->setField(100);
+        $field->setField('100');
         $field->setSubfield('z');
         $name = $this->manager->getFieldName($field);
         $this->assertSame('100z', $name);
@@ -105,7 +105,7 @@ class MarcManagerTest extends ControllerBaseCase {
 
     public function testGetEstcSubfieldName() : void {
         $field = new EstcMarc();
-        $field->setField(100);
+        $field->setField('100');
         $field->setSubfield('a');
         $name = $this->manager->getFieldName($field);
         $this->assertSame('Field 100a', $name);
@@ -113,7 +113,7 @@ class MarcManagerTest extends ControllerBaseCase {
 
     public function testGetUnknownOsborneSubfieldName() : void {
         $field = new OsborneMarc();
-        $field->setField(100);
+        $field->setField('100');
         $field->setSubfield('z');
         $name = $this->manager->getFieldName($field);
         $this->assertSame('100z', $name);
@@ -121,7 +121,7 @@ class MarcManagerTest extends ControllerBaseCase {
 
     public function testGetOsborneSubfieldName() : void {
         $field = new OsborneMarc();
-        $field->setField(100);
+        $field->setField('100');
         $field->setSubfield('a');
         $name = $this->manager->getFieldName($field);
         $this->assertSame('Field 100a', $name);

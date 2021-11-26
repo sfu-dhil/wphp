@@ -34,14 +34,13 @@ class AasMarcController extends AbstractController implements PaginatorAwareInte
     /**
      * Lists all AasMarc entities.
      *
-     * @return array
-     *
      * @Route("/", name="resource_aas_index", methods={"GET"})
      * @Template
      */
-    public function indexAction(Request $request, MarcManager $manager, AasMarcRepository $repo) {
+    public function indexAction(Request $request, MarcManager $manager, AasMarcRepository $repo) : array {
+        $pageSize = $this->getParameter('page_size');
         $query = $repo->indexQuery();
-        $aasMarcs = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
+        $aasMarcs = $this->paginator->paginate($query, $request->query->getInt('page', 1), $pageSize);
 
         return [
             'aasMarcs' => $aasMarcs,
@@ -52,15 +51,15 @@ class AasMarcController extends AbstractController implements PaginatorAwareInte
     /**
      * Search for AasMarc entities.
      *
-     * @return array
      * @Route("/search", name="resource_aas_search", methods={"GET"})
      * @Template
      */
-    public function searchAction(Request $request, MarcManager $manager, AasMarcRepository $repo) {
+    public function searchAction(Request $request, MarcManager $manager, AasMarcRepository $repo) : array {
+        $pageSize = $this->getParameter('page_size');
         $q = $request->query->get('q');
         if ($q) {
             $result = $repo->searchQuery($q);
-            $titleIds = $this->paginator->paginate($result, $request->query->getInt('page', 1), 25);
+            $titleIds = $this->paginator->paginate($result, $request->query->getInt('page', 1), $pageSize);
         } else {
             $titleIds = [];
         }
@@ -84,15 +83,15 @@ class AasMarcController extends AbstractController implements PaginatorAwareInte
     /**
      * Search for AasMarc entities.
      *
-     * @return array
      * @Route("/imprint_search", name="resource_aas_search_imprint", methods={"GET"})
      * @Template
      */
-    public function imprintSearchAction(Request $request, MarcManager $manager, AasMarcRepository $repo) {
+    public function imprintSearchAction(Request $request, MarcManager $manager, AasMarcRepository $repo) : array {
+        $pageSize = $this->getParameter('page_size');
         $q = $request->query->get('q');
         if ($q) {
             $result = $repo->imprintSearchQuery($q);
-            $titleIds = $this->paginator->paginate($result, $request->query->getInt('page', 1), 25);
+            $titleIds = $this->paginator->paginate($result, $request->query->getInt('page', 1), $pageSize);
         } else {
             $titleIds = [];
         }
@@ -116,13 +115,11 @@ class AasMarcController extends AbstractController implements PaginatorAwareInte
     /**
      * Finds and displays a AasMarc entity.
      *
-     * @return array
-     *
      * @Route("/{id}", name="resource_aas_show", methods={"GET"})
-     * @ParamConverter("aasMarc", options={"mapping": {"id": "titleId"}})
+     * @ParamConverter("aasMarc", options={"mapping" = {"id" = "titleId"}})
      * @Template
      */
-    public function showAction(AasMarc $aasMarc, MarcManager $manager) {
+    public function showAction(AasMarc $aasMarc, MarcManager $manager) : array {
         return [
             'aasMarc' => $aasMarc,
             'manager' => $manager,

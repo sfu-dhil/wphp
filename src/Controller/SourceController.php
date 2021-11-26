@@ -11,7 +11,6 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Entity\Source;
-use App\Entity\TitleSource;
 use App\Form\SourceType;
 use App\Repository\SourceRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -38,27 +37,16 @@ class SourceController extends AbstractController implements PaginatorAwareInter
      *
      * @Route("/", name="source_index", methods={"GET"})
      * @Template
-     *
-     * @return array
      */
-    public function indexAction(Request $request, EntityManagerInterface $em, SourceRepository $repo) {
-        $qb = $em->createQueryBuilder();
-        $qb->select('IDENTITY(ts.source) as srcId, COUNT(DISTINCT(ts.title)) as cnt');
-        $qb->from(TitleSource::class, 'ts');
-        $qb->groupBy('ts.source');
-        $qb->orderBy('ts.source');
-        $counts = [];
-        foreach ($qb->getQuery()->getResult() as $result) {
-            $counts[$result['srcId']] = $result['cnt'];
-        }
-
-        $dql = 'SELECT e FROM App:Source e ORDER BY e.name';
-        $query = $em->createQuery($dql);
-        $sources = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
+    public function indexAction(Request $request, EntityManagerInterface $em, SourceRepository $repository) : array {
+        $pageSize = $this->getParameter('page_size');
+        $counts = $repository->countTitles();
+        $query = $repository->indexQuery();
+        $sources = $this->paginator->paginate($query, $request->query->getInt('page', 1), $pageSize);
 
         return [
             'sources' => $sources,
-            'repo' => $repo,
+            'repo' => $repository,
             'counts' => $counts,
         ];
     }
@@ -66,11 +54,10 @@ class SourceController extends AbstractController implements PaginatorAwareInter
     /**
      * Typeahead action for editor widgets.
      *
-     * @return JsonResponse
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
      * @Route("/typeahead", name="source_typeahead", methods={"GET"})
      */
-    public function typeaheadAction(Request $request, SourceRepository $repo) {
+    public function typeaheadAction(Request $request, SourceRepository $repo) : JsonResponse {
         $q = $request->query->get('q');
         if ( ! $q) {
             return new JsonResponse([]);
@@ -121,14 +108,13 @@ class SourceController extends AbstractController implements PaginatorAwareInter
      *
      * @Route("/{id}", name="source_show", methods={"GET"})
      * @Template
-     *
-     * @return array
      */
-    public function showAction(Request $request, Source $source, EntityManagerInterface $em) {
+    public function showAction(Request $request, Source $source, EntityManagerInterface $em) : array {
+        $pageSize = $this->getParameter('page_size');
         $dql = 'SELECT t FROM App:Title t INNER JOIN t.titleSources ts WHERE ts.source = :source ORDER BY t.title';
         $query = $em->createQuery($dql);
         $query->setParameter('source', $source);
-        $titles = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
+        $titles = $this->paginator->paginate($query, $request->query->getInt('page', 1), $pageSize);
 
         return [
             'source' => $source,
@@ -167,10 +153,8 @@ class SourceController extends AbstractController implements PaginatorAwareInter
      *
      * @Route("/{id}/delete", name="source_delete", methods={"GET"})
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
-     *
-     * @return RedirectResponse
      */
-    public function deleteAction(Request $request, Source $source, EntityManagerInterface $em) {
+    public function deleteAction(Request $request, Source $source, EntityManagerInterface $em) : RedirectResponse {
         $em->remove($source);
         $em->flush();
         $this->addFlash('success', 'The source was deleted.');

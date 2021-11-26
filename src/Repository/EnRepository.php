@@ -26,12 +26,17 @@ class EnRepository extends ServiceEntityRepository {
         parent::__construct($registry, En::class);
     }
 
+    public function indexQuery() : Query {
+        $qb = $this->createQueryBuilder('e');
+        $qb->orderBy('e.id', 'ASC');
+
+        return $qb->getQuery();
+    }
+
     /**
-     * @param string $q
-     *
-     * @return Query
+     * @return En[]|Query
      */
-    public function searchQuery($q) {
+    public function searchQuery(string $q) {
         $qb = $this->createQueryBuilder('e');
         $qb->andWhere('MATCH (e.author, e.title) AGAINST (:q BOOLEAN) > 0');
         $qb->setParameter('q', $q);

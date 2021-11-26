@@ -40,8 +40,8 @@ class CurrencyTest extends ControllerBaseCase {
     }
 
     /**
-     * @group user
      * @group index
+     * @group user
      */
     public function testUserIndex() : void {
         $this->login('user.user');
@@ -72,8 +72,8 @@ class CurrencyTest extends ControllerBaseCase {
     }
 
     /**
-     * @group user
      * @group show
+     * @group user
      */
     public function testUserShow() : void {
         $this->login('user.user');
@@ -111,8 +111,8 @@ class CurrencyTest extends ControllerBaseCase {
     }
 
     /**
-     * @group user
      * @group typeahead
+     * @group user
      */
     public function testUserTypeahead() : void {
         $this->login('user.user');
@@ -206,8 +206,8 @@ class CurrencyTest extends ControllerBaseCase {
     }
 
     /**
-     * @group user
      * @group edit
+     * @group user
      */
     public function testUserEdit() : void {
         $this->login('user.user');
@@ -252,8 +252,8 @@ class CurrencyTest extends ControllerBaseCase {
     }
 
     /**
-     * @group user
      * @group new
+     * @group user
      */
     public function testUserNew() : void {
         $this->login('user.user');

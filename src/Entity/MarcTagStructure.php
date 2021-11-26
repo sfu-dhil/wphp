@@ -24,89 +24,62 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class MarcTagStructure {
     /**
-     * @var int
-     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    private int $id;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="tagfield", type="string", length=3)
      */
-    private $tagField;
+    private string $tagField;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="liblibrarian", type="string", length=255, nullable=false)
      */
-    private $name;
+    private string $name;
 
     /**
-     * @var bool
-     *
-     * @ORM\Column(name="hidden", type="integer", nullable=true)
+     * @ORM\Column(name="hidden", type="boolean", nullable=true)
      */
-    private $hidden;
+    private ?bool $hidden;
 
     public function __toString() : string {
         return $this->name;
     }
 
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId() {
+    public function getId() : ?int {
         return $this->id;
     }
 
-    /**
-     * Set tagField.
-     *
-     * @param string $tagField
-     *
-     * @return MarcTagStructure
-     */
-    public function setTagField($tagField) {
+    public function getTagField() : ?string {
+        return $this->tagField;
+    }
+
+    public function setTagField(string $tagField) : self {
         $this->tagField = $tagField;
 
         return $this;
     }
 
-    /**
-     * Get tagField.
-     *
-     * @return string
-     */
-    public function getTagField() {
-        return $this->tagField;
+    public function getName() : ?string {
+        return $this->name;
     }
 
-    /**
-     * Set name.
-     *
-     * @param string $name
-     *
-     * @return MarcTagStructure
-     */
-    public function setName($name) {
+    public function setName(string $name) : self {
         $this->name = $name;
 
         return $this;
     }
 
-    /**
-     * Get name.
-     *
-     * @return string
-     */
-    public function getName() {
-        return $this->name;
+    public function getHidden() : ?int {
+        return $this->hidden;
+    }
+
+    public function setHidden(?int $hidden) : self {
+        $this->hidden = $hidden;
+
+        return $this;
     }
 }

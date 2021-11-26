@@ -34,14 +34,13 @@ class EstcMarcController extends AbstractController implements PaginatorAwareInt
     /**
      * Lists all EstcMarc entities.
      *
-     * @return array
-     *
      * @Route("/", name="resource_estc_index", methods={"GET"})
      * @Template
      */
-    public function indexAction(Request $request, MarcManager $manager, EstcMarcRepository $repo) {
+    public function indexAction(Request $request, MarcManager $manager, EstcMarcRepository $repo) : array {
+        $pageSize = $this->getParameter('page_size');
         $query = $repo->indexQuery();
-        $estcMarcs = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
+        $estcMarcs = $this->paginator->paginate($query, $request->query->getInt('page', 1), $pageSize);
 
         return [
             'estcMarcs' => $estcMarcs,
@@ -52,15 +51,15 @@ class EstcMarcController extends AbstractController implements PaginatorAwareInt
     /**
      * Search for EstcMarc entities.
      *
-     * @return array
      * @Route("/search", name="resource_estc_search", methods={"GET"})
      * @Template
      */
-    public function searchAction(Request $request, MarcManager $manager, EstcMarcRepository $repo) {
+    public function searchAction(Request $request, MarcManager $manager, EstcMarcRepository $repo) : array {
+        $pageSize = $this->getParameter('page_size');
         $q = $request->query->get('q');
         if ($q) {
             $result = $repo->searchQuery($q);
-            $titleIds = $this->paginator->paginate($result, $request->query->getInt('page', 1), 25);
+            $titleIds = $this->paginator->paginate($result, $request->query->getInt('page', 1), $pageSize);
         } else {
             $titleIds = [];
         }
@@ -84,15 +83,15 @@ class EstcMarcController extends AbstractController implements PaginatorAwareInt
     /**
      * Search for EstcMarc entities.
      *
-     * @return array
      * @Route("/imprint_search", name="resource_estc_search_imprint", methods={"GET"})
      * @Template
      */
-    public function imprintSearchAction(Request $request, MarcManager $manager, EstcMarcRepository $repo) {
+    public function imprintSearchAction(Request $request, MarcManager $manager, EstcMarcRepository $repo) : array {
+        $pageSize = $this->getParameter('page_size');
         $q = $request->query->get('q');
         if ($q) {
             $result = $repo->imprintSearchQuery($q);
-            $titleIds = $this->paginator->paginate($result, $request->query->getInt('page', 1), 25);
+            $titleIds = $this->paginator->paginate($result, $request->query->getInt('page', 1), $pageSize);
         } else {
             $titleIds = [];
         }
@@ -116,13 +115,11 @@ class EstcMarcController extends AbstractController implements PaginatorAwareInt
     /**
      * Finds and displays a EstcMarc entity.
      *
-     * @return array
-     *
      * @Route("/{id}", name="resource_estc_show", methods={"GET"})
-     * @ParamConverter("estcMarc", options={"mapping": {"id": "titleId"}})
+     * @ParamConverter("estcMarc", options={"mapping" = {"id" = "titleId"}})
      * @Template
      */
-    public function showAction(EstcMarc $estcMarc, MarcManager $manager) {
+    public function showAction(EstcMarc $estcMarc, MarcManager $manager) : array {
         return [
             'estcMarc' => $estcMarc,
             'manager' => $manager,

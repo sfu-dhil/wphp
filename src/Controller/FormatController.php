@@ -37,13 +37,11 @@ class FormatController extends AbstractController implements PaginatorAwareInter
      *
      * @Route("/", name="format_index", methods={"GET"})
      * @Template
-     *
-     * @return array
      */
-    public function indexAction(Request $request, FormatRepository $repo, EntityManagerInterface $em) {
-        $dql = 'SELECT e FROM App:Format e ORDER BY e.id';
-        $query = $em->createQuery($dql);
-        $formats = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
+    public function indexAction(Request $request, FormatRepository $repo) : array {
+        $pageSize = $this->getParameter('page_size');
+        $query = $repo->indexQuery();
+        $formats = $this->paginator->paginate($query, $request->query->getInt('page', 1), $pageSize);
 
         return [
             'formats' => $formats,
@@ -54,11 +52,10 @@ class FormatController extends AbstractController implements PaginatorAwareInter
     /**
      * Searchf for formats and return a JSON response for a typeahead widget.
      *
-     * @return JsonResponse
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
      * @Route("/typeahead", name="format_typeahead", methods={"GET"})
      */
-    public function typeaheadAction(Request $request, FormatRepository $repo) {
+    public function typeaheadAction(Request $request, FormatRepository $repo) : JsonResponse {
         $q = $request->query->get('q');
         if ( ! $q) {
             return new JsonResponse([]);
@@ -109,19 +106,13 @@ class FormatController extends AbstractController implements PaginatorAwareInter
      *
      * @Route("/{id}", name="format_show", methods={"GET"})
      * @Template
-     *
-     * @return array
      */
-    public function showAction(Request $request, Format $format, EntityManagerInterface $em) {
-        $dql = 'SELECT t FROM App:Title t WHERE t.format = :format';
-        if (null === $this->getUser()) {
-            $dql .= ' AND (t.finalcheck = 1 OR t.finalattempt = 1)';
-        }
-        $dql .= ' ORDER BY t.title';
-
-        $query = $em->createQuery($dql);
+    public function showAction(Request $request, Format $format, FormatRepository $repository) : array {
+        $user = $this->getUser();
+        $pageSize = $this->getParameter('page_size');
+        $query = $repository->titlesQuery($format, $user);
         $query->setParameter('format', $format);
-        $titles = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
+        $titles = $this->paginator->paginate($query, $request->query->getInt('page', 1), $pageSize);
 
         return [
             'format' => $format,
@@ -160,10 +151,8 @@ class FormatController extends AbstractController implements PaginatorAwareInter
      *
      * @Route("/{id}/delete", name="format_delete", methods={"GET"})
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
-     *
-     * @return RedirectResponse
      */
-    public function deleteAction(Request $request, Format $format, EntityManagerInterface $em) {
+    public function deleteAction(Request $request, Format $format, EntityManagerInterface $em) : RedirectResponse {
         $em->remove($format);
         $em->flush();
         $this->addFlash('success', 'The format was deleted.');

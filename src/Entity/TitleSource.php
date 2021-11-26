@@ -24,104 +24,61 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class TitleSource {
     /**
-     * @var int
-     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    private int $id;
 
     /**
-     * @var string
      * @ORM\Column(type="string", length=300, nullable=true)
      */
-    private $identifier;
+    private ?string $identifier = null;
 
     /**
-     * @var Title
      * @ORM\ManyToOne(targetEntity="App\Entity\Title", inversedBy="titleSources")
      */
-    private $title;
+    private Title $title;
 
     /**
-     * @var Source
      * @ORM\ManyToOne(targetEntity="App\Entity\Source", inversedBy="titleSources")
      */
-    private $source;
+    private Source $source;
 
     /**
      * Get id.
-     *
-     * @return int
      */
-    public function getId() {
+    public function getId() : int {
         return $this->id;
     }
 
-    /**
-     * Set identifier.
-     *
-     * @param string $identifier
-     *
-     * @return TitleSource
-     */
-    public function setIdentifier($identifier) {
+    public function getIdentifier() : ?string {
+        return $this->identifier;
+    }
+
+    public function setIdentifier(?string $identifier) : self {
         $this->identifier = $identifier;
 
         return $this;
     }
 
-    /**
-     * Get identifier.
-     *
-     * @return string
-     */
-    public function getIdentifier() {
-        return $this->identifier;
+    public function getTitle() : ?Title {
+        return $this->title;
     }
 
-    /**
-     * Set title.
-     *
-     * @param null|\App\Entity\Title $title
-     *
-     * @return TitleSource
-     */
-    public function setTitle(?Title $title = null) {
+    public function setTitle(?Title $title) : self {
         $this->title = $title;
 
         return $this;
     }
 
-    /**
-     * Get title.
-     *
-     * @return null|\App\Entity\Title
-     */
-    public function getTitle() {
-        return $this->title;
+    public function getSource() : ?Source {
+        return $this->source;
     }
 
-    /**
-     * Set source.
-     *
-     * @param null|\App\Entity\Source $source
-     *
-     * @return TitleSource
-     */
-    public function setSource(?Source $source = null) {
+    public function setSource(?Source $source) : self {
         $this->source = $source;
 
         return $this;
-    }
-
-    /**
-     * Get source.
-     *
-     * @return null|\App\Entity\Source
-     */
-    public function getSource() {
-        return $this->source;
     }
 }

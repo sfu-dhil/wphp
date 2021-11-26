@@ -13,6 +13,7 @@ namespace App\Controller;
 use App\Entity\Currency;
 use App\Form\CurrencyType;
 use App\Repository\CurrencyRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Nines\UtilBundle\Controller\PaginatorTrait;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -48,14 +49,13 @@ class CurrencyController extends AbstractController implements PaginatorAwareInt
      * @Route("/search", name="currency_search", methods={"GET"})
      *
      * @Template
-     *
-     * @return array
      */
-    public function search(Request $request, CurrencyRepository $currencyRepository) {
+    public function search(Request $request, CurrencyRepository $currencyRepository) : array {
         $q = $request->query->get('q');
         if ($q) {
+            $pageSize = $this->getParameter('page_size');
             $query = $currencyRepository->searchQuery($q);
-            $currencies = $this->paginator->paginate($query, $request->query->getInt('page', 1), $this->getParameter('page_size'), ['wrap-queries' => true]);
+            $currencies = $this->paginator->paginate($query, $request->query->getInt('page', 1), $pageSize, ['wrap-queries' => true]);
         } else {
             $currencies = [];
         }
@@ -68,10 +68,8 @@ class CurrencyController extends AbstractController implements PaginatorAwareInt
 
     /**
      * @Route("/typeahead", name="currency_typeahead", methods={"GET"})
-     *
-     * @return JsonResponse
      */
-    public function typeahead(Request $request, CurrencyRepository $currencyRepository) {
+    public function typeahead(Request $request, CurrencyRepository $currencyRepository) : JsonResponse {
         $q = $request->query->get('q');
         if ( ! $q) {
             return new JsonResponse([]);
@@ -95,15 +93,14 @@ class CurrencyController extends AbstractController implements PaginatorAwareInt
      *
      * @return array|RedirectResponse
      */
-    public function new(Request $request) {
+    public function new(Request $request, EntityManagerInterface $em) {
         $currency = new Currency();
         $form = $this->createForm(CurrencyType::class, $currency);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($currency);
-            $entityManager->flush();
+            $em->persist($currency);
+            $em->flush();
             $this->addFlash('success', 'The new currency has been saved.');
 
             return $this->redirectToRoute('currency_show', ['id' => $currency->getId()]);
@@ -118,10 +115,8 @@ class CurrencyController extends AbstractController implements PaginatorAwareInt
     /**
      * @Route("/{id}", name="currency_show", methods={"GET"})
      * @Template
-     *
-     * @return array
      */
-    public function show(Currency $currency) {
+    public function show(Currency $currency) : array {
         return [
             'currency' => $currency,
         ];
@@ -135,12 +130,12 @@ class CurrencyController extends AbstractController implements PaginatorAwareInt
      *
      * @return array|RedirectResponse
      */
-    public function edit(Request $request, Currency $currency) {
+    public function edit(Request $request, Currency $currency, EntityManagerInterface $em) {
         $form = $this->createForm(CurrencyType::class, $currency);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $em->flush();
             $this->addFlash('success', 'The updated currency has been saved.');
 
             return $this->redirectToRoute('currency_show', ['id' => $currency->getId()]);
@@ -155,14 +150,11 @@ class CurrencyController extends AbstractController implements PaginatorAwareInt
     /**
      * @IsGranted("ROLE_CONTENT_ADMIN")
      * @Route("/{id}", name="currency_delete", methods={"DELETE"})
-     *
-     * @return RedirectResponse
      */
-    public function delete(Request $request, Currency $currency) {
+    public function delete(Request $request, Currency $currency, EntityManagerInterface $em) : RedirectResponse {
         if ($this->isCsrfTokenValid('delete' . $currency->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($currency);
-            $entityManager->flush();
+            $em->remove($currency);
+            $em->flush();
             $this->addFlash('success', 'The currency has been deleted.');
         }
 

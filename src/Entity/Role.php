@@ -20,26 +20,21 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Role {
     /**
-     * @var bool
-     *
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    private int $id;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="name", type="text", nullable=true)
      */
-    private $name;
+    private ?string $name = null;
 
     /**
-     * @var string
      * @ORM\Column(type="text", nullable=true)
      */
-    private $description;
+    private ?string  $description = null;
 
     /**
      * Return the name of this role.
@@ -48,56 +43,27 @@ class Role {
         return $this->name;
     }
 
-    /**
-     * Get id.
-     *
-     * @return bool
-     */
-    public function getId() {
+    public function getId() : ?int {
         return $this->id;
     }
 
-    /**
-     * Set name.
-     *
-     * @param string $name
-     *
-     * @return Role
-     */
-    public function setName($name) {
+    public function getName() : ?string {
+        return $this->name;
+    }
+
+    public function setName(?string $name) : self {
         $this->name = $name;
 
         return $this;
     }
 
-    /**
-     * Get name.
-     *
-     * @return string
-     */
-    public function getName() {
-        return $this->name;
+    public function getDescription() : ?string {
+        return $this->description;
     }
 
-    /**
-     * Set description.
-     *
-     * @param null|string $description
-     *
-     * @return Format
-     */
-    public function setDescription($description = null) {
+    public function setDescription(?string $description) : self {
         $this->description = $description;
 
         return $this;
-    }
-
-    /**
-     * Get description.
-     *
-     * @return null|string
-     */
-    public function getDescription() {
-        return $this->description;
     }
 }

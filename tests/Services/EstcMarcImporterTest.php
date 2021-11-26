@@ -21,10 +21,7 @@ use App\Repository\TitleSourceRepository;
 use Nines\UtilBundle\Tests\ControllerBaseCase;
 
 class EstcMarcImporterTest extends ControllerBaseCase {
-    /**
-     * @var EstcMarcImporter
-     */
-    private $importer;
+    private EstcMarcImporter $importer;
 
     protected function fixtures() : array {
         return [
@@ -37,9 +34,10 @@ class EstcMarcImporterTest extends ControllerBaseCase {
 
     public function testGetFields() : void {
         $f1 = new EstcMarc();
-        $f1->setTitleId('abc')->setField('100')->setSubfield('a')->setFieldData('Bond, James');
+        $f1->setTitleId(123)
+            ->setField('100')->setSubfield('a')->setFieldData('Bond, James');
         $f2 = new EstcMarc();
-        $f2->setTitleId('abc')->setField('100')->setSubfield('b')->setFieldData('Moneypenny, Miss');
+        $f2->setTitleId(1234)->setField('100')->setSubfield('b')->setFieldData('Moneypenny, Miss');
 
         $repo = $this->createMock(EstcMarcRepository::class);
         $repo->method('findBy')->willReturn([$f1, $f2]);
@@ -90,7 +88,6 @@ class EstcMarcImporterTest extends ControllerBaseCase {
             ['1751', '1801', '1751-1801'],
             ['1751', '1801', '1751-1801.'],
             ['1751', '1801', '1751-1801,'],
-            [null, null, null],
 
             // this is actual data. sigh.
             ['1698', '1709', 'active 1698-1709.'],

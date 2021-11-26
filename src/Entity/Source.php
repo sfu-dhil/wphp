@@ -23,41 +23,32 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Source {
     /**
-     * @var bool
-     *
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    private int $id;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="name", type="string", length=100, nullable=false)
      */
-    private $name;
+    private string $name;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="description", type="text", nullable=true)
      */
-    private $description;
+    private ?string $description = null;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="citation", type="text", nullable=true)
      */
-    private $citation;
+    private ?string $citation = null;
 
     /**
-     * @var string
      * @ORM\Column(name="onlinesource", type="string", length=200, nullable=true)
      * @Assert\Url
      */
-    private $onlineSource;
+    private ?string $onlineSource = null;
 
     /**
      * @var Collection|TitleSource[]
@@ -86,166 +77,101 @@ class Source {
         return $this->name;
     }
 
-    /**
-     * Get id.
-     *
-     * @return bool
-     */
-    public function getId() {
+    public function getId() : ?int {
         return $this->id;
     }
 
-    /**
-     * Set name.
-     *
-     * @param string $name
-     *
-     * @return Source
-     */
-    public function setName($name) {
+    public function getName() : ?string {
+        return $this->name;
+    }
+
+    public function setName(string $name) : self {
         $this->name = $name;
 
         return $this;
     }
 
-    /**
-     * Get name.
-     *
-     * @return string
-     */
-    public function getName() {
-        return $this->name;
+    public function getDescription() : ?string {
+        return $this->description;
     }
 
-    /**
-     * Set description.
-     *
-     * @param string $description
-     *
-     * @return Source
-     */
-    public function setDescription($description) {
+    public function setDescription(?string $description) : self {
         $this->description = $description;
 
         return $this;
     }
 
-    /**
-     * Get description.
-     *
-     * @return string
-     */
-    public function getDescription() {
-        return $this->description;
+    public function getCitation() : ?string {
+        return $this->citation;
     }
 
-    /**
-     * Set citation.
-     *
-     * @param string $citation
-     *
-     * @return Source
-     */
-    public function setCitation($citation) {
+    public function setCitation(?string $citation) : self {
         $this->citation = $citation;
 
         return $this;
     }
 
-    /**
-     * Get citation.
-     *
-     * @return string
-     */
-    public function getCitation() {
-        return $this->citation;
+    public function getOnlineSource() : ?string {
+        return $this->onlineSource;
     }
 
-    /**
-     * Set onlineSource.
-     *
-     * @param string $onlineSource
-     *
-     * @return Source
-     */
-    public function setOnlineSource($onlineSource) {
+    public function setOnlineSource(?string $onlineSource) : self {
         $this->onlineSource = $onlineSource;
 
         return $this;
     }
 
     /**
-     * Get onlineSource.
-     *
-     * @return string
+     * @return Collection|TitleSource[]
      */
-    public function getOnlineSource() {
-        return $this->onlineSource;
-    }
-
-    /**
-     * Add titleSource.
-     *
-     * @param \App\Entity\TitleSource $titleSource
-     *
-     * @return Source
-     */
-    public function addTitleSource(TitleSource $titleSource) {
-        $this->titleSources[] = $titleSource;
-
-        return $this;
-    }
-
-    /**
-     * Remove titleSource.
-     *
-     * @param \App\Entity\TitleSource $titleSource
-     *
-     * @return bool TRUE if this collection contained the specified element, FALSE otherwise.
-     */
-    public function removeTitleSource(TitleSource $titleSource) {
-        return $this->titleSources->removeElement($titleSource);
-    }
-
-    /**
-     * Get titleSources.
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getTitleSources() {
+    public function getTitleSources() : Collection {
         return $this->titleSources;
     }
 
-    /**
-     * Add firmSource.
-     *
-     * @param \App\Entity\FirmSource $firmSource
-     *
-     * @return Source
-     */
-    public function addFirmSource(FirmSource $firmSource) {
-        $this->firmSources[] = $firmSource;
+    public function addTitleSource(TitleSource $titleSource) : self {
+        if ( ! $this->titleSources->contains($titleSource)) {
+            $this->titleSources[] = $titleSource;
+            $titleSource->setSource($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTitleSource(TitleSource $titleSource) : self {
+        if ($this->titleSources->removeElement($titleSource)) {
+            // set the owning side to null (unless already changed)
+            if ($titleSource->getSource() === $this) {
+                $titleSource->setSource(null);
+            }
+        }
 
         return $this;
     }
 
     /**
-     * Remove firmSource.
-     *
-     * @param \App\Entity\FirmSource $firmSource
-     *
-     * @return bool TRUE if this collection contained the specified element, FALSE otherwise.
+     * @return Collection|FirmSource[]
      */
-    public function removeFirmSource(FirmSource $firmSource) {
-        return $this->firmSources->removeElement($firmSource);
+    public function getFirmSources() : Collection {
+        return $this->firmSources;
     }
 
-    /**
-     * Get firmSources.
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getFirmSources() {
-        return $this->firmSources;
+    public function addFirmSource(FirmSource $firmSource) : self {
+        if ( ! $this->firmSources->contains($firmSource)) {
+            $this->firmSources[] = $firmSource;
+            $firmSource->setSource($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFirmSource(FirmSource $firmSource) : self {
+        if ($this->firmSources->removeElement($firmSource)) {
+            // set the owning side to null (unless already changed)
+            if ($firmSource->getSource() === $this) {
+                $firmSource->setSource(null);
+            }
+        }
+
+        return $this;
     }
 }

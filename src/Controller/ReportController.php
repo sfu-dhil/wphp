@@ -10,8 +10,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Entity\Title;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\ReportRepository;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Nines\UtilBundle\Controller\PaginatorTrait;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -34,13 +33,11 @@ class ReportController extends AbstractController implements PaginatorAwareInter
      *
      * @Route("/titles_fc", name="report_titles_check", methods={"GET"})
      * @Template
-     *
-     * @return array
      */
-    public function titlesFinalCheckAction(Request $request, EntityManagerInterface $em) {
-        $dql = 'SELECT e FROM App:Title e WHERE e.finalcheck = 0 AND e.finalattempt = 0 ORDER BY e.id';
-        $query = $em->createQuery($dql);
-        $titles = $this->paginator->paginate($query->execute(), $request->query->getInt('page', 1), 25);
+    public function titlesFinalCheckAction(Request $request, ReportRepository $repository) : array {
+        $pageSize = $this->getParameter('page_size');
+        $query = $repository->titlesFinalCheckQuery();
+        $titles = $this->paginator->paginate($query->execute(), $request->query->getInt('page', 1), $pageSize);
 
         return [
             'titles' => $titles,
@@ -52,13 +49,11 @@ class ReportController extends AbstractController implements PaginatorAwareInter
      *
      * @Route("/titles_date", name="report_titles_date", methods={"GET"})
      * @Template
-     *
-     * @return array
      */
-    public function titlesDateAction(Request $request, EntityManagerInterface $em) {
-        $dql = "SELECT e FROM App:Title e WHERE e.pubdate IS NOT NULL AND e.pubdate != '' AND regexp(e.pubdate,'[^0-9-]') = 1";
-        $query = $em->createQuery($dql);
-        $titles = $this->paginator->paginate($query->execute(), $request->query->getInt('page', 1), 25);
+    public function titlesDateAction(Request $request, ReportRepository $repository) : array {
+        $pageSize = $this->getParameter('page_size');
+        $query = $repository->titlesDateQuery();
+        $titles = $this->paginator->paginate($query->execute(), $request->query->getInt('page', 1), $pageSize);
 
         return [
             'titles' => $titles,
@@ -70,13 +65,11 @@ class ReportController extends AbstractController implements PaginatorAwareInter
      *
      * @Route("/firms_fc", name="report_firms_fc", methods={"GET"})
      * @Template
-     *
-     * @return array
      */
-    public function firmsFinalCheckAction(Request $request, EntityManagerInterface $em) {
-        $dql = 'SELECT e FROM App:Firm e WHERE e.finalcheck != 1';
-        $query = $em->createQuery($dql);
-        $firms = $this->paginator->paginate($query->execute(), $request->query->getInt('page', 1), 25);
+    public function firmsFinalCheckAction(Request $request, ReportRepository $repository) : array {
+        $pageSize = $this->getParameter('page_size');
+        $query = $repository->firmsFinalCheckQuery();
+        $firms = $this->paginator->paginate($query->execute(), $request->query->getInt('page', 1), $pageSize);
 
         return [
             'firms' => $firms,
@@ -88,13 +81,11 @@ class ReportController extends AbstractController implements PaginatorAwareInter
      *
      * @Route("/persons_fc", name="report_persons_fc", methods={"GET"})
      * @Template
-     *
-     * @return array
      */
-    public function personsFinalCheckAction(Request $request, EntityManagerInterface $em) {
-        $dql = 'SELECT e FROM App:Person e WHERE e.finalcheck != 1';
-        $query = $em->createQuery($dql);
-        $persons = $this->paginator->paginate($query->execute(), $request->query->getInt('page', 1), 25);
+    public function personsFinalCheckAction(Request $request, ReportRepository $repository) : array {
+        $pageSize = $this->getParameter('page_size');
+        $query = $repository->personsFinalCheckQuery();
+        $persons = $this->paginator->paginate($query->execute(), $request->query->getInt('page', 1), $pageSize);
 
         return [
             'persons' => $persons,
@@ -106,20 +97,11 @@ class ReportController extends AbstractController implements PaginatorAwareInter
      *
      * @Route("/editions", name="report_editions", methods={"GET"})
      * @Template
-     *
-     * @return array
      */
-    public function editionsAction(Request $request, EntityManagerInterface $em) {
-        $qb = $em->createQueryBuilder();
-        $qb->select('title')
-            ->from(Title::class, 'title')
-            ->orWhere("title.edition LIKE '%irish%'")
-            ->orWhere("title.edition LIKE '%american%'")
-            ->orWhere("regexp(title.edition, '[0-9]') = 1")
-            ->orderBy('title.id', 'ASC')
-        ;
-
-        $titles = $this->paginator->paginate($qb, $request->query->getInt('page', 1), 25);
+    public function editionsAction(Request $request, ReportRepository $repository) : array {
+        $pageSize = $this->getParameter('page_size');
+        $query = $repository->editionsQuery();
+        $titles = $this->paginator->paginate($query, $request->query->getInt('page', 1), $pageSize);
 
         return [
             'titles' => $titles,
@@ -131,18 +113,11 @@ class ReportController extends AbstractController implements PaginatorAwareInter
      *
      * @Route("/editions_check", name="report_editions_to_check", methods={"GET"})
      * @Template
-     *
-     * @return array
      */
-    public function editionsToCheckAction(Request $request, EntityManagerInterface $em) {
-        $qb = $em->createQueryBuilder();
-        $qb->select('title')
-            ->from(Title::class, 'title')
-            ->where('title.editionChecked = 0')
-            ->orderBy('title.id', 'ASC')
-        ;
-
-        $titles = $this->paginator->paginate($qb, $request->query->getInt('page', 1), 25);
+    public function editionsToCheckAction(Request $request, ReportRepository $repository) : array {
+        $pageSize = $this->getParameter('page_size');
+        $query = $repository->editionsToCheckQuery();
+        $titles = $this->paginator->paginate($query, $request->query->getInt('page', 1), $pageSize);
 
         return [
             'titles' => $titles,

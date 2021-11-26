@@ -37,13 +37,11 @@ class GenreController extends AbstractController implements PaginatorAwareInterf
      *
      * @Route("/", name="genre_index", methods={"GET"})
      * @Template
-     *
-     * @return array
      */
-    public function indexAction(Request $request, GenreRepository $repo, EntityManagerInterface $em) {
-        $dql = 'SELECT e FROM App:Genre e ORDER BY e.name';
-        $query = $em->createQuery($dql);
-        $genres = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
+    public function indexAction(Request $request, GenreRepository $repo) : array {
+        $pageSize = $this->getParameter('page_size');
+        $query = $repo->indexQuery();
+        $genres = $this->paginator->paginate($query, $request->query->getInt('page', 1), $pageSize);
 
         return [
             'genres' => $genres,
@@ -54,11 +52,10 @@ class GenreController extends AbstractController implements PaginatorAwareInterf
     /**
      * Typeahead action for an editor widget.
      *
-     * @return JsonResponse
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
      * @Route("/typeahead", name="genre_typeahead", methods={"GET"})
      */
-    public function typeaheadAction(Request $request, GenreRepository $repo) {
+    public function typeaheadAction(Request $request, GenreRepository $repo) : JsonResponse {
         $q = $request->query->get('q');
         if ( ! $q) {
             return new JsonResponse([]);
@@ -109,18 +106,13 @@ class GenreController extends AbstractController implements PaginatorAwareInterf
      *
      * @Route("/{id}", name="genre_show", methods={"GET"})
      * @Template
-     *
-     * @return array
      */
-    public function showAction(Request $request, Genre $genre, EntityManagerInterface $em) {
-        $dql = 'SELECT t FROM App:Title t WHERE :genre MEMBER OF t.genres';
-        if (null === $this->getUser()) {
-            $dql .= ' AND (t.finalcheck = 1 OR t.finalattempt = 1)';
-        }
-        $dql .= ' ORDER BY t.title';
-        $query = $em->createQuery($dql);
+    public function showAction(Request $request, Genre $genre, GenreRepository $repository) : array {
+        $pageSize = $this->getParameter('page_size');
+        $user = $this->getUser();
+        $query = $repository->titlesQuery($genre, $user);
         $query->setParameter('genre', $genre);
-        $titles = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
+        $titles = $this->paginator->paginate($query, $request->query->getInt('page', 1), $pageSize);
 
         return [
             'genre' => $genre,
@@ -159,10 +151,8 @@ class GenreController extends AbstractController implements PaginatorAwareInterf
      *
      * @Route("/{id}/delete", name="genre_delete", methods={"GET"})
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
-     *
-     * @return RedirectResponse
      */
-    public function deleteAction(Request $request, Genre $genre, EntityManagerInterface $em) {
+    public function deleteAction(Request $request, Genre $genre, EntityManagerInterface $em) : RedirectResponse {
         $em->remove($genre);
         $em->flush();
         $this->addFlash('success', 'The genre was deleted.');

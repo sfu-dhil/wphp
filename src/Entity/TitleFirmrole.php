@@ -20,116 +20,70 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class TitleFirmrole {
     /**
-     * @var int
-     *
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    private int $id;
 
     /**
-     * @var Title
-     *
      * @ORM\ManyToOne(targetEntity="Title", inversedBy="titleFirmroles")
      * @ORM\JoinColumns({
      *     @ORM\JoinColumn(name="title_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      * })
      */
-    private $title;
+    private ?Title $title = null;
 
     /**
-     * @var Firm
-     *
      * @ORM\ManyToOne(targetEntity="Firm", inversedBy="titleFirmroles")
      * @ORM\JoinColumns({
      *     @ORM\JoinColumn(name="firm_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      * })
      */
-    private $firm;
+    private ?Firm $firm = null;
 
     /**
-     * @var Firmrole
-     *
      * @ORM\ManyToOne(targetEntity="Firmrole")
      * @ORM\JoinColumns({
      *     @ORM\JoinColumn(name="firmrole_id", referencedColumnName="id", nullable=false)
      * })
      */
-    private $firmrole;
+    private ?Firmrole $firmrole = null;
 
     /**
      * Get id.
-     *
-     * @return int
      */
-    public function getId() {
+    public function getId() : int {
         return $this->id;
     }
 
-    /**
-     * Set title.
-     *
-     * @param Title $title
-     *
-     * @return TitleFirmrole
-     */
-    public function setTitle(?Title $title = null) {
+    public function getTitle() : ?Title {
+        return $this->title;
+    }
+
+    public function setTitle(?Title $title) : self {
         $this->title = $title;
 
         return $this;
     }
 
-    /**
-     * Get title.
-     *
-     * @return Title
-     */
-    public function getTitle() {
-        return $this->title;
+    public function getFirm() : ?Firm {
+        return $this->firm;
     }
 
-    /**
-     * Set firm.
-     *
-     * @param Firm $firm
-     *
-     * @return TitleFirmrole
-     */
-    public function setFirm(?Firm $firm = null) {
+    public function setFirm(?Firm $firm) : self {
         $this->firm = $firm;
 
         return $this;
     }
 
-    /**
-     * Get firm.
-     *
-     * @return Firm
-     */
-    public function getFirm() {
-        return $this->firm;
+    public function getFirmrole() : ?Firmrole {
+        return $this->firmrole;
     }
 
-    /**
-     * Set firmrole.
-     *
-     * @param Firmrole $firmrole
-     *
-     * @return TitleFirmrole
-     */
-    public function setFirmrole(?Firmrole $firmrole = null) {
+    public function setFirmrole(?Firmrole $firmrole) : self {
         $this->firmrole = $firmrole;
 
         return $this;
-    }
-
-    /**
-     * Get firmrole.
-     *
-     * @return Firmrole
-     */
-    public function getFirmrole() {
-        return $this->firmrole;
     }
 }

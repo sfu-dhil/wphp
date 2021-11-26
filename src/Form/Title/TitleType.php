@@ -15,14 +15,15 @@ use App\Entity\Format;
 use App\Entity\Genre;
 use App\Entity\Geonames;
 use App\Entity\Title;
-use App\Form\RelatedTitleType;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Tetranz\Select2EntityBundle\Form\Type\Select2EntityType;
@@ -32,7 +33,7 @@ use Tetranz\Select2EntityBundle\Form\Type\Select2EntityType;
  */
 class TitleType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) : void {
-        $builder->add('title', null, [
+        $builder->add('title', TextType::class, [
             'label' => 'Title',
             'required' => true,
             'attr' => [
@@ -55,14 +56,14 @@ class TitleType extends AbstractType {
                 'help_block' => 'title.form.contributors',
             ],
         ]);
-        $builder->add('signedAuthor', null, [
+        $builder->add('signedAuthor', TextType::class, [
             'label' => 'Signed Author',
             'required' => false,
             'attr' => [
                 'help_block' => 'title.form.signedAuthor',
             ],
         ]);
-        $builder->add('pseudonym', null, [
+        $builder->add('pseudonym', TextType::class, [
             'label' => 'Pseudonym',
             'required' => false,
             'attr' => [
@@ -100,49 +101,49 @@ class TitleType extends AbstractType {
                 'help_block' => 'title.form.selfPublished',
             ],
         ]);
-        $builder->add('volumes', null, [
+        $builder->add('volumes', IntegerType::class, [
             'label' => 'Volumes',
             'required' => false,
             'attr' => [
                 'help_block' => 'title.form.volumes',
             ],
         ]);
-        $builder->add('pagination', null, [
+        $builder->add('pagination', TextType::class, [
             'label' => 'Pagination',
             'required' => false,
             'attr' => [
                 'help_block' => 'title.form.pagination',
             ],
         ]);
-        $builder->add('pubdate', null, [
+        $builder->add('pubdate', TextType::class, [
             'label' => 'Publication Date',
             'required' => false,
             'attr' => [
                 'help_block' => 'title.form.pubDate',
             ],
         ]);
-        $builder->add('edition', null, [
+        $builder->add('edition', TextType::class, [
             'label' => 'Edition Statement',
             'required' => false,
             'attr' => [
                 'help_block' => 'title.form.edition',
             ],
         ]);
-        $builder->add('editionNumber', null, [
+        $builder->add('editionNumber', IntegerType::class, [
             'label' => 'Edition Number',
             'required' => false,
             'attr' => [
                 'help_block' => 'title.form.editionNumber',
             ],
         ]);
-        $builder->add('dateOfFirstPublication', null, [
+        $builder->add('dateOfFirstPublication', TextType::class, [
             'label' => 'Date of First Publication',
             'required' => false,
             'attr' => [
                 'help_block' => 'title.form.dateOfFirstPublication',
             ],
         ]);
-        $builder->add('imprint', null, [
+        $builder->add('imprint', TextType::class, [
             'label' => 'Imprint',
             'required' => false,
             'attr' => [
@@ -156,7 +157,7 @@ class TitleType extends AbstractType {
                 'help_block' => 'title.form.colophon',
             ],
         ]);
-        $builder->add('copyright', null, [
+        $builder->add('copyright', TextType::class, [
             'label' => 'Copyright Statement',
             'required' => false,
             'attr' => [
@@ -178,8 +179,8 @@ class TitleType extends AbstractType {
         ]);
         $builder->add('format', EntityType::class, [
             'class' => Format::class,
-            'query_builder' => fn (ServiceEntityRepository $repo) => $repo->createQueryBuilder('u')->orderBy('u.name', 'ASC'),
-            'choice_label' => fn (Format $format) => "{$format->getName()} ({$format->getAbbreviation()})",
+            'query_builder' => fn(ServiceEntityRepository $repo) => $repo->createQueryBuilder('u')->orderBy('u.name', 'ASC'),
+            'choice_label' => fn(Format $format) => "{$format->getName()} ({$format->getAbbreviation()})",
             'multiple' => false,
             'expanded' => false,
             'required' => false,
@@ -188,35 +189,35 @@ class TitleType extends AbstractType {
                 'help_block' => 'title.form.format',
             ],
         ]);
-        $builder->add('sizeL', null, [
+        $builder->add('sizeL', IntegerType::class, [
             'label' => 'Size L',
             'required' => false,
             'attr' => [
                 'help_block' => 'title.form.sizeL',
             ],
         ]);
-        $builder->add('sizeW', null, [
+        $builder->add('sizeW', IntegerType::class, [
             'label' => 'Size W',
             'required' => false,
             'attr' => [
                 'help_block' => 'title.form.sizeW',
             ],
         ]);
-        $builder->add('pricePound', null, [
+        $builder->add('pricePound', IntegerType::class, [
             'label' => 'Price Pound',
             'required' => false,
             'attr' => [
                 'help_block' => 'title.form.pricePound',
             ],
         ]);
-        $builder->add('priceShilling', null, [
+        $builder->add('priceShilling', IntegerType::class, [
             'label' => 'Price Shilling',
             'required' => false,
             'attr' => [
                 'help_block' => 'title.form.priceShilling',
             ],
         ]);
-        $builder->add('pricePence', null, [
+        $builder->add('pricePence', NumberType::class, [
             'label' => 'Price Pence',
             'required' => false,
             'attr' => [
@@ -250,10 +251,9 @@ class TitleType extends AbstractType {
             'multiple' => false,
             'required' => false,
             'placeholder' => '',
-            'query_builder' => function (ServiceEntityRepository $er) {
+            'query_builder' => function(ServiceEntityRepository $er) {
                 return $er->createQueryBuilder('e')
-                    ->orderBy('e.name', 'ASC')
-                ;
+                    ->orderBy('e.name', 'ASC');
             },
             'attr' => [
                 'help_block' => 'title.form.otherCurrency',
@@ -267,16 +267,15 @@ class TitleType extends AbstractType {
             'multiple' => true,
             'required' => false,
             'placeholder' => 'Unknown',
-            'query_builder' => function (ServiceEntityRepository $er) {
+            'query_builder' => function(ServiceEntityRepository $er) {
                 return $er->createQueryBuilder('e')
-                    ->orderBy('e.name', 'ASC')
-                ;
+                    ->orderBy('e.name', 'ASC');
             },
             'attr' => [
                 'help_block' => 'title.form.genre',
             ],
         ]);
-        $builder->add('shelfmark', null, [
+        $builder->add('shelfmark', TextType::class, [
             'label' => 'Shelfmark',
             'required' => false,
             'attr' => [
@@ -308,9 +307,9 @@ class TitleType extends AbstractType {
             'allow_clear' => true,
             'attr' => [
                 'help_block' => '',
-            ]
+            ],
         ]);
-        $builder->add('notes', null, [
+        $builder->add('notes', TextType::class, [
             'label' => 'Notes',
             'required' => false,
             'attr' => [

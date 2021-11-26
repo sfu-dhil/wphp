@@ -22,26 +22,21 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Genre {
     /**
-     * @var bool
-     *
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    private int $id;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="name", type="text", nullable=true)
      */
-    private $name;
+    private ?string $name = null;
 
     /**
-     * @var string
      * @ORM\Column(type="text", nullable=true)
      */
-    private $description;
+    private ?string $description = null;
 
     /**
      * @var Collection|Title[]
@@ -60,83 +55,51 @@ class Genre {
         return $this->name;
     }
 
-    /**
-     * Get id.
-     *
-     * @return bool
-     */
-    public function getId() {
+    public function getId() : ?int {
         return $this->id;
     }
 
-    /**
-     * Set name.
-     *
-     * @param string $name
-     *
-     * @return Genre
-     */
-    public function setName($name) {
+    public function getName() : ?string {
+        return $this->name;
+    }
+
+    public function setName(?string $name) : self {
         $this->name = $name;
 
         return $this;
     }
 
-    /**
-     * Get name.
-     *
-     * @return string
-     */
-    public function getName() {
-        return $this->name;
+    public function getDescription() : ?string {
+        return $this->description;
     }
 
-    /**
-     * Add title.
-     *
-     * @return Genre
-     */
-    public function addTitle(Title $title) {
-        $this->titles[] = $title;
-
-        return $this;
-    }
-
-    /**
-     * Remove title.
-     */
-    public function removeTitle(Title $title) : void {
-        $this->titles->removeElement($title);
-    }
-
-    /**
-     * Get titles.
-     *
-     * @return Collection
-     */
-    public function getTitles() {
-        return $this->titles;
-    }
-
-    /**
-     * Set description.
-     *
-     * @param null|string $description
-     *
-     * @return Format
-     */
-    public function setDescription($description = null) {
+    public function setDescription(?string $description) : self {
         $this->description = $description;
 
         return $this;
     }
 
     /**
-     * Get description.
-     *
-     * @return null|string
+     * @return Collection|Title[]
      */
-    public function getDescription() {
-        return $this->description;
+    public function getTitles() : Collection {
+        return $this->titles;
+    }
+
+    public function addTitle(Title $title) : self {
+        if ( ! $this->titles->contains($title)) {
+            $this->titles[] = $title;
+            $title->addGenre($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTitle(Title $title) : self {
+        if ($this->titles->removeElement($title)) {
+            $title->removeGenre($this);
+        }
+
+        return $this;
     }
 }

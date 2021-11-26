@@ -14,8 +14,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Nines\BlogBundle\Entity\Page;
 use Nines\BlogBundle\Entity\Post;
+use Nines\BlogBundle\Entity\PostCategory;
 use Nines\UtilBundle\Controller\PaginatorTrait;
-use Proxies\__CG__\Nines\BlogBundle\Entity\PostCategory;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,10 +32,8 @@ class DefaultController extends AbstractController implements PaginatorAwareInte
      *
      * @Route("/", name="homepage")
      * @Template
-     *
-     * @return array
      */
-    public function indexAction(EntityManagerInterface $em) {
+    public function indexAction(EntityManagerInterface $em) : array {
         $pageRepo = $em->getRepository(Page::class);
 
         $spotlightCategories = [
@@ -69,10 +67,8 @@ class DefaultController extends AbstractController implements PaginatorAwareInte
      *
      * @Route("/privacy", name="privacy")
      * @Template
-     *
-     * @return array
      */
-    public function privacyAction(Request $request) {
+    public function privacyAction(Request $request) : array {
         return [];
     }
 }

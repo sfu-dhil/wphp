@@ -24,10 +24,7 @@ use Symfony\Component\Form\FormBuilderInterface;
  * injected as a dependency.
  */
 class FirmFilterType extends AbstractType {
-    /**
-     * @var EntityManager
-     */
-    private $em;
+    private EntityManager $em;
 
     public function __construct(EntityManagerInterface $em) {
         $this->em = $em;
@@ -72,8 +69,8 @@ class FirmFilterType extends AbstractType {
 
         $builder->add('firm_role', ChoiceType::class, [
             'choices' => $roles,
-            'choice_label' => fn ($value, $key, $index) => $value->getName(),
-            'choice_value' => function ($value) {
+            'choice_label' => fn($value, $key, $index) => $value->getName(),
+            'choice_value' => function($value) {
                 if ($value) {
                     return $value->getId();
                 }

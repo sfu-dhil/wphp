@@ -24,169 +24,92 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class MarcSubfieldStructure {
     /**
-     * @var int
-     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    private int $id;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="tagfield", type="string", length=3)
      */
-    private $tagField;
+    private string $tagField;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="tagsubfield", type="string", length=1)
      */
-    private $tagSubfield;
+    private string $tagSubfield;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="liblibrarian", type="string", length=255, nullable=false)
      */
-    private $name;
+    private string $name;
 
     /**
-     * @var bool
-     *
      * @ORM\Column(name="isurl", type="boolean", nullable=true)
      */
-    private $isUrl;
+    private ?bool $isUrl = null;
 
     /**
-     * @var bool
-     *
-     * @ORM\Column(name="hidden", type="integer", nullable=true)
+     * @ORM\Column(name="hidden", type="boolean", nullable=true)
      */
-    private $hidden;
+    private ?bool $hidden = null;
 
     public function __toString() : string {
         return $this->name;
     }
 
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId() {
+    public function getId() : ?int {
         return $this->id;
     }
 
-    /**
-     * Set tagField.
-     *
-     * @param string $tagField
-     *
-     * @return MarcSubfieldStructure
-     */
-    public function setTagField($tagField) {
+    public function getTagField() : ?string {
+        return $this->tagField;
+    }
+
+    public function setTagField(string $tagField) : self {
         $this->tagField = $tagField;
 
         return $this;
     }
 
-    /**
-     * Get tagField.
-     *
-     * @return string
-     */
-    public function getTagField() {
-        return $this->tagField;
+    public function getTagSubfield() : ?string {
+        return $this->tagSubfield;
     }
 
-    /**
-     * Set tagSubfield.
-     *
-     * @param string $tagSubfield
-     *
-     * @return MarcSubfieldStructure
-     */
-    public function setTagSubfield($tagSubfield) {
+    public function setTagSubfield(string $tagSubfield) : self {
         $this->tagSubfield = $tagSubfield;
 
         return $this;
     }
 
-    /**
-     * Get tagSubfield.
-     *
-     * @return string
-     */
-    public function getTagSubfield() {
-        return $this->tagSubfield;
+    public function getName() : ?string {
+        return $this->name;
     }
 
-    /**
-     * Set name.
-     *
-     * @param string $name
-     *
-     * @return MarcSubfieldStructure
-     */
-    public function setName($name) {
+    public function setName(string $name) : self {
         $this->name = $name;
 
         return $this;
     }
 
-    /**
-     * Get name.
-     *
-     * @return string
-     */
-    public function getName() {
-        return $this->name;
+    public function getIsUrl() : ?bool {
+        return $this->isUrl;
     }
 
-    /**
-     * Set isUrl.
-     *
-     * @param bool $isUrl
-     *
-     * @return MarcSubfieldStructure
-     */
-    public function setIsUrl($isUrl) {
+    public function setIsUrl(?bool $isUrl) : self {
         $this->isUrl = $isUrl;
 
         return $this;
     }
 
-    /**
-     * Get isUrl.
-     *
-     * @return bool
-     */
-    public function getIsUrl() {
-        return $this->isUrl;
+    public function getHidden() : ?bool {
+        return $this->hidden;
     }
 
-    /**
-     * Set hidden.
-     *
-     * @param int $hidden
-     *
-     * @return MarcSubfieldStructure
-     */
-    public function setHidden($hidden) {
+    public function setHidden(?bool $hidden) : self {
         $this->hidden = $hidden;
 
         return $this;
-    }
-
-    /**
-     * Get hidden.
-     *
-     * @return int
-     */
-    public function getHidden() {
-        return $this->hidden;
     }
 }

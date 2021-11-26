@@ -35,226 +35,168 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Title {
     /**
-     * @var int
-     *
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    private int $id;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="title", type="text", nullable=false)
      */
-    private $title;
+    private string $title;
 
     /**
-     * @var int
      * @ORM\Column(name="edition_number", type="integer", nullable=true)
      */
-    private $editionNumber;
+    private ?int $editionNumber = null;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="signed_author", type="text", nullable=true)
      */
-    private $signedAuthor;
+    private ?string $signedAuthor = null;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="pseudonym", type="string", length=255, nullable=true)
      */
-    private $pseudonym;
+    private ?string $pseudonym = null;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="imprint", type="text", nullable=true)
      */
-    private $imprint;
+    private ?string $imprint = null;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="copyright", type="text", nullable=true)
      */
-    private $copyright;
+    private ?string $copyright = null;
 
     /**
-     * @var bool
-     *
      * @ORM\Column(name="selfpublished", type="boolean", nullable=true)
      */
     private $selfpublished = false;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="pubdate", type="string", length=40, nullable=true)
      */
-    private $pubdate;
+    private ?string $pubdate = null;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="date_of_first_publication", type="string", length=40, nullable=true)
      */
-    private $dateOfFirstPublication;
+    private ?string $dateOfFirstPublication = null;
 
     /**
-     * @var bool
-     *
      * @ORM\Column(name="size_l", type="integer", nullable=true)
      */
-    private $sizeL;
+    private ?int $sizeL = null;
 
     /**
-     * @var bool
-     *
      * @ORM\Column(name="size_w", type="integer", nullable=true)
      */
-    private $sizeW;
+    private ?int $sizeW = null;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="edition", type="string", length=200, nullable=true)
      */
-    private $edition;
+    private ?string $edition = null;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="colophon", type="text", nullable=true)
      */
-    private $colophon;
+    private ?string $colophon = null;
 
     /**
-     * @var bool
-     *
      * @ORM\Column(name="volumes", type="integer", nullable=true)
      */
-    private $volumes;
+    private ?int $volumes = null;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="pagination", type="string", length=200, nullable=true)
      */
-    private $pagination;
+    private ?string $pagination = null;
 
     /**
-     * @var int
-     *
      * @ORM\Column(name="price_total", type="integer", nullable=false)
      */
-    private $totalPrice;
+    private int $totalPrice;
 
     /**
-     * @var int
-     *
      * @ORM\Column(name="price_pound", type="integer", nullable=true)
      */
-    private $pricePound;
+    private ?int $pricePound = null;
 
     /**
-     * @var int
-     *
      * @ORM\Column(name="price_shilling", type="integer", nullable=true)
      */
-    private $priceShilling;
+    private ?int $priceShilling = null;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="price_pence", type="decimal", precision=9, scale=1, nullable=true)
      */
-    private $pricePence;
+    private ?float $pricePence = null;
 
     /**
-     * @var float
      * @ORM\Column(name="other_price", type="decimal", precision=7, scale=2, nullable=true)
      */
-    private $otherPrice;
+    private ?float $otherPrice = null;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="shelfmark", type="text", nullable=true)
      */
-    private $shelfmark;
+    private ?string $shelfmark = null;
 
     /**
-     * @var bool
-     *
      * @ORM\Column(name="checked", type="boolean", nullable=false)
      */
-    private $checked = '0';
+    private bool $checked = false;
 
     /**
-     * @var bool
-     *
      * @ORM\Column(name="finalcheck", type="boolean", nullable=false)
      */
-    private $finalcheck = '0';
+    private bool $finalcheck = false;
 
     /**
-     * @var bool
-     *
      * @ORM\Column(name="finalattempt", type="boolean", nullable=false)
      */
-    private $finalattempt = '0';
+    private bool $finalattempt = false;
 
     /**
-     * @var bool
-     *
      * @ORM\Column(name="edition_checked", type="boolean", nullable=false)
      */
-    private $editionChecked = '0';
+    private bool $editionChecked = false;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="notes", type="text", nullable=true)
      */
-    private $notes;
+    private ?string $notes = null;
 
     /**
-     * @var Geonames
-     *
      * @ORM\ManyToOne(targetEntity="Geonames", inversedBy="titles")
      * @ORM\JoinColumns({
      *     @ORM\JoinColumn(name="location_of_printing", referencedColumnName="geonameid")
      * })
      */
-    private $locationOfPrinting;
+    private ?Geonames $locationOfPrinting = null;
 
     /**
-     * @var Format
-     *
      * @ORM\ManyToOne(targetEntity="Format", inversedBy="titles")
      * @ORM\JoinColumns({
      *     @ORM\JoinColumn(name="format_id", referencedColumnName="id")
      * })
      */
-    private $format;
+    private ?Format $format = null;
 
     /**
-     * @var Genre
-     *
+     * @var Collection|Genre[]
      * @ORM\ManyToMany(targetEntity="Genre", inversedBy="titles")
      */
     private $genres;
 
     /**
-     * @var Currency
      * @ORM\ManyToOne(targetEntity="App\Entity\Currency", inversedBy="titles")
      */
-    private $otherCurrency;
+    private ?Currency $otherCurrency = null;
 
     /**
      * @var Collection|TitleRole[]
@@ -315,517 +257,300 @@ class Title {
     }
 
     /**
-     * Get id.
-     *
-     * @return int
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
      */
-    public function getId() {
+    public function getTotalPrice() : int {
+        $this->totalPrice = 0;
+
+        if ($this->pricePound && is_numeric($this->pricePound)) {
+            $this->totalPrice += $this->pricePound * 240;
+        }
+        if ($this->priceShilling && is_numeric($this->priceShilling)) {
+            $this->totalPrice += $this->priceShilling * 12;
+        }
+        if ($this->pricePence && is_numeric($this->pricePence)) {
+            $this->totalPrice += (int) round($this->pricePence);
+        }
+
+        return $this->totalPrice;
+    }
+
+    public function getId() : ?int {
         return $this->id;
     }
 
-    /**
-     * Set title.
-     *
-     * @param string $title
-     *
-     * @return Title
-     */
-    public function setTitle($title) {
+    public function getTitle() : ?string {
+        return $this->title;
+    }
+
+    public function setTitle(string $title) : self {
         $this->title = $title;
 
         return $this;
     }
 
-    /**
-     * Get title.
-     *
-     * @return string
-     */
-    public function getTitle() {
-        return $this->title;
+    public function getEditionNumber() : ?int {
+        return $this->editionNumber;
     }
 
-    public function getFormId() {
-        return "({$this->id}) {$this->title}";
+    public function setEditionNumber(?int $editionNumber) : self {
+        $this->editionNumber = $editionNumber;
+
+        return $this;
     }
 
-    /**
-     * Set signedAuthor.
-     *
-     * @param string $signedAuthor
-     *
-     * @return Title
-     */
-    public function setSignedAuthor($signedAuthor) {
+    public function getSignedAuthor() : ?string {
+        return $this->signedAuthor;
+    }
+
+    public function setSignedAuthor(?string $signedAuthor) : self {
         $this->signedAuthor = $signedAuthor;
 
         return $this;
     }
 
-    /**
-     * Get signedAuthor.
-     *
-     * @return string
-     */
-    public function getSignedAuthor() {
-        return $this->signedAuthor;
+    public function getPseudonym() : ?string {
+        return $this->pseudonym;
     }
 
-    /**
-     * Set pseudonym.
-     *
-     * @param string $pseudonym
-     *
-     * @return Title
-     */
-    public function setPseudonym($pseudonym) {
+    public function setPseudonym(?string $pseudonym) : self {
         $this->pseudonym = $pseudonym;
 
         return $this;
     }
 
-    /**
-     * Get pseudonym.
-     *
-     * @return string
-     */
-    public function getPseudonym() {
-        return $this->pseudonym;
+    public function getImprint() : ?string {
+        return $this->imprint;
     }
 
-    /**
-     * Set imprint.
-     *
-     * @param string $imprint
-     *
-     * @return Title
-     */
-    public function setImprint($imprint) {
+    public function setImprint(?string $imprint) : self {
         $this->imprint = $imprint;
 
         return $this;
     }
 
-    /**
-     * Get imprint.
-     *
-     * @return string
-     */
-    public function getImprint() {
-        return $this->imprint;
+    public function getCopyright() : ?string {
+        return $this->copyright;
     }
 
-    /**
-     * Set copyright.
-     *
-     * @param string $copyright
-     *
-     * @return Title
-     */
-    public function setCopyright($copyright) {
+    public function setCopyright(?string $copyright) : self {
         $this->copyright = $copyright;
 
         return $this;
     }
 
-    /**
-     * Get copyright.
-     *
-     * @return string
-     */
-    public function getCopyright() {
-        return $this->copyright;
+    public function getSelfpublished() : ?bool {
+        return $this->selfpublished;
     }
 
-    /**
-     * Set selfpublished.
-     *
-     * @param bool $selfpublished
-     *
-     * @return Title
-     */
-    public function setSelfpublished($selfpublished) {
+    public function setSelfpublished(?bool $selfpublished) : self {
         $this->selfpublished = $selfpublished;
 
         return $this;
     }
 
-    /**
-     * Get selfpublished.
-     *
-     * @return bool
-     */
-    public function getSelfpublished() {
-        return $this->selfpublished;
+    public function getPubdate() : ?string {
+        return $this->pubdate;
     }
 
-    /**
-     * Set pubdate.
-     *
-     * @param string $pubdate
-     *
-     * @return Title
-     */
-    public function setPubdate($pubdate) {
+    public function setPubdate(?string $pubdate) : self {
         $this->pubdate = $pubdate;
 
         return $this;
     }
 
-    /**
-     * Get pubdate.
-     *
-     * @return string
-     */
-    public function getPubdate() {
-        return $this->pubdate;
+    public function getDateOfFirstPublication() : ?string {
+        return $this->dateOfFirstPublication;
     }
 
-    /**
-     * Set dateOfFirstPublication.
-     *
-     * @param string $dateOfFirstPublication
-     *
-     * @return Title
-     */
-    public function setDateOfFirstPublication($dateOfFirstPublication) {
+    public function setDateOfFirstPublication(?string $dateOfFirstPublication) : self {
         $this->dateOfFirstPublication = $dateOfFirstPublication;
 
         return $this;
     }
 
-    /**
-     * Get dateOfFirstPublication.
-     *
-     * @return string
-     */
-    public function getDateOfFirstPublication() {
-        return $this->dateOfFirstPublication;
+    public function getSizeL() : ?int {
+        return $this->sizeL;
     }
 
-    /**
-     * Set sizeL.
-     *
-     * @param bool $sizeL
-     *
-     * @return Title
-     */
-    public function setSizeL($sizeL) {
+    public function setSizeL(?int $sizeL) : self {
         $this->sizeL = $sizeL;
 
         return $this;
     }
 
-    /**
-     * Get sizeL.
-     *
-     * @return bool
-     */
-    public function getSizeL() {
-        return $this->sizeL;
+    public function getSizeW() : ?int {
+        return $this->sizeW;
     }
 
-    /**
-     * Set sizeW.
-     *
-     * @param bool $sizeW
-     *
-     * @return Title
-     */
-    public function setSizeW($sizeW) {
+    public function setSizeW(?int $sizeW) : self {
         $this->sizeW = $sizeW;
 
         return $this;
     }
 
-    /**
-     * Get sizeW.
-     *
-     * @return bool
-     */
-    public function getSizeW() {
-        return $this->sizeW;
+    public function getEdition() : ?string {
+        return $this->edition;
     }
 
-    /**
-     * Set edition.
-     *
-     * @param string $edition
-     *
-     * @return Title
-     */
-    public function setEdition($edition) {
+    public function setEdition(?string $edition) : self {
         $this->edition = $edition;
 
         return $this;
     }
 
-    /**
-     * Get edition.
-     *
-     * @return string
-     */
-    public function getEdition() {
-        return $this->edition;
+    public function getColophon() : ?string {
+        return $this->colophon;
     }
 
-    /**
-     * Set volumes.
-     *
-     * @param bool $volumes
-     *
-     * @return Title
-     */
-    public function setVolumes($volumes) {
+    public function setColophon(?string $colophon) : self {
+        $this->colophon = $colophon;
+
+        return $this;
+    }
+
+    public function getVolumes() : ?int {
+        return $this->volumes;
+    }
+
+    public function setVolumes(?int $volumes) : self {
         $this->volumes = $volumes;
 
         return $this;
     }
 
-    /**
-     * Get volumes.
-     *
-     * @return bool
-     */
-    public function getVolumes() {
-        return $this->volumes;
+    public function getPagination() : ?string {
+        return $this->pagination;
     }
 
-    /**
-     * Set pagination.
-     *
-     * @param string $pagination
-     *
-     * @return Title
-     */
-    public function setPagination($pagination) {
+    public function setPagination(?string $pagination) : self {
         $this->pagination = $pagination;
 
         return $this;
     }
 
-    /**
-     * Get pagination.
-     *
-     * @return string
-     */
-    public function getPagination() {
-        return $this->pagination;
+    public function setTotalPrice(int $totalPrice) : self {
+        $this->totalPrice = $totalPrice;
+
+        return $this;
     }
 
-    /**
-     * Set pricePound.
-     *
-     * @param int $pricePound
-     *
-     * @return Title
-     */
-    public function setPricePound($pricePound) {
+    public function getPricePound() : ?int {
+        return $this->pricePound;
+    }
+
+    public function setPricePound(?int $pricePound) : self {
         $this->pricePound = $pricePound;
 
         return $this;
     }
 
-    /**
-     * Get pricePound.
-     *
-     * @return int
-     */
-    public function getPricePound() {
-        return $this->pricePound;
+    public function getPriceShilling() : ?int {
+        return $this->priceShilling;
     }
 
-    /**
-     * Set priceShilling.
-     *
-     * @param int $priceShilling
-     *
-     * @return Title
-     */
-    public function setPriceShilling($priceShilling) {
+    public function setPriceShilling(?int $priceShilling) : self {
         $this->priceShilling = $priceShilling;
 
         return $this;
     }
 
-    /**
-     * Get priceShilling.
-     *
-     * @return int
-     */
-    public function getPriceShilling() {
-        return $this->priceShilling;
+    public function getPricePence() : ?float {
+        return $this->pricePence;
     }
 
-    /**
-     * Set pricePence.
-     *
-     * @param string $pricePence
-     *
-     * @return Title
-     */
-    public function setPricePence($pricePence) {
+    public function setPricePence(?float $pricePence) : self {
         $this->pricePence = $pricePence;
 
         return $this;
     }
 
-    /**
-     * Get pricePence.
-     *
-     * @return string
-     */
-    public function getPricePence() {
-        return $this->pricePence;
+    public function getOtherPrice() : ?float {
+        return $this->otherPrice;
     }
 
-    /**
-     * @ORM\PrePersist
-     * @ORM\PreUpdate
-     */
-    public function setTotalPrice() : void {
-        $this->totalPrice = 0;
+    public function setOtherPrice(?float $otherPrice) : self {
+        $this->otherPrice = $otherPrice;
 
-        if ($this->pricePound && is_int($this->pricePound)) {
-            $this->totalPrice += $this->pricePound * 240;
-        }
-        if ($this->priceShilling && is_int($this->priceShilling)) {
-            $this->totalPrice += $this->priceShilling * 12;
-        }
-        if ($this->pricePence && is_int($this->pricePence)) {
-            $this->totalPrice += $this->pricePence;
-        }
+        return $this;
     }
 
-    /**
-     * Get the totalPrice in pence.
-     *
-     * @return int
-     */
-    public function getTotalPrice() {
-        $this->setTotalPrice();
-
-        return $this->totalPrice;
+    public function getShelfmark() : ?string {
+        return $this->shelfmark;
     }
 
-    /**
-     * Set shelfmark.
-     *
-     * @param string $shelfmark
-     *
-     * @return Title
-     */
-    public function setShelfmark($shelfmark) {
+    public function setShelfmark(?string $shelfmark) : self {
         $this->shelfmark = $shelfmark;
 
         return $this;
     }
 
-    /**
-     * Get shelfmark.
-     *
-     * @return string
-     */
-    public function getShelfmark() {
-        return $this->shelfmark;
+    public function getChecked() : ?bool {
+        return $this->checked;
     }
 
-    /**
-     * Set checked.
-     *
-     * @param bool $checked
-     *
-     * @return Title
-     */
-    public function setChecked($checked) {
+    public function setChecked(bool $checked) : self {
         $this->checked = $checked;
 
         return $this;
     }
 
-    /**
-     * Get checked.
-     *
-     * @return bool
-     */
-    public function getChecked() {
-        return $this->checked;
+    public function getFinalcheck() : ?bool {
+        return $this->finalcheck;
     }
 
-    /**
-     * Set finalcheck.
-     *
-     * @param bool $finalcheck
-     *
-     * @return Title
-     */
-    public function setFinalcheck($finalcheck) {
+    public function setFinalcheck(bool $finalcheck) : self {
         $this->finalcheck = $finalcheck;
 
         return $this;
     }
 
-    /**
-     * Get finalcheck.
-     *
-     * @return bool
-     */
-    public function getFinalcheck() {
-        return $this->finalcheck;
+    public function getFinalattempt() : ?bool {
+        return $this->finalattempt;
     }
 
-    /**
-     * Set notes.
-     *
-     * @param string $notes
-     *
-     * @return Title
-     */
-    public function setNotes($notes) {
+    public function setFinalattempt(bool $finalattempt) : self {
+        $this->finalattempt = $finalattempt;
+
+        return $this;
+    }
+
+    public function getEditionChecked() : ?bool {
+        return $this->editionChecked;
+    }
+
+    public function setEditionChecked(bool $editionChecked) : self {
+        $this->editionChecked = $editionChecked;
+
+        return $this;
+    }
+
+    public function getNotes() : ?string {
+        return $this->notes;
+    }
+
+    public function setNotes(?string $notes) : self {
         $this->notes = $notes;
 
         return $this;
     }
 
-    /**
-     * Get notes.
-     *
-     * @return string
-     */
-    public function getNotes() {
-        return $this->notes;
+    public function getLocationOfPrinting() : ?Geonames {
+        return $this->locationOfPrinting;
     }
 
-    /**
-     * Set locationOfPrinting.
-     *
-     * @param Geonames $locationOfPrinting
-     *
-     * @return Title
-     */
-    public function setLocationOfPrinting(?Geonames $locationOfPrinting = null) {
+    public function setLocationOfPrinting(?Geonames $locationOfPrinting) : self {
         $this->locationOfPrinting = $locationOfPrinting;
 
         return $this;
     }
 
-    /**
-     * Get locationOfPrinting.
-     *
-     * @return Geonames
-     */
-    public function getLocationOfPrinting() {
-        return $this->locationOfPrinting;
+    public function getFormat() : ?Format {
+        return $this->format;
     }
 
-    /**
-     * Set format.
-     *
-     * @param Format $format
-     *
-     * @return Title
-     */
-    public function setFormat(?Format $format = null) {
+    public function setFormat(?Format $format) : self {
         $this->format = $format;
 
         return $this;
@@ -852,101 +577,6 @@ class Title {
         return $this;
     }
 
-    /**
-     * Get format.
-     *
-     * @return Format
-     */
-    public function getFormat() {
-        return $this->format;
-    }
-
-    public function hasTitleRole(Person $person, Role $role) {
-        foreach ($this->titleRoles as $tr) {
-            if ($tr->getPerson() === $person && $tr->getRole() === $role) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * Set editionNumber.
-     *
-     * @param int $editionNumber
-     *
-     * @return Title
-     */
-    public function setEditionNumber($editionNumber) {
-        $this->editionNumber = $editionNumber;
-
-        return $this;
-    }
-
-    /**
-     * Get editionNumber.
-     *
-     * @return int
-     */
-    public function getEditionNumber() {
-        return $this->editionNumber;
-    }
-
-    /**
-     * Set finalattempt.
-     *
-     * @param bool $finalattempt
-     *
-     * @return Title
-     */
-    public function setFinalattempt($finalattempt) {
-        $this->finalattempt = $finalattempt;
-
-        return $this;
-    }
-
-    /**
-     * Get finalattempt.
-     *
-     * @return bool
-     */
-    public function getFinalattempt() {
-        return $this->finalattempt;
-    }
-
-    /**
-     * Set colophon.
-     *
-     * @param null|string $colophon
-     *
-     * @return Title
-     */
-    public function setColophon($colophon = null) {
-        $this->colophon = $colophon;
-
-        return $this;
-    }
-
-    /**
-     * Get colophon.
-     *
-     * @return null|string
-     */
-    public function getColophon() {
-        return $this->colophon;
-    }
-
-    public function getOtherPrice() : ?float {
-        return (float) $this->otherPrice;
-    }
-
-    public function setOtherPrice($otherPrice) : self {
-        $this->otherPrice = (float) $otherPrice;
-
-        return $this;
-    }
-
     public function getOtherCurrency() : ?Currency {
         return $this->otherCurrency;
     }
@@ -957,27 +587,15 @@ class Title {
         return $this;
     }
 
-    public function getEditionChecked() {
-        return $this->editionChecked;
-    }
-
-    public function setEditionChecked(bool $editionChecked) : self {
-        $this->editionChecked = $editionChecked;
-
-        return $this;
-    }
-
     /**
      * @return Collection|TitleRole[]
      */
-    public function getTitleRoles(): Collection
-    {
+    public function getTitleRoles() : Collection {
         return $this->titleRoles;
     }
 
-    public function addTitleRole(TitleRole $titleRole): self
-    {
-        if (!$this->titleRoles->contains($titleRole)) {
+    public function addTitleRole(TitleRole $titleRole) : self {
+        if ( ! $this->titleRoles->contains($titleRole)) {
             $this->titleRoles[] = $titleRole;
             $titleRole->setTitle($this);
         }
@@ -985,8 +603,7 @@ class Title {
         return $this;
     }
 
-    public function removeTitleRole(TitleRole $titleRole): self
-    {
+    public function removeTitleRole(TitleRole $titleRole) : self {
         if ($this->titleRoles->removeElement($titleRole)) {
             // set the owning side to null (unless already changed)
             if ($titleRole->getTitle() === $this) {
@@ -1000,14 +617,12 @@ class Title {
     /**
      * @return Collection|TitleFirmrole[]
      */
-    public function getTitleFirmroles(): Collection
-    {
+    public function getTitleFirmroles() : Collection {
         return $this->titleFirmroles;
     }
 
-    public function addTitleFirmrole(TitleFirmrole $titleFirmrole): self
-    {
-        if (!$this->titleFirmroles->contains($titleFirmrole)) {
+    public function addTitleFirmrole(TitleFirmrole $titleFirmrole) : self {
+        if ( ! $this->titleFirmroles->contains($titleFirmrole)) {
             $this->titleFirmroles[] = $titleFirmrole;
             $titleFirmrole->setTitle($this);
         }
@@ -1015,8 +630,7 @@ class Title {
         return $this;
     }
 
-    public function removeTitleFirmrole(TitleFirmrole $titleFirmrole): self
-    {
+    public function removeTitleFirmrole(TitleFirmrole $titleFirmrole) : self {
         if ($this->titleFirmroles->removeElement($titleFirmrole)) {
             // set the owning side to null (unless already changed)
             if ($titleFirmrole->getTitle() === $this) {
@@ -1030,14 +644,12 @@ class Title {
     /**
      * @return Collection|TitleSource[]
      */
-    public function getTitleSources(): Collection
-    {
+    public function getTitleSources() : Collection {
         return $this->titleSources;
     }
 
-    public function addTitleSource(TitleSource $titleSource): self
-    {
-        if (!$this->titleSources->contains($titleSource)) {
+    public function addTitleSource(TitleSource $titleSource) : self {
+        if ( ! $this->titleSources->contains($titleSource)) {
             $this->titleSources[] = $titleSource;
             $titleSource->setTitle($this);
         }
@@ -1045,8 +657,7 @@ class Title {
         return $this;
     }
 
-    public function removeTitleSource(TitleSource $titleSource): self
-    {
+    public function removeTitleSource(TitleSource $titleSource) : self {
         if ($this->titleSources->removeElement($titleSource)) {
             // set the owning side to null (unless already changed)
             if ($titleSource->getTitle() === $this) {
@@ -1060,22 +671,19 @@ class Title {
     /**
      * @return Collection|Title[]
      */
-    public function getRelatedTitles(): Collection
-    {
+    public function getRelatedTitles() : Collection {
         return $this->relatedTitles;
     }
 
-    public function addRelatedTitle(Title $relatedTitle): self
-    {
-        if (!$this->relatedTitles->contains($relatedTitle)) {
+    public function addRelatedTitle(self $relatedTitle) : self {
+        if ( ! $this->relatedTitles->contains($relatedTitle)) {
             $this->relatedTitles[] = $relatedTitle;
         }
 
         return $this;
     }
 
-    public function removeRelatedTitle(Title $relatedTitle): self
-    {
+    public function removeRelatedTitle(self $relatedTitle) : self {
         $this->relatedTitles->removeElement($relatedTitle);
 
         return $this;
@@ -1084,14 +692,12 @@ class Title {
     /**
      * @return Collection|Title[]
      */
-    public function getTitlesRelated(): Collection
-    {
+    public function getTitlesRelated() : Collection {
         return $this->titlesRelated;
     }
 
-    public function addTitlesRelated(Title $titlesRelated): self
-    {
-        if (!$this->titlesRelated->contains($titlesRelated)) {
+    public function addTitlesRelated(self $titlesRelated) : self {
+        if ( ! $this->titlesRelated->contains($titlesRelated)) {
             $this->titlesRelated[] = $titlesRelated;
             $titlesRelated->addRelatedTitle($this);
         }
@@ -1099,13 +705,11 @@ class Title {
         return $this;
     }
 
-    public function removeTitlesRelated(Title $titlesRelated): self
-    {
+    public function removeTitlesRelated(self $titlesRelated) : self {
         if ($this->titlesRelated->removeElement($titlesRelated)) {
             $titlesRelated->removeRelatedTitle($this);
         }
 
         return $this;
     }
-
 }

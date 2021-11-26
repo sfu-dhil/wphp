@@ -45,7 +45,7 @@ class EnFixtures extends Fixture implements FixtureGroupInterface {
             $fixture->setPrice(($i + 1) . 'p');
             $fixture->setContemporary('Contemporary ' . $i);
             $fixture->setShelfmark('QA 76.' . $i);
-            $fixture->setEditions($i + 1);
+            $fixture->setEditions((string) ($i + 1));
             $fixture->setGenre('Genre ' . $i);
             $fixture->setNotes('Lorem Ipsum');
             $manager->persist($fixture);

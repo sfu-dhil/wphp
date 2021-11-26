@@ -17,15 +17,9 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
  * Service to check the current user's roles.
  */
 class RoleChecker {
-    /**
-     * @var AuthorizationCheckerInterface
-     */
-    private $authChecker;
+    private AuthorizationCheckerInterface $authChecker;
 
-    /**
-     * @var TokenStorageInterface
-     */
-    private $tokenStorage;
+    private TokenStorageInterface $tokenStorage;
 
     /**
      * RoleChecker constructor.
@@ -37,12 +31,8 @@ class RoleChecker {
 
     /**
      * Check that the current use has the given role.
-     *
-     * @param string $role
-     *
-     * @return bool
      */
-    public function hasRole($role) {
+    public function hasRole(string $role) : bool {
         if ( ! $this->tokenStorage->getToken()) {
             return false;
         }

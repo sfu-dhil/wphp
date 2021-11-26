@@ -37,113 +37,85 @@ class Person {
     public const TRANS = 'T';
 
     /**
-     * @var int
-     *
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    private int $id;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="last_name", type="string", length=100, nullable=true)
      */
-    private $lastName;
+    private ?string  $lastName = null;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="first_name", type="string", length=100, nullable=true)
      */
-    private $firstName;
+    private ?string $firstName = null;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="title", type="string", length=200, nullable=true)
      */
-    private $title;
+    private ?string  $title = null;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="gender", type="string", length=1, nullable=false, options={"default": "U"})
+     * @ORM\Column(name="gender", type="string", length=1, nullable=false, options={"default" = "U"})
      */
-    private $gender;
+    private string $gender;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="dob", type="string", length=20, nullable=true)
      */
-    private $dob;
+    private ?string  $dob = null;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="dod", type="string", length=20, nullable=true)
      */
-    private $dod;
+    private ?string  $dod = null;
 
     /**
-     * @var string
-     *
      * @Assert\Url
      * @ORM\Column(name="viaf_permalink", type="string", length=127, nullable=true)
      */
-    private $viafUrl;
+    private ?string  $viafUrl = null;
 
     /**
-     * @var string
-     *
      * @Assert\Url
      * @ORM\Column(name="wikipedia_link", type="string", length=127, nullable=true)
      */
-    private $wikipediaUrl;
+    private ?string $wikipediaUrl = null;
 
     /**
-     * @var string
-     *
      * @Assert\Url
      * @ORM\Column(name="image_link", type="string", length=255, nullable=true)
      */
-    private $imageUrl;
+    private ?string  $imageUrl = null;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="notes", type="text", nullable=true)
      */
-    private $notes;
+    private ?string $notes = null;
 
     /**
-     * @var bool
-     *
      * @ORM\Column(name="finalcheck", type="boolean", nullable=false)
      */
-    private $finalcheck = '0';
+    private bool $finalcheck = false;
 
     /**
-     * @var Geonames
-     *
      * @ORM\ManyToOne(targetEntity="Geonames", inversedBy="peopleBorn")
      * @ORM\JoinColumns({
      *     @ORM\JoinColumn(name="city_id_of_birth", referencedColumnName="geonameid")
      * })
      */
-    private $cityOfBirth;
+    private ?Geonames $cityOfBirth = null;
 
     /**
-     * @var Geonames
-     *
      * @ORM\ManyToOne(targetEntity="Geonames", inversedBy="peopleDied")
      * @ORM\JoinColumns({
      *     @ORM\JoinColumn(name="city_id_of_death", referencedColumnName="geonameid")
      * })
      */
-    private $cityOfDeath;
+    private ?Geonames $cityOfDeath = null;
 
     /**
      * @var Collection|TitleRole[]
@@ -177,350 +149,173 @@ class Person {
         return "({$this->id}) " . implode(', ', array_filter([$this->lastName, $this->firstName]));
     }
 
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId() {
+    public function getId() : ?int {
         return $this->id;
     }
 
-    /**
-     * Set lastName.
-     *
-     * @param string $lastName
-     *
-     * @return Person
-     */
-    public function setLastName($lastName) {
+    public function getLastName() : ?string {
+        return $this->lastName;
+    }
+
+    public function setLastName(?string $lastName) : self {
         $this->lastName = $lastName;
 
         return $this;
     }
 
-    /**
-     * Get lastName.
-     *
-     * @return string
-     */
-    public function getLastName() {
-        return $this->lastName;
+    public function getFirstName() : ?string {
+        return $this->firstName;
     }
 
-    /**
-     * Set firstName.
-     *
-     * @param string $firstName
-     *
-     * @return Person
-     */
-    public function setFirstName($firstName) {
+    public function setFirstName(?string $firstName) : self {
         $this->firstName = $firstName;
 
         return $this;
     }
 
-    /**
-     * Get firstName.
-     *
-     * @return string
-     */
-    public function getFirstName() {
-        return $this->firstName;
+    public function getTitle() : ?string {
+        return $this->title;
     }
 
-    /**
-     * Set title.
-     *
-     * @param string $title
-     *
-     * @return Person
-     */
-    public function setTitle($title) {
+    public function setTitle(?string $title) : self {
         $this->title = $title;
 
         return $this;
     }
 
-    /**
-     * Get title.
-     *
-     * @return string
-     */
-    public function getTitle() {
-        return $this->title;
+    public function getGender() : ?string {
+        return $this->gender;
     }
 
-    /**
-     * Set gender.
-     *
-     * @param string $gender
-     *
-     * @return Person
-     */
-    public function setGender($gender) {
+    public function setGender(string $gender) : self {
         $this->gender = $gender;
 
         return $this;
     }
 
-    /**
-     * Get gender.
-     *
-     * @return string
-     */
-    public function getGender() {
-        return $this->gender;
-    }
-
-    /**
-     * Set dob.
-     *
-     * @param string $dob
-     *
-     * @return Person
-     */
-    public function setDob($dob) {
-        $this->dob = $dob;
-
-        return $this;
-    }
-
-    /**
-     * Get dob.
-     *
-     * @return string
-     */
-    public function getDob() {
+    public function getDob() : ?string {
         if ('0000-00-00' === $this->dob) {
-            return;
+            return null;
         }
 
         return $this->dob;
     }
 
-    /**
-     * Set dod.
-     *
-     * @param string $dod
-     *
-     * @return Person
-     */
-    public function setDod($dod) {
-        $this->dod = $dod;
+    public function setDob(?string $dob) : self {
+        $this->dob = $dob;
 
         return $this;
     }
 
-    /**
-     * Get dod.
-     *
-     * @return string
-     */
-    public function getDod() {
+    public function getDod() : ?string {
         if ('0000-00-00' === $this->dod) {
-            return;
+            return null;
         }
 
         return $this->dod;
     }
 
-    /**
-     * Set notes.
-     *
-     * @param string $notes
-     *
-     * @return Title
-     */
-    public function setNotes($notes) {
+    public function setDod(?string $dod) : self {
+        $this->dod = $dod;
+
+        return $this;
+    }
+
+    public function getViafUrl() : ?string {
+        return $this->viafUrl;
+    }
+
+    public function setViafUrl(?string $viafUrl) : self {
+        $this->viafUrl = $viafUrl;
+
+        return $this;
+    }
+
+    public function getWikipediaUrl() : ?string {
+        return $this->wikipediaUrl;
+    }
+
+    public function setWikipediaUrl(?string $wikipediaUrl) : self {
+        $this->wikipediaUrl = $wikipediaUrl;
+
+        return $this;
+    }
+
+    public function getImageUrl() : ?string {
+        return $this->imageUrl;
+    }
+
+    public function setImageUrl(?string $imageUrl) : self {
+        $this->imageUrl = $imageUrl;
+
+        return $this;
+    }
+
+    public function getNotes() : ?string {
+        return $this->notes;
+    }
+
+    public function setNotes(?string $notes) : self {
         $this->notes = $notes;
 
         return $this;
     }
 
-    /**
-     * Get notes.
-     *
-     * @return string
-     */
-    public function getNotes() {
-        return $this->notes;
+    public function getFinalcheck() : ?bool {
+        return $this->finalcheck;
     }
 
-    /**
-     * Set finalcheck.
-     *
-     * @param bool $finalcheck
-     *
-     * @return Person
-     */
-    public function setFinalcheck($finalcheck) {
+    public function setFinalcheck(bool $finalcheck) : self {
         $this->finalcheck = $finalcheck;
 
         return $this;
     }
 
-    /**
-     * Get finalcheck.
-     *
-     * @return bool
-     */
-    public function getFinalcheck() {
-        return $this->finalcheck;
+    public function getCityOfBirth() : ?Geonames {
+        return $this->cityOfBirth;
     }
 
-    /**
-     * Set cityOfBirth.
-     *
-     * @param Geonames $cityOfBirth
-     *
-     * @return Person
-     */
-    public function setCityOfBirth(?Geonames $cityOfBirth = null) {
+    public function setCityOfBirth(?Geonames $cityOfBirth) : self {
         $this->cityOfBirth = $cityOfBirth;
 
         return $this;
     }
 
-    /**
-     * Get cityOfBirth.
-     *
-     * @return Geonames
-     */
-    public function getCityOfBirth() {
-        return $this->cityOfBirth;
+    public function getCityOfDeath() : ?Geonames {
+        return $this->cityOfDeath;
     }
 
-    /**
-     * Set cityOfDeath.
-     *
-     * @param Geonames $cityOfDeath
-     *
-     * @return Person
-     */
-    public function setCityOfDeath(?Geonames $cityOfDeath = null) {
+    public function setCityOfDeath(?Geonames $cityOfDeath) : self {
         $this->cityOfDeath = $cityOfDeath;
 
         return $this;
     }
 
     /**
-     * Get cityOfDeath.
-     *
-     * @return Geonames
-     */
-    public function getCityOfDeath() {
-        return $this->cityOfDeath;
-    }
-
-    /**
-     * Add titleRole.
-     *
-     * @return Person
-     */
-    public function addTitleRole(TitleRole $titleRole) {
-        $this->titleRoles[] = $titleRole;
-
-        return $this;
-    }
-
-    /**
-     * Remove titleRole.
-     */
-    public function removeTitleRole(TitleRole $titleRole) : void {
-        $this->titleRoles->removeElement($titleRole);
-    }
-
-    /**
-     * Get titleRoles.
-     *
-     * @param bool $sort
-     *
      * @return Collection|TitleRole[]
      */
-    public function getTitleRoles($sort = false) {
-        if ( ! $sort) {
-            return $this->titleRoles;
+    public function getTitleRoles() : Collection {
+        return $this->titleRoles;
+    }
+
+    public function addTitleRole(TitleRole $titleRole) : self {
+        if ( ! $this->titleRoles->contains($titleRole)) {
+            $this->titleRoles[] = $titleRole;
+            $titleRole->setPerson($this);
         }
 
-        $iterator = $this->titleRoles->getIterator();
-        $iterator->uasort(function (TitleRole $a, TitleRole $b) {
-            $dateCmp = $a->getTitle()->getPubdate() <=> $b->getTitle()->getPubdate();
-            if (0 !== $dateCmp) {
-                return $dateCmp;
+        return $this;
+    }
+
+    public function removeTitleRole(TitleRole $titleRole) : self {
+        if ($this->titleRoles->removeElement($titleRole)) {
+            // set the owning side to null (unless already changed)
+            if ($titleRole->getPerson() === $this) {
+                $titleRole->setPerson(null);
             }
-
-            return strcasecmp($a->getTitle()->getTitle(), $b->getTitle()->getTitle());
-        });
-
-        return new ArrayCollection(iterator_to_array($iterator));
-    }
-
-    /**
-     * Set viafUrl.
-     *
-     * @param null|string $viafUrl
-     *
-     * @return Person
-     */
-    public function setViafUrl($viafUrl = null) {
-        $this->viafUrl = $viafUrl;
+        }
 
         return $this;
-    }
-
-    /**
-     * Get viafUrl.
-     *
-     * @return null|string
-     */
-    public function getViafUrl() {
-        return $this->viafUrl;
-    }
-
-    /**
-     * Set wikipediaUrl.
-     *
-     * @param null|string $wikipediaUrl
-     *
-     * @return Person
-     */
-    public function setWikipediaUrl($wikipediaUrl = null) {
-        $this->wikipediaUrl = $wikipediaUrl;
-
-        return $this;
-    }
-
-    /**
-     * Get wikipediaUrl.
-     *
-     * @return null|string
-     */
-    public function getWikipediaUrl() {
-        return $this->wikipediaUrl;
-    }
-
-    /**
-     * Set imageUrl.
-     *
-     * @param null|string $imageUrl
-     *
-     * @return Person
-     */
-    public function setImageUrl($imageUrl = null) {
-        $this->imageUrl = $imageUrl;
-
-        return $this;
-    }
-
-    /**
-     * Get imageUrl.
-     *
-     * @return null|string
-     */
-    public function getImageUrl() {
-        return $this->imageUrl;
     }
 
     /**

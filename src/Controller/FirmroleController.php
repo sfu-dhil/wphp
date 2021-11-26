@@ -37,33 +37,25 @@ class FirmroleController extends AbstractController implements PaginatorAwareInt
      *
      * @Route("/", name="firmrole_index", methods={"GET"})
      * @Template
-     *
-     * @param FirmroleRepository $repo
-     *
-     * @return array
      */
-    public function indexAction(Request $request, EntityManagerInterface $em) {
-        $dql = 'SELECT e FROM App:Firmrole e ORDER BY e.name';
-        $query = $em->createQuery($dql);
-        $firmroles = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25, [
-            'defaultSortFieldName' => 'e.name',
-            'defaultSortDirection' => 'asc',
-        ]);
+    public function indexAction(Request $request, FirmroleRepository $repository) : array {
+        $pageSize = $this->getParameter('page_size');
+        $query = $repository->indexQuery();
+        $firmroles = $this->paginator->paginate($query, $request->query->getInt('page', 1), $pageSize);
 
         return [
             'firmroles' => $firmroles,
-            'repo' => $em->getRepository(Firmrole::class),
+            'repo' => $repository,
         ];
     }
 
     /**
      * Typeahead action for editor widgets.
      *
-     * @return JsonResponse
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
      * @Route("/typeahead", name="firmrole_typeahead", methods={"GET"})
      */
-    public function typeaheadAction(Request $request, FirmroleRepository $repo) {
+    public function typeaheadAction(Request $request, FirmroleRepository $repo) : JsonResponse {
         $q = $request->query->get('q');
         if ( ! $q) {
             return new JsonResponse([]);
@@ -114,14 +106,11 @@ class FirmroleController extends AbstractController implements PaginatorAwareInt
      *
      * @Route("/{id}", name="firmrole_show", methods={"GET"})
      * @Template
-     *
-     * @return array
      */
-    public function showAction(Request $request, Firmrole $firmrole, EntityManagerInterface $em) {
-        $dql = 'SELECT tfr FROM App:TitleFirmrole tfr WHERE tfr.firmrole = :firmrole';
-        $query = $em->createQuery($dql);
-        $query->setParameter('firmrole', $firmrole);
-        $titleFirmRoles = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
+    public function showAction(Request $request, Firmrole $firmrole, FirmroleRepository $repository) : array {
+        $pageSize = $this->getParameter('page_size');
+        $query = $repository->titlesQuery($firmrole);
+        $titleFirmRoles = $this->paginator->paginate($query, $request->query->getInt('page', 1), $pageSize);
 
         return [
             'firmrole' => $firmrole,
@@ -160,10 +149,8 @@ class FirmroleController extends AbstractController implements PaginatorAwareInt
      *
      * @Route("/{id}/delete", name="firmrole_delete", methods={"GET"})
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
-     *
-     * @return RedirectResponse
      */
-    public function deleteAction(Request $request, Firmrole $firmrole, EntityManagerInterface $em) {
+    public function deleteAction(Request $request, Firmrole $firmrole, EntityManagerInterface $em) : RedirectResponse {
         $em->remove($firmrole);
         $em->flush();
         $this->addFlash('success', 'The firmrole was deleted.');

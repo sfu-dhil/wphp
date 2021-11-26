@@ -30,37 +30,21 @@ class Builder implements ContainerAwareInterface {
 
     /**
      * List of spotlight menu items.
-     *
-     * @var array
      */
-    private $spotlightMenuItems;
+    private array $spotlightMenuItems;
 
-    /**
-     * @var EntityManagerInterface
-     */
-    private $em;
+    private EntityManagerInterface $em;
 
-    /**
-     * @var FactoryInterface
-     */
-    private $factory;
+    private FactoryInterface $factory;
 
-    /**
-     * @var AuthorizationCheckerInterface
-     */
-    private $authChecker;
+    private AuthorizationCheckerInterface $authChecker;
 
-    /**
-     * @var TokenStorageInterface
-     */
-    private $tokenStorage;
+    private TokenStorageInterface $tokenStorage;
 
     /**
      * Build the menu builder.
-     *
-     * @param array $spotlightMenuItems
      */
-    public function __construct($spotlightMenuItems, EntityManagerInterface $em, FactoryInterface $factory, AuthorizationCheckerInterface $authChecker, TokenStorageInterface $tokenStorage) {
+    public function __construct(array $spotlightMenuItems, EntityManagerInterface $em, FactoryInterface $factory, AuthorizationCheckerInterface $authChecker, TokenStorageInterface $tokenStorage) {
         $this->spotlightMenuItems = $spotlightMenuItems;
         $this->em = $em;
         $this->factory = $factory;
@@ -70,12 +54,8 @@ class Builder implements ContainerAwareInterface {
 
     /**
      * Check if the current user is both logged in and granted a role.
-     *
-     * @param string $role
-     *
-     * @return bool
      */
-    private function hasRole($role) {
+    private function hasRole(string $role) : bool {
         if ( ! $this->tokenStorage->getToken()) {
             return false;
         }
@@ -98,10 +78,8 @@ class Builder implements ContainerAwareInterface {
 
     /**
      * Build the navigation menu and return it.
-     *
-     * @return ItemInterface
      */
-    public function mainMenu(array $options) {
+    public function mainMenu(array $options) : ItemInterface {
         $menu = $this->factory->createItem('root');
         $menu->setChildrenAttributes([
             'class' => 'nav navbar-nav',
@@ -204,10 +182,8 @@ class Builder implements ContainerAwareInterface {
 
     /**
      * Build the spotlight menu and return it.
-     *
-     * @return ItemInterface
      */
-    public function spotlightMenu(array $options) {
+    public function spotlightMenu(array $options) : ItemInterface {
         $menu = $this->factory->createItem('root');
         $menu->setChildrenAttributes([
             'class' => 'nav navbar-nav',
@@ -244,10 +220,8 @@ class Builder implements ContainerAwareInterface {
 
     /**
      * Build the research menu and return it.
-     *
-     * @return ItemInterface
      */
-    public function researchMenu(array $options) {
+    public function researchMenu(array $options) : ItemInterface {
         $menu = $this->factory->createItem('root');
         $menu->setChildrenAttributes([
             'class' => 'nav navbar-nav',
@@ -263,8 +237,7 @@ class Builder implements ContainerAwareInterface {
         $research->setChildrenAttribute('class', 'dropdown-menu');
 
         $category = $this->em->getRepository(PostCategory::class)
-            ->findOneBy(['name' => 'research'])
-        ;
+            ->findOneBy(['name' => 'research']);
 
         if ( ! $category) {
             return $research;
@@ -313,10 +286,8 @@ class Builder implements ContainerAwareInterface {
 
     /**
      * Build a user menu.
-     *
-     * @return ItemInterface
      */
-    public function userNavMenu(array $options) {
+    public function userNavMenu(array $options) : ItemInterface {
         $name = 'Login';
         if (isset($options['name'])) {
             $name = $options['name'];
@@ -388,10 +359,8 @@ class Builder implements ContainerAwareInterface {
 
     /**
      * Build a menu for blog posts.
-     *
-     * @return ItemInterface
      */
-    public function postNavMenu(array $options) {
+    public function postNavMenu(array $options) : ItemInterface {
         $menu = $this->factory->createItem('root');
         $menu->setChildrenAttributes([
             'class' => 'nav navbar-nav',
@@ -421,8 +390,7 @@ class Builder implements ContainerAwareInterface {
             ->innerJoin(PostCategory::class, 'pc', Join::WITH, 'p.category = pc')
             ->where('pc.name = \'news\'')
             ->orderBy('p.created', 'DESC')
-            ->setMaxResults(10)
-        ;
+            ->setMaxResults(10);
         if ( ! $this->hasRole('ROLE_USER')) {
             $status = $this->em->getRepository('NinesBlogBundle:PostStatus')->findOneBy([
                 'public' => true,

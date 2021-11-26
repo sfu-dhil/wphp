@@ -12,6 +12,7 @@ namespace App\Repository;
 
 use App\Entity\Firm;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -26,14 +27,21 @@ class FirmRepository extends ServiceEntityRepository {
         parent::__construct($registry, Firm::class);
     }
 
+    public function indexQuery(?string $sort) : Query {
+        $qb = $this->createQueryBuilder('e');
+        if ('g.name+e.name' === $sort) {
+            $qb->leftJoin('e.city', 'g');
+        }
+
+        return $qb->getQuery();
+    }
+
     /**
      * Do a name search for a typeahead widget.
      *
-     * @param string $q
-     *
-     * @return mixed
+     * @return Collection|Firm[]
      */
-    public function typeaheadQuery($q) {
+    public function typeaheadQuery(string $q) {
         $qb = $this->createQueryBuilder('e');
         $qb->where('e.name LIKE :q');
         $qb->orWhere('e.id = :id');
@@ -50,9 +58,9 @@ class FirmRepository extends ServiceEntityRepository {
      *
      * @param array $data The search form's data from $form->getData().
      *
-     * @return Query
+     * @return array|Query
      */
-    public function buildSearchQuery($data) {
+    public function buildSearchQuery(array $data) {
         $qb = $this->createQueryBuilder('e');
         $qb->orderBy('e.name');
         $qb->addOrderBy('e.startDate');
@@ -178,8 +186,7 @@ class FirmRepository extends ServiceEntityRepository {
             $tfrAlias = 'tfr_' . $idx;
             $tAlias = 't_' . $idx;
             $qb->innerJoin('e.titleFirmroles', $tfrAlias)
-                ->innerJoin("{$tfrAlias}.title", $tAlias)
-            ;
+                ->innerJoin("{$tfrAlias}.title", $tAlias);
 
             if (isset($filter['id']) && $filter['id']) {
                 $qb->andWhere("{$tAlias}.id = :{$tAlias}_id");
@@ -229,8 +236,7 @@ class FirmRepository extends ServiceEntityRepository {
             $qb->innerJoin('e.titleFirmroles', $tfrAlias)
                 ->innerJoin("{$tfrAlias}.title", $tAlias)
                 ->innerJoin("{$tAlias}.titleRoles", $trAlias)
-                ->innerJoin("{$trAlias}.person", $pAlias)
-            ;
+                ->innerJoin("{$trAlias}.person", $pAlias);
 
             if (isset($filter['id']) && $filter['id']) {
                 $qb->andWhere("{$pAlias}.id = :{$pAlias}_id");
@@ -266,12 +272,8 @@ class FirmRepository extends ServiceEntityRepository {
 
     /**
      * Find and return $limit firms, selected at random.
-     *
-     * @param int $limit
-     *
-     * @return Collection
      */
-    public function random($limit) {
+    public function random(int $limit) : Collection {
         $qb = $this->createQueryBuilder('e');
         $qb->orderBy('RAND()');
         $qb->setMaxResults($limit);

@@ -46,15 +46,9 @@ class TitleTest extends TestCase {
             [252, 0, 1, 1],
             [0, 0, 0, 0],
             [24, 12, 1, 0],
-            [0, 'I am a chicken', 0, 0],
-            [0, '3 chickens', 0, 0],
-            [0, 0, '3 chickens', 0],
-            [0, 0, 0, '3 chickens'],
             [-240, 0, 0, -1],
             [0, null, null, null],
             [40, 40, null, 0],
-            [0, false, 0, 0],
-            [12, false, 1, 0],
         ];
     }
 

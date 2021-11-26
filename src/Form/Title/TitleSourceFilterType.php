@@ -28,7 +28,7 @@ class TitleSourceFilterType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) : void {
         $builder->add('source', EntityType::class, [
             'class' => Source::class,
-            'query_builder' => fn (ServiceEntityRepository $er) => $er->createQueryBuilder('ts')->orderBy('ts.name', 'ASC'),
+            'query_builder' => fn(ServiceEntityRepository $er) => $er->createQueryBuilder('ts')->orderBy('ts.name', 'ASC'),
             'label' => 'Source',
             'choice_label' => 'name',
             'required' => false,

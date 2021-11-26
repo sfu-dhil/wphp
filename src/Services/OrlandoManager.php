@@ -18,13 +18,8 @@ class OrlandoManager {
 
     /**
      * Get the named field for the Orlando data.
-     *
-     * @param string $data
-     * @param string $name
-     *
-     * @return array
      */
-    public function getField($data, $name = 'standard') {
+    public function getField(?string $data, string $name = 'standard') : array {
         $name = mb_strtolower($name);
         $fields = [];
         if ( ! $data) {

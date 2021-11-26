@@ -27,14 +27,18 @@ class PersonRepository extends ServiceEntityRepository {
         parent::__construct($registry, Person::class);
     }
 
+    public function indexQuery() : Query {
+        $qb = $this->createQueryBuilder('e');
+
+        return $qb->getQuery();
+    }
+
     /**
      * Do a name search for a typeahead query.
      *
-     * @param string $q
-     *
      * @return mixed
      */
-    public function typeaheadQuery($q) {
+    public function typeaheadQuery(string $q) {
         $qb = $this->createQueryBuilder('e');
         $qb->where("CONCAT(COALESCE(e.lastName, ''), ' ', COALESCE(e.firstName, '')) LIKE :q");
         $qb->orWhere('e.id = :id');
@@ -48,14 +52,9 @@ class PersonRepository extends ServiceEntityRepository {
     /**
      * Find people by name and year.
      *
-     * @param string $firstName
-     * @param string $lastName
-     * @param string $dob
-     * @param string $dod
-     *
      * @return mixed
      */
-    public function findByNameDates($firstName, $lastName, $dob, $dod) {
+    public function findByNameDates(string $firstName, string $lastName, string $dob, string $dod) {
         $qb = $this->createQueryBuilder('e');
         $qb->andWhere('e.lastName = :last');
         $qb->setParameter('last', $lastName);
@@ -77,11 +76,9 @@ class PersonRepository extends ServiceEntityRepository {
     /**
      * Build and return a complex search query from a search form.
      *
-     * @param array $data
-     *
-     * @return Query
+     * @return array|Query
      */
-    public function buildSearchQuery($data) {
+    public function buildSearchQuery(array $data) {
         $qb = $this->createQueryBuilder('e');
         $qb->orderBy('e.lastName');
         $qb->addOrderBy('e.firstName');
@@ -314,8 +311,7 @@ class PersonRepository extends ServiceEntityRepository {
             $qb->innerJoin('e.titleRoles', $trAlias)
                 ->innerJoin("{$trAlias}.title", $tAlias)
                 ->innerJoin("{$tAlias}.titleFirmroles", $tfrAlias)
-                ->innerJoin("{$tfrAlias}.firm", $fAlias)
-            ;
+                ->innerJoin("{$tfrAlias}.firm", $fAlias);
 
             if (isset($filter['firm_id']) && $filter['firm_id']) {
                 $qb->andWhere("{$fAlias}.id = :{$fAlias}_id");
@@ -359,11 +355,9 @@ class PersonRepository extends ServiceEntityRepository {
     /**
      * Find and return $limit random person entities.
      *
-     * @param int $limit
-     *
      * @return Collection|Person[]
      */
-    public function random($limit) {
+    public function random(int $limit) {
         $qb = $this->createQueryBuilder('e');
         $qb->orderBy('RAND()');
         $qb->setMaxResults($limit);

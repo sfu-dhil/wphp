@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
-use DateTime;
+use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -27,138 +27,102 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Geonames {
     /**
-     * @var int
-     *
      * @ORM\Column(name="geonameid", type="integer", nullable=false)
      * @ORM\Id
      */
-    private $geonameid;
+    private int $geonameid;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="name", type="string", length=200, nullable=true)
      */
-    private $name;
+    private ?string $name = null;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="asciiname", type="string", length=200, nullable=true)
      */
-    private $asciiname;
+    private ?string  $asciiname = null;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="alternatenames", type="string", length=4000, nullable=true)
      */
-    private $alternatenames;
+    private ?string  $alternatenames = null;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="latitude", type="decimal", precision=10, scale=7, nullable=true)
      */
-    private $latitude;
+    private ?float $latitude = null;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="longitude", type="decimal", precision=10, scale=7, nullable=true)
      */
-    private $longitude;
+    private ?float $longitude = null;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="fclass", type="string", length=1, nullable=true)
      */
-    private $fclass;
+    private ?string  $fclass = null;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="fcode", type="string", length=10, nullable=true)
      */
-    private $fcode;
+    private ?string  $fcode = null;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="country", type="string", length=2, nullable=true)
      */
-    private $country;
+    private ?string $country = null;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="cc2", type="string", length=60, nullable=true)
      */
-    private $cc2;
+    private ?string $cc2 = null;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="admin1", type="string", length=20, nullable=true)
      */
-    private $admin1;
+    private ?string  $admin1 = null;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="admin2", type="string", length=80, nullable=true)
      */
-    private $admin2;
+    private ?string  $admin2 = null;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="admin3", type="string", length=20, nullable=true)
      */
-    private $admin3;
+    private ?string  $admin3 = null;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="admin4", type="string", length=20, nullable=true)
      */
-    private $admin4;
+    private ?string  $admin4 = null;
 
     /**
-     * @var int
-     *
      * @ORM\Column(name="population", type="integer", nullable=true)
      */
-    private $population;
+    private ?int $population = null;
 
     /**
-     * @var int
-     *
      * @ORM\Column(name="elevation", type="integer", nullable=true)
      */
-    private $elevation;
+    private ?int $elevation = null;
 
     /**
-     * @var int
-     *
      * @ORM\Column(name="gtopo30", type="integer", nullable=true)
      */
-    private $gtopo30;
+    private ?int $gtopo30 = null;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="timezone", type="string", length=40, nullable=true)
      */
-    private $timezone;
+    private ?string $timezone = null;
 
     /**
-     * @var DateTime
+     * @var ?DateTimeImmutable
      *
-     * @ORM\Column(name="moddate", type="date", nullable=true)
+     * @ORM\Column(name="moddate", type="date_immutable", nullable=true)
      */
-    private $moddate;
+    private ?DateTimeImmutable $moddate = null;
 
     /**
      * @var Collection|Title[]
@@ -201,529 +165,301 @@ class Geonames {
         return $this->name . ' (' . $this->country . ')';
     }
 
-    /**
-     * Set geonameid.
-     *
-     * @param string $geonameid
-     *
-     * @return Geonames
-     */
-    public function setGeonameid($geonameid) {
+    public function getGeonameid() : ?int {
+        return $this->geonameid;
+    }
+
+    public function setGeonameid(?int $geonameid) : self {
         $this->geonameid = $geonameid;
 
         return $this;
     }
 
-    /**
-     * Get geonameid.
-     *
-     * @return int
-     */
-    public function getGeonameid() {
-        return $this->geonameid;
+    public function getName() : ?string {
+        return $this->name;
     }
 
-    /**
-     * Set name.
-     *
-     * @param string $name
-     *
-     * @return Geonames
-     */
-    public function setName($name) {
+    public function setName(?string $name) : self {
         $this->name = $name;
 
         return $this;
     }
 
-    /**
-     * Get name.
-     *
-     * @return string
-     */
-    public function getName() {
-        return $this->name;
+    public function getAsciiname() : ?string {
+        return $this->asciiname;
     }
 
-    /**
-     * Set asciiname.
-     *
-     * @param string $asciiname
-     *
-     * @return Geonames
-     */
-    public function setAsciiname($asciiname) {
+    public function setAsciiname(?string $asciiname) : self {
         $this->asciiname = $asciiname;
 
         return $this;
     }
 
-    /**
-     * Get asciiname.
-     *
-     * @return string
-     */
-    public function getAsciiname() {
-        return $this->asciiname;
+    public function getAlternatenames() : ?string {
+        return $this->alternatenames;
     }
 
-    /**
-     * Set alternatenames.
-     *
-     * @param string $alternatenames
-     *
-     * @return Geonames
-     */
-    public function setAlternatenames($alternatenames) {
+    public function setAlternatenames(?string $alternatenames) : self {
         $this->alternatenames = $alternatenames;
 
         return $this;
     }
 
-    /**
-     * Get alternatenames.
-     *
-     * @return string
-     */
-    public function getAlternatenames() {
-        return $this->alternatenames;
+    public function getLatitude() : ?float {
+        return $this->latitude;
     }
 
-    /**
-     * Set latitude.
-     *
-     * @param string $latitude
-     *
-     * @return Geonames
-     */
-    public function setLatitude($latitude) {
+    public function setLatitude(?float $latitude) : self {
         $this->latitude = $latitude;
 
         return $this;
     }
 
-    /**
-     * Get latitude.
-     *
-     * @return string
-     */
-    public function getLatitude() {
-        return $this->latitude;
+    public function getLongitude() : ?float {
+        return $this->longitude;
     }
 
-    /**
-     * Set longitude.
-     *
-     * @param string $longitude
-     *
-     * @return Geonames
-     */
-    public function setLongitude($longitude) {
+    public function setLongitude(?float $longitude) : self {
         $this->longitude = $longitude;
 
         return $this;
     }
 
-    /**
-     * Get longitude.
-     *
-     * @return string
-     */
-    public function getLongitude() {
-        return $this->longitude;
+    public function getFclass() : ?string {
+        return $this->fclass;
     }
 
-    /**
-     * Set fclass.
-     *
-     * @param string $fclass
-     *
-     * @return Geonames
-     */
-    public function setFclass($fclass) {
+    public function setFclass(?string $fclass) : self {
         $this->fclass = $fclass;
 
         return $this;
     }
 
-    /**
-     * Get fclass.
-     *
-     * @return string
-     */
-    public function getFclass() {
-        return $this->fclass;
+    public function getFcode() : ?string {
+        return $this->fcode;
     }
 
-    /**
-     * Set fcode.
-     *
-     * @param string $fcode
-     *
-     * @return Geonames
-     */
-    public function setFcode($fcode) {
+    public function setFcode(?string $fcode) : self {
         $this->fcode = $fcode;
 
         return $this;
     }
 
-    /**
-     * Get fcode.
-     *
-     * @return string
-     */
-    public function getFcode() {
-        return $this->fcode;
+    public function getCountry() : ?string {
+        return $this->country;
     }
 
-    /**
-     * Set country.
-     *
-     * @param string $country
-     *
-     * @return Geonames
-     */
-    public function setCountry($country) {
+    public function setCountry(?string $country) : self {
         $this->country = $country;
 
         return $this;
     }
 
-    /**
-     * Get country.
-     *
-     * @return string
-     */
-    public function getCountry() {
-        return $this->country;
+    public function getCc2() : ?string {
+        return $this->cc2;
     }
 
-    /**
-     * Set cc2.
-     *
-     * @param string $cc2
-     *
-     * @return Geonames
-     */
-    public function setCc2($cc2) {
+    public function setCc2(?string $cc2) : self {
         $this->cc2 = $cc2;
 
         return $this;
     }
 
-    /**
-     * Get cc2.
-     *
-     * @return string
-     */
-    public function getCc2() {
-        return $this->cc2;
+    public function getAdmin1() : ?string {
+        return $this->admin1;
     }
 
-    /**
-     * Set admin1.
-     *
-     * @param string $admin1
-     *
-     * @return Geonames
-     */
-    public function setAdmin1($admin1) {
+    public function setAdmin1(?string $admin1) : self {
         $this->admin1 = $admin1;
 
         return $this;
     }
 
-    /**
-     * Get admin1.
-     *
-     * @return string
-     */
-    public function getAdmin1() {
-        return $this->admin1;
+    public function getAdmin2() : ?string {
+        return $this->admin2;
     }
 
-    /**
-     * Set admin2.
-     *
-     * @param string $admin2
-     *
-     * @return Geonames
-     */
-    public function setAdmin2($admin2) {
+    public function setAdmin2(?string $admin2) : self {
         $this->admin2 = $admin2;
 
         return $this;
     }
 
-    /**
-     * Get admin2.
-     *
-     * @return string
-     */
-    public function getAdmin2() {
-        return $this->admin2;
+    public function getAdmin3() : ?string {
+        return $this->admin3;
     }
 
-    /**
-     * Set admin3.
-     *
-     * @param string $admin3
-     *
-     * @return Geonames
-     */
-    public function setAdmin3($admin3) {
+    public function setAdmin3(?string $admin3) : self {
         $this->admin3 = $admin3;
 
         return $this;
     }
 
-    /**
-     * Get admin3.
-     *
-     * @return string
-     */
-    public function getAdmin3() {
-        return $this->admin3;
+    public function getAdmin4() : ?string {
+        return $this->admin4;
     }
 
-    /**
-     * Set admin4.
-     *
-     * @param string $admin4
-     *
-     * @return Geonames
-     */
-    public function setAdmin4($admin4) {
+    public function setAdmin4(?string $admin4) : self {
         $this->admin4 = $admin4;
 
         return $this;
     }
 
-    /**
-     * Get admin4.
-     *
-     * @return string
-     */
-    public function getAdmin4() {
-        return $this->admin4;
+    public function getPopulation() : ?int {
+        return $this->population;
     }
 
-    /**
-     * Set population.
-     *
-     * @param int $population
-     *
-     * @return Geonames
-     */
-    public function setPopulation($population) {
+    public function setPopulation(?int $population) : self {
         $this->population = $population;
 
         return $this;
     }
 
-    /**
-     * Get population.
-     *
-     * @return int
-     */
-    public function getPopulation() {
-        return $this->population;
+    public function getElevation() : ?int {
+        return $this->elevation;
     }
 
-    /**
-     * Set elevation.
-     *
-     * @param int $elevation
-     *
-     * @return Geonames
-     */
-    public function setElevation($elevation) {
+    public function setElevation(?int $elevation) : self {
         $this->elevation = $elevation;
 
         return $this;
     }
 
-    /**
-     * Get elevation.
-     *
-     * @return int
-     */
-    public function getElevation() {
-        return $this->elevation;
+    public function getGtopo30() : ?int {
+        return $this->gtopo30;
     }
 
-    /**
-     * Set gtopo30.
-     *
-     * @param int $gtopo30
-     *
-     * @return Geonames
-     */
-    public function setGtopo30($gtopo30) {
+    public function setGtopo30(?int $gtopo30) : self {
         $this->gtopo30 = $gtopo30;
 
         return $this;
     }
 
-    /**
-     * Get gtopo30.
-     *
-     * @return int
-     */
-    public function getGtopo30() {
-        return $this->gtopo30;
+    public function getTimezone() : ?string {
+        return $this->timezone;
     }
 
-    /**
-     * Set timezone.
-     *
-     * @param string $timezone
-     *
-     * @return Geonames
-     */
-    public function setTimezone($timezone) {
+    public function setTimezone(?string $timezone) : self {
         $this->timezone = $timezone;
 
         return $this;
     }
 
-    /**
-     * Get timezone.
-     *
-     * @return string
-     */
-    public function getTimezone() {
-        return $this->timezone;
+    public function getModdate() : ?DateTimeImmutable {
+        return $this->moddate;
     }
 
-    /**
-     * Set moddate.
-     *
-     * @param DateTime $moddate
-     *
-     * @return Geonames
-     */
-    public function setModdate($moddate) {
+    public function setModdate(?DateTimeImmutable $moddate) : self {
         $this->moddate = $moddate;
 
         return $this;
     }
 
     /**
-     * Get moddate.
-     *
-     * @return DateTime
+     * @return Collection|Title[]
      */
-    public function getModdate() {
-        return $this->moddate;
-    }
-
-    /**
-     * Add title.
-     *
-     * @return Geonames
-     */
-    public function addTitle(Title $title) {
-        $this->titles[] = $title;
-
-        return $this;
-    }
-
-    /**
-     * Remove title.
-     */
-    public function removeTitle(Title $title) : void {
-        $this->titles->removeElement($title);
-    }
-
-    /**
-     * Get titles.
-     *
-     * @return Collection
-     */
-    public function getTitles() {
+    public function getTitles() : Collection {
         return $this->titles;
     }
 
-    /**
-     * Add firm.
-     *
-     * @return Geonames
-     */
-    public function addFirm(Firm $firm) {
-        $this->firms[] = $firm;
+    public function addTitle(Title $title) : self {
+        if ( ! $this->titles->contains($title)) {
+            $this->titles[] = $title;
+            $title->setLocationOfPrinting($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTitle(Title $title) : self {
+        if ($this->titles->removeElement($title)) {
+            // set the owning side to null (unless already changed)
+            if ($title->getLocationOfPrinting() === $this) {
+                $title->setLocationOfPrinting(null);
+            }
+        }
 
         return $this;
     }
 
     /**
-     * Remove firm.
+     * @return Collection|Firm[]
      */
-    public function removeFirm(Firm $firm) : void {
-        $this->firms->removeElement($firm);
-    }
-
-    /**
-     * Get firms.
-     *
-     * @return Collection
-     */
-    public function getFirms() {
+    public function getFirms() : Collection {
         return $this->firms;
     }
 
-    /**
-     * Add peopleBorn.
-     *
-     * @return Geonames
-     */
-    public function addPeopleBorn(Person $peopleBorn) {
-        $this->peopleBorn[] = $peopleBorn;
+    public function addFirm(Firm $firm) : self {
+        if ( ! $this->firms->contains($firm)) {
+            $this->firms[] = $firm;
+            $firm->setCity($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFirm(Firm $firm) : self {
+        if ($this->firms->removeElement($firm)) {
+            // set the owning side to null (unless already changed)
+            if ($firm->getCity() === $this) {
+                $firm->setCity(null);
+            }
+        }
 
         return $this;
     }
 
     /**
-     * Remove peopleBorn.
+     * @return Collection|Person[]
      */
-    public function removePeopleBorn(Person $peopleBorn) : void {
-        $this->peopleBorn->removeElement($peopleBorn);
-    }
-
-    /**
-     * Get peopleBorn.
-     *
-     * @return Collection
-     */
-    public function getPeopleBorn() {
+    public function getPeopleBorn() : Collection {
         return $this->peopleBorn;
     }
 
-    /**
-     * Add peopleDied.
-     *
-     * @return Geonames
-     */
-    public function addPeopleDied(Firm $peopleDied) {
-        $this->peopleDied[] = $peopleDied;
+    public function addPeopleBorn(Person $peopleBorn) : self {
+        if ( ! $this->peopleBorn->contains($peopleBorn)) {
+            $this->peopleBorn[] = $peopleBorn;
+            $peopleBorn->setCityOfBirth($this);
+        }
+
+        return $this;
+    }
+
+    public function removePeopleBorn(Person $peopleBorn) : self {
+        if ($this->peopleBorn->removeElement($peopleBorn)) {
+            // set the owning side to null (unless already changed)
+            if ($peopleBorn->getCityOfBirth() === $this) {
+                $peopleBorn->setCityOfBirth(null);
+            }
+        }
 
         return $this;
     }
 
     /**
-     * Remove peopleDied.
+     * @return Collection|Person[]
      */
-    public function removePeopleDied(Firm $peopleDied) : void {
-        $this->peopleDied->removeElement($peopleDied);
+    public function getPeopleDied() : Collection {
+        return $this->peopleDied;
     }
 
-    /**
-     * Get peopleDied.
-     *
-     * @return Collection
-     */
-    public function getPeopleDied() {
-        return $this->peopleDied;
+    public function addPeopleDied(Person $peopleDied) : self {
+        if ( ! $this->peopleDied->contains($peopleDied)) {
+            $this->peopleDied[] = $peopleDied;
+            $peopleDied->setCityOfDeath($this);
+        }
+
+        return $this;
+    }
+
+    public function removePeopleDied(Person $peopleDied) : self {
+        if ($this->peopleDied->removeElement($peopleDied)) {
+            // set the owning side to null (unless already changed)
+            if ($peopleDied->getCityOfDeath() === $this) {
+                $peopleDied->setCityOfDeath(null);
+            }
+        }
+
+        return $this;
     }
 }

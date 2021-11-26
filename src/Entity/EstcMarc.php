@@ -24,7 +24,7 @@ use Doctrine\ORM\Mapping as ORM;
  *     indexes={
  *         @ORM\Index(name="estcmarc_cid_idx", columns={"cid"}),
  *         @ORM\Index(name="estcmarc_data_ft", columns={"field_data"}, flags={"fulltext"}),
- *         @ORM\Index(name="estcmarc_data_idx", columns={"field_data"}, options={"lengths": {24} }),
+ *         @ORM\Index(name="estcmarc_data_idx", columns={"field_data"}, options={"lengths" = {24} }),
  *         @ORM\Index(name="estcmarc_field_idx", columns={"field"})
  *     }
  * )
@@ -32,41 +32,31 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class EstcMarc {
     /**
-     * @var int
-     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    private int $id;
 
     /**
-     * @var int
-     *
      * @ORM\Column(name="cid", type="integer")
      */
-    private $titleId;
+    private int $titleId;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="field", type="string", length=3)
      */
-    private $field;
+    private string $field;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="subfield", type="string", length=1, nullable=true)
      */
-    private $subfield;
+    private ?string $subfield = null;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="field_data", type="text")
      */
-    private $fieldData;
+    private string $fieldData;
 
     /**
      * Return the field and subfield for this MARC record.
@@ -75,100 +65,47 @@ class EstcMarc {
         return $this->field . $this->subfield;
     }
 
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId() {
+    public function getId() : ?int {
         return $this->id;
     }
 
-    /**
-     * Set titleId.
-     *
-     * @param int $titleId
-     *
-     * @return EstcMarc
-     */
-    public function setTitleId($titleId) {
+    public function getTitleId() : ?int {
+        return $this->titleId;
+    }
+
+    public function setTitleId(int $titleId) : self {
         $this->titleId = $titleId;
 
         return $this;
     }
 
-    /**
-     * Get titleId.
-     *
-     * @return int
-     */
-    public function getTitleId() {
-        return $this->titleId;
+    public function getField() : ?string {
+        return $this->field;
     }
 
-    /**
-     * Set field.
-     *
-     * @param string $field
-     *
-     * @return EstcMarc
-     */
-    public function setField($field) {
+    public function setField(string $field) : self {
         $this->field = $field;
 
         return $this;
     }
 
-    /**
-     * Get field.
-     *
-     * @return string
-     */
-    public function getField() {
-        return $this->field;
+    public function getSubfield() : ?string {
+        return $this->subfield;
     }
 
-    /**
-     * Set subfield.
-     *
-     * @param string $subfield
-     *
-     * @return EstcMarc
-     */
-    public function setSubfield($subfield) {
+    public function setSubfield(?string $subfield) : self {
         $this->subfield = $subfield;
 
         return $this;
     }
 
-    /**
-     * Get subfield.
-     *
-     * @return string
-     */
-    public function getSubfield() {
-        return $this->subfield;
+    public function getFieldData() : ?string {
+        return $this->fieldData;
     }
 
-    /**
-     * Set fieldData.
-     *
-     * @param string $fieldData
-     *
-     * @return EstcMarc
-     */
-    public function setFieldData($fieldData) {
+    public function setFieldData(string $fieldData) : self {
         $this->fieldData = $fieldData;
 
         return $this;
-    }
-
-    /**
-     * Get fieldData.
-     *
-     * @return string
-     */
-    public function getFieldData() {
-        return $this->fieldData;
     }
 }

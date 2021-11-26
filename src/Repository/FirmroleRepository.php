@@ -13,6 +13,9 @@ namespace App\Repository;
 use App\Entity\Firmrole;
 use App\Entity\TitleFirmrole;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -26,14 +29,19 @@ class FirmroleRepository extends ServiceEntityRepository {
         parent::__construct($registry, Firmrole::class);
     }
 
+    public function indexQuery() : Query {
+        $qb = $this->createQueryBuilder('e');
+        $qb->orderBy('e.name');
+
+        return $qb->getQuery();
+    }
+
     /**
      * Do a name search for a typeahead query.
      *
-     * @param string $q
-     *
      * @return mixed
      */
-    public function typeaheadQuery($q) {
+    public function typeaheadQuery(string $q) {
         $qb = $this->createQueryBuilder('e');
         $qb->andWhere('e.name LIKE :q');
         $qb->orderBy('e.name');
@@ -42,10 +50,20 @@ class FirmroleRepository extends ServiceEntityRepository {
         return $qb->getQuery()->execute();
     }
 
+    public function titlesQuery(Firmrole $firmrole) : Query {
+        $qb = $this->_em->createQueryBuilder();
+        $qb->select('tfr');
+        $qb->from(TitleFirmrole::class, 'tfr');
+        $qb->where('tfr.firmrole = :firmrole');
+        $qb->setParameter('firmrole', $firmrole);
+
+        return $qb->getQuery();
+    }
+
     /**
      * Count the firms in a given role.
      *
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws NonUniqueResultException|NoResultException
      *
      * @return mixed
      */

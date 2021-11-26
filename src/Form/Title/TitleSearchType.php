@@ -24,15 +24,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * Search form for titles.
  */
 class TitleSearchType extends AbstractType {
-    /**
-     * @var FormatRepository
-     */
-    private $formatRepository;
+    private FormatRepository $formatRepository;
 
-    /**
-     * @var GenreRepository
-     */
-    private $genreRepository;
+    private GenreRepository $genreRepository;
 
     public function __construct(FormatRepository $formatRepository, GenreRepository $genreRepository) {
         $this->formatRepository = $formatRepository;
@@ -199,8 +193,8 @@ class TitleSearchType extends AbstractType {
         ]);
         $builder->add('format', ChoiceType::class, [
             'choices' => $formats,
-            'choice_label' => fn ($value, $key, $index) => $value->getName(),
-            'choice_value' => fn ($value) => $value->getId(),
+            'choice_label' => fn($value, $key, $index) => $value->getName(),
+            'choice_value' => fn($value) => $value->getId(),
             'label' => 'Format',
             'required' => false,
             'expanded' => true,
@@ -233,8 +227,8 @@ class TitleSearchType extends AbstractType {
 
         $builder->add('genre', ChoiceType::class, [
             'choices' => $genres,
-            'choice_label' => fn ($value, $key, $index) => $value->getName(),
-            'choice_value' => fn ($value) => $value ? $value->getid() : null,
+            'choice_label' => fn($value, $key, $index) => $value->getName(),
+            'choice_value' => fn($value) => $value ? $value->getid() : null,
             'label' => 'Genre',
             'required' => false,
             'expanded' => true,

@@ -17,6 +17,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
+use Nines\UserBundle\Entity\User;
 
 /**
  * Title Repository.
@@ -29,12 +30,16 @@ class TitleRepository extends ServiceEntityRepository {
         parent::__construct($registry, Title::class);
     }
 
-    /**
-     * @param array $data
-     * @param string $fieldName
-     * @param string $formName
-     */
-    private function fulltextPart(QueryBuilder $qb, $data, $fieldName, $formName) : void {
+    public function indexQuery(?User $user) : Query {
+        $qb = $this->createQueryBuilder('e');
+        if( ! $user) {
+            $qb->where('e.finalcheck = 1 OR e.finalattempt = 1');
+        }
+        $qb->orderBy('e.id');
+        return $qb->getQuery();
+    }
+
+    private function fulltextPart(QueryBuilder $qb, array $data, string $fieldName, string $formName) : void {
         if ( ! isset($data[$formName])) {
             return;
         }
@@ -53,13 +58,7 @@ class TitleRepository extends ServiceEntityRepository {
         }
     }
 
-    /**
-     * @param QueryBuilder $qb
-     * @param array $data
-     * @param string $fieldName
-     * @param string $formName
-     */
-    private function arrayPart($qb, $data, $fieldName, $formName) : void {
+    private function arrayPart(QueryBuilder $qb, array $data, string $fieldName, string $formName) : void {
         if ( ! isset($data[$formName]) || ! is_array($data[$formName])) {
             return;
         }
@@ -74,11 +73,9 @@ class TitleRepository extends ServiceEntityRepository {
     /**
      * Do a name search for a typeahead query.
      *
-     * @param string $q
-     *
      * @return mixed
      */
-    public function typeaheadQuery($q) {
+    public function typeaheadQuery(string $q) {
         $qb = $this->createQueryBuilder('e');
         $qb->where('e.title LIKE :q');
         $qb->orWhere('e.id = :id');
@@ -92,12 +89,9 @@ class TitleRepository extends ServiceEntityRepository {
     /**
      * Build a complex search query from form data.
      *
-     * @param array $data
-     * @param null|mixed $user
-     *
-     * @return Query
+     * @return array|Query
      */
-    public function buildSearchQuery($data = [], $user = null) {
+    public function buildSearchQuery(array $data = [], ?User $user = null) {
         $qb = $this->createQueryBuilder('e');
         $qb->orderBy('e.pubdate');
         $qb->addOrderBy('e.title');
@@ -397,12 +391,8 @@ class TitleRepository extends ServiceEntityRepository {
 
     /**
      * Find and return $limit random titles.
-     *
-     * @param int $limit
-     *
-     * @return Collection
      */
-    public function random($limit) {
+    public function random(int $limit) : Collection {
         $qb = $this->createQueryBuilder('e');
         $qb->orderBy('RAND()');
         $qb->setMaxResults($limit);

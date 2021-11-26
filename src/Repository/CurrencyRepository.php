@@ -18,31 +18,25 @@ use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method null|Currency find($id, $lockMode = null, $lockVersion = null)
- * @method null|Currency findOneBy(array $criteria, array $orderBy = null)
  * @method Currency[] findAll()
  * @method Currency[] findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method null|Currency findOneBy(array $criteria, array $orderBy = null)
  */
 class CurrencyRepository extends ServiceEntityRepository {
     public function __construct(ManagerRegistry $registry) {
         parent::__construct($registry, Currency::class);
     }
 
-    /**
-     * @return Query
-     */
-    public function indexQuery() {
+    public function indexQuery() : Query {
         return $this->createQueryBuilder('currency')
             ->orderBy('currency.id')
-            ->getQuery()
-        ;
+            ->getQuery();
     }
 
     /**
-     * @param string $q
-     *
      * @return Collection|Currency[]
      */
-    public function typeaheadQuery($q) {
+    public function typeaheadQuery(string $q) {
         $qb = $this->createQueryBuilder('currency');
         $qb->andWhere('currency.name LIKE :q');
         $qb->orderBy('currency.name', 'ASC');
@@ -52,11 +46,9 @@ class CurrencyRepository extends ServiceEntityRepository {
     }
 
     /**
-     * @param string $q
-     *
      * @return Collection|Currency[]
      */
-    public function searchQuery($q) {
+    public function searchQuery(string $q) {
         $qb = $this->createQueryBuilder('currency');
         $qb->andWhere('currency.name LIKE :q');
         $qb->orderBy('currency.name', 'ASC');

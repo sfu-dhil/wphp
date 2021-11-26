@@ -12,7 +12,6 @@ namespace App\Controller;
 
 use App\Entity\Jackson;
 use App\Repository\JacksonRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Nines\UtilBundle\Controller\PaginatorTrait;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -33,17 +32,14 @@ class JacksonController extends AbstractController implements PaginatorAwareInte
     /**
      * Lists all Jackson entities.
      *
-     * @return array
-     *
      * @Route("/", name="resource_jackson_index", methods={"GET"})
      *
      * @Template
      */
-    public function indexAction(Request $request, EntityManagerInterface $em) {
-        $qb = $em->createQueryBuilder();
-        $qb->select('e')->from(Jackson::class, 'e')->orderBy('e.id', 'ASC');
-        $query = $qb->getQuery();
-        $jacksons = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
+    public function indexAction(Request $request, JacksonRepository $repository) : array {
+        $pageSize = $this->getParameter('page_size');
+        $query = $repository->indexQuery();
+        $jacksons = $this->paginator->paginate($query, $request->query->getInt('page', 1), $pageSize);
 
         return [
             'jacksons' => $jacksons,
@@ -53,15 +49,15 @@ class JacksonController extends AbstractController implements PaginatorAwareInte
     /**
      * Search for Jackson entities.
      *
-     * @return array
      * @Route("/search", name="resource_jackson_search", methods={"GET"})
      * @Template
      */
-    public function searchAction(Request $request, JacksonRepository $repo) {
+    public function searchAction(Request $request, JacksonRepository $repo) : array {
+        $pageSize = $this->getParameter('page_size');
         $q = $request->query->get('q');
         if ($q) {
             $query = $repo->searchQuery($q);
-            $jacksons = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
+            $jacksons = $this->paginator->paginate($query, $request->query->getInt('page', 1), $pageSize);
         } else {
             $jacksons = [];
         }
@@ -75,13 +71,11 @@ class JacksonController extends AbstractController implements PaginatorAwareInte
     /**
      * Finds and displays a Jackson entity.
      *
-     * @return array
-     *
      * @Route("/{id}", name="resource_jackson_show", methods={"GET"})
      *
      * @Template
      */
-    public function showAction(Jackson $jackson) {
+    public function showAction(Jackson $jackson) : array {
         return [
             'jackson' => $jackson,
         ];

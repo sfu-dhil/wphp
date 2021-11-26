@@ -24,104 +24,58 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class FirmSource {
     /**
-     * @var int
-     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    private int $id;
 
     /**
-     * @var string
      * @ORM\Column(type="string", length=300, nullable=true)
      */
-    private $identifier;
+    private ?string $identifier = null;
 
     /**
-     * @var Firm
      * @ORM\ManyToOne(targetEntity="App\Entity\Firm", inversedBy="firmSources")
      */
-    private $firm;
+    private Firm $firm;
 
     /**
-     * @var Source
      * @ORM\ManyToOne(targetEntity="App\Entity\Source", inversedBy="firmSources")
      */
-    private $source;
+    private Source $source;
 
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId() {
+    public function getId() : ?int {
         return $this->id;
     }
 
-    /**
-     * Set identifier.
-     *
-     * @param string $identifier
-     *
-     * @return FirmSource
-     */
-    public function setIdentifier($identifier) {
+    public function getIdentifier() : ?string {
+        return $this->identifier;
+    }
+
+    public function setIdentifier(?string $identifier) : self {
         $this->identifier = $identifier;
 
         return $this;
     }
 
-    /**
-     * Get identifier.
-     *
-     * @return string
-     */
-    public function getIdentifier() {
-        return $this->identifier;
+    public function getFirm() : ?Firm {
+        return $this->firm;
     }
 
-    /**
-     * Set firm.
-     *
-     * @param null|\App\Entity\Firm $firm
-     *
-     * @return FirmSource
-     */
-    public function setFirm(?Firm $firm = null) {
+    public function setFirm(?Firm $firm) : self {
         $this->firm = $firm;
 
         return $this;
     }
 
-    /**
-     * Get firm.
-     *
-     * @return null|\App\Entity\Firm
-     */
-    public function getFirm() {
-        return $this->firm;
+    public function getSource() : ?Source {
+        return $this->source;
     }
 
-    /**
-     * Set source.
-     *
-     * @param null|\App\Entity\Source $source
-     *
-     * @return FirmSource
-     */
-    public function setSource(?Source $source = null) {
+    public function setSource(?Source $source) : self {
         $this->source = $source;
 
         return $this;
-    }
-
-    /**
-     * Get source.
-     *
-     * @return null|\App\Entity\Source
-     */
-    public function getSource() {
-        return $this->source;
     }
 }

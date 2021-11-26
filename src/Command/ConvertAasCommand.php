@@ -96,8 +96,8 @@ class ConvertAasCommand extends Command {
         $data = file_get_contents('data/women.txt');
         $data = preg_split("/\n/u", $data);
         $data = array_filter($data);
-        $data = array_map(fn ($s) => preg_replace('/^\s+|\s+$/u', '', $s), $data);
-        $data = array_map(fn ($s) => mb_convert_case($s, MB_CASE_LOWER), $data);
+        $data = array_map(fn($s) => preg_replace('/^\s+|\s+$/u', '', $s), $data);
+        $data = array_map(fn($s) => mb_convert_case($s, MB_CASE_LOWER), $data);
         $this->names = $data;
     }
 
@@ -169,8 +169,6 @@ class ConvertAasCommand extends Command {
      * Field 100 is always considered to be an author.
      * Field 700 is a pseudonym if ind1 is 0.
      * Field 700 is a person if ind1 is not zero. The role is expressed in subfield e.
-     *
-     * @param ?Field $field
      */
     protected function addTitleRole(Title $title, ?Field $field) : void {
         if ( ! $field) {
@@ -275,7 +273,7 @@ class ConvertAasCommand extends Command {
             'dob' => $birthYear,
             'dod' => $deathYear,
         ];
-        $criteria = array_filter($criteria, fn ($v) => (bool) $v);
+        $criteria = array_filter($criteria, fn($v) => (bool) $v);
         $person = $this->personRepository->findOneBy($criteria);
         if ( ! $person) {
             $person = new Person();

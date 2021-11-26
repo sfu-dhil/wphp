@@ -23,10 +23,7 @@ use Doctrine\ORM\EntityManagerInterface;
  * Manage MARC records.
  */
 class MarcManager {
-    /**
-     * @var EntityManagerInterface
-     */
-    private $em;
+    private EntityManagerInterface $em;
 
     /**
      * MarcManager constructor.
@@ -39,10 +36,8 @@ class MarcManager {
      * Get the title of a MARC record.
      *
      * @param EstcMarc|OsborneMarc $object
-     *
-     * @return string
      */
-    public function getTitle($object) {
+    public function getTitle($object) : string {
         $repo = $this->em->getRepository(get_class($object));
         $rows = $repo->findBy([
             'titleId' => $object->getTitleId(),
@@ -51,7 +46,7 @@ class MarcManager {
             'field' => 'ASC', 'subfield' => 'ASC',
         ]);
 
-        return implode("\n", array_map(fn ($row) => $row->getFieldData(), $rows));
+        return implode("\n", array_map(fn($row) => $row->getFieldData(), $rows));
     }
 
     public function getControlId($object) {
@@ -66,10 +61,8 @@ class MarcManager {
 
     /**
      * @param EstcMarc|string $record
-     *
-     * @return bool
      */
-    public function isImported($record) {
+    public function isImported($record) : bool {
         $controlId = null;
         if ($record instanceof EstcMarc) {
             $controlId = $this->getControlId($record);
@@ -91,10 +84,8 @@ class MarcManager {
      * Get the author of a MARC record.
      *
      * @param EstcMarc|OsborneMarc $object
-     *
-     * @return string
      */
-    public function getAuthor($object) {
+    public function getAuthor($object) : string {
         $repo = $this->em->getRepository(get_class($object));
         $rows = $repo->findBy([
             'titleId' => $object->getTitleId(),
@@ -111,11 +102,8 @@ class MarcManager {
      * Get a field value for a record.
      *
      * @param EstcMarc|OsborneMarc $object
-     * @param string $field
-     *
-     * @return array
      */
-    public function getFieldValues($object, $field) {
+    public function getFieldValues($object, string $field) : array {
         $repo = $this->em->getRepository(get_class($object));
         $rows = $repo->findBy([
             'titleId' => $object->getTitleId(),
@@ -124,7 +112,7 @@ class MarcManager {
             'field' => 'ASC', 'subfield' => 'ASC',
         ]);
 
-        return array_map(fn ($row) => $row->getFieldData(), $rows);
+        return array_map(fn($row) => $row->getFieldData(), $rows);
     }
 
     /**
@@ -144,10 +132,8 @@ class MarcManager {
      * Find the name of a MARC field.
      *
      * @param EstcMarc|OsborneMarc $field
-     *
-     * @return string
      */
-    public function getFieldName($field) {
+    public function getFieldName($field) : string {
         if ($field->getSubfield()) {
             $repo = $this->em->getRepository(MarcSubfieldStructure::class);
             $tag = $repo->findOneBy([
