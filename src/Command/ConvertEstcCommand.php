@@ -76,6 +76,7 @@ class ConvertEstcCommand extends Command {
     protected static $defaultName = 'wphp:convert:estc';
 
     protected static $defaultDescription = 'Add a short description for your command';
+    private int $saved = 0;
 
     protected function configure() : void {
         $this->setDescription(self::$defaultDescription);
@@ -89,7 +90,7 @@ class ConvertEstcCommand extends Command {
             $this->em->flush();
             $this->em->clear();
         }
-        echo "\r{$this->n}";
+        echo "\r{$this->n} - {$this->saved}";
         if ($finished) {
             echo "\nfinished\n";
         }
@@ -100,6 +101,7 @@ class ConvertEstcCommand extends Command {
      * true.
      */
     protected function save(object $object) : void {
+        $this->saved++;
         if ($this->save) {
             $this->em->persist($object);
         }
@@ -137,17 +139,17 @@ class ConvertEstcCommand extends Command {
             $record = $file->next();
             while ($record) {
                 if ($this->checkTitle($record) || $this->checkName($record)) {
-//                    $estcMarc = $this->estcMarcRepository->findOneBy([
-//                        'field' => '001',
-//                        'fieldData' => $record->field('001')->data,
-//                    ]);
-//                    $title = $this->importer->import($estcMarc->getTitleId());
-//                    foreach($title->getTitleSources() as $ts) {
-//                        $this->em->persist($ts);
-//                    }
-//                    $this->save($title);
+                    $estcMarc = $this->estcMarcRepository->findOneBy([
+                        'field' => '001',
+                        'fieldData' => $record->field('001')->data,
+                    ]);
+                    $title = $this->importer->import($estcMarc->getTitleId());
+                    foreach($title->getTitleSources() as $ts) {
+                        $this->em->persist($ts);
+                    }
+                    $this->save($title);
                 }
-//                $this->dot(false);
+                $this->dot();
 
                 try {
                     $record = $file->next();
@@ -172,10 +174,6 @@ class ConvertEstcCommand extends Command {
                     foreach ($this->titles as $title) {
                         $m = [];
                         if (preg_match("/\\b({$title})\\b/ui", $data, $m)) {
-                            echo implode("|", [
-                                'title', $title, $data, $id . $s, $record->field('001')->data(),
-                                    $record->subfield('245', 'a'), 'http://estc.bl.uk/' . $record->field('001')->data()
-                            ]) . "\n";
                             return true;
                         }
                     }
@@ -199,10 +197,6 @@ class ConvertEstcCommand extends Command {
                     foreach ($this->names as $name) {
                         $m = [];
                         if (preg_match("/\\b({$name})\\b/ui", $given, $m)) {
-                            echo implode("|", [
-                                    'name', $name, $data, $id . $s, $record->field('001')->data(),
-                                    $record->subfield('245', 'a'), 'http://estc.bl.uk/' . $record->field('001')->data()
-                                ]) . "\n";
                             return true;
                         }
                     }
