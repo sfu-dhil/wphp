@@ -136,8 +136,10 @@ class EstcMarcImporter {
      * @return Person[]
      */
     public function getPerson($fields) {
+        if( ! isset($fields['100a'])) {
+            return [];
+        }
         $fullName = preg_replace('/[^a-zA-Z0-9]*$/', '', $fields['100a']->getFieldData());
-        echo "\n" . $fullName . "\n";
         if(mb_strpos($fullName, ',')) {
             [$last, $first] = explode(', ', $fullName);
             [$dob, $dod] = $this->getDates($fields);
@@ -271,8 +273,9 @@ class EstcMarcImporter {
         $format = $this->guessFormat($fields);
         $title->setFormat($format);
 
-        foreach($this->getPerson($fields) as $person) {
-            $this->addAuthor($title, $person);
+        $authors = $this->getPerson($fields);
+        if(count($authors) > 0) {
+            $this->addAuthor($title, $authors[0]);
         }
 
         [$width, $height] = $this->guessDimensions($fields);
