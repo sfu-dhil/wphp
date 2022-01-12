@@ -50,6 +50,7 @@ class PersonController extends AbstractController implements PaginatorAwareInter
         $form = $this->createForm(PersonSearchType::class, null, [
             'action' => $this->generateUrl('person_search'),
             'entity_manager' => $em,
+            'user' => $this->getUser(),
         ]);
         $dql = 'SELECT e FROM App:Person e';
         if (null === $this->getUser()) {
@@ -101,7 +102,7 @@ class PersonController extends AbstractController implements PaginatorAwareInter
      * @return BinaryFileResponse
      */
     public function searchExportCsvAction(Request $request, EntityManagerInterface $em, PersonRepository $repo, CsvExporter $exporter) {
-        $form = $this->createForm(PersonSearchType::class, null, ['entity_manager' => $em]);
+        $form = $this->createForm(PersonSearchType::class, null, ['entity_manager' => $em, 'user' => $this->getUser()]);
         $form->handleRequest($request);
         $persons = [];
 
@@ -130,14 +131,17 @@ class PersonController extends AbstractController implements PaginatorAwareInter
      * @return array
      */
     public function searchAction(Request $request, PersonRepository $repo, EntityManagerInterface $em) {
-        $form = $this->createForm(PersonSearchType::class, null, ['entity_manager' => $em]);
+        $form = $this->createForm(PersonSearchType::class, null, [
+            'entity_manager' => $em,
+            'user' => $this->getUser()
+        ]);
         $form->handleRequest($request);
         $persons = [];
         $submitted = false;
 
         if ($form->isSubmitted()) {
             $submitted = true;
-            $query = $repo->buildSearchQuery($form->getData());
+            $query = $repo->buildSearchQuery($form->getData(), $this->getUser());
             $persons = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
         }
 

@@ -127,6 +127,7 @@ firm:
     gender: Search by gender of the firm or leave unchecked to include all genders
     name: Search for all or part of a firm name
     startDate: Search by year (eg <kbd>1795</kbd>) or range of years (<kbd>1790-1800</kbd>) or a partial range of years (<kbd>*-1800</kbd>)
+    finalcheck: Limit results to firm records that have been verified or not verified
 
 geonames:
   fields: &geonames_fields
@@ -186,6 +187,7 @@ person:
     name: Search for all or part of a person's name
     viafUrl: Enter a VIAF URI to check if we have a corresponding record. Enter <kbd>blank</kbd> to find records which do not have VIAF URIs.
     wikipediaUrl: Enter a Wikipedia URL to check if we have a corresponding record. Enter <kbd>blank</kbd> to find records which do not have Wikipedia URLs.
+    finalcheck: Limit results to person records that have been verified or not verified
 
 source:
   fields: &source_fields

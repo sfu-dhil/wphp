@@ -49,10 +49,14 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
     public function indexAction(Request $request, EntityManagerInterface $em) {
         $form = $this->createForm(FirmSearchType::class, null, [
             'action' => $this->generateUrl('firm_search'),
+            'user' => $this->getUser(),
         ]);
         $dql = 'SELECT e FROM App:Firm e';
         if ('g.name+e.name' === $request->query->get('sort')) {
-            $dql = 'SELECT e FROM App:Firm e LEFT JOIN e.city g ORDER BY e.name, e.startDate';
+            $dql .= ' LEFT JOIN e.city g ORDER BY e.name, e.startDate';
+        }
+        if( ! $this->getUser()) {
+            $dql .= ' WHERE (e.finalcheck = 1)';
         }
         $query = $em->createQuery($dql);
         $firms = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25, [
@@ -100,14 +104,16 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
      * @return array
      */
     public function searchAction(Request $request, FirmRepository $repo) {
-        $form = $this->createForm(FirmSearchType::class);
+        $form = $this->createForm(FirmSearchType::class, null, [
+            'user' => $this->getUser(),
+        ]);
         $form->handleRequest($request);
         $firms = [];
         $submitted = false;
 
         if ($form->isSubmitted() && $form->isValid()) {
             $submitted = true;
-            $query = $repo->buildSearchQuery($form->getData());
+            $query = $repo->buildSearchQuery($form->getData(), $this->getUser());
             $firms = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
         }
 
@@ -126,13 +132,15 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
      * @return BinaryFileResponse
      */
     public function searchExportAction(Request $request, FirmRepository $repo) {
-        $form = $this->createForm(FirmSearchType::class);
+        $form = $this->createForm(FirmSearchType::class, [
+            'user' => $this->getUser()
+        ]);
         $form->handleRequest($request);
         $firms = [];
 
         $name = '';
         if ($form->isSubmitted() && $form->isValid()) {
-            $query = $repo->buildSearchQuery($form->getData());
+            $query = $repo->buildSearchQuery($form->getData(), $this->getUser());
 
             foreach ($query->getParameters() as $param) {
                 $paramValue = $param->getValue();
