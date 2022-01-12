@@ -54,9 +54,11 @@
                                 <ul>
                                     {% for tr in title.titleRoles %}
                                         {% set person = tr.person %}
-                                        <li>
-                                            <a href="{{ path('person_show', {'id': person.id}) }}">{{ person }}</a> ({{ tr.role.name }})
-                                        </li>
+                                        {% if person.finalCheck or app.user %}
+                                            <li>
+                                                <a href="{{ path('person_show', {'id': person.id}) }}">{{ person }}</a> ({{ tr.role.name }})
+                                            </li>
+                                        {% endif %}
                                     {% endfor %}
                                 </ul>
                             {% endif %}
