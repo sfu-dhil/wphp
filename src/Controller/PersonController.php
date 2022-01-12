@@ -52,6 +52,9 @@ class PersonController extends AbstractController implements PaginatorAwareInter
             'entity_manager' => $em,
         ]);
         $dql = 'SELECT e FROM App:Person e';
+        if (null === $this->getUser()) {
+            $dql .= ' WHERE (e.finalcheck = 1)';
+        }
         $query = $em->createQuery($dql);
         $people = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25, [
             'defaultSortFieldName' => ['e.lastName', 'e.firstName', 'e.dob'],
