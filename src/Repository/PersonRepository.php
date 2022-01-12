@@ -15,6 +15,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
+use Nines\UserBundle\Entity\User;
 
 /**
  * PersonRepository.
@@ -78,10 +79,11 @@ class PersonRepository extends ServiceEntityRepository {
      * Build and return a complex search query from a search form.
      *
      * @param array $data
+     * @param ?User $user
      *
      * @return Query
      */
-    public function buildSearchQuery($data) {
+    public function buildSearchQuery($data, $user) {
         $qb = $this->createQueryBuilder('e');
         $qb->orderBy('e.lastName');
         $qb->addOrderBy('e.firstName');
@@ -252,6 +254,15 @@ class PersonRepository extends ServiceEntityRepository {
                 $qb->andWhere('MATCH(e.imageUrl) AGAINST(:imageUrl BOOLEAN) > 0');
                 $qb->setParameter('imageUrl', $data['imageUrl']);
             }
+        }
+
+        if($user) {
+            if(isset($data['finalcheck'])) {
+                $qb->andWhere('e.finalcheck = :finalcheck');
+                $qb->setParameter('finalcheck', 'Y' === $data['finalcheck']);
+            }
+        } else {
+            $qb->andWhere('e.finalcheck = 1');
         }
 
         if (isset($data['title_filter']) && count(array_filter($data['title_filter']))) {

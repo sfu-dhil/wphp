@@ -12,12 +12,15 @@ namespace App\Services;
 
 use App\Entity\EstcMarc;
 use App\Entity\Format;
+use App\Entity\Person;
 use App\Entity\Role;
 use App\Entity\Source;
 use App\Entity\Title;
+use App\Entity\TitleRole;
 use App\Entity\TitleSource;
 use App\Repository\EstcMarcRepository;
 use App\Repository\FormatRepository;
+use App\Repository\PersonRepository;
 use App\Repository\RoleRepository;
 use App\Repository\SourceRepository;
 use App\Repository\TitleRepository;
@@ -54,6 +57,11 @@ class EstcMarcImporter {
     private $sourceRepo;
 
     /**
+     * @var PersonRepository
+     */
+    private $personRepo;
+
+    /**
      * @var FormatRepository
      */
     private $formatRepo;
@@ -77,6 +85,7 @@ class EstcMarcImporter {
         $this->titleRepo = $this->em->getRepository(Title::class);
         $this->roleRepo = $this->em->getRepository(Role::class);
         $this->sourceRepo = $this->em->getRepository(Source::class);
+        $this->personRepo = $this->em->getRepository(Person::class);
         $this->formatRepo = $this->em->getRepository(Format::class);
         $this->titleSourceRepository = $this->em->getRepository(TitleSource::class);
         $this->messages = [];
@@ -117,6 +126,26 @@ class EstcMarcImporter {
         ]))) {
             $this->messages[] = 'This ESTC ID already exists in the database. Please check that you are not duplicating data.';
         }
+    }
+
+    /**
+     * Attempt to fetch a person record based on a MARC record.
+     *
+     * @param array $fields
+     *
+     * @return Person[]
+     */
+    public function getPerson($fields) {
+        if( ! isset($fields['100a'])) {
+            return [];
+        }
+        $fullName = preg_replace('/[^a-zA-Z0-9]*$/', '', $fields['100a']->getFieldData());
+        if(mb_strpos($fullName, ',')) {
+            [$last, $first] = explode(', ', $fullName);
+            [$dob, $dod] = $this->getDates($fields);
+            return $this->personRepo->findByNameDates($first, $last, $dob, $dod);
+        }
+        return [];
     }
 
     /**
@@ -244,12 +273,33 @@ class EstcMarcImporter {
         $format = $this->guessFormat($fields);
         $title->setFormat($format);
 
-        list($width, $height) = $this->guessDimensions($fields);
+        $authors = $this->getPerson($fields);
+        if(count($authors) > 0) {
+            $this->addAuthor($title, $authors[0]);
+        }
+
+        [$width, $height] = $this->guessDimensions($fields);
         $title->setSizeL($width);
         $title->setSizeW($height);
         $title->setChecked(false);
 
         return $title;
+    }
+
+    /**
+     * Add the person to a title as an author.
+     */
+    public function addAuthor(Title $title, Person $person) : void {
+        if ( ! $person) {
+            return;
+        }
+        $role = $this->roleRepo->findOneBy(['name' => 'Author']);
+        $titleRole = new TitleRole();
+        $titleRole->setPerson($person);
+        $titleRole->setRole($role);
+        $titleRole->setTitle($title);
+        $title->addTitleRole($titleRole);
+        $this->em->persist($titleRole);
     }
 
     /**

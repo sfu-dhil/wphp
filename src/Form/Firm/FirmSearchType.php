@@ -26,6 +26,7 @@ class FirmSearchType extends AbstractType {
      * Build the form.
      */
     public function buildForm(FormBuilderInterface $builder, array $options) : void {
+        $user=  $options['user'];
         $builder->setMethod('get');
 
         $builder->add('name', TextType::class, [
@@ -124,6 +125,23 @@ class FirmSearchType extends AbstractType {
                 'class' => 'embedded-form',
             ],
         ]);
+        if($user) {
+            $builder->add('finalcheck', ChoiceType::class, [
+                'label' => 'Verified',
+                'choices' => [
+                    'Yes' => 'Y',
+                    'No' => 'N',
+                ],
+                'attr' => [
+                    'help_block' => 'firm.search.finalcheck',
+                ],
+                'required' => false,
+                'expanded' => true,
+                'multiple' => false,
+                'empty_data' => null,
+                'data' => null,
+            ]);
+        }
     }
 
     /**
@@ -131,5 +149,6 @@ class FirmSearchType extends AbstractType {
      */
     public function configureOptions(OptionsResolver $resolver) : void {
         parent::configureOptions($resolver);
+        $resolver->setRequired(['user']);
     }
 }

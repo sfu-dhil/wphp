@@ -14,6 +14,7 @@ use App\Entity\Firm;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
+use Nines\UserBundle\Entity\User;
 
 /**
  * FirmRepository.
@@ -49,10 +50,11 @@ class FirmRepository extends ServiceEntityRepository {
      * parameters from the firm search and does smart things with them.
      *
      * @param array $data The search form's data from $form->getData().
+     * @param ?User $user
      *
      * @return Query
      */
-    public function buildSearchQuery($data) {
+    public function buildSearchQuery($data, $user) {
         $qb = $this->createQueryBuilder('e');
         $qb->orderBy('e.name');
         $qb->addOrderBy('e.startDate');
@@ -170,6 +172,15 @@ class FirmRepository extends ServiceEntityRepository {
                 $qb->setParameter('frome', $from);
                 $qb->setParameter('toe', $to);
             }
+        }
+
+        if($user) {
+            if(isset($data['finalcheck'])) {
+                $qb->andWhere('e.finalcheck = :finalcheck');
+                $qb->setParameter('finalcheck', 'Y' === $data['finalcheck']);
+            }
+        } else {
+            $qb->andWhere('e.finalcheck = 1');
         }
 
         if (isset($data['title_filter']) && count(array_filter($data['title_filter']))) {

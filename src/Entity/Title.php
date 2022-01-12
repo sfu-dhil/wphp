@@ -94,7 +94,7 @@ class Title {
     /**
      * @var string
      *
-     * @ORM\Column(name="pubdate", type="string", length=40, nullable=true)
+     * @ORM\Column(name="pubdate", type="string", length=60, nullable=true)
      */
     private $pubdate;
 

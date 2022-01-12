@@ -31,6 +31,7 @@ security:
                 samesite: strict
                 httponly: true
                 name: WPHP_REMEMBER_ME
+                remember_me_parameter: remember_me
 
     role_hierarchy:
         ROLE_ADMIN:       [ ROLE_ADMIN, ROLE_BLOG_ADMIN, ROLE_COMMENT_ADMIN, ROLE_CONTENT_ADMIN, ROLE_DC_ADMIN, ROLE_USER_ADMIN ]
