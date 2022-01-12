@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Entity\Title;
+use App\Entity\TitleRole;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Nines\UtilBundle\Controller\PaginatorTrait;
@@ -141,6 +142,50 @@ class ReportController extends AbstractController implements PaginatorAwareInter
             ->where('title.editionChecked = 0')
             ->orderBy('title.id', 'ASC')
         ;
+
+        $titles = $this->paginator->paginate($qb, $request->query->getInt('page', 1), 25);
+
+        return [
+            'titles' => $titles,
+        ];
+    }
+
+    /**
+     * @Route("/titles_unverified_persons", name="titles_unverified_persons", methods={"GET"})
+     * @Template
+     *
+     * @return array
+     */
+    public function titlesWithUnverifiedPersons(Request $request, EntityManagerInterface $em) {
+        $qb = $em->createQueryBuilder();
+        $qb->select('title')
+            ->from(Title::class, 'title')
+            ->innerJoin('title.titleRoles', 'tr')
+            ->innerJoin('tr.person', 'p')
+            ->where('p.finalcheck = 0')
+            ->andWhere('(title.checked = 1 OR title.finalattempt = 1 OR title.finalcheck = 1)');
+
+        $titles = $this->paginator->paginate($qb, $request->query->getInt('page', 1), 25);
+
+        return [
+            'titles' => $titles,
+        ];
+    }
+
+    /**
+     * @Route("/titles_unverified_firms", name="titles_unverified_firms", methods={"GET"})
+     * @Template
+     *
+     * @return array
+     */
+    public function titlesWithUnverifiedFirms(Request $request, EntityManagerInterface $em) {
+        $qb = $em->createQueryBuilder();
+        $qb->select('title')
+            ->from(Title::class, 'title')
+            ->innerJoin('title.titleFirmroles', 'tfr')
+            ->innerJoin('tfr.firm', 'f')
+            ->where('f.finalcheck = 0')
+            ->andWhere('(title.checked = 1 OR title.finalattempt = 1 OR title.finalcheck = 1)');
 
         $titles = $this->paginator->paginate($qb, $request->query->getInt('page', 1), 25);
 
