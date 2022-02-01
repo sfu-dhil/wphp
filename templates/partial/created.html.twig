@@ -1,0 +1,10 @@
+{% if app.user %}
+    <tr>
+        <th>Created</th>
+        <td>{{ entity.created|date(null, false) }}</td>
+    </tr>
+    <tr>
+        <th>Updated</th>
+        <td>{{ entity.updated|date(null, false) }}</td>
+    </tr>
+{% endif %}

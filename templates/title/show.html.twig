@@ -278,6 +278,7 @@
                     <th data-toggle="popover"  data-content="{{ 'title.fields.finalattempt'|trans }}">Attempted Verification</th>
                     <td>{% if title.finalattempt %}Yes{% else %}No{% endif %}</td>
                 </tr>
+                {% include 'partial/created.html.twig' with {'entity': title} %}
             {% endblock %}
             {% endembed %}
         </div>

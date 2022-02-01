@@ -13,6 +13,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Nines\UtilBundle\Entity\AbstractEntity;
 
 /**
  * Firm.
@@ -28,21 +29,12 @@ use Doctrine\ORM\Mapping as ORM;
  * )
  * @ORM\Entity(repositoryClass="App\Repository\FirmRepository")
  */
-class Firm {
+class Firm extends AbstractEntity {
     public const MALE = 'M';
 
     public const FEMALE = 'F';
 
     public const UNKNOWN = 'U';
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $id;
 
     /**
      * @var string
@@ -139,6 +131,7 @@ class Firm {
      * Construct a new firm.
      */
     public function __construct() {
+        parent::__construct();
         $this->gender = self::UNKNOWN;
         $this->titleFirmroles = new ArrayCollection();
         $this->relatedPeople = new ArrayCollection();
@@ -155,15 +148,6 @@ class Firm {
 
     public function getFormId() {
         return "({$this->id}) {$this->name}";
-    }
-
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId() {
-        return $this->id;
     }
 
     /**

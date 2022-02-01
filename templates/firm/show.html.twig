@@ -113,6 +113,7 @@
                     <td>{% if firm.finalcheck %}Yes{% else %}No{% endif %}</td>
                 </tr>
             {% endif %}
+            {% include 'partial/created.html.twig' with {'entity': firm} %}
         {% endblock %}
     {% endembed %}
 

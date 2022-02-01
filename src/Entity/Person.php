@@ -13,6 +13,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Nines\UtilBundle\Entity\AbstractEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -27,7 +28,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     })
  *     @ORM\Entity(repositoryClass="App\Repository\PersonRepository")
  */
-class Person {
+class Person extends AbstractEntity {
     public const MALE = 'M';
 
     public const FEMALE = 'F';
@@ -35,15 +36,6 @@ class Person {
     public const UNKNOWN = 'U';
 
     public const TRANS = 'T';
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $id;
 
     /**
      * @var string
@@ -161,6 +153,7 @@ class Person {
      * Construct the person entity.
      */
     public function __construct() {
+        parent::__construct();
         $this->gender = self::UNKNOWN;
         $this->titleRoles = new ArrayCollection();
         $this->relatedFirms = new ArrayCollection();
@@ -175,15 +168,6 @@ class Person {
 
     public function getFormId() {
         return "({$this->id}) " . implode(', ', array_filter([$this->lastName, $this->firstName]));
-    }
-
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId() {
-        return $this->id;
     }
 
     /**
