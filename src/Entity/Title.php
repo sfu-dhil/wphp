@@ -13,6 +13,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Nines\UtilBundle\Entity\AbstractEntity;
 
 /**
  * Title.
@@ -33,16 +34,7 @@ use Doctrine\ORM\Mapping as ORM;
  *     @ORM\Entity(repositoryClass="App\Repository\TitleRepository")
  *     @ORM\HasLifecycleCallbacks
  */
-class Title {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $id;
-
+class Title extends AbstractEntity {
     /**
      * @var string
      *
@@ -294,6 +286,7 @@ class Title {
      * Constructor.
      */
     public function __construct() {
+        parent::__construct();
         $this->totalPrice = 0;
         $this->genres = new ArrayCollection();
         $this->titleRoles = new ArrayCollection();
@@ -312,15 +305,6 @@ class Title {
 
     public function getTitleId() : string {
         return "({$this->id}) {$this->title}";
-    }
-
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId() {
-        return $this->id;
     }
 
     /**

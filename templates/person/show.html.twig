@@ -127,6 +127,7 @@
                             <td>{% if person.finalCheck %}Yes{% else %}No{% endif %}</td>
                         </tr>
                     {% endif %}
+                    {% include 'partial/created.html.twig' with {'entity': person} %}
                 {% endblock %}
             {% endembed %}
         </div>
