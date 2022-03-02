@@ -1,0 +1,104 @@
+/**
+  * Base stylesheet for the timeline;
+  we don't include this in the regular global site CSS since it
+  only appears on a fraction of the pages
+ */
+
+@import 'mixins';
+
+#timeline-container{
+  margin-bottom: 2.8rem;
+}
+
+#timeline{
+  width: 100%;
+  min-height: 75vh;
+}
+
+.lds-ellipsis {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+  left: 50%;
+}
+.lds-ellipsis div {
+  position: absolute;
+  top: 33px;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #ccc;
+  animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+.lds-ellipsis div:nth-child(1) {
+  left: 8px;
+  animation: lds-ellipsis1 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(2) {
+  left: 8px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(3) {
+  left: 32px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(4) {
+  left: 56px;
+  animation: lds-ellipsis3 0.6s infinite;
+}
+@keyframes lds-ellipsis1 {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes lds-ellipsis3 {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+@keyframes lds-ellipsis2 {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(24px, 0);
+  }
+}
+
+#timeline-container #timeline{
+  visibility:hidden;
+}
+
+#timeline-container.loaded {
+  #timeline{
+    visibility:visible;
+  }
+  .lds-ellipsis{
+    display:none;
+  }
+}
+
+
+
+// Adjust the headline size, since titles tend to be long
+.tl-timeline :is(h2, .tl-headline){
+  font-size: 40px;
+  line-height: 40px;
+}
+
+.tl-timeline{
+  @include link($color_link, $color_link_hover);
+}
+
+.tl-timegroup .tl-timegroup-message{
+  text-shadow:none;
+  color:inherit;
+  z-index:9000;
+}

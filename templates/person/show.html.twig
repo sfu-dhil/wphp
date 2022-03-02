@@ -1,10 +1,19 @@
 {% extends 'base.html.twig' %}
 
+{% set makeTimeline = pagination|length > 0 %}
+
 {% block htmlhead %}
     <link href='{{ path('person_show', {'id': person.id, '_format': 'xml'}) }}' type='application/rdf+xml'
           rel='alternate'/>
     <link href='{{ path('person_show', {'id': person.id, '_format': 'json'}) }}' type='application/ld+json'
           rel='alternate'/>
+{% endblock %}
+
+{% block styles %}
+    {% if makeTimeline %}
+        <link href="{{ asset('yarn/@knight-lab/timelinejs/dist/css/timeline.css') }}" type="text/css" rel="stylesheet"/>
+        <link href="{{ asset('css/timeline.css') }}" type="text/css" rel="stylesheet"/>
+    {% endif %}
 {% endblock %}
 
 {% block pageheader %}
@@ -26,6 +35,7 @@
     {% endif %}
     <h1>{{ person }}</h1>
 {% endblock %}
+
 
 {% block body %}
 
@@ -105,7 +115,7 @@
                         <th data-toggle="popover" data-content="{{ 'person.fields.wikipediaUrl'|trans }}">Wikipedia Entry</th>
                         <td>
                             {% if person.wikipediaUrl %}
-                                <a href="{{person.wikipediaUrl }}">{{ person.wikipediaUrl }}</a>
+                                <a href="{{person.wikipediaUrl }}" class="wikipediaUrl">{{ person.wikipediaUrl }}</a>
                             {% endif %}
                         </td>
                     </tr>
@@ -113,7 +123,7 @@
                         <th>Image URL</th>
                         <td>
                             {% if person.imageUrl %}
-                                <a href="{{person.imageUrl }}">{{ person.imageUrl }}</a>
+                                <a href="{{person.imageUrl }}" class="imageUrl">{{ person.imageUrl }}</a>
                             {% endif %}
                         </td>
                     </tr>
@@ -136,6 +146,7 @@
     </div>
 
 
+
     {% if pagination|length > 0 %}
         <div id="person_titles">
             <h2>Titles</h2>
@@ -143,6 +154,9 @@
         </div>
     {% endif %}
 
+    {% if makeTimeline %}
+        {% include 'person/partial/timeline.html.twig' %}
+    {% endif %}
 
     {% include 'partial/citation.html.twig' with {
         'record': person,
@@ -151,17 +165,14 @@
 
     } %}
 
-
-
     {% include '@NinesFeedback/comment/comment-interface.html.twig' with { 'entity': person } %}
 
 {% endblock %}
 
 {% block javascripts %}
     <script src="{{ asset('yarn/tablesorter/dist/js/jquery.tablesorter.min.js') }}"></script>
-    <script src="{{ asset('yarn/@knight-lab/timelinejs/dist/js/timeline-min.js') }}"></script>
-    <script>
-        let url = '{{ path('person_show', {'id': person.id, '_format': 'json'}) }}'
-    </script>
-    <script src="{{ asset('js/timeline.js') }}"></script>
+    {% if makeTimeline %}
+        <script src="{{ asset('yarn/@knight-lab/timelinejs/dist/js/timeline-min.js') }}"></script>
+        <script src="{{ asset('js/timeline.js') }}"></script>
+    {% endif %}
 {% endblock %}

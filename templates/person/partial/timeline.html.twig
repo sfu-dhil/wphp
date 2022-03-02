@@ -1,0 +1,10 @@
+<div id="timeline-container">
+        {% embed 'partial/accordion.html.twig' with {'open': true} %}
+                {% block summary %}Timeline{% endblock %}
+                {% block content %}
+                        {# Add the loader, which will display until the timeline is finished #}
+                        <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+                        <div id="timeline"></div>
+                {% endblock %}
+        {% endembed %}
+</div>
