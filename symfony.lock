@@ -5,6 +5,9 @@
     "caseyamcl/php-marc21": {
         "version": "v1.1"
     },
+    "composer/package-versions-deprecated": {
+        "version": "1.11.99.3"
+    },
     "doctrine/annotations": {
         "version": "1.0",
         "recipe": {
@@ -165,20 +168,11 @@
             "config/packages/nyholm_psr7.yaml"
         ]
     },
-    "ocramius/package-versions": {
-        "version": "1.4.2"
-    },
-    "ocramius/proxy-manager": {
-        "version": "2.2.3"
-    },
     "phar-io/manifest": {
         "version": "2.0.1"
     },
     "phar-io/version": {
         "version": "3.1.0"
-    },
-    "php": {
-        "version": "7.2"
     },
     "php-http/message-factory": {
         "version": "v1.0.2"
@@ -699,11 +693,5 @@
     },
     "webmozart/assert": {
         "version": "1.6.0"
-    },
-    "zendframework/zend-code": {
-        "version": "3.4.1"
-    },
-    "zendframework/zend-eventmanager": {
-        "version": "3.2.1"
     }
 }
