@@ -231,9 +231,10 @@
                 <tr>
                     <th>Related Titles</th>
                     <td>
-                        {% if title.relatedTitles|length > 0 %}
+                        {% set relations = title.relatedTitles|merge(title.titlesRelated) %}
+                        {% if relations|length > 0 %}
                             <ul>
-                                {% for related in title.relatedTitles %}
+                                {% for related in relations %}
                                     <li>
                                         <a href='{{ path('title_show', {'id': related.id}) }}'>{{ related }}</a><br/>
                                         {{ related.edition }} {{ related.pubdate }}
