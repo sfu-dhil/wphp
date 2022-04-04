@@ -36,8 +36,9 @@
 ,"@id": "{{ url('person_show', {'id':person.id}) }}",
 
     "@graph": [
-        {% for titleRole in person.getTitleRoles | sort((a,b) => a.title.pubDate <=> b.title.pubDate) %}
-        {% if titleRole.Role.Name == "Author" %}
+        {% set titleRoles = person.getTitleRoles %}
+        {% set authoredTitles = titleRoles|filter(titleRole => titleRole.Role.Name == "Author") %}
+        {% for titleRole in authoredTitles | sort((a,b) => a.title.pubDate <=> b.title.pubDate) %}
         {% set book = titleRole.title %}
     {
             "@type": "Book",
@@ -87,7 +88,6 @@
             ]
         }
         {% if not loop.last %},{% endif %}
-        {% endif %}
         {% endfor %}
     ]
 }
