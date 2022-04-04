@@ -19,6 +19,11 @@
         {% endfor %}
     {% endblock %}
     {% set export %}
-        {% include 'partial/export.html.twig' with {'path': 'person_export', 'parameters': {'id': person.id}} %}
+        {% include 'partial/export.html.twig' with {
+            'path': 'person_export',
+            'parameters': {'id': person.id},
+            'json': path('person_show', {'id': person.id, '_format': 'json'}),
+            'rdf': path('person_show', {'id': person.id, '_format': 'xml'}),
+        } %}
     {% endset %}
 {% endembed %}

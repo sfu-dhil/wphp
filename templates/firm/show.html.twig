@@ -122,7 +122,14 @@
             <h2>Titles</h2>
             {% embed 'partial/table.html.twig' %}
                 {% set entities = pagination %}
-                {% set export = include('partial/export.html.twig', {'path': 'firm_export', 'parameters': {'id': firm.id}}) %}
+                {% set export %}
+                    {% include 'partial/export.html.twig' with {
+                        'path': 'firm_export',
+                        'parameters': {'id': firm.id},
+                        'json': path('firm_show', {'id': firm.id, '_format': 'json'}),
+                        'rdf': path('firm_show', {'id': firm.id, '_format': 'xml'}),
+                    } %}
+                {% endset %}
 
                 {% block thead %}
                     <tr>
