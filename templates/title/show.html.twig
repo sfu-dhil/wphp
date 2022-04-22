@@ -229,23 +229,6 @@
                 </tr>
 
                 <tr>
-                    <th>Related Titles</th>
-                    <td>
-                        {% set relations = title.relatedTitles|merge(title.titlesRelated) %}
-                        {% if relations|length > 0 %}
-                            <ul>
-                                {% for related in relations %}
-                                    <li>
-                                        <a href='{{ path('title_show', {'id': related.id}) }}'>{{ related }}</a><br/>
-                                        {{ related.edition }} {{ related.pubdate }}
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                        {% endif %}
-                    </td>
-                </tr>
-
-                <tr>
                     <th data-toggle="popover"  data-content="{{ 'title.fields.shelfmark'|trans }}">Shelfmarks</th>
                     <td>
                         {% if title.shelfmark %}
@@ -283,6 +266,31 @@
             {% endblock %}
             {% endembed %}
         </div>
+
+        {% set relations = title.relatedTitles|merge(title.titlesRelated) %}
+        {% if relations|length > 0 %}
+            <div>
+                <h2>Related Titles</h2>
+                {% embed 'partial/table.html.twig' %}
+                    {% block thead %}
+                        <th>Title</th>
+                        <th>Edition</th>
+                        <th>Publication Date</th>
+                    {%  endblock %}
+                    {% block tbody %}
+                        {% for related in relations|sort( (a,b) => a.pubdate - b.pubdate ) %}
+                            <tr>
+                                <td>
+                                    <a href='{{ path('title_show', {'id': related.id}) }}'>{{ related }}</a>
+                                </td>
+                                <td>{{ related.edition }}</td>
+                                <td>{{ related.pubdate }}</td>
+                            </tr>
+                        {% endfor %}
+                    {% endblock %}
+                {% endembed %}
+            </div>
+        {% endif %}
 
         {% set roles = title.titleRoles('Author') %}
         {% embed 'partial/citation.html.twig' with {
