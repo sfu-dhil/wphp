@@ -10,3 +10,7 @@
 	branch = main
 [submodule "docs/"]
 	branch = main
+[submodule "etc"]
+	path = etc
+	url = https://github.com/ubermichael/symake
+	branch = main
