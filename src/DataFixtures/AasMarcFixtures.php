@@ -24,7 +24,7 @@ class AasMarcFixtures extends Fixture implements DependentFixtureInterface, Fixt
      * {@inheritdoc}
      */
     public static function getGroups() : array {
-        return ['test'];
+        return ['dev', 'test'];
     }
 
     /**

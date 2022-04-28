@@ -24,7 +24,7 @@ class FirmSourceFixtures extends Fixture implements DependentFixtureInterface, F
      * {@inheritdoc}
      */
     public static function getGroups() : array {
-        return ['test'];
+        return ['dev', 'test'];
     }
 
     /**

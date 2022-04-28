@@ -23,7 +23,7 @@ class MarcSubfieldStructureFixtures extends Fixture implements FixtureGroupInter
      * {@inheritdoc}
      */
     public static function getGroups() : array {
-        return ['test'];
+        return ['dev', 'test'];
     }
 
     /**

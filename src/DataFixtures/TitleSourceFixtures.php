@@ -24,7 +24,7 @@ class TitleSourceFixtures extends Fixture implements DependentFixtureInterface, 
      * {@inheritdoc}
      */
     public static function getGroups() : array {
-        return ['test'];
+        return ['dev', 'test'];
     }
 
     /**
