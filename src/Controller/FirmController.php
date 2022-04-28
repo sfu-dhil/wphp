@@ -55,7 +55,7 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
         if ('g.name+e.name' === $request->query->get('sort')) {
             $dql .= ' LEFT JOIN e.city g ORDER BY e.name, e.startDate';
         }
-        if( ! $this->getUser()) {
+        if ( ! $this->getUser()) {
             $dql .= ' WHERE (e.finalcheck = 1)';
         }
         $query = $em->createQuery($dql);
@@ -133,7 +133,7 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
      */
     public function searchExportAction(Request $request, FirmRepository $repo) {
         $form = $this->createForm(FirmSearchType::class, [
-            'user' => $this->getUser()
+            'user' => $this->getUser(),
         ]);
         $form->handleRequest($request);
         $firms = [];

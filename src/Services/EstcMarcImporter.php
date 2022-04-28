@@ -136,15 +136,17 @@ class EstcMarcImporter {
      * @return Person[]
      */
     public function getPerson($fields) {
-        if( ! isset($fields['100a'])) {
+        if ( ! isset($fields['100a'])) {
             return [];
         }
         $fullName = preg_replace('/[^a-zA-Z0-9]*$/', '', $fields['100a']->getFieldData());
-        if(mb_strpos($fullName, ',')) {
-            [$last, $first] = explode(', ', $fullName);
-            [$dob, $dod] = $this->getDates($fields);
+        if (mb_strpos($fullName, ',')) {
+            list($last, $first) = explode(', ', $fullName);
+            list($dob, $dod) = $this->getDates($fields);
+
             return $this->personRepo->findByNameDates($first, $last, $dob, $dod);
         }
+
         return [];
     }
 
@@ -274,11 +276,11 @@ class EstcMarcImporter {
         $title->setFormat($format);
 
         $authors = $this->getPerson($fields);
-        if(count($authors) > 0) {
+        if (count($authors) > 0) {
             $this->addAuthor($title, $authors[0]);
         }
 
-        [$width, $height] = $this->guessDimensions($fields);
+        list($width, $height) = $this->guessDimensions($fields);
         $title->setSizeL($width);
         $title->setSizeW($height);
         $title->setChecked(false);

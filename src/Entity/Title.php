@@ -954,14 +954,12 @@ class Title extends AbstractEntity {
     /**
      * @return Collection|TitleRole[]
      */
-    public function getTitleRoles(): Collection
-    {
+    public function getTitleRoles() : Collection {
         return $this->titleRoles;
     }
 
-    public function addTitleRole(TitleRole $titleRole): self
-    {
-        if (!$this->titleRoles->contains($titleRole)) {
+    public function addTitleRole(TitleRole $titleRole) : self {
+        if ( ! $this->titleRoles->contains($titleRole)) {
             $this->titleRoles[] = $titleRole;
             $titleRole->setTitle($this);
         }
@@ -969,8 +967,7 @@ class Title extends AbstractEntity {
         return $this;
     }
 
-    public function removeTitleRole(TitleRole $titleRole): self
-    {
+    public function removeTitleRole(TitleRole $titleRole) : self {
         if ($this->titleRoles->removeElement($titleRole)) {
             // set the owning side to null (unless already changed)
             if ($titleRole->getTitle() === $this) {
@@ -984,14 +981,12 @@ class Title extends AbstractEntity {
     /**
      * @return Collection|TitleFirmrole[]
      */
-    public function getTitleFirmroles(): Collection
-    {
+    public function getTitleFirmroles() : Collection {
         return $this->titleFirmroles;
     }
 
-    public function addTitleFirmrole(TitleFirmrole $titleFirmrole): self
-    {
-        if (!$this->titleFirmroles->contains($titleFirmrole)) {
+    public function addTitleFirmrole(TitleFirmrole $titleFirmrole) : self {
+        if ( ! $this->titleFirmroles->contains($titleFirmrole)) {
             $this->titleFirmroles[] = $titleFirmrole;
             $titleFirmrole->setTitle($this);
         }
@@ -999,8 +994,7 @@ class Title extends AbstractEntity {
         return $this;
     }
 
-    public function removeTitleFirmrole(TitleFirmrole $titleFirmrole): self
-    {
+    public function removeTitleFirmrole(TitleFirmrole $titleFirmrole) : self {
         if ($this->titleFirmroles->removeElement($titleFirmrole)) {
             // set the owning side to null (unless already changed)
             if ($titleFirmrole->getTitle() === $this) {
@@ -1014,14 +1008,12 @@ class Title extends AbstractEntity {
     /**
      * @return Collection|TitleSource[]
      */
-    public function getTitleSources(): Collection
-    {
+    public function getTitleSources() : Collection {
         return $this->titleSources;
     }
 
-    public function addTitleSource(TitleSource $titleSource): self
-    {
-        if (!$this->titleSources->contains($titleSource)) {
+    public function addTitleSource(TitleSource $titleSource) : self {
+        if ( ! $this->titleSources->contains($titleSource)) {
             $this->titleSources[] = $titleSource;
             $titleSource->setTitle($this);
         }
@@ -1029,8 +1021,7 @@ class Title extends AbstractEntity {
         return $this;
     }
 
-    public function removeTitleSource(TitleSource $titleSource): self
-    {
+    public function removeTitleSource(TitleSource $titleSource) : self {
         if ($this->titleSources->removeElement($titleSource)) {
             // set the owning side to null (unless already changed)
             if ($titleSource->getTitle() === $this) {
@@ -1044,22 +1035,19 @@ class Title extends AbstractEntity {
     /**
      * @return Collection|Title[]
      */
-    public function getRelatedTitles(): Collection
-    {
+    public function getRelatedTitles() : Collection {
         return $this->relatedTitles;
     }
 
-    public function addRelatedTitle(Title $relatedTitle): self
-    {
-        if (!$this->relatedTitles->contains($relatedTitle)) {
+    public function addRelatedTitle(self $relatedTitle) : self {
+        if ( ! $this->relatedTitles->contains($relatedTitle)) {
             $this->relatedTitles[] = $relatedTitle;
         }
 
         return $this;
     }
 
-    public function removeRelatedTitle(Title $relatedTitle): self
-    {
+    public function removeRelatedTitle(self $relatedTitle) : self {
         $this->relatedTitles->removeElement($relatedTitle);
 
         return $this;
@@ -1068,14 +1056,12 @@ class Title extends AbstractEntity {
     /**
      * @return Collection|Title[]
      */
-    public function getTitlesRelated(): Collection
-    {
+    public function getTitlesRelated() : Collection {
         return $this->titlesRelated;
     }
 
-    public function addTitlesRelated(Title $titlesRelated): self
-    {
-        if (!$this->titlesRelated->contains($titlesRelated)) {
+    public function addTitlesRelated(self $titlesRelated) : self {
+        if ( ! $this->titlesRelated->contains($titlesRelated)) {
             $this->titlesRelated[] = $titlesRelated;
             $titlesRelated->addRelatedTitle($this);
         }
@@ -1083,13 +1069,11 @@ class Title extends AbstractEntity {
         return $this;
     }
 
-    public function removeTitlesRelated(Title $titlesRelated): self
-    {
+    public function removeTitlesRelated(self $titlesRelated) : self {
         if ($this->titlesRelated->removeElement($titlesRelated)) {
             $titlesRelated->removeRelatedTitle($this);
         }
 
         return $this;
     }
-
 }

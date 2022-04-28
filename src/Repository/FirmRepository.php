@@ -174,8 +174,8 @@ class FirmRepository extends ServiceEntityRepository {
             }
         }
 
-        if($user) {
-            if(isset($data['finalcheck'])) {
+        if ($user) {
+            if (isset($data['finalcheck'])) {
                 $qb->andWhere('e.finalcheck = :finalcheck');
                 $qb->setParameter('finalcheck', 'Y' === $data['finalcheck']);
             }

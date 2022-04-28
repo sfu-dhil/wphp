@@ -11,7 +11,6 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Entity\Title;
-use App\Entity\TitleRole;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Nines\UtilBundle\Controller\PaginatorTrait;
@@ -163,7 +162,8 @@ class ReportController extends AbstractController implements PaginatorAwareInter
             ->innerJoin('title.titleRoles', 'tr')
             ->innerJoin('tr.person', 'p')
             ->where('p.finalcheck = 0')
-            ->andWhere('(title.checked = 1 OR title.finalattempt = 1 OR title.finalcheck = 1)');
+            ->andWhere('(title.checked = 1 OR title.finalattempt = 1 OR title.finalcheck = 1)')
+        ;
 
         $titles = $this->paginator->paginate($qb, $request->query->getInt('page', 1), 25);
 
@@ -185,7 +185,8 @@ class ReportController extends AbstractController implements PaginatorAwareInter
             ->innerJoin('title.titleFirmroles', 'tfr')
             ->innerJoin('tfr.firm', 'f')
             ->where('f.finalcheck = 0')
-            ->andWhere('(title.checked = 1 OR title.finalattempt = 1 OR title.finalcheck = 1)');
+            ->andWhere('(title.checked = 1 OR title.finalattempt = 1 OR title.finalcheck = 1)')
+        ;
 
         $titles = $this->paginator->paginate($qb, $request->query->getInt('page', 1), 25);
 

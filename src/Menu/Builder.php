@@ -198,10 +198,10 @@ class Builder implements ContainerAwareInterface {
                 'route' => 'report_editions_to_check',
             ]);
             $browse->addChild('Titles with Unverified People', [
-                'route' => 'titles_unverified_persons'
+                'route' => 'titles_unverified_persons',
             ]);
             $browse->addChild('Titles with Unverified Firms', [
-                'route' => 'titles_unverified_firms'
+                'route' => 'titles_unverified_firms',
             ]);
         }
 

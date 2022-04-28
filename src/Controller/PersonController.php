@@ -133,7 +133,7 @@ class PersonController extends AbstractController implements PaginatorAwareInter
     public function searchAction(Request $request, PersonRepository $repo, EntityManagerInterface $em) {
         $form = $this->createForm(PersonSearchType::class, null, [
             'entity_manager' => $em,
-            'user' => $this->getUser()
+            'user' => $this->getUser(),
         ]);
         $form->handleRequest($request);
         $persons = [];

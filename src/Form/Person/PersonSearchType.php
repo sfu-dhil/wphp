@@ -155,7 +155,7 @@ class PersonSearchType extends AbstractType {
                 'class' => 'embedded-form',
             ],
         ]);
-        if($user) {
+        if ($user) {
             $builder->add('finalcheck', ChoiceType::class, [
                 'label' => 'Verified',
                 'choices' => [

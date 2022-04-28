@@ -73,10 +73,11 @@ class ConvertEstcCommand extends Command {
 
     private EstcMarcRepository $estcMarcRepository;
 
+    private int $saved = 0;
+
     protected static $defaultName = 'wphp:convert:estc';
 
     protected static $defaultDescription = 'Add a short description for your command';
-    private int $saved = 0;
 
     protected function configure() : void {
         $this->setDescription(self::$defaultDescription);
@@ -144,7 +145,7 @@ class ConvertEstcCommand extends Command {
                         'fieldData' => $record->field('001')->data,
                     ]);
                     $title = $this->importer->import($estcMarc->getTitleId());
-                    foreach($title->getTitleSources() as $ts) {
+                    foreach ($title->getTitleSources() as $ts) {
                         $this->em->persist($ts);
                     }
                     $this->save($title);
