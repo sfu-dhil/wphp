@@ -151,10 +151,10 @@ class SourceControllerTest extends ControllerTestCase {
 
     public function testAdminDelete() : void {
         $source = $this->em->find(Source::class, 1);
-        foreach($source->getFirmSources() as $fs) {
+        foreach ($source->getFirmSources() as $fs) {
             $this->em->remove($fs);
         }
-        foreach($source->getTitleSources() as $ts) {
+        foreach ($source->getTitleSources() as $ts) {
             $this->em->remove($ts);
         }
 

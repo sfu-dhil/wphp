@@ -160,10 +160,10 @@ class FirmControllerTest extends ControllerTestCase {
 
     public function testAdminDelete() : void {
         $firm = $this->em->find(Firm::class, 1);
-        foreach($firm->getTitleFirmroles() as $tfr) {
+        foreach ($firm->getTitleFirmroles() as $tfr) {
             $this->em->remove($tfr);
         }
-        foreach($firm->getFirmSources() as $fs) {
+        foreach ($firm->getFirmSources() as $fs) {
             $this->em->remove($fs);
         }
         $this->em->flush();

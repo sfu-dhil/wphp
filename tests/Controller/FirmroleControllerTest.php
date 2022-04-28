@@ -152,7 +152,7 @@ class FirmroleControllerTest extends ControllerTestCase {
 
     public function testAdminDelete() : void {
         $fr = $this->em->find(Firmrole::class, 1);
-        foreach($this->em->getRepository(TitleFirmrole::class)->findBy(['firmrole' => $fr]) as $tfr) {
+        foreach ($this->em->getRepository(TitleFirmrole::class)->findBy(['firmrole' => $fr]) as $tfr) {
             $this->em->remove($tfr);
         }
 
