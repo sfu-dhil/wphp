@@ -10,14 +10,11 @@ declare(strict_types=1);
 
 namespace App\Tests\Controller;
 
-use App\DataFixtures\FirmroleFixtures;
-use App\DataFixtures\TitleFirmroleFixtures;
 use App\Entity\Firmrole;
 use Nines\UserBundle\DataFixtures\UserFixtures;
 use Nines\UtilBundle\TestCase\ControllerTestCase;
 
 class FirmroleControllerTest extends ControllerTestCase {
-
     public function testAnonIndex() : void {
         $crawler = $this->client->request('GET', '/firmrole/');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());

@@ -10,11 +10,6 @@ declare(strict_types=1);
 
 namespace App\Tests\Services;
 
-use App\DataFixtures\EnFixtures;
-use App\DataFixtures\EstcMarcFixtures;
-use App\DataFixtures\JacksonFixtures;
-use App\DataFixtures\OrlandoBiblioFixtures;
-use App\DataFixtures\OsborneMarcFixtures;
 use App\Entity\Source;
 use App\Services\RoleChecker;
 use App\Services\SourceLinker;

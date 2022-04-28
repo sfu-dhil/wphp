@@ -10,14 +10,11 @@ declare(strict_types=1);
 
 namespace App\Tests\Controller;
 
-use App\DataFixtures\TitleFixtures;
 use App\Entity\Title;
-use App\Repository\TitleRepository;
 use Nines\UserBundle\DataFixtures\UserFixtures;
 use Nines\UtilBundle\TestCase\ControllerTestCase;
 
 class TitleControllerTest extends ControllerTestCase {
-
     public function testAnonIndex() : void {
         $crawler = $this->client->request('GET', '/title/');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());

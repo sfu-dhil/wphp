@@ -10,12 +10,10 @@ declare(strict_types=1);
 
 namespace App\Tests\Controller;
 
-use App\DataFixtures\GeonamesFixtures;
 use Nines\UserBundle\DataFixtures\UserFixtures;
 use Nines\UtilBundle\TestCase\ControllerTestCase;
 
 class GeonamesControllerTest extends ControllerTestCase {
-
     public function testAnonIndex() : void {
         $crawler = $this->client->request('GET', '/geonames/');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());

@@ -11,8 +11,6 @@ declare(strict_types=1);
 namespace App\Tests\Controller;
 
 use App\DataFixtures\AasMarcFixtures;
-use App\Repository\AasMarcRepository;
-use App\Services\MarcManager;
 use Nines\UserBundle\DataFixtures\UserFixtures;
 use Nines\UtilBundle\TestCase\ControllerTestCase;
 
@@ -94,12 +92,12 @@ class AasMarcControllerTest extends ControllerTestCase {
         $formCrawler = $this->client->request('GET', '/resource/aas/search');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $form = $formCrawler->selectButton('Search')->form([
-            'q' => 'adventures',
+            'q' => '"title 1',
         ]);
 
         $responseCrawler = $this->client->submit($form);
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
-        $this->assertSame(1, $responseCrawler->filter('td:contains("Ben Muffin")')->count());
+        $this->assertSame(1, $responseCrawler->filter('td:contains("Title 1")')->count());
     }
 
     public function testAdminSearch() : void {
@@ -107,12 +105,12 @@ class AasMarcControllerTest extends ControllerTestCase {
         $formCrawler = $this->client->request('GET', '/resource/aas/search');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $form = $formCrawler->selectButton('Search')->form([
-            'q' => 'adventures',
+            'q' => '"title 1',
         ]);
 
         $responseCrawler = $this->client->submit($form);
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
-        $this->assertSame(1, $responseCrawler->filter('td:contains("Ben Muffin")')->count());
+        $this->assertSame(1, $responseCrawler->filter('td:contains("Title 1")')->count());
     }
 
     public function testAnonImprintSearch() : void {
@@ -126,12 +124,12 @@ class AasMarcControllerTest extends ControllerTestCase {
         $formCrawler = $this->client->request('GET', '/resource/aas/imprint_search');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $form = $formCrawler->selectButton('Search')->form([
-            'q' => 'adventures',
+            'q' => '"imprint 1"',
         ]);
 
         $responseCrawler = $this->client->submit($form);
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
-        $this->assertSame(1, $responseCrawler->filter('td:contains("Ben Muffin")')->count());
+        $this->assertSame(1, $responseCrawler->filter('td:contains("Title 1")')->count());
     }
 
     public function testAdminImprintSearch() : void {
@@ -139,11 +137,11 @@ class AasMarcControllerTest extends ControllerTestCase {
         $formCrawler = $this->client->request('GET', '/resource/aas/imprint_search');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $form = $formCrawler->selectButton('Search')->form([
-            'q' => 'adventures',
+            'q' => '"imprint 1"',
         ]);
 
         $responseCrawler = $this->client->submit($form);
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
-        $this->assertSame(1, $responseCrawler->filter('td:contains("Ben Muffin")')->count());
+        $this->assertSame(1, $responseCrawler->filter('td:contains("Title 1")')->count());
     }
 }

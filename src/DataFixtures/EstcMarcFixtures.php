@@ -51,6 +51,13 @@ class EstcMarcFixtures extends Fixture implements DependentFixtureInterface, Fix
             $title->setFieldData('ESTC Title ' . $n);
             $manager->persist($title);
 
+            $title = new EstcMarc();
+            $title->setTitleId(1 + $n);
+            $title->setField('260');
+            $title->setSubfield('b');
+            $title->setFieldData('ESTC Imprint ' . $n);
+            $manager->persist($title);
+
             for ($j = 0; $j < 20; $j++) {
                 for ($i = 0; $i < 10; $i++) {
                     $fixture = new EstcMarc();

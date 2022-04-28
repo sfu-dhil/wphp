@@ -10,13 +10,10 @@ declare(strict_types=1);
 
 namespace App\Tests\Controller;
 
-use App\DataFixtures\EnFixtures;
-use App\Repository\EnRepository;
 use Nines\UserBundle\DataFixtures\UserFixtures;
 use Nines\UtilBundle\TestCase\ControllerTestCase;
 
 class EnControllerTest extends ControllerTestCase {
-
     /**
      * @group anon
      * @group index
@@ -92,7 +89,7 @@ class EnControllerTest extends ControllerTestCase {
         $formCrawler = $this->client->request('GET', '/resource/en/search');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $form = $formCrawler->selectButton('Search')->form([
-            'q' => 'adventures',
+            'q' => '"title 1"',
         ]);
 
         $responseCrawler = $this->client->submit($form);
@@ -105,7 +102,7 @@ class EnControllerTest extends ControllerTestCase {
         $formCrawler = $this->client->request('GET', '/resource/en/search');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $form = $formCrawler->selectButton('Search')->form([
-            'q' => 'adventures',
+            'q' => '"title 1"',
         ]);
 
         $responseCrawler = $this->client->submit($form);

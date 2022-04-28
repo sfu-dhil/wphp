@@ -10,10 +10,6 @@ declare(strict_types=1);
 
 namespace App\Tests\Services;
 
-use App\DataFixtures\EstcMarcFixtures;
-use App\DataFixtures\MarcSubfieldStructureFixtures;
-use App\DataFixtures\MarcTagStructureFixtures;
-use App\DataFixtures\OsborneMarcFixtures;
 use App\Entity\EstcMarc;
 use App\Entity\OsborneMarc;
 use App\Services\MarcManager;

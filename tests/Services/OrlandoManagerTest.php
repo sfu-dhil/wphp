@@ -10,7 +10,6 @@ declare(strict_types=1);
 
 namespace App\Tests\Services;
 
-use App\DataFixtures\OrlandoBiblioFixtures;
 use App\Services\OrlandoManager;
 use Nines\UtilBundle\TestCase\ControllerTestCase;
 

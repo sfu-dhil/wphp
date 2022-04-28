@@ -10,14 +10,11 @@ declare(strict_types=1);
 
 namespace App\Tests\Controller;
 
-use App\DataFixtures\FirmFixtures;
 use App\Entity\Firm;
-use App\Repository\FirmRepository;
 use Nines\UserBundle\DataFixtures\UserFixtures;
 use Nines\UtilBundle\TestCase\ControllerTestCase;
 
 class FirmControllerTest extends ControllerTestCase {
-
     public function testAnonIndex() : void {
         $crawler = $this->client->request('GET', '/firm/');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
@@ -162,6 +159,16 @@ class FirmControllerTest extends ControllerTestCase {
     }
 
     public function testAdminDelete() : void {
+        $firm = $this->em->find(Firm::class, 1);
+        foreach($firm->getTitleFirmroles() as $tfr) {
+            $this->em->remove($tfr);
+        }
+        foreach($firm->getFirmSources() as $fs) {
+            $this->em->remove($fs);
+        }
+        $this->em->flush();
+        $this->em->clear();
+
         $preCount = count($this->em->getRepository(Firm::class)->findAll());
         $this->login(UserFixtures::ADMIN);
         $crawler = $this->client->request('GET', '/firm/1/delete');
@@ -173,19 +180,31 @@ class FirmControllerTest extends ControllerTestCase {
         $this->em->clear();
         $postCount = count($this->em->getRepository(Firm::class)->findAll());
         $this->assertSame($preCount - 1, $postCount);
+        $this->reset();
     }
 
-    public function testAnonSearch() : void {
+    public function testAnonSearchChecked() : void {
         $formCrawler = $this->client->request('GET', '/firm/search');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $form = $formCrawler->selectButton('Search')->form([
-            'firm_search[name]' => 'adventures',
-        ])
-        ;
+            'firm_search[name]' => 'Name 2',
+        ]);
 
         $responseCrawler = $this->client->submit($form);
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
-        $this->assertSame(1, $responseCrawler->filter('td:contains("StreetAddress 1")')->count());
+        $this->assertSame(1, $responseCrawler->filter('td:contains("StreetAddress 2")')->count());
+    }
+
+    public function testAnonSearchNotChecked() : void {
+        $formCrawler = $this->client->request('GET', '/firm/search');
+        $this->assertSame(200, $this->client->getResponse()->getStatusCode());
+        $form = $formCrawler->selectButton('Search')->form([
+            'firm_search[name]' => 'Name 1',
+        ]);
+
+        $responseCrawler = $this->client->submit($form);
+        $this->assertSame(200, $this->client->getResponse()->getStatusCode());
+        $this->assertSame(0, $responseCrawler->filter('td:contains("StreetAddress 1")')->count());
     }
 
     public function testUserSearch() : void {
@@ -193,9 +212,8 @@ class FirmControllerTest extends ControllerTestCase {
         $formCrawler = $this->client->request('GET', '/firm/search');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $form = $formCrawler->selectButton('Search')->form([
-            'firm_search[name]' => 'adventures',
-        ])
-        ;
+            'firm_search[name]' => 'Name 1',
+        ]);
 
         $responseCrawler = $this->client->submit($form);
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
@@ -207,9 +225,8 @@ class FirmControllerTest extends ControllerTestCase {
         $formCrawler = $this->client->request('GET', '/firm/search');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $form = $formCrawler->selectButton('Search')->form([
-            'firm_search[name]' => 'adventures',
-        ])
-        ;
+            'firm_search[name]' => 'Name 1',
+        ]);
 
         $responseCrawler = $this->client->submit($form);
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());

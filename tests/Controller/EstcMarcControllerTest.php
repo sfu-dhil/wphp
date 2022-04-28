@@ -10,14 +10,10 @@ declare(strict_types=1);
 
 namespace App\Tests\Controller;
 
-use App\DataFixtures\EstcMarcFixtures;
-use App\Repository\EstcMarcRepository;
-use App\Services\MarcManager;
 use Nines\UserBundle\DataFixtures\UserFixtures;
 use Nines\UtilBundle\TestCase\ControllerTestCase;
 
 class EstcMarcControllerTest extends ControllerTestCase {
-
     /**
      * @group anon
      * @group index
@@ -87,12 +83,12 @@ class EstcMarcControllerTest extends ControllerTestCase {
         $formCrawler = $this->client->request('GET', '/resource/estc/search');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $form = $formCrawler->selectButton('Search')->form([
-            'q' => 'adventures',
+            'q' => '"title 1"',
         ]);
 
         $responseCrawler = $this->client->submit($form);
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
-        $this->assertSame(1, $responseCrawler->filter('td:contains("Ben Muffin")')->count());
+        $this->assertSame(1, $responseCrawler->filter('td:contains("ESTC Title 1")')->count());
     }
 
     public function testAdminSearch() : void {
@@ -100,12 +96,12 @@ class EstcMarcControllerTest extends ControllerTestCase {
         $formCrawler = $this->client->request('GET', '/resource/estc/search');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $form = $formCrawler->selectButton('Search')->form([
-            'q' => 'adventures',
+            'q' => '"title 1"',
         ]);
 
         $responseCrawler = $this->client->submit($form);
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
-        $this->assertSame(1, $responseCrawler->filter('td:contains("Ben Muffin")')->count());
+        $this->assertSame(1, $responseCrawler->filter('td:contains("ESTC Title 1")')->count());
     }
 
     public function testAnonImprintSearch() : void {
@@ -119,12 +115,12 @@ class EstcMarcControllerTest extends ControllerTestCase {
         $formCrawler = $this->client->request('GET', '/resource/estc/imprint_search');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $form = $formCrawler->selectButton('Search')->form([
-            'q' => 'adventures',
+            'q' => '"imprint 1"',
         ]);
 
         $responseCrawler = $this->client->submit($form);
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
-        $this->assertSame(1, $responseCrawler->filter('td:contains("Ben Muffin")')->count());
+        $this->assertSame(1, $responseCrawler->filter('td:contains("ESTC Title 1")')->count());
     }
 
     public function testAdminImprintSearch() : void {
@@ -132,11 +128,11 @@ class EstcMarcControllerTest extends ControllerTestCase {
         $formCrawler = $this->client->request('GET', '/resource/estc/imprint_search');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $form = $formCrawler->selectButton('Search')->form([
-            'q' => 'adventures',
+            'q' => '"imprint 1"',
         ]);
 
         $responseCrawler = $this->client->submit($form);
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
-        $this->assertSame(1, $responseCrawler->filter('td:contains("Ben Muffin")')->count());
+        $this->assertSame(1, $responseCrawler->filter('td:contains("ESTC Title 1")')->count());
     }
 }

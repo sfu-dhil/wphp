@@ -10,13 +10,11 @@ declare(strict_types=1);
 
 namespace App\Tests\Controller;
 
-use App\DataFixtures\SourceFixtures;
 use App\Entity\Source;
 use Nines\UserBundle\DataFixtures\UserFixtures;
 use Nines\UtilBundle\TestCase\ControllerTestCase;
 
 class SourceControllerTest extends ControllerTestCase {
-
     public function testAnonIndex() : void {
         $crawler = $this->client->request('GET', '/source/');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());

@@ -10,14 +10,10 @@ declare(strict_types=1);
 
 namespace App\Tests\Controller;
 
-use App\DataFixtures\OsborneMarcFixtures;
-use App\Repository\OsborneMarcRepository;
-use App\Services\MarcManager;
 use Nines\UserBundle\DataFixtures\UserFixtures;
 use Nines\UtilBundle\TestCase\ControllerTestCase;
 
 class OsborneMarcControllerTest extends ControllerTestCase {
-
     /**
      * @group anon
      * @group index

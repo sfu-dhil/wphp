@@ -10,13 +10,10 @@ declare(strict_types=1);
 
 namespace App\Tests\Controller;
 
-use App\DataFixtures\JacksonFixtures;
-use App\Repository\JacksonRepository;
 use Nines\UserBundle\DataFixtures\UserFixtures;
 use Nines\UtilBundle\TestCase\ControllerTestCase;
 
 class JacksonControllerTest extends ControllerTestCase {
-
     /**
      * @group anon
      * @group index

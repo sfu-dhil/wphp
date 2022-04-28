@@ -10,13 +10,10 @@ declare(strict_types=1);
 
 namespace App\Tests\Controller;
 
-use App\DataFixtures\OrlandoBiblioFixtures;
-use App\Repository\OrlandoBiblioRepository;
 use Nines\UserBundle\DataFixtures\UserFixtures;
 use Nines\UtilBundle\TestCase\ControllerTestCase;
 
 class OrlandoBiblioControllerTest extends ControllerTestCase {
-
     /**
      * @group anon
      * @group index

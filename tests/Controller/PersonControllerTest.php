@@ -10,14 +10,11 @@ declare(strict_types=1);
 
 namespace App\Tests\Controller;
 
-use App\DataFixtures\PersonFixtures;
 use App\Entity\Person;
-use App\Repository\PersonRepository;
 use Nines\UserBundle\DataFixtures\UserFixtures;
 use Nines\UtilBundle\TestCase\ControllerTestCase;
 
 class PersonControllerTest extends ControllerTestCase {
-
     public function testAnonIndex() : void {
         $crawler = $this->client->request('GET', '/person/');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());

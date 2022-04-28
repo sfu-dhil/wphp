@@ -1,6 +1,6 @@
 <div>
     {% set form = comment_service.getForm() %}
-    {{ form_start(form, {'action': path('nines_feedback_comment_post')}) }}
+    {{ form_start(form, {'action': path('nines_feedback_comment_new')}) }}
     {{ form_widget(form) }}
     <input type="hidden" name="entity_id" value="{{entity.id}}"/>
     <input type="hidden" name="entity_class" value="{{entity|class_name}}" />

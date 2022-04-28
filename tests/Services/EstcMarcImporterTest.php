@@ -10,10 +10,6 @@ declare(strict_types=1);
 
 namespace App\Services;
 
-use App\DataFixtures\FormatFixtures;
-use App\DataFixtures\PersonFixtures;
-use App\DataFixtures\RoleFixtures;
-use App\DataFixtures\SourceFixtures;
 use App\Entity\EstcMarc;
 use App\Repository\EstcMarcRepository;
 use App\Repository\TitleRepository;

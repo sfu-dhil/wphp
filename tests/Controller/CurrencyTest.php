@@ -10,7 +10,6 @@ declare(strict_types=1);
 
 namespace App\Tests\Controller;
 
-use App\DataFixtures\CurrencyFixtures;
 use App\Repository\CurrencyRepository;
 use Nines\UserBundle\DataFixtures\UserFixtures;
 use Nines\UtilBundle\TestCase\ControllerTestCase;
@@ -204,8 +203,8 @@ class CurrencyTest extends ControllerTestCase {
 
         $form = $formCrawler->selectButton('Save')->form([
             'currency[code]' => 'UNK',
-            'currency[name]' => '¤',
-            'currency[symbol]' => 'Currency Sign',
+            'currency[symbol]' => '¤',
+            'currency[name]' => 'Currency Sign',
             'currency[description]' => 'Updated Description',
         ]);
 
@@ -250,8 +249,8 @@ class CurrencyTest extends ControllerTestCase {
 
         $form = $formCrawler->selectButton('Save')->form([
             'currency[code]' => 'UNK',
-            'currency[name]' => '¤',
-            'currency[symbol]' => 'Currency Sign',
+            'currency[symbol]' => '¤',
+            'currency[name]' => 'Currency Sign',
             'currency[description]' => 'New Description',
         ]);
 
