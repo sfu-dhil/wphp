@@ -18,22 +18,13 @@ use App\Entity\EstcMarc;
 use App\Repository\EstcMarcRepository;
 use App\Repository\TitleRepository;
 use App\Repository\TitleSourceRepository;
-use Nines\UtilBundle\Tests\ControllerBaseCase;
+use Nines\UtilBundle\TestCase\ControllerTestCase;
 
-class EstcMarcImporterTest extends ControllerBaseCase {
+class EstcMarcImporterTest extends ControllerTestCase {
     /**
      * @var EstcMarcImporter
      */
     private $importer;
-
-    protected function fixtures() : array {
-        return [
-            PersonFixtures::class,
-            RoleFixtures::class,
-            SourceFixtures::class,
-            FormatFixtures::class,
-        ];
-    }
 
     public function testGetFields() : void {
         $f1 = new EstcMarc();

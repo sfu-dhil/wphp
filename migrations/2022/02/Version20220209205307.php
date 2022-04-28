@@ -27,6 +27,10 @@ final class Version20220209205307 extends AbstractMigration {
         $this->addSql('RENAME TABLE blog_post TO nines_blog_post');
         $this->addSql('RENAME TABLE blog_post_category TO nines_blog_post_category');
         $this->addSql('RENAME TABLE blog_post_status TO nines_blog_post_status');
+        $this->addSql('RENAME TABLE comment TO nines_feedback_comment');
+        $this->addSql('RENAME TABLE comment_note TO nines_feedback_comment_note');
+        $this->addSql('RENAME TABLE comment_status TO nines_feedback_comment_status');
+        $this->addSql('DROP TABLE element');
     }
 
     public function down(Schema $schema) : void {

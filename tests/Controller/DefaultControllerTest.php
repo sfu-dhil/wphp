@@ -8,19 +8,13 @@ declare(strict_types=1);
  * with this source code in the file LICENSE.
  */
 
-namespace App\Tests\App\Controller;
+namespace App\Tests\Controller;
 
 use Nines\BlogBundle\DataFixtures\PageFixtures;
 use Nines\UserBundle\DataFixtures\UserFixtures;
-use Nines\UtilBundle\Tests\ControllerBaseCase;
+use Nines\UtilBundle\TestCase\ControllerTestCase;
 
-class DefaultControllerTest extends ControllerBaseCase {
-    protected function fixtures() : array {
-        return [
-            PageFixtures::class,
-            UserFixtures::class,
-        ];
-    }
+class DefaultControllerTest extends ControllerTestCase {
 
     public function testIndex() : void {
         $crawler = $this->client->request('GET', '/');

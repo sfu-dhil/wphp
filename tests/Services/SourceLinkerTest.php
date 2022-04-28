@@ -18,25 +18,15 @@ use App\DataFixtures\OsborneMarcFixtures;
 use App\Entity\Source;
 use App\Services\RoleChecker;
 use App\Services\SourceLinker;
-use Nines\UtilBundle\Tests\ControllerBaseCase;
+use Nines\UtilBundle\TestCase\ControllerTestCase;
 
-class SourceLinkerTest extends ControllerBaseCase {
+class SourceLinkerTest extends ControllerTestCase {
     /**
      * @var SourceLinker
      */
     private $linker;
 
     private $checker;
-
-    protected function fixtures() : array {
-        return [
-            EstcMarcFixtures::class,
-            OrlandoBiblioFixtures::class,
-            JacksonFixtures::class,
-            EnFixtures::class,
-            OsborneMarcFixtures::class,
-        ];
-    }
 
     public function testSanity() : void {
         $this->assertInstanceOf(SourceLinker::class, $this->linker);

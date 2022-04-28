@@ -13,15 +13,9 @@ namespace App\Tests\Controller;
 use App\DataFixtures\OrlandoBiblioFixtures;
 use App\Repository\OrlandoBiblioRepository;
 use Nines\UserBundle\DataFixtures\UserFixtures;
-use Nines\UtilBundle\Tests\ControllerBaseCase;
+use Nines\UtilBundle\TestCase\ControllerTestCase;
 
-class OrlandoBiblioControllerTest extends ControllerBaseCase {
-    protected function fixtures() : array {
-        return [
-            UserFixtures::class,
-            OrlandoBiblioFixtures::class,
-        ];
-    }
+class OrlandoBiblioControllerTest extends ControllerTestCase {
 
     /**
      * @group anon
@@ -37,7 +31,7 @@ class OrlandoBiblioControllerTest extends ControllerBaseCase {
      * @group index
      */
     public function testUserIndex() : void {
-        $this->login('user.user');
+        $this->login(UserFixtures::USER);
         $crawler = $this->client->request('GET', '/resource/orlando_biblio/');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
     }
@@ -47,7 +41,7 @@ class OrlandoBiblioControllerTest extends ControllerBaseCase {
      * @group index
      */
     public function testAdminIndex() : void {
-        $this->login('user.admin');
+        $this->login(UserFixtures::ADMIN);
         $crawler = $this->client->request('GET', '/resource/orlando_biblio/');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
     }
@@ -66,7 +60,7 @@ class OrlandoBiblioControllerTest extends ControllerBaseCase {
      * @group show
      */
     public function testUserShow() : void {
-        $this->login('user.user');
+        $this->login(UserFixtures::USER);
         $crawler = $this->client->request('GET', '/resource/orlando_biblio/1');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
     }
@@ -76,7 +70,7 @@ class OrlandoBiblioControllerTest extends ControllerBaseCase {
      * @group show
      */
     public function testAdminShow() : void {
-        $this->login('user.admin');
+        $this->login(UserFixtures::ADMIN);
         $crawler = $this->client->request('GET', '/resource/orlando_biblio/1');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
     }
@@ -88,12 +82,7 @@ class OrlandoBiblioControllerTest extends ControllerBaseCase {
     }
 
     public function testUserSearch() : void {
-        $repo = $this->createMock(OrlandoBiblioRepository::class);
-        $repo->method('searchQuery')->willReturn([$this->getReference('orlando.1')]);
-        $this->login('user.user');
-        $this->client->disableReboot();
-        $this->client->getContainer()->set(OrlandoBiblioRepository::class, $repo);
-
+        $this->login(UserFixtures::USER);
         $formCrawler = $this->client->request('GET', '/resource/orlando_biblio/search');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $form = $formCrawler->selectButton('Search')->form([
@@ -106,12 +95,7 @@ class OrlandoBiblioControllerTest extends ControllerBaseCase {
     }
 
     public function testAdminSearch() : void {
-        $repo = $this->createMock(OrlandoBiblioRepository::class);
-        $repo->method('searchQuery')->willReturn([$this->getReference('orlando.1')]);
-        $this->login('user.admin');
-        $this->client->disableReboot();
-        $this->client->getContainer()->set(OrlandoBiblioRepository::class, $repo);
-
+        $this->login(UserFixtures::ADMIN);
         $formCrawler = $this->client->request('GET', '/resource/orlando_biblio/search');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $form = $formCrawler->selectButton('Search')->form([

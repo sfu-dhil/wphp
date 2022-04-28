@@ -1,10 +1,6 @@
 nines_blog:
   resource: '@NinesBlogBundle/config/routes.yaml'
 
-nines_dc:
-  prefix: /dublin_core
-  resource: '@NinesDublinCoreBundle/config/routes.yaml'
-
 nines_editor:
   resource: '@NinesEditorBundle/config/routes.yaml'
   prefix: editor

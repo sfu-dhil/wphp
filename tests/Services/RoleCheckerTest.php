@@ -12,11 +12,11 @@ namespace App\Tests\Services;
 
 use App\Services\RoleChecker;
 use Exception;
-use Nines\UtilBundle\Tests\ControllerBaseCase;
+use Nines\UtilBundle\TestCase\ControllerTestCase;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
-class RoleCheckerTest extends ControllerBaseCase {
+class RoleCheckerTest extends ControllerTestCase {
     /**
      * @var RoleChecker
      */

@@ -17,52 +17,43 @@ use App\DataFixtures\OsborneMarcFixtures;
 use App\Entity\EstcMarc;
 use App\Entity\OsborneMarc;
 use App\Services\MarcManager;
-use Nines\UtilBundle\Tests\ControllerBaseCase;
+use Nines\UtilBundle\TestCase\ControllerTestCase;
 
-class MarcManagerTest extends ControllerBaseCase {
+class MarcManagerTest extends ControllerTestCase {
     private $manager;
-
-    protected function fixtures() : array {
-        return [
-            EstcMarcFixtures::class,
-            OsborneMarcFixtures::class,
-            MarcTagStructureFixtures::class,
-            MarcSubfieldStructureFixtures::class,
-        ];
-    }
 
     public function testSanity() : void {
         $this->assertInstanceOf(MarcManager::class, $this->manager);
     }
 
     public function testGetEstcTitle() : void {
-        $estcMarc = $this->getReference('estc.0.0.0');
+        $estcMarc = $this->em->find(EstcMarc::class, 1);
         $this->assertSame('ESTC Title 0', $this->manager->getTitle($estcMarc));
     }
 
     public function testGetOsborneTitle() : void {
-        $estcMarc = $this->getReference('osborne.0.0.0');
+        $estcMarc = $this->em->find(OsborneMarc::class, 1);
         $this->assertSame('OSBORNE Title 0', $this->manager->getTitle($estcMarc));
     }
 
     public function testGetEstcAuthor() : void {
-        $estcMarc = $this->getReference('estc.0.0.0');
+        $estcMarc = $this->em->find(EstcMarc::class, 1);
         $this->assertSame('Estc Field Data 0 100a', $this->manager->getAuthor($estcMarc));
     }
 
     public function testGetOsborneAuthor() : void {
-        $estcMarc = $this->getReference('osborne.0.0.0');
+        $estcMarc = $this->em->find(OsborneMarc::class, 1);
         $this->assertSame('Osborne Field Data 0 0 0', $this->manager->getAuthor($estcMarc));
     }
 
     public function testGetEstcData() : void {
-        $estcMarc = $this->getReference('estc.0.0.0');
+        $estcMarc = $this->em->find(EstcMarc::class, 1);
         $data = $this->manager->getData($estcMarc);
         $this->assertCount(203, $data);
     }
 
     public function testGetDataData() : void {
-        $estcMarc = $this->getReference('osborne.0.0.0');
+        $estcMarc = $this->em->find(EstcMarc::class, 1);
         $data = $this->manager->getData($estcMarc);
         $this->assertCount(203, $data);
     }

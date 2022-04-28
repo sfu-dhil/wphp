@@ -12,15 +12,9 @@ namespace App\Tests\Controller;
 
 use App\DataFixtures\GeonamesFixtures;
 use Nines\UserBundle\DataFixtures\UserFixtures;
-use Nines\UtilBundle\Tests\ControllerBaseCase;
+use Nines\UtilBundle\TestCase\ControllerTestCase;
 
-class GeonamesControllerTest extends ControllerBaseCase {
-    protected function fixtures() : array {
-        return [
-            UserFixtures::class,
-            GeonamesFixtures::class,
-        ];
-    }
+class GeonamesControllerTest extends ControllerTestCase {
 
     public function testAnonIndex() : void {
         $crawler = $this->client->request('GET', '/geonames/');
@@ -28,13 +22,13 @@ class GeonamesControllerTest extends ControllerBaseCase {
     }
 
     public function testUserIndex() : void {
-        $this->login('user.user');
+        $this->login(UserFixtures::USER);
         $crawler = $this->client->request('GET', '/geonames/');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
     }
 
     public function testAdminIndex() : void {
-        $this->login('user.admin');
+        $this->login(UserFixtures::ADMIN);
         $crawler = $this->client->request('GET', '/geonames/');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
     }
@@ -47,14 +41,14 @@ class GeonamesControllerTest extends ControllerBaseCase {
     }
 
     public function testUserTypeahead() : void {
-        $this->login('user.user');
+        $this->login(UserFixtures::USER);
         $crawler = $this->client->request('GET', '/geonames/typeahead?q=name');
         $this->assertSame(403, $this->client->getResponse()->getStatusCode());
         $this->assertStringContainsStringIgnoringCase('Access denied.', $this->client->getResponse()->getContent());
     }
 
     public function testAdminTypeahead() : void {
-        $this->login('user.admin');
+        $this->login(UserFixtures::ADMIN);
         $crawler = $this->client->request('GET', '/geonames/typeahead?q=name');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $this->assertSame('application/json', $this->client->getResponse()->headers->get('Content-Type'));
@@ -68,13 +62,13 @@ class GeonamesControllerTest extends ControllerBaseCase {
     }
 
     public function testUserShow() : void {
-        $this->login('user.user');
+        $this->login(UserFixtures::USER);
         $crawler = $this->client->request('GET', '/geonames/1');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
     }
 
     public function testAdminShow() : void {
-        $this->login('user.admin');
+        $this->login(UserFixtures::ADMIN);
         $crawler = $this->client->request('GET', '/geonames/1');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
     }

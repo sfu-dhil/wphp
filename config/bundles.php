@@ -19,7 +19,6 @@ return [
     DAMA\DoctrineTestBundle\DAMADoctrineTestBundle::class => ['test' => true],
 
     Nines\BlogBundle\NinesBlogBundle::class => ['all' => true],
-    Nines\DublinCoreBundle\NinesDublinCoreBundle::class => ['all' => true],
     Nines\EditorBundle\NinesEditorBundle::class => ['all' => true],
     Nines\FeedbackBundle\NinesFeedbackBundle::class => ['all' => true],
     Nines\MakerBundle\NinesMakerBundle::class => ['dev' => true],
