@@ -1,22 +1,17 @@
 nines_blog:
-  type: annotation
-  prefix: /blog
-  resource: '@NinesBlogBundle/Controller'
+  resource: '@NinesBlogBundle/config/routes.yaml'
 
 nines_dc:
-  type: annotation
   prefix: /dublin_core
-  resource: '@NinesDublinCoreBundle/Controller'
+  resource: '@NinesDublinCoreBundle/config/routes.yaml'
 
 nines_editor:
-  type: annotation
-  prefix: /editor
-  resource: '@NinesEditorBundle/Controller'
+  resource: '@NinesEditorBundle/config/routes.yaml'
+  prefix: editor
 
 nines_feedback:
-  type: annotation
   prefix: /feedback
-  resource: '@NinesFeedbackBundle/Controller'
+  resource: '@NinesFeedbackBundle/config/routes.yaml'
 
 nines_user:
-  resource: '@NinesUserBundle/Resources/config/routes.yaml'
+  resource: '@NinesUserBundle/config/routes.yaml'

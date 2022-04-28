@@ -1,6 +1,9 @@
 # This file is the entry point to configure your own services.
 # Files in the packages/ subdirectory configure your dependencies.
 
+imports:
+    - { resource: '../vendor/beberlei/doctrineextensions/config/mysql.yml' }
+
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
@@ -18,18 +21,14 @@ parameters:
     dhil.matomo_siteid: 32
     dhil.matomo_domain: dhil.lib.sfu.ca/wphp
 
+    wphp.title_index_authors: 3
     wphp.spotlight_menu:
         - spotlight_titles
         - spotlight_person
         - spotlight_firms
         - miscellaneous-spotlights
 
-    wphp.title_index_authors: 3
-
-    nines.editor.upload_dir: public/images/blog
-
-    nines_feedback.recipients: '%env(json:FEEDBACK_RECIPIENTS)%'
-
+    nines.editor.upload_dir: '%kernel.project_dir%/public/images/blog'
     page_size: 25
 
 services:

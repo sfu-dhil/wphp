@@ -1,2 +1,19 @@
 nines_util:
     trim_length: 50
+    sender: 'noreply@%router.request_context.host%'
+    routing:
+        firm:
+            class: App\Entity\Firm
+            route: firm_show
+        person:
+            class: App\Entity\Person
+            route: person_show
+        title:
+            class: App\Entity\Title
+            route: title_show
+        blog_post:
+            class: Nines\BlogBundle\Entity\Post
+            route: nines_blog_post_show
+        blog_page:
+            class: Nines\BlogBundle\Entity\Page
+            route: nines_blog_page_show
