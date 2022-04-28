@@ -208,12 +208,12 @@ class TitleControllerTest extends ControllerTestCase {
         $formCrawler = $this->client->request('GET', '/title/search');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $form = $formCrawler->selectButton('Search')->form([
-            'title_search[title]' => 'adventures',
+            'title_search[title]' => 'title',
         ]);
 
         $responseCrawler = $this->client->submit($form);
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
-        $this->assertSame(1, $responseCrawler->filter('td:contains("Title 1")')->count());
+        $this->assertSame(0, $responseCrawler->filter('td:contains("Title 2")')->count());
     }
 
     public function testUserSearch() : void {
@@ -221,7 +221,7 @@ class TitleControllerTest extends ControllerTestCase {
         $formCrawler = $this->client->request('GET', '/title/search');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $form = $formCrawler->selectButton('Search')->form([
-            'title_search[title]' => 'adventures',
+            'title_search[title]' => '"title 1"',
         ]);
 
         $responseCrawler = $this->client->submit($form);
@@ -234,7 +234,7 @@ class TitleControllerTest extends ControllerTestCase {
         $formCrawler = $this->client->request('GET', '/title/search');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $form = $formCrawler->selectButton('Search')->form([
-            'title_search[title]' => 'adventures',
+            'title_search[title]' => '"title 1"',
         ]);
 
         $responseCrawler = $this->client->submit($form);

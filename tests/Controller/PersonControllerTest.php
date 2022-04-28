@@ -185,12 +185,12 @@ class PersonControllerTest extends ControllerTestCase {
         $formCrawler = $this->client->request('GET', '/person/search');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $form = $formCrawler->selectButton('Search')->form([
-            'person_search[name]' => 'adventures',
+            'person_search[name]' => 'FirstName',
         ]);
 
         $responseCrawler = $this->client->submit($form);
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
-        $this->assertSame(1, $responseCrawler->filter('td:contains("LastName 1")')->count());
+        $this->assertSame(1, $responseCrawler->filter('td:contains("LastName 2")')->count());
     }
 
     public function testUserSearch() : void {
@@ -198,7 +198,7 @@ class PersonControllerTest extends ControllerTestCase {
         $formCrawler = $this->client->request('GET', '/person/search');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $form = $formCrawler->selectButton('Search')->form([
-            'person_search[name]' => 'adventures',
+            'person_search[name]' => 'FirstName 1',
         ]);
 
         $responseCrawler = $this->client->submit($form);
@@ -211,7 +211,7 @@ class PersonControllerTest extends ControllerTestCase {
         $formCrawler = $this->client->request('GET', '/person/search');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $form = $formCrawler->selectButton('Search')->form([
-            'person_search[name]' => 'adventures',
+            'person_search[name]' => 'FirstName 1',
         ]);
 
         $responseCrawler = $this->client->submit($form);

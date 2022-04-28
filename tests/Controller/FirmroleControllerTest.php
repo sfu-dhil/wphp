@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace App\Tests\Controller;
 
 use App\Entity\Firmrole;
+use App\Entity\TitleFirmrole;
 use Nines\UserBundle\DataFixtures\UserFixtures;
 use Nines\UtilBundle\TestCase\ControllerTestCase;
 
@@ -150,6 +151,11 @@ class FirmroleControllerTest extends ControllerTestCase {
     }
 
     public function testAdminDelete() : void {
+        $fr = $this->em->find(Firmrole::class, 1);
+        foreach($this->em->getRepository(TitleFirmrole::class)->findBy(['firmrole' => $fr]) as $tfr) {
+            $this->em->remove($tfr);
+        }
+
         $preCount = count($this->em->getRepository(Firmrole::class)->findAll());
         $this->login(UserFixtures::ADMIN);
         $crawler = $this->client->request('GET', '/firmrole/1/delete');
@@ -161,5 +167,7 @@ class FirmroleControllerTest extends ControllerTestCase {
         $this->em->clear();
         $postCount = count($this->em->getRepository(Firmrole::class)->findAll());
         $this->assertSame($preCount - 1, $postCount);
+
+        $this->reset();
     }
 }

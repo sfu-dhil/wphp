@@ -45,13 +45,13 @@ class MarcManagerTest extends ControllerTestCase {
     public function testGetEstcData() : void {
         $estcMarc = $this->em->find(EstcMarc::class, 1);
         $data = $this->manager->getData($estcMarc);
-        $this->assertCount(203, $data);
+        $this->assertCount(204, $data);
     }
 
     public function testGetDataData() : void {
         $estcMarc = $this->em->find(EstcMarc::class, 1);
         $data = $this->manager->getData($estcMarc);
-        $this->assertCount(203, $data);
+        $this->assertCount(204, $data);
     }
 
     public function testGetUnknownEstcFieldName() : void {

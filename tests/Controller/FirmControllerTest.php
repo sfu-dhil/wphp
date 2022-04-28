@@ -183,23 +183,11 @@ class FirmControllerTest extends ControllerTestCase {
         $this->reset();
     }
 
-    public function testAnonSearchChecked() : void {
+    public function testAnonSearch() : void {
         $formCrawler = $this->client->request('GET', '/firm/search');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $form = $formCrawler->selectButton('Search')->form([
-            'firm_search[name]' => 'Name 2',
-        ]);
-
-        $responseCrawler = $this->client->submit($form);
-        $this->assertSame(200, $this->client->getResponse()->getStatusCode());
-        $this->assertSame(1, $responseCrawler->filter('td:contains("StreetAddress 2")')->count());
-    }
-
-    public function testAnonSearchNotChecked() : void {
-        $formCrawler = $this->client->request('GET', '/firm/search');
-        $this->assertSame(200, $this->client->getResponse()->getStatusCode());
-        $form = $formCrawler->selectButton('Search')->form([
-            'firm_search[name]' => 'Name 1',
+            'firm_search[name]' => '"name 1"',
         ]);
 
         $responseCrawler = $this->client->submit($form);

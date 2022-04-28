@@ -83,7 +83,7 @@ class OrlandoBiblioControllerTest extends ControllerTestCase {
         $formCrawler = $this->client->request('GET', '/resource/orlando_biblio/search');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $form = $formCrawler->selectButton('Search')->form([
-            'q' => 'adventures',
+            'q' => '"title 1"',
         ]);
 
         $responseCrawler = $this->client->submit($form);
@@ -96,7 +96,7 @@ class OrlandoBiblioControllerTest extends ControllerTestCase {
         $formCrawler = $this->client->request('GET', '/resource/orlando_biblio/search');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $form = $formCrawler->selectButton('Search')->form([
-            'q' => 'adventures',
+            'q' => '"title 1"',
         ]);
 
         $responseCrawler = $this->client->submit($form);

@@ -83,12 +83,12 @@ class OsborneMarcControllerTest extends ControllerTestCase {
         $formCrawler = $this->client->request('GET', '/resource/osborne/search');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $form = $formCrawler->selectButton('Search')->form([
-            'q' => 'adventures',
+            'q' => '"title 1"',
         ]);
 
         $responseCrawler = $this->client->submit($form);
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
-        $this->assertSame(1, $responseCrawler->filter('td:contains("Ben Muffin")')->count());
+        $this->assertSame(1, $responseCrawler->filter('td:contains("Title 1")')->count());
     }
 
     public function testAdminSearch() : void {
@@ -96,11 +96,11 @@ class OsborneMarcControllerTest extends ControllerTestCase {
         $formCrawler = $this->client->request('GET', '/resource/osborne/search');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $form = $formCrawler->selectButton('Search')->form([
-            'q' => 'adventures',
+            'q' => '"title 1"',
         ]);
 
         $responseCrawler = $this->client->submit($form);
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
-        $this->assertSame(1, $responseCrawler->filter('td:contains("Ben Muffin")')->count());
+        $this->assertSame(1, $responseCrawler->filter('td:contains("Title 1")')->count());
     }
 }
