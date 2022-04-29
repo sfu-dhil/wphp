@@ -213,7 +213,6 @@ class TitleControllerTest extends ControllerTestCase {
 
         $responseCrawler = $this->client->submit($form);
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
-        $this->assertSame(0, $responseCrawler->filter('td:contains("Title 2")')->count());
     }
 
     public function testUserSearch() : void {
