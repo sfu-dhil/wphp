@@ -62,7 +62,7 @@ class EstcMarcFixtures extends Fixture implements DependentFixtureInterface, Fix
                 for ($i = 0; $i < 10; $i++) {
                     $fixture = new EstcMarc();
                     $fixture->setTitleId(1 + $n);
-                    $fixture->setField(100 + $j);
+                    $fixture->setField(sprintf('%d', 100 + $j));
                     $fixture->setSubfield('abcdefghijklmnop'[$i]);
                     $fixture->setFieldData("Estc Field Data {$n} " . (100 + $j) . 'abcdefghijklmnop'[$i]);
                     $manager->persist($fixture);

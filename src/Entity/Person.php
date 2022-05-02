@@ -13,6 +13,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Exception;
 use Nines\UtilBundle\Entity\AbstractEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -115,7 +116,7 @@ class Person extends AbstractEntity {
      *
      * @ORM\Column(name="finalcheck", type="boolean", nullable=false)
      */
-    private $finalcheck = '0';
+    private $finalcheck = false;
 
     /**
      * @var Geonames
@@ -166,6 +167,9 @@ class Person extends AbstractEntity {
         return implode(', ', array_filter([$this->lastName, $this->firstName]));
     }
 
+    /**
+     * @return string
+     */
     public function getFormId() {
         return "({$this->id}) " . implode(', ', array_filter([$this->lastName, $this->firstName]));
     }
@@ -175,7 +179,7 @@ class Person extends AbstractEntity {
      *
      * @param string $lastName
      *
-     * @return Person
+     * @return self
      */
     public function setLastName($lastName) {
         $this->lastName = $lastName;
@@ -197,7 +201,7 @@ class Person extends AbstractEntity {
      *
      * @param string $firstName
      *
-     * @return Person
+     * @return self
      */
     public function setFirstName($firstName) {
         $this->firstName = $firstName;
@@ -219,7 +223,7 @@ class Person extends AbstractEntity {
      *
      * @param string $title
      *
-     * @return Person
+     * @return self
      */
     public function setTitle($title) {
         $this->title = $title;
@@ -241,7 +245,7 @@ class Person extends AbstractEntity {
      *
      * @param string $gender
      *
-     * @return Person
+     * @return self
      */
     public function setGender($gender) {
         $this->gender = $gender;
@@ -263,7 +267,7 @@ class Person extends AbstractEntity {
      *
      * @param string $dob
      *
-     * @return Person
+     * @return self
      */
     public function setDob($dob) {
         $this->dob = $dob;
@@ -274,11 +278,11 @@ class Person extends AbstractEntity {
     /**
      * Get dob.
      *
-     * @return string
+     * @return null|string
      */
     public function getDob() {
         if ('0000-00-00' === $this->dob) {
-            return;
+            return null;
         }
 
         return $this->dob;
@@ -289,7 +293,7 @@ class Person extends AbstractEntity {
      *
      * @param string $dod
      *
-     * @return Person
+     * @return self
      */
     public function setDod($dod) {
         $this->dod = $dod;
@@ -300,11 +304,11 @@ class Person extends AbstractEntity {
     /**
      * Get dod.
      *
-     * @return string
+     * @return null|string
      */
     public function getDod() {
         if ('0000-00-00' === $this->dod) {
-            return;
+            return null;
         }
 
         return $this->dod;
@@ -315,7 +319,7 @@ class Person extends AbstractEntity {
      *
      * @param string $notes
      *
-     * @return Title
+     * @return self
      */
     public function setNotes($notes) {
         $this->notes = $notes;
@@ -337,7 +341,7 @@ class Person extends AbstractEntity {
      *
      * @param bool $finalcheck
      *
-     * @return Person
+     * @return self
      */
     public function setFinalcheck($finalcheck) {
         $this->finalcheck = $finalcheck;
@@ -359,7 +363,7 @@ class Person extends AbstractEntity {
      *
      * @param Geonames $cityOfBirth
      *
-     * @return Person
+     * @return self
      */
     public function setCityOfBirth(?Geonames $cityOfBirth = null) {
         $this->cityOfBirth = $cityOfBirth;
@@ -370,7 +374,7 @@ class Person extends AbstractEntity {
     /**
      * Get cityOfBirth.
      *
-     * @return Geonames
+     * @return null|Geonames
      */
     public function getCityOfBirth() {
         return $this->cityOfBirth;
@@ -379,9 +383,7 @@ class Person extends AbstractEntity {
     /**
      * Set cityOfDeath.
      *
-     * @param Geonames $cityOfDeath
-     *
-     * @return Person
+     * @return self
      */
     public function setCityOfDeath(?Geonames $cityOfDeath = null) {
         $this->cityOfDeath = $cityOfDeath;
@@ -392,7 +394,7 @@ class Person extends AbstractEntity {
     /**
      * Get cityOfDeath.
      *
-     * @return Geonames
+     * @return null|Geonames
      */
     public function getCityOfDeath() {
         return $this->cityOfDeath;
@@ -401,7 +403,7 @@ class Person extends AbstractEntity {
     /**
      * Add titleRole.
      *
-     * @return Person
+     * @return self
      */
     public function addTitleRole(TitleRole $titleRole) {
         $this->titleRoles[] = $titleRole;
@@ -420,6 +422,8 @@ class Person extends AbstractEntity {
      * Get titleRoles.
      *
      * @param bool $sort
+     *
+     * @throws Exception
      *
      * @return Collection|TitleRole[]
      */
@@ -446,7 +450,7 @@ class Person extends AbstractEntity {
      *
      * @param null|string $viafUrl
      *
-     * @return Person
+     * @return self
      */
     public function setViafUrl($viafUrl = null) {
         $this->viafUrl = $viafUrl;
@@ -468,7 +472,7 @@ class Person extends AbstractEntity {
      *
      * @param null|string $wikipediaUrl
      *
-     * @return Person
+     * @return self
      */
     public function setWikipediaUrl($wikipediaUrl = null) {
         $this->wikipediaUrl = $wikipediaUrl;
@@ -490,7 +494,7 @@ class Person extends AbstractEntity {
      *
      * @param null|string $imageUrl
      *
-     * @return Person
+     * @return self
      */
     public function setImageUrl($imageUrl = null) {
         $this->imageUrl = $imageUrl;

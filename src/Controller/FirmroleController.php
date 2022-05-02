@@ -38,8 +38,6 @@ class FirmroleController extends AbstractController implements PaginatorAwareInt
      * @Route("/", name="firmrole_index", methods={"GET"})
      * @Template
      *
-     * @param FirmroleRepository $repo
-     *
      * @return array
      */
     public function indexAction(Request $request, EntityManagerInterface $em) {

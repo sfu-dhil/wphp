@@ -10,18 +10,10 @@ declare(strict_types=1);
 
 namespace App\Tests\Controller;
 
-use App\DataFixtures\AasMarcFixtures;
 use Nines\UserBundle\DataFixtures\UserFixtures;
 use Nines\UtilBundle\TestCase\ControllerTestCase;
 
 class AasMarcControllerTest extends ControllerTestCase {
-    protected function fixtures() : array {
-        return [
-            UserFixtures::class,
-            AasMarcFixtures::class,
-        ];
-    }
-
     /**
      * @group anon
      * @group index

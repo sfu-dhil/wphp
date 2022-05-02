@@ -31,6 +31,9 @@ class FirmTest extends TestCase {
         $this->AssertEquals($expected, $firm->getStartDate());
     }
 
+    /**
+     * @return array
+     */
     public function getStartDateData() {
         return [
             [null, '0000-00-00'],
@@ -48,7 +51,7 @@ class FirmTest extends TestCase {
     public function testGetEndDate($expected, $date) : void {
         $firm = new Firm();
         $firm->setEndDate($date);
-        $this->AssertEquals($expected, $firm->getEndDate());
+        $this->assertSame($expected, $firm->getEndDate());
     }
 
     public function getEndDateData() {

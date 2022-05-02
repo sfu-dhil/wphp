@@ -11,7 +11,6 @@ declare(strict_types=1);
 namespace App\Form\Firm;
 
 use App\Entity\Firmrole;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -25,7 +24,7 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class FirmFilterType extends AbstractType {
     /**
-     * @var EntityManager
+     * @var EntityManagerInterface
      */
     private $em;
 
@@ -38,7 +37,7 @@ class FirmFilterType extends AbstractType {
      */
     public function buildForm(FormBuilderInterface $builder, array $options) : void {
         $firmRoleRepo = $this->em->getRepository(Firmrole::class);
-        $roles = $firmRoleRepo->findAll([
+        $roles = $firmRoleRepo->findBy([], [
             'name' => 'ASC',
         ]);
         $builder->add('firm_id', TextType::class, [

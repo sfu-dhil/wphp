@@ -24,9 +24,9 @@ class EstcMarcImporterTest extends ControllerTestCase {
 
     public function testGetFields() : void {
         $f1 = new EstcMarc();
-        $f1->setTitleId('abc')->setField('100')->setSubfield('a')->setFieldData('Bond, James');
+        $f1->setTitleId(123)->setField('100')->setSubfield('a')->setFieldData('Bond, James');
         $f2 = new EstcMarc();
-        $f2->setTitleId('abc')->setField('100')->setSubfield('b')->setFieldData('Moneypenny, Miss');
+        $f2->setTitleId(123)->setField('100')->setSubfield('b')->setFieldData('Moneypenny, Miss');
 
         $repo = $this->createMock(EstcMarcRepository::class);
         $repo->method('findBy')->willReturn([$f1, $f2]);
@@ -72,6 +72,9 @@ class EstcMarcImporterTest extends ControllerTestCase {
         $this->assertSame($expectedDod, $dod);
     }
 
+    /**
+     * @return array
+     */
     public function getDatesData() {
         return [
             ['1751', '1801', '1751-1801'],
@@ -142,6 +145,9 @@ class EstcMarcImporterTest extends ControllerTestCase {
         $this->assertSame($height, $h);
     }
 
+    /**
+     * @return array
+     */
     public function guessDimensionsData() {
         return [
             ['10', '15', '10 x 15 cm'],

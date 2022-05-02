@@ -15,10 +15,16 @@ use App\Entity\Person;
 use App\Entity\Title;
 
 class CsvExporter {
+    /**
+     * @return string[]
+     */
     public function firmHeaders() {
         return ['Firm ID', 'Name', 'Gender', 'Street Address', 'City', 'Start Date', 'End Date'];
     }
 
+    /**
+     * @return array<int,mixed>
+     */
     public function firmRow(Firm $firm) {
         return [
             $firm->getId(),
@@ -31,10 +37,16 @@ class CsvExporter {
         ];
     }
 
+    /**
+     * @return string[]
+     */
     public function personHeaders() {
         return ['Person ID', 'Last Name', 'First Name', 'Gender', 'Birth Date', 'Birth City', 'Death Date', 'Death City'];
     }
 
+    /**
+     * @return array<int,mixed>
+     */
     public function personRow(Person $person) {
         return [
             $person->getId(),
@@ -48,6 +60,9 @@ class CsvExporter {
         ];
     }
 
+    /**
+     * @return string[]
+     */
     public function titleHeaders() {
         return [
             'Title Id',
@@ -77,6 +92,9 @@ class CsvExporter {
         ];
     }
 
+    /**
+     * @return array<int,mixed>
+     */
     public function titleRow(Title $title) {
         $sources = [];
         foreach ($title->getTitleSources() as $source) {

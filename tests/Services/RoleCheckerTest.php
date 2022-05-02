@@ -17,11 +17,6 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class RoleCheckerTest extends ControllerTestCase {
-    /**
-     * @var RoleChecker
-     */
-    private $checker;
-
     public function testMissingToken() : void {
         $authChecker = $this->createMock(AuthorizationCheckerInterface::class);
         $authChecker->method('isGranted')->will($this->throwException(new Exception('No token')));

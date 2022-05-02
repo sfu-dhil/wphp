@@ -210,7 +210,7 @@ class Source {
     /**
      * Get titleSources.
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getTitleSources() {
         return $this->titleSources;
@@ -243,7 +243,7 @@ class Source {
     /**
      * Get firmSources.
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getFirmSources() {
         return $this->firmSources;

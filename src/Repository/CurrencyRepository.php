@@ -21,6 +21,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method null|Currency findOneBy(array $criteria, array $orderBy = null)
  * @method Currency[] findAll()
  * @method Currency[] findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @phpstan-extends ServiceEntityRepository<Currency>
  */
 class CurrencyRepository extends ServiceEntityRepository {
     public function __construct(ManagerRegistry $registry) {

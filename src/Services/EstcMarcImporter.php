@@ -191,7 +191,7 @@ class EstcMarcImporter {
      */
     public function guessFormat($fields) {
         if ( ! isset($fields['300c']) || null === $fields['300c']->getFieldData()) {
-            return;
+            return null;
         }
         $data = $fields['300c']->getFieldData();
         $matches = [];
@@ -290,8 +290,10 @@ class EstcMarcImporter {
 
     /**
      * Add the person to a title as an author.
+     *
+     * @param ?Person $person
      */
-    public function addAuthor(Title $title, Person $person) : void {
+    public function addAuthor(Title $title, ?Person $person) : void {
         if ( ! $person) {
             return;
         }

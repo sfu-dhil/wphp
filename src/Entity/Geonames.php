@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
-use DateTime;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -154,7 +154,7 @@ class Geonames {
     private $timezone;
 
     /**
-     * @var DateTime
+     * @var DateTimeInterface
      *
      * @ORM\Column(name="moddate", type="date", nullable=true)
      */
@@ -204,7 +204,7 @@ class Geonames {
     /**
      * Set geonameid.
      *
-     * @param string $geonameid
+     * @param int $geonameid
      *
      * @return Geonames
      */
@@ -600,7 +600,7 @@ class Geonames {
     /**
      * Set moddate.
      *
-     * @param DateTime $moddate
+     * @param DateTimeInterface $moddate
      *
      * @return Geonames
      */
@@ -613,7 +613,7 @@ class Geonames {
     /**
      * Get moddate.
      *
-     * @return DateTime
+     * @return DateTimeInterface
      */
     public function getModdate() {
         return $this->moddate;

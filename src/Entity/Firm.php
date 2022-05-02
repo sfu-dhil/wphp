@@ -83,7 +83,7 @@ class Firm extends AbstractEntity {
      *
      * @ORM\Column(name="finalcheck", type="boolean", nullable=false)
      */
-    private $finalcheck = '0';
+    private $finalcheck = false;
 
     /**
      * @var Geonames
@@ -146,7 +146,7 @@ class Firm extends AbstractEntity {
         return $this->name;
     }
 
-    public function getFormId() {
+    public function getFormId() : string {
         return "({$this->id}) {$this->name}";
     }
 
@@ -210,11 +210,11 @@ class Firm extends AbstractEntity {
     /**
      * Get startDate.
      *
-     * @return string
+     * @return null|string
      */
     public function getStartDate() {
         if ('0000-00-00' === $this->startDate) {
-            return;
+            return null;
         }
 
         return $this->startDate;
@@ -236,11 +236,11 @@ class Firm extends AbstractEntity {
     /**
      * Get endDate.
      *
-     * @return string
+     * @return null|string
      */
     public function getEndDate() {
         if ('0000-00-00' === $this->endDate) {
-            return;
+            return null;
         }
 
         return $this->endDate;
@@ -251,7 +251,7 @@ class Firm extends AbstractEntity {
      *
      * @param string $notes
      *
-     * @return Title
+     * @return self
      */
     public function setNotes($notes) {
         $this->notes = $notes;
@@ -273,7 +273,7 @@ class Firm extends AbstractEntity {
      *
      * @param bool $finalcheck
      *
-     * @return Firm
+     * @return self
      */
     public function setFinalcheck($finalcheck) {
         $this->finalcheck = $finalcheck;
@@ -295,7 +295,7 @@ class Firm extends AbstractEntity {
      *
      * @param Geonames $city
      *
-     * @return Firm
+     * @return self
      */
     public function setCity(?Geonames $city = null) {
         $this->city = $city;
@@ -306,7 +306,7 @@ class Firm extends AbstractEntity {
     /**
      * Get city.
      *
-     * @return Geonames
+     * @return null|Geonames
      */
     public function getCity() {
         return $this->city;
@@ -315,7 +315,7 @@ class Firm extends AbstractEntity {
     /**
      * Add titleFirmrole.
      *
-     * @return Firm
+     * @return self
      */
     public function addTitleFirmrole(TitleFirmrole $titleFirmrole) {
         $this->titleFirmroles[] = $titleFirmrole;
@@ -363,7 +363,7 @@ class Firm extends AbstractEntity {
      *
      * @param null|string $gender
      *
-     * @return Firm
+     * @return self
      */
     public function setGender($gender = null) {
         $this->gender = $gender;
@@ -392,7 +392,7 @@ class Firm extends AbstractEntity {
     /**
      * Add firmSource.
      *
-     * @return Firm
+     * @return self
      */
     public function addFirmSource(FirmSource $firmSource) {
         $this->firmSources[] = $firmSource;

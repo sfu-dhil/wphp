@@ -78,6 +78,8 @@ class SourceLinker {
                 'id' => $record->getTitleId(),
             ]);
         }
+
+        return null;
     }
 
     /**
@@ -102,6 +104,8 @@ class SourceLinker {
                 'id' => $record->getTitleId(),
             ]);
         }
+
+        return null;
     }
 
     /**
@@ -114,7 +118,7 @@ class SourceLinker {
      */
     public function orlando($data) {
         if ( ! $this->checker->hasRole('ROLE_USER')) {
-            return;
+            return null;
         }
         $repo = $this->em->getRepository(OrlandoBiblio::class);
         $record = $repo->findOneBy([
@@ -125,6 +129,8 @@ class SourceLinker {
                 'id' => $record->getId(),
             ]);
         }
+
+        return null;
     }
 
     /**
@@ -155,7 +161,7 @@ class SourceLinker {
      */
     public function en($data) {
         if ( ! $this->checker->hasRole('ROLE_USER')) {
-            return;
+            return null;
         }
         $repo = $this->em->getRepository(En::class);
         $record = $repo->findOneBy([
@@ -166,6 +172,8 @@ class SourceLinker {
                 'id' => $record->getId(),
             ]);
         }
+
+        return null;
     }
 
     /**
@@ -177,7 +185,7 @@ class SourceLinker {
      */
     public function osborne($data) {
         if ( ! $this->checker->hasRole('ROLE_USER')) {
-            return;
+            return null;
         }
         $repo = $this->em->getRepository(OsborneMarc::class);
         $record = $repo->findOneBy([
@@ -189,6 +197,8 @@ class SourceLinker {
                 'id' => $record->getTitleId(),
             ]);
         }
+
+        return null;
     }
 
     /**
@@ -241,7 +251,7 @@ class SourceLinker {
                 return $this->aas($data);
 
             default:
-                return;
+                return null;
         }
     }
 }

@@ -16,7 +16,7 @@ use Nines\UtilBundle\TestCase\ControllerTestCase;
 class OrlandoManagerTest extends ControllerTestCase {
     public const DATA = 'A_ID = 20384 || STANDARD = Author 2 || ROLE = EDITOR %%% A_ID = 19884 || STANDARD = Other Author 2 || ROLE = AUTHOR';
 
-    private $manager;
+    private OrlandoManager $manager;
 
     public function testSanity() : void {
         $this->assertInstanceOf(OrlandoManager::class, $this->manager);

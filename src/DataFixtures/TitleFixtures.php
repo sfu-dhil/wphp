@@ -39,8 +39,8 @@ class TitleFixtures extends Fixture implements DependentFixtureInterface, Fixtur
             $fixture->setPseudonym('Pseudonym ' . $i);
             $fixture->setImprint('Imprint ' . $i);
             $fixture->setSelfpublished(0 === $i % 2);
-            $fixture->setPubdate(1775 + $i);
-            $fixture->setDateOfFirstPublication(1770 + $i);
+            $fixture->setPubdate(sprintf('%d', 1775 + $i));
+            $fixture->setDateOfFirstPublication(sprintf('%d', 1770 + $i));
             $fixture->setSizeL($i + 10);
             $fixture->setSizeW($i + 6);
             $fixture->setEdition('Edition ' . $i);
@@ -48,7 +48,7 @@ class TitleFixtures extends Fixture implements DependentFixtureInterface, Fixtur
             $fixture->setPagination('Pagination ' . $i);
             $fixture->setPricePound($i + 1);
             $fixture->setPriceShilling($i);
-            $fixture->setPricePence($i);
+            $fixture->setPricePence(sprintf('%d', $i));
             $fixture->setShelfmark('Shelfmark ' . $i);
             $fixture->setChecked(0 === $i % 2);
             $fixture->setFinalcheck(0 === $i % 2);

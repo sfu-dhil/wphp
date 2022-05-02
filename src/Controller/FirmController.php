@@ -178,23 +178,6 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
     }
 
     /**
-     * Search for Title entities.
-     *
-     * @Route("/jump", name="firm_jump", methods={"GET"})
-     * @Template
-     *
-     * @return RedirectResponse
-     */
-    public function jumpAction(Request $request) {
-        $q = $request->query->get('q');
-        if ($q) {
-            return $this->redirect($this->generateUrl('firm_show', ['id' => $q]));
-        }
-
-        return $this->redirect($this->generateUrl('firm_index'));
-    }
-
-    /**
      * Creates a new Firm entity.
      *
      * @Route("/new", name="firm_new", methods={"GET", "POST"})

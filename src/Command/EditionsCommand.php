@@ -27,7 +27,7 @@ class EditionsCommand extends Command {
 
     protected static $defaultName = 'wphp:check:editions';
 
-    protected static $defaultDescription = 'Update edition checked field';
+    protected static string $defaultDescription = 'Update edition checked field';
 
     /**
      * UpdateEditionNumberCommand constructor.

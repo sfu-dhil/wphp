@@ -1,0 +1,47 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Return type \\(void\\) of method App\\\\Command\\\\UpdateEditionNumberCommand\\:\\:execute\\(\\) should be compatible with return type \\(int\\) of method Symfony\\\\Component\\\\Console\\\\Command\\\\Command\\:\\:execute\\(\\)$#"
+			count: 1
+			path: src/Command/UpdateEditionNumberCommand.php
+
+		-
+			message: "#^Return type \\(void\\) of method App\\\\Command\\\\UpdateEstcCommand\\:\\:execute\\(\\) should be compatible with return type \\(int\\) of method Symfony\\\\Component\\\\Console\\\\Command\\\\Command\\:\\:execute\\(\\)$#"
+			count: 1
+			path: src/Command/UpdateEstcCommand.php
+
+		-
+			message: "#^Method App\\\\Controller\\\\PersonController\\:\\:editAction\\(\\) should return array but returns Symfony\\\\Component\\\\HttpFoundation\\\\RedirectResponse\\.$#"
+			count: 1
+			path: src/Controller/PersonController.php
+
+		-
+			message: "#^Method App\\\\Controller\\\\RoleController\\:\\:newAction\\(\\) should return array but returns Symfony\\\\Component\\\\HttpFoundation\\\\RedirectResponse\\.$#"
+			count: 1
+			path: src/Controller/RoleController.php
+
+		-
+			message: "#^Call to an undefined method Traversable\\<mixed, mixed\\>\\:\\:uasort\\(\\)\\.$#"
+			count: 1
+			path: src/Entity/Firm.php
+
+		-
+			message: "#^Property App\\\\Entity\\\\Firm\\:\\:\\$firmSources \\(Doctrine\\\\Common\\\\Collections\\\\Collection&iterable\\<App\\\\Entity\\\\FirmSource\\>\\) does not accept array\\<App\\\\Entity\\\\FirmSource\\>\\|\\(Doctrine\\\\Common\\\\Collections\\\\Collection&iterable\\<App\\\\Entity\\\\FirmSource\\>\\)\\.$#"
+			count: 1
+			path: src/Entity/Firm.php
+
+		-
+			message: "#^Call to an undefined method Traversable\\<mixed, mixed\\>\\:\\:uasort\\(\\)\\.$#"
+			count: 1
+			path: src/Entity/Person.php
+
+		-
+			message: "#^Property App\\\\Entity\\\\Title\\:\\:\\$totalPrice \\(int\\) does not accept float\\.$#"
+			count: 1
+			path: src/Entity/Title.php
+
+		-
+			message: "#^Property App\\\\Services\\\\EstcMarcImporter\\:\\:\\$titleSourceRepository \\(App\\\\Repository\\\\TitleSourceRepository\\) does not accept Doctrine\\\\ORM\\\\EntityRepository\\<App\\\\Entity\\\\TitleSource\\>\\.$#"
+			count: 1
+			path: src/Services/EstcMarcImporter.php
+

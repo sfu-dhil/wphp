@@ -104,7 +104,8 @@ class PersonController extends AbstractController implements PaginatorAwareInter
     public function searchExportCsvAction(Request $request, EntityManagerInterface $em, PersonRepository $repo, CsvExporter $exporter) {
         $form = $this->createForm(PersonSearchType::class, null, ['entity_manager' => $em, 'user' => $this->getUser()]);
         $form->handleRequest($request);
-        $persons = [];
+        $query = $repo->buildSearchQuery($form->getData(), $this->getUser());
+        $persons = $query->execute();
 
         $tmpPath = tempnam(sys_get_temp_dir(), 'wphp-export-');
         $fh = fopen($tmpPath, 'w');
@@ -150,24 +151,6 @@ class PersonController extends AbstractController implements PaginatorAwareInter
             'people' => $persons,
             'submitted' => $submitted,
         ];
-    }
-
-    /**
-     * Search for Title entities.
-     *
-     * @Route("/jump", name="person_jump", methods={"GET"})
-     *
-     * @Template
-     *
-     * @return array
-     */
-    public function jumpAction(Request $request) {
-        $q = $request->query->getInt('q');
-        if ($q) {
-            return $this->redirect($this->generateUrl('person_show', ['id' => $q]));
-        }
-
-        return $this->redirect($this->generateUrl('person_index', ['id' => $q]));
     }
 
     /**

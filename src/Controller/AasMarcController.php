@@ -34,7 +34,7 @@ class AasMarcController extends AbstractController implements PaginatorAwareInte
     /**
      * Lists all AasMarc entities.
      *
-     * @return array
+     * @return array<string,mixed>
      *
      * @Route("/", name="resource_aas_index", methods={"GET"})
      * @Template
@@ -52,7 +52,7 @@ class AasMarcController extends AbstractController implements PaginatorAwareInte
     /**
      * Search for AasMarc entities.
      *
-     * @return array
+     * @return array<string,mixed>
      * @Route("/search", name="resource_aas_search", methods={"GET"})
      * @Template
      */
@@ -84,7 +84,7 @@ class AasMarcController extends AbstractController implements PaginatorAwareInte
     /**
      * Search for AasMarc entities.
      *
-     * @return array
+     * @return array<string,mixed>
      * @Route("/imprint_search", name="resource_aas_search_imprint", methods={"GET"})
      * @Template
      */
@@ -116,7 +116,7 @@ class AasMarcController extends AbstractController implements PaginatorAwareInte
     /**
      * Finds and displays a AasMarc entity.
      *
-     * @return array
+     * @return array<string,mixed>
      *
      * @Route("/{id}", name="resource_aas_show", methods={"GET"})
      * @ParamConverter("aasMarc", options={"mapping": {"id": "titleId"}})

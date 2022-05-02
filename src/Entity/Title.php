@@ -98,14 +98,14 @@ class Title extends AbstractEntity {
     private $dateOfFirstPublication;
 
     /**
-     * @var bool
+     * @var int
      *
      * @ORM\Column(name="size_l", type="integer", nullable=true)
      */
     private $sizeL;
 
     /**
-     * @var bool
+     * @var int
      *
      * @ORM\Column(name="size_w", type="integer", nullable=true)
      */
@@ -126,7 +126,7 @@ class Title extends AbstractEntity {
     private $colophon;
 
     /**
-     * @var bool
+     * @var int
      *
      * @ORM\Column(name="volumes", type="integer", nullable=true)
      */
@@ -185,28 +185,28 @@ class Title extends AbstractEntity {
      *
      * @ORM\Column(name="checked", type="boolean", nullable=false)
      */
-    private $checked = '0';
+    private $checked = false;
 
     /**
      * @var bool
      *
      * @ORM\Column(name="finalcheck", type="boolean", nullable=false)
      */
-    private $finalcheck = '0';
+    private $finalcheck = false;
 
     /**
      * @var bool
      *
      * @ORM\Column(name="finalattempt", type="boolean", nullable=false)
      */
-    private $finalattempt = '0';
+    private $finalattempt = false;
 
     /**
      * @var bool
      *
      * @ORM\Column(name="edition_checked", type="boolean", nullable=false)
      */
-    private $editionChecked = '0';
+    private $editionChecked = false;
 
     /**
      * @var string
@@ -236,7 +236,7 @@ class Title extends AbstractEntity {
     private $format;
 
     /**
-     * @var Genre
+     * @var Collection|Genre[]
      *
      * @ORM\ManyToMany(targetEntity="Genre", inversedBy="titles")
      */
@@ -329,7 +329,7 @@ class Title extends AbstractEntity {
         return $this->title;
     }
 
-    public function getFormId() {
+    public function getFormId() : string {
         return "({$this->id}) {$this->title}";
     }
 
@@ -490,7 +490,7 @@ class Title extends AbstractEntity {
     /**
      * Set sizeL.
      *
-     * @param bool $sizeL
+     * @param int $sizeL
      *
      * @return Title
      */
@@ -503,7 +503,7 @@ class Title extends AbstractEntity {
     /**
      * Get sizeL.
      *
-     * @return bool
+     * @return int
      */
     public function getSizeL() {
         return $this->sizeL;
@@ -512,7 +512,7 @@ class Title extends AbstractEntity {
     /**
      * Set sizeW.
      *
-     * @param bool $sizeW
+     * @param int $sizeW
      *
      * @return Title
      */
@@ -525,7 +525,7 @@ class Title extends AbstractEntity {
     /**
      * Get sizeW.
      *
-     * @return bool
+     * @return int
      */
     public function getSizeW() {
         return $this->sizeW;
@@ -556,7 +556,7 @@ class Title extends AbstractEntity {
     /**
      * Set volumes.
      *
-     * @param bool $volumes
+     * @param int $volumes
      *
      * @return Title
      */
@@ -569,7 +569,7 @@ class Title extends AbstractEntity {
     /**
      * Get volumes.
      *
-     * @return bool
+     * @return int
      */
     public function getVolumes() {
         return $this->volumes;
@@ -796,7 +796,7 @@ class Title extends AbstractEntity {
     /**
      * Get locationOfPrinting.
      *
-     * @return Geonames
+     * @return null|Geonames
      */
     public function getLocationOfPrinting() {
         return $this->locationOfPrinting;
@@ -839,12 +839,15 @@ class Title extends AbstractEntity {
     /**
      * Get format.
      *
-     * @return Format
+     * @return null|Format
      */
     public function getFormat() {
         return $this->format;
     }
 
+    /**
+     * @return bool
+     */
     public function hasTitleRole(Person $person, Role $role) {
         foreach ($this->titleRoles as $tr) {
             if ($tr->getPerson() === $person && $tr->getRole() === $role) {
@@ -925,6 +928,11 @@ class Title extends AbstractEntity {
         return (float) $this->otherPrice;
     }
 
+    /**
+     * @param string $otherPrice
+     *
+     * @return $this
+     */
     public function setOtherPrice($otherPrice) : self {
         $this->otherPrice = (float) $otherPrice;
 
@@ -941,7 +949,7 @@ class Title extends AbstractEntity {
         return $this;
     }
 
-    public function getEditionChecked() {
+    public function getEditionChecked() : bool {
         return $this->editionChecked;
     }
 

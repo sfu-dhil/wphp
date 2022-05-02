@@ -19,7 +19,7 @@ class OrlandoManager {
     /**
      * Get the named field for the Orlando data.
      *
-     * @param string $data
+     * @param null|string $data
      * @param string $name
      *
      * @return array

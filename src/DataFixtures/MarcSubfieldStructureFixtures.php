@@ -34,10 +34,10 @@ class MarcSubfieldStructureFixtures extends Fixture implements FixtureGroupInter
             for ($i = 0; $i < 10; $i++) {
                 $subfield = 'abcdefghijklmnop'[$i];
                 $fixture = new MarcSubfieldStructure();
-                $fixture->setTagField(100 + $j);
+                $fixture->setTagField(sprintf('%d', 100 + $j));
                 $fixture->setTagSubfield($subfield);
                 $fixture->setName('Field ' . (100 + $j) . $subfield);
-                $fixture->setHidden([0, -6, -5, -1][$i % 4]);
+                $fixture->setHidden(0 === $i % 4);
                 $manager->persist($fixture);
                 $this->setReference("marcsubfield.{$j}.{$i}", $fixture);
             }

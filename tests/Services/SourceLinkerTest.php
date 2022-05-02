@@ -21,6 +21,9 @@ class SourceLinkerTest extends ControllerTestCase {
      */
     private $linker;
 
+    /**
+     * @var \PHPUnit\Framework\MockObject\MockObject|RoleChecker
+     */
     private $checker;
 
     public function testSanity() : void {

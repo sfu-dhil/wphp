@@ -181,7 +181,7 @@ return $config
         'self_static_accessor' => true,
 
         'single_import_per_statement' => true,
-        'simplified_null_return' => true,
+        'simplified_null_return' => false,
         'strict_comparison' => true,
         'strict_param' => true,
 

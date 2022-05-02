@@ -25,7 +25,7 @@ class ImportAasCommand extends Command {
 
     protected static $defaultName = 'wphp:import:aas';
 
-    protected static $defaultDescription = 'Add a short description for your command';
+    protected static string $defaultDescription = 'Add a short description for your command';
 
     protected function configure() : void {
         $this->setDescription(self::$defaultDescription);
@@ -40,6 +40,7 @@ class ImportAasCommand extends Command {
             echo "\n{$path}\n";
             $file = new File();
             $file->file($path);
+            // @phpstan-ignore-next-line
             while (($record = $file->next())) {
                 $ldr = new AasMarc();
                 $ldr->setTitleId($recordCount);

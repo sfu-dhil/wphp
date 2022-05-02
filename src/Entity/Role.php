@@ -84,7 +84,7 @@ class Role {
      *
      * @param null|string $description
      *
-     * @return Format
+     * @return self
      */
     public function setDescription($description = null) {
         $this->description = $description;

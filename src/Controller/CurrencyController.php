@@ -32,6 +32,7 @@ class CurrencyController extends AbstractController implements PaginatorAwareInt
     /**
      * @Route("/", name="currency_index", methods={"GET"})
      *
+     * @return array<string,mixed>
      * @Template
      */
     public function index(Request $request, CurrencyRepository $currencyRepository) : array {
@@ -49,6 +50,7 @@ class CurrencyController extends AbstractController implements PaginatorAwareInt
      *
      * @Template
      *
+     * @return array<string,mixed>
      * @return array
      */
     public function search(Request $request, CurrencyRepository $currencyRepository) {
@@ -119,7 +121,7 @@ class CurrencyController extends AbstractController implements PaginatorAwareInt
      * @Route("/{id}", name="currency_show", methods={"GET"})
      * @Template
      *
-     * @return array
+     * @return array<string,mixed>
      */
     public function show(Currency $currency) {
         return [
