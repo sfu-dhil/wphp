@@ -51,7 +51,7 @@ class Currency extends AbstractEntity {
     private $description;
 
     /**
-     * @var Collection|Title[]
+     * @var Collection<int,Title>
      * @ORM\OneToMany(targetEntity="App\Entity\Title", mappedBy="otherCurrency")
      */
     private $titles;
@@ -128,7 +128,7 @@ class Currency extends AbstractEntity {
     }
 
     /**
-     * @return Collection|Title[]
+     * @return Collection<int,Title>
      */
     public function getTitles() : Collection {
         return $this->titles;

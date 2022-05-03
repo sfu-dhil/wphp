@@ -41,7 +41,7 @@ class CurrencyRepository extends ServiceEntityRepository {
     /**
      * @param string $q
      *
-     * @return Collection|Currency[]
+     * @return Collection<int,Currency>
      */
     public function typeaheadQuery($q) {
         $qb = $this->createQueryBuilder('currency');
@@ -55,7 +55,7 @@ class CurrencyRepository extends ServiceEntityRepository {
     /**
      * @param string $q
      *
-     * @return Collection|Currency[]
+     * @return Collection<int,Currency>
      */
     public function searchQuery($q) {
         $qb = $this->createQueryBuilder('currency');

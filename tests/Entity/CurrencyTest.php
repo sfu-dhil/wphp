@@ -20,7 +20,7 @@ class CurrencyTest extends TestCase {
     //put your code here
 
     /**
-     * @return array
+     * @return array[]
      */
     public function getData() {
         return [

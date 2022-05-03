@@ -44,7 +44,7 @@ class Genre {
     private $description;
 
     /**
-     * @var Collection|Title[]
+     * @var Collection<int,Title>
      * @ORM\ManyToMany(targetEntity="Title", mappedBy="genres")
      */
     private $titles;
@@ -112,7 +112,7 @@ class Genre {
     /**
      * Get titles.
      *
-     * @return Collection
+     * @return Collection<int,Title>
      */
     public function getTitles() {
         return $this->titles;

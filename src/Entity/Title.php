@@ -236,7 +236,7 @@ class Title extends AbstractEntity {
     private $format;
 
     /**
-     * @var Collection|Genre[]
+     * @var Collection<int,Genre>
      *
      * @ORM\ManyToMany(targetEntity="Genre", inversedBy="titles")
      */
@@ -249,13 +249,13 @@ class Title extends AbstractEntity {
     private $otherCurrency;
 
     /**
-     * @var Collection|TitleRole[]
+     * @var Collection<int,TitleRole>
      * @ORM\OneToMany(targetEntity="TitleRole", mappedBy="title")
      */
     private $titleRoles;
 
     /**
-     * @var Collection|TitleFirmrole[]
+     * @var Collection<int,TitleFirmrole>
      * @ORM\OneToMany(targetEntity="TitleFirmrole", mappedBy="title")
      */
     private $titleFirmroles;
@@ -265,19 +265,19 @@ class Title extends AbstractEntity {
      * poorly named with respect to sourceTitles which records different
      * information.
      *
-     * @var Collection|TitleSource[]
+     * @var Collection<int,TitleSource>
      * @ORM\OneToMany(targetEntity="TitleSource", mappedBy="title")
      */
     private $titleSources;
 
     /**
-     * @var Collection|Title[]
+     * @var Collection<int,Title>
      * @ORM\ManyToMany(targetEntity="App\Entity\Title", inversedBy="titlesRelated")
      */
     private $relatedTitles;
 
     /**
-     * @var Collection|Title[]
+     * @var Collection<int,Title>
      * @ORM\ManyToMany(targetEntity="App\Entity\Title", mappedBy="relatedTitles")
      */
     private $titlesRelated;
@@ -816,7 +816,7 @@ class Title extends AbstractEntity {
     }
 
     /**
-     * @return Collection|Genre[]
+     * @return Collection<int,Genre>
      */
     public function getGenres() : Collection {
         return $this->genres;
@@ -960,10 +960,19 @@ class Title extends AbstractEntity {
     }
 
     /**
-     * @return Collection|TitleRole[]
+     * Get titleRoles, optionally filtered by role name.
+     *
+     * @param string $roleName
+     *
+     * @return Collection<int,TitleRole>
      */
-    public function getTitleRoles() : Collection {
-        return $this->titleRoles;
+    public function getTitleRoles($roleName = null) {
+        if (null === $roleName) {
+            return $this->titleRoles;
+        }
+        $roles = $this->titleRoles->filter(fn (TitleRole $titleRole) => $titleRole->getRole()->getName() === $roleName);
+
+        return new ArrayCollection($roles->getValues());
     }
 
     public function addTitleRole(TitleRole $titleRole) : self {
@@ -987,7 +996,7 @@ class Title extends AbstractEntity {
     }
 
     /**
-     * @return Collection|TitleFirmrole[]
+     * @return Collection<int,TitleFirmrole>
      */
     public function getTitleFirmroles() : Collection {
         return $this->titleFirmroles;
@@ -1014,7 +1023,7 @@ class Title extends AbstractEntity {
     }
 
     /**
-     * @return Collection|TitleSource[]
+     * @return Collection<int,TitleSource>
      */
     public function getTitleSources() : Collection {
         return $this->titleSources;
@@ -1041,7 +1050,7 @@ class Title extends AbstractEntity {
     }
 
     /**
-     * @return Collection|Title[]
+     * @return Collection<int,Title>
      */
     public function getRelatedTitles() : Collection {
         return $this->relatedTitles;
@@ -1062,7 +1071,7 @@ class Title extends AbstractEntity {
     }
 
     /**
-     * @return Collection|Title[]
+     * @return Collection<int,Title>
      */
     public function getTitlesRelated() : Collection {
         return $this->titlesRelated;

@@ -38,8 +38,7 @@ class FirmroleController extends AbstractController implements PaginatorAwareInt
      * @Route("/", name="firmrole_index", methods={"GET"})
      * @Template
      *
-     * @return array
-     */
+     * @return array<string,mixed>     */
     public function indexAction(Request $request, EntityManagerInterface $em) {
         $dql = 'SELECT e FROM App:Firmrole e ORDER BY e.name';
         $query = $em->createQuery($dql);
@@ -85,7 +84,7 @@ class FirmroleController extends AbstractController implements PaginatorAwareInt
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
      * @Template
      *
-     * @return array|RedirectResponse
+     * @return array<string,mixed>|RedirectResponse
      */
     public function newAction(Request $request, EntityManagerInterface $em) {
         $firmrole = new Firmrole();
@@ -113,8 +112,7 @@ class FirmroleController extends AbstractController implements PaginatorAwareInt
      * @Route("/{id}", name="firmrole_show", methods={"GET"})
      * @Template
      *
-     * @return array
-     */
+     * @return array<string,mixed>     */
     public function showAction(Request $request, Firmrole $firmrole, EntityManagerInterface $em) {
         $dql = 'SELECT tfr FROM App:TitleFirmrole tfr WHERE tfr.firmrole = :firmrole';
         $query = $em->createQuery($dql);
@@ -134,7 +132,7 @@ class FirmroleController extends AbstractController implements PaginatorAwareInt
      * @Template
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
      *
-     * @return array|RedirectResponse
+     * @return array<string,mixed>|RedirectResponse
      */
     public function editAction(Request $request, Firmrole $firmrole, EntityManagerInterface $em) {
         $editForm = $this->createForm(FirmroleType::class, $firmrole);

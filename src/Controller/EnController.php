@@ -33,7 +33,7 @@ class EnController extends AbstractController implements PaginatorAwareInterface
     /**
      * Lists all En entities.
      *
-     * @return array
+     * @return array<string,mixed>
      *
      * @Route("/", name="resource_en_index", methods={"GET"})
      * @Template
@@ -52,7 +52,7 @@ class EnController extends AbstractController implements PaginatorAwareInterface
     /**
      * Search for En entities.
      *
-     * @return array
+     * @return array<string,mixed>
      * @Route("/search", name="resource_en_search", methods={"GET"})
      * @Template
      */
@@ -74,8 +74,7 @@ class EnController extends AbstractController implements PaginatorAwareInterface
     /**
      * Finds and displays a En entity.
      *
-     * @return array
-     *
+     * @return array<string,mixed> *
      * @Route("/{id}", name="resource_en_show", methods={"GET"})
      *
      * @Template

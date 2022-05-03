@@ -72,7 +72,7 @@ class EstcMarcImporter {
     private $titleSourceRepository;
 
     /**
-     * @var array
+     * @var array<string>
      */
     private $messages;
 
@@ -96,7 +96,7 @@ class EstcMarcImporter {
      *
      * @param string $id
      *
-     * @return array
+     * @return array<EstcMarc>
      */
     public function getFields($id) {
         $data = $this->estcRepo->findBy(['titleId' => $id]);
@@ -131,7 +131,7 @@ class EstcMarcImporter {
     /**
      * Attempt to fetch a person record based on a MARC record.
      *
-     * @param array $fields
+     * @param array<EstcMarc> $fields
      *
      * @return Person[]
      */

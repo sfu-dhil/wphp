@@ -32,7 +32,7 @@ class FirmTest extends TestCase {
     }
 
     /**
-     * @return array
+     * @return array[]
      */
     public function getStartDateData() {
         return [
@@ -54,6 +54,9 @@ class FirmTest extends TestCase {
         $this->assertSame($expected, $firm->getEndDate());
     }
 
+    /**
+     * @return array[]
+     */
     public function getEndDateData() {
         return [
             [null, '0000-00-00'],

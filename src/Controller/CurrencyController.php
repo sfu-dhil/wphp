@@ -51,7 +51,6 @@ class CurrencyController extends AbstractController implements PaginatorAwareInt
      * @Template
      *
      * @return array<string,mixed>
-     * @return array
      */
     public function search(Request $request, CurrencyRepository $currencyRepository) {
         $q = $request->query->get('q');
@@ -95,7 +94,7 @@ class CurrencyController extends AbstractController implements PaginatorAwareInt
      * @Template
      * @IsGranted("ROLE_CONTENT_ADMIN")
      *
-     * @return array|RedirectResponse
+     * @return array<string,mixed>|RedirectResponse
      */
     public function new(Request $request) {
         $currency = new Currency();
@@ -135,7 +134,7 @@ class CurrencyController extends AbstractController implements PaginatorAwareInt
      *
      * @Template
      *
-     * @return array|RedirectResponse
+     * @return array<string,mixed>|RedirectResponse
      */
     public function edit(Request $request, Currency $currency) {
         $form = $this->createForm(CurrencyType::class, $currency);

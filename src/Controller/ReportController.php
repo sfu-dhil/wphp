@@ -35,8 +35,7 @@ class ReportController extends AbstractController implements PaginatorAwareInter
      * @Route("/titles_fc", name="report_titles_check", methods={"GET"})
      * @Template
      *
-     * @return array
-     */
+     * @return array<string,mixed>     */
     public function titlesFinalCheckAction(Request $request, EntityManagerInterface $em) {
         $dql = 'SELECT e FROM App:Title e WHERE e.finalcheck = 0 AND e.finalattempt = 0 ORDER BY e.id';
         $query = $em->createQuery($dql);
@@ -53,8 +52,7 @@ class ReportController extends AbstractController implements PaginatorAwareInter
      * @Route("/titles_date", name="report_titles_date", methods={"GET"})
      * @Template
      *
-     * @return array
-     */
+     * @return array<string,mixed>     */
     public function titlesDateAction(Request $request, EntityManagerInterface $em) {
         $dql = "SELECT e FROM App:Title e WHERE e.pubdate IS NOT NULL AND e.pubdate != '' AND regexp(e.pubdate,'[^0-9-]') = 1";
         $query = $em->createQuery($dql);
@@ -71,8 +69,7 @@ class ReportController extends AbstractController implements PaginatorAwareInter
      * @Route("/firms_fc", name="report_firms_fc", methods={"GET"})
      * @Template
      *
-     * @return array
-     */
+     * @return array<string,mixed>     */
     public function firmsFinalCheckAction(Request $request, EntityManagerInterface $em) {
         $dql = 'SELECT e FROM App:Firm e WHERE e.finalcheck != 1';
         $query = $em->createQuery($dql);
@@ -89,8 +86,7 @@ class ReportController extends AbstractController implements PaginatorAwareInter
      * @Route("/persons_fc", name="report_persons_fc", methods={"GET"})
      * @Template
      *
-     * @return array
-     */
+     * @return array<string,mixed>     */
     public function personsFinalCheckAction(Request $request, EntityManagerInterface $em) {
         $dql = 'SELECT e FROM App:Person e WHERE e.finalcheck != 1';
         $query = $em->createQuery($dql);
@@ -107,8 +103,7 @@ class ReportController extends AbstractController implements PaginatorAwareInter
      * @Route("/editions", name="report_editions", methods={"GET"})
      * @Template
      *
-     * @return array
-     */
+     * @return array<string,mixed>     */
     public function editionsAction(Request $request, EntityManagerInterface $em) {
         $qb = $em->createQueryBuilder();
         $qb->select('title')
@@ -132,8 +127,7 @@ class ReportController extends AbstractController implements PaginatorAwareInter
      * @Route("/editions_check", name="report_editions_to_check", methods={"GET"})
      * @Template
      *
-     * @return array
-     */
+     * @return array<string,mixed>     */
     public function editionsToCheckAction(Request $request, EntityManagerInterface $em) {
         $qb = $em->createQueryBuilder();
         $qb->select('title')
@@ -153,8 +147,7 @@ class ReportController extends AbstractController implements PaginatorAwareInter
      * @Route("/titles_unverified_persons", name="titles_unverified_persons", methods={"GET"})
      * @Template
      *
-     * @return array
-     */
+     * @return array<string,mixed>     */
     public function titlesWithUnverifiedPersons(Request $request, EntityManagerInterface $em) {
         $qb = $em->createQueryBuilder();
         $qb->select('title')
@@ -176,8 +169,7 @@ class ReportController extends AbstractController implements PaginatorAwareInter
      * @Route("/titles_unverified_firms", name="titles_unverified_firms", methods={"GET"})
      * @Template
      *
-     * @return array
-     */
+     * @return array<string,mixed>     */
     public function titlesWithUnverifiedFirms(Request $request, EntityManagerInterface $em) {
         $qb = $em->createQueryBuilder();
         $qb->select('title')

@@ -35,7 +35,7 @@ class TitleTest extends TestCase {
     }
 
     /**
-     * @return array
+     * @return array[]
      */
     public function getTotalPriceData() {
         return [

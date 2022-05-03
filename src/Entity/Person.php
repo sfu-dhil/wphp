@@ -139,13 +139,13 @@ class Person extends AbstractEntity {
     private $cityOfDeath;
 
     /**
-     * @var Collection|TitleRole[]
+     * @var Collection<int,TitleRole>
      * @ORM\OneToMany(targetEntity="TitleRole", mappedBy="person")
      */
     private $titleRoles;
 
     /**
-     * @var Collection|Firm[]
+     * @var Collection<int,Firm>
      * @ORM\ManyToMany(targetEntity="Firm", inversedBy="relatedPeople")
      */
     private $relatedFirms;
@@ -383,6 +383,8 @@ class Person extends AbstractEntity {
     /**
      * Set cityOfDeath.
      *
+     * @param ?Geonames $cityOfDeath
+     *
      * @return self
      */
     public function setCityOfDeath(?Geonames $cityOfDeath = null) {
@@ -425,7 +427,7 @@ class Person extends AbstractEntity {
      *
      * @throws Exception
      *
-     * @return Collection|TitleRole[]
+     * @return Collection<int,TitleRole>
      */
     public function getTitleRoles($sort = false) {
         if ( ! $sort) {
@@ -512,7 +514,7 @@ class Person extends AbstractEntity {
     }
 
     /**
-     * @return Collection|Firm[]
+     * @return Collection<int,Firm>
      */
     public function getRelatedFirms() : Collection {
         return $this->relatedFirms;

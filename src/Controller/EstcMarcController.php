@@ -34,8 +34,7 @@ class EstcMarcController extends AbstractController implements PaginatorAwareInt
     /**
      * Lists all EstcMarc entities.
      *
-     * @return array
-     *
+     * @return array<string,mixed> *
      * @Route("/", name="resource_estc_index", methods={"GET"})
      * @Template
      */
@@ -52,8 +51,7 @@ class EstcMarcController extends AbstractController implements PaginatorAwareInt
     /**
      * Search for EstcMarc entities.
      *
-     * @return array
-     * @Route("/search", name="resource_estc_search", methods={"GET"})
+     * @return array<string,mixed> * @Route("/search", name="resource_estc_search", methods={"GET"})
      * @Template
      */
     public function searchAction(Request $request, MarcManager $manager, EstcMarcRepository $repo) {
@@ -84,8 +82,7 @@ class EstcMarcController extends AbstractController implements PaginatorAwareInt
     /**
      * Search for EstcMarc entities.
      *
-     * @return array
-     * @Route("/imprint_search", name="resource_estc_search_imprint", methods={"GET"})
+     * @return array<string,mixed> * @Route("/imprint_search", name="resource_estc_search_imprint", methods={"GET"})
      * @Template
      */
     public function imprintSearchAction(Request $request, MarcManager $manager, EstcMarcRepository $repo) {
@@ -116,8 +113,7 @@ class EstcMarcController extends AbstractController implements PaginatorAwareInt
     /**
      * Finds and displays a EstcMarc entity.
      *
-     * @return array
-     *
+     * @return array<string,mixed> *
      * @Route("/{id}", name="resource_estc_show", methods={"GET"})
      * @ParamConverter("estcMarc", options={"mapping": {"id": "titleId"}})
      * @Template

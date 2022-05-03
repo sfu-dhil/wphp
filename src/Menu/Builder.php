@@ -101,6 +101,8 @@ class Builder implements ContainerAwareInterface {
     /**
      * Build the navigation menu and return it.
      *
+     * @param array<string,mixed> $options
+     *
      * @return ItemInterface
      */
     public function mainMenu(array $options) {
@@ -213,6 +215,8 @@ class Builder implements ContainerAwareInterface {
     /**
      * Build the spotlight menu and return it.
      *
+     * @param array<string,mixed> $options
+     *
      * @return ItemInterface
      */
     public function spotlightMenu(array $options) {
@@ -252,6 +256,8 @@ class Builder implements ContainerAwareInterface {
 
     /**
      * Build the research menu and return it.
+     *
+     * @param array<string,mixed> $options
      *
      * @return ItemInterface
      */
@@ -321,6 +327,8 @@ class Builder implements ContainerAwareInterface {
 
     /**
      * Build a user menu.
+     *
+     * @param array<string,mixed> $options
      *
      * @return ItemInterface
      */
@@ -396,6 +404,8 @@ class Builder implements ContainerAwareInterface {
 
     /**
      * Build a menu for blog posts.
+     *
+     * @param array<string,mixed> $options
      *
      * @return ItemInterface
      */

@@ -34,7 +34,7 @@ class PersonTest extends TestCase {
     }
 
     /**
-     * @return array
+     * @return array[]
      */
     public function getDobData() {
         return [
@@ -56,6 +56,9 @@ class PersonTest extends TestCase {
         $this->AssertEquals($expected, $person->getDod());
     }
 
+    /**
+     * @return array[]
+     */
     public function getDodData() {
         return [
             [null, '0000-00-00'],

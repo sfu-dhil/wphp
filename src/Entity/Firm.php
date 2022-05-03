@@ -96,7 +96,7 @@ class Firm extends AbstractEntity {
     private $city;
 
     /**
-     * @var Collection|TitleFirmrole[]
+     * @var Collection<int,TitleFirmrole>
      * @ORM\OneToMany(targetEntity="TitleFirmrole", mappedBy="firm")
      */
     private $titleFirmroles;
@@ -104,25 +104,25 @@ class Firm extends AbstractEntity {
     /**
      * Firm sources are where the bibliographic information comes from.
      *
-     * @var Collection|FirmSource[]
+     * @var Collection<int,FirmSource>
      * @ORM\OneToMany(targetEntity="FirmSource", mappedBy="firm")
      */
     private $firmSources;
 
     /**
-     * @var Collection|Person[]
+     * @var Collection<int,Person>
      * @ORM\ManyToMany(targetEntity="Person", mappedBy="relatedFirms")
      */
     private $relatedPeople;
 
     /**
-     * @var Collection|Firm[]
+     * @var Collection<int,Firm>
      * @ORM\ManyToMany(targetEntity="Firm", inversedBy="firmsRelated")
      */
     private $relatedFirms;
 
     /**
-     * @var Collection|Firm[]
+     * @var Collection<int,Firm>
      * @ORM\ManyToMany(targetEntity="Firm", mappedBy="relatedFirms")
      */
     private $firmsRelated;
@@ -137,6 +137,7 @@ class Firm extends AbstractEntity {
         $this->relatedPeople = new ArrayCollection();
         $this->relatedFirms = new ArrayCollection();
         $this->firmsRelated = new ArrayCollection();
+        $this->firmSources = new ArrayCollection();
     }
 
     /**
@@ -335,7 +336,7 @@ class Firm extends AbstractEntity {
      *
      * @param bool $sort
      *
-     * @return Collection
+     * @return Collection<int,TitleFirmrole>
      */
     public function getTitleFirmroles($sort = false) {
         if ( ! $sort) {
@@ -383,7 +384,7 @@ class Firm extends AbstractEntity {
     /**
      * Set the sources for this firm.
      *
-     * @param array|Collection|FirmSource[] $firmSources
+     * @param Collection<int,FirmSource> $firmSources
      */
     public function setFirmSources($firmSources) : void {
         $this->firmSources = $firmSources;
@@ -412,14 +413,14 @@ class Firm extends AbstractEntity {
     /**
      * Get firmSources.
      *
-     * @return array|Collection|FirmSource[]
+     * @return Collection<int,FirmSource>
      */
     public function getFirmSources() {
         return $this->firmSources;
     }
 
     /**
-     * @return Collection|Person[]
+     * @return Collection<int,Person>
      */
     public function getRelatedPeople() : Collection {
         return $this->relatedPeople;
@@ -440,7 +441,7 @@ class Firm extends AbstractEntity {
     }
 
     /**
-     * @return Collection|Firm[]
+     * @return Collection<int,Firm>
      */
     public function getRelatedFirms() : Collection {
         return $this->relatedFirms;
@@ -461,7 +462,7 @@ class Firm extends AbstractEntity {
     }
 
     /**
-     * @return Collection|Firm[]
+     * @return Collection<int,Firm>
      */
     public function getFirmsRelated() : Collection {
         return $this->firmsRelated;

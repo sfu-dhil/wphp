@@ -67,7 +67,7 @@ class ConvertEstcCommand extends Command {
     private EstcMarcImporter $importer;
 
     /**
-     * @var array|array[]|false[]|null[]|string[]|string[][]
+     * @var array<string>
      */
     private array $titles;
 

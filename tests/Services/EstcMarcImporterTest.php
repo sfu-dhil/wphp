@@ -73,7 +73,7 @@ class EstcMarcImporterTest extends ControllerTestCase {
     }
 
     /**
-     * @return array
+     * @return array[]
      */
     public function getDatesData() {
         return [
@@ -120,6 +120,9 @@ class EstcMarcImporterTest extends ControllerTestCase {
         $this->assertSame($name, $format->getName());
     }
 
+    /**
+     * @return string[][]
+     */
     public function guessFormatData() {
         return [
             ['octavo', '8vo'],
@@ -146,7 +149,7 @@ class EstcMarcImporterTest extends ControllerTestCase {
     }
 
     /**
-     * @return array
+     * @return array[]
      */
     public function guessDimensionsData() {
         return [

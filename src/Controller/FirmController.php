@@ -44,8 +44,7 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
      * @Route("/", name="firm_index", methods={"GET"})
      * @Template
      *
-     * @return array
-     */
+     * @return array<string,mixed>     */
     public function indexAction(Request $request, EntityManagerInterface $em) {
         $form = $this->createForm(FirmSearchType::class, null, [
             'action' => $this->generateUrl('firm_search'),
@@ -101,8 +100,7 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
      * @Route("/search", name="firm_search", methods={"GET"})
      * @Template
      *
-     * @return array
-     */
+     * @return array<string,mixed>     */
     public function searchAction(Request $request, FirmRepository $repo) {
         $form = $this->createForm(FirmSearchType::class, null, [
             'user' => $this->getUser(),
@@ -184,7 +182,7 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
      * @Template
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
      *
-     * @return array|RedirectResponse
+     * @return array<string,mixed>|RedirectResponse
      */
     public function newAction(Request $request, EntityManagerInterface $em) {
         $firm = new Firm();
@@ -194,7 +192,7 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
         if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($firm);
 
-            if ($firm->getFirmSources()) {
+            if ($firm->getFirmSources()->count() > 0) {
                 foreach ($firm->getFirmSources() as $ts) {
                     $ts->setFirm($firm);
                     $em->persist($ts);
@@ -251,8 +249,7 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
      * @Route("/{id}.{_format}", name="firm_show", defaults={"_format": "html"}, methods={"GET"})
      * @Template
      *
-     * @return array
-     */
+     * @return array<string,mixed>     */
     public function showAction(Request $request, Firm $firm, SourceLinker $linker) {
         $firmRoles = $firm->getTitleFirmroles(true);
         if ( ! $this->getUser()) {
@@ -316,8 +313,7 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
      *
      * @param mixed $format
      *
-     * @return array
-     */
+     * @return array<string,mixed>     */
     public function exportAction(Request $request, Firm $firm, $format) {
         $firmRoles = $firm->getTitleFirmroles(true);
         if ( ! $this->getUser()) {
@@ -342,14 +338,14 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
      * @Template
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
      *
-     * @return array|RedirectResponse
+     * @return array<string,mixed>|RedirectResponse
      */
     public function editAction(Request $request, Firm $firm, EntityManagerInterface $em) {
         $editForm = $this->createForm(FirmType::class, $firm);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            if ($firm->getFirmSources()) {
+            if ($firm->getFirmSources()->count() > 0) {
                 foreach ($firm->getFirmSources() as $ts) {
                     $ts->setFirm($firm);
                     $em->persist($ts);

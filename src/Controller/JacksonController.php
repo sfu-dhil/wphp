@@ -33,8 +33,7 @@ class JacksonController extends AbstractController implements PaginatorAwareInte
     /**
      * Lists all Jackson entities.
      *
-     * @return array
-     *
+     * @return array<string,mixed> *
      * @Route("/", name="resource_jackson_index", methods={"GET"})
      *
      * @Template
@@ -53,8 +52,7 @@ class JacksonController extends AbstractController implements PaginatorAwareInte
     /**
      * Search for Jackson entities.
      *
-     * @return array
-     * @Route("/search", name="resource_jackson_search", methods={"GET"})
+     * @return array<string,mixed> * @Route("/search", name="resource_jackson_search", methods={"GET"})
      * @Template
      */
     public function searchAction(Request $request, JacksonRepository $repo) {
@@ -75,8 +73,7 @@ class JacksonController extends AbstractController implements PaginatorAwareInte
     /**
      * Finds and displays a Jackson entity.
      *
-     * @return array
-     *
+     * @return array<string,mixed> *
      * @Route("/{id}", name="resource_jackson_show", methods={"GET"})
      *
      * @Template

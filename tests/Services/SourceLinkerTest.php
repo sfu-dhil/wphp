@@ -117,6 +117,9 @@ class SourceLinkerTest extends ControllerTestCase {
         }
     }
 
+    /**
+     * @return array[]
+     */
     public function urlData() {
         return [
             ['/^https\:\/\/example.com/', 'ESTC', 'https://example.com/foo/bar'],
