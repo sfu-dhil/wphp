@@ -175,7 +175,10 @@ class PersonTimeline{
             .then(json => {
                 _.data = json;
                 _.timelineObject = this.buildTimelineObject();
-                _.timeline = new TL.Timeline(this.div, this.timelineObject);
+                console.log(_.container.offsetWidth);
+                _.timeline = new TL.Timeline(this.div, this.timelineObject, {
+                    slide_padding_lr: 75
+                });
                 _.watchTimeline();
             }).catch(e => {
             _.container.classList.add('loaded');
@@ -184,6 +187,10 @@ class PersonTimeline{
         });
     }
 
+    getSlidePadding(){
+        return 50;
+
+    }
     /**
      * Observes the Timeline so we can add styling, handling, etc
      * rather than try and hook into TimelineJS's processing (which
@@ -246,7 +253,13 @@ class PersonTimeline{
         }
         if (this.wikiUrl || this.imageUrl){
             title.media = {
-                url: this.imageUrl
+                url: this.imageUrl,
+                credit: `<a href="${this.imageUrl}">${this.imageUrl}</a>`,
+                alt: `Image of ${this.name}`
+            }
+            if (this.wikiUrl){
+                title.media.link = this.wikiUrl;
+                title.media.link_target = '_blank';
             }
         }
         return title;
