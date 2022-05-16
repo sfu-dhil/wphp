@@ -175,7 +175,6 @@ class PersonTimeline{
             .then(json => {
                 _.data = json;
                 _.timelineObject = this.buildTimelineObject();
-                console.log(_.container.offsetWidth);
                 _.timeline = new TL.Timeline(this.div, this.timelineObject, {
                     slide_padding_lr: 75
                 });
@@ -186,11 +185,7 @@ class PersonTimeline{
             console.error(e);
         });
     }
-
-    getSlidePadding(){
-        return 50;
-
-    }
+    
     /**
      * Observes the Timeline so we can add styling, handling, etc
      * rather than try and hook into TimelineJS's processing (which
