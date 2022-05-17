@@ -113,4 +113,9 @@
   z-index: 9000;
 }
 
+.tl-slide-text-only .tl-slide-content-container .tl-slide-content .tl-text {
+  width: 90%;
+  max-width: 90%;
+}
+
 /*# sourceMappingURL=timeline.css.map */

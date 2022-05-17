@@ -141,21 +141,17 @@
                 {% endblock %}
             {% endembed %}
         </div>
-
-
     </div>
 
-
+    {% if makeTimeline %}
+        {% include 'person/partial/timeline.html.twig' %}
+    {% endif %}
 
     {% if pagination|length > 0 %}
         <div id="person_titles">
             <h2>Titles</h2>
             {% include 'person/partial/titles.html.twig' %}
         </div>
-    {% endif %}
-
-    {% if makeTimeline %}
-        {% include 'person/partial/timeline.html.twig' %}
     {% endif %}
 
     {% include 'partial/citation.html.twig' with {

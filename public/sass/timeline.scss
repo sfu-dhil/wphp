@@ -102,3 +102,10 @@
   color:inherit;
   z-index:9000;
 }
+
+// Update width of the text
+.tl-slide-text-only .tl-slide-content-container .tl-slide-content .tl-text{
+  width:90%;
+  max-width:90%
+
+}
