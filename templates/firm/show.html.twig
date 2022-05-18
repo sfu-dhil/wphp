@@ -135,20 +135,25 @@
                     <tr>
                         <th>Firm&nbsp;Role</th>
                         <th>Title</th>
-                        <th>Author</th>
+                        <th>Contributors</th>
                         <th>Date</th>
                     </tr>
                 {% endblock %}
                 {% block tbody %}
                     {% for tfr in pagination %}
                         {% set title = tfr.title %}
-                        {% set authorRole = title.getTitleRoles('Author')|first %}
                         <tr>
                             <td>{{ tfr.firmrole.name }}</td>
                             <td><a href="{{ path('title_show', {'id': title.id}) }}">{{ title.title }}</a></td>
-                            <td>{% if authorRole %}
-                                    <a href='{{ path('person_show', {'id': authorRole.person.id}) }}'>{{ authorRole.person }}</a>
-                                {% endif %}
+                            <td>
+                                {% for tr in title.titleRoles|slice(0,title_index_authors) %}
+                                    {% set person = tr.person %}
+                                    <a href="{{ path('person_show', {'id': person.id}) }}">{{ person.lastName }}
+                                        , {{ person.firstName }}</a>
+                                    ({{ tr.role }})
+                                    <br/>
+                                {% endfor %}
+                                {% if title.titleRoles|length > title_index_authors %}and {{ title.titleRoles|length - title_index_authors }} more.{% endif %}
                             </td>
                             <td>{{ title.pubdate }}</td>
                         </tr>
@@ -157,8 +162,6 @@
             {% endembed %}
         </div>
     {% endif %}
-
-
 
     {{ include('partial/citation.html.twig', {
         'record': firm,
