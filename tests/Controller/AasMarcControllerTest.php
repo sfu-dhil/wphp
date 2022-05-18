@@ -10,20 +10,10 @@ declare(strict_types=1);
 
 namespace App\Tests\Controller;
 
-use App\DataFixtures\AasMarcFixtures;
-use App\Repository\AasMarcRepository;
-use App\Services\MarcManager;
 use Nines\UserBundle\DataFixtures\UserFixtures;
-use Nines\UtilBundle\Tests\ControllerBaseCase;
+use Nines\UtilBundle\TestCase\ControllerTestCase;
 
-class AasMarcControllerTest extends ControllerBaseCase {
-    protected function fixtures() : array {
-        return [
-            UserFixtures::class,
-            AasMarcFixtures::class,
-        ];
-    }
-
+class AasMarcControllerTest extends ControllerTestCase {
     /**
      * @group anon
      * @group index
@@ -38,7 +28,7 @@ class AasMarcControllerTest extends ControllerBaseCase {
      * @group index
      */
     public function testUserIndex() : void {
-        $this->login('user.user');
+        $this->login(UserFixtures::USER);
         $crawler = $this->client->request('GET', '/resource/aas/');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
     }
@@ -48,7 +38,7 @@ class AasMarcControllerTest extends ControllerBaseCase {
      * @group index
      */
     public function testAdminIndex() : void {
-        $this->login('user.admin');
+        $this->login(UserFixtures::ADMIN);
         $crawler = $this->client->request('GET', '/resource/aas/');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
     }
@@ -67,7 +57,7 @@ class AasMarcControllerTest extends ControllerBaseCase {
      * @group show
      */
     public function testUserShow() : void {
-        $this->login('user.user');
+        $this->login(UserFixtures::USER);
         $crawler = $this->client->request('GET', '/resource/aas/1');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
     }
@@ -77,7 +67,7 @@ class AasMarcControllerTest extends ControllerBaseCase {
      * @group show
      */
     public function testAdminShow() : void {
-        $this->login('user.admin');
+        $this->login(UserFixtures::ADMIN);
         $crawler = $this->client->request('GET', '/resource/aas/1');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
     }
@@ -89,51 +79,30 @@ class AasMarcControllerTest extends ControllerBaseCase {
     }
 
     public function testUserSearch() : void {
-        $repo = $this->createMock(AasMarcRepository::class);
-        $repo->method('searchQuery')->willReturn([$this->getReference('aas.0.0.2')]);
-        $repo->method('findOneBy')->willReturn($this->getReference('aas.0.0.0'));
-        $manager = $this->createMock(MarcManager::class);
-        $manager->method('getAuthor')->willReturn('Ben Muffin');
-        $manager->method('getTitle')->willReturn('The Cheese Diggers');
-
-        $this->login('user.user');
-        $this->client->disableReboot();
-        $this->client->getContainer()->set(AasMarcRepository::class, $repo);
-        $this->client->getContainer()->set(MarcManager::class, $manager);
+        $this->login(UserFixtures::USER);
 
         $formCrawler = $this->client->request('GET', '/resource/aas/search');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $form = $formCrawler->selectButton('Search')->form([
-            'q' => 'adventures',
+            'q' => '"title 1',
         ]);
 
         $responseCrawler = $this->client->submit($form);
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
-        $this->assertSame(1, $responseCrawler->filter('td:contains("Ben Muffin")')->count());
+        $this->assertSame(1, $responseCrawler->filter('td:contains("Title 1")')->count());
     }
 
     public function testAdminSearch() : void {
-        $repo = $this->createMock(AasMarcRepository::class);
-        $repo->method('searchQuery')->willReturn([$this->getReference('aas.0.0.2')]);
-        $repo->method('findOneBy')->willReturn($this->getReference('aas.0.0.0'));
-        $manager = $this->createMock(MarcManager::class);
-        $manager->method('getAuthor')->willReturn('Ben Muffin');
-        $manager->method('getTitle')->willReturn('The Cheese Diggers');
-
-        $this->login('user.admin');
-        $this->client->disableReboot();
-        $this->client->getContainer()->set(AasMarcRepository::class, $repo);
-        $this->client->getContainer()->set(MarcManager::class, $manager);
-
+        $this->login(UserFixtures::ADMIN);
         $formCrawler = $this->client->request('GET', '/resource/aas/search');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $form = $formCrawler->selectButton('Search')->form([
-            'q' => 'adventures',
+            'q' => '"title 1',
         ]);
 
         $responseCrawler = $this->client->submit($form);
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
-        $this->assertSame(1, $responseCrawler->filter('td:contains("Ben Muffin")')->count());
+        $this->assertSame(1, $responseCrawler->filter('td:contains("Title 1")')->count());
     }
 
     public function testAnonImprintSearch() : void {
@@ -143,50 +112,28 @@ class AasMarcControllerTest extends ControllerBaseCase {
     }
 
     public function testUserImprintSearch() : void {
-        $repo = $this->createMock(AasMarcRepository::class);
-        $repo->method('imprintSearchQuery')->willReturn([$this->getReference('aas.0.0.2')]);
-        $repo->method('findOneBy')->willReturn($this->getReference('aas.0.0.0'));
-        $manager = $this->createMock(MarcManager::class);
-        $manager->method('getFieldValues')->willReturn(['Ben Muffin']);
-        $manager->method('getTitle')->willReturn('The Cheese Diggers');
-
-        $this->login('user.user');
-        $this->client->disableReboot();
-        $this->client->getContainer()->set(AasMarcRepository::class, $repo);
-        $this->client->getContainer()->set(MarcManager::class, $manager);
-
+        $this->login(UserFixtures::USER);
         $formCrawler = $this->client->request('GET', '/resource/aas/imprint_search');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $form = $formCrawler->selectButton('Search')->form([
-            'q' => 'adventures',
+            'q' => '"imprint 1"',
         ]);
 
         $responseCrawler = $this->client->submit($form);
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
-        $this->assertSame(1, $responseCrawler->filter('td:contains("Ben Muffin")')->count());
+        $this->assertSame(1, $responseCrawler->filter('td:contains("Title 1")')->count());
     }
 
     public function testAdminImprintSearch() : void {
-        $repo = $this->createMock(AasMarcRepository::class);
-        $repo->method('imprintSearchQuery')->willReturn([$this->getReference('aas.0.0.2')]);
-        $repo->method('findOneBy')->willReturn($this->getReference('aas.0.0.0'));
-        $manager = $this->createMock(MarcManager::class);
-        $manager->method('getFieldValues')->willReturn(['Ben Muffin']);
-        $manager->method('getTitle')->willReturn('The Cheese Diggers');
-
-        $this->login('user.admin');
-        $this->client->disableReboot();
-        $this->client->getContainer()->set(AasMarcRepository::class, $repo);
-        $this->client->getContainer()->set(MarcManager::class, $manager);
-
+        $this->login(UserFixtures::ADMIN);
         $formCrawler = $this->client->request('GET', '/resource/aas/imprint_search');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $form = $formCrawler->selectButton('Search')->form([
-            'q' => 'adventures',
+            'q' => '"imprint 1"',
         ]);
 
         $responseCrawler = $this->client->submit($form);
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
-        $this->assertSame(1, $responseCrawler->filter('td:contains("Ben Muffin")')->count());
+        $this->assertSame(1, $responseCrawler->filter('td:contains("Title 1")')->count());
     }
 }

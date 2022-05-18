@@ -72,7 +72,7 @@ class EstcMarcImporter {
     private $titleSourceRepository;
 
     /**
-     * @var array
+     * @var array<string>
      */
     private $messages;
 
@@ -96,7 +96,7 @@ class EstcMarcImporter {
      *
      * @param string $id
      *
-     * @return array
+     * @return array<EstcMarc>
      */
     public function getFields($id) {
         $data = $this->estcRepo->findBy(['titleId' => $id]);
@@ -131,20 +131,22 @@ class EstcMarcImporter {
     /**
      * Attempt to fetch a person record based on a MARC record.
      *
-     * @param array $fields
+     * @param array<EstcMarc> $fields
      *
      * @return Person[]
      */
     public function getPerson($fields) {
-        if( ! isset($fields['100a'])) {
+        if ( ! isset($fields['100a'])) {
             return [];
         }
         $fullName = preg_replace('/[^a-zA-Z0-9]*$/', '', $fields['100a']->getFieldData());
-        if(mb_strpos($fullName, ',')) {
-            [$last, $first] = explode(', ', $fullName);
-            [$dob, $dod] = $this->getDates($fields);
+        if (mb_strpos($fullName, ',')) {
+            list($last, $first) = explode(', ', $fullName);
+            list($dob, $dod) = $this->getDates($fields);
+
             return $this->personRepo->findByNameDates($first, $last, $dob, $dod);
         }
+
         return [];
     }
 
@@ -189,7 +191,7 @@ class EstcMarcImporter {
      */
     public function guessFormat($fields) {
         if ( ! isset($fields['300c']) || null === $fields['300c']->getFieldData()) {
-            return;
+            return null;
         }
         $data = $fields['300c']->getFieldData();
         $matches = [];
@@ -274,11 +276,11 @@ class EstcMarcImporter {
         $title->setFormat($format);
 
         $authors = $this->getPerson($fields);
-        if(count($authors) > 0) {
+        if (count($authors) > 0) {
             $this->addAuthor($title, $authors[0]);
         }
 
-        [$width, $height] = $this->guessDimensions($fields);
+        list($width, $height) = $this->guessDimensions($fields);
         $title->setSizeL($width);
         $title->setSizeW($height);
         $title->setChecked(false);
@@ -288,8 +290,10 @@ class EstcMarcImporter {
 
     /**
      * Add the person to a title as an author.
+     *
+     * @param ?Person $person
      */
-    public function addAuthor(Title $title, Person $person) : void {
+    public function addAuthor(Title $title, ?Person $person) : void {
         if ( ! $person) {
             return;
         }

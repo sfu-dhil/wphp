@@ -29,7 +29,7 @@ class ImportEstcCommand extends Command {
 
     protected static $defaultName = 'wphp:import:estc';
 
-    protected static $defaultDescription = 'Import ESTC MARC data';
+    protected static string $defaultDescription = 'Import ESTC MARC data';
 
     protected function configure() : void {
         $this->setDescription(self::$defaultDescription);
@@ -60,8 +60,7 @@ class ImportEstcCommand extends Command {
     }
 
     protected function execute(InputInterface $input, OutputInterface $output) : int {
-        $this->em->getConnection()->getConfiguration()->setSQLLogger(null);
-        set_error_handler([$this, 'errorHandler']);
+        $this->em->getConnection()->getConfiguration()->setSQLLogger();
         $this->save = $input->getOption('save');
         $recordCount = 234043; // manually set.
         foreach ($input->getArgument('path') as $path) {
@@ -69,6 +68,7 @@ class ImportEstcCommand extends Command {
             $file = new File();
             $file->file($path);
             $record = $file->next();
+            // @phpstan-ignore-next-line
             while ($record) {
                 $ldr = new EstcMarc();
                 $ldr->setTitleId($recordCount);
@@ -109,13 +109,6 @@ class ImportEstcCommand extends Command {
         $this->dot(true);
 
         return 0;
-    }
-
-    /**
-     * @throws Exception
-     */
-    public function errorHandler(int $errno, string $errstr, string $errfile, int $errline, array $errcontext) : void {
-        throw new Exception($errstr, $errno);
     }
 
     /**

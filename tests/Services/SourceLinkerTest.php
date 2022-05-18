@@ -10,33 +10,21 @@ declare(strict_types=1);
 
 namespace App\Tests\Services;
 
-use App\DataFixtures\EnFixtures;
-use App\DataFixtures\EstcMarcFixtures;
-use App\DataFixtures\JacksonFixtures;
-use App\DataFixtures\OrlandoBiblioFixtures;
-use App\DataFixtures\OsborneMarcFixtures;
 use App\Entity\Source;
 use App\Services\RoleChecker;
 use App\Services\SourceLinker;
-use Nines\UtilBundle\Tests\ControllerBaseCase;
+use Nines\UtilBundle\TestCase\ControllerTestCase;
 
-class SourceLinkerTest extends ControllerBaseCase {
+class SourceLinkerTest extends ControllerTestCase {
     /**
      * @var SourceLinker
      */
     private $linker;
 
+    /**
+     * @var \PHPUnit\Framework\MockObject\MockObject|RoleChecker
+     */
     private $checker;
-
-    protected function fixtures() : array {
-        return [
-            EstcMarcFixtures::class,
-            OrlandoBiblioFixtures::class,
-            JacksonFixtures::class,
-            EnFixtures::class,
-            OsborneMarcFixtures::class,
-        ];
-    }
 
     public function testSanity() : void {
         $this->assertInstanceOf(SourceLinker::class, $this->linker);
@@ -129,6 +117,9 @@ class SourceLinkerTest extends ControllerBaseCase {
         }
     }
 
+    /**
+     * @return array[]
+     */
     public function urlData() {
         return [
             ['/^https\:\/\/example.com/', 'ESTC', 'https://example.com/foo/bar'],

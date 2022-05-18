@@ -4,7 +4,7 @@
 DB := dhil_wphp
 PROJECT := wphp
 
-include etc/Makefile.legacy
+include etc/Makefile
 
 ## Local make file
 

@@ -21,3 +21,4 @@ twig:
         matomo_domain: '%dhil.matomo_domain%'
         title_index_authors: "%wphp.title_index_authors%"
         nines_editor_config: js/editor-config.js
+        linker: '@Nines\UtilBundle\Services\EntityLinker'

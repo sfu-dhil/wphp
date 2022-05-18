@@ -44,8 +44,7 @@ class PersonController extends AbstractController implements PaginatorAwareInter
      *
      * @Template
      *
-     * @return array
-     */
+     * @return array<string,mixed>     */
     public function indexAction(Request $request, EntityManagerInterface $em) {
         $form = $this->createForm(PersonSearchType::class, null, [
             'action' => $this->generateUrl('person_search'),
@@ -104,7 +103,8 @@ class PersonController extends AbstractController implements PaginatorAwareInter
     public function searchExportCsvAction(Request $request, EntityManagerInterface $em, PersonRepository $repo, CsvExporter $exporter) {
         $form = $this->createForm(PersonSearchType::class, null, ['entity_manager' => $em, 'user' => $this->getUser()]);
         $form->handleRequest($request);
-        $persons = [];
+        $query = $repo->buildSearchQuery($form->getData(), $this->getUser());
+        $persons = $query->execute();
 
         $tmpPath = tempnam(sys_get_temp_dir(), 'wphp-export-');
         $fh = fopen($tmpPath, 'w');
@@ -128,12 +128,11 @@ class PersonController extends AbstractController implements PaginatorAwareInter
      * @Route("/search", name="person_search", methods={"GET"})
      * @Template
      *
-     * @return array
-     */
+     * @return array<string,mixed>     */
     public function searchAction(Request $request, PersonRepository $repo, EntityManagerInterface $em) {
         $form = $this->createForm(PersonSearchType::class, null, [
             'entity_manager' => $em,
-            'user' => $this->getUser()
+            'user' => $this->getUser(),
         ]);
         $form->handleRequest($request);
         $persons = [];
@@ -150,24 +149,6 @@ class PersonController extends AbstractController implements PaginatorAwareInter
             'people' => $persons,
             'submitted' => $submitted,
         ];
-    }
-
-    /**
-     * Search for Title entities.
-     *
-     * @Route("/jump", name="person_jump", methods={"GET"})
-     *
-     * @Template
-     *
-     * @return array
-     */
-    public function jumpAction(Request $request) {
-        $q = $request->query->getInt('q');
-        if ($q) {
-            return $this->redirect($this->generateUrl('person_show', ['id' => $q]));
-        }
-
-        return $this->redirect($this->generateUrl('person_index', ['id' => $q]));
     }
 
     /**
@@ -212,8 +193,7 @@ class PersonController extends AbstractController implements PaginatorAwareInter
      *
      * @param mixed $format
      *
-     * @return array
-     */
+     * @return array<string,mixed>     */
     public function exportAction(Request $request, Person $person, $format) {
         $titleRoles = $person->getTitleRoles(true);
         if ( ! $this->getUser()) {
@@ -238,7 +218,7 @@ class PersonController extends AbstractController implements PaginatorAwareInter
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
      * @Template
      *
-     * @return array|RedirectResponse
+     * @return array<string,mixed>|RedirectResponse
      */
     public function newAction(Request $request, EntityManagerInterface $em) {
         $person = new Person();
@@ -298,8 +278,7 @@ class PersonController extends AbstractController implements PaginatorAwareInter
      * @Route("/{id}.{_format}", name="person_show", defaults={"_format": "html"}, methods={"GET"})
      * @Template
      *
-     * @return array
-     */
+     * @return array<string,mixed>     */
     public function showAction(Request $request, Person $person) {
         $titleRoles = $person->getTitleRoles(true);
         if ( ! $this->getUser()) {
@@ -326,7 +305,7 @@ class PersonController extends AbstractController implements PaginatorAwareInter
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
      * @Template
      *
-     * @return array
+     * @return array<string,mixed>|RedirectResponse
      */
     public function editAction(Request $request, Person $person, EntityManagerInterface $em) {
         $editForm = $this->createForm(PersonType::class, $person);

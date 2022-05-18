@@ -24,7 +24,7 @@ class FirmFixtures extends Fixture implements DependentFixtureInterface, Fixture
      * {@inheritdoc}
      */
     public static function getGroups() : array {
-        return ['test'];
+        return ['dev', 'test'];
     }
 
     /**
@@ -35,8 +35,8 @@ class FirmFixtures extends Fixture implements DependentFixtureInterface, Fixture
             $fixture = new Firm();
             $fixture->setName('Name ' . $i);
             $fixture->setStreetAddress('StreetAddress ' . $i);
-            $fixture->setStartDate(1800 - $i * 10);
-            $fixture->setEndDate(1820 + $i * 15);
+            $fixture->setStartDate(sprintf('%d', 1800 - $i * 10));
+            $fixture->setEndDate(sprintf('%d', 1820 + $i * 15));
             $fixture->setFinalcheck(0 === $i % 2);
             $fixture->setGender('U');
             $fixture->setCity($this->getReference('geonames.1'));

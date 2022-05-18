@@ -12,7 +12,6 @@ namespace App\Form\Person;
 
 use App\Entity\Person;
 use App\Entity\Role;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -24,7 +23,7 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class PersonFilterType extends AbstractType {
     /**
-     * @var EntityManager
+     * @var EntityManagerInterface
      */
     private $em;
 
@@ -37,7 +36,7 @@ class PersonFilterType extends AbstractType {
      */
     public function buildForm(FormBuilderInterface $builder, array $options) : void {
         $roleRepo = $this->em->getRepository(Role::class);
-        $roles = $roleRepo->findAll([
+        $roles = $roleRepo->findBy([], [
             'name' => 'ASC',
         ]);
 

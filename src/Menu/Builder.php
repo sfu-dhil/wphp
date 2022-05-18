@@ -17,10 +17,12 @@ use Knp\Menu\ItemInterface;
 use Nines\BlogBundle\Entity\Post;
 use Nines\BlogBundle\Entity\PostCategory;
 use Nines\BlogBundle\Entity\PostStatus;
+use Nines\UserBundle\Entity\User;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Menu builder for the navigation and search menus.
@@ -31,7 +33,7 @@ class Builder implements ContainerAwareInterface {
     /**
      * List of spotlight menu items.
      *
-     * @var array
+     * @var array<string>
      */
     private $spotlightMenuItems;
 
@@ -58,7 +60,7 @@ class Builder implements ContainerAwareInterface {
     /**
      * Build the menu builder.
      *
-     * @param array $spotlightMenuItems
+     * @param array<string> $spotlightMenuItems
      */
     public function __construct($spotlightMenuItems, EntityManagerInterface $em, FactoryInterface $factory, AuthorizationCheckerInterface $authChecker, TokenStorageInterface $tokenStorage) {
         $this->spotlightMenuItems = $spotlightMenuItems;
@@ -86,11 +88,11 @@ class Builder implements ContainerAwareInterface {
     /**
      * Get the currently logged in user.
      *
-     * @return null|object|string
+     * @return null|UserInterface
      */
     private function getUser() {
         if ( ! $this->hasRole('ROLE_USER')) {
-            return;
+            return null;
         }
 
         return $this->tokenStorage->getToken()->getUser();
@@ -98,6 +100,8 @@ class Builder implements ContainerAwareInterface {
 
     /**
      * Build the navigation menu and return it.
+     *
+     * @param array<string,mixed> $options
      *
      * @return ItemInterface
      */
@@ -198,10 +202,10 @@ class Builder implements ContainerAwareInterface {
                 'route' => 'report_editions_to_check',
             ]);
             $browse->addChild('Titles with Unverified People', [
-                'route' => 'titles_unverified_persons'
+                'route' => 'titles_unverified_persons',
             ]);
             $browse->addChild('Titles with Unverified Firms', [
-                'route' => 'titles_unverified_firms'
+                'route' => 'titles_unverified_firms',
             ]);
         }
 
@@ -210,6 +214,8 @@ class Builder implements ContainerAwareInterface {
 
     /**
      * Build the spotlight menu and return it.
+     *
+     * @param array<string,mixed> $options
      *
      * @return ItemInterface
      */
@@ -250,6 +256,8 @@ class Builder implements ContainerAwareInterface {
 
     /**
      * Build the research menu and return it.
+     *
+     * @param array<string,mixed> $options
      *
      * @return ItemInterface
      */
@@ -319,6 +327,8 @@ class Builder implements ContainerAwareInterface {
 
     /**
      * Build a user menu.
+     *
+     * @param array<string,mixed> $options
      *
      * @return ItemInterface
      */
@@ -395,6 +405,8 @@ class Builder implements ContainerAwareInterface {
     /**
      * Build a menu for blog posts.
      *
+     * @param array<string,mixed> $options
+     *
      * @return ItemInterface
      */
     public function postNavMenu(array $options) {
@@ -418,7 +430,7 @@ class Builder implements ContainerAwareInterface {
         $menu['announcements']->setLinkAttribute('data-toggle', 'dropdown');
         $menu['announcements']->setChildrenAttribute('class', 'dropdown-menu');
 
-        $status = $this->em->getRepository('NinesBlogBundle:PostStatus')->findOneBy([
+        $status = $this->em->getRepository(PostStatus::class)->findOneBy([
             'public' => true,
         ]);
         $qb = $this->em->createQueryBuilder();
@@ -430,7 +442,7 @@ class Builder implements ContainerAwareInterface {
             ->setMaxResults(10)
         ;
         if ( ! $this->hasRole('ROLE_USER')) {
-            $status = $this->em->getRepository('NinesBlogBundle:PostStatus')->findOneBy([
+            $status = $this->em->getRepository(PostStatus::class)->findOneBy([
                 'public' => true,
             ]);
             $qb->andWhere('p.status = :status');

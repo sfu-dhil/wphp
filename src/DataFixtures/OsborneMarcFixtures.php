@@ -24,7 +24,7 @@ class OsborneMarcFixtures extends Fixture implements DependentFixtureInterface, 
      * {@inheritdoc}
      */
     public static function getGroups() : array {
-        return ['test'];
+        return ['dev', 'test'];
     }
 
     /**
@@ -54,7 +54,7 @@ class OsborneMarcFixtures extends Fixture implements DependentFixtureInterface, 
             for ($j = 0; $j < 20; $j++) {
                 for ($i = 0; $i < 10; $i++) {
                     $fixture = new OsborneMarc();
-                    $fixture->setField(100 + $j);
+                    $fixture->setField(sprintf('%d', 100 + $j));
                     $fixture->setSubfield('abcdefghijklmnop'[$i]);
                     $fixture->setTitleId(1 + $n);
                     $fixture->setFieldData("Osborne Field Data {$n} {$j} {$i}");

@@ -6,10 +6,6 @@ doctrine:
         default_table_options:
             charset: utf8mb4
             collate: utf8mb4_unicode_ci
-
-        # IMPORTANT: You MUST configure your server version,
-        # either here or in the DATABASE_URL env var (see .env file)
-        #server_version: '5.7'
     orm:
         auto_generate_proxy_classes: true
         naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
@@ -21,10 +17,3 @@ doctrine:
                 dir: '%kernel.project_dir%/src/Entity'
                 prefix: 'App\Entity'
                 alias: App
-        dql:
-            string_functions:
-                match: Nines\UtilBundle\Extensions\Doctrine\MySQL\MatchAgainst
-                strtodate: Nines\UtilBundle\Extensions\Doctrine\MySQL\StrToDate
-                regexp: Nines\UtilBundle\Extensions\Doctrine\MySQL\Regexp
-            numeric_functions:
-                year: Nines\UtilBundle\Extensions\Doctrine\MySQL\Year

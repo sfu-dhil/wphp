@@ -39,8 +39,7 @@ class SourceController extends AbstractController implements PaginatorAwareInter
      * @Route("/", name="source_index", methods={"GET"})
      * @Template
      *
-     * @return array
-     */
+     * @return array<string,mixed>     */
     public function indexAction(Request $request, EntityManagerInterface $em, SourceRepository $repo) {
         $qb = $em->createQueryBuilder();
         $qb->select('IDENTITY(ts.source) as srcId, COUNT(DISTINCT(ts.title)) as cnt');
@@ -94,7 +93,7 @@ class SourceController extends AbstractController implements PaginatorAwareInter
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
      * @Template
      *
-     * @return array|RedirectResponse
+     * @return array<string,mixed>|RedirectResponse
      */
     public function newAction(Request $request, EntityManagerInterface $em) {
         $source = new Source();
@@ -122,8 +121,7 @@ class SourceController extends AbstractController implements PaginatorAwareInter
      * @Route("/{id}", name="source_show", methods={"GET"})
      * @Template
      *
-     * @return array
-     */
+     * @return array<string,mixed>     */
     public function showAction(Request $request, Source $source, EntityManagerInterface $em) {
         $dql = 'SELECT t FROM App:Title t INNER JOIN t.titleSources ts WHERE ts.source = :source ORDER BY t.title';
         $query = $em->createQuery($dql);
@@ -143,7 +141,7 @@ class SourceController extends AbstractController implements PaginatorAwareInter
      * @Template
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
      *
-     * @return array|RedirectResponse
+     * @return array<string,mixed>|RedirectResponse
      */
     public function editAction(Request $request, Source $source, EntityManagerInterface $em) {
         $editForm = $this->createForm(SourceType::class, $source);

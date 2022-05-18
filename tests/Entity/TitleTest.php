@@ -34,6 +34,9 @@ class TitleTest extends TestCase {
         $this->assertSame($expected, $title->getTotalPrice());
     }
 
+    /**
+     * @return array[]
+     */
     public function getTotalPriceData() {
         return [
             // array( expected, pence, shillings, pounds)

@@ -51,7 +51,7 @@ class Format {
     private $description;
 
     /**
-     * @var Collection|Title[]
+     * @var Collection<int,Title>
      * @ORM\OneToMany(targetEntity="Title", mappedBy="format")
      */
     private $titles;
@@ -141,7 +141,7 @@ class Format {
     /**
      * Get titles.
      *
-     * @return Collection
+     * @return Collection<int,Title>
      */
     public function getTitles() {
         return $this->titles;

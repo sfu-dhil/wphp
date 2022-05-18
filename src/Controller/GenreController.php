@@ -38,8 +38,7 @@ class GenreController extends AbstractController implements PaginatorAwareInterf
      * @Route("/", name="genre_index", methods={"GET"})
      * @Template
      *
-     * @return array
-     */
+     * @return array<string,mixed>     */
     public function indexAction(Request $request, GenreRepository $repo, EntityManagerInterface $em) {
         $dql = 'SELECT e FROM App:Genre e ORDER BY e.name';
         $query = $em->createQuery($dql);
@@ -82,7 +81,7 @@ class GenreController extends AbstractController implements PaginatorAwareInterf
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
      * @Template
      *
-     * @return array|RedirectResponse
+     * @return array<string,mixed>|RedirectResponse
      */
     public function newAction(Request $request, EntityManagerInterface $em) {
         $genre = new Genre();
@@ -110,8 +109,7 @@ class GenreController extends AbstractController implements PaginatorAwareInterf
      * @Route("/{id}", name="genre_show", methods={"GET"})
      * @Template
      *
-     * @return array
-     */
+     * @return array<string,mixed>     */
     public function showAction(Request $request, Genre $genre, EntityManagerInterface $em) {
         $dql = 'SELECT t FROM App:Title t WHERE :genre MEMBER OF t.genres';
         if (null === $this->getUser()) {
@@ -135,7 +133,7 @@ class GenreController extends AbstractController implements PaginatorAwareInterf
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
      * @Template
      *
-     * @return array|RedirectResponse
+     * @return array<string,mixed>|RedirectResponse
      */
     public function editAction(Request $request, Genre $genre, EntityManagerInterface $em) {
         $editForm = $this->createForm(GenreType::class, $genre);

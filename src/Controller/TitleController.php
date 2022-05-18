@@ -47,8 +47,7 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
      *
      * @Template
      *
-     * @return array
-     */
+     * @return array<string,mixed>     */
     public function indexAction(Request $request, EntityManagerInterface $em) {
         $dql = 'SELECT e FROM App:Title e';
         if (null === $this->getUser()) {
@@ -132,8 +131,7 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
      * @Route("/search", name="title_search", methods={"GET"})
      * @Template
      *
-     * @return array
-     */
+     * @return array<string,mixed>     */
     public function searchAction(Request $request, TitleRepository $repo) {
         $form = $this->createForm(TitleSearchType::class, null, [
             'user' => $this->getUser(),
@@ -213,8 +211,7 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
      *
      * @param mixed $format
      *
-     * @return array
-     */
+     * @return array<string,mixed>     */
     public function searchExportAction(Request $request, TitleRepository $repo, $format) {
         $form = $this->createForm(TitleSearchType::class, null, [
             'user' => $this->getUser(),
@@ -240,7 +237,7 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
      * @Template
      *
-     * @return array|RedirectResponse
+     * @return array<string,mixed>|RedirectResponse
      */
     public function newAction(Request $request, EntityManagerInterface $em) {
         $title = new Title();
@@ -287,8 +284,7 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
      *
      * @param string $id
      *
-     * @return array
-     * @Route("/import/{id}", name="title_marc_import", methods={"GET"})
+     * @return array<string,mixed> * @Route("/import/{id}", name="title_marc_import", methods={"GET"})
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
      * @Template("title/new.html.twig")
      */
@@ -316,8 +312,7 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
      * @Route("/{id}.{_format}", name="title_show", defaults={"_format": "html"}, methods={"GET"})
      * @Template
      *
-     * @return array
-     */
+     * @return array<string,mixed>     */
     public function showAction(Title $title, SourceLinker $linker) {
         if ( ! $this->getUser() && ! $title->getFinalattempt() && ! $title->getFinalcheck()) {
             throw new AccessDeniedHttpException('This title has not been verified and is not available to the public.');
@@ -336,7 +331,7 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
      * @Template
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
      *
-     * @return array|RedirectResponse
+     * @return array<string,mixed>|RedirectResponse
      */
     public function editAction(Request $request, Title $title, EntityManagerInterface $em) {
         // collect the titleFirmRole objects before modification.
@@ -424,8 +419,7 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
      * @Template
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
      *
-     * @return array
-     */
+     * @return array<string,mixed>     */
     public function copyAction(Request $request, Title $title, EntityManagerInterface $em) {
         $form = $this->createForm(TitleType::class, $title, [
             'action' => $this->generateUrl('title_new'),

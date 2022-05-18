@@ -43,7 +43,7 @@ class En {
     private $enId;
 
     /**
-     * @var string
+     * @var int
      * @ORM\Column(name="year", type="integer")
      * @Assert\Range(min=0, max=2018)
      */

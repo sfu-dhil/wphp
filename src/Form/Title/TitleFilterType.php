@@ -12,7 +12,6 @@ namespace App\Form\Title;
 
 use App\Entity\Genre;
 use App\Entity\Role;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -25,7 +24,7 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class TitleFilterType extends AbstractType {
     /**
-     * @var EntityManager
+     * @var EntityManagerInterface
      */
     private $em;
 
@@ -39,10 +38,10 @@ class TitleFilterType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) : void {
         $genreRepo = $this->em->getRepository(Genre::class);
         $roleRepo = $this->em->getRepository(Role::class);
-        $roles = $roleRepo->findAll([
+        $roles = $roleRepo->findBy([], [
             'name' => 'ASC',
         ]);
-        $genres = $genreRepo->findAll([
+        $genres = $genreRepo->findBy([], [
             'name' => 'asc',
         ]);
 

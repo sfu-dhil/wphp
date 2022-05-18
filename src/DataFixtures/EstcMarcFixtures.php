@@ -24,7 +24,7 @@ class EstcMarcFixtures extends Fixture implements DependentFixtureInterface, Fix
      * {@inheritdoc}
      */
     public static function getGroups() : array {
-        return ['test'];
+        return ['dev', 'test'];
     }
 
     /**
@@ -51,11 +51,18 @@ class EstcMarcFixtures extends Fixture implements DependentFixtureInterface, Fix
             $title->setFieldData('ESTC Title ' . $n);
             $manager->persist($title);
 
+            $title = new EstcMarc();
+            $title->setTitleId(1 + $n);
+            $title->setField('260');
+            $title->setSubfield('b');
+            $title->setFieldData('ESTC Imprint ' . $n);
+            $manager->persist($title);
+
             for ($j = 0; $j < 20; $j++) {
                 for ($i = 0; $i < 10; $i++) {
                     $fixture = new EstcMarc();
                     $fixture->setTitleId(1 + $n);
-                    $fixture->setField(100 + $j);
+                    $fixture->setField(sprintf('%d', 100 + $j));
                     $fixture->setSubfield('abcdefghijklmnop'[$i]);
                     $fixture->setFieldData("Estc Field Data {$n} " . (100 + $j) . 'abcdefghijklmnop'[$i]);
                     $manager->persist($fixture);

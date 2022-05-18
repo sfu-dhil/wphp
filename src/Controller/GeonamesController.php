@@ -40,8 +40,7 @@ class GeonamesController extends AbstractController implements PaginatorAwareInt
      * @Route("/", name="geonames_index", methods={"GET"})
      * @Template
      *
-     * @return array
-     */
+     * @return array<string,mixed>     */
     public function indexAction(Request $request, EntityManagerInterface $em) {
         $dql = 'SELECT e FROM App:Geonames e ORDER BY e.geonameid';
         $query = $em->createQuery($dql);
@@ -79,8 +78,7 @@ class GeonamesController extends AbstractController implements PaginatorAwareInt
     /**
      * Search for geonames entities.
      *
-     * @return array
-     * @Route("/search", name="geonames_search", methods={"GET"})
+     * @return array<string,mixed> * @Route("/search", name="geonames_search", methods={"GET"})
      * @Template
      */
     public function searchAction(Request $request, GeonamesRepository $repo) {
@@ -106,8 +104,7 @@ class GeonamesController extends AbstractController implements PaginatorAwareInt
      *
      * @Template
      *
-     * @return array
-     */
+     * @return array<string,mixed>     */
     public function importSearchAction(Request $request) {
         $q = $request->query->get('q');
         $results = [];
@@ -188,8 +185,7 @@ class GeonamesController extends AbstractController implements PaginatorAwareInt
      * @Route("/{id}", name="geonames_show", methods={"GET"})
      * @Template
      *
-     * @return array
-     */
+     * @return array<string,mixed>     */
     public function showAction(Request $request, Geonames $geoname, EntityManagerInterface $em) {
         $dql = 'SELECT count(t.id) FROM App:Title t WHERE t.locationOfPrinting = :geoname';
         if (null === $this->getUser()) {
@@ -212,8 +208,7 @@ class GeonamesController extends AbstractController implements PaginatorAwareInt
      * @Route("/{id}/titles", name="geonames_titles", methods={"GET"})
      * @Template
      *
-     * @return array
-     */
+     * @return array<string,mixed>     */
     public function titlesAction(Request $request, Geonames $geoname, EntityManagerInterface $em) {
         $dql = 'SELECT t FROM App:Title t WHERE t.locationOfPrinting = :geoname';
         if (null === $this->getUser()) {
@@ -236,8 +231,7 @@ class GeonamesController extends AbstractController implements PaginatorAwareInt
      * @Route("/{id}/firms", name="geonames_firms", methods={"GET"})
      * @Template
      *
-     * @return array
-     */
+     * @return array<string,mixed>     */
     public function firmsAction(Request $request, Geonames $geoname, EntityManagerInterface $em) {
         $dql = 'SELECT f FROM App:Firm f WHERE f.city = :geoname ORDER BY f.name';
         $query = $em->createQuery($dql);
@@ -256,8 +250,7 @@ class GeonamesController extends AbstractController implements PaginatorAwareInt
      * @Route("/{id}/people", name="geonames_people", methods={"GET"})
      * @Template
      *
-     * @return array
-     */
+     * @return array<string,mixed>     */
     public function peopleAction(Request $request, Geonames $geoname, EntityManagerInterface $em) {
         $dql = 'SELECT p FROM App:Person p WHERE (p.cityOfBirth = :geoname) OR (p.cityOfDeath = :geoname) ORDER BY p.lastName, p.firstName';
         $query = $em->createQuery($dql);

@@ -51,7 +51,7 @@ class Currency extends AbstractEntity {
     private $description;
 
     /**
-     * @var Collection
+     * @var Collection<int,Title>
      * @ORM\OneToMany(targetEntity="App\Entity\Title", mappedBy="otherCurrency")
      */
     private $titles;
@@ -68,6 +68,11 @@ class Currency extends AbstractEntity {
         return $this->name;
     }
 
+    /**
+     * @param float $value
+     *
+     * @return bool|string
+     */
     public function format($value) {
         if ($this->code) {
             $fmt = new NumberFormatter('en_CA', NumberFormatter::CURRENCY);
@@ -123,7 +128,7 @@ class Currency extends AbstractEntity {
     }
 
     /**
-     * @return Collection|Title[]
+     * @return Collection<int,Title>
      */
     public function getTitles() : Collection {
         return $this->titles;

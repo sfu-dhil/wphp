@@ -15,7 +15,6 @@ use App\Entity\Format;
 use App\Entity\Genre;
 use App\Entity\Geonames;
 use App\Entity\Title;
-use App\Form\RelatedTitleType;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -308,7 +307,7 @@ class TitleType extends AbstractType {
             'allow_clear' => true,
             'attr' => [
                 'help_block' => '',
-            ]
+            ],
         ]);
         $builder->add('notes', null, [
             'label' => 'Notes',

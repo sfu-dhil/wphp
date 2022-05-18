@@ -34,8 +34,7 @@ class OsborneMarcController extends AbstractController implements PaginatorAware
     /**
      * Lists all OsborneMarc entities.
      *
-     * @return array
-     *
+     * @return array<string,mixed> *
      * @Route("/", name="resource_osborne_index", methods={"GET"})
      *
      * @Template
@@ -56,8 +55,7 @@ class OsborneMarcController extends AbstractController implements PaginatorAware
      * @Route("/search", name="resource_osborne_search", methods={"GET"})
      * @Template
      *
-     * @return array
-     */
+     * @return array<string,mixed>     */
     public function searchAction(Request $request, MarcManager $manager, OsborneMarcRepository $repo) {
         $q = $request->query->get('q');
         if ($q) {
@@ -86,8 +84,7 @@ class OsborneMarcController extends AbstractController implements PaginatorAware
     /**
      * Finds and displays a OsborneMarc entity.
      *
-     * @return array
-     *
+     * @return array<string,mixed> *
      * @Route("/{id}", name="resource_osborne_show", methods={"GET"})
      *
      * @ParamConverter("osborneMarc", options={"mapping": {"id": "titleId"}})

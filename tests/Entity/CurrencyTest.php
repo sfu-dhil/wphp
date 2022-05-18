@@ -19,6 +19,9 @@ use PHPUnit\Framework\TestCase;
 class CurrencyTest extends TestCase {
     //put your code here
 
+    /**
+     * @return array[]
+     */
     public function getData() {
         return [
             ['GBP', '£', 'Pound Sterling', 1.00, '£1.00'],

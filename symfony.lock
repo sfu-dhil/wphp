@@ -2,11 +2,41 @@
     "aternus/geonames-client": {
         "version": "1.0.9"
     },
+    "beberlei/doctrineextensions": {
+        "version": "v1.3.0"
+    },
     "caseyamcl/php-marc21": {
         "version": "v1.1"
     },
     "composer/package-versions-deprecated": {
         "version": "1.11.99.3"
+    },
+    "composer/pcre": {
+        "version": "1.0.1"
+    },
+    "composer/semver": {
+        "version": "3.3.2"
+    },
+    "composer/xdebug-handler": {
+        "version": "2.0.5"
+    },
+    "dama/doctrine-test-bundle": {
+        "version": "6.7",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "4.0",
+            "ref": "56eaa387b5e48ebcc7c95a893b47dfa1ad51449c"
+        },
+        "files": [
+            "config/packages/test/dama_doctrine_test_bundle.yaml"
+        ]
+    },
+    "deployer/deployer": {
+        "version": "v6.8.0"
+    },
+    "deployer/phar-update": {
+        "version": "v2.2.0"
     },
     "doctrine/annotations": {
         "version": "1.0",
@@ -99,17 +129,29 @@
     "doctrine/persistence": {
         "version": "1.3.6"
     },
-    "doctrine/reflection": {
-        "version": "v1.1.0"
-    },
     "doctrine/sql-formatter": {
         "version": "1.1.0"
     },
     "egulias/email-validator": {
         "version": "2.1.15"
     },
+    "friendsofphp/php-cs-fixer": {
+        "version": "3.4",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "3.0",
+            "ref": "be2103eb4a20942e28a6dd87736669b757132435"
+        },
+        "files": [
+            ".php-cs-fixer.dist.php"
+        ]
+    },
     "friendsofphp/proxy-manager-lts": {
         "version": "v1.0.2"
+    },
+    "friendsoftwig/twigcs": {
+        "version": "v5.1.0"
     },
     "guzzlehttp/guzzle": {
         "version": "6.5.2"
@@ -134,9 +176,6 @@
     },
     "laminas/laminas-code": {
         "version": "4.0.0"
-    },
-    "liip/test-fixtures-bundle": {
-        "version": "1.6.0"
     },
     "lorenzo/pinky": {
         "version": "1.0.5"
@@ -174,6 +213,9 @@
     "phar-io/version": {
         "version": "3.1.0"
     },
+    "php-cs-fixer/diff": {
+        "version": "v2.0.2"
+    },
     "php-http/message-factory": {
         "version": "v1.0.2"
     },
@@ -188,6 +230,15 @@
     },
     "phpspec/prophecy": {
         "version": "1.13.0"
+    },
+    "phpstan/phpstan": {
+        "version": "1.6.3"
+    },
+    "phpstan/phpstan-doctrine": {
+        "version": "1.3.3"
+    },
+    "phpstan/phpstan-symfony": {
+        "version": "1.1.8"
     },
     "phpunit/php-code-coverage": {
         "version": "9.2.6"
@@ -217,6 +268,9 @@
             "phpunit.xml.dist",
             "tests/bootstrap.php"
         ]
+    },
+    "pimple/pimple": {
+        "version": "v3.5.0"
     },
     "psr/cache": {
         "version": "1.0.1"
@@ -307,6 +361,9 @@
     },
     "solarium/solarium": {
         "version": "6.1.1"
+    },
+    "soundasleep/html2text": {
+        "version": "1.1.0"
     },
     "symfony/asset": {
         "version": "v4.4.4"

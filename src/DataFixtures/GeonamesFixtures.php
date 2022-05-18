@@ -24,7 +24,7 @@ class GeonamesFixtures extends Fixture implements FixtureGroupInterface {
      * {@inheritdoc}
      */
     public static function getGroups() : array {
-        return ['test'];
+        return ['dev', 'test'];
     }
 
     /**
@@ -37,8 +37,8 @@ class GeonamesFixtures extends Fixture implements FixtureGroupInterface {
             $fixture->setName('Name ' . $i);
             $fixture->setAsciiname('Asciiname ' . $i);
             $fixture->setAlternatenames('Alternatenames ' . $i);
-            $fixture->setLatitude(40 + $i / 10);
-            $fixture->setLongitude(50 + $i / 10);
+            $fixture->setLatitude(sprintf('%f', 40 + $i / 10));
+            $fixture->setLongitude(sprintf('%f', 50 + $i / 10));
             $fixture->setFclass('F');
             $fixture->setFcode('Fcode ' . $i);
             $fixture->setCountry('C' . $i);

@@ -10,36 +10,23 @@ declare(strict_types=1);
 
 namespace App\Services;
 
-use App\DataFixtures\FormatFixtures;
-use App\DataFixtures\PersonFixtures;
-use App\DataFixtures\RoleFixtures;
-use App\DataFixtures\SourceFixtures;
 use App\Entity\EstcMarc;
 use App\Repository\EstcMarcRepository;
 use App\Repository\TitleRepository;
 use App\Repository\TitleSourceRepository;
-use Nines\UtilBundle\Tests\ControllerBaseCase;
+use Nines\UtilBundle\TestCase\ControllerTestCase;
 
-class EstcMarcImporterTest extends ControllerBaseCase {
+class EstcMarcImporterTest extends ControllerTestCase {
     /**
      * @var EstcMarcImporter
      */
     private $importer;
 
-    protected function fixtures() : array {
-        return [
-            PersonFixtures::class,
-            RoleFixtures::class,
-            SourceFixtures::class,
-            FormatFixtures::class,
-        ];
-    }
-
     public function testGetFields() : void {
         $f1 = new EstcMarc();
-        $f1->setTitleId('abc')->setField('100')->setSubfield('a')->setFieldData('Bond, James');
+        $f1->setTitleId(123)->setField('100')->setSubfield('a')->setFieldData('Bond, James');
         $f2 = new EstcMarc();
-        $f2->setTitleId('abc')->setField('100')->setSubfield('b')->setFieldData('Moneypenny, Miss');
+        $f2->setTitleId(123)->setField('100')->setSubfield('b')->setFieldData('Moneypenny, Miss');
 
         $repo = $this->createMock(EstcMarcRepository::class);
         $repo->method('findBy')->willReturn([$f1, $f2]);
@@ -85,6 +72,9 @@ class EstcMarcImporterTest extends ControllerBaseCase {
         $this->assertSame($expectedDod, $dod);
     }
 
+    /**
+     * @return array[]
+     */
     public function getDatesData() {
         return [
             ['1751', '1801', '1751-1801'],
@@ -130,6 +120,9 @@ class EstcMarcImporterTest extends ControllerBaseCase {
         $this->assertSame($name, $format->getName());
     }
 
+    /**
+     * @return string[][]
+     */
     public function guessFormatData() {
         return [
             ['octavo', '8vo'],
@@ -155,6 +148,9 @@ class EstcMarcImporterTest extends ControllerBaseCase {
         $this->assertSame($height, $h);
     }
 
+    /**
+     * @return array[]
+     */
     public function guessDimensionsData() {
         return [
             ['10', '15', '10 x 15 cm'],

@@ -24,7 +24,7 @@ class PersonFixtures extends Fixture implements DependentFixtureInterface, Fixtu
      * {@inheritdoc}
      */
     public static function getGroups() : array {
-        return ['test'];
+        return ['dev', 'test'];
     }
 
     /**

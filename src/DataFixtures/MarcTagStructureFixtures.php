@@ -23,7 +23,7 @@ class MarcTagStructureFixtures extends Fixture implements FixtureGroupInterface 
      * {@inheritdoc}
      */
     public static function getGroups() : array {
-        return ['test'];
+        return ['dev', 'test'];
     }
 
     /**
@@ -33,7 +33,7 @@ class MarcTagStructureFixtures extends Fixture implements FixtureGroupInterface 
         for ($i = 0; $i < 20; $i++) {
             $fixture = new MarcTagStructure();
             $fixture->setName('Tag ' . $i);
-            $fixture->setTagField(100 + $i);
+            $fixture->setTagField(sprintf('%d', 100 + $i));
             $manager->persist($fixture);
             $this->setReference('marctag.' . $i, $fixture);
         }

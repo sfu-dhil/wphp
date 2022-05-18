@@ -68,7 +68,7 @@ class ConvertAasCommand extends Command {
 
     protected static $defaultName = 'wphp:convert:aas';
 
-    protected static $defaultDescription = 'Add a short description for your command';
+    protected static string $defaultDescription = 'Add a short description for your command';
 
     protected function configure() : void {
         $this->setDescription(self::$defaultDescription);
@@ -176,7 +176,7 @@ class ConvertAasCommand extends Command {
         if ( ! $field) {
             return;
         }
-        if (700 === $field->tagno && '0' === $field->ind1) {
+        if ('700' === $field->tagno && '0' === $field->ind1) {
             $title->setPseudonym($field->subfield('a'));
 
             return;
@@ -184,7 +184,7 @@ class ConvertAasCommand extends Command {
 
         $person = $this->parsePerson($field);
         $role = null;
-        if (100 !== $field->tagno) {
+        if ('100' !== $field->tagno) {
             if ( ! $field->subfield('e')) {
                 $role = $this->findRole('Contributor');
             } else {
@@ -265,6 +265,13 @@ class ConvertAasCommand extends Command {
         return 0;
     }
 
+    /**
+     * @param string $lastName
+     * @param string $firstName
+     * @param string $title
+     * @param string $birthYear
+     * @param string $deathYear
+     */
     protected function findPerson($lastName, $firstName, $title, $birthYear, $deathYear) : Person {
         if ( ! $title) {
             $title = null;
@@ -296,8 +303,11 @@ class ConvertAasCommand extends Command {
         return $person;
     }
 
-    protected function parsePerson($field) : ?Person {
-        if ( ! $field || 0 === $field->ind1) {
+    /**
+     * @param ?Field $field
+     */
+    protected function parsePerson(?Field $field) : ?Person {
+        if ( ! $field || '0' === $field->ind1) {
             return null;
         }
         $dob = '';

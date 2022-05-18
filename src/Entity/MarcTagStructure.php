@@ -51,7 +51,7 @@ class MarcTagStructure {
      *
      * @ORM\Column(name="hidden", type="integer", nullable=true)
      */
-    private $hidden;
+    private $hidden = false;
 
     public function __toString() : string {
         return $this->name;

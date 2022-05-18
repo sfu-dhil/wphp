@@ -44,7 +44,7 @@ class Genre {
     private $description;
 
     /**
-     * @var Collection|Title[]
+     * @var Collection<int,Title>
      * @ORM\ManyToMany(targetEntity="Title", mappedBy="genres")
      */
     private $titles;
@@ -74,7 +74,7 @@ class Genre {
      *
      * @param string $name
      *
-     * @return Genre
+     * @return self
      */
     public function setName($name) {
         $this->name = $name;
@@ -94,7 +94,7 @@ class Genre {
     /**
      * Add title.
      *
-     * @return Genre
+     * @return self
      */
     public function addTitle(Title $title) {
         $this->titles[] = $title;
@@ -112,7 +112,7 @@ class Genre {
     /**
      * Get titles.
      *
-     * @return Collection
+     * @return Collection<int,Title>
      */
     public function getTitles() {
         return $this->titles;
@@ -123,7 +123,7 @@ class Genre {
      *
      * @param null|string $description
      *
-     * @return Format
+     * @return self
      */
     public function setDescription($description = null) {
         $this->description = $description;

@@ -2,6 +2,12 @@
 
 declare(strict_types=1);
 
+/*
+ * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace DoctrineMigrations;
 
 use Doctrine\DBAL\Schema\Schema;
@@ -10,15 +16,12 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20220201003207 extends AbstractMigration
-{
-    public function getDescription(): string
-    {
+final class Version20220201003207 extends AbstractMigration {
+    public function getDescription() : string {
         return '';
     }
 
-    public function up(Schema $schema): void
-    {
+    public function up(Schema $schema) : void {
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql('ALTER TABLE firm ADD created DATETIME NOT NULL COMMENT \'(DC2Type:datetime_immutable)\', ADD updated DATETIME NOT NULL COMMENT \'(DC2Type:datetime_immutable)\'');
         $this->addSql('ALTER TABLE person ADD created DATETIME NOT NULL COMMENT \'(DC2Type:datetime_immutable)\', ADD updated DATETIME NOT NULL COMMENT \'(DC2Type:datetime_immutable)\'');
@@ -28,8 +31,7 @@ final class Version20220201003207 extends AbstractMigration
         $this->addSql('UPDATE title SET created=now(), updated=now()');
     }
 
-    public function down(Schema $schema): void
-    {
+    public function down(Schema $schema) : void {
         // this down() migration is auto-generated, please modify it to your needs
         $this->addSql('ALTER TABLE firm DROP created, DROP updated');
         $this->addSql('ALTER TABLE person DROP created, DROP updated');

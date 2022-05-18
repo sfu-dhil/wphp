@@ -38,8 +38,7 @@ class FormatController extends AbstractController implements PaginatorAwareInter
      * @Route("/", name="format_index", methods={"GET"})
      * @Template
      *
-     * @return array
-     */
+     * @return array<string,mixed>     */
     public function indexAction(Request $request, FormatRepository $repo, EntityManagerInterface $em) {
         $dql = 'SELECT e FROM App:Format e ORDER BY e.id';
         $query = $em->createQuery($dql);
@@ -82,7 +81,7 @@ class FormatController extends AbstractController implements PaginatorAwareInter
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
      * @Template
      *
-     * @return array|RedirectResponse
+     * @return array<string,mixed>|RedirectResponse
      */
     public function newAction(Request $request, EntityManagerInterface $em) {
         $format = new Format();
@@ -110,8 +109,7 @@ class FormatController extends AbstractController implements PaginatorAwareInter
      * @Route("/{id}", name="format_show", methods={"GET"})
      * @Template
      *
-     * @return array
-     */
+     * @return array<string,mixed>     */
     public function showAction(Request $request, Format $format, EntityManagerInterface $em) {
         $dql = 'SELECT t FROM App:Title t WHERE t.format = :format';
         if (null === $this->getUser()) {
@@ -136,7 +134,7 @@ class FormatController extends AbstractController implements PaginatorAwareInter
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
      * @Template
      *
-     * @return array|RedirectResponse
+     * @return array<string,mixed>|RedirectResponse
      */
     public function editAction(Request $request, Format $format, EntityManagerInterface $em) {
         $editForm = $this->createForm(FormatType::class, $format);

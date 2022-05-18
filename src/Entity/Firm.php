@@ -83,7 +83,7 @@ class Firm extends AbstractEntity {
      *
      * @ORM\Column(name="finalcheck", type="boolean", nullable=false)
      */
-    private $finalcheck = '0';
+    private $finalcheck = false;
 
     /**
      * @var Geonames
@@ -96,7 +96,7 @@ class Firm extends AbstractEntity {
     private $city;
 
     /**
-     * @var Collection|TitleFirmrole[]
+     * @var Collection<int,TitleFirmrole>
      * @ORM\OneToMany(targetEntity="TitleFirmrole", mappedBy="firm")
      */
     private $titleFirmroles;
@@ -104,25 +104,25 @@ class Firm extends AbstractEntity {
     /**
      * Firm sources are where the bibliographic information comes from.
      *
-     * @var Collection|FirmSource[]
+     * @var Collection<int,FirmSource>
      * @ORM\OneToMany(targetEntity="FirmSource", mappedBy="firm")
      */
     private $firmSources;
 
     /**
-     * @var Collection|Person[]
+     * @var Collection<int,Person>
      * @ORM\ManyToMany(targetEntity="Person", mappedBy="relatedFirms")
      */
     private $relatedPeople;
 
     /**
-     * @var Collection|Firm[]
+     * @var Collection<int,Firm>
      * @ORM\ManyToMany(targetEntity="Firm", inversedBy="firmsRelated")
      */
     private $relatedFirms;
 
     /**
-     * @var Collection|Firm[]
+     * @var Collection<int,Firm>
      * @ORM\ManyToMany(targetEntity="Firm", mappedBy="relatedFirms")
      */
     private $firmsRelated;
@@ -137,6 +137,7 @@ class Firm extends AbstractEntity {
         $this->relatedPeople = new ArrayCollection();
         $this->relatedFirms = new ArrayCollection();
         $this->firmsRelated = new ArrayCollection();
+        $this->firmSources = new ArrayCollection();
     }
 
     /**
@@ -146,7 +147,7 @@ class Firm extends AbstractEntity {
         return $this->name;
     }
 
-    public function getFormId() {
+    public function getFormId() : string {
         return "({$this->id}) {$this->name}";
     }
 
@@ -210,11 +211,11 @@ class Firm extends AbstractEntity {
     /**
      * Get startDate.
      *
-     * @return string
+     * @return null|string
      */
     public function getStartDate() {
         if ('0000-00-00' === $this->startDate) {
-            return;
+            return null;
         }
 
         return $this->startDate;
@@ -236,11 +237,11 @@ class Firm extends AbstractEntity {
     /**
      * Get endDate.
      *
-     * @return string
+     * @return null|string
      */
     public function getEndDate() {
         if ('0000-00-00' === $this->endDate) {
-            return;
+            return null;
         }
 
         return $this->endDate;
@@ -251,7 +252,7 @@ class Firm extends AbstractEntity {
      *
      * @param string $notes
      *
-     * @return Title
+     * @return self
      */
     public function setNotes($notes) {
         $this->notes = $notes;
@@ -273,7 +274,7 @@ class Firm extends AbstractEntity {
      *
      * @param bool $finalcheck
      *
-     * @return Firm
+     * @return self
      */
     public function setFinalcheck($finalcheck) {
         $this->finalcheck = $finalcheck;
@@ -295,7 +296,7 @@ class Firm extends AbstractEntity {
      *
      * @param Geonames $city
      *
-     * @return Firm
+     * @return self
      */
     public function setCity(?Geonames $city = null) {
         $this->city = $city;
@@ -306,7 +307,7 @@ class Firm extends AbstractEntity {
     /**
      * Get city.
      *
-     * @return Geonames
+     * @return null|Geonames
      */
     public function getCity() {
         return $this->city;
@@ -315,7 +316,7 @@ class Firm extends AbstractEntity {
     /**
      * Add titleFirmrole.
      *
-     * @return Firm
+     * @return self
      */
     public function addTitleFirmrole(TitleFirmrole $titleFirmrole) {
         $this->titleFirmroles[] = $titleFirmrole;
@@ -335,7 +336,7 @@ class Firm extends AbstractEntity {
      *
      * @param bool $sort
      *
-     * @return Collection
+     * @return Collection<int,TitleFirmrole>
      */
     public function getTitleFirmroles($sort = false) {
         if ( ! $sort) {
@@ -363,7 +364,7 @@ class Firm extends AbstractEntity {
      *
      * @param null|string $gender
      *
-     * @return Firm
+     * @return self
      */
     public function setGender($gender = null) {
         $this->gender = $gender;
@@ -383,7 +384,7 @@ class Firm extends AbstractEntity {
     /**
      * Set the sources for this firm.
      *
-     * @param array|Collection|FirmSource[] $firmSources
+     * @param Collection<int,FirmSource> $firmSources
      */
     public function setFirmSources($firmSources) : void {
         $this->firmSources = $firmSources;
@@ -392,7 +393,7 @@ class Firm extends AbstractEntity {
     /**
      * Add firmSource.
      *
-     * @return Firm
+     * @return self
      */
     public function addFirmSource(FirmSource $firmSource) {
         $this->firmSources[] = $firmSource;
@@ -412,14 +413,14 @@ class Firm extends AbstractEntity {
     /**
      * Get firmSources.
      *
-     * @return array|Collection|FirmSource[]
+     * @return Collection<int,FirmSource>
      */
     public function getFirmSources() {
         return $this->firmSources;
     }
 
     /**
-     * @return Collection|Person[]
+     * @return Collection<int,Person>
      */
     public function getRelatedPeople() : Collection {
         return $this->relatedPeople;
@@ -440,7 +441,7 @@ class Firm extends AbstractEntity {
     }
 
     /**
-     * @return Collection|Firm[]
+     * @return Collection<int,Firm>
      */
     public function getRelatedFirms() : Collection {
         return $this->relatedFirms;
@@ -461,7 +462,7 @@ class Firm extends AbstractEntity {
     }
 
     /**
-     * @return Collection|Firm[]
+     * @return Collection<int,Firm>
      */
     public function getFirmsRelated() : Collection {
         return $this->firmsRelated;

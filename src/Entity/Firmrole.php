@@ -62,7 +62,7 @@ class Firmrole {
      *
      * @param string $name
      *
-     * @return Firmrole
+     * @return self
      */
     public function setName($name) {
         $this->name = $name;
@@ -84,7 +84,7 @@ class Firmrole {
      *
      * @param null|string $description
      *
-     * @return Format
+     * @return self
      */
     public function setDescription($description = null) {
         $this->description = $description;

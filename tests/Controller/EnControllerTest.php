@@ -10,19 +10,10 @@ declare(strict_types=1);
 
 namespace App\Tests\Controller;
 
-use App\DataFixtures\EnFixtures;
-use App\Repository\EnRepository;
 use Nines\UserBundle\DataFixtures\UserFixtures;
-use Nines\UtilBundle\Tests\ControllerBaseCase;
+use Nines\UtilBundle\TestCase\ControllerTestCase;
 
-class EnControllerTest extends ControllerBaseCase {
-    protected function fixtures() : array {
-        return [
-            UserFixtures::class,
-            EnFixtures::class,
-        ];
-    }
-
+class EnControllerTest extends ControllerTestCase {
     /**
      * @group anon
      * @group index
@@ -38,7 +29,7 @@ class EnControllerTest extends ControllerBaseCase {
      * @group index
      */
     public function testUserIndex() : void {
-        $this->login('user.user');
+        $this->login(UserFixtures::USER);
         $crawler = $this->client->request('GET', '/resource/en/');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $this->assertSame(0, $crawler->selectLink('New')->count());
@@ -49,7 +40,7 @@ class EnControllerTest extends ControllerBaseCase {
      * @group index
      */
     public function testAdminIndex() : void {
-        $this->login('user.admin');
+        $this->login(UserFixtures::ADMIN);
         $crawler = $this->client->request('GET', '/resource/en/');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
     }
@@ -70,7 +61,7 @@ class EnControllerTest extends ControllerBaseCase {
      * @group show
      */
     public function testUserShow() : void {
-        $this->login('user.user');
+        $this->login(UserFixtures::USER);
         $crawler = $this->client->request('GET', '/resource/en/1');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $this->assertSame(0, $crawler->selectLink('Edit')->count());
@@ -82,7 +73,7 @@ class EnControllerTest extends ControllerBaseCase {
      * @group show
      */
     public function testAdminShow() : void {
-        $this->login('user.admin');
+        $this->login(UserFixtures::ADMIN);
         $crawler = $this->client->request('GET', '/resource/en/1');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
     }
@@ -94,16 +85,11 @@ class EnControllerTest extends ControllerBaseCase {
     }
 
     public function testUserSearch() : void {
-        $repo = $this->createMock(EnRepository::class);
-        $repo->method('searchQuery')->willReturn([$this->getReference('en.1')]);
-        $this->login('user.user');
-        $this->client->disableReboot();
-        $this->client->getContainer()->set(EnRepository::class, $repo);
-
+        $this->login(UserFixtures::USER);
         $formCrawler = $this->client->request('GET', '/resource/en/search');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $form = $formCrawler->selectButton('Search')->form([
-            'q' => 'adventures',
+            'q' => '"title 1"',
         ]);
 
         $responseCrawler = $this->client->submit($form);
@@ -112,16 +98,11 @@ class EnControllerTest extends ControllerBaseCase {
     }
 
     public function testAdminSearch() : void {
-        $repo = $this->createMock(EnRepository::class);
-        $repo->method('searchQuery')->willReturn([$this->getReference('en.1')]);
-        $this->login('user.admin');
-        $this->client->disableReboot();
-        $this->client->getContainer()->set(EnRepository::class, $repo);
-
+        $this->login(UserFixtures::ADMIN);
         $formCrawler = $this->client->request('GET', '/resource/en/search');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $form = $formCrawler->selectButton('Search')->form([
-            'q' => 'adventures',
+            'q' => '"title 1"',
         ]);
 
         $responseCrawler = $this->client->submit($form);

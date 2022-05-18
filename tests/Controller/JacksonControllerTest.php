@@ -10,19 +10,10 @@ declare(strict_types=1);
 
 namespace App\Tests\Controller;
 
-use App\DataFixtures\JacksonFixtures;
-use App\Repository\JacksonRepository;
 use Nines\UserBundle\DataFixtures\UserFixtures;
-use Nines\UtilBundle\Tests\ControllerBaseCase;
+use Nines\UtilBundle\TestCase\ControllerTestCase;
 
-class JacksonControllerTest extends ControllerBaseCase {
-    protected function fixtures() : array {
-        return [
-            UserFixtures::class,
-            JacksonFixtures::class,
-        ];
-    }
-
+class JacksonControllerTest extends ControllerTestCase {
     /**
      * @group anon
      * @group index
@@ -37,7 +28,7 @@ class JacksonControllerTest extends ControllerBaseCase {
      * @group index
      */
     public function testUserIndex() : void {
-        $this->login('user.user');
+        $this->login(UserFixtures::USER);
         $crawler = $this->client->request('GET', '/resource/jackson/');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
     }
@@ -47,7 +38,7 @@ class JacksonControllerTest extends ControllerBaseCase {
      * @group index
      */
     public function testAdminIndex() : void {
-        $this->login('user.admin');
+        $this->login(UserFixtures::ADMIN);
         $crawler = $this->client->request('GET', '/resource/jackson/');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
     }
@@ -66,7 +57,7 @@ class JacksonControllerTest extends ControllerBaseCase {
      * @group show
      */
     public function testUserShow() : void {
-        $this->login('user.user');
+        $this->login(UserFixtures::USER);
         $crawler = $this->client->request('GET', '/resource/jackson/1');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
     }
@@ -76,7 +67,7 @@ class JacksonControllerTest extends ControllerBaseCase {
      * @group show
      */
     public function testAdminShow() : void {
-        $this->login('user.admin');
+        $this->login(UserFixtures::ADMIN);
         $crawler = $this->client->request('GET', '/resource/jackson/1');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
     }
@@ -88,16 +79,11 @@ class JacksonControllerTest extends ControllerBaseCase {
     }
 
     public function testUserSearch() : void {
-        $repo = $this->createMock(JacksonRepository::class);
-        $repo->method('searchQuery')->willReturn([$this->getReference('jackson.1')]);
-        $this->login('user.user');
-        $this->client->disableReboot();
-        $this->client->getContainer()->set(JacksonRepository::class, $repo);
-
+        $this->login(UserFixtures::USER);
         $formCrawler = $this->client->request('GET', '/resource/jackson/search');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $form = $formCrawler->selectButton('Search')->form([
-            'q' => 'adventures',
+            'q' => '"title 1"',
         ]);
 
         $responseCrawler = $this->client->submit($form);
@@ -106,16 +92,11 @@ class JacksonControllerTest extends ControllerBaseCase {
     }
 
     public function testAdminSearch() : void {
-        $repo = $this->createMock(JacksonRepository::class);
-        $repo->method('searchQuery')->willReturn([$this->getReference('jackson.1')]);
-        $this->login('user.admin');
-        $this->client->disableReboot();
-        $this->client->getContainer()->set(JacksonRepository::class, $repo);
-
+        $this->login(UserFixtures::ADMIN);
         $formCrawler = $this->client->request('GET', '/resource/jackson/search');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $form = $formCrawler->selectButton('Search')->form([
-            'q' => 'adventures',
+            'q' => '"title 1"',
         ]);
 
         $responseCrawler = $this->client->submit($form);

@@ -11,11 +11,12 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\NonUniqueResultException;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Nines\BlogBundle\Entity\Page;
 use Nines\BlogBundle\Entity\Post;
+use Nines\BlogBundle\Entity\PostCategory;
 use Nines\UtilBundle\Controller\PaginatorTrait;
-use Proxies\__CG__\Nines\BlogBundle\Entity\PostCategory;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -33,7 +34,9 @@ class DefaultController extends AbstractController implements PaginatorAwareInte
      * @Route("/", name="homepage")
      * @Template
      *
-     * @return array
+     * @throws NonUniqueResultException
+     *
+     * @return array<string,mixed>
      */
     public function indexAction(EntityManagerInterface $em) {
         $pageRepo = $em->getRepository(Page::class);
@@ -70,7 +73,7 @@ class DefaultController extends AbstractController implements PaginatorAwareInte
      * @Route("/privacy", name="privacy")
      * @Template
      *
-     * @return array
+     * @return array{}
      */
     public function privacyAction(Request $request) {
         return [];

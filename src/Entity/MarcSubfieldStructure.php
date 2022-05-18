@@ -65,7 +65,7 @@ class MarcSubfieldStructure {
      *
      * @ORM\Column(name="hidden", type="integer", nullable=true)
      */
-    private $hidden;
+    private $hidden = false;
 
     public function __toString() : string {
         return $this->name;
@@ -171,7 +171,7 @@ class MarcSubfieldStructure {
     /**
      * Set hidden.
      *
-     * @param int $hidden
+     * @param bool $hidden
      *
      * @return MarcSubfieldStructure
      */
@@ -184,7 +184,7 @@ class MarcSubfieldStructure {
     /**
      * Get hidden.
      *
-     * @return int
+     * @return bool
      */
     public function getHidden() {
         return $this->hidden;

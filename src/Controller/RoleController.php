@@ -38,8 +38,7 @@ class RoleController extends AbstractController implements PaginatorAwareInterfa
      * @Route("/", name="role_index", methods={"GET"})
      * @Template
      *
-     * @return array
-     */
+     * @return array<string,mixed>     */
     public function indexAction(Request $request, RoleRepository $repo, EntityManagerInterface $em) {
         $dql = 'SELECT e FROM App:Role e ORDER BY e.name';
         $query = $em->createQuery($dql);
@@ -82,7 +81,7 @@ class RoleController extends AbstractController implements PaginatorAwareInterfa
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
      * @Template
      *
-     * @return array
+     * @return array<string,mixed>|RedirectResponse
      */
     public function newAction(Request $request, EntityManagerInterface $em) {
         $role = new Role();
@@ -110,8 +109,7 @@ class RoleController extends AbstractController implements PaginatorAwareInterfa
      * @Route("/{id}", name="role_show", methods={"GET"})
      * @Template
      *
-     * @return array
-     */
+     * @return array<string,mixed>     */
     public function showAction(Request $request, Role $role, EntityManagerInterface $em) {
         $dql = 'SELECT tr FROM App:TitleRole tr INNER JOIN tr.person p WHERE tr.role = :role ORDER BY p.lastName, p.firstName';
         $query = $em->createQuery($dql);
@@ -131,7 +129,7 @@ class RoleController extends AbstractController implements PaginatorAwareInterfa
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
      * @Template
      *
-     * @return array|RedirectResponse
+     * @return array<string,mixed>|RedirectResponse
      */
     public function editAction(Request $request, Role $role, EntityManagerInterface $em) {
         $editForm = $this->createForm(RoleType::class, $role);

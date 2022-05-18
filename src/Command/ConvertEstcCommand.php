@@ -67,16 +67,17 @@ class ConvertEstcCommand extends Command {
     private EstcMarcImporter $importer;
 
     /**
-     * @var array|array[]|false[]|null[]|string[]|\string[][]
+     * @var array<string>
      */
     private array $titles;
 
     private EstcMarcRepository $estcMarcRepository;
 
+    private int $saved = 0;
+
     protected static $defaultName = 'wphp:convert:estc';
 
-    protected static $defaultDescription = 'Add a short description for your command';
-    private int $saved = 0;
+    protected static string $defaultDescription = 'Add a short description for your command';
 
     protected function configure() : void {
         $this->setDescription(self::$defaultDescription);
@@ -128,7 +129,6 @@ class ConvertEstcCommand extends Command {
 
     protected function execute(InputInterface $input, OutputInterface $output) : int {
         $this->em->getConnection()->getConfiguration()->setSQLLogger(null);
-//        set_error_handler([$this, 'errorHandler']);
         $this->save = $input->getOption('save');
         $this->getNames();
 
@@ -137,14 +137,15 @@ class ConvertEstcCommand extends Command {
             $file = new File();
             $file->file($path);
             $record = $file->next();
+            // @phpstan-ignore-next-line
             while ($record) {
                 if ($this->checkTitle($record) || $this->checkName($record)) {
                     $estcMarc = $this->estcMarcRepository->findOneBy([
                         'field' => '001',
                         'fieldData' => $record->field('001')->data,
                     ]);
-                    $title = $this->importer->import($estcMarc->getTitleId());
-                    foreach($title->getTitleSources() as $ts) {
+                    $title = $this->importer->import((string) $estcMarc->getTitleId());
+                    foreach ($title->getTitleSources() as $ts) {
                         $this->em->persist($ts);
                     }
                     $this->save($title);
@@ -205,13 +206,6 @@ class ConvertEstcCommand extends Command {
         }
 
         return false;
-    }
-
-    /**
-     * @throws Exception
-     */
-    public function errorHandler(int $errno, string $errstr, string $errfile, int $errline, array $errcontext) : void {
-        throw new Exception($errstr, $errno);
     }
 
     /**

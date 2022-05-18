@@ -60,13 +60,13 @@ class Source {
     private $onlineSource;
 
     /**
-     * @var Collection|TitleSource[]
+     * @var Collection<int,TitleSource>
      * @ORM\OneToMany(targetEntity="TitleSource", mappedBy="source")
      */
     private $titleSources;
 
     /**
-     * @var Collection|FirmSource[]
+     * @var Collection<int,FirmSource>
      * @ORM\OneToMany(targetEntity="FirmSource", mappedBy="source")
      */
     private $firmSources;
@@ -210,7 +210,7 @@ class Source {
     /**
      * Get titleSources.
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection<int,TitleSource>
      */
     public function getTitleSources() {
         return $this->titleSources;
@@ -218,8 +218,6 @@ class Source {
 
     /**
      * Add firmSource.
-     *
-     * @param \App\Entity\FirmSource $firmSource
      *
      * @return Source
      */
@@ -232,8 +230,6 @@ class Source {
     /**
      * Remove firmSource.
      *
-     * @param \App\Entity\FirmSource $firmSource
-     *
      * @return bool TRUE if this collection contained the specified element, FALSE otherwise.
      */
     public function removeFirmSource(FirmSource $firmSource) {
@@ -243,7 +239,7 @@ class Source {
     /**
      * Get firmSources.
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection<int,FirmSource>
      */
     public function getFirmSources() {
         return $this->firmSources;

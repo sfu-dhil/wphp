@@ -10,13 +10,13 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Entity\AasMarc;
 use App\Entity\EstcMarc;
 use App\Entity\MarcSubfieldStructure;
 use App\Entity\MarcTagStructure;
 use App\Entity\OsborneMarc;
 use App\Entity\Source;
 use App\Entity\TitleSource;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 
 /**
@@ -54,6 +54,11 @@ class MarcManager {
         return implode("\n", array_map(fn ($row) => $row->getFieldData(), $rows));
     }
 
+    /**
+     * @param AasMarc|EstcMarc|OsborneMarc $object
+     *
+     * @return string
+     */
     public function getControlId($object) {
         $repo = $this->em->getRepository(get_class($object));
         $field = $repo->findOneBy([
@@ -92,7 +97,7 @@ class MarcManager {
      *
      * @param EstcMarc|OsborneMarc $object
      *
-     * @return string
+     * @return null|string
      */
     public function getAuthor($object) {
         $repo = $this->em->getRepository(get_class($object));
@@ -105,6 +110,8 @@ class MarcManager {
         if (count($rows) > 0) {
             return $rows[0]->getFieldData();
         }
+
+        return null;
     }
 
     /**
@@ -132,7 +139,7 @@ class MarcManager {
      *
      * @param EstcMarc|OsborneMarc $object
      *
-     * @return Collection|EstcMarc[]|OsborneMarc[]
+     * @return EstcMarc[]|OsborneMarc[]
      */
     public function getData($object) {
         $repo = $this->em->getRepository(get_class($object));

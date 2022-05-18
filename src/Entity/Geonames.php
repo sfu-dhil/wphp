@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
-use DateTime;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -154,32 +154,32 @@ class Geonames {
     private $timezone;
 
     /**
-     * @var DateTime
+     * @var DateTimeInterface
      *
      * @ORM\Column(name="moddate", type="date", nullable=true)
      */
     private $moddate;
 
     /**
-     * @var Collection|Title[]
+     * @var Collection<int,Title>
      * @ORM\OneToMany(targetEntity="Title", mappedBy="locationOfPrinting")
      */
     private $titles;
 
     /**
-     * @var Collection|Title[]
+     * @var Collection<int,Firm>
      * @ORM\OneToMany(targetEntity="Firm", mappedBy="city")
      */
     private $firms;
 
     /**
-     * @var Collection|Person[]
+     * @var Collection<int,Person>
      * @ORM\OneToMany(targetEntity="Person", mappedBy="cityOfBirth")
      */
     private $peopleBorn;
 
     /**
-     * @var Collection|Title[]
+     * @var Collection<int,Person>
      * @ORM\OneToMany(targetEntity="Person", mappedBy="cityOfDeath")
      */
     private $peopleDied;
@@ -204,7 +204,7 @@ class Geonames {
     /**
      * Set geonameid.
      *
-     * @param string $geonameid
+     * @param int $geonameid
      *
      * @return Geonames
      */
@@ -600,7 +600,7 @@ class Geonames {
     /**
      * Set moddate.
      *
-     * @param DateTime $moddate
+     * @param DateTimeInterface $moddate
      *
      * @return Geonames
      */
@@ -613,7 +613,7 @@ class Geonames {
     /**
      * Get moddate.
      *
-     * @return DateTime
+     * @return DateTimeInterface
      */
     public function getModdate() {
         return $this->moddate;
@@ -640,7 +640,7 @@ class Geonames {
     /**
      * Get titles.
      *
-     * @return Collection
+     * @return Collection<int,Title>
      */
     public function getTitles() {
         return $this->titles;
@@ -667,7 +667,7 @@ class Geonames {
     /**
      * Get firms.
      *
-     * @return Collection
+     * @return Collection<int,Firm>
      */
     public function getFirms() {
         return $this->firms;
@@ -694,7 +694,7 @@ class Geonames {
     /**
      * Get peopleBorn.
      *
-     * @return Collection
+     * @return Collection<int,Person>
      */
     public function getPeopleBorn() {
         return $this->peopleBorn;
@@ -703,10 +703,10 @@ class Geonames {
     /**
      * Add peopleDied.
      *
-     * @return Geonames
+     * @return self
      */
-    public function addPeopleDied(Firm $peopleDied) {
-        $this->peopleDied[] = $peopleDied;
+    public function addPeopleDied(Person $peopleDied) {
+        $this->peopleDied->add($peopleDied);
 
         return $this;
     }
@@ -714,14 +714,14 @@ class Geonames {
     /**
      * Remove peopleDied.
      */
-    public function removePeopleDied(Firm $peopleDied) : void {
+    public function removePeopleDied(Person $peopleDied) : void {
         $this->peopleDied->removeElement($peopleDied);
     }
 
     /**
      * Get peopleDied.
      *
-     * @return Collection
+     * @return Collection<int,Person>
      */
     public function getPeopleDied() {
         return $this->peopleDied;
