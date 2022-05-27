@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "09e019fec10da95664c491fcfab86611",
+    "content-hash": "6a993d06f92c503dfeaa970df00d1f17",
     "packages": [
         {
             "name": "aternus/geonames-client",
