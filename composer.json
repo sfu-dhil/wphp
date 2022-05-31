@@ -18,6 +18,7 @@
         "doctrine/doctrine-bundle": "^2.3",
         "doctrine/doctrine-migrations-bundle": "3.0.*",
         "doctrine/orm": "^2.7",
+        "doctrine/persistence": "^2.5",
         "knplabs/knp-menu-bundle": "^3.2",
         "knplabs/knp-paginator-bundle": "^5.8",
         "ninsuo/symfony-collection": "^2.1",
