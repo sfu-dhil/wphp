@@ -10,26 +10,20 @@ declare(strict_types=1);
 
 namespace App\Menu;
 
+use App\Entity\Post;
+use App\Entity\PostCategory;
+use App\Entity\PostStatus;
+use App\Repository\PageRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
-use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
-use Nines\BlogBundle\Entity\Post;
-use Nines\BlogBundle\Entity\PostCategory;
-use Nines\BlogBundle\Entity\PostStatus;
 use Nines\UserBundle\Entity\User;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
+use Nines\UtilBundle\Menu\AbstractBuilder;
 
 /**
  * Menu builder for the navigation and search menus.
  */
-class Builder implements ContainerAwareInterface {
-    use ContainerAwareTrait;
-
+class Builder extends AbstractBuilder {
     /**
      * List of spotlight menu items.
      *
@@ -42,60 +36,16 @@ class Builder implements ContainerAwareInterface {
      */
     private $em;
 
-    /**
-     * @var FactoryInterface
-     */
-    private $factory;
-
-    /**
-     * @var AuthorizationCheckerInterface
-     */
-    private $authChecker;
-
-    /**
-     * @var TokenStorageInterface
-     */
-    private $tokenStorage;
+    private ?PageRepository $pageRepository;
 
     /**
      * Build the menu builder.
      *
      * @param array<string> $spotlightMenuItems
      */
-    public function __construct($spotlightMenuItems, EntityManagerInterface $em, FactoryInterface $factory, AuthorizationCheckerInterface $authChecker, TokenStorageInterface $tokenStorage) {
+    public function __construct($spotlightMenuItems, EntityManagerInterface $em) {
         $this->spotlightMenuItems = $spotlightMenuItems;
         $this->em = $em;
-        $this->factory = $factory;
-        $this->authChecker = $authChecker;
-        $this->tokenStorage = $tokenStorage;
-    }
-
-    /**
-     * Check if the current user is both logged in and granted a role.
-     *
-     * @param string $role
-     *
-     * @return bool
-     */
-    private function hasRole($role) {
-        if ( ! $this->tokenStorage->getToken()) {
-            return false;
-        }
-
-        return $this->authChecker->isGranted($role);
-    }
-
-    /**
-     * Get the currently logged in user.
-     *
-     * @return null|UserInterface
-     */
-    private function getUser() {
-        if ( ! $this->hasRole('ROLE_USER')) {
-            return null;
-        }
-
-        return $this->tokenStorage->getToken()->getUser();
     }
 
     /**
@@ -485,5 +435,44 @@ class Builder implements ContainerAwareInterface {
         }
 
         return $menu;
+    }
+
+    /**
+     * @param array<string,string> $options
+     */
+    public function pageMenu(array $options) : ItemInterface {
+        $menu = $this->dropdown($options['title'] ?? 'About');
+
+        // @TODO turn this into menuQuery().
+        $pages = $this->pageRepository->findBy(
+            ['public' => true, 'homepage' => false, 'inMenu' => true],
+            ['weight' => 'ASC', 'title' => 'ASC'],
+        );
+        foreach ($pages as $page) {
+            $menu->addChild($page->getTitle(), [
+                'route' => 'nines_blog_page_show',
+                'routeParameters' => [
+                    'id' => $page->getId(),
+                ],
+            ]);
+        }
+
+        if ($this->hasRole('ROLE_BLOG_ADMIN')) {
+            $this->addDivider($menu);
+            $menu->addChild('All Pages', [
+                'route' => 'nines_blog_page_index',
+            ]);
+        }
+
+        return $menu->getParent();
+    }
+
+    /**
+     * @required
+     *
+     * @codeCoverageIgnore
+     */
+    public function setPageRepository(PageRepository $pageRepository) : void {
+        $this->pageRepository = $pageRepository;
     }
 }
