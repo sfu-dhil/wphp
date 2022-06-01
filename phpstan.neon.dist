@@ -18,3 +18,7 @@ parameters:
     checkMissingCallableSignature: true
     dynamicConstantNames:
         - App\Tests\Controller\CurrencyTest::ANON_RESPONSE_CODE
+        - App\Tests\Controller\PageTest::ANON_RESPONSE_CODE
+        - App\Tests\Controller\PostCategoryTest::ANON_RESPONSE_CODE
+        - App\Tests\Controller\PostStatusTest::ANON_RESPONSE_CODE
+        - App\Tests\Controller\PostTest::ANON_RESPONSE_CODE

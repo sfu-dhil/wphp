@@ -14,10 +14,10 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
-use Nines\BlogBundle\DataFixtures\PostStatusFixtures;
-use Nines\BlogBundle\Entity\Post;
-use Nines\BlogBundle\Entity\PostCategory;
-use Nines\BlogBundle\Entity\PostStatus;
+use App\DataFixtures\PostStatusFixtures;
+use App\Entity\Post;
+use App\Entity\PostCategory;
+use App\Entity\PostStatus;
 
 /**
  * Load some test spotlights.

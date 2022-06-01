@@ -13,7 +13,7 @@ namespace App\DataFixtures;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Persistence\ObjectManager;
-use Nines\BlogBundle\Entity\PostCategory;
+use App\Entity\PostCategory;
 
 /**
  * Load some test spotlight categories.

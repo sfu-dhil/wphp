@@ -61,3 +61,4 @@ services:
             - { name: knp_menu.menu_builder, method: spotlightMenu, alias: spotlight}
             - { name: knp_menu.menu_builder, method: userNavMenu, alias: wphp_user }
             - { name: knp_menu.menu_builder, method: postNavMenu, alias: wphp_post }
+            - { name: knp_menu.menu_builder, method: pageMenu, alias: nines_blog_pages }
