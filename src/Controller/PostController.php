@@ -172,7 +172,7 @@ class PostController extends AbstractController implements PaginatorAwareInterfa
     /**
      * @Route("/{id}/edit_pdf/{pdf_id}", name="post_edit_pdf", methods={"GET", "POST"})
      * @IsGranted("ROLE_CONTENT_ADMIN")
-     * @ParamConverter("pdf", options={"id" = "pdf_id"})
+     * @ParamConverter("pdf", options={"id": "pdf_id"})
      *
      * @throws Exception
      */
@@ -190,12 +190,11 @@ class PostController extends AbstractController implements PaginatorAwareInterfa
     /**
      * @Route("/{id}/delete_pdf/{pdf_id}", name="post_delete_pdf", methods={"DELETE"})
      * @IsGranted("ROLE_CONTENT_ADMIN")
-     * @ParamConverter("pdf", options={"id" = "pdf_id"})
+     * @ParamConverter("pdf", options={"id": "pdf_id"})
      *
      * @throws Exception
      */
     public function deletePdf(Request $request, EntityManagerInterface $em, Post $post, Pdf $pdf) : RedirectResponse {
         return $this->deletePdfAction($request, $em, $post, $pdf, 'nines_blog_post_show');
     }
-
 }
