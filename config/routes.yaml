@@ -1,10 +1,14 @@
 nines_editor:
+  prefix: /editor
   resource: '@NinesEditorBundle/config/routes.yaml'
-  prefix: editor
 
 nines_feedback:
   prefix: /feedback
   resource: '@NinesFeedbackBundle/config/routes.yaml'
+
+nines_media:
+  prefix: /media
+  resource: '@NinesMediaBundle/config/routes.yaml'
 
 nines_user:
   resource: '@NinesUserBundle/config/routes.yaml'

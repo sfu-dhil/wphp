@@ -8,6 +8,9 @@ nines_util:
         person:
             class: App\Entity\Person
             route: person_show
+        post:
+            class: App\Entity\Post
+            route: nines_blog_post_show
         title:
             class: App\Entity\Title
             route: title_show

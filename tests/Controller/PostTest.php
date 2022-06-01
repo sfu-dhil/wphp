@@ -10,6 +10,8 @@ declare(strict_types=1);
 
 namespace App\Tests\Controller;
 
+use Nines\MediaBundle\Repository\PdfRepository;
+use Nines\MediaBundle\Service\PdfManager;
 use Nines\UserBundle\DataFixtures\UserFixtures;
 use Nines\UtilBundle\TestCase\ControllerTestCase;
 use Symfony\Component\HttpFoundation\Response;
@@ -191,5 +193,120 @@ class PostTest extends ControllerTestCase {
         $this->assertResponseRedirects('/blog/post/7', Response::HTTP_FOUND);
         $responseCrawler = $this->client->followRedirect();
         $this->assertResponseIsSuccessful();
+    }
+
+    public function testAnonNewPdf() : void {
+        $crawler = $this->client->request('GET', '/blog/post/1/new_pdf');
+        $this->assertResponseRedirects('/login', Response::HTTP_FOUND);
+    }
+
+    public function testUserNewPdf() : void {
+        $this->login(UserFixtures::USER);
+        $crawler = $this->client->request('GET', '/blog/post/1/new_pdf');
+        $this->assertSame(403, $this->client->getResponse()->getStatusCode());
+    }
+
+    public function testAdminNewPdf() : void {
+        $this->login(UserFixtures::ADMIN);
+        $crawler = $this->client->request('GET', '/blog/post/1/new_pdf');
+        $this->assertResponseIsSuccessful();
+
+        $manager = self::$container->get(PdfManager::class);
+        $manager->setCopy(true);
+
+        $form = $crawler->selectButton('Create')->form([
+            'pdf[public]' => 1,
+            'pdf[description]' => 'Description',
+            'pdf[license]' => 'License',
+        ]);
+        $form['pdf[file]']->upload(dirname(__FILE__, 3) . '/vendor/ubermichael/nines/MediaBundle/Tests/data/pdf/holmes_2.pdf');
+        $this->client->submit($form);
+        $this->assertResponseRedirects('/blog/post/1');
+        $responseCrawler = $this->client->followRedirect();
+        $this->assertResponseIsSuccessful();
+
+        $manager->setCopy(false);
+    }
+
+    public function testAnonEditPdf() : void {
+        $crawler = $this->client->request('GET', '/blog/post/1/edit_pdf/1');
+        $this->assertResponseRedirects('/login', Response::HTTP_FOUND);
+    }
+
+    public function testUserEditPdf() : void {
+        $this->login(UserFixtures::USER);
+        $crawler = $this->client->request('GET', '/blog/post/1/edit_pdf/1');
+        $this->assertSame(403, $this->client->getResponse()->getStatusCode());
+    }
+
+    public function testAdminEditPdf() : void {
+        $this->login(UserFixtures::ADMIN);
+        $crawler = $this->client->request('GET', '/blog/post/1/edit_pdf/1');
+        $this->assertResponseIsSuccessful();
+
+        $manager = self::$container->get(PdfManager::class);
+        $manager->setCopy(true);
+
+        $form = $crawler->selectButton('Update')->form([
+            'pdf[public]' => 0,
+            'pdf[description]' => 'Updated Description',
+            'pdf[license]' => 'Updated License',
+        ]);
+        $form['pdf[newFile]']->upload(dirname(__FILE__, 3) . '/vendor/ubermichael/nines/MediaBundle/Tests/data/pdf/holmes_2.pdf');
+        $this->client->submit($form);
+        $this->assertResponseRedirects('/blog/post/1');
+        $responseCrawler = $this->client->followRedirect();
+        $this->assertResponseIsSuccessful();
+
+        $manager->setCopy(false);
+    }
+
+    public function testAnonDeletePdf() : void {
+        $crawler = $this->client->request('DELETE', '/blog/post/1/delete_pdf/1');
+        $this->assertResponseRedirects('/login', Response::HTTP_FOUND);
+    }
+
+    public function testUserDeletePdf() : void {
+        $this->login(UserFixtures::USER);
+        $crawler = $this->client->request('DELETE', '/blog/post/1/delete_pdf/1');
+        $this->assertSame(403, $this->client->getResponse()->getStatusCode());
+    }
+
+    public function testAdminDeletePdf() : void {
+        $repo = self::$container->get(PdfRepository::class);
+        $preCount = count($repo->findAll());
+
+        $this->login(UserFixtures::ADMIN);
+        $crawler = $this->client->request('GET', '/blog/post/4');
+        $this->assertResponseIsSuccessful();
+
+        $form = $crawler->filter('form.delete-form[action="/blog/post/4/delete_pdf/4"]')->form();
+        $this->client->submit($form);
+        $this->assertResponseRedirects('/blog/post/4');
+        $responseCrawler = $this->client->followRedirect();
+        $this->assertResponseIsSuccessful();
+
+        $this->em->clear();
+        $postCount = count($repo->findAll());
+        $this->assertSame($preCount - 1, $postCount);
+    }
+
+    public function testAdminDeleteWrongPdf() : void {
+        $repo = self::$container->get(PdfRepository::class);
+        $preCount = count($repo->findAll());
+
+        $this->login(UserFixtures::ADMIN);
+        $crawler = $this->client->request('GET', '/blog/post/4');
+        $this->assertResponseIsSuccessful();
+
+        $form = $crawler->filter('form.delete-form[action="/blog/post/4/delete_pdf/4"]')->form();
+        $form->getNode()->setAttribute('action', '/blog/post/3/delete_pdf/4');
+
+        $this->client->submit($form);
+        $this->assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
+
+        $this->em->clear();
+        $postCount = count($repo->findAll());
+        $this->assertSame($preCount, $postCount);
     }
 }

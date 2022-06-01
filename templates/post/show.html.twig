@@ -35,4 +35,23 @@
     <div class="blog-content">
         {{ post.content|raw }}
     </div>
+
+    <h2>PDFs</h2>
+    {% if is_granted('ROLE_CONTENT_ADMIN') %}
+        <div class='btn-toolbar pull-right'>
+            <div class='btn-group'>
+                <a href="{{ path('post_new_pdf', {'id': post.id }) }}" class="btn btn-default">
+                    <span class="glyphicon glyphicon-plus"></span> Add Pdf </a>
+            </div>
+        </div>
+        <div class='clearfix'></div>
+    {% endif %}
+    {% embed '@NinesMedia/pdf/ui/list.html.twig' with {
+        'container': post,
+        'path_delete': 'post_delete_pdf',
+        'path_edit': 'post_edit_pdf',
+    } %}
+    {% endembed %}
+
+
 {% endblock %}

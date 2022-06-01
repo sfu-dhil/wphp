@@ -13,10 +13,16 @@ namespace App\Controller;
 use App\Entity\Post;
 use App\Form\PostType;
 use App\Repository\PostRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
+use Nines\MediaBundle\Controller\PdfControllerTrait;
+use Nines\MediaBundle\Entity\Pdf;
+use Nines\MediaBundle\Service\PdfManager;
 use Nines\UserBundle\Entity\User;
 use Nines\UtilBundle\Controller\PaginatorTrait;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,6 +34,7 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class PostController extends AbstractController implements PaginatorAwareInterface {
     use PaginatorTrait;
+    use PdfControllerTrait;
 
     /**
      * @Route("/", name="nines_blog_post_index", methods={"GET"})
@@ -144,4 +151,51 @@ class PostController extends AbstractController implements PaginatorAwareInterfa
 
         return $this->redirectToRoute('nines_blog_post_index');
     }
+
+    /**
+     * @Route("/{id}/new_pdf", name="post_new_pdf", methods={"GET", "POST"})
+     * @IsGranted("ROLE_CONTENT_ADMIN")
+     *
+     * @throws Exception
+     */
+    public function newPdf(Request $request, EntityManagerInterface $em, Post $post) : Response {
+        $context = $this->newPdfAction($request, $em, $post, 'nines_blog_post_show');
+        if ($context instanceof RedirectResponse) {
+            return $context;
+        }
+
+        return $this->render('post/new_pdf.html.twig', array_merge($context, [
+            'post' => $post,
+        ]));
+    }
+
+    /**
+     * @Route("/{id}/edit_pdf/{pdf_id}", name="post_edit_pdf", methods={"GET", "POST"})
+     * @IsGranted("ROLE_CONTENT_ADMIN")
+     * @ParamConverter("pdf", options={"id" = "pdf_id"})
+     *
+     * @throws Exception
+     */
+    public function editPdf(Request $request, EntityManagerInterface $em, Post $post, Pdf $pdf, PdfManager $fileUploader) : Response {
+        $context = $this->editPdfAction($request, $em, $post, $pdf, 'nines_blog_post_show');
+        if ($context instanceof RedirectResponse) {
+            return $context;
+        }
+
+        return $this->render('post/edit_pdf.html.twig', array_merge($context, [
+            'post' => $post,
+        ]));
+    }
+
+    /**
+     * @Route("/{id}/delete_pdf/{pdf_id}", name="post_delete_pdf", methods={"DELETE"})
+     * @IsGranted("ROLE_CONTENT_ADMIN")
+     * @ParamConverter("pdf", options={"id" = "pdf_id"})
+     *
+     * @throws Exception
+     */
+    public function deletePdf(Request $request, EntityManagerInterface $em, Post $post, Pdf $pdf) : RedirectResponse {
+        return $this->deletePdfAction($request, $em, $post, $pdf, 'nines_blog_post_show');
+    }
+
 }

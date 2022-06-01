@@ -11,6 +11,8 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Nines\MediaBundle\Entity\PdfContainerInterface;
+use Nines\MediaBundle\Entity\PdfContainerTrait;
 use Nines\UserBundle\Entity\User;
 use Nines\UtilBundle\Entity\AbstractEntity;
 use Nines\UtilBundle\Entity\ContentEntityInterface;
@@ -25,8 +27,11 @@ use Nines\UtilBundle\Entity\ContentExcerptTrait;
  * @ORM\Entity(repositoryClass="App\Repository\PostRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class Post extends AbstractEntity implements ContentEntityInterface {
+class Post extends AbstractEntity implements ContentEntityInterface, PdfContainerInterface {
     use ContentExcerptTrait;
+    use PdfContainerTrait {
+        PdfContainerTrait::__construct as pdf_constructor;
+    }
 
     /**
      * @ORM\Column(name="include_comments", type="boolean", nullable=false)
@@ -63,6 +68,7 @@ class Post extends AbstractEntity implements ContentEntityInterface {
 
     public function __construct() {
         parent::__construct();
+        $this->pdf_constructor();
     }
 
     /**

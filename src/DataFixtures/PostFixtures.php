@@ -15,9 +15,22 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+use Nines\MediaBundle\Entity\Pdf;
+use Nines\MediaBundle\Service\PdfManager;
 use Nines\UserBundle\DataFixtures\UserFixtures;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class PostFixtures extends Fixture implements DependentFixtureInterface, FixtureGroupInterface {
+    public const FILES = [
+        'holmes_1.pdf',
+        'holmes_2.pdf',
+        'holmes_3.pdf',
+        'holmes_4.pdf',
+        'holmes_5.pdf',
+    ];
+
+    private ?PdfManager $pdfManager = null;
+
     public static function getGroups() : array {
         return ['dev', 'test'];
     }
@@ -26,6 +39,7 @@ class PostFixtures extends Fixture implements DependentFixtureInterface, Fixture
      * {@inheritDoc}
      */
     public function load(ObjectManager $manager) : void {
+        $this->pdfManager->setCopy(true);
         for ($i = 1; $i <= 5; $i++) {
             $fixture = new Post();
             $fixture->setIncludeComments(0 === $i % 2);
@@ -36,9 +50,23 @@ class PostFixtures extends Fixture implements DependentFixtureInterface, Fixture
             $fixture->setStatus($this->getReference('poststatus.' . $i));
             $fixture->setUser($this->getReference('user.inactive'));
             $manager->persist($fixture);
+            $manager->flush();
+
+            $file = self::FILES[$i - 1];
+            $upload = new UploadedFile(dirname(__DIR__, 2) . '/vendor/ubermichael/nines/MediaBundle/Tests/data/pdf/' . $file, $file, 'application/pdf', null, true);
+            $pdf = new Pdf();
+            $pdf->setFile($upload);
+            $pdf->setPublic(0 === ($i % 2));
+            $pdf->setOriginalName($file);
+            $pdf->setDescription("<p>This is paragraph {$i}</p>");
+            $pdf->setLicense("<p>This is paragraph {$i}</p>");
+            $pdf->setEntity($fixture);
+            $manager->persist($pdf);
+            $manager->flush();
+
             $this->setReference('post.' . $i, $fixture);
         }
-        $manager->flush();
+        $this->pdfManager->setCopy(false);
     }
 
     /**
@@ -52,5 +80,12 @@ class PostFixtures extends Fixture implements DependentFixtureInterface, Fixture
             PostStatusFixtures::class,
             UserFixtures::class,
         ];
+    }
+
+    /**
+     * @required
+     */
+    public function setPdfManager(PdfManager $pdfManager) : void {
+        $this->pdfManager = $pdfManager;
     }
 }
