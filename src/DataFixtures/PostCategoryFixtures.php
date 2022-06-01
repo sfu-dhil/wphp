@@ -3,17 +3,17 @@
 declare(strict_types=1);
 
 /*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
+ * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
  * This source file is subject to the GPL v2, bundled
  * with this source code in the file LICENSE.
  */
 
 namespace App\DataFixtures;
 
+use App\Entity\PostCategory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Persistence\ObjectManager;
-use App\Entity\PostCategory;
 
 class PostCategoryFixtures extends Fixture implements FixtureGroupInterface {
     public static function getGroups() : array {

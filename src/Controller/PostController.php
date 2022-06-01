@@ -3,17 +3,17 @@
 declare(strict_types=1);
 
 /*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
+ * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
  * This source file is subject to the GPL v2, bundled
  * with this source code in the file LICENSE.
  */
 
 namespace App\Controller;
 
-use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use App\Entity\Post;
 use App\Form\PostType;
 use App\Repository\PostRepository;
+use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Nines\UserBundle\Entity\User;
 use Nines\UtilBundle\Controller\PaginatorTrait;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;

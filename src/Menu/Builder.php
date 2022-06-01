@@ -16,21 +16,14 @@ use App\Entity\PostStatus;
 use App\Repository\PageRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
-use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
 use Nines\UserBundle\Entity\User;
 use Nines\UtilBundle\Menu\AbstractBuilder;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Menu builder for the navigation and search menus.
  */
 class Builder extends AbstractBuilder {
-
     /**
      * List of spotlight menu items.
      *

@@ -10,10 +10,10 @@ declare(strict_types=1);
 
 namespace App\DataFixtures;
 
+use App\Entity\PostCategory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Persistence\ObjectManager;
-use App\Entity\PostCategory;
 
 /**
  * Load some test spotlight categories.

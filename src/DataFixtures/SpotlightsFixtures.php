@@ -10,14 +10,13 @@ declare(strict_types=1);
 
 namespace App\DataFixtures;
 
+use App\Entity\Post;
+use App\Entity\PostCategory;
+use App\Entity\PostStatus;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
-use App\DataFixtures\PostStatusFixtures;
-use App\Entity\Post;
-use App\Entity\PostCategory;
-use App\Entity\PostStatus;
 
 /**
  * Load some test spotlights.

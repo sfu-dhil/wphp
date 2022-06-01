@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
+ * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
  * This source file is subject to the GPL v2, bundled
  * with this source code in the file LICENSE.
  */
@@ -42,7 +42,7 @@ class Page extends AbstractEntity implements ContentEntityInterface {
     private bool $public = false;
 
     /**
-     * @ORM\Column(name="homepage", type="boolean", options={"default" = 0})
+     * @ORM\Column(name="homepage", type="boolean", options={"default": 0})
      */
     private bool $homepage = false;
 
@@ -208,6 +208,8 @@ class Page extends AbstractEntity implements ContentEntityInterface {
 
     /**
      * @codeCoverageIgnore
+     *
+     * @param ?User $user
      */
     public function setUser(?User $user) : self {
         $this->user = $user;

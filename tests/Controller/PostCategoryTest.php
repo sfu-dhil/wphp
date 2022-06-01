@@ -3,14 +3,13 @@
 declare(strict_types=1);
 
 /*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
+ * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
  * This source file is subject to the GPL v2, bundled
  * with this source code in the file LICENSE.
  */
 
 namespace App\Tests\Controller;
 
-use App\Repository\PostCategoryRepository;
 use Nines\UserBundle\DataFixtures\UserFixtures;
 use Nines\UtilBundle\TestCase\ControllerTestCase;
 use Symfony\Component\HttpFoundation\Response;
@@ -111,5 +110,4 @@ class PostCategoryTest extends ControllerTestCase {
         $responseCrawler = $this->client->followRedirect();
         $this->assertResponseIsSuccessful();
     }
-
 }

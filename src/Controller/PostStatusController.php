@@ -3,18 +3,18 @@
 declare(strict_types=1);
 
 /*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
+ * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
  * This source file is subject to the GPL v2, bundled
  * with this source code in the file LICENSE.
  */
 
 namespace App\Controller;
 
-use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use App\Entity\PostStatus;
 use App\Form\PostStatusType;
 use App\Repository\PostRepository;
 use App\Repository\PostStatusRepository;
+use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Nines\UtilBundle\Controller\PaginatorTrait;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

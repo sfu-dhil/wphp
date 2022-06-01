@@ -10,12 +10,12 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\NonUniqueResultException;
-use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use App\Entity\Page;
 use App\Entity\Post;
 use App\Entity\PostCategory;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\NonUniqueResultException;
+use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Nines\UtilBundle\Controller\PaginatorTrait;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
