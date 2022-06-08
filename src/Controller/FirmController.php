@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
+ * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
  * This source file is subject to the GPL v2, bundled
  * with this source code in the file LICENSE.
  */
@@ -345,7 +345,7 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
         $firmSources = new ArrayCollection();
 
         // Copy the firm sources
-        foreach($firm->getFirmSources() as $fs) {
+        foreach ($firm->getFirmSources() as $fs) {
             $firmSources->add($fs);
         }
 
@@ -353,8 +353,8 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
         $editForm->handleRequest($request);
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             // delete any firm sources that were removed in the form
-            foreach($firmSources as $fs) {
-                if( ! $firm->getFirmSources()->contains($fs)) {
+            foreach ($firmSources as $fs) {
+                if ( ! $firm->getFirmSources()->contains($fs)) {
                     $em->remove($fs);
                 }
             }
