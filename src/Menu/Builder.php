@@ -329,7 +329,7 @@ class Builder extends AbstractBuilder {
             ]);
         }
 
-        if ($this->hasRole('ROLE_COMMENT_ADMIN')) {
+        if ($this->hasRole('ROLE_FEEDBACK_ADMIN')) {
             $userMenu->addChild('comment_divider', [
                 'label' => '',
             ]);
