@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
+ * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
  * This source file is subject to the GPL v2, bundled
  * with this source code in the file LICENSE.
  */
@@ -17,6 +17,7 @@ use App\Form\Firm\FirmType;
 use App\Repository\FirmRepository;
 use App\Services\CsvExporter;
 use App\Services\SourceLinker;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Nines\UtilBundle\Controller\PaginatorTrait;
@@ -341,10 +342,23 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
      * @return array<string,mixed>|RedirectResponse
      */
     public function editAction(Request $request, Firm $firm, EntityManagerInterface $em) {
+        $firmSources = new ArrayCollection();
+
+        // Copy the firm sources
+        foreach ($firm->getFirmSources() as $fs) {
+            $firmSources->add($fs);
+        }
+
         $editForm = $this->createForm(FirmType::class, $firm);
         $editForm->handleRequest($request);
-
         if ($editForm->isSubmitted() && $editForm->isValid()) {
+            // delete any firm sources that were removed in the form
+            foreach ($firmSources as $fs) {
+                if ( ! $firm->getFirmSources()->contains($fs)) {
+                    $em->remove($fs);
+                }
+            }
+            // Add any new firm sources added in the form
             if ($firm->getFirmSources()->count() > 0) {
                 foreach ($firm->getFirmSources() as $ts) {
                     $ts->setFirm($firm);

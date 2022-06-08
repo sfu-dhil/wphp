@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
+ * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
  * This source file is subject to the GPL v2, bundled
  * with this source code in the file LICENSE.
  */
@@ -329,7 +329,7 @@ class Builder extends AbstractBuilder {
             ]);
         }
 
-        if ($this->hasRole('ROLE_COMMENT_ADMIN')) {
+        if ($this->hasRole('ROLE_FEEDBACK_ADMIN')) {
             $userMenu->addChild('comment_divider', [
                 'label' => '',
             ]);
