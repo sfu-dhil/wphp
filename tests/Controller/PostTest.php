@@ -241,7 +241,7 @@ class PostTest extends ControllerTestCase {
 
     public function testAdminEditPdf() : void {
         $this->login(UserFixtures::ADMIN);
-        $crawler = $this->client->request('GET', '/blog/post/1/edit_pdf/1');
+        $crawler = $this->client->request('GET', '/blog/post/1/edit_pdf/6');
         $this->assertResponseIsSuccessful();
 
         $manager = self::$container->get(PdfManager::class);
@@ -262,13 +262,13 @@ class PostTest extends ControllerTestCase {
     }
 
     public function testAnonDeletePdf() : void {
-        $crawler = $this->client->request('DELETE', '/blog/post/1/delete_pdf/1');
+        $crawler = $this->client->request('DELETE', '/blog/post/1/delete_pdf/6');
         $this->assertResponseRedirects('/login', Response::HTTP_FOUND);
     }
 
     public function testUserDeletePdf() : void {
         $this->login(UserFixtures::USER);
-        $crawler = $this->client->request('DELETE', '/blog/post/1/delete_pdf/1');
+        $crawler = $this->client->request('DELETE', '/blog/post/1/delete_pdf/6');
         $this->assertSame(403, $this->client->getResponse()->getStatusCode());
     }
 
@@ -280,7 +280,7 @@ class PostTest extends ControllerTestCase {
         $crawler = $this->client->request('GET', '/blog/post/4');
         $this->assertResponseIsSuccessful();
 
-        $form = $crawler->filter('form.delete-form[action="/blog/post/4/delete_pdf/4"]')->form();
+        $form = $crawler->filter('form.delete-form[action="/blog/post/4/delete_pdf/9"]')->form();
         $this->client->submit($form);
         $this->assertResponseRedirects('/blog/post/4');
         $responseCrawler = $this->client->followRedirect();
@@ -291,22 +291,4 @@ class PostTest extends ControllerTestCase {
         $this->assertSame($preCount - 1, $postCount);
     }
 
-    public function testAdminDeleteWrongPdf() : void {
-        $repo = self::$container->get(PdfRepository::class);
-        $preCount = count($repo->findAll());
-
-        $this->login(UserFixtures::ADMIN);
-        $crawler = $this->client->request('GET', '/blog/post/4');
-        $this->assertResponseIsSuccessful();
-
-        $form = $crawler->filter('form.delete-form[action="/blog/post/4/delete_pdf/4"]')->form();
-        $form->getNode()->setAttribute('action', '/blog/post/3/delete_pdf/4');
-
-        $this->client->submit($form);
-        $this->assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
-
-        $this->em->clear();
-        $postCount = count($repo->findAll());
-        $this->assertSame($preCount, $postCount);
-    }
 }
