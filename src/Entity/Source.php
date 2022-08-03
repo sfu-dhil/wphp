@@ -23,7 +23,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Source {
     /**
-     * @var bool
+     * @var int
      *
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
@@ -89,7 +89,7 @@ class Source {
     /**
      * Get id.
      *
-     * @return bool
+     * @return int
      */
     public function getId() {
         return $this->id;
