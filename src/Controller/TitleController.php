@@ -313,14 +313,17 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
      * @Template
      *
      * @return array<string,mixed>     */
-    public function showAction(Title $title, SourceLinker $linker) {
+    public function showAction(Title $title, SourceLinker $linker, TitleRepository $repo) {
         if ( ! $this->getUser() && ! $title->getFinalattempt() && ! $title->getFinalcheck()) {
             throw new AccessDeniedHttpException('This title has not been verified and is not available to the public.');
         }
 
+        $similar = $repo->moreLike($title);
+
         return [
             'title' => $title,
             'linker' => $linker,
+            'similar' => $similar,
         ];
     }
 

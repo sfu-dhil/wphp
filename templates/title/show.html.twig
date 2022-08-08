@@ -267,6 +267,76 @@
             {% endembed %}
         </div>
 
+        {% if is_granted('ROLE_USER') %}
+            <div class='similarity'>
+                <h2>Similar Titles</h2>
+                {% set count = similar | length %}
+                {% if count > 0 %}
+                    <p><i>These titles are selected from the database automatically,
+                            based on text analysis. The list may be incomplete or contain
+                            unrelated titles.</i></p>
+                    <table class='table'>
+                        <thead>
+                            <th>ID</th>
+                            <th>Title</th>
+                            <th>Contributors</th>
+                            <th>Firms</th>
+                            <th>Edition</th>
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <th></th>
+                            {% endif %}
+                        </thead>
+                        <tbody>
+                            {% for row in similar %}
+                                {% set title = row.title %}
+                            <tr>
+                                <td>
+                                    <a href="{{ path('title_show', { 'id': title.id }) }}">
+                                        {{ title.id }}
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="{{ path('title_show', { 'id': title.id }) }}">
+                                        {{ title.title }}
+                                    </a>
+                                </td>
+                                <td>
+                                    {% for tr in title.titleRoles|slice(0,title_index_authors) %}
+                                        {% set person = tr.person %}
+                                        <a href="{{ path('person_show', {'id': person.id}) }}">{{ person.lastName }}
+                                            , {{ person.firstName }}</a>
+                                        ({{ tr.role }})
+                                        <br/>
+                                    {% endfor %}
+                                    {% if title.titleRoles|length > title_index_authors %}and {{ title.titleRoles|length - title_index_authors }} more.{% endif %}
+                                </td>
+                                <td>
+                                    {% for tfr in title.titleFirmRoles|slice(0,title_index_authors) %}
+                                        {% set firm = tfr.firm %}
+                                        <a href="{{ path('firm_show', {'id': firm.id}) }}">{{ firm.name }}</a>
+                                        ({{ tfr.firmrole }})
+                                        <br/>
+                                    {% endfor %}
+                                    {% if title.titleFirmRoles|length > title_index_authors %}and {{ title.titleFirmRoles|length - title_index_authors }} more.{% endif %}
+                                </td>
+                                <td class="numeric">{{ title.pubdate }}</td>
+                                <td class="numeric">{{ title.editionNumber }}</td>
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <td class='numeric'>
+                                        {{ row.score|format_number({fraction_digit: 1}) }}<br>
+                                        {{ row.lev|format_number(style='percent') }}
+                                    </td>
+                                {% endif %}
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p><i>No similar titles found in the database.</i></p>
+                {% endif %}
+            </div>
+        {% endif %}
+
         {% set relations = title.relatedTitles|merge(title.titlesRelated) %}
         {% if relations|length > 0 %}
             <div>
