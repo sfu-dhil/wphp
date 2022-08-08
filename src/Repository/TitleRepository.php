@@ -16,6 +16,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Console\Input\InputOption;
 
 /**
  * Title Repository.
@@ -88,6 +89,44 @@ class TitleRepository extends ServiceEntityRepository {
         $qb->setParameter('q', "%{$q}%");
 
         return $qb->getQuery()->execute();
+    }
+
+    /**
+     * @param Title $title
+     *
+     * @return array
+     */
+    public function moreLike(Title $title) {
+        $qb = $this->createQueryBuilder('title');
+        $qb->addSelect('MATCH(title.title) AGAINST (:title BOOLEAN) AS score');
+        $qb->setParameter('title', $title->getTitle());
+        $qb->andHaving('score > 5.0');
+        $qb->orderBy('score', 'desc');
+        $result = $qb->getQuery()->execute();
+
+        // MySQL's full text indexing is good, but not good enough for this. It
+        // finds a lot of false positives, so filter them out with a quick
+        // levenshtein().
+        $similar = [];
+        // No mb_substr here, as levenshtein() is hard-limited to 255 bytes!
+        $t1 = substr($title->getTitle(), 0, 255);
+        foreach($result as $row) {
+            $t = $row[0];
+            if($t->getId() === $title->getId()) {
+                continue;
+            }
+            // No mb_substr here, as levenshtein() is hard-limited to 255 bytes!
+            $t2 = substr($t->getTitle(), 0, 255);
+            $lev = 1.0 - levenshtein($t1, $t2) / max(mb_strlen($t1), mb_strlen($t2));
+            if($lev > 0.3) {
+                $similar[] = [
+                    'title' => $t,
+                    'score' => $row['score'],
+                    'lev' => $lev,
+                ];
+            }
+        }
+        return $similar;
     }
 
     /**
