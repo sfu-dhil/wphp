@@ -99,10 +99,9 @@ class TitleRepository extends ServiceEntityRepository {
     public function moreLike(Title $title) {
         $qb = $this->createQueryBuilder('title');
         $qb->addSelect('MATCH(title.title) AGAINST (:title BOOLEAN) AS score');
-        $qb->setParameter('title', $title->getTitle());
         $qb->andHaving('score > 5.0');
         $qb->orderBy('score', 'desc');
-        $result = $qb->getQuery()->execute();
+        $result = $qb->getQuery()->execute(['title' => '"' . $title->getTitle() . '"']);
 
         // MySQL's full text indexing is good, but not good enough for this. It
         // finds a lot of false positives, so filter them out with a quick

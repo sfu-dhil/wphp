@@ -318,7 +318,10 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
             throw new AccessDeniedHttpException('This title has not been verified and is not available to the public.');
         }
 
-        $similar = $repo->moreLike($title);
+        $similar = [];
+        if($this->getUser()) {
+            $similar = $repo->moreLike($title);
+        }
 
         return [
             'title' => $title,
