@@ -4,7 +4,7 @@
     <h1>{{ heading }}</h1>
     {% if titles|length > 0 %}
         Displaying {{ titles|length }} titles of {{ titles.getTotalItemCount }} total
-        which are verified and also refer to unverified persons
+        that are published between 1801–1819 (inclusive), list the AAS as a source, and are not verified
     {% else %}
         No titles to display.
     {% endif %}
@@ -17,16 +17,37 @@
             {% set entities = titles %}
             {% block thead %}
                 <tr>
-                    <th>ID</th>
-                    <th>Title</th>
+                    {% include 'partial/sortable.html.twig' with {
+                        'pagination': titles,
+                        'header': 'ID',
+                        'field': 'title.id',
+                    } %}
+                    {% include 'partial/sortable.html.twig' with {
+                        'pagination': titles,
+                        'header': 'Title',
+                        'field': ['title.title', 'title.pubdate'],
+                    } %}
+                    <th>AAS ID</th>
                     <th>Attempted Verification</th>
                     <th>Verified</th>
-                    <th>Pub Date</th>
-                    <th>First Pub Date</th>
+                    {% include 'partial/sortable.html.twig' with {
+                        'pagination': titles,
+                        'header': 'Pub Date',
+                        'field': ['title.pubdate', 'title.title'],
+                        'class': 'numeric'
+                    } %}
+                    {% include 'partial/sortable.html.twig' with {
+                        'pagination': titles,
+                        'header': 'First Pub Date',
+                        'field': ['title.dateOfFirstPublication', 'title.pubdate', 'title.title'],
+                        'class': 'numeric'
+                    } %}
                 </tr>
             {% endblock %}
+
             {% block tbody %}
                 {% for title in titles %}
+                    {% set aas = title.titleSources|filter(ts => ts.source.id == 75)|first  %}
                     <tr>
                         <td>
                             <a href="{{ path('title_show', { 'id': title.id }) }}">
@@ -38,6 +59,7 @@
                                 {{ title.title }}
                             </a>
                         </td>
+                        <td>{{ aas.identifier }}</td>
                         <td>{% if title.finalattempt %}Yes{% else %}No{% endif %}</td>
                         <td>{% if title.finalcheck %}Yes{% else %}No{% endif %}</td>
                         <td>{{ title.pubdate }}</td>
