@@ -18,9 +18,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Routing\RequestContext;
 
 /**
  * Reports controller.
@@ -32,30 +30,29 @@ class ReportController extends AbstractController implements PaginatorAwareInter
     use PaginatorTrait;
 
     /**
-     * Index for all reports
+     * Index for all reports.
      *
      * @Route("/", name="report_index", methods={"GET"})
      * @Template
      *
      * @return array<string,mixed>
      */
-    public function indexAction(Request $request, EntityManagerInterface $em){
+    public function indexAction(Request $request, EntityManagerInterface $em) {
         $router = $this->get('router');
         $routeCollection = $router->getRouteCollection()->all();
-        $reportRoutes = array_filter($routeCollection, function($route){
-            return preg_match('/\/report\/.+/', $route->getPath());
-        });
+        $reportRoutes = array_filter($routeCollection, fn ($route) => preg_match('/\/report\/.+/', $route->getPath()));
         $reports = [];
-        foreach($reportRoutes as $route){
+        foreach ($reportRoutes as $route) {
             $defaults = $route->getDefaults();
             $path = $route->getPath();
             $controller = $defaults['_controller'];
             $bits = preg_split('/:+/', $controller);
             $method = end($bits);
-            $reports[$path] = $this->$method($request, $em);
+            $reports[$path] = $this->{$method}($request, $em);
         }
+
         return [
-            'reports' => $reports
+            'reports' => $reports,
         ];
     }
 
@@ -74,7 +71,7 @@ class ReportController extends AbstractController implements PaginatorAwareInter
         return [
             'heading' => 'Titles to Final Check',
             'titles' => $titles,
-            'count' => $titles->getTotalItemCount()
+            'count' => $titles->getTotalItemCount(),
         ];
     }
 
@@ -93,7 +90,7 @@ class ReportController extends AbstractController implements PaginatorAwareInter
         return [
             'heading' => 'Titles with Bad Publication Date',
             'titles' => $titles,
-            'count' => $titles->getTotalItemCount()
+            'count' => $titles->getTotalItemCount(),
         ];
     }
 
@@ -112,7 +109,7 @@ class ReportController extends AbstractController implements PaginatorAwareInter
         return [
             'heading' => 'Firms to Final Check',
             'firms' => $firms,
-            'count' => $firms->getTotalItemCount()
+            'count' => $firms->getTotalItemCount(),
         ];
     }
 
@@ -131,14 +128,14 @@ class ReportController extends AbstractController implements PaginatorAwareInter
         return [
             'heading' => 'Persons to Final Check',
             'persons' => $persons,
-            'count' => $persons->getTotalItemCount()
+            'count' => $persons->getTotalItemCount(),
 
         ];
     }
 
     /**
      * List of titles where the edition field contains a number
-     * or the words "Irish" or "American"
+     * or the words "Irish" or "American".
      *
      * @Route("/editions", name="report_editions", methods={"GET"})
      * @Template
@@ -159,12 +156,12 @@ class ReportController extends AbstractController implements PaginatorAwareInter
         return [
             'heading' => 'Titles with numerical, Irish, or American Editions',
             'titles' => $titles,
-            'count' => $titles->getTotalItemCount()
+            'count' => $titles->getTotalItemCount(),
         ];
     }
 
     /**
-     * Titles that do
+     * Titles that do.
      *
      * @Route("/editions_check", name="report_editions_to_check", methods={"GET"})
      * @Template
@@ -183,7 +180,7 @@ class ReportController extends AbstractController implements PaginatorAwareInter
         return [
             'heading' => 'Titles with Editions to Check',
             'titles' => $titles,
-            'count' => $titles->getTotalItemCount()
+            'count' => $titles->getTotalItemCount(),
         ];
     }
 
@@ -207,7 +204,7 @@ class ReportController extends AbstractController implements PaginatorAwareInter
         return [
             'heading' => 'Titles with Unverified Persons',
             'titles' => $titles,
-            'count' => $titles->getTotalItemCount()
+            'count' => $titles->getTotalItemCount(),
         ];
     }
 
@@ -231,7 +228,7 @@ class ReportController extends AbstractController implements PaginatorAwareInter
         return [
             'heading' => 'Titles with Unverified Firms',
             'titles' => $titles,
-            'count' => $titles->getTotalItemCount()
+            'count' => $titles->getTotalItemCount(),
         ];
     }
 
@@ -243,8 +240,8 @@ class ReportController extends AbstractController implements PaginatorAwareInter
     public function uncheckedAasTitles(Request $request, EntityManagerInterface $em) {
         /**
          * List the American Antiquarian Society (AAS) as a source
-        Are not final-checked, not hand-checked, and not attempted verified
-        That have a publication date between 1801 and 1819 (inclusive)
+         * Are not final-checked, not hand-checked, and not attempted verified
+         * That have a publication date between 1801 and 1819 (inclusive).
          */
         $qb = $em->createQueryBuilder();
         $qb->select('title')
@@ -265,8 +262,7 @@ class ReportController extends AbstractController implements PaginatorAwareInter
             'heading' => 'AAS Titles (1801-1819)',
             'titles' => $titles,
             'sortable' => true,
-            'count' => $titles->getTotalItemCount()
+            'count' => $titles->getTotalItemCount(),
         ];
     }
-
 }

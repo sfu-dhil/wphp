@@ -136,11 +136,11 @@ class Builder extends AbstractBuilder {
                 'class' => 'divider',
             ]);
             $browse->addChild('All Reports', [
-                'route' => 'report_index'
+                'route' => 'report_index',
             ]);
 
             $browse->addChild('AAS Titles', [
-                'route' => 'unchecked_aas_titles'
+                'route' => 'unchecked_aas_titles',
             ]);
             $browse->addChild('Titles to Final Check', [
                 'route' => 'report_titles_check',

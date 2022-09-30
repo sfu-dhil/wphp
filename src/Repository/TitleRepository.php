@@ -16,7 +16,6 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Component\Console\Input\InputOption;
 
 /**
  * Title Repository.
@@ -92,8 +91,6 @@ class TitleRepository extends ServiceEntityRepository {
     }
 
     /**
-     * @param Title $title
-     *
      * @return array
      */
     public function moreLike(Title $title) {
@@ -108,16 +105,16 @@ class TitleRepository extends ServiceEntityRepository {
         // levenshtein().
         $similar = [];
         // No mb_substr here, as levenshtein() is hard-limited to 255 bytes!
-        $t1 = substr($title->getTitle(), 0, 255);
-        foreach($result as $row) {
+        $t1 = mb_substr($title->getTitle(), 0, 255);
+        foreach ($result as $row) {
             $t = $row[0];
-            if($t->getId() === $title->getId()) {
+            if ($t->getId() === $title->getId()) {
                 continue;
             }
             // No mb_substr here, as levenshtein() is hard-limited to 255 bytes!
-            $t2 = substr($t->getTitle(), 0, 255);
+            $t2 = mb_substr($t->getTitle(), 0, 255);
             $lev = 1.0 - levenshtein($t1, $t2) / max(mb_strlen($t1), mb_strlen($t2));
-            if($lev > 0.3) {
+            if ($lev > 0.3) {
                 $similar[] = [
                     'title' => $t,
                     'score' => $row['score'],
@@ -125,6 +122,7 @@ class TitleRepository extends ServiceEntityRepository {
                 ];
             }
         }
+
         return $similar;
     }
 

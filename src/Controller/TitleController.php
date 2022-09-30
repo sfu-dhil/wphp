@@ -319,7 +319,7 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
         }
 
         $similar = [];
-        if($this->getUser()) {
+        if ($this->getUser()) {
             $similar = $repo->moreLike($title);
         }
 

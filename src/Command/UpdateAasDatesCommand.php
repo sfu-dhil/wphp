@@ -15,7 +15,6 @@ use App\Entity\Source;
 use App\Entity\Title;
 use App\Entity\TitleSource;
 use App\Repository\AasMarcRepository;
-use App\Services\MarcManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -27,13 +26,13 @@ class UpdateAasDatesCommand extends Command {
 
     private int $n = 0;
 
-    protected static $defaultName = 'wphp:update:aas-dates';
-
-    protected static string $defaultDescription = 'Update the imported AAS records dates';
-
     private AasMarcRepository $aasRepo;
 
     private $save = false;
+
+    protected static $defaultName = 'wphp:update:aas-dates';
+
+    protected static string $defaultDescription = 'Update the imported AAS records dates';
 
     protected function configure() : void {
         $this->setDescription(self::$defaultDescription);
@@ -41,7 +40,7 @@ class UpdateAasDatesCommand extends Command {
     }
 
     protected function dot(bool $finished = false) : void {
-        if($this->save) {
+        if ($this->save) {
             $this->em->flush();
         }
         $this->em->clear();
@@ -64,8 +63,9 @@ class UpdateAasDatesCommand extends Command {
             /** @var Title $title */
 
             // don't mangle existing pubDates.
-            if($title->getPubdate()) {
+            if ($title->getPubdate()) {
                 $this->dot();
+
                 continue;
             }
 
@@ -79,6 +79,7 @@ class UpdateAasDatesCommand extends Command {
             }
             if ( ! $titleSource) {
                 $this->dot();
+
                 continue;
             }
 
@@ -86,7 +87,7 @@ class UpdateAasDatesCommand extends Command {
             /** @var AasMarc $marc001 */
             $marc001 = $this->aasRepo->findOneBy([
                 'field' => '001',
-                'fieldData' => $titleSource->getIdentifier()
+                'fieldData' => $titleSource->getIdentifier(),
             ]);
             $titleId = $marc001->getTitleId();
 
@@ -97,16 +98,18 @@ class UpdateAasDatesCommand extends Command {
                 'subfield' => 'c',
                 'titleId' => $titleId,
             ]);
-            if( ! $marc260c) {
+            if ( ! $marc260c) {
                 $output->writeln("Cannot find AAS pubdate for {$title->getId()}");
                 $this->dot();
+
                 continue;
             }
             $dateField = $marc260c->getFieldData();
             $matches = [];
-            if( ! preg_match('/(\d{4})/', $dateField, $matches)) {
+            if ( ! preg_match('/(\d{4})/', $dateField, $matches)) {
                 $output->writeln("Cannot find year for {$title->getId()} in {$dateField}");
                 $this->dot();
+
                 continue;
             }
             $pubDate = $matches[1];
@@ -129,8 +132,7 @@ class UpdateAasDatesCommand extends Command {
     /**
      * @required
      */
-    public function setAasMarcRepository(AasMarcRepository $aasRepo) {
+    public function setAasMarcRepository(AasMarcRepository $aasRepo) : void {
         $this->aasRepo = $aasRepo;
     }
-
 }
