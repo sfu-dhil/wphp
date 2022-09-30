@@ -249,7 +249,7 @@ class ReportController extends AbstractController implements PaginatorAwareInter
             ->innerJoin('title.titleSources', 'ts')
             ->innerJoin('ts.source', 's')
             ->where('s.id = 75')
-            ->andWhere('(title.checked = 1 OR title.finalattempt = 1 OR title.finalcheck = 1)')
+            ->andWhere('(title.checked = 0 AND title.finalattempt = 0 AND title.finalcheck = 0)')
             ->andWhere("title.pubdate IS NOT NULL AND title.pubdate != '' AND regexp(title.pubdate,'^18[01][1-9]$') = 1")
         ;
 
