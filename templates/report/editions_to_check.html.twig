@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block pageheader %}
-    <h1>Titles to Final Check</h1>
+    <h1>{{ heading }}</h1>
     {% if titles|length > 0 %}
         Displaying {{ titles|length }} titles of {{ titles.getTotalItemCount }} total
         where the edition field contains a number or the words "Irish" or "American."
@@ -43,10 +43,6 @@
                 {% endfor %}
             {% endblock %}
         {% endembed %}
-
-        <div class="navigation">
-            {{ knp_pagination_render(titles) }}
-        </div>
     {% endif %}
 
 {% endblock %}

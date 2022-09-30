@@ -135,10 +135,16 @@ class Builder extends AbstractBuilder {
                 'role' => 'separator',
                 'class' => 'divider',
             ]);
+            $browse->addChild('All Reports', [
+                'route' => 'report_index',
+            ]);
+
+            $browse->addChild('AAS Titles', [
+                'route' => 'unchecked_aas_titles',
+            ]);
             $browse->addChild('Titles to Final Check', [
                 'route' => 'report_titles_check',
             ]);
-
             $browse->addChild('Titles with Bad Publication Date', [
                 'route' => 'report_titles_date',
             ]);

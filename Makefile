@@ -4,8 +4,9 @@
 DB := dhil_wphp
 PROJECT := wphp
 
+# Override any of the options above by copying them to makefile.local
+-include Makefile.local
+
 include etc/Makefile
 
-## Local make file
-
-## -- No targets yet
+## -- Local make file

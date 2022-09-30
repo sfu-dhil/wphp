@@ -290,5 +290,4 @@ class PostTest extends ControllerTestCase {
         $postCount = count($repo->findAll());
         $this->assertSame($preCount - 1, $postCount);
     }
-
 }

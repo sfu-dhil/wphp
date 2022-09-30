@@ -38,3 +38,5 @@ src/.preload.php
 /.php-cs-fixer.cache
 ###< friendsofphp/php-cs-fixer ###
 phpstan.neon
+
+Makefile.local

@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block pageheader %}
+    <h1>All Reports</h1>
+{% endblock %}
+
+{% block body %}
+    {% embed 'partial/table.html.twig' %}
+        {% block thead %}
+            <tr>
+                <th>Name</th>
+                <th>Count</th>
+            </tr>
+        {% endblock %}
+        {% block tbody %}
+            {% for path, val in reports %}
+                <tr>
+                    <td>
+                        <a href="{{ path }}">{{ val.heading }}</a>
+                    </td>
+                    <td>
+                        {{ val.count }}
+                    </td>
+                </tr>
+            {% endfor %}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

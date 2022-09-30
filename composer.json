@@ -53,7 +53,7 @@
         "twig/intl-extra": "^3.4",
         "twig/markdown-extra": "^3.3",
         "twig/string-extra": "^3.0",
-        "twig/twig": "^2.12|^3.0",
+        "twig/twig": "^3.4.3",
         "ubermichael/nines": "dev-4.x-up"
     },
     "require-dev": {
