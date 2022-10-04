@@ -246,12 +246,12 @@ class ReportController extends AbstractController implements PaginatorAwareInter
         $qb = $em->createQueryBuilder();
         $qb->select('title')
             ->from(Title::class, 'title')
-            ->innerJoin('title.titleSources', 'ts')
-            ->innerJoin('ts.source', 's')
-            ->where('s.id = 75')
+            ->where("1801 <= YEAR(STRTODATE(title.pubdate, '%Y')) AND YEAR(STRTODATE(title.pubdate, '%Y')) <= 1819")
             ->andWhere('(title.checked = 0 AND title.finalattempt = 0 AND title.finalcheck = 0)')
-            ->andWhere("title.pubdate IS NOT NULL AND title.pubdate != '' AND regexp(title.pubdate,'^18[01][1-9]$') = 1")
-        ;
+            ->innerJoin('title.titleSources', 'ts')
+            ->andWhere('ts.source = 75')
+            ;
+
 
         $titles = $this->paginator->paginate($qb, $request->query->getInt('page', 1), 25, [
             'defaultSortFieldName' => ['title.title', 'title.pubdate'],
