@@ -247,6 +247,7 @@ class ReportController extends AbstractController implements PaginatorAwareInter
         $qb->select('title')
             ->from(Title::class, 'title')
             ->where("1801 <= YEAR(STRTODATE(title.pubdate, '%Y')) AND YEAR(STRTODATE(title.pubdate, '%Y')) <= 1819")
+            ->andWhere('(title.checked = 0 AND title.finalattempt = 0 AND title.finalcheck = 0)')
             ->innerJoin('title.titleSources', 'ts')
             ->andWhere('ts.source = 75')
             ;
