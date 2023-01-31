@@ -56,3 +56,18 @@ a.btn-primary {
   color: $color_white;
   background-color: #1f1f1f ;
 }
+
+.icon-button{
+  border:none;
+  appearance:none;
+  box-shadow:none;
+  background:none;
+  height:2.5rem;
+  width:2.5rem;
+  a{
+    all:unset;
+    display:block;
+    height:100%;
+    width:100%;
+  }
+}
