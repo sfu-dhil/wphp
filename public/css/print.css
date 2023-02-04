@@ -1,0 +1,163 @@
+/*
+ * Print stylesheet for the WPHP
+ *
+ * Note that most print styles are inherited from Bootstrap,
+ * so this is a fairly minimal implementation
+ */
+@import '../yarn/@fontsource/lato/latin.css';
+@import '../yarn/@fontsource/eb-garamond/latin.css';
+/* Add hamburger for nav bar */
+/* Add hamburger for nav bar */
+@media print {
+  @page {
+    margin: 0.5in;
+    size: 165mm 240mm;
+  }
+  :root, html, body, main {
+    font-size: 12pt !important;
+  }
+
+  body {
+    width: 100%;
+    display: block;
+  }
+
+  main {
+    margin: 0 !important;
+  }
+
+  footer {
+    display: none;
+  }
+
+  img {
+    width: unset !important;
+    max-height: 90mm;
+  }
+
+  .blog-content a[href]:after {
+    content: unset;
+  }
+
+  .container {
+    max-width: unset !important;
+    width: unset !important;
+  }
+
+  .page-header {
+    display: block !important;
+    width: 100%;
+  }
+  .page-header > * {
+    display: block;
+    width: 100%;
+  }
+
+  .btn-toolbar {
+    display: none;
+  }
+
+  .nines_blog_post_show .blog-content,
+.nines_blog_page_show .blog-content {
+    border: none;
+    padding-top: 0rem;
+    max-width: unset;
+    padding: 0;
+    margin: 0;
+  }
+  .nines_blog_post_show .blog-content p.img-holder + h5,
+.nines_blog_page_show .blog-content p.img-holder + h5 {
+    font-size: 0.9rem;
+    margin-top: 0;
+    margin-bottom: 2em !important;
+    page-break-before: avoid;
+  }
+  .nines_blog_post_show .blog-content p, .nines_blog_post_show .blog-content h4, .nines_blog_post_show .blog-content h5,
+.nines_blog_page_show .blog-content p,
+.nines_blog_page_show .blog-content h4,
+.nines_blog_page_show .blog-content h5 {
+    font-size: 1rem;
+  }
+  .nines_blog_post_show .blog-content blockquote,
+.nines_blog_page_show .blog-content blockquote {
+    border: none;
+    margin: 0.25em 0 0.25em 2em;
+  }
+  .nines_blog_post_show .blog-content .icon-button,
+.nines_blog_page_show .blog-content .icon-button {
+    display: none;
+  }
+  .nines_blog_post_show .blog-content .nines_blog_page_show .blog-content .print-header + *,
+.nines_blog_page_show .blog-content .nines_blog_page_show .blog-content .print-header + * {
+    margin-top: 0.4rem;
+  }
+
+  .blog-pdfs {
+    display: none;
+  }
+
+  /*
+
+    // All pages
+    main{
+      margin: 0!important;
+    }
+    .btn-toolbar, footer{
+      display:none;
+    }
+    // Forms, indexes, etc
+
+    // Remove most of the form, but keep
+    // the query intact
+    form.search{
+      #controls,
+      #controls + .form-group{
+        display:none;
+      }
+
+    }
+
+    .tbl-container{
+      .navigation,
+      .tbl-info-footer{
+        display:none;
+      }
+      &.vtable .tbl-overflow{
+        max-height:100%!important;
+      }
+
+      & > .tbl-overflow{
+        max-width:unset;
+        width:100%;
+        overflow-x: visible;
+      }
+      .table.table-striped{
+        border:none;
+        & > thead > tr,
+        & > thead > tr > th{
+          background: #efefef!important;
+        }
+        & > tbody > tr > td{
+          border:1px solid lighten($color_black, 70%)!important;
+          &:nth-of-type(odd){
+            background: lighten(#efefef, 30%)!important;
+          }
+        }
+
+      }
+    }
+
+
+
+
+    a[href]{
+      border-bottom:none;
+    }
+
+
+
+
+    */
+}
+
+/*# sourceMappingURL=print.css.map */

@@ -206,6 +206,35 @@ export function breakLinksAtSlash(root = document.querySelector('main')) {
 }
 
 /**
+ * Function that attempts to add the author metadata to the header
+ * of the page; it won't work all the time, but it gives it a bit of a
+ * better shot of getting it right
+ */
+function addAuthor(){
+    const content = document.querySelector('.blog-content');
+    const children = content.children;
+    const authorRex = /\s*Authored\s*by:\s*/gi;
+    const titleMeta = document.querySelector('meta[name="citation_title"]');
+    let bylineEl = [...children].find(el => {
+        return  authorRex.test(el.innerText);
+    });
+    if (!bylineEl){
+        return;
+    }
+    let byline = bylineEl.innerText.trim();
+    let bylineNorm = byline.replace(authorRex,'').replace(' and ',',');
+    let names = bylineNorm.split(/,+\s*/gi);
+    names.forEach(name => {
+        let parts = name.split(/\s+/);
+        let nameArr = [parts.pop(), parts.join(' ')];
+        if (nameArr.length > 0){
+            let authorMeta = `<meta name="citation_author" content="${nameArr.join(', ')}"/>`;
+            titleMeta.insertAdjacentHTML('beforebegin', authorMeta);
+        }
+    });
+}
+
+/**
  * Driver
  */
 (function(){
@@ -221,5 +250,6 @@ export function breakLinksAtSlash(root = document.querySelector('main')) {
     let blogContent = document.querySelector('.blog-content');
     if (blogContent){
         blogContent.querySelectorAll('img').forEach(cleanStyles);
+        addAuthor();
     }
 })();
