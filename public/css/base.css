@@ -1,6 +1,96 @@
+/* lato-latin-100-normal*/
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100;
+  src: url(.././fonts/lato-latin-100-normal.woff2) format('woff2'), url(.././fonts/lato-latin-100-normal.woff) format('woff');
+  
+}
+/* lato-latin-300-normal*/
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 300;
+  src: url(.././fonts/lato-latin-300-normal.woff2) format('woff2'), url(.././fonts/lato-latin-300-normal.woff) format('woff');
+  
+}
+/* lato-latin-400-normal*/
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url(.././fonts/lato-latin-400-normal.woff2) format('woff2'), url(.././fonts/lato-latin-400-normal.woff) format('woff');
+  
+}
+/* lato-latin-700-normal*/
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 700;
+  src: url(.././fonts/lato-latin-700-normal.woff2) format('woff2'), url(.././fonts/lato-latin-700-normal.woff) format('woff');
+  
+}
+/* lato-latin-900-normal*/
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 900;
+  src: url(.././fonts/lato-latin-900-normal.woff2) format('woff2'), url(.././fonts/lato-latin-900-normal.woff) format('woff');
+  
+}
+
+/* eb-garamond-latin-400-normal*/
+@font-face {
+  font-family: 'EB Garamond';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url(.././fonts/eb-garamond-latin-400-normal.woff2) format('woff2'), url(.././fonts/eb-garamond-latin-400-normal.woff) format('woff');
+  
+}
+/* eb-garamond-latin-500-normal*/
+@font-face {
+  font-family: 'EB Garamond';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 500;
+  src: url(.././fonts/eb-garamond-latin-500-normal.woff2) format('woff2'), url(.././fonts/eb-garamond-latin-500-normal.woff) format('woff');
+  
+}
+/* eb-garamond-latin-600-normal*/
+@font-face {
+  font-family: 'EB Garamond';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 600;
+  src: url(.././fonts/eb-garamond-latin-600-normal.woff2) format('woff2'), url(.././fonts/eb-garamond-latin-600-normal.woff) format('woff');
+  
+}
+/* eb-garamond-latin-700-normal*/
+@font-face {
+  font-family: 'EB Garamond';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 700;
+  src: url(.././fonts/eb-garamond-latin-700-normal.woff2) format('woff2'), url(.././fonts/eb-garamond-latin-700-normal.woff) format('woff');
+  
+}
+/* eb-garamond-latin-800-normal*/
+@font-face {
+  font-family: 'EB Garamond';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 800;
+  src: url(.././fonts/eb-garamond-latin-800-normal.woff2) format('woff2'), url(.././fonts/eb-garamond-latin-800-normal.woff) format('woff');
+  
+}
+
 @charset "UTF-8";
-@import '../yarn/@fontsource/lato/latin.css';
-@import '../yarn/@fontsource/eb-garamond/latin.css';
 /* Add hamburger for nav bar */
 /* Add hamburger for nav bar */
 /* Mixins file, which we should try and use globally across DHIL projects,
@@ -130,7 +220,7 @@ details.accordion summary {
   font-variant: small-caps;
   font-size: 1rem;
   font-weight: 500;
-  background-color: #f4f4f4;
+  background-color: rgb(244, 244, 244);
   transition: background-color 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955);
   cursor: pointer;
 }
@@ -193,7 +283,7 @@ a.btn-default,
 a.btn-primary {
   /* Rectangle 10: */
   background: #73685B;
-  border: 1px solid #302316;
+  border: 1px solid rgb(48, 35, 22);
   /* Submit button exampl: */
   font-family: "Lato", sans-serif;
   line-height: 1em;
@@ -548,7 +638,7 @@ footer.footer p {
   color: #E1306C;
 }
 .social-icon:hover .fa-podcast {
-  color: #b251e0;
+  color: rgb(178, 81, 224);
 }
 .social-icon:hover .fa-spotify {
   color: #1DB954;
@@ -558,7 +648,6 @@ footer.footer p {
   .footer_container {
     grid-template-rows: auto;
   }
-
   .footer_logo {
     grid-column: 1/4;
     margin-right: auto;
@@ -568,13 +657,11 @@ footer.footer p {
     margin-bottom: 1em;
     max-width: 15rem;
   }
-
   .footer_social {
     grid-column: 5/end;
     grid-row: 1;
     margin: auto 0;
   }
-
   .footer_menus {
     border-top: 2px solid rgba(252, 252, 252, 0.5);
     grid-column: span 6;
@@ -587,7 +674,6 @@ footer.footer p {
     display: grid;
     grid-template-columns: repeat(auto-fit, 11rem);
   }
-
   .footer_sponsor {
     justify-content: center;
   }
@@ -611,12 +697,10 @@ footer.footer p {
     padding-top: 1em;
     padding-bottom: 0.5em;
   }
-
   .footer_logo {
     max-width: 50%;
     margin: 0 auto 1em auto;
   }
-
   .social-icons-list {
     justify-content: space-around;
   }
@@ -1638,7 +1722,7 @@ td ul.double-list {
 :root {
   --hero-height: clamp(60vh, calc(300vw/2), min(800px, 70vh));
   --hero-width: min(100vw, 1600px);
-  --hero-image: url(../../images/hero.jpg);
+  --hero-image: url(.././images/hero.jpg);
 }
 
 .homepage main.container {
@@ -1811,4 +1895,4 @@ td ul.double-list {
   }
 }
 
-/*# sourceMappingURL=base.css.map */
+/*# sourceMappingURL=base.css.map*/

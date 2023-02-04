@@ -5,7 +5,7 @@
 
 "use strict";
 
-import Accordion from "../../yarn/dhilux/js/accordion";
+import Accordion from "../../node_modules/dhilux/js/accordion";
 
 /**
  * IIFE to make accordions happen

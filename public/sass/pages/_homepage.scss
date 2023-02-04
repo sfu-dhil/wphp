@@ -1,7 +1,7 @@
 :root{
   --hero-height: clamp(60vh, calc(300vw/2), min(800px, 70vh));
   --hero-width: min(100vw, #{$container_width_max});
-  --hero-image: url(../../images/hero.jpg);
+  --hero-image: url(../images/hero.jpg);
 }
 
 // Everything is wrapped in homepage

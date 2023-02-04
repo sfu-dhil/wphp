@@ -1,0 +1,59 @@
+version: '3.8'
+services:
+  db:
+    container_name: wphp_db
+    image: mariadb:10.10
+    ports:
+      - "13306:3306"
+    volumes:
+      - .data/mariadb:/var/lib/mysql
+      - ./docker/mariadb/custom.cnf:/etc/mysql/conf.d/custom.cnf
+      - ./docker/mariadb/init:/docker-entrypoint-initdb.d
+      # HACK: easy sql script running for setting up db
+      - ./wphp-data.sql:/wphp-data.sql
+      - ./wphp-schema.sql:/wphp-schema.sql
+    environment:
+      MARIADB_ROOT_PASSWORD: root
+      MARIADB_DATABASE: wphp
+      MARIADB_USER: wphp
+      MARIADB_PASSWORD: password
+
+  app:
+    container_name: wphp_app
+    # image: dhil/wphp
+    build:
+      context: .
+      target: wphp
+    ports:
+      - "8080:80"
+    volumes:
+      # code for development
+      - .:/var/www/html
+
+      # persist file uploads in .data
+      - .data/app/data:/var/www/html/data
+      - .data/app/blog_images:/var/www/html/public/images/blog
+      - .data/app/var:/var/www/html/var
+
+      # use the container's node_modules & vendor folders (don't override)
+      - /var/www/html/public/node_modules
+      - /var/www/html/vendor
+    depends_on:
+      - db
+
+  webpack_watcher:
+    container_name: wphp_webpack_watcher
+    build:
+      context: .
+      target: wphp-webpack
+    command: yarn watch
+    volumes:
+      - ./public:/app
+      # use the container's node_modules folder (don't override)
+      - /app/node_modules
+
+  mail:
+    container_name: wphp_mail
+    image: mailhog/mailhog:v1.0.1
+    ports:
+      - "8025:8025"

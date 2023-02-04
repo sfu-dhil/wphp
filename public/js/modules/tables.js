@@ -6,10 +6,10 @@
 
 "use strict";
 
-import A11YTables from '../../yarn/dhilux/js/a11Y_tables.js';
-import Swup from "../../yarn/swup/dist/swup.min.js";
-import SwupPreloadPlugin from "../../yarn/@swup/preload-plugin/dist/SwupPreloadPlugin.min.js";
-import StickyElements from "../../yarn/dhilux/js/sticky_elements.js";
+import A11YTables from '../../node_modules/dhilux/js/a11y_tables.js';
+import Swup from "../../node_modules/swup/dist/swup.min.js";
+import SwupPreloadPlugin from "../../node_modules/@swup/preload-plugin/dist/SwupPreloadPlugin.min.js";
+import StickyElements from "../../node_modules/dhilux/js/sticky_elements.js";
 
 // Import utilities to process all incoming content
 import { makeModals } from "./modals.js";

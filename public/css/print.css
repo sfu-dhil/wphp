@@ -1,11 +1,101 @@
+/* lato-latin-100-normal*/
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100;
+  src: url(.././fonts/lato-latin-100-normal.woff2) format('woff2'), url(.././fonts/lato-latin-100-normal.woff) format('woff');
+  
+}
+/* lato-latin-300-normal*/
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 300;
+  src: url(.././fonts/lato-latin-300-normal.woff2) format('woff2'), url(.././fonts/lato-latin-300-normal.woff) format('woff');
+  
+}
+/* lato-latin-400-normal*/
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url(.././fonts/lato-latin-400-normal.woff2) format('woff2'), url(.././fonts/lato-latin-400-normal.woff) format('woff');
+  
+}
+/* lato-latin-700-normal*/
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 700;
+  src: url(.././fonts/lato-latin-700-normal.woff2) format('woff2'), url(.././fonts/lato-latin-700-normal.woff) format('woff');
+  
+}
+/* lato-latin-900-normal*/
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 900;
+  src: url(.././fonts/lato-latin-900-normal.woff2) format('woff2'), url(.././fonts/lato-latin-900-normal.woff) format('woff');
+  
+}
+
+/* eb-garamond-latin-400-normal*/
+@font-face {
+  font-family: 'EB Garamond';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url(.././fonts/eb-garamond-latin-400-normal.woff2) format('woff2'), url(.././fonts/eb-garamond-latin-400-normal.woff) format('woff');
+  
+}
+/* eb-garamond-latin-500-normal*/
+@font-face {
+  font-family: 'EB Garamond';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 500;
+  src: url(.././fonts/eb-garamond-latin-500-normal.woff2) format('woff2'), url(.././fonts/eb-garamond-latin-500-normal.woff) format('woff');
+  
+}
+/* eb-garamond-latin-600-normal*/
+@font-face {
+  font-family: 'EB Garamond';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 600;
+  src: url(.././fonts/eb-garamond-latin-600-normal.woff2) format('woff2'), url(.././fonts/eb-garamond-latin-600-normal.woff) format('woff');
+  
+}
+/* eb-garamond-latin-700-normal*/
+@font-face {
+  font-family: 'EB Garamond';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 700;
+  src: url(.././fonts/eb-garamond-latin-700-normal.woff2) format('woff2'), url(.././fonts/eb-garamond-latin-700-normal.woff) format('woff');
+  
+}
+/* eb-garamond-latin-800-normal*/
+@font-face {
+  font-family: 'EB Garamond';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 800;
+  src: url(.././fonts/eb-garamond-latin-800-normal.woff2) format('woff2'), url(.././fonts/eb-garamond-latin-800-normal.woff) format('woff');
+  
+}
+
 /*
  * Print stylesheet for the WPHP
  *
  * Note that most print styles are inherited from Bootstrap,
  * so this is a fairly minimal implementation
  */
-@import '../yarn/@fontsource/lato/latin.css';
-@import '../yarn/@fontsource/eb-garamond/latin.css';
 /* Add hamburger for nav bar */
 /* Add hamburger for nav bar */
 @media print {
@@ -16,34 +106,27 @@
   :root, html, body, main {
     font-size: 12pt !important;
   }
-
   body {
     width: 100%;
     display: block;
   }
-
   main {
     margin: 0 !important;
   }
-
   footer {
     display: none;
   }
-
   img {
     width: unset !important;
     max-height: 90mm;
   }
-
   .blog-content a[href]:after {
     content: unset;
   }
-
   .container {
     max-width: unset !important;
     width: unset !important;
   }
-
   .page-header {
     display: block !important;
     width: 100%;
@@ -52,13 +135,11 @@
     display: block;
     width: 100%;
   }
-
   .btn-toolbar {
     display: none;
   }
-
   .nines_blog_post_show .blog-content,
-.nines_blog_page_show .blog-content {
+  .nines_blog_page_show .blog-content {
     border: none;
     padding-top: 0rem;
     max-width: unset;
@@ -66,36 +147,34 @@
     margin: 0;
   }
   .nines_blog_post_show .blog-content p.img-holder + h5,
-.nines_blog_page_show .blog-content p.img-holder + h5 {
+  .nines_blog_page_show .blog-content p.img-holder + h5 {
     font-size: 0.9rem;
     margin-top: 0;
     margin-bottom: 2em !important;
     page-break-before: avoid;
   }
   .nines_blog_post_show .blog-content p, .nines_blog_post_show .blog-content h4, .nines_blog_post_show .blog-content h5,
-.nines_blog_page_show .blog-content p,
-.nines_blog_page_show .blog-content h4,
-.nines_blog_page_show .blog-content h5 {
+  .nines_blog_page_show .blog-content p,
+  .nines_blog_page_show .blog-content h4,
+  .nines_blog_page_show .blog-content h5 {
     font-size: 1rem;
   }
   .nines_blog_post_show .blog-content blockquote,
-.nines_blog_page_show .blog-content blockquote {
+  .nines_blog_page_show .blog-content blockquote {
     border: none;
     margin: 0.25em 0 0.25em 2em;
   }
   .nines_blog_post_show .blog-content .icon-button,
-.nines_blog_page_show .blog-content .icon-button {
+  .nines_blog_page_show .blog-content .icon-button {
     display: none;
   }
   .nines_blog_post_show .blog-content .nines_blog_page_show .blog-content .print-header + *,
-.nines_blog_page_show .blog-content .nines_blog_page_show .blog-content .print-header + * {
+  .nines_blog_page_show .blog-content .nines_blog_page_show .blog-content .print-header + * {
     margin-top: 0.4rem;
   }
-
   .blog-pdfs {
     display: none;
   }
-
   /*
 
     // All pages
@@ -160,4 +239,4 @@
     */
 }
 
-/*# sourceMappingURL=print.css.map */
+/*# sourceMappingURL=print.css.map*/
