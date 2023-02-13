@@ -252,7 +252,6 @@ class ReportController extends AbstractController implements PaginatorAwareInter
             ->andWhere('ts.source = 75')
             ;
 
-
         $titles = $this->paginator->paginate($qb, $request->query->getInt('page', 1), 25, [
             'defaultSortFieldName' => ['title.title', 'title.pubdate'],
             'defaultSortDirection' => 'asc',

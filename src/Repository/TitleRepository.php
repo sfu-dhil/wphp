@@ -98,7 +98,7 @@ class TitleRepository extends ServiceEntityRepository {
         $qb->addSelect('MATCH(title.title) AGAINST (:title BOOLEAN) AS score');
         $qb->andHaving('score > 5.0');
         $qb->orderBy('score', 'desc');
-        $result = $qb->getQuery()->execute(['title' => '"' . $title->getTitle() . '"']);
+        $result = $qb->getQuery()->execute(['title' => '"' . $title->getTrimmedTitle() . '"']);
 
         // MySQL's full text indexing is good, but not good enough for this. It
         // finds a lot of false positives, so filter them out with a quick
