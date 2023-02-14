@@ -1,6 +1,8 @@
 [submodule "deployment"]
 	path = deployment
 	url = https://github.com/ubermichael/deployment.git
-	branch = master
-[submodule "deployment/"]
+	branch = main
+[submodule "docs"]
+	path = docs
+	url = https://github.com/sfu-dhil/wphp-docs.git
 	branch = main
