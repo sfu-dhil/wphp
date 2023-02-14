@@ -8,19 +8,6 @@
 /vendor/
 ###< symfony/framework-bundle ###
 
-# PHPStorm config.
-/.idea
-.vscode
-node_modules
-config/deploy.yaml
-*.sql
-jquery.collection.js
-templates/jquery.collection.html.twig
-public/docs
-public/images/blog
-src/.preload.php
-/data
-
 ###> phpunit/phpunit ###
 .phpunit.cache/
 coverage/
@@ -30,15 +17,33 @@ coverage/
 /.php-cs-fixer.cache
 ###< friendsofphp/php-cs-fixer ###
 
-.DS_Store
+# Editors
+/.idea
+.vscode
+
+# Bundles
+/public/js/jquery.collection.js
+/templates/jquery.collection.html.twig
+
+# Yarn packages.
+node_modules
 
 # Docker
 .data
 
+# MISC
+/config/deploy.yaml
+/*.sql
+/data
+/src/.preload.php
+.DS_Store
+public/docs
+
+public/images/blog
+
 # Docker image specific
 **/.git
 /docs
-/deployment
 .gitmodules
 .gitignore
 /.github/
