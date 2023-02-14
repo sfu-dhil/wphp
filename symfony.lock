@@ -745,7 +745,7 @@
     "twig/twig": {
         "version": "v3.0.1"
     },
-    "ubermichael/nines": {
+    "sfu-dhil/nines": {
         "version": "4.x-dev"
     },
     "webmozart/assert": {

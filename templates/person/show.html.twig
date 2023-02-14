@@ -11,7 +11,7 @@
 
 {% block styles %}
     {% if makeTimeline %}
-        <link href="{{ asset('yarn/@knight-lab/timelinejs/dist/css/timeline.css') }}" type="text/css" rel="stylesheet"/>
+        <link href="{{ asset('node_modules/@knight-lab/timelinejs/dist/css/timeline.css') }}" type="text/css" rel="stylesheet"/>
         <link href="{{ asset('css/timeline.css') }}" type="text/css" rel="stylesheet"/>
     {% endif %}
 {% endblock %}
@@ -166,9 +166,9 @@
 {% endblock %}
 
 {% block javascripts %}
-    <script src="{{ asset('yarn/tablesorter/dist/js/jquery.tablesorter.min.js') }}"></script>
+    <script src="{{ asset('node_modules/tablesorter/dist/js/jquery.tablesorter.min.js') }}"></script>
     {% if makeTimeline %}
-        <script src="{{ asset('yarn/@knight-lab/timelinejs/dist/js/timeline-min.js') }}"></script>
+        <script src="{{ asset('node_modules/@knight-lab/timelinejs/dist/js/timeline.js') }}"></script>
         <script src="{{ asset('js/timeline.js') }}"></script>
     {% endif %}
 {% endblock %}

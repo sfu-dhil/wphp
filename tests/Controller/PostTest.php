@@ -219,7 +219,7 @@ class PostTest extends ControllerTestCase {
             'pdf[description]' => 'Description',
             'pdf[license]' => 'License',
         ]);
-        $form['pdf[file]']->upload(dirname(__FILE__, 3) . '/vendor/ubermichael/nines/MediaBundle/Tests/data/pdf/holmes_2.pdf');
+        $form['pdf[file]']->upload(dirname(__FILE__, 3) . '/vendor/sfu-dhil/nines/MediaBundle/Tests/data/pdf/holmes_2.pdf');
         $this->client->submit($form);
         $this->assertResponseRedirects('/blog/post/1');
         $responseCrawler = $this->client->followRedirect();
@@ -252,7 +252,7 @@ class PostTest extends ControllerTestCase {
             'pdf[description]' => 'Updated Description',
             'pdf[license]' => 'Updated License',
         ]);
-        $form['pdf[newFile]']->upload(dirname(__FILE__, 3) . '/vendor/ubermichael/nines/MediaBundle/Tests/data/pdf/holmes_2.pdf');
+        $form['pdf[newFile]']->upload(dirname(__FILE__, 3) . '/vendor/sfu-dhil/nines/MediaBundle/Tests/data/pdf/holmes_2.pdf');
         $this->client->submit($form);
         $this->assertResponseRedirects('/blog/post/1');
         $responseCrawler = $this->client->followRedirect();

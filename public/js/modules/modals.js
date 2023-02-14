@@ -5,7 +5,7 @@
 
 "use strict";
 
-import Modals from '../../yarn/dhilux/js/modals.bundle.js';
+import Modals from '../../node_modules/dhilux/js/modals.bundle.js';
 const myParser = new DOMParser();
 let citationType;
 

@@ -53,7 +53,7 @@ class PostFixtures extends Fixture implements DependentFixtureInterface, Fixture
             $manager->flush();
 
             $file = self::FILES[$i - 1];
-            $upload = new UploadedFile(dirname(__DIR__, 2) . '/vendor/ubermichael/nines/MediaBundle/Tests/data/pdf/' . $file, $file, 'application/pdf', null, true);
+            $upload = new UploadedFile(dirname(__DIR__, 2) . '/vendor/sfu-dhil/nines/MediaBundle/Tests/data/pdf/' . $file, $file, 'application/pdf', null, true);
             $pdf = new Pdf();
             $pdf->setFile($upload);
             $pdf->setPublic(0 === ($i % 2));

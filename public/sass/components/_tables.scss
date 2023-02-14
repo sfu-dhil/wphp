@@ -19,7 +19,7 @@ $table_body_link_color_hover: $color_link_hover;
 $color_table_background_hover_odd: darken($color_table_background_odd, 5%);
 $color_table_background_hover_even: darken($color_table_background_even, 5%);
 
-@import '../../yarn/dhilux/scss/a11y_tables';
+@import '../../node_modules/dhilux/scss/a11y_tables';
 
 .tbl-container{
 
