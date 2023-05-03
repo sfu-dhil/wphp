@@ -7,6 +7,7 @@
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/)
 - A copy of the `wphp-schema.sql` and `wphp-data.sql` database files. If you are not sure what these are or where to get them, you should contact the [Digital Humanities Innovation Lab](mailto:dhil@sfu.ca) for access. These files should be placed in the root folder.
 - A copy of the blog images. These should be placed directly into the `.data/app/blog_images/` directory (start the application for the first time if you don't see the directory).
+- A copy of the data (audio/image/pdf) files. These should be placed directly into the `.data/data/audio`,  `.data/data/image`,  `.data/data/pdf` directory (start the application for the first time if you don't see the data directory).
 
 ## Initialize the Application
 
@@ -22,6 +23,20 @@ Next you must start the whole application
     docker compose up -d --build
 
 WPHP will now be available at `http://localhost:8080/`
+
+### Create your admin user credentials
+
+    docker exec -it wphp_app ./bin/console nines:user:create <your@email.address> '<your full name>' '<affiliation>'
+    docker exec -it wphp_app ./bin/console nines:user:password <your@email.address> <password>
+    docker exec -it wphp_app ./bin/console nines:user:promote <your@email.address> ROLE_ADMIN
+    docker exec -it wphp_app ./bin/console nines:user:activate <your@email.address>
+
+example:
+
+    docker exec -it wphp_app ./bin/console nines:user:create test@test.com 'Test User' 'DHIL'
+    docker exec -it wphp_app ./bin/console nines:user:password test@test.com test_password
+    docker exec -it wphp_app ./bin/console nines:user:promote test@test.com ROLE_ADMIN
+    docker exec -it wphp_app ./bin/console nines:user:activate test@test.com
 
 ## General Usage
 
@@ -88,7 +103,7 @@ Migrate up to latest
 
 Note: If you are having problems starting/building the application due to javascript dependencies issues you can also run a standalone node container to help resolve them
 
-    docker run -it -v $(pwd)/public:/app -w /app node:19.5 bash
+    docker run -it --rm -v $(pwd)/public:/app -w /app node:19.5 bash
 
     [check Dockerfile for the 'apt-get update' code piece of wphp-webpack]
 

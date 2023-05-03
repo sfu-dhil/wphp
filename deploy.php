@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace Deployer;
 
 use Symfony\Component\Console\Input\InputOption;
@@ -92,7 +86,7 @@ task('dhil:fonts', function() : void {
  */
 task('dhil:phpunit', function() : void {
     if (file_exists('Makefile')) {
-        $output = run('cd {{ release_path }} && make test.db test', ['timeout' => null]);
+        $output = run('cd {{ release_path }} && make test', ['timeout' => null]);
     } else {
         $output = run('cd {{ release_path }} && ./vendor/bin/phpunit', ['timeout' => null]);
     }

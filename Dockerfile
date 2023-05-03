@@ -36,8 +36,9 @@ RUN apt-get update \
         unzip \
         ghostscript \
         libicu-dev \
+        libapache2-mod-xsendfile \
     && cp "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini" \
-    && a2enmod rewrite \
+    && a2enmod rewrite headers \
     && docker-php-ext-configure intl \
     && docker-php-ext-install xsl pdo pdo_mysql zip intl \
     && pecl install imagick pcov \
@@ -49,6 +50,7 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # default service settings
+COPY docker/app/docker-entrypoint.sh /docker-entrypoint.sh
 COPY docker/app/apache.conf /etc/apache2/sites-enabled/000-default.conf
 COPY docker/app/php.ini /usr/local/etc/php/conf.d/wphp.ini
 COPY docker/app/image-policy.xml /etc/ImageMagick-6/policy.xml
@@ -66,4 +68,4 @@ COPY --from=wphp-prod-assets /app/js/dist /var/www/html/public/js/dist
 COPY --from=wphp-prod-assets /app/css /var/www/html/public/css
 COPY --from=wphp-prod-assets /app/node_modules /var/www/html/public/node_modules
 
-CMD apache2-foreground
+CMD ["/docker-entrypoint.sh"]

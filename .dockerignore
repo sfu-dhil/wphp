@@ -42,8 +42,5 @@ public/docs
 public/images/blog
 
 # Docker image specific
-**/.git
 /docs
-.gitmodules
-.gitignore
 /.github/
