@@ -1,4 +1,4 @@
-FROM node:19.5 AS wphp-webpack
+FROM node:20.4 AS wphp-webpack
 WORKDIR /app
 
 RUN apt-get update \
