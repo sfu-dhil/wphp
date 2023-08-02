@@ -54,14 +54,9 @@
                                 <ul>
                                     {% for tr in title.titleRoles %}
                                         {% set person = tr.person %}
-                                        {% if person.finalCheck or app.user %}
-                                            <li>
-                                                <a href="{{ path('person_show', {'id': person.id}) }}">{{ person }}</a> ({{ tr.role.name }})
-                                                {% if not person.finalCheck %}
-                                                    <i>(unverified)</i>
-                                                {% endif %}
-                                            </li>
-                                        {% endif %}
+                                        <li>
+                                            <a href="{{ path('person_show', {'id': person.id}) }}">{{ person }}</a> ({{ tr.role.name }})
+                                        </li>
                                     {% endfor %}
                                 </ul>
                             {% endif %}
@@ -82,14 +77,9 @@
                                     <ul>
                                         {% for tfr in title.titleFirmRoles %}
                                             {% set firm = tfr.firm %}
-                                            {% if firm.finalCheck or app.user %}
-                                                <li>
-                                                    <a href="{{ path('firm_show', {'id': firm.id}) }}">{{ firm.name }}</a> ({{ tfr.firmrole }})
-                                                    {% if not firm.finalCheck %}
-                                                        <i>(unverified)</i>
-                                                    {% endif %}
-                                                </li>
-                                            {% endif %}
+                                            <li>
+                                                <a href="{{ path('firm_show', {'id': firm.id}) }}">{{ firm.name }}</a> ({{ tfr.firmrole }})
+                                            </li>
                                         {% endfor %}
                                     </ul>
                                 {% endif %}
