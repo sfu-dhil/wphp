@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Controller;
 
 use App\Entity\Genre;
@@ -26,19 +20,17 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Genre controller.
- *
- * @Route("/genre")
  */
+#[Route(path: '/genre')]
 class GenreController extends AbstractController implements PaginatorAwareInterface {
     use PaginatorTrait;
 
     /**
      * Lists all Genre entities.
      *
-     * @Route("/", name="genre_index", methods={"GET"})
-     * @Template
-     *
      * @return array<string,mixed>     */
+    #[Route(path: '/', name: 'genre_index', methods: ['GET'])]
+    #[Template]
     public function indexAction(Request $request, GenreRepository $repo, EntityManagerInterface $em) {
         $dql = 'SELECT e FROM App:Genre e ORDER BY e.name';
         $query = $em->createQuery($dql);
@@ -54,9 +46,9 @@ class GenreController extends AbstractController implements PaginatorAwareInterf
      * Typeahead action for an editor widget.
      *
      * @return JsonResponse
-     * @Security("is_granted('ROLE_CONTENT_ADMIN')")
-     * @Route("/typeahead", name="genre_typeahead", methods={"GET"})
      */
+    #[Security("is_granted('ROLE_CONTENT_ADMIN')")]
+    #[Route(path: '/typeahead', name: 'genre_typeahead', methods: ['GET'])]
     public function typeaheadAction(Request $request, GenreRepository $repo) {
         $q = $request->query->get('q');
         if ( ! $q) {
@@ -77,12 +69,11 @@ class GenreController extends AbstractController implements PaginatorAwareInterf
     /**
      * Creates a new Genre entity.
      *
-     * @Route("/new", name="genre_new", methods={"GET", "POST"})
-     * @Security("is_granted('ROLE_CONTENT_ADMIN')")
-     * @Template
-     *
      * @return array<string,mixed>|RedirectResponse
      */
+    #[Route(path: '/new', name: 'genre_new', methods: ['GET', 'POST'])]
+    #[Security("is_granted('ROLE_CONTENT_ADMIN')")]
+    #[Template]
     public function newAction(Request $request, EntityManagerInterface $em) {
         $genre = new Genre();
         $form = $this->createForm(GenreType::class, $genre);
@@ -106,10 +97,9 @@ class GenreController extends AbstractController implements PaginatorAwareInterf
     /**
      * Finds and displays a Genre entity.
      *
-     * @Route("/{id}", name="genre_show", methods={"GET"})
-     * @Template
-     *
      * @return array<string,mixed>     */
+    #[Route(path: '/{id}', name: 'genre_show', methods: ['GET'])]
+    #[Template]
     public function showAction(Request $request, Genre $genre, EntityManagerInterface $em) {
         $dql = 'SELECT t FROM App:Title t WHERE :genre MEMBER OF t.genres';
         if (null === $this->getUser()) {
@@ -129,12 +119,11 @@ class GenreController extends AbstractController implements PaginatorAwareInterf
     /**
      * Displays a form to edit an existing Genre entity.
      *
-     * @Route("/{id}/edit", name="genre_edit", methods={"GET", "POST"})
-     * @Security("is_granted('ROLE_CONTENT_ADMIN')")
-     * @Template
-     *
      * @return array<string,mixed>|RedirectResponse
      */
+    #[Route(path: '/{id}/edit', name: 'genre_edit', methods: ['GET', 'POST'])]
+    #[Security("is_granted('ROLE_CONTENT_ADMIN')")]
+    #[Template]
     public function editAction(Request $request, Genre $genre, EntityManagerInterface $em) {
         $editForm = $this->createForm(GenreType::class, $genre);
         $editForm->handleRequest($request);
@@ -155,11 +144,10 @@ class GenreController extends AbstractController implements PaginatorAwareInterf
     /**
      * Deletes a Genre entity.
      *
-     * @Route("/{id}/delete", name="genre_delete", methods={"GET"})
-     * @Security("is_granted('ROLE_CONTENT_ADMIN')")
-     *
      * @return RedirectResponse
      */
+    #[Route(path: '/{id}/delete', name: 'genre_delete', methods: ['GET'])]
+    #[Security("is_granted('ROLE_CONTENT_ADMIN')")]
     public function deleteAction(Request $request, Genre $genre, EntityManagerInterface $em) {
         $em->remove($genre);
         $em->flush();

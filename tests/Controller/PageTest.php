@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Tests\Controller;
 
 use Nines\UserBundle\DataFixtures\UserFixtures;
@@ -102,7 +96,7 @@ class PageTest extends ControllerTestCase {
 
     public function testAnonEdit() : void {
         $crawler = $this->client->request('GET', '/blog/page/1/edit');
-        $this->assertResponseRedirects('/login', Response::HTTP_FOUND);
+        $this->assertResponseRedirects('http://localhost/login', Response::HTTP_FOUND);
     }
 
     public function testUserEdit() : void {
@@ -134,23 +128,12 @@ class PageTest extends ControllerTestCase {
 
     public function testAnonNew() : void {
         $crawler = $this->client->request('GET', '/blog/page/new');
-        $this->assertResponseRedirects('/login', Response::HTTP_FOUND);
-    }
-
-    public function testAnonNewPopup() : void {
-        $crawler = $this->client->request('GET', '/blog/page/new_popup');
-        $this->assertResponseRedirects('/login', Response::HTTP_FOUND);
+        $this->assertResponseRedirects('http://localhost/login', Response::HTTP_FOUND);
     }
 
     public function testUserNew() : void {
         $this->login(UserFixtures::USER);
         $crawler = $this->client->request('GET', '/blog/page/new');
-        $this->assertSame(403, $this->client->getResponse()->getStatusCode());
-    }
-
-    public function testUserNewPopup() : void {
-        $this->login(UserFixtures::USER);
-        $crawler = $this->client->request('GET', '/blog/page/new_popup');
         $this->assertSame(403, $this->client->getResponse()->getStatusCode());
     }
 
@@ -175,30 +158,9 @@ class PageTest extends ControllerTestCase {
         $this->assertResponseIsSuccessful();
     }
 
-    public function testAdminNewPopup() : void {
-        $this->login(UserFixtures::ADMIN);
-        $formCrawler = $this->client->request('GET', '/blog/page/new');
-        $this->assertResponseIsSuccessful();
-
-        $form = $formCrawler->selectButton('Save')->form([
-            'page[inMenu]' => 1,
-            'page[public]' => 1,
-            'page[homepage]' => 1,
-            'page[includeComments]' => 1,
-            'page[title]' => 'Updated Title',
-            'page[excerpt]' => '<p>Updated Text</p>',
-            'page[content]' => '<p>Updated Text</p>',
-        ]);
-
-        $this->client->submit($form);
-        $this->assertResponseRedirects('/blog/page/7', Response::HTTP_FOUND);
-        $responseCrawler = $this->client->followRedirect();
-        $this->assertResponseIsSuccessful();
-    }
-
     public function testAnonSort() : void {
         $crawler = $this->client->request('GET', '/blog/page/sort');
-        $this->assertResponseRedirects('/login', Response::HTTP_FOUND);
+        $this->assertResponseRedirects('http://localhost/login', Response::HTTP_FOUND);
     }
 
     public function testUserSort() : void {

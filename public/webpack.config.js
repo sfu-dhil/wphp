@@ -10,6 +10,9 @@ module.exports = {
     timeline: './sass/timeline.scss',
   },
   mode: 'production',
+  stats: {
+    warnings:false
+  },
   output: {
     path: path.resolve(__dirname),
     filename: 'js/dist/[name].js',

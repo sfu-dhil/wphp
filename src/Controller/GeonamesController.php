@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Controller;
 
 use App\Entity\Geonames;
@@ -28,19 +22,17 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Geonames controller.
- *
- * @Route("/geonames")
  */
+#[Route(path: '/geonames')]
 class GeonamesController extends AbstractController implements PaginatorAwareInterface {
     use PaginatorTrait;
 
     /**
      * Lists all Geonames entities.
      *
-     * @Route("/", name="geonames_index", methods={"GET"})
-     * @Template
-     *
      * @return array<string,mixed>     */
+    #[Route(path: '/', name: 'geonames_index', methods: ['GET'])]
+    #[Template]
     public function indexAction(Request $request, EntityManagerInterface $em) {
         $dql = 'SELECT e FROM App:Geonames e ORDER BY e.geonameid';
         $query = $em->createQuery($dql);
@@ -55,9 +47,9 @@ class GeonamesController extends AbstractController implements PaginatorAwareInt
      * Typeahead action for editor widgets.
      *
      * @return JsonResponse
-     * @Security("is_granted('ROLE_CONTENT_ADMIN')")
-     * @Route("/typeahead", name="geonames_typeahead", methods={"GET"})
      */
+    #[Security("is_granted('ROLE_CONTENT_ADMIN')")]
+    #[Route(path: '/typeahead', name: 'geonames_typeahead', methods: ['GET'])]
     public function typeaheadAction(Request $request, GeonamesRepository $repo) {
         $q = $request->query->get('q');
         if ( ! $q) {
@@ -79,8 +71,8 @@ class GeonamesController extends AbstractController implements PaginatorAwareInt
      * Search for geonames entities.
      *
      * @return array<string,mixed> * @Route("/search", name="geonames_search", methods={"GET"})
-     * @Template
      */
+    #[Template]
     public function searchAction(Request $request, GeonamesRepository $repo) {
         $q = $request->query->get('q');
         if ($q) {
@@ -99,12 +91,10 @@ class GeonamesController extends AbstractController implements PaginatorAwareInt
     /**
      * Search and display results from the Geonames API in preparation for import.
      *
-     * @Security("is_granted('ROLE_CONTENT_ADMIN')")
-     * @Route("/import", name="geonames_import", methods={"GET"})
-     *
-     * @Template
-     *
      * @return array<string,mixed>     */
+    #[Security("is_granted('ROLE_CONTENT_ADMIN')")]
+    #[Route(path: '/import', name: 'geonames_import', methods: ['GET'])]
+    #[Template]
     public function importSearchAction(Request $request) {
         $q = $request->query->get('q');
         $results = [];
@@ -130,9 +120,9 @@ class GeonamesController extends AbstractController implements PaginatorAwareInt
      * @throws Exception
      *
      * @return RedirectResponse
-     * @Security("is_granted('ROLE_CONTENT_ADMIN')")
-     * @Route("/import", name="geonames_import_save", methods={"POST"})
      */
+    #[Security("is_granted('ROLE_CONTENT_ADMIN')")]
+    #[Route(path: '/import', name: 'geonames_import_save', methods: ['POST'])]
     public function importSaveAction(Request $request, EntityManagerInterface $em) {
         $user = $this->getParameter('wphp.geonames.username');
         $client = new GeoNamesClient($user);
@@ -182,10 +172,9 @@ class GeonamesController extends AbstractController implements PaginatorAwareInt
     /**
      * Finds and displays a Geonames entity.
      *
-     * @Route("/{id}", name="geonames_show", methods={"GET"})
-     * @Template
-     *
      * @return array<string,mixed>     */
+    #[Route(path: '/{id}', name: 'geonames_show', methods: ['GET'])]
+    #[Template]
     public function showAction(Request $request, Geonames $geoname, EntityManagerInterface $em) {
         $dql = 'SELECT count(t.id) FROM App:Title t WHERE t.locationOfPrinting = :geoname';
         if (null === $this->getUser()) {
@@ -205,10 +194,9 @@ class GeonamesController extends AbstractController implements PaginatorAwareInt
     /**
      * Finds and displays a Geonames entity.
      *
-     * @Route("/{id}/titles", name="geonames_titles", methods={"GET"})
-     * @Template
-     *
      * @return array<string,mixed>     */
+    #[Route(path: '/{id}/titles', name: 'geonames_titles', methods: ['GET'])]
+    #[Template]
     public function titlesAction(Request $request, Geonames $geoname, EntityManagerInterface $em) {
         $dql = 'SELECT t FROM App:Title t WHERE t.locationOfPrinting = :geoname';
         if (null === $this->getUser()) {
@@ -228,10 +216,9 @@ class GeonamesController extends AbstractController implements PaginatorAwareInt
     /**
      * Finds and displays a Geonames entity.
      *
-     * @Route("/{id}/firms", name="geonames_firms", methods={"GET"})
-     * @Template
-     *
      * @return array<string,mixed>     */
+    #[Route(path: '/{id}/firms', name: 'geonames_firms', methods: ['GET'])]
+    #[Template]
     public function firmsAction(Request $request, Geonames $geoname, EntityManagerInterface $em) {
         $dql = 'SELECT f FROM App:Firm f WHERE f.city = :geoname ORDER BY f.name';
         $query = $em->createQuery($dql);
@@ -247,10 +234,9 @@ class GeonamesController extends AbstractController implements PaginatorAwareInt
     /**
      * Finds and displays a Geonames entity.
      *
-     * @Route("/{id}/people", name="geonames_people", methods={"GET"})
-     * @Template
-     *
      * @return array<string,mixed>     */
+    #[Route(path: '/{id}/people', name: 'geonames_people', methods: ['GET'])]
+    #[Template]
     public function peopleAction(Request $request, Geonames $geoname, EntityManagerInterface $em) {
         $dql = 'SELECT p FROM App:Person p WHERE (p.cityOfBirth = :geoname) OR (p.cityOfDeath = :geoname) ORDER BY p.lastName, p.firstName';
         $query = $em->createQuery($dql);

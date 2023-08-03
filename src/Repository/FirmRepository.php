@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Repository;
 
 use App\Entity\Firm;
@@ -150,10 +144,10 @@ class FirmRepository extends ServiceEntityRepository {
         }
         if (isset($data['start']) && $data['start']) {
             $m = [];
-            if (preg_match('/^\s*[0-9]{4}\s*$/', $data['start'])) {
+            if (preg_match('/^\s*[0-9]{4}\s*$/', (string) $data['start'])) {
                 $qb->andWhere('e.startDate = :yearb');
                 $qb->setParameter('yearb', $data['start']);
-            } elseif (preg_match('/^\s*(\*|[0-9]{4})\s*-\s*(\*|[0-9]{4})\s*$/', $data['start'], $m)) {
+            } elseif (preg_match('/^\s*(\*|[0-9]{4})\s*-\s*(\*|[0-9]{4})\s*$/', (string) $data['start'], $m)) {
                 $from = ('*' === $m[1] ? -1 : $m[1]);
                 $to = ('*' === $m[2] ? 9999 : $m[2]);
                 $qb->andWhere(':fromb <= e.startDate AND e.startDate <= :tob');
@@ -164,10 +158,10 @@ class FirmRepository extends ServiceEntityRepository {
 
         if (isset($data['end']) && $data['end']) {
             $m = [];
-            if (preg_match('/^\s*[0-9]{4}\s*$/', $data['end'])) {
+            if (preg_match('/^\s*[0-9]{4}\s*$/', (string) $data['end'])) {
                 $qb->andWhere('e.endDate = :yeare');
                 $qb->setParameter('yeare', $data['end']);
-            } elseif (preg_match('/^\s*(\*|[0-9]{4})\s*-\s*(\*|[0-9]{4})\s*$/', $data['end'], $m)) {
+            } elseif (preg_match('/^\s*(\*|[0-9]{4})\s*-\s*(\*|[0-9]{4})\s*$/', (string) $data['end'], $m)) {
                 $from = ('*' === $m[1] ? -1 : $m[1]);
                 $to = ('*' === $m[2] ? 9999 : $m[2]);
                 $qb->andWhere(':frome <= e.endDate AND e.endDate <= :toe');
@@ -185,7 +179,7 @@ class FirmRepository extends ServiceEntityRepository {
             $qb->andWhere('e.finalcheck = 1');
         }
 
-        if (isset($data['title_filter']) && count(array_filter($data['title_filter']))) {
+        if (isset($data['title_filter']) && count((array) array_filter($data['title_filter']))) {
             $filter = $data['title_filter'];
             $idx = '00';
             $tfrAlias = 'tfr_' . $idx;
@@ -206,10 +200,10 @@ class FirmRepository extends ServiceEntityRepository {
 
             if (isset($filter['pubdate']) && $filter['pubdate']) {
                 $m = [];
-                if (preg_match('/^\s*[0-9]{4}\s*$/', $filter['pubdate'])) {
+                if (preg_match('/^\s*[0-9]{4}\s*$/', (string) $filter['pubdate'])) {
                     $qb->andWhere("YEAR(STRTODATE({$tAlias}.pubdate, '%Y')) = :{$tAlias}_year");
                     $qb->setParameter("{$tAlias}_year", $filter['pubdate']);
-                } elseif (preg_match('/^\s*(\*|[0-9]{4})\s*-\s*(\*|[0-9]{4})\s*$/', $filter['pubdate'], $m)) {
+                } elseif (preg_match('/^\s*(\*|[0-9]{4})\s*-\s*(\*|[0-9]{4})\s*$/', (string) $filter['pubdate'], $m)) {
                     $from = ('*' === $m[1] ? -1 : $m[1]);
                     $to = ('*' === $m[2] ? 9999 : $m[2]);
                     $qb->andWhere(":{$tAlias}_from <= YEAR(STRTODATE({$tAlias}.pubdate, '%Y')) AND YEAR(STRTODATE({$tAlias}.pubdate, '%Y')) <= :{$tAlias}_to");
@@ -218,7 +212,7 @@ class FirmRepository extends ServiceEntityRepository {
                 }
             }
 
-            if (isset($filter['genre']) && count($filter['genre']) > 0) {
+            if (isset($filter['genre']) && (is_countable($filter['genre']) ? count($filter['genre']) : 0) > 0) {
                 $qb->andWhere("{$tAlias}.genre in (:{$tAlias}_genres)");
                 $qb->setParameter("{$tAlias}_genres", $filter['genre']);
             }
@@ -231,7 +225,7 @@ class FirmRepository extends ServiceEntityRepository {
             }
         }
 
-        if (isset($data['person_filter']) && count(array_filter($data['person_filter']))) {
+        if (isset($data['person_filter']) && count((array) array_filter($data['person_filter']))) {
             $filter = $data['person_filter'];
             $idx = '01';
             $tfrAlias = 'tfr_' . $idx;
@@ -268,7 +262,7 @@ class FirmRepository extends ServiceEntityRepository {
                 $qb->setParameter('genders', $genders);
             }
 
-            if (isset($filter['person_role']) && count($filter['person_role']) > 0) {
+            if (isset($filter['person_role']) && (is_countable($filter['person_role']) ? count($filter['person_role']) : 0) > 0) {
                 $qb->andWhere("{$trAlias}.role in (:roles_{$idx})");
                 $qb->setParameter("roles_{$idx}", $filter['person_role']);
             }

@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Controller;
 
 use App\Entity\Person;
@@ -31,20 +25,17 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Person controller.
- *
- * @Route("/person")
  */
+#[Route(path: '/person')]
 class PersonController extends AbstractController implements PaginatorAwareInterface {
     use PaginatorTrait;
 
     /**
      * Lists all Person entities.
      *
-     * @Route("/", name="person_index", methods={"GET"})
-     *
-     * @Template
-     *
      * @return array<string,mixed>     */
+    #[Route(path: '/', name: 'person_index', methods: ['GET'])]
+    #[Template]
     public function indexAction(Request $request, EntityManagerInterface $em) {
         $form = $this->createForm(PersonSearchType::class, null, [
             'action' => $this->generateUrl('person_search'),
@@ -72,9 +63,9 @@ class PersonController extends AbstractController implements PaginatorAwareInter
      * Search for persons and return a JSON response for a typeahead widget.
      *
      * @return JsonResponse
-     * @Security("is_granted('ROLE_CONTENT_ADMIN')")
-     * @Route("/typeahead", name="person_typeahead", methods={"GET"})
      */
+    #[Security("is_granted('ROLE_CONTENT_ADMIN')")]
+    #[Route(path: '/typeahead', name: 'person_typeahead', methods: ['GET'])]
     public function typeaheadAction(Request $request, PersonRepository $repo) {
         $q = $request->query->get('q');
         if ( ! $q) {
@@ -95,11 +86,10 @@ class PersonController extends AbstractController implements PaginatorAwareInter
     /**
      * Full text search for Person entities.
      *
-     * @Route("/search/export/{format}", name="person_search_export", methods={"GET"}, requirements={"format": "^csv$"})
-     * @Template
-     *
      * @return BinaryFileResponse
      */
+    #[Route(path: '/search/export/{format}', name: 'person_search_export', methods: ['GET'], requirements: ['format' => '^csv$'])]
+    #[Template]
     public function searchExportCsvAction(Request $request, EntityManagerInterface $em, PersonRepository $repo, CsvExporter $exporter) {
         $form = $this->createForm(PersonSearchType::class, null, ['entity_manager' => $em, 'user' => $this->getUser()]);
         $form->handleRequest($request);
@@ -125,10 +115,9 @@ class PersonController extends AbstractController implements PaginatorAwareInter
     /**
      * Full text search for Person entities.
      *
-     * @Route("/search", name="person_search", methods={"GET"})
-     * @Template
-     *
      * @return array<string,mixed>     */
+    #[Route(path: '/search', name: 'person_search', methods: ['GET'])]
+    #[Template]
     public function searchAction(Request $request, PersonRepository $repo, EntityManagerInterface $em) {
         $form = $this->createForm(PersonSearchType::class, null, [
             'entity_manager' => $em,
@@ -154,11 +143,10 @@ class PersonController extends AbstractController implements PaginatorAwareInter
     /**
      * Exports a person's titles in CSV.
      *
-     * @Route("/{id}/export/{format}", name="person_export_csv", methods={"GET", "POST"}, requirements={"format": "^csv$"})
-     * @Template
-     *
      * @return BinaryFileResponse
      */
+    #[Route(path: '/{id}/export/{format}', name: 'person_export_csv', methods: ['GET', 'POST'], requirements: ['format' => '^csv$'])]
+    #[Template]
     public function exportCsvAction(Request $request, Person $person, CsvExporter $exporter) {
         $titleRoles = $person->getTitleRoles(true);
         if ( ! $this->getUser()) {
@@ -174,7 +162,7 @@ class PersonController extends AbstractController implements PaginatorAwareInter
         fputcsv($fh, array_merge($exporter->personHeaders(), ['Role'], $exporter->titleHeaders()));
 
         foreach ($titleRoles as $role) {
-            fputcsv($fh, array_merge($exporter->personRow($person), [$role->getRole()->getName()], $exporter->titleRow($role->getTitle())));
+            fputcsv($fh, [...$exporter->personRow($person), $role->getRole()->getName(), ...$exporter->titleRow($role->getTitle())]);
         }
 
         fclose($fh);
@@ -188,13 +176,10 @@ class PersonController extends AbstractController implements PaginatorAwareInter
     /**
      * Exports a person's titles in a format.
      *
-     * @Route("/{id}/export/{format}", name="person_export", methods={"GET", "POST"})
-     * @Template
-     *
-     * @param mixed $format
-     *
      * @return array<string,mixed>     */
-    public function exportAction(Request $request, Person $person, $format) {
+    #[Route(path: '/{id}/export/{format}', name: 'person_export', methods: ['GET', 'POST'])]
+    #[Template]
+    public function exportAction(Request $request, Person $person, mixed $format) {
         $titleRoles = $person->getTitleRoles(true);
         if ( ! $this->getUser()) {
             $titleRoles = $titleRoles->filter(function (TitleRole $tr) {
@@ -214,12 +199,11 @@ class PersonController extends AbstractController implements PaginatorAwareInter
     /**
      * Creates a new Person entity.
      *
-     * @Route("/new", name="person_new", methods={"GET", "POST"})
-     * @Security("is_granted('ROLE_CONTENT_ADMIN')")
-     * @Template
-     *
      * @return array<string,mixed>|RedirectResponse
      */
+    #[Route(path: '/new', name: 'person_new', methods: ['GET', 'POST'])]
+    #[Security("is_granted('ROLE_CONTENT_ADMIN')")]
+    #[Template]
     public function newAction(Request $request, EntityManagerInterface $em) {
         $person = new Person();
         $form = $this->createForm(PersonType::class, $person);
@@ -243,10 +227,9 @@ class PersonController extends AbstractController implements PaginatorAwareInter
     /**
      * Exports all person entries in CSV.
      *
-     * @Route("/export", name="person_export_all", methods={"GET"})
-     *
      * @return BinaryFileResponse
      */
+    #[Route(path: '/export', name: 'person_export_all', methods: ['GET'])]
     public function exportAllAction(Request $request, CsvExporter $exporter, PersonRepository $repo) {
         $persons = [];
         if ($this->getUser()) {
@@ -275,10 +258,9 @@ class PersonController extends AbstractController implements PaginatorAwareInter
     /**
      * Finds and displays a Person entity.
      *
-     * @Route("/{id}.{_format}", name="person_show", defaults={"_format": "html"}, methods={"GET"})
-     * @Template
-     *
      * @return array<string,mixed>     */
+    #[Route(path: '/{id}.{_format}', name: 'person_show', defaults: ['_format' => 'html'], methods: ['GET'])]
+    #[Template]
     public function showAction(Request $request, Person $person) {
         $titleRoles = $person->getTitleRoles(true);
         if ( ! $this->getUser()) {
@@ -300,13 +282,11 @@ class PersonController extends AbstractController implements PaginatorAwareInter
     /**
      * Displays a form to edit an existing Person entity.
      *
-     * @Route("/{id}/edit", name="person_edit", methods={"GET", "POST"})
-     *
-     * @Security("is_granted('ROLE_CONTENT_ADMIN')")
-     * @Template
-     *
      * @return array<string,mixed>|RedirectResponse
      */
+    #[Route(path: '/{id}/edit', name: 'person_edit', methods: ['GET', 'POST'])]
+    #[Security("is_granted('ROLE_CONTENT_ADMIN')")]
+    #[Template]
     public function editAction(Request $request, Person $person, EntityManagerInterface $em) {
         $editForm = $this->createForm(PersonType::class, $person);
         $editForm->handleRequest($request);
@@ -327,12 +307,10 @@ class PersonController extends AbstractController implements PaginatorAwareInter
     /**
      * Deletes a Person entity.
      *
-     * @Route("/{id}/delete", name="person_delete", methods={"GET"})
-     *
-     * @Security("is_granted('ROLE_CONTENT_ADMIN')")
-     *
      * @return RedirectResponse
      */
+    #[Route(path: '/{id}/delete', name: 'person_delete', methods: ['GET'])]
+    #[Security("is_granted('ROLE_CONTENT_ADMIN')")]
     public function deleteAction(Request $request, Person $person, EntityManagerInterface $em) {
         $em->remove($person);
         $em->flush();

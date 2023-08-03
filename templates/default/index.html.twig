@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% set hero_image = asset('images/hero.jpg') %}
+{% set hero_image = asset_prefix|default('') ~ asset('images/hero.jpg') %}
 
 {% block htmlhead %}
 <link rel="preload" href="{{ hero_image }}" as="image"/>

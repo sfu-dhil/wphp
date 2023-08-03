@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Services;
 
 use App\Entity\EstcMarc;
@@ -31,56 +25,32 @@ use Doctrine\ORM\EntityManagerInterface;
  * Import MARC records from ESTC.
  */
 class EstcMarcImporter {
-    /**
-     * @var EntityManagerInterface
-     */
-    private $em;
+    private \Doctrine\ORM\EntityRepository|EstcMarcRepository $estcRepo;
 
-    /**
-     * @var EstcMarcRepository
-     */
-    private $estcRepo;
+    private \Doctrine\ORM\EntityRepository|TitleRepository $titleRepo;
 
-    /**
-     * @var TitleRepository
-     */
-    private $titleRepo;
+    private \Doctrine\ORM\EntityRepository|RoleRepository $roleRepo;
 
-    /**
-     * @var RoleRepository
-     */
-    private $roleRepo;
-
-    /**
-     * @var SourceRepository
-     */
-    private $sourceRepo;
+    private \Doctrine\ORM\EntityRepository|SourceRepository $sourceRepo;
 
     /**
      * @var PersonRepository
      */
-    private $personRepo;
+    private \Doctrine\ORM\EntityRepository $personRepo;
 
-    /**
-     * @var FormatRepository
-     */
-    private $formatRepo;
+    private \Doctrine\ORM\EntityRepository|FormatRepository $formatRepo;
 
-    /**
-     * @var TitleSourceRepository
-     */
-    private $titleSourceRepository;
+    private \Doctrine\ORM\EntityRepository|TitleSourceRepository $titleSourceRepository;
 
     /**
      * @var array<string>
      */
-    private $messages;
+    private array $messages;
 
     /**
      * EstcMarcImporter constructor.
      */
-    public function __construct(EntityManagerInterface $em) {
-        $this->em = $em;
+    public function __construct(private EntityManagerInterface $em) {
         $this->estcRepo = $this->em->getRepository(EstcMarc::class);
         $this->titleRepo = $this->em->getRepository(Title::class);
         $this->roleRepo = $this->em->getRepository(Role::class);
@@ -164,16 +134,16 @@ class EstcMarcImporter {
         $data = $fields['100d']->getFieldData();
 
         $matches = [];
-        if (preg_match('/(\d{4})[?.]*-(\d{4})/', $data, $matches)) {
+        if (preg_match('/(\d{4})[?.]*-(\d{4})/', (string) $data, $matches)) {
             return [$matches[1], $matches[2]];
         }
-        if (preg_match('/-(\d{4})/', $data, $matches)) {
+        if (preg_match('/-(\d{4})/', (string) $data, $matches)) {
             return [null, $matches[1]];
         }
-        if (preg_match('/(\d{4})[?.]*-/', $data, $matches)) {
+        if (preg_match('/(\d{4})[?.]*-/', (string) $data, $matches)) {
             return [$matches[1], null];
         }
-        if (preg_match('/b\.\s*(\d{4})/', $data, $matches)) {
+        if (preg_match('/b\.\s*(\d{4})/', (string) $data, $matches)) {
             return [$matches[1], null];
         }
 
@@ -184,19 +154,15 @@ class EstcMarcImporter {
 
     /**
      * Guess the format of a title.
-     *
-     * @param array $fields
-     *
-     * @return null|Format
      */
-    public function guessFormat($fields) {
+    public function guessFormat(array $fields) : ?Format {
         if ( ! isset($fields['300c']) || null === $fields['300c']->getFieldData()) {
             return null;
         }
         $data = $fields['300c']->getFieldData();
         $matches = [];
         $format = null;
-        if (preg_match('/(\d+[mtv]o)/', $data, $matches)) {
+        if (preg_match('/(\d+[mtv]o)/', (string) $data, $matches)) {
             $format = $this->formatRepo->findOneBy([
                 'abbreviation' => $matches[1],
             ]);
@@ -224,11 +190,11 @@ class EstcMarcImporter {
         }
         $data = $fields['300c']->getFieldData();
         $matches = [];
-        if (preg_match('/(\\d+)\\s*(?:cm)?\\s*x\\s*(\\d+)\\s*(?:cm)?/', $data, $matches)) {
+        if (preg_match('/(\\d+)\\s*(?:cm)?\\s*x\\s*(\\d+)\\s*(?:cm)?/', (string) $data, $matches)) {
             return [$matches[1], $matches[2]];
         }
 
-        if (preg_match('/(\\d+)\\s*(?:cm|mm)/', $data, $matches)) {
+        if (preg_match('/(\\d+)\\s*(?:cm|mm)/', (string) $data, $matches)) {
             return [$matches[1], null];
         }
 
@@ -239,12 +205,8 @@ class EstcMarcImporter {
 
     /**
      * Import one title. Does not persist the title.
-     *
-     * @param string $id
-     *
-     * @return Title
      */
-    public function import($id) {
+    public function import(string $id) : Title {
         $fields = $this->getFields($id);
 
         $fullTitle = $fields['245a']->getFieldData();
@@ -308,10 +270,8 @@ class EstcMarcImporter {
 
     /**
      * Get the list of messages generated during the import.
-     *
-     * @return mixed
      */
-    public function getMessages() {
+    public function getMessages() : mixed {
         return $this->messages;
     }
 

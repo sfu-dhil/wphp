@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Repository;
 
 use App\Entity\Currency;
@@ -21,6 +15,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method null|Currency findOneBy(array $criteria, array $orderBy = null)
  * @method Currency[] findAll()
  * @method Currency[] findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ *
  * @phpstan-extends ServiceEntityRepository<Currency>
  */
 class CurrencyRepository extends ServiceEntityRepository {

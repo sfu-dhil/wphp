@@ -2,44 +2,25 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Entity;
 
+use App\Repository\RoleRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Stringable;
 
-/**
- * Role.
- *
- * @ORM\Table(name="role")
- * @ORM\Entity(repositoryClass="App\Repository\RoleRepository")
- */
-class Role {
-    /**
-     * @var bool
-     *
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $id;
+#[ORM\Table(name: 'role')]
+#[ORM\Entity(repositoryClass: RoleRepository::class)]
+class Role implements Stringable {
+    #[ORM\Column(name: 'id', type: 'integer', nullable: false)]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    private ?int $id = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="name", type="text", nullable=true)
-     */
-    private $name;
+    #[ORM\Column(name: 'name', type: 'text', nullable: true)]
+    private ?string $name;
 
-    /**
-     * @var string
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $description;
+    #[ORM\Column(type: 'text', nullable: true)]
+    private ?string $description;
 
     /**
      * Return the name of this role.
@@ -48,56 +29,27 @@ class Role {
         return $this->name;
     }
 
-    /**
-     * Get id.
-     *
-     * @return bool
-     */
-    public function getId() {
+    public function getId() : ?int {
         return $this->id;
     }
 
-    /**
-     * Set name.
-     *
-     * @param string $name
-     *
-     * @return Role
-     */
-    public function setName($name) {
+    public function setName(?string $name) : self {
         $this->name = $name;
 
         return $this;
     }
 
-    /**
-     * Get name.
-     *
-     * @return string
-     */
-    public function getName() {
+    public function getName() : ?string {
         return $this->name;
     }
 
-    /**
-     * Set description.
-     *
-     * @param null|string $description
-     *
-     * @return self
-     */
-    public function setDescription($description = null) {
+    public function setDescription(?string $description = null) : self {
         $this->description = $description;
 
         return $this;
     }
 
-    /**
-     * Get description.
-     *
-     * @return null|string
-     */
-    public function getDescription() {
+    public function getDescription() : ?string {
         return $this->description;
     }
 }

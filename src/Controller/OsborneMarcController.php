@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Controller;
 
 use App\Entity\OsborneMarc;
@@ -24,10 +18,9 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * OsborneMarc controller.
- *
- * @Security("is_granted('ROLE_USER')")
- * @Route("/resource/osborne")
  */
+#[Security("is_granted('ROLE_USER')")]
+#[Route(path: '/resource/osborne')]
 class OsborneMarcController extends AbstractController implements PaginatorAwareInterface {
     use PaginatorTrait;
 
@@ -35,10 +28,9 @@ class OsborneMarcController extends AbstractController implements PaginatorAware
      * Lists all OsborneMarc entities.
      *
      * @return array<string,mixed> *
-     * @Route("/", name="resource_osborne_index", methods={"GET"})
-     *
-     * @Template
      */
+    #[Route(path: '/', name: 'resource_osborne_index', methods: ['GET'])]
+    #[Template]
     public function indexAction(Request $request, MarcManager $manager, OsborneMarcRepository $repo) {
         $query = $repo->indexQuery();
         $osborneMarcs = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
@@ -52,10 +44,9 @@ class OsborneMarcController extends AbstractController implements PaginatorAware
     /**
      * Search for OsborneMarc entities.
      *
-     * @Route("/search", name="resource_osborne_search", methods={"GET"})
-     * @Template
-     *
      * @return array<string,mixed>     */
+    #[Route(path: '/search', name: 'resource_osborne_search', methods: ['GET'])]
+    #[Template]
     public function searchAction(Request $request, MarcManager $manager, OsborneMarcRepository $repo) {
         $q = $request->query->get('q');
         if ($q) {
@@ -85,11 +76,10 @@ class OsborneMarcController extends AbstractController implements PaginatorAware
      * Finds and displays a OsborneMarc entity.
      *
      * @return array<string,mixed> *
-     * @Route("/{id}", name="resource_osborne_show", methods={"GET"})
-     *
-     * @ParamConverter("osborneMarc", options={"mapping": {"id": "titleId"}})
-     * @Template
      */
+    #[Route(path: '/{id}', name: 'resource_osborne_show', methods: ['GET'])]
+    #[ParamConverter('osborneMarc', options: ['mapping' => ['id' => 'titleId']])]
+    #[Template]
     public function showAction(OsborneMarc $osborneMarc, MarcManager $manager) {
         return [
             'osborneMarc' => $osborneMarc,

@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Tests\Entity;
 
 use App\Entity\Firm;
@@ -21,11 +15,8 @@ use PHPUnit\Framework\TestCase;
 class FirmTest extends TestCase {
     /**
      * @dataProvider getStartDateData
-     *
-     * @param mixed $expected
-     * @param mixed $date
      */
-    public function testGetStartDate($expected, $date) : void {
+    public function testGetStartDate(mixed $expected, mixed $date) : void {
         $firm = new Firm();
         $firm->setStartDate($date);
         $this->AssertEquals($expected, $firm->getStartDate());
@@ -44,11 +35,8 @@ class FirmTest extends TestCase {
 
     /**
      * @dataProvider getEndDateData
-     *
-     * @param mixed $expected
-     * @param mixed $date
      */
-    public function testGetEndDate($expected, $date) : void {
+    public function testGetEndDate(mixed $expected, mixed $date) : void {
         $firm = new Firm();
         $firm->setEndDate($date);
         $this->assertSame($expected, $firm->getEndDate());

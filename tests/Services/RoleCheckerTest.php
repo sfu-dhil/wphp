@@ -2,18 +2,13 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Tests\Services;
 
 use App\Services\RoleChecker;
 use Exception;
 use Nines\UtilBundle\TestCase\ControllerTestCase;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class RoleCheckerTest extends ControllerTestCase {
@@ -21,7 +16,7 @@ class RoleCheckerTest extends ControllerTestCase {
         $authChecker = $this->createMock(AuthorizationCheckerInterface::class);
         $authChecker->method('isGranted')->will($this->throwException(new Exception('No token')));
         $storage = $this->createMock(TokenStorageInterface::class);
-        $storage->method('getToken')->willReturn(false);
+        $storage->method('getToken')->willReturn(null);
         $checker = new RoleChecker($authChecker, $storage);
         $this->assertFalse($checker->hasRole('ROLE_USER'));
     }
@@ -29,8 +24,9 @@ class RoleCheckerTest extends ControllerTestCase {
     public function testNotAuthorized() : void {
         $authChecker = $this->createMock(AuthorizationCheckerInterface::class);
         $authChecker->method('isGranted')->willReturn(false);
+        $token = $this->createMock(TokenInterface::class);
         $storage = $this->createMock(TokenStorageInterface::class);
-        $storage->method('getToken')->willReturn('abc');
+        $storage->method('getToken')->willReturn($token);
         $checker = new RoleChecker($authChecker, $storage);
         $this->assertFalse($checker->hasRole('ROLE_USER'));
     }
@@ -38,8 +34,9 @@ class RoleCheckerTest extends ControllerTestCase {
     public function testAuthorized() : void {
         $authChecker = $this->createMock(AuthorizationCheckerInterface::class);
         $authChecker->method('isGranted')->willReturn(true);
+        $token = $this->createMock(TokenInterface::class);
         $storage = $this->createMock(TokenStorageInterface::class);
-        $storage->method('getToken')->willReturn(true);
+        $storage->method('getToken')->willReturn($token);
         $checker = new RoleChecker($authChecker, $storage);
         $this->assertTrue($checker->hasRole('ROLE_USER'));
     }

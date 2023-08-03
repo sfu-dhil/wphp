@@ -6,79 +6,82 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="google" content="notranslate"/>
     <title>{% block title %}WPHP{% endblock %}</title>
-    <link rel="icon" href="{{ asset('images/favicon.ico') }}" sizes="any"/>
-    <link rel="icon" href="{{ asset('images/favicon.svg') }}" type="image/svg+xml"/>
-    <link rel="stylesheet" href="{{ asset('node_modules/@fortawesome/fontawesome-free/css/all.css') }}">
-    <link rel="stylesheet" href="{{ asset('node_modules/bootstrap3/dist/css/bootstrap.min.css') }}"/>
-    <link rel="stylesheet" href="{{ asset('css/base.css') }}" media="all"/>
-    <link rel="stylesheet" href="{{ asset('css/print.css') }}" media="print"/>
-    <script src="{{ asset('node_modules/jquery/dist/jquery.min.js') }}"></script>
-    <script src="{{ asset('node_modules/select2/dist/js/select2.full.min.js') }}"></script>
-    <link href="{{ asset('node_modules/select2/dist/css/select2.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('node_modules/select2-bootstrap-css/select2-bootstrap.min.css') }}" rel="stylesheet">
-    <script src="{{ asset('bundles/tetranzselect2entity/js/select2entity.js') }}"></script>
-    <script src="{{ asset('node_modules/symfony-collection/jquery.collection.js') }}"></script>
-    <script src="{{ asset('js/form.js') }}"></script>
+    <link rel="icon" href="{{ asset_prefix|default('') ~ asset('images/favicon.ico') }}" sizes="any"/>
+    <link rel="icon" href="{{ asset_prefix|default('') ~ asset('images/favicon.svg') }}" type="image/svg+xml"/>
+
+    <link rel="stylesheet" href="{{ asset_prefix|default('') ~ asset('node_modules/@fortawesome/fontawesome-free/css/all.css') }}">
+    <link rel="stylesheet" href="{{ asset_prefix|default('') ~ asset('node_modules/bootstrap/dist/css/bootstrap.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset_prefix|default('') ~ asset('node_modules/bootstrap-icons/font/bootstrap-icons.css') }}" />
+    <link rel="stylesheet" href="{{ asset_prefix|default('') ~ asset('node_modules/select2/dist/css/select2.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset_prefix|default('') ~ asset('node_modules/select2-bootstrap-5-theme/dist/select2-bootstrap-5-theme.min.css') }}" />
+
+    <link rel="stylesheet" href="{{ asset_prefix|default('') ~ asset('css/base.css') }}" media="all"/>
+    <link rel="stylesheet" href="{{ asset_prefix|default('') ~ asset('css/print.css') }}" media="print"/>
+
+    <script src="{{ asset_prefix|default('') ~ asset('node_modules/jquery/dist/jquery.min.js') }}"></script>
+    <script src="{{ asset_prefix|default('') ~ asset('node_modules/select2/dist/js/select2.full.min.js') }}"></script>
+    <script src="{{ asset_prefix|default('') ~ asset('bundles/tetranzselect2entity/js/select2entity.js') }}"></script>
+    <script src="{{ asset_prefix|default('') ~ asset('node_modules/symfony-collection/jquery.collection.js') }}"></script>
+    <script src="{{ asset_prefix|default('') ~ asset('node_modules/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset_prefix|default('') ~ asset('js/form.js') }}"></script>
     {% block htmlhead %}{% endblock %}
     {% block styles %}{% endblock -%}
 </head>
 <body class="{{ app.request.get('_route') }}">
-<nav class="navbar navbar-default navbar-fixed-top">
-    <div class="nav-container">
-        <div class="nav-brand">
-            <a href="{{ path('homepage') }}">
-                <img src="{{ asset('images/logo_white_2.svg') }}" alt="Home page"/>
-            </a>
-        </div>
-        <div class="navbar-header nav-toggle">
-            <button class="hamburger hamburger--collapse navbar-toggle" type="button"
-                    data-toggle="collapse" data-target="#navbar"
-                    aria-expanded="false" aria-controls="navbar">
-                <span class="hamburger-box">
-                    <span class="hamburger-inner"></span>
-                </span>
-            </button>
-        </div>
-        <div id="navbar" class="collapse navbar-collapse" aria-expanded="false">
-            {{ knp_menu_render('nines_blog_pages') }}
-            {{ knp_menu_render('main') }}
-            {{ knp_menu_render('research') }}
-            {{ knp_menu_render('spotlight') }}
-            {% set postMenu = knp_menu_get('wphp_post', [], {'title': 'Podcast'}) %}
-            {{ knp_menu_render(postMenu) }}
-            {{ knp_menu_render('wphp_user') }}
-        </div>
-    </div>
-</nav>
-<main class="container">
-    {% if block('pageheader') is defined %}
-        <div class="page-header">
-            {{ block('pageheader') }}
-        </div>
-    {% endif %}
-
-    {% for type, messages in app.session.flashbag.all() %}
-        {% for message in messages %}
-            <div class="alert alert-{{ type }}">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span>
-                </button>
-                {{ message }}
+    <nav class="navbar navbar-default fixed-top">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <a href="{{ path('homepage') }}">
+                    <img src="{{ asset_prefix|default('') ~ asset('images/logo_white_2.svg') }}" alt="Home page"/>
+                </a>
             </div>
+            <div class="navbar-header nav-toggle ms-auto">
+                <button class="hamburger hamburger--collapse navbar-toggle" type="button"
+                        data-bs-toggle="collapse" data-bs-target="#navbar"
+                        aria-expanded="false" aria-controls="navbar">
+                    <span class="hamburger-box">
+                        <span class="hamburger-inner"></span>
+                    </span>
+                </button>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse" aria-expanded="false">
+                {{ knp_menu_render('nines_blog_pages', { 'allow_safe_labels': true }) }}
+                {{ knp_menu_render('main', { 'allow_safe_labels': true }) }}
+                {{ knp_menu_render('research', { 'allow_safe_labels': true }) }}
+                {{ knp_menu_render('spotlight', { 'allow_safe_labels': true }) }}
+                {% set postMenu = knp_menu_get('wphp_post', [], {'title': 'Podcast'}) %}
+                {{ knp_menu_render(postMenu, { 'allow_safe_labels': true }) }}
+                {{ knp_menu_render('wphp_user', { 'allow_safe_labels': true }) }}
+            </div>
+        </div>
+    </nav>
+    <main class="container">
+        {% for type, messages in app.session.flashbag.all() %}
+            {% for message in messages %}
+                <div class="alert alert-{{ type }} alert-dismissible fade show" role="alert">
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    {{ message }}
+                </div>
+            {% endfor %}
         {% endfor %}
-    {% endfor %}
 
-    {% block body %}
+        {% if block('pageheader') is defined %}
+            <div class="page-header">
+                {{ block('pageheader') }}
+            </div>
+        {% endif %}
+
+        {% block body %}
+        {% endblock %}
+    </main>
+
+    {% include 'partial/footer.html.twig' %}
+
+    {% block javascripts %}
     {% endblock %}
-</main>
-
-{% include 'partial/footer.html.twig' %}
-
-<script src="{{ asset('node_modules/bootstrap3/dist/js/bootstrap.min.js') }}"></script>
-{% block javascripts %}
-{% endblock %}
-<script src="{{ asset('js/dist/main.js') }}" type="module"></script>
-{% if matomo_enabled %}
-    {% include '@NinesUtil/matomo.html.twig' %}
-{% endif %}
+    <script src="{{ asset_prefix|default('') ~ asset('js/dist/main.js') }}" type="module"></script>
+    {% if matomo_enabled %}
+        {% include '@NinesUtil/matomo.html.twig' %}
+    {% endif %}
 </body>
 </html>

@@ -1,7 +1,7 @@
 <footer class="footer">
     <div class="container footer_container">
         <div class="footer_logo">
-            <img src="{{ asset('images/logo_white_2.svg') }}"/>
+            <img src="{{ asset_prefix|default('') ~ asset('images/logo_white_2.svg') }}"/>
         </div>
         <div class="footer_social">
             <ul class="social-icons-list list-unstyled">
@@ -45,11 +45,11 @@
 
                 <p>The Women’s Print History Project is supported in part by funding from
                     the Social Sciences and Humanities Research Council.</p>
-                <img src="{{ asset('images/sshrc_color.svg') }}" alt="SSHRC"/>
+                <img src="{{ asset_prefix|default('') ~ asset('images/sshrc_color.svg') }}" alt="SSHRC"/>
             </div>
             <div class="dhil">
                 <a href="https://dhil.lib.sfu.ca" class="img-container">
-                    <img src="{{ asset('images/DHIL.png') }}"
+                    <img src="{{ asset_prefix|default('') ~ asset('images/DHIL.png') }}"
                          alt="Digital Humanities Innovation Lab at SFU">
                 </a>
             </div>

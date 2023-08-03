@@ -2,37 +2,23 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Entity;
 
+use App\Repository\PostCategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Nines\UtilBundle\Entity\AbstractTerm;
 
-/**
- * PostCategory.
- *
- * @ORM\Table(name="nines_blog_post_category")
- * @ORM\Entity(repositoryClass="App\Repository\PostCategoryRepository")
- */
+#[ORM\Table(name: 'nines_blog_post_category')]
+#[ORM\Entity(repositoryClass: PostCategoryRepository::class)]
 class PostCategory extends AbstractTerm {
     /**
-     * Posts in the category.
-     *
      * @var Collection<int,Post>|Post[]
-     * @ORM\OneToMany(targetEntity="Post", mappedBy="category")
      */
-    private $posts;
+    #[ORM\OneToMany(targetEntity: Post::class, mappedBy: 'category')]
+    private Collection|array $posts;
 
-    /**
-     * Construct the category.
-     */
     public function __construct() {
         parent::__construct();
         $this->posts = new ArrayCollection();
@@ -40,8 +26,6 @@ class PostCategory extends AbstractTerm {
 
     /**
      * @return Collection<int,Post>|Post[]
-     *
-     * @codeCoverageIgnore
      */
     public function getPosts() : Collection {
         return $this->posts;

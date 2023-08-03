@@ -2,191 +2,91 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Entity;
 
+use App\Repository\MarcSubfieldStructureRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Stringable;
 
-/**
- * MarcSubfieldStructure.
- *
- * @ORM\Table(name="marc_subfield_structure",
- *     indexes={
- *         @ORM\Index(name="marcsubfield_fields_idx", columns={"tagfield", "tagsubfield"})
- *     }
- * )
- * @ORM\Entity(repositoryClass="App\Repository\MarcSubfieldStructureRepository")
- */
-class MarcSubfieldStructure {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $id;
+#[ORM\Table(name: 'marc_subfield_structure')]
+#[ORM\Index(name: 'marcsubfield_fields_idx', columns: ['tagfield', 'tagsubfield'])]
+#[ORM\Entity(repositoryClass: MarcSubfieldStructureRepository::class)]
+class MarcSubfieldStructure implements Stringable {
+    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    private ?int $id = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="tagfield", type="string", length=3)
-     */
-    private $tagField;
+    #[ORM\Column(name: 'tagfield', type: 'string', length: 3)]
+    private ?string $tagField = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="tagsubfield", type="string", length=1)
-     */
-    private $tagSubfield;
+    #[ORM\Column(name: 'tagsubfield', type: 'string', length: 1)]
+    private ?string $tagSubfield = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="liblibrarian", type="string", length=255, nullable=false)
-     */
-    private $name;
+    #[ORM\Column(name: 'liblibrarian', type: 'string', length: 255, nullable: false)]
+    private ?string $name = null;
 
-    /**
-     * @var bool
-     *
-     * @ORM\Column(name="isurl", type="boolean", nullable=true)
-     */
-    private $isUrl;
+    #[ORM\Column(name: 'isurl', type: 'boolean', nullable: true)]
+    private ?bool $isUrl = null;
 
-    /**
-     * @var bool
-     *
-     * @ORM\Column(name="hidden", type="integer", nullable=true)
-     */
-    private $hidden = false;
+    #[ORM\Column(name: 'hidden', type: 'integer', nullable: true)]
+    private bool $hidden = false;
 
     public function __toString() : string {
         return $this->name;
     }
 
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId() {
+    public function getId() : ?int {
         return $this->id;
     }
 
-    /**
-     * Set tagField.
-     *
-     * @param string $tagField
-     *
-     * @return MarcSubfieldStructure
-     */
-    public function setTagField($tagField) {
+    public function setTagField(?string $tagField) : self {
         $this->tagField = $tagField;
 
         return $this;
     }
 
-    /**
-     * Get tagField.
-     *
-     * @return string
-     */
-    public function getTagField() {
+    public function getTagField() : ?string {
         return $this->tagField;
     }
 
-    /**
-     * Set tagSubfield.
-     *
-     * @param string $tagSubfield
-     *
-     * @return MarcSubfieldStructure
-     */
-    public function setTagSubfield($tagSubfield) {
+    public function setTagSubfield(?string $tagSubfield) : self {
         $this->tagSubfield = $tagSubfield;
 
         return $this;
     }
 
-    /**
-     * Get tagSubfield.
-     *
-     * @return string
-     */
-    public function getTagSubfield() {
+    public function getTagSubfield() : ?string {
         return $this->tagSubfield;
     }
 
-    /**
-     * Set name.
-     *
-     * @param string $name
-     *
-     * @return MarcSubfieldStructure
-     */
-    public function setName($name) {
+    public function setName(?string $name) : self {
         $this->name = $name;
 
         return $this;
     }
 
-    /**
-     * Get name.
-     *
-     * @return string
-     */
-    public function getName() {
+    public function getName() : ?string {
         return $this->name;
     }
 
-    /**
-     * Set isUrl.
-     *
-     * @param bool $isUrl
-     *
-     * @return MarcSubfieldStructure
-     */
-    public function setIsUrl($isUrl) {
+    public function setIsUrl(?bool $isUrl) : self {
         $this->isUrl = $isUrl;
 
         return $this;
     }
 
-    /**
-     * Get isUrl.
-     *
-     * @return bool
-     */
-    public function getIsUrl() {
+    public function getIsUrl() : ?bool {
         return $this->isUrl;
     }
 
-    /**
-     * Set hidden.
-     *
-     * @param bool $hidden
-     *
-     * @return MarcSubfieldStructure
-     */
-    public function setHidden($hidden) {
+    public function setHidden(bool $hidden) : self {
         $this->hidden = $hidden;
 
         return $this;
     }
 
-    /**
-     * Get hidden.
-     *
-     * @return bool
-     */
-    public function getHidden() {
+    public function getHidden() : bool {
         return $this->hidden;
     }
 }

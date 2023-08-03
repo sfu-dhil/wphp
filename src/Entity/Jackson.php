@@ -2,524 +2,248 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Entity;
 
+use App\Repository\JacksonRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Stringable;
 
-/**
- * Jackson.
- *
- * @ORM\Table(name="jackson_biblio",
- *     indexes={
- *         @ORM\Index(name="jackson_jbid_idx", columns={"jbid"}),
- *         @ORM\Index(name="jackson_ft", columns={"author", "title"}, flags={"fulltext"})
- *     }
- * )
- * @ORM\Entity(repositoryClass="App\Repository\JacksonRepository")
- */
-class Jackson {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
+#[ORM\Table(name: 'jackson_biblio')]
+#[ORM\Index(name: 'jackson_jbid_idx', columns: ['jbid'])]
+#[ORM\Index(name: 'jackson_ft', columns: ['author', 'title'], flags: ['fulltext'])]
+#[ORM\Entity(repositoryClass: JacksonRepository::class)]
+class Jackson implements Stringable {
+    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    private ?int $id = null;
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="jbid", type="integer")
-     */
-    private $jbid;
+    #[ORM\Column(name: 'jbid', type: 'integer')]
+    private ?int $jbid = null;
 
-    /**
-     * @var string
-     * @ORM\Column(name="detailedentry", type="text")
-     */
-    private $detailedEntry;
+    #[ORM\Column(name: 'detailedentry', type: 'text')]
+    private ?string $detailedEntry = null;
 
-    /**
-     * @var string
-     * @ORM\Column(name="author", type="text", nullable=true)
-     */
-    private $author;
+    #[ORM\Column(name: 'author', type: 'text', nullable: true)]
+    private ?string $author = null;
 
-    /**
-     * @var string
-     * @ORM\Column(name="title", type="text")
-     */
-    private $title;
+    #[ORM\Column(name: 'title', type: 'text')]
+    private ?string $title = null;
 
-    /**
-     * @var string
-     * @ORM\Column(name="editor", type="text", nullable=true)
-     */
-    private $editor;
+    #[ORM\Column(name: 'editor', type: 'text', nullable: true)]
+    private ?string $editor = null;
 
-    /**
-     * @var string
-     * @ORM\Column(name="pubplace", type="string", length=160, nullable=true)
-     */
-    private $pubplace;
+    #[ORM\Column(name: 'pubplace', type: 'string', length: 160, nullable: true)]
+    private ?string $pubplace = null;
 
-    /**
-     * @var string
-     * @ORM\Column(name="publisher", type="text", nullable=true)
-     */
-    private $publisher;
+    #[ORM\Column(name: 'publisher', type: 'text', nullable: true)]
+    private ?string $publisher = null;
 
-    /**
-     * @var string
-     * @ORM\Column(name="pubdate", type="text", nullable=true)
-     */
-    private $pubdate;
+    #[ORM\Column(name: 'pubdate', type: 'text', nullable: true)]
+    private ?string $pubdate = null;
 
-    /**
-     * @var string
-     * @ORM\Column(name="edition", type="string", length=160, nullable=true)
-     */
-    private $edition;
+    #[ORM\Column(name: 'edition', type: 'string', length: 160, nullable: true)]
+    private ?string $edition = null;
 
-    /**
-     * @var string
-     * @ORM\Column(name="format", type="string", length=160, nullable=true)
-     */
-    private $format;
+    #[ORM\Column(name: 'format', type: 'string', length: 160, nullable: true)]
+    private ?string $format = null;
 
-    /**
-     * @var string
-     * @ORM\Column(name="pagination", type="string", length=160, nullable=true)
-     */
-    private $pagination;
+    #[ORM\Column(name: 'pagination', type: 'string', length: 160, nullable: true)]
+    private ?string $pagination = null;
 
-    /**
-     * @var string
-     * @ORM\Column(name="price", type="string", length=120, nullable=true)
-     */
-    private $price;
+    #[ORM\Column(name: 'price', type: 'string', length: 120, nullable: true)]
+    private ?string $price = null;
 
-    /**
-     * @var string
-     * @ORM\Column(name="reference", type="string", length=120, nullable=true)
-     */
-    private $reference;
+    #[ORM\Column(name: 'reference', type: 'string', length: 120, nullable: true)]
+    private ?string $reference = null;
 
-    /**
-     * @var string
-     * @ORM\Column(name="library", type="string", length=80, nullable=true)
-     */
-    private $library;
+    #[ORM\Column(name: 'library', type: 'string', length: 80, nullable: true)]
+    private ?string $library = null;
 
-    /**
-     * @var string
-     * @ORM\Column(name="shelfmark", type="string", length=80, nullable=true)
-     */
-    private $shelfmark;
+    #[ORM\Column(name: 'shelfmark', type: 'string', length: 80, nullable: true)]
+    private ?string $shelfmark = null;
 
-    /**
-     * @var string
-     * @ORM\Column(name="comment", type="text", nullable=true)
-     */
-    private $comment;
+    #[ORM\Column(name: 'comment', type: 'text', nullable: true)]
+    private ?string $comment = null;
 
-    /**
-     * @var string
-     * @ORM\Column(name="examnote", type="text")
-     */
-    private $examnote;
+    #[ORM\Column(name: 'examnote', type: 'text')]
+    private ?string $examnote = null;
 
     public function __toString() : string {
         return $this->title;
     }
 
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId() {
+    public function getId() : ?int {
         return $this->id;
     }
 
-    /**
-     * Set jbid.
-     *
-     * @param int $jbid
-     *
-     * @return Jackson
-     */
-    public function setJbid($jbid) {
+    public function setJbid(?int $jbid) : self {
         $this->jbid = $jbid;
 
         return $this;
     }
 
-    /**
-     * Get jbid.
-     *
-     * @return int
-     */
-    public function getJbid() {
+    public function getJbid() : ?int {
         return $this->jbid;
     }
 
-    /**
-     * Set detailedEntry.
-     *
-     * @param string $detailedEntry
-     *
-     * @return Jackson
-     */
-    public function setDetailedEntry($detailedEntry) {
+    public function setDetailedEntry(?string $detailedEntry) : self {
         $this->detailedEntry = $detailedEntry;
 
         return $this;
     }
 
-    /**
-     * Get detailedEntry.
-     *
-     * @return string
-     */
-    public function getDetailedEntry() {
+    public function getDetailedEntry() : ?string {
         return $this->detailedEntry;
     }
 
-    /**
-     * Set author.
-     *
-     * @param string $author
-     *
-     * @return Jackson
-     */
-    public function setAuthor($author) {
+    public function setAuthor(?string $author) : self {
         $this->author = $author;
 
         return $this;
     }
 
-    /**
-     * Get author.
-     *
-     * @return string
-     */
-    public function getAuthor() {
+    public function getAuthor() : ?string {
         return $this->author;
     }
 
-    /**
-     * Set title.
-     *
-     * @param string $title
-     *
-     * @return Jackson
-     */
-    public function setTitle($title) {
+    public function setTitle(?string $title) : self {
         $this->title = $title;
 
         return $this;
     }
 
-    /**
-     * Get title.
-     *
-     * @return string
-     */
-    public function getTitle() {
+    public function getTitle() : ?string {
         return $this->title;
     }
 
-    /**
-     * Set editor.
-     *
-     * @param string $editor
-     *
-     * @return Jackson
-     */
-    public function setEditor($editor) {
+    public function setEditor(?string $editor) : self {
         $this->editor = $editor;
 
         return $this;
     }
 
-    /**
-     * Get editor.
-     *
-     * @return string
-     */
-    public function getEditor() {
+    public function getEditor() : ?string {
         return $this->editor;
     }
 
-    /**
-     * Set pubplace.
-     *
-     * @param string $pubplace
-     *
-     * @return Jackson
-     */
-    public function setPubplace($pubplace) {
+    public function setPubplace(?string $pubplace) : self {
         $this->pubplace = $pubplace;
 
         return $this;
     }
 
-    /**
-     * Get pubplace.
-     *
-     * @return string
-     */
-    public function getPubplace() {
+    public function getPubplace() : ?string {
         return $this->pubplace;
     }
 
-    /**
-     * Set publisher.
-     *
-     * @param string $publisher
-     *
-     * @return Jackson
-     */
-    public function setPublisher($publisher) {
+    public function setPublisher(?string $publisher) : self {
         $this->publisher = $publisher;
 
         return $this;
     }
 
-    /**
-     * Get publisher.
-     *
-     * @return string
-     */
-    public function getPublisher() {
+    public function getPublisher() : ?string {
         return $this->publisher;
     }
 
-    /**
-     * Set pubdate.
-     *
-     * @param string $pubdate
-     *
-     * @return Jackson
-     */
-    public function setPubdate($pubdate) {
+    public function setPubdate(?string $pubdate) : self {
         $this->pubdate = $pubdate;
 
         return $this;
     }
 
-    /**
-     * Get pubdate.
-     *
-     * @return string
-     */
-    public function getPubdate() {
+    public function getPubdate() : ?string {
         return $this->pubdate;
     }
 
-    /**
-     * Set edition.
-     *
-     * @param string $edition
-     *
-     * @return Jackson
-     */
-    public function setEdition($edition) {
+    public function setEdition(?string $edition) : self {
         $this->edition = $edition;
 
         return $this;
     }
 
-    /**
-     * Get edition.
-     *
-     * @return string
-     */
-    public function getEdition() {
+    public function getEdition() : ?string {
         return $this->edition;
     }
 
-    /**
-     * Set format.
-     *
-     * @param string $format
-     *
-     * @return Jackson
-     */
-    public function setFormat($format) {
+    public function setFormat(?string $format) : self {
         $this->format = $format;
 
         return $this;
     }
 
-    /**
-     * Get format.
-     *
-     * @return string
-     */
-    public function getFormat() {
+    public function getFormat() : ?string {
         return $this->format;
     }
 
-    /**
-     * Set pagination.
-     *
-     * @param string $pagination
-     *
-     * @return Jackson
-     */
-    public function setPagination($pagination) {
+    public function setPagination(?string $pagination) : self {
         $this->pagination = $pagination;
 
         return $this;
     }
 
-    /**
-     * Get pagination.
-     *
-     * @return string
-     */
-    public function getPagination() {
+    public function getPagination() : ?string {
         return $this->pagination;
     }
 
-    /**
-     * Set price.
-     *
-     * @param string $price
-     *
-     * @return Jackson
-     */
-    public function setPrice($price) {
+    public function setPrice(?string $price) : self {
         $this->price = $price;
 
         return $this;
     }
 
-    /**
-     * Get price.
-     *
-     * @return string
-     */
-    public function getPrice() {
+    public function getPrice() : ?string {
         return $this->price;
     }
 
-    /**
-     * Set reference.
-     *
-     * @param string $reference
-     *
-     * @return Jackson
-     */
-    public function setReference($reference) {
+    public function setReference(?string $reference) : self {
         $this->reference = $reference;
 
         return $this;
     }
 
-    /**
-     * Get reference.
-     *
-     * @return string
-     */
-    public function getReference() {
+    public function getReference() : ?string {
         return $this->reference;
     }
 
-    /**
-     * Set library.
-     *
-     * @param string $library
-     *
-     * @return Jackson
-     */
-    public function setLibrary($library) {
+    public function setLibrary(?string $library) : self {
         $this->library = $library;
 
         return $this;
     }
 
-    /**
-     * Get library.
-     *
-     * @return string
-     */
-    public function getLibrary() {
+    public function getLibrary() : ?string {
         return $this->library;
     }
 
-    /**
-     * Set shelfmark.
-     *
-     * @param string $shelfmark
-     *
-     * @return Jackson
-     */
-    public function setShelfmark($shelfmark) {
+    public function setShelfmark(?string $shelfmark) : self {
         $this->shelfmark = $shelfmark;
 
         return $this;
     }
 
-    /**
-     * Get shelfmark.
-     *
-     * @return string
-     */
-    public function getShelfmark() {
+    public function getShelfmark() : ?string {
         return $this->shelfmark;
     }
 
-    /**
-     * Set comment.
-     *
-     * @param string $comment
-     *
-     * @return Jackson
-     */
-    public function setComment($comment) {
+    public function setComment(?string $comment) : self {
         $this->comment = $comment;
 
         return $this;
     }
 
-    /**
-     * Get comment.
-     *
-     * @return string
-     */
-    public function getComment() {
+    public function getComment() : ?string {
         return $this->comment;
     }
 
-    /**
-     * Set examnote.
-     *
-     * @param string $examnote
-     *
-     * @return Jackson
-     */
-    public function setExamnote($examnote) {
+    public function setExamnote(?string $examnote) : self {
         $this->examnote = $examnote;
 
         return $this;
     }
 
-    /**
-     * Get examnote.
-     *
-     * @return string
-     */
-    public function getExamnote() {
+    public function getExamnote() : ?string {
         return $this->examnote;
     }
 }

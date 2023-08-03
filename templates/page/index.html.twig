@@ -1,18 +1,18 @@
 {% extends 'base.html.twig' %}
 
 {% block pageheader %}
-    <div class='btn-toolbar pull-right'>
-        <div class='btn-group'>
+    <div class='btn-toolbar'>
+        <div class='btn-group ms-auto'>
             {% if is_granted('ROLE_BLOG_ADMIN') %}
                 <a href="{{ path('nines_blog_page_new') }}" class="btn btn-default">
-                    <span class="glyphicon glyphicon-plus"></span> New
+                    <span class="bi bi-plus-lg"></span> New
                 </a>
                 <a href="{{ path('nines_blog_page_sort') }}" class="btn btn-default">
-                    <span class="glyphicon glyphicon-sort"></span> Sort
+                    <span class="bi bi-arrow-down-up"></span> Sort
                 </a>
             {% endif %}
             <a href="{{ path('nines_blog_page_search') }}" class="btn btn-default">
-                <span class="glyphicon glyphicon-search"></span> Search
+                <span class="bi bi-search"></span> Search
             </a>
         </div>
     </div>

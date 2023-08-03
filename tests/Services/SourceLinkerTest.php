@@ -2,18 +2,13 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Tests\Services;
 
 use App\Entity\Source;
 use App\Services\RoleChecker;
 use App\Services\SourceLinker;
 use Nines\UtilBundle\TestCase\ControllerTestCase;
+use PHPUnit\Framework\MockObject\MockObject;
 
 class SourceLinkerTest extends ControllerTestCase {
     /**
@@ -21,10 +16,7 @@ class SourceLinkerTest extends ControllerTestCase {
      */
     private $linker;
 
-    /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|RoleChecker
-     */
-    private $checker;
+    private RoleChecker&MockObject $checker;
 
     public function testSanity() : void {
         $this->assertInstanceOf(SourceLinker::class, $this->linker);
@@ -101,12 +93,8 @@ class SourceLinkerTest extends ControllerTestCase {
 
     /**
      * @dataProvider urlData
-     *
-     * @param mixed $expected
-     * @param mixed $name
-     * @param mixed $data
      */
-    public function testUrl($expected, $name, $data) : void {
+    public function testUrl(mixed $expected, mixed $name, mixed $data) : void {
         $source = $this->createMock(Source::class);
         $source->method('getName')->willReturn($name);
         $actual = $this->linker->url($source, $data);
@@ -153,7 +141,7 @@ class SourceLinkerTest extends ControllerTestCase {
         parent::setUp();
         $this->checker = $this->createMock(RoleChecker::class);
         $this->checker->method('hasRole')->willReturn(true);
-        $this->linker = self::$container->get(SourceLinker::class);
+        $this->linker = self::getContainer()->get(SourceLinker::class);
         $this->linker->setRoleChecker($this->checker);
     }
 }

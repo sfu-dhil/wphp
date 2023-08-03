@@ -2,19 +2,13 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Tests\Services;
 
 use App\Services\OrlandoManager;
 use Nines\UtilBundle\TestCase\ControllerTestCase;
 
 class OrlandoManagerTest extends ControllerTestCase {
-    public const DATA = 'A_ID = 20384 || STANDARD = Author 2 || ROLE = EDITOR %%% A_ID = 19884 || STANDARD = Other Author 2 || ROLE = AUTHOR';
+    final public const DATA = 'A_ID = 20384 || STANDARD = Author 2 || ROLE = EDITOR %%% A_ID = 19884 || STANDARD = Other Author 2 || ROLE = AUTHOR';
 
     private OrlandoManager $manager;
 
@@ -40,6 +34,6 @@ class OrlandoManagerTest extends ControllerTestCase {
 
     protected function setUp() : void {
         parent::setUp();
-        $this->manager = self::$container->get(OrlandoManager::class);
+        $this->manager = self::getContainer()->get(OrlandoManager::class);
     }
 }

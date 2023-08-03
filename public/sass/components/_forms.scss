@@ -24,6 +24,8 @@ div.embedded-form {
   border: 1px solid lightgrey;
   padding-top: 15px;
   padding-right: 15px;
+  padding-left: 5px;
+  padding-right: 5px;
 }
 
 /* Select2 typeaheads are a bit short. */
@@ -38,5 +40,14 @@ p.help-block {
 
   a {
     text-decoration: underline;
+  }
+}
+.form-check.form-check-inline {
+  display: inline-block;
+  min-width: 25%;
+}
+.col-form-label {
+  @media (min-width: #{$breakpoint_sm}){
+    text-align: right;
   }
 }

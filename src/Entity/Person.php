@@ -2,157 +2,86 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Entity;
 
+use App\Repository\PersonRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Exception;
 use Nines\UtilBundle\Entity\AbstractEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * Person.
- *
- * @ORM\Table(name="person",
- *     indexes={
- *         @ORM\Index(name="person_full_idx", columns={"last_name", "first_name", "title"}, flags={"fulltext"}),
- *         @ORM\Index(name="person_viaf_idx", columns={"viaf_permalink"}, flags={"fulltext"}),
- *         @ORM\Index(name="person_wikipedia_idx", columns={"wikipedia_link"}, flags={"fulltext"}),
- *         @ORM\Index(name="person_image_idx", columns={"image_link"}, flags={"fulltext"}),
- *     })
- *     @ORM\Entity(repositoryClass="App\Repository\PersonRepository")
- */
+#[ORM\Table(name: 'person')]
+#[ORM\Index(name: 'person_full_idx', columns: ['last_name', 'first_name', 'title'], flags: ['fulltext'])]
+#[ORM\Index(name: 'person_viaf_idx', columns: ['viaf_permalink'], flags: ['fulltext'])]
+#[ORM\Index(name: 'person_wikipedia_idx', columns: ['wikipedia_link'], flags: ['fulltext'])]
+#[ORM\Index(name: 'person_image_idx', columns: ['image_link'], flags: ['fulltext'])]
+#[ORM\Entity(repositoryClass: PersonRepository::class)]
 class Person extends AbstractEntity {
-    public const MALE = 'M';
+    final public const MALE = 'M';
 
-    public const FEMALE = 'F';
+    final public const FEMALE = 'F';
 
-    public const UNKNOWN = 'U';
+    final public const UNKNOWN = 'U';
 
-    public const TRANS = 'T';
+    final public const TRANS = 'T';
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="last_name", type="string", length=100, nullable=true)
-     */
-    private $lastName;
+    #[ORM\Column(name: 'last_name', type: 'string', length: 100, nullable: true)]
+    private ?string $lastName = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="first_name", type="string", length=100, nullable=true)
-     */
-    private $firstName;
+    #[ORM\Column(name: 'first_name', type: 'string', length: 100, nullable: true)]
+    private ?string $firstName;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="title", type="string", length=200, nullable=true)
-     */
-    private $title;
+    #[ORM\Column(name: 'title', type: 'string', length: 200, nullable: true)]
+    private ?string $title;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="gender", type="string", length=1, nullable=false, options={"default": "U"})
-     */
-    private $gender;
+    #[ORM\Column(name: 'gender', type: 'string', length: 1, nullable: false, options: ['default' => 'U'])]
+    private ?string $gender;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="dob", type="string", length=20, nullable=true)
-     */
-    private $dob;
+    #[ORM\Column(name: 'dob', type: 'string', length: 20, nullable: true)]
+    private ?string $dob = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="dod", type="string", length=20, nullable=true)
-     */
-    private $dod;
+    #[ORM\Column(name: 'dod', type: 'string', length: 20, nullable: true)]
+    private ?string $dod = null;
 
-    /**
-     * @var string
-     *
-     * @Assert\Url
-     * @ORM\Column(name="viaf_permalink", type="string", length=127, nullable=true)
-     */
-    private $viafUrl;
+    #[Assert\Url]
+    #[ORM\Column(name: 'viaf_permalink', type: 'string', length: 127, nullable: true)]
+    private ?string $viafUrl = null;
 
-    /**
-     * @var string
-     *
-     * @Assert\Url
-     * @ORM\Column(name="wikipedia_link", type="string", length=127, nullable=true)
-     */
-    private $wikipediaUrl;
+    #[Assert\Url]
+    #[ORM\Column(name: 'wikipedia_link', type: 'string', length: 127, nullable: true)]
+    private ?string $wikipediaUrl = null;
 
-    /**
-     * @var string
-     *
-     * @Assert\Url
-     * @ORM\Column(name="image_link", type="string", length=255, nullable=true)
-     */
-    private $imageUrl;
+    #[Assert\Url]
+    #[ORM\Column(name: 'image_link', type: 'string', length: 255, nullable: true)]
+    private ?string $imageUrl = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="notes", type="text", nullable=true)
-     */
-    private $notes;
+    #[ORM\Column(name: 'notes', type: 'text', nullable: true)]
+    private ?string $notes = null;
 
-    /**
-     * @var bool
-     *
-     * @ORM\Column(name="finalcheck", type="boolean", nullable=false)
-     */
-    private $finalcheck = false;
+    #[ORM\Column(name: 'finalcheck', type: 'boolean', nullable: false)]
+    private bool $finalcheck = false;
 
-    /**
-     * @var Geonames
-     *
-     * @ORM\ManyToOne(targetEntity="Geonames", inversedBy="peopleBorn")
-     * @ORM\JoinColumns({
-     *     @ORM\JoinColumn(name="city_id_of_birth", referencedColumnName="geonameid")
-     * })
-     */
-    private $cityOfBirth;
+    #[ORM\JoinColumn(name: 'city_id_of_birth', referencedColumnName: 'geonameid')]
+    #[ORM\ManyToOne(targetEntity: Geonames::class, inversedBy: 'peopleBorn')]
+    private ?Geonames $cityOfBirth = null;
 
-    /**
-     * @var Geonames
-     *
-     * @ORM\ManyToOne(targetEntity="Geonames", inversedBy="peopleDied")
-     * @ORM\JoinColumns({
-     *     @ORM\JoinColumn(name="city_id_of_death", referencedColumnName="geonameid")
-     * })
-     */
-    private $cityOfDeath;
+    #[ORM\JoinColumn(name: 'city_id_of_death', referencedColumnName: 'geonameid')]
+    #[ORM\ManyToOne(targetEntity: Geonames::class, inversedBy: 'peopleDied')]
+    private ?Geonames $cityOfDeath = null;
 
     /**
      * @var Collection<int,TitleRole>
-     * @ORM\OneToMany(targetEntity="TitleRole", mappedBy="person")
      */
-    private $titleRoles;
+    #[ORM\OneToMany(targetEntity: TitleRole::class, mappedBy: 'person')]
+    private Collection|array $titleRoles;
 
     /**
      * @var Collection<int,Firm>
-     * @ORM\ManyToMany(targetEntity="Firm", inversedBy="relatedPeople")
      */
-    private $relatedFirms;
+    #[ORM\ManyToMany(targetEntity: Firm::class, inversedBy: 'relatedPeople')]
+    private Collection|array $relatedFirms;
 
-    /**
-     * Construct the person entity.
-     */
     public function __construct() {
         parent::__construct();
         $this->gender = self::UNKNOWN;
@@ -160,127 +89,61 @@ class Person extends AbstractEntity {
         $this->relatedFirms = new ArrayCollection();
     }
 
-    /**
-     * Get a string representation of the person, which is lastname, firstname.
-     */
     public function __toString() : string {
         return implode(', ', array_filter([$this->lastName, $this->firstName]));
     }
 
-    /**
-     * @return string
-     */
-    public function getFormId() {
+    public function getFormId() : string {
         return "({$this->id}) " . implode(', ', array_filter([$this->lastName, $this->firstName]));
     }
 
-    /**
-     * Set lastName.
-     *
-     * @param string $lastName
-     *
-     * @return self
-     */
-    public function setLastName($lastName) {
+    public function setLastName(?string $lastName) : self {
         $this->lastName = $lastName;
 
         return $this;
     }
 
-    /**
-     * Get lastName.
-     *
-     * @return string
-     */
-    public function getLastName() {
+    public function getLastName() : ?string {
         return $this->lastName;
     }
 
-    /**
-     * Set firstName.
-     *
-     * @param string $firstName
-     *
-     * @return self
-     */
-    public function setFirstName($firstName) {
+    public function setFirstName(?string $firstName) : self {
         $this->firstName = $firstName;
 
         return $this;
     }
 
-    /**
-     * Get firstName.
-     *
-     * @return string
-     */
-    public function getFirstName() {
+    public function getFirstName() : ?string {
         return $this->firstName;
     }
 
-    /**
-     * Set title.
-     *
-     * @param string $title
-     *
-     * @return self
-     */
-    public function setTitle($title) {
+    public function setTitle(?string $title) : self {
         $this->title = $title;
 
         return $this;
     }
 
-    /**
-     * Get title.
-     *
-     * @return string
-     */
-    public function getTitle() {
+    public function getTitle() : ?string {
         return $this->title;
     }
 
-    /**
-     * Set gender.
-     *
-     * @param string $gender
-     *
-     * @return self
-     */
-    public function setGender($gender) {
+    public function setGender(?string $gender) : self {
         $this->gender = $gender;
 
         return $this;
     }
 
-    /**
-     * Get gender.
-     *
-     * @return string
-     */
-    public function getGender() {
+    public function getGender() : ?string {
         return $this->gender;
     }
 
-    /**
-     * Set dob.
-     *
-     * @param string $dob
-     *
-     * @return self
-     */
-    public function setDob($dob) {
+    public function setDob(?string $dob) : self {
         $this->dob = $dob;
 
         return $this;
     }
 
-    /**
-     * Get dob.
-     *
-     * @return null|string
-     */
-    public function getDob() {
+    public function getDob() : ?string {
         if ('0000-00-00' === $this->dob) {
             return null;
         }
@@ -288,25 +151,13 @@ class Person extends AbstractEntity {
         return $this->dob;
     }
 
-    /**
-     * Set dod.
-     *
-     * @param string $dod
-     *
-     * @return self
-     */
-    public function setDod($dod) {
+    public function setDod(?string $dod) : self {
         $this->dod = $dod;
 
         return $this;
     }
 
-    /**
-     * Get dod.
-     *
-     * @return null|string
-     */
-    public function getDod() {
+    public function getDod() : ?string {
         if ('0000-00-00' === $this->dod) {
             return null;
         }
@@ -314,122 +165,57 @@ class Person extends AbstractEntity {
         return $this->dod;
     }
 
-    /**
-     * Set notes.
-     *
-     * @param string $notes
-     *
-     * @return self
-     */
-    public function setNotes($notes) {
+    public function setNotes(?string $notes) : self {
         $this->notes = $notes;
 
         return $this;
     }
 
-    /**
-     * Get notes.
-     *
-     * @return string
-     */
-    public function getNotes() {
+    public function getNotes() : ?string {
         return $this->notes;
     }
 
-    /**
-     * Set finalcheck.
-     *
-     * @param bool $finalcheck
-     *
-     * @return self
-     */
-    public function setFinalcheck($finalcheck) {
+    public function setFinalcheck(bool $finalcheck) : self {
         $this->finalcheck = $finalcheck;
 
         return $this;
     }
 
-    /**
-     * Get finalcheck.
-     *
-     * @return bool
-     */
-    public function getFinalcheck() {
+    public function getFinalcheck() : bool {
         return $this->finalcheck;
     }
 
-    /**
-     * Set cityOfBirth.
-     *
-     * @param Geonames $cityOfBirth
-     *
-     * @return self
-     */
-    public function setCityOfBirth(?Geonames $cityOfBirth = null) {
+    public function setCityOfBirth(?Geonames $cityOfBirth = null) : self {
         $this->cityOfBirth = $cityOfBirth;
 
         return $this;
     }
 
-    /**
-     * Get cityOfBirth.
-     *
-     * @return null|Geonames
-     */
-    public function getCityOfBirth() {
+    public function getCityOfBirth() : ?Geonames {
         return $this->cityOfBirth;
     }
 
-    /**
-     * Set cityOfDeath.
-     *
-     * @param ?Geonames $cityOfDeath
-     *
-     * @return self
-     */
-    public function setCityOfDeath(?Geonames $cityOfDeath = null) {
+    public function setCityOfDeath(?Geonames $cityOfDeath = null) : self {
         $this->cityOfDeath = $cityOfDeath;
 
         return $this;
     }
 
-    /**
-     * Get cityOfDeath.
-     *
-     * @return null|Geonames
-     */
-    public function getCityOfDeath() {
+    public function getCityOfDeath() : ?Geonames {
         return $this->cityOfDeath;
     }
 
-    /**
-     * Add titleRole.
-     *
-     * @return self
-     */
-    public function addTitleRole(TitleRole $titleRole) {
+    public function addTitleRole(TitleRole $titleRole) : self {
         $this->titleRoles[] = $titleRole;
 
         return $this;
     }
 
-    /**
-     * Remove titleRole.
-     */
     public function removeTitleRole(TitleRole $titleRole) : void {
         $this->titleRoles->removeElement($titleRole);
     }
 
-    /**
-     * Get titleRoles.
-     *
-     * @param bool $sort
-     *
-     * @throws Exception
-     *
-     * @return Collection<int,TitleRole>
-     */
-    public function getTitleRoles($sort = false) {
+    public function getTitleRoles(bool $sort = false) : Collection {
         if ( ! $sort) {
             return $this->titleRoles;
         }
@@ -447,69 +233,33 @@ class Person extends AbstractEntity {
         return new ArrayCollection(iterator_to_array($iterator));
     }
 
-    /**
-     * Set viafUrl.
-     *
-     * @param null|string $viafUrl
-     *
-     * @return self
-     */
-    public function setViafUrl($viafUrl = null) {
+    public function setViafUrl(?string $viafUrl = null) : self {
         $this->viafUrl = $viafUrl;
 
         return $this;
     }
 
-    /**
-     * Get viafUrl.
-     *
-     * @return null|string
-     */
-    public function getViafUrl() {
+    public function getViafUrl() : ?string {
         return $this->viafUrl;
     }
 
-    /**
-     * Set wikipediaUrl.
-     *
-     * @param null|string $wikipediaUrl
-     *
-     * @return self
-     */
-    public function setWikipediaUrl($wikipediaUrl = null) {
+    public function setWikipediaUrl(?string $wikipediaUrl = null) : self {
         $this->wikipediaUrl = $wikipediaUrl;
 
         return $this;
     }
 
-    /**
-     * Get wikipediaUrl.
-     *
-     * @return null|string
-     */
-    public function getWikipediaUrl() {
+    public function getWikipediaUrl() : ?string {
         return $this->wikipediaUrl;
     }
 
-    /**
-     * Set imageUrl.
-     *
-     * @param null|string $imageUrl
-     *
-     * @return self
-     */
-    public function setImageUrl($imageUrl = null) {
+    public function setImageUrl(?string $imageUrl = null) : self {
         $this->imageUrl = $imageUrl;
 
         return $this;
     }
 
-    /**
-     * Get imageUrl.
-     *
-     * @return null|string
-     */
-    public function getImageUrl() {
+    public function getImageUrl() : ?string {
         return $this->imageUrl;
     }
 

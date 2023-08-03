@@ -14,16 +14,16 @@
 
     {% if is_granted('ROLE_CONTENT_ADMIN') %}
         <div class="btn-toolbar">
-            <div class="btn-group pull-right">
+            <div class="btn-group ms-auto">
                 <a href="{{ path('firm_new') }}" class="btn btn-default">
-                    <span class='glyphicon glyphicon-plus'></span> Add Firm
+                    <span class='bi bi-plus-lg'></span> Add Firm
                 </a>
                 <a href="{{ path('firm_edit', { 'id': firm.id }) }}" class="btn btn-default">
-                    <span class='glyphicon glyphicon-edit'></span> Edit Firm
+                    <span class='bi bi-pencil-square'></span> Edit Firm
                 </a>
                 <a href="{{ path('firm_delete', { 'id': firm.id }) }}" class="btn btn-default"
                    data-confirm="Are you sure you want to delete this Firm?">
-                    <span class='glyphicon glyphicon-remove'></span> Delete Firm
+                    <span class='bi bi-trash'></span> Delete Firm
                 </a>
             </div>
         </div>
@@ -31,23 +31,23 @@
     {% embed 'partial/table.html.twig' %}
         {% block tbody %}
             <tr>
-                <th data-toggle="popover" data-content="{{ 'firm.fields.id'|trans }}">ID</th>
+                <th data-bs-toggle="popover" data-bs-content="{{ 'firm.fields.id'|trans }}">ID</th>
                 <td>{{ firm.id }}</td>
             </tr>
             <tr>
-                <th data-toggle="popover" data-content="{{ 'firm.fields.name'|trans }}">Name</th>
+                <th data-bs-toggle="popover" data-bs-content="{{ 'firm.fields.name'|trans }}">Name</th>
                 <td>{{ firm.name }}</td>
             </tr>
             <tr>
-                <th data-toggle="popover" data-content="{{ 'firm.fields.gender'|trans }}">Gender</th>
+                <th data-bs-toggle="popover" data-bs-content="{{ 'firm.fields.gender'|trans }}">Gender</th>
                 <td>{% include 'firm/partial/gender.html.twig' %}</td>
             </tr>
             <tr>
-                <th data-toggle="popover" data-content="{{ 'firm.fields.streetAddress'|trans }}">Street Address</th>
+                <th data-bs-toggle="popover" data-bs-content="{{ 'firm.fields.streetAddress'|trans }}">Street Address</th>
                 <td>{{ firm.streetAddress }}</td>
             </tr>
             <tr>
-                <th data-toggle="popover" data-content="{{ 'firm.fields.city'|trans }}">City</th>
+                <th data-bs-toggle="popover" data-bs-content="{{ 'firm.fields.city'|trans }}">City</th>
                 <td>
                     {% if firm.city %}
                         <a href="{{ path('geonames_show', {'id': firm.city.geonameid}) }}">
@@ -57,15 +57,15 @@
                 </td>
             </tr>
             <tr>
-                <th data-toggle="popover" data-content="{{ 'firm.fields.startDate'|trans }}">Start Date</th>
+                <th data-bs-toggle="popover" data-bs-content="{{ 'firm.fields.startDate'|trans }}">Start Date</th>
                 <td>{{ firm.startDate }}</td>
             </tr>
             <tr>
-                <th data-toggle="popover" data-content="{{ 'firm.fields.endDate'|trans }}">End Date</th>
+                <th data-bs-toggle="popover" data-bs-content="{{ 'firm.fields.endDate'|trans }}">End Date</th>
                 <td>{{ firm.endDate }}</td>
             </tr>
             <tr>
-                <th data-toggle="popover"  data-content="{{ 'firm.fields.firmSources'|trans }}">Sources</th>
+                <th data-bs-toggle="popover"  data-bs-content="{{ 'firm.fields.firmSources'|trans }}">Sources</th>
                 <td>
                     {% for firmSource in firm.firmSources %}
                         {% include "firm/partial/source-link.html.twig"
@@ -75,7 +75,7 @@
             </tr>
             {% if firm.relatedPeople|length %}
                 <tr>
-                    <th data-toggle='popover' data-content='{{ 'firm.fields.relatedPeople'|trans }}'>Related People</th>
+                    <th data-bs-toggle='popover' data-bs-content='{{ 'firm.fields.relatedPeople'|trans }}'>Related People</th>
                     <td>
                         {% for person in firm.relatedPeople %}
                         <a href='{{ path('person_show', {'id': person.id}) }}'>
@@ -88,7 +88,7 @@
 
             {% if (firm.relatedFirms|length + firm.firmsRelated|length) > 0 %}
                 <tr>
-                    <th data-toggle='popover' data-content='{{ 'firm.fields.relatedFirms'|trans }}'>Related Firms</th>
+                    <th data-bs-toggle='popover' data-bs-content='{{ 'firm.fields.relatedFirms'|trans }}'>Related Firms</th>
                     <td>
                         {% for firm in firm.relatedFirms %}
                             <a href='{{ path('firm_show', {'id': firm.id}) }}'>
@@ -104,12 +104,12 @@
                 </tr>
             {% endif %}
             <tr>
-                <th data-toggle="popover"  data-content="{{ 'firm.fields.notes'|trans }}">Notes</th>
+                <th data-bs-toggle="popover"  data-bs-content="{{ 'firm.fields.notes'|trans }}">Notes</th>
                 <td>{{ firm.notes }}</td>
             </tr>
             {% if app.user %}
                 <tr>
-                    <th data-toggle="popover" data-content="{{ 'firm.fields.finalCheck'|trans }}">Final Check</th>
+                    <th data-bs-toggle="popover" data-bs-content="{{ 'firm.fields.finalCheck'|trans }}">Final Check</th>
                     <td>{% if firm.finalcheck %}Yes{% else %}No{% endif %}</td>
                 </tr>
             {% endif %}

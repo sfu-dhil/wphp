@@ -2,246 +2,132 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Entity;
 
+use App\Repository\SourceRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Stringable;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * Source.
- *
- * @ORM\Table(name="source")
- * @ORM\Entity(repositoryClass="App\Repository\SourceRepository")
- */
-class Source {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $id;
+#[ORM\Table(name: 'source')]
+#[ORM\Entity(repositoryClass: SourceRepository::class)]
+class Source implements Stringable {
+    #[ORM\Column(name: 'id', type: 'integer', nullable: false)]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    private ?int $id = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="name", type="string", length=100, nullable=false)
-     */
-    private $name;
+    #[ORM\Column(name: 'name', type: 'string', length: 100, nullable: false)]
+    private string $name = '';
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="description", type="text", nullable=true)
-     */
-    private $description;
+    #[ORM\Column(name: 'description', type: 'text', nullable: true)]
+    private ?string $description = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="citation", type="text", nullable=true)
-     */
-    private $citation;
+    #[ORM\Column(name: 'citation', type: 'text', nullable: true)]
+    private ?string $citation = null;
 
-    /**
-     * @var string
-     * @ORM\Column(name="onlinesource", type="string", length=200, nullable=true)
-     * @Assert\Url
-     */
-    private $onlineSource;
+    #[ORM\Column(name: 'onlinesource', type: 'string', length: 200, nullable: true)]
+    #[Assert\Url]
+    private ?string $onlineSource;
 
     /**
      * @var Collection<int,TitleSource>
-     * @ORM\OneToMany(targetEntity="TitleSource", mappedBy="source")
      */
-    private $titleSources;
+    #[ORM\OneToMany(targetEntity: TitleSource::class, mappedBy: 'source')]
+    private Collection|array $titleSources;
 
     /**
      * @var Collection<int,FirmSource>
-     * @ORM\OneToMany(targetEntity="FirmSource", mappedBy="source")
      */
-    private $firmSources;
+    #[ORM\OneToMany(targetEntity: FirmSource::class, mappedBy: 'source')]
+    private Collection|array $firmSources;
 
-    /**
-     * Source constructor.
-     */
     public function __construct() {
         $this->titleSources = new ArrayCollection();
         $this->firmSources = new ArrayCollection();
     }
 
-    /**
-     * Return the name of this source.
-     */
     public function __toString() : string {
         return $this->name;
     }
 
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId() {
+    public function getId() : ?int {
         return $this->id;
     }
 
-    /**
-     * Set name.
-     *
-     * @param string $name
-     *
-     * @return Source
-     */
-    public function setName($name) {
+    public function setName(string $name) : self {
         $this->name = $name;
 
         return $this;
     }
 
-    /**
-     * Get name.
-     *
-     * @return string
-     */
-    public function getName() {
+    public function getName() : string {
         return $this->name;
     }
 
-    /**
-     * Set description.
-     *
-     * @param string $description
-     *
-     * @return Source
-     */
-    public function setDescription($description) {
+    public function setDescription(?string $description) : self {
         $this->description = $description;
 
         return $this;
     }
 
-    /**
-     * Get description.
-     *
-     * @return string
-     */
-    public function getDescription() {
+    public function getDescription() : ?string {
         return $this->description;
     }
 
-    /**
-     * Set citation.
-     *
-     * @param string $citation
-     *
-     * @return Source
-     */
-    public function setCitation($citation) {
+    public function setCitation(?string $citation) : self {
         $this->citation = $citation;
 
         return $this;
     }
 
-    /**
-     * Get citation.
-     *
-     * @return string
-     */
-    public function getCitation() {
+    public function getCitation() : ?string {
         return $this->citation;
     }
 
-    /**
-     * Set onlineSource.
-     *
-     * @param string $onlineSource
-     *
-     * @return Source
-     */
-    public function setOnlineSource($onlineSource) {
+    public function setOnlineSource(?string $onlineSource) : self {
         $this->onlineSource = $onlineSource;
 
         return $this;
     }
 
-    /**
-     * Get onlineSource.
-     *
-     * @return string
-     */
-    public function getOnlineSource() {
+    public function getOnlineSource() : ?string {
         return $this->onlineSource;
     }
 
-    /**
-     * Add titleSource.
-     *
-     * @param \App\Entity\TitleSource $titleSource
-     *
-     * @return Source
-     */
-    public function addTitleSource(TitleSource $titleSource) {
+    public function addTitleSource(TitleSource $titleSource) : self {
         $this->titleSources[] = $titleSource;
 
         return $this;
     }
 
-    /**
-     * Remove titleSource.
-     *
-     * @param \App\Entity\TitleSource $titleSource
-     *
-     * @return bool TRUE if this collection contained the specified element, FALSE otherwise.
-     */
-    public function removeTitleSource(TitleSource $titleSource) {
+    public function removeTitleSource(TitleSource $titleSource) : bool {
         return $this->titleSources->removeElement($titleSource);
     }
 
     /**
-     * Get titleSources.
-     *
      * @return Collection<int,TitleSource>
      */
-    public function getTitleSources() {
+    public function getTitleSources() : Collection {
         return $this->titleSources;
     }
 
-    /**
-     * Add firmSource.
-     *
-     * @return Source
-     */
-    public function addFirmSource(FirmSource $firmSource) {
+    public function addFirmSource(FirmSource $firmSource) : self {
         $this->firmSources[] = $firmSource;
 
         return $this;
     }
 
-    /**
-     * Remove firmSource.
-     *
-     * @return bool TRUE if this collection contained the specified element, FALSE otherwise.
-     */
-    public function removeFirmSource(FirmSource $firmSource) {
+    public function removeFirmSource(FirmSource $firmSource) : bool {
         return $this->firmSources->removeElement($firmSource);
     }
 
     /**
-     * Get firmSources.
-     *
      * @return Collection<int,FirmSource>
      */
-    public function getFirmSources() {
+    public function getFirmSources() : Collection {
         return $this->firmSources;
     }
 }

@@ -2,111 +2,65 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Entity;
 
+use App\Repository\MarcTagStructureRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Stringable;
 
-/**
- * MarcTagStructure.
- *
- * @ORM\Table(name="marc_tag_structure",
- *     uniqueConstraints={
- *         @ORM\UniqueConstraint(name="marctag_tagfield_uniq", columns={"tagfield"})
- *     }
- * )
- * @ORM\Entity(repositoryClass="App\Repository\MarcTagStructureRepository")
- */
-class MarcTagStructure {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $id;
+#[ORM\Table(name: 'marc_tag_structure')]
+#[ORM\UniqueConstraint(name: 'marctag_tagfield_uniq', columns: ['tagfield'])]
+#[ORM\Entity(repositoryClass: MarcTagStructureRepository::class)]
+class MarcTagStructure implements Stringable {
+    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    private ?int $id = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="tagfield", type="string", length=3)
-     */
-    private $tagField;
+    #[ORM\Column(name: 'tagfield', type: 'string', length: 3)]
+    private ?string $tagField = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="liblibrarian", type="string", length=255, nullable=false)
-     */
-    private $name;
+    #[ORM\Column(name: 'liblibrarian', type: 'string', length: 255, nullable: false)]
+    private ?string $name = null;
 
-    /**
-     * @var bool
-     *
-     * @ORM\Column(name="hidden", type="integer", nullable=true)
-     */
-    private $hidden = false;
+    #[ORM\Column(name: 'hidden', type: 'integer', nullable: true)]
+    private bool $hidden = false;
 
     public function __toString() : string {
         return $this->name;
     }
 
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId() {
+    public function getId() : ?int {
         return $this->id;
     }
 
-    /**
-     * Set tagField.
-     *
-     * @param string $tagField
-     *
-     * @return MarcTagStructure
-     */
-    public function setTagField($tagField) {
+    public function setTagField(?string $tagField) : self {
         $this->tagField = $tagField;
 
         return $this;
     }
 
-    /**
-     * Get tagField.
-     *
-     * @return string
-     */
-    public function getTagField() {
+    public function getTagField() : ?string {
         return $this->tagField;
     }
 
-    /**
-     * Set name.
-     *
-     * @param string $name
-     *
-     * @return MarcTagStructure
-     */
-    public function setName($name) {
+    public function setName(?string $name) : self {
         $this->name = $name;
 
         return $this;
     }
 
-    /**
-     * Get name.
-     *
-     * @return string
-     */
-    public function getName() {
+    public function getName() : ?string {
         return $this->name;
+    }
+
+    public function setHidden(bool $hidden) : self {
+        $this->hidden = $hidden;
+
+        return $this;
+    }
+
+    public function getHidden() : bool {
+        return $this->hidden;
     }
 }

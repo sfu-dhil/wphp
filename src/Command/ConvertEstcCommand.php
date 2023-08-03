@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Command;
 
 use App\Repository\EstcMarcRepository;
@@ -17,70 +11,59 @@ use Exception;
 use PhpMarc\Field;
 use PhpMarc\File;
 use PhpMarc\Record;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(name: 'wphp:convert:estc')]
 class ConvertEstcCommand extends Command {
-    //100 - Personal Name
-    //a. Personal name
-    //c. titles
-    //q. fuller form of name
-    //260 - Publication
-    //b. Name of publisher
-    //f. Manufacturer
-    //264 - Production
-    //b. Name of producer
-    //700 - Added entry - Personal Name
-    //a. Personal name
-    //c. titles
-    //q. fuller form of name
+    // 100 - Personal Name
+    // a. Personal name
+    // c. titles
+    // q. fuller form of name
+    // 260 - Publication
+    // b. Name of publisher
+    // f. Manufacturer
+    // 264 - Production
+    // b. Name of producer
+    // 700 - Added entry - Personal Name
+    // a. Personal name
+    // c. titles
+    // q. fuller form of name
 
-    public const NAME_FIELDS = [
+    final public const NAME_FIELDS = [
         '100' => ['a', 'q'],
         '700' => ['a', 'q'],
     ];
 
-    public const TITLE_FIELDS = [
+    final public const TITLE_FIELDS = [
         '100' => ['c'],
         '700' => ['c'],
     ];
 
-    public const NAME_PUNCT = [
+    final public const NAME_PUNCT = [
         '/(\w\w).$/u' => '$1',
         '/,$/u' => '',
     ];
 
-    private bool $save = false;
-
-    private EntityManagerInterface $em;
-
-    private int $n = 0;
-
-    /**
-     * @var string[]
-     */
-    private array $names;
-
-    private EstcMarcImporter $importer;
-
-    /**
-     * @var array<string>
-     */
-    private array $titles;
-
-    private EstcMarcRepository $estcMarcRepository;
-
-    private int $saved = 0;
-
-    protected static $defaultName = 'wphp:convert:estc';
-
-    protected static string $defaultDescription = 'Add a short description for your command';
+    public function __construct(
+        private EntityManagerInterface $em,
+        private EstcMarcImporter $importer,
+        private EstcMarcRepository $estcMarcRepository,
+        private array $names = [],
+        private array $titles = [],
+        private int $n = 0,
+        private bool $save = false,
+        private int $saved = 0,
+    ) {
+        parent::__construct(null);
+    }
 
     protected function configure() : void {
-        $this->setDescription(self::$defaultDescription);
+        $this->setDescription('Add a short description for your command');
         $this->addArgument('path', InputArgument::IS_ARRAY, 'One or more files to import');
         $this->addOption('save', null, InputOption::VALUE_NONE, 'Save converted records');
     }
@@ -174,7 +157,7 @@ class ConvertEstcCommand extends Command {
                     }
                     foreach ($this->titles as $title) {
                         $m = [];
-                        if (preg_match("/\\b({$title})\\b/ui", $data, $m)) {
+                        if (preg_match("/\\b({$title})\\b/ui", (string) $data, $m)) {
                             return true;
                         }
                     }
@@ -191,10 +174,10 @@ class ConvertEstcCommand extends Command {
             $fields = $record->fields[$id] ?? [];
             foreach ($fields as $field) {
                 foreach ($subs as $s) {
-                    if (( ! $data = $field->subfields[$s] ?? null)) {
+                    if ( ! $data = $field->subfields[$s] ?? null) {
                         continue;
                     }
-                    $given = preg_replace('/^[^,]*,\\s*/u', '', $data);
+                    $given = preg_replace('/^[^,]*,\\s*/u', '', (string) $data);
                     foreach ($this->names as $name) {
                         $m = [];
                         if (preg_match("/\\b({$name})\\b/ui", $given, $m)) {
@@ -206,26 +189,5 @@ class ConvertEstcCommand extends Command {
         }
 
         return false;
-    }
-
-    /**
-     * @required
-     */
-    public function setEntityManager(EntityManagerInterface $em) : void {
-        $this->em = $em;
-    }
-
-    /**
-     * @required
-     */
-    public function setEstcMarcImporter(EstcMarcImporter $importer) : void {
-        $this->importer = $importer;
-    }
-
-    /**
-     * @required
-     */
-    public function setEstcMarcRepository(EstcMarcRepository $estcMarcRepository) : void {
-        $this->estcMarcRepository = $estcMarcRepository;
     }
 }

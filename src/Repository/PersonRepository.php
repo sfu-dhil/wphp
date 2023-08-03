@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Repository;
 
 use App\Entity\Person;
@@ -91,7 +85,7 @@ class PersonRepository extends ServiceEntityRepository {
         $qb->addOrderBy('e.dob');
         if (isset($data['name']) && $data['name']) {
             $matches = [];
-            if (preg_match('/^"(.*?)"$/', $data['name'], $matches)) {
+            if (preg_match('/^"(.*?)"$/', (string) $data['name'], $matches)) {
                 $qb->andWhere('CONCAT(e.firstName, \' \', e.lastName) LIKE :name');
                 $qb->setParameter('name', $matches[1]);
             } else {
@@ -195,10 +189,10 @@ class PersonRepository extends ServiceEntityRepository {
 
         if (isset($data['dob']) && $data['dob']) {
             $m = [];
-            if (preg_match('/^\s*[0-9]{4}\s*$/', $data['dob'])) {
+            if (preg_match('/^\s*[0-9]{4}\s*$/', (string) $data['dob'])) {
                 $qb->andWhere('YEAR(e.dob) = :yearb');
                 $qb->setParameter('yearb', $data['dob']);
-            } elseif (preg_match('/^\s*(\*|[0-9]{4})\s*-\s*(\*|[0-9]{4})\s*$/', $data['dob'], $m)) {
+            } elseif (preg_match('/^\s*(\*|[0-9]{4})\s*-\s*(\*|[0-9]{4})\s*$/', (string) $data['dob'], $m)) {
                 $from = ('*' === $m[1] ? -1 : $m[1]);
                 $to = ('*' === $m[2] ? 9999 : $m[2]);
                 $qb->andWhere(':fromb <= YEAR(e.dob) AND YEAR(e.dob) <= :tob');
@@ -209,10 +203,10 @@ class PersonRepository extends ServiceEntityRepository {
 
         if (isset($data['dod']) && $data['dod']) {
             $m = [];
-            if (preg_match('/^\s*[0-9]{4}\s*$/', $data['dod'])) {
+            if (preg_match('/^\s*[0-9]{4}\s*$/', (string) $data['dod'])) {
                 $qb->andWhere('YEAR(e.dod) = :yeard');
                 $qb->setParameter('yeard', $data['dod']);
-            } elseif (preg_match('/^\s*(\*|[0-9]{4})\s*-\s*(\*|[0-9]{4})\s*$/', $data['dod'], $m)) {
+            } elseif (preg_match('/^\s*(\*|[0-9]{4})\s*-\s*(\*|[0-9]{4})\s*$/', (string) $data['dod'], $m)) {
                 $from = ('*' === $m[1] ? -1 : $m[1]);
                 $to = ('*' === $m[2] ? 9999 : $m[2]);
                 $qb->andWhere(':fromd <= YEAR(e.dod) AND YEAR(e.dod) <= :tod');
@@ -266,7 +260,7 @@ class PersonRepository extends ServiceEntityRepository {
             $qb->andWhere('e.finalcheck = 1');
         }
 
-        if (isset($data['title_filter']) && count(array_filter($data['title_filter']))) {
+        if (isset($data['title_filter']) && count((array) array_filter($data['title_filter']))) {
             $filter = $data['title_filter'];
             $idx = '00';
             $trAlias = 'tr_' . $idx;
@@ -290,10 +284,10 @@ class PersonRepository extends ServiceEntityRepository {
 
             if (isset($filter['pubdate']) && $filter['pubdate']) {
                 $m = [];
-                if (preg_match('/^\s*[0-9]{4}\s*$/', $filter['pubdate'])) {
+                if (preg_match('/^\s*[0-9]{4}\s*$/', (string) $filter['pubdate'])) {
                     $qb->andWhere("YEAR(STRTODATE({$tAlias}.pubdate, '%Y')) = :{$tAlias}_year");
                     $qb->setParameter("{$tAlias}_year", $filter['pubdate']);
-                } elseif (preg_match('/^\s*(\*|[0-9]{4})\s*-\s*(\*|[0-9]{4})\s*$/', $filter['pubdate'], $m)) {
+                } elseif (preg_match('/^\s*(\*|[0-9]{4})\s*-\s*(\*|[0-9]{4})\s*$/', (string) $filter['pubdate'], $m)) {
                     $from = ('*' === $m[1] ? -1 : $m[1]);
                     $to = ('*' === $m[2] ? 9999 : $m[2]);
                     $qb->andWhere(":{$tAlias}_from <= YEAR(STRTODATE({$tAlias}.pubdate, '%Y')) AND YEAR(STRTODATE({$tAlias}.pubdate, '%Y')) <= :{$tAlias}_to");
@@ -302,7 +296,7 @@ class PersonRepository extends ServiceEntityRepository {
                 }
             }
 
-            if (isset($filter['genre']) && count($filter['genre']) > 0) {
+            if (isset($filter['genre']) && (is_countable($filter['genre']) ? count($filter['genre']) : 0) > 0) {
                 $qb->andWhere("{$tAlias}.genre in (:{$tAlias}_genres)");
                 $qb->setParameter("{$tAlias}_genres", $filter['genre']);
             }
@@ -315,7 +309,7 @@ class PersonRepository extends ServiceEntityRepository {
             }
         }
 
-        if (isset($data['firm_filter']) && count(array_filter($data['firm_filter']))) {
+        if (isset($data['firm_filter']) && count((array) array_filter($data['firm_filter']))) {
             $filter = $data['firm_filter'];
             $idx = '01';
             $trAlias = 'tr_' . $idx;

@@ -42,36 +42,35 @@
         });
     }
 
-    function formPopup(e) {
-        e.preventDefault();
-        var url = $(this).prop('href');
-        window.open(url, "_blank", "toolbar=no,scrollbars=yes,resizable=yes,top=60,left=60,width=500,height=600");
-    }
-
     function simpleCollection() {
+        if ( $('.collection-simple').length == 0 ) {
+            return
+        }
         $('.collection-simple').collection({
             init_with_n_elements: 1,
             allow_up: false,
             allow_down: false,
-            preserve_names: true,
-            add: '<a href="#" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-plus"></span></a>',
-            remove: '<a href="#" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-minus"></span></a>',
+            max: 400,
             add_at_the_end: true,
+            add: '<a href="#" class="btn btn-primary btn-sm"><i class="bi bi-plus-circle"></i></a>',
+            remove: '<a href="#" class="btn btn-primary btn-sm"><i class="bi bi-dash-circle"></i></a>',
         });
     }
 
     function complexCollection() {
+        if ( $('.collection-complex').length == 0 ) {
+            return
+        }
         $('.collection-complex').collection({
             init_with_n_elements: 1,
             allow_up: false,
             allow_down: false,
-            preserve_names: true,
-            add: '<a href="#" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-plus"></span></a>',
-            remove: '<a href="#" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-minus"></span></a>',
+            max: 400,
             add_at_the_end: true,
-            after_add: function (collection, element) {
+            add: '<a href="#" class="btn btn-primary btn-sm"><i class="bi bi-plus-circle"></i></a>',
+            remove: '<a href="#" class="btn btn-primary btn-sm"><i class="bi bi-dash-circle"></i></a>',
+            after_add: function(collection, element){
                 $(element).find('.select2entity').select2entity();
-                $(element).find('.select2-container').css('width', '100%');
                 return true;
             },
         });
@@ -93,16 +92,19 @@
     $(document).ready(function () {
         $(window).bind('beforeunload', windowBeforeUnload);
         $('form').each(formDirty);
-        $("a.popup").click(formPopup);
         $("a").each(link);
         $("*[data-confirm]").each(confirm);
-        $('[data-toggle="popover"]').popover({
-            container: 'body',
-            trigger: 'hover',
-            placement: function(p, el){
-               return el.getAttribute('data-placement') ? el.getAttribute('data-placement') : 'bottom';
-            }
-        }); //add this line to enable bootstrap popover
+        let popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+        popoverTriggerList.map(function (popoverTriggerEl) {
+            return new bootstrap.Popover(popoverTriggerEl, {
+                html: true,
+                trigger: 'focus',
+            })
+        }) // add this line to enable bootstrap popover
+        let alertList = document.querySelectorAll('.alert')
+        alertList.forEach(function (alert) {
+            new bootstrap.Alert(alert);
+        }); // add alert dismissal
         if (typeof $().collection === 'function') {
             simpleCollection();
             complexCollection();

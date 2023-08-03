@@ -1,4 +1,0 @@
-[submodule "docs"]
-	path = docs
-	url = https://github.com/sfu-dhil/wphp-docs.git
-	branch = main

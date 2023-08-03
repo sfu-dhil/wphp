@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Tests\Entity;
 
 use App\Entity\Person;
@@ -19,15 +13,11 @@ use PHPUnit\Framework\TestCase;
  * Description of PersonTest.
  */
 class PersonTest extends TestCase {
-    //put your code here
-
+    // put your code here
     /**
      * @dataProvider getDobData
-     *
-     * @param mixed $expected
-     * @param mixed $date
      */
-    public function testGetDob($expected, $date) : void {
+    public function testGetDob(mixed $expected, mixed $date) : void {
         $person = new Person();
         $person->setDob($date);
         $this->AssertEquals($expected, $person->getDob());
@@ -46,11 +36,8 @@ class PersonTest extends TestCase {
 
     /**
      * @dataProvider getDodData
-     *
-     * @param mixed $expected
-     * @param mixed $date
      */
-    public function testGetDod($expected, $date) : void {
+    public function testGetDod(mixed $expected, mixed $date) : void {
         $person = new Person();
         $person->setDod($date);
         $this->AssertEquals($expected, $person->getDod());

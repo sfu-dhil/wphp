@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Tests\Controller;
 
 use Nines\MediaBundle\Repository\PdfRepository;
@@ -43,21 +37,21 @@ class PostTest extends ControllerTestCase {
     public function testAnonShow() : void {
         $crawler = $this->client->request('GET', '/blog/post/1');
         $this->assertResponseStatusCodeSame(self::ANON_RESPONSE_CODE);
-        $this->assertSame(0, $crawler->selectLink('Edit')->count());
+        $this->assertSame(0, $crawler->filter('.page-header')->selectLink('Edit')->count());
     }
 
     public function testUserShow() : void {
         $this->login(UserFixtures::USER);
         $crawler = $this->client->request('GET', '/blog/post/1');
         $this->assertResponseIsSuccessful();
-        $this->assertSame(0, $crawler->selectLink('Edit')->count());
+        $this->assertSame(0, $crawler->filter('.page-header')->selectLink('Edit')->count());
     }
 
     public function testAdminShow() : void {
         $this->login(UserFixtures::ADMIN);
         $crawler = $this->client->request('GET', '/blog/post/1');
         $this->assertResponseIsSuccessful();
-        $this->assertSame(1, $crawler->selectLink('Edit')->count());
+        $this->assertSame(1, $crawler->filter('.page-header')->selectLink('Edit')->count());
     }
 
     public function testAnonSearch() : void {
@@ -104,7 +98,7 @@ class PostTest extends ControllerTestCase {
 
     public function testAnonEdit() : void {
         $crawler = $this->client->request('GET', '/blog/post/1/edit');
-        $this->assertResponseRedirects('/login', Response::HTTP_FOUND);
+        $this->assertResponseRedirects('http://localhost/login', Response::HTTP_FOUND);
     }
 
     public function testUserEdit() : void {
@@ -124,8 +118,8 @@ class PostTest extends ControllerTestCase {
             'post[excerpt]' => '<p>Updated Text</p>',
             'post[content]' => '<p>Updated Text</p>',
         ]);
-        $this->overrideField($form, 'post[category]', 2);
-        $this->overrideField($form, 'post[status]', 2);
+        $this->overrideField($form, 'post[category]', '2');
+        $this->overrideField($form, 'post[status]', '2');
 
         $this->client->submit($form);
         $this->assertResponseRedirects('/blog/post/1', Response::HTTP_FOUND);
@@ -135,23 +129,12 @@ class PostTest extends ControllerTestCase {
 
     public function testAnonNew() : void {
         $crawler = $this->client->request('GET', '/blog/post/new');
-        $this->assertResponseRedirects('/login', Response::HTTP_FOUND);
-    }
-
-    public function testAnonNewPopup() : void {
-        $crawler = $this->client->request('GET', '/blog/post/new_popup');
-        $this->assertResponseRedirects('/login', Response::HTTP_FOUND);
+        $this->assertResponseRedirects('http://localhost/login', Response::HTTP_FOUND);
     }
 
     public function testUserNew() : void {
         $this->login(UserFixtures::USER);
         $crawler = $this->client->request('GET', '/blog/post/new');
-        $this->assertSame(403, $this->client->getResponse()->getStatusCode());
-    }
-
-    public function testUserNewPopup() : void {
-        $this->login(UserFixtures::USER);
-        $crawler = $this->client->request('GET', '/blog/post/new_popup');
         $this->assertSame(403, $this->client->getResponse()->getStatusCode());
     }
 
@@ -166,8 +149,8 @@ class PostTest extends ControllerTestCase {
             'post[excerpt]' => '<p>Updated Text</p>',
             'post[content]' => '<p>Updated Text</p>',
         ]);
-        $this->overrideField($form, 'post[category]', 2);
-        $this->overrideField($form, 'post[status]', 2);
+        $this->overrideField($form, 'post[category]', '2');
+        $this->overrideField($form, 'post[status]', '2');
 
         $this->client->submit($form);
         $this->assertResponseRedirects('/blog/post/6', Response::HTTP_FOUND);
@@ -175,29 +158,9 @@ class PostTest extends ControllerTestCase {
         $this->assertResponseIsSuccessful();
     }
 
-    public function testAdminNewPopup() : void {
-        $this->login(UserFixtures::ADMIN);
-        $formCrawler = $this->client->request('GET', '/blog/post/new');
-        $this->assertResponseIsSuccessful();
-
-        $form = $formCrawler->selectButton('Save')->form([
-            'post[includeComments]' => 1,
-            'post[title]' => 'Updated Title',
-            'post[excerpt]' => '<p>Updated Text</p>',
-            'post[content]' => '<p>Updated Text</p>',
-        ]);
-        $this->overrideField($form, 'post[category]', 2);
-        $this->overrideField($form, 'post[status]', 2);
-
-        $this->client->submit($form);
-        $this->assertResponseRedirects('/blog/post/7', Response::HTTP_FOUND);
-        $responseCrawler = $this->client->followRedirect();
-        $this->assertResponseIsSuccessful();
-    }
-
     public function testAnonNewPdf() : void {
         $crawler = $this->client->request('GET', '/blog/post/1/new_pdf');
-        $this->assertResponseRedirects('/login', Response::HTTP_FOUND);
+        $this->assertResponseRedirects('http://localhost/login', Response::HTTP_FOUND);
     }
 
     public function testUserNewPdf() : void {
@@ -211,11 +174,10 @@ class PostTest extends ControllerTestCase {
         $crawler = $this->client->request('GET', '/blog/post/1/new_pdf');
         $this->assertResponseIsSuccessful();
 
-        $manager = self::$container->get(PdfManager::class);
+        $manager = self::getContainer()->get(PdfManager::class);
         $manager->setCopy(true);
 
         $form = $crawler->selectButton('Create')->form([
-            'pdf[public]' => 1,
             'pdf[description]' => 'Description',
             'pdf[license]' => 'License',
         ]);
@@ -230,7 +192,7 @@ class PostTest extends ControllerTestCase {
 
     public function testAnonEditPdf() : void {
         $crawler = $this->client->request('GET', '/blog/post/1/edit_pdf/1');
-        $this->assertResponseRedirects('/login', Response::HTTP_FOUND);
+        $this->assertResponseRedirects('http://localhost/login', Response::HTTP_FOUND);
     }
 
     public function testUserEditPdf() : void {
@@ -244,15 +206,14 @@ class PostTest extends ControllerTestCase {
         $crawler = $this->client->request('GET', '/blog/post/1/edit_pdf/6');
         $this->assertResponseIsSuccessful();
 
-        $manager = self::$container->get(PdfManager::class);
+        $manager = self::getContainer()->get(PdfManager::class);
         $manager->setCopy(true);
 
         $form = $crawler->selectButton('Update')->form([
-            'pdf[public]' => 0,
             'pdf[description]' => 'Updated Description',
             'pdf[license]' => 'Updated License',
         ]);
-        $form['pdf[newFile]']->upload(dirname(__FILE__, 3) . '/vendor/sfu-dhil/nines/MediaBundle/Tests/data/pdf/holmes_2.pdf');
+        $form['pdf[file]']->upload(dirname(__FILE__, 3) . '/vendor/sfu-dhil/nines/MediaBundle/Tests/data/pdf/holmes_2.pdf');
         $this->client->submit($form);
         $this->assertResponseRedirects('/blog/post/1');
         $responseCrawler = $this->client->followRedirect();
@@ -263,7 +224,7 @@ class PostTest extends ControllerTestCase {
 
     public function testAnonDeletePdf() : void {
         $crawler = $this->client->request('DELETE', '/blog/post/1/delete_pdf/6');
-        $this->assertResponseRedirects('/login', Response::HTTP_FOUND);
+        $this->assertResponseRedirects('http://localhost/login', Response::HTTP_FOUND);
     }
 
     public function testUserDeletePdf() : void {
@@ -273,21 +234,21 @@ class PostTest extends ControllerTestCase {
     }
 
     public function testAdminDeletePdf() : void {
-        $repo = self::$container->get(PdfRepository::class);
-        $preCount = count($repo->findAll());
+        $repo = self::getContainer()->get(PdfRepository::class);
+        $preCount = is_countable($repo->findAll()) ? count($repo->findAll()) : 0;
 
         $this->login(UserFixtures::ADMIN);
         $crawler = $this->client->request('GET', '/blog/post/4');
         $this->assertResponseIsSuccessful();
 
-        $form = $crawler->filter('form.delete-form[action="/blog/post/4/delete_pdf/9"]')->form();
+        $form = $crawler->filter('form[action="/blog/post/4/delete_pdf/9"]')->form();
         $this->client->submit($form);
         $this->assertResponseRedirects('/blog/post/4');
         $responseCrawler = $this->client->followRedirect();
         $this->assertResponseIsSuccessful();
 
         $this->em->clear();
-        $postCount = count($repo->findAll());
+        $postCount = is_countable($repo->findAll()) ? count($repo->findAll()) : 0;
         $this->assertSame($preCount - 1, $postCount);
     }
 }

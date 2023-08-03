@@ -1,11 +1,5 @@
 <?php
 
-$header = <<<'HEADER'
-(c) 2022 Michael Joyce <mjoyce@sfu.ca>
-This source file is subject to the GPL v2, bundled
-with this source code in the file LICENSE.
-HEADER;
-
 $finder = PhpCsFixer\Finder::create()
     ->in(__DIR__ . '/src')
     ->in(__DIR__ . '/tests')
@@ -25,8 +19,8 @@ return $config
         '@PhpCsFixer' => true,
         '@PSR2'        => true,
 
-        '@PHP74Migration' => true,
-        '@PHP74Migration:risky' => true,
+        '@PHP82Migration' => true,
+        '@PHP80Migration:risky' => true,
 
         'align_multiline_comment' => [
             'comment_type' => 'all_multiline',
@@ -37,14 +31,10 @@ return $config
         'backtick_to_shell_exec' => true,
         'blank_line_after_namespace' => true,
         'blank_line_after_opening_tag' => true,
-//        'blank_line_before_statement' => [
-//            'statements' => [
-//                'declare', 'die', 'exit', 'for', 'foreach', 'return', 'try',
-//            ]
-//        ],
-        'braces' => [
-            'allow_single_line_closure' => true,
-            'position_after_functions_and_oop_constructs' => 'same'
+
+        'curly_braces_position' => [
+            'classes_opening_brace' => 'same_line',
+            'functions_opening_brace' => 'same_line',
         ],
 
         'cast_spaces' => [
@@ -77,9 +67,6 @@ return $config
             'import_functions' => false,
         ],
 
-        'header_comment' => [
-            'header' => $header,
-        ],
         'heredoc_to_nowdoc' => true,
 
         'implode_call' => true,
@@ -181,7 +168,7 @@ return $config
         'self_static_accessor' => true,
 
         'single_import_per_statement' => true,
-        'simplified_null_return' => false,
+        'simplified_null_return' => true,
         'strict_comparison' => true,
         'strict_param' => true,
 

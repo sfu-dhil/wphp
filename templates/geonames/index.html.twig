@@ -2,17 +2,17 @@
 
 {% block pageheader %}
     <h1>Geonames</h1>
-{% endblock %} 
+{% endblock %}
 
 {% block body %}
 
-    <div class='btn-toolbar pull-right'>
-        <div class='btn-group'>
+    <div class='btn-toolbar'>
+        <div class='btn-group ms-auto'>
             <a href="{{ path('geonames_search') }}" class="btn btn-default">
-                <span class="glyphicon glyphicon-search"></span> Search
+                <span class="bi bi-search"></span> Search
             </a>
             <a href="{{ path('geonames_import') }}" class="btn btn-default">
-                <span class="glyphicon glyphicon-search"></span> Import
+                <span class="bi bi-search"></span> Import
             </a>
         </div>
     </div>

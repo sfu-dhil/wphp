@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Tests\Controller;
 
 use App\Entity\Firmrole;
@@ -55,7 +49,7 @@ class FirmroleControllerTest extends ControllerTestCase {
         $crawler = $this->client->request('GET', '/firmrole/typeahead?q=name');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $this->assertSame('application/json', $this->client->getResponse()->headers->get('Content-Type'));
-        $json = json_decode($this->client->getResponse()->getContent());
+        $json = json_decode($this->client->getResponse()->getContent(), null, 512, JSON_THROW_ON_ERROR);
         $this->assertCount(4, $json);
     }
 

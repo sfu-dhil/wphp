@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\DataFixtures;
 
 use App\Entity\MarcSubfieldStructure;
@@ -19,16 +13,10 @@ use Doctrine\Persistence\ObjectManager;
  * Load some test MARC subfield data for testing.
  */
 class MarcSubfieldStructureFixtures extends Fixture implements FixtureGroupInterface {
-    /**
-     * {@inheritdoc}
-     */
     public static function getGroups() : array {
         return ['dev', 'test'];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function load(ObjectManager $manager) : void {
         for ($j = 0; $j < 20; $j++) {
             for ($i = 0; $i < 10; $i++) {

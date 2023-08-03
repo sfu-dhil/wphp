@@ -67,6 +67,9 @@ $color_table_background_hover_even: darken($color_table_background_even, 5%);
     color: $color_black;
     font-size:0.925rem;
     margin-bottom:0;
+    > :not(caption) > * > * {
+      background-color: transparent;
+    }
     //striped tables.
     &.table-striped{
       border: 1px solid $color_grey_light;
@@ -81,7 +84,6 @@ $color_table_background_hover_even: darken($color_table_background_even, 5%);
         }
         &:nth-of-type(odd) {
           background: $color_table_background_odd;
-          border:none;
           &:hover,
           &:focus {
             background: $color_table_background_hover_odd;
@@ -205,7 +207,7 @@ $color_table_background_hover_even: darken($color_table_background_even, 5%);
   margin:0;
 }
 
-th[data-toggle="popover"]{
+th[data-bs-toggle="popover"]{
   cursor: help;
 }
 

@@ -190,7 +190,7 @@
     // the query intact
     form.search{
       #controls,
-      #controls + .form-group{
+      #controls + .mb-3.row{
         display:none;
       }
 

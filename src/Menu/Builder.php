@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Menu;
 
 use App\Entity\Post;
@@ -17,35 +11,17 @@ use App\Repository\PageRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
 use Knp\Menu\ItemInterface;
-use Nines\UserBundle\Entity\User;
 use Nines\UtilBundle\Menu\AbstractBuilder;
 
 /**
  * Menu builder for the navigation and search menus.
  */
 class Builder extends AbstractBuilder {
-    /**
-     * List of spotlight menu items.
-     *
-     * @var array<string>
-     */
-    private $spotlightMenuItems;
-
-    /**
-     * @var EntityManagerInterface
-     */
-    private $em;
-
-    private ?PageRepository $pageRepository;
-
-    /**
-     * Build the menu builder.
-     *
-     * @param array<string> $spotlightMenuItems
-     */
-    public function __construct($spotlightMenuItems, EntityManagerInterface $em) {
-        $this->spotlightMenuItems = $spotlightMenuItems;
-        $this->em = $em;
+    public function __construct(
+        private PageRepository $pageRepository,
+        private EntityManagerInterface $em,
+        private array $spotlightMenuItems = [],
+    ) {
     }
 
     /**
@@ -64,104 +40,188 @@ class Builder extends AbstractBuilder {
         $browse = $menu->addChild('browse', [
             'uri' => '#',
             'label' => 'Database',
+            'attributes' => [
+                'class' => 'nav-item dropdown',
+            ],
+            'linkAttributes' => [
+                'class' => 'nav-link', // dropdown-toggle
+                'role' => 'button',
+                'data-bs-toggle' => 'dropdown',
+                'id' => 'browse-dropdown',
+            ],
+            'childrenAttributes' => [
+                'class' => 'dropdown-menu text-small shadow dropdown-menu-end',
+                'aria-labelledby' => 'browse-dropdown',
+            ],
         ]);
-        $browse->setAttribute('dropdown', true);
-        $browse->setLinkAttribute('class', 'dropdown-toggle');
-        $browse->setLinkAttribute('data-toggle', 'dropdown');
-        $browse->setChildrenAttribute('class', 'dropdown-menu');
 
         $browse->addChild('Search Titles', [
             'route' => 'title_index',
+            'linkAttributes' => [
+                'class' => 'dropdown-item link-dark',
+            ],
         ]);
         $browse->addChild('Search Persons', [
             'route' => 'person_index',
+            'linkAttributes' => [
+                'class' => 'dropdown-item link-dark',
+            ],
         ]);
         $browse->addChild('Search Firms', [
             'route' => 'firm_index',
+            'linkAttributes' => [
+                'class' => 'dropdown-item link-dark',
+            ],
         ]);
 
         $browse->addChild('Formats', [
             'route' => 'format_index',
+            'linkAttributes' => [
+                'class' => 'dropdown-item link-dark',
+            ],
         ]);
         $browse->addChild('Genres', [
             'route' => 'genre_index',
+            'linkAttributes' => [
+                'class' => 'dropdown-item link-dark',
+            ],
         ]);
         $browse->addChild('Sources', [
             'route' => 'source_index',
+            'linkAttributes' => [
+                'class' => 'dropdown-item link-dark',
+            ],
         ]);
         $browse->addChild('Contributor Roles', [
             'route' => 'role_index',
+            'linkAttributes' => [
+                'class' => 'dropdown-item link-dark',
+            ],
         ]);
         $browse->addChild('Firm Roles', [
             'route' => 'firmrole_index',
+            'linkAttributes' => [
+                'class' => 'dropdown-item link-dark',
+            ],
         ]);
 
         if ($this->hasRole('ROLE_USER')) {
-            $divider = $browse->addChild('divider', [
+            $browse->addChild('divider1', [
                 'label' => '',
-            ]);
-            $divider->setAttributes([
-                'role' => 'separator',
-                'class' => 'divider',
+                'attributes' => [
+                    'role' => 'separator',
+                    'class' => 'divider',
+                ],
             ]);
             $browse->addChild('AAS', [
                 'route' => 'resource_aas_index',
+                'linkAttributes' => [
+                    'class' => 'dropdown-item link-dark',
+                ],
             ]);
             $browse->addChild('Currencies', [
                 'route' => 'currency_index',
+                'linkAttributes' => [
+                    'class' => 'dropdown-item link-dark',
+                ],
             ]);
             $browse->addChild('Geonames', [
                 'route' => 'geonames_index',
+                'linkAttributes' => [
+                    'class' => 'dropdown-item link-dark',
+                ],
             ]);
             $browse->addChild('English Novel', [
                 'route' => 'resource_en_index',
+                'linkAttributes' => [
+                    'class' => 'dropdown-item link-dark',
+                ],
             ]);
             $browse->addChild('ESTC', [
                 'route' => 'resource_estc_index',
+                'linkAttributes' => [
+                    'class' => 'dropdown-item link-dark',
+                ],
             ]);
             $browse->addChild('Jackson', [
                 'route' => 'resource_jackson_index',
+                'linkAttributes' => [
+                    'class' => 'dropdown-item link-dark',
+                ],
             ]);
             $browse->addChild('Orlando', [
                 'route' => 'resource_orlando_biblio_index',
+                'linkAttributes' => [
+                    'class' => 'dropdown-item link-dark',
+                ],
             ]);
             $browse->addChild('Osborne', [
                 'route' => 'resource_osborne_index',
+                'linkAttributes' => [
+                    'class' => 'dropdown-item link-dark',
+                ],
             ]);
-            $divider = $browse->addChild('divider2', [
+            $browse->addChild('divider2', [
                 'label' => '',
-            ]);
-            $divider->setAttributes([
-                'role' => 'separator',
-                'class' => 'divider',
+                'attributes' => [
+                    'role' => 'separator',
+                    'class' => 'divider',
+                ],
             ]);
             $browse->addChild('All Reports', [
                 'route' => 'report_index',
+                'linkAttributes' => [
+                    'class' => 'dropdown-item link-dark',
+                ],
             ]);
 
             $browse->addChild('AAS Titles', [
                 'route' => 'unchecked_aas_titles',
+                'linkAttributes' => [
+                    'class' => 'dropdown-item link-dark',
+                ],
             ]);
             $browse->addChild('Titles to Final Check', [
                 'route' => 'report_titles_check',
+                'linkAttributes' => [
+                    'class' => 'dropdown-item link-dark',
+                ],
             ]);
             $browse->addChild('Titles with Bad Publication Date', [
                 'route' => 'report_titles_date',
+                'linkAttributes' => [
+                    'class' => 'dropdown-item link-dark',
+                ],
             ]);
             $browse->addChild('Firms to Check', [
                 'route' => 'report_firms_fc',
+                'linkAttributes' => [
+                    'class' => 'dropdown-item link-dark',
+                ],
             ]);
             $browse->addChild('Persons to Check', [
                 'route' => 'report_persons_fc',
+                'linkAttributes' => [
+                    'class' => 'dropdown-item link-dark',
+                ],
             ]);
             $browse->addChild('Editions to Check', [
                 'route' => 'report_editions_to_check',
+                'linkAttributes' => [
+                    'class' => 'dropdown-item link-dark',
+                ],
             ]);
             $browse->addChild('Titles with Unverified People', [
                 'route' => 'titles_unverified_persons',
+                'linkAttributes' => [
+                    'class' => 'dropdown-item link-dark',
+                ],
             ]);
             $browse->addChild('Titles with Unverified Firms', [
                 'route' => 'titles_unverified_firms',
+                'linkAttributes' => [
+                    'class' => 'dropdown-item link-dark',
+                ],
             ]);
         }
 
@@ -184,11 +244,20 @@ class Builder extends AbstractBuilder {
         $spotlight = $menu->addChild('spotlight', [
             'uri' => '#',
             'label' => 'Spotlights',
+            'attributes' => [
+                'class' => 'nav-item dropdown',
+            ],
+            'linkAttributes' => [
+                'class' => 'nav-link', // dropdown-toggle
+                'role' => 'button',
+                'data-bs-toggle' => 'dropdown',
+                'id' => 'spotlight-dropdown',
+            ],
+            'childrenAttributes' => [
+                'class' => 'dropdown-menu text-small shadow dropdown-menu-end',
+                'aria-labelledby' => 'spotlight-dropdown',
+            ],
         ]);
-        $spotlight->setAttribute('dropdown', true);
-        $spotlight->setLinkAttribute('class', 'dropdown-toggle');
-        $spotlight->setLinkAttribute('data-toggle', 'dropdown');
-        $spotlight->setChildrenAttribute('class', 'dropdown-menu');
 
         $repo = $this->em->getRepository(PostCategory::class);
 
@@ -203,6 +272,9 @@ class Builder extends AbstractBuilder {
                 'route' => 'nines_blog_post_category_show',
                 'routeParameters' => [
                     'id' => $category->getId(),
+                ],
+                'linkAttributes' => [
+                    'class' => 'dropdown-item link-dark',
                 ],
             ]);
         }
@@ -226,12 +298,20 @@ class Builder extends AbstractBuilder {
         $research = $menu->addChild('research', [
             'uri' => '#',
             'label' => 'Research',
+            'attributes' => [
+                'class' => 'nav-item dropdown',
+            ],
+            'linkAttributes' => [
+                'class' => 'nav-link', // dropdown-toggle
+                'role' => 'button',
+                'data-bs-toggle' => 'dropdown',
+                'id' => 'research-dropdown',
+            ],
+            'childrenAttributes' => [
+                'class' => 'dropdown-menu text-small shadow dropdown-menu-end',
+                'aria-labelledby' => 'research-dropdown',
+            ],
         ]);
-        $research->setAttribute('dropdown', true);
-        $research->setLinkAttribute('class', 'dropdown-toggle');
-        $research->setLinkAttribute('data-toggle', 'dropdown');
-        $research->setChildrenAttribute('class', 'dropdown-menu');
-
         $category = $this->em->getRepository(PostCategory::class)
             ->findOneBy(['name' => 'research'])
         ;
@@ -244,7 +324,8 @@ class Builder extends AbstractBuilder {
         $qb->select('p')->from(Post::class, 'p')
             ->where('p.category = :category')
             ->setParameter('category', $category)
-            ->orderBy('p.created', 'DESC')->setMaxResults(10);
+            ->orderBy('p.created', 'DESC')->setMaxResults(10)
+        ;
 
         if ( ! $this->hasRole('ROLE_USER')) {
             $status = $this->em->getRepository(PostStatus::class)->findOneBy([
@@ -263,18 +344,25 @@ class Builder extends AbstractBuilder {
                 'routeParameters' => [
                     'id' => $post->getId(),
                 ],
+                'linkAttributes' => [
+                    'class' => 'dropdown-item link-dark',
+                ],
             ]);
         }
-
-        $research->addChild('divider');
-        $research['divider']->setAttributes([
-            'role' => 'separator',
-            'class' => 'divider',
+        $research->addChild('divider1', [
+            'label' => '',
+            'attributes' => [
+                'role' => 'separator',
+                'class' => 'divider',
+            ],
         ]);
         $research->addChild('All Research', [
             'route' => 'nines_blog_post_category_show',
             'routeParameters' => [
                 'id' => $category->getId(),
+            ],
+            'linkAttributes' => [
+                'class' => 'dropdown-item link-dark',
             ],
         ]);
 
@@ -297,7 +385,7 @@ class Builder extends AbstractBuilder {
         $menu->setChildrenAttributes([
             'class' => 'nav navbar-nav navbar-right',
         ]);
-        $menu->setAttribute('dropdown', true);
+
         $user = $this->getUser();
         if ( ! $this->hasRole('ROLE_USER')) {
             $menu->addChild($name, [
@@ -309,49 +397,83 @@ class Builder extends AbstractBuilder {
 
         $userMenu = $menu->addChild('user', [
             'uri' => '#',
-            'label' => $user->getUsername(),
+            'label' => $user->getUserIdentifier(),
+            'attributes' => [
+                'class' => 'nav-item dropdown',
+            ],
+            'linkAttributes' => [
+                'class' => 'nav-link', // dropdown-toggle
+                'role' => 'button',
+                'data-bs-toggle' => 'dropdown',
+                'id' => 'user-dropdown',
+            ],
+            'childrenAttributes' => [
+                'class' => 'dropdown-menu text-small shadow dropdown-menu-end',
+                'aria-labelledby' => 'user-dropdown',
+            ],
         ]);
-        $userMenu->setAttribute('dropdown', true);
-        $userMenu->setLinkAttribute('class', 'dropdown-toggle');
-        $userMenu->setLinkAttribute('data-toggle', 'dropdown');
-        $userMenu->setChildrenAttribute('class', 'dropdown-menu');
 
-        $userMenu->addChild('Profile', ['route' => 'nines_user_profile_index']);
-        $userMenu->addChild('Change password', ['route' => 'nines_user_profile_password']);
-        $userMenu->addChild('Logout', ['route' => 'nines_user_security_logout']);
+        $userMenu->addChild('Profile', [
+            'route' => 'nines_user_profile_index',
+            'linkAttributes' => [
+                'class' => 'dropdown-item link-dark',
+            ],
+        ]);
+        $userMenu->addChild('Change password', [
+            'route' => 'nines_user_profile_password',
+            'linkAttributes' => [
+                'class' => 'dropdown-item link-dark',
+            ],
+        ]);
+        $userMenu->addChild('Logout', [
+            'route' => 'nines_user_security_logout',
+            'linkAttributes' => [
+                'class' => 'dropdown-item link-dark',
+            ],
+        ]);
 
         if ($this->hasRole('ROLE_ADMIN')) {
-            $userMenu->addChild('divider', [
+            $userMenu->addChild('divider1', [
                 'label' => '',
+                'attributes' => [
+                    'role' => 'separator',
+                    'class' => 'divider',
+                ],
             ]);
-            $userMenu['divider']->setAttributes([
-                'role' => 'separator',
-                'class' => 'divider',
-            ]);
-
             $userMenu->addChild('users', [
                 'label' => 'Users',
                 'route' => 'nines_user_admin_index',
+                'linkAttributes' => [
+                    'class' => 'dropdown-item link-dark',
+                ],
             ]);
         }
 
         if ($this->hasRole('ROLE_FEEDBACK_ADMIN')) {
-            $userMenu->addChild('comment_divider', [
+            $userMenu->addChild('divider2', [
                 'label' => '',
+                'attributes' => [
+                    'role' => 'separator',
+                    'class' => 'divider',
+                ],
             ]);
-            $userMenu['comment_divider']->setAttributes([
-                'role' => 'separator',
-                'class' => 'divider',
-            ]);
-
             $userMenu->addChild('Comments', [
                 'route' => 'nines_feedback_comment_index',
+                'linkAttributes' => [
+                    'class' => 'dropdown-item link-dark',
+                ],
             ]);
             $userMenu->addChild('Comment Notes', [
                 'route' => 'nines_feedback_comment_note_index',
+                'linkAttributes' => [
+                    'class' => 'dropdown-item link-dark',
+                ],
             ]);
             $userMenu->addChild('Comment States', [
                 'route' => 'nines_feedback_comment_status_index',
+                'linkAttributes' => [
+                    'class' => 'dropdown-item link-dark',
+                ],
             ]);
         }
 
@@ -370,7 +492,6 @@ class Builder extends AbstractBuilder {
         $menu->setChildrenAttributes([
             'class' => 'nav navbar-nav',
         ]);
-        $menu->setAttribute('dropdown', true);
 
         $title = 'Announcements';
         if (isset($options['title'])) {
@@ -380,11 +501,20 @@ class Builder extends AbstractBuilder {
         $menu->addChild('announcements', [
             'uri' => '#',
             'label' => $title,
+            'attributes' => [
+                'class' => 'nav-item dropdown',
+            ],
+            'linkAttributes' => [
+                'class' => 'nav-link', // dropdown-toggle
+                'role' => 'button',
+                'data-bs-toggle' => 'dropdown',
+                'id' => 'announcements-dropdown',
+            ],
+            'childrenAttributes' => [
+                'class' => 'dropdown-menu text-small shadow dropdown-menu-end',
+                'aria-labelledby' => 'announcements-dropdown',
+            ],
         ]);
-        $menu['announcements']->setAttribute('dropdown', true);
-        $menu['announcements']->setLinkAttribute('class', 'dropdown-toggle');
-        $menu['announcements']->setLinkAttribute('data-toggle', 'dropdown');
-        $menu['announcements']->setChildrenAttribute('class', 'dropdown-menu');
 
         $status = $this->em->getRepository(PostStatus::class)->findOneBy([
             'public' => true,
@@ -414,29 +544,40 @@ class Builder extends AbstractBuilder {
                 'routeParameters' => [
                     'id' => $post->getId(),
                 ],
+                'linkAttributes' => [
+                    'class' => 'dropdown-item link-dark',
+                ],
             ]);
         }
 
         if ($this->hasRole('ROLE_BLOG_ADMIN')) {
-            $menu['announcements']->addChild('divider', [
+            $menu['announcements']->addChild('divider1', [
                 'label' => '',
+                'attributes' => [
+                    'role' => 'separator',
+                    'class' => 'divider',
+                ],
             ]);
-            $menu['announcements']['divider']->setAttributes([
-                'role' => 'separator',
-                'class' => 'divider',
-            ]);
-
             $menu['announcements']->addChild('All Announcements', [
                 'route' => 'nines_blog_post_index',
+                'linkAttributes' => [
+                    'class' => 'dropdown-item link-dark',
+                ],
             ]);
 
             $menu['announcements']->addChild('post_category', [
                 'label' => 'Post Categories',
                 'route' => 'nines_blog_post_category_index',
+                'linkAttributes' => [
+                    'class' => 'dropdown-item link-dark',
+                ],
             ]);
             $menu['announcements']->addChild('post_status', [
                 'label' => 'Post Statuses',
                 'route' => 'nines_blog_post_status_index',
+                'linkAttributes' => [
+                    'class' => 'dropdown-item link-dark',
+                ],
             ]);
         }
 
@@ -448,6 +589,7 @@ class Builder extends AbstractBuilder {
      */
     public function pageMenu(array $options) : ItemInterface {
         $menu = $this->dropdown($options['title'] ?? 'About');
+        $menu->setLinkAttribute('class', 'nav-link');
 
         // @TODO turn this into menuQuery().
         $pages = $this->pageRepository->findBy(
@@ -460,25 +602,28 @@ class Builder extends AbstractBuilder {
                 'routeParameters' => [
                     'id' => $page->getId(),
                 ],
+                'linkAttributes' => [
+                    'class' => 'dropdown-item link-dark',
+                ],
             ]);
         }
 
         if ($this->hasRole('ROLE_BLOG_ADMIN')) {
-            $this->addDivider($menu);
+            $menu->addChild('divider', [
+                'label' => '',
+                'attributes' => [
+                    'role' => 'separator',
+                    'class' => 'divider',
+                ],
+            ]);
             $menu->addChild('All Pages', [
                 'route' => 'nines_blog_page_index',
+                'linkAttributes' => [
+                    'class' => 'dropdown-item link-dark',
+                ],
             ]);
         }
 
         return $menu->getParent();
-    }
-
-    /**
-     * @required
-     *
-     * @codeCoverageIgnore
-     */
-    public function setPageRepository(PageRepository $pageRepository) : void {
-        $this->pageRepository = $pageRepository;
     }
 }

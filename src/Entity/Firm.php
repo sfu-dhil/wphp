@@ -2,134 +2,83 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Entity;
 
+use App\Repository\FirmRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Nines\UtilBundle\Entity\AbstractEntity;
 
-/**
- * Firm.
- *
- * @ORM\Table(name="firm",
- *     indexes={
- *         @ORM\Index(name="firm_name_ft", columns={"name"}, flags={"fulltext"}),
- *         @ORM\Index(name="firm_address_ft", columns={"street_address"}, flags={"fulltext"}),
- *     },
- *     uniqueConstraints={
- *         @ORM\UniqueConstraint(name="firm_uniq", columns={"name", "city_id", "start_date", "end_date"})
- *     }
- * )
- * @ORM\Entity(repositoryClass="App\Repository\FirmRepository")
- */
+#[ORM\Table(name: 'firm')]
+#[ORM\Index(name: 'firm_name_ft', columns: ['name'], flags: ['fulltext'])]
+#[ORM\Index(name: 'firm_address_ft', columns: ['street_address'], flags: ['fulltext'])]
+#[ORM\UniqueConstraint(name: 'firm_uniq', columns: ['name', 'city_id', 'start_date', 'end_date'])]
+#[ORM\Entity(repositoryClass: FirmRepository::class)]
 class Firm extends AbstractEntity {
-    public const MALE = 'M';
+    final public const MALE = 'M';
 
-    public const FEMALE = 'F';
+    final public const FEMALE = 'F';
 
-    public const UNKNOWN = 'U';
+    final public const UNKNOWN = 'U';
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="name", type="string", length=255, nullable=true)
-     */
-    private $name;
+    #[ORM\Column(name: 'name', type: 'string', length: 255, nullable: true)]
+    private ?string $name = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="gender", type="string", length=1, nullable=false, options={"default": "U"})
-     */
-    private $gender;
+    #[ORM\Column(name: 'gender', type: 'string', length: 1, nullable: false, options: ['default' => 'U'])]
+    private ?string $gender;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="street_address", type="text", nullable=true)
-     */
-    private $streetAddress;
+    #[ORM\Column(name: 'street_address', type: 'text', nullable: true)]
+    private ?string $streetAddress = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="start_date", type="string", length=4, nullable=true)
-     */
-    private $startDate;
+    #[ORM\Column(name: 'start_date', type: 'string', length: 4, nullable: true)]
+    private ?string $startDate = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="end_date", type="string", length=4, nullable=true)
-     */
-    private $endDate;
+    #[ORM\Column(name: 'end_date', type: 'string', length: 4, nullable: true)]
+    private ?string $endDate = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="notes", type="text", nullable=true)
-     */
-    private $notes;
+    #[ORM\Column(name: 'notes', type: 'text', nullable: true)]
+    private ?string $notes = null;
 
-    /**
-     * @var bool
-     *
-     * @ORM\Column(name="finalcheck", type="boolean", nullable=false)
-     */
-    private $finalcheck = false;
+    #[ORM\Column(name: 'finalcheck', type: 'boolean', nullable: false)]
+    private bool $finalcheck = false;
 
-    /**
-     * @var Geonames
-     *
-     * @ORM\ManyToOne(targetEntity="Geonames", inversedBy="firms")
-     * @ORM\JoinColumns({
-     *     @ORM\JoinColumn(name="city_id", referencedColumnName="geonameid")
-     * })
-     */
-    private $city;
+    #[ORM\JoinColumn(name: 'city_id', referencedColumnName: 'geonameid')]
+    #[ORM\ManyToOne(targetEntity: Geonames::class, inversedBy: 'firms')]
+    private ?Geonames $city = null;
 
     /**
      * @var Collection<int,TitleFirmrole>
-     * @ORM\OneToMany(targetEntity="TitleFirmrole", mappedBy="firm")
      */
-    private $titleFirmroles;
+    #[ORM\OneToMany(targetEntity: TitleFirmrole::class, mappedBy: 'firm')]
+    private Collection|array $titleFirmroles;
 
     /**
      * Firm sources are where the bibliographic information comes from.
      *
      * @var Collection<int,FirmSource>
-     * @ORM\OneToMany(targetEntity="FirmSource", mappedBy="firm")
      */
-    private $firmSources;
+    #[ORM\OneToMany(targetEntity: FirmSource::class, mappedBy: 'firm')]
+    private Collection|array $firmSources;
 
     /**
      * @var Collection<int,Person>
-     * @ORM\ManyToMany(targetEntity="Person", mappedBy="relatedFirms")
      */
-    private $relatedPeople;
+    #[ORM\ManyToMany(targetEntity: Person::class, mappedBy: 'relatedFirms')]
+    private Collection|array $relatedPeople;
 
     /**
      * @var Collection<int,Firm>
-     * @ORM\ManyToMany(targetEntity="Firm", inversedBy="firmsRelated")
      */
-    private $relatedFirms;
+    #[ORM\ManyToMany(targetEntity: self::class, inversedBy: 'firmsRelated')]
+    private Collection|array $relatedFirms;
 
     /**
      * @var Collection<int,Firm>
-     * @ORM\ManyToMany(targetEntity="Firm", mappedBy="relatedFirms")
      */
-    private $firmsRelated;
+    #[ORM\ManyToMany(targetEntity: self::class, mappedBy: 'relatedFirms')]
+    private Collection|array $firmsRelated;
 
-    /**
-     * Construct a new firm.
-     */
     public function __construct() {
         parent::__construct();
         $this->gender = self::UNKNOWN;
@@ -140,9 +89,6 @@ class Firm extends AbstractEntity {
         $this->firmSources = new ArrayCollection();
     }
 
-    /**
-     * Get the name of the firm.
-     */
     public function __toString() : string {
         return $this->name;
     }
@@ -151,69 +97,33 @@ class Firm extends AbstractEntity {
         return "({$this->id}) {$this->name}";
     }
 
-    /**
-     * Set name.
-     *
-     * @param string $name
-     *
-     * @return Firm
-     */
-    public function setName($name) {
+    public function setName(?string $name) : self {
         $this->name = $name;
 
         return $this;
     }
 
-    /**
-     * Get name.
-     *
-     * @return string
-     */
-    public function getName() {
+    public function getName() : ?string {
         return $this->name;
     }
 
-    /**
-     * Set streetAddress.
-     *
-     * @param string $streetAddress
-     *
-     * @return Firm
-     */
-    public function setStreetAddress($streetAddress) {
+    public function setStreetAddress(?string $streetAddress) : self {
         $this->streetAddress = $streetAddress;
 
         return $this;
     }
 
-    /**
-     * Get streetAddress.
-     *
-     * @return string
-     */
-    public function getStreetAddress() {
+    public function getStreetAddress() : ?string {
         return $this->streetAddress;
     }
 
-    /**
-     * Set startDate.
-     *
-     * @param string $startDate
-     *
-     * @return Firm
-     */
-    public function setStartDate($startDate) {
+    public function setStartDate(?string $startDate) : self {
         $this->startDate = $startDate;
 
         return $this;
     }
 
-    /**
-     * Get startDate.
-     *
-     * @return null|string
-     */
-    public function getStartDate() {
+    public function getStartDate() : ?string {
         if ('0000-00-00' === $this->startDate) {
             return null;
         }
@@ -221,25 +131,13 @@ class Firm extends AbstractEntity {
         return $this->startDate;
     }
 
-    /**
-     * Set endDate.
-     *
-     * @param string $endDate
-     *
-     * @return Firm
-     */
-    public function setEndDate($endDate) {
+    public function setEndDate(?string $endDate) : self {
         $this->endDate = $endDate;
 
         return $this;
     }
 
-    /**
-     * Get endDate.
-     *
-     * @return null|string
-     */
-    public function getEndDate() {
+    public function getEndDate() : ?string {
         if ('0000-00-00' === $this->endDate) {
             return null;
         }
@@ -247,98 +145,50 @@ class Firm extends AbstractEntity {
         return $this->endDate;
     }
 
-    /**
-     * Set notes.
-     *
-     * @param string $notes
-     *
-     * @return self
-     */
-    public function setNotes($notes) {
+    public function setNotes(?string $notes) : self {
         $this->notes = $notes;
 
         return $this;
     }
 
-    /**
-     * Get notes.
-     *
-     * @return string
-     */
-    public function getNotes() {
+    public function getNotes() : ?string {
         return $this->notes;
     }
 
-    /**
-     * Set finalcheck.
-     *
-     * @param bool $finalcheck
-     *
-     * @return self
-     */
-    public function setFinalcheck($finalcheck) {
+    public function setFinalcheck(bool $finalcheck) : self {
         $this->finalcheck = $finalcheck;
 
         return $this;
     }
 
-    /**
-     * Get finalcheck.
-     *
-     * @return bool
-     */
-    public function getFinalcheck() {
+    public function getFinalcheck() : bool {
         return $this->finalcheck;
     }
 
-    /**
-     * Set city.
-     *
-     * @param Geonames $city
-     *
-     * @return self
-     */
-    public function setCity(?Geonames $city = null) {
+    public function setCity(?Geonames $city = null) : self {
         $this->city = $city;
 
         return $this;
     }
 
-    /**
-     * Get city.
-     *
-     * @return null|Geonames
-     */
-    public function getCity() {
+    public function getCity() : ?Geonames {
         return $this->city;
     }
 
-    /**
-     * Add titleFirmrole.
-     *
-     * @return self
-     */
-    public function addTitleFirmrole(TitleFirmrole $titleFirmrole) {
+    public function addTitleFirmrole(TitleFirmrole $titleFirmrole) : self {
         $this->titleFirmroles[] = $titleFirmrole;
 
         return $this;
     }
 
-    /**
-     * Remove titleFirmrole.
-     */
     public function removeTitleFirmrole(TitleFirmrole $titleFirmrole) : void {
         $this->titleFirmroles->removeElement($titleFirmrole);
     }
 
     /**
-     * Get titleFirmroles for the firm, optionally sorted by name.
-     *
-     * @param bool $sort
-     *
      * @return Collection<int,TitleFirmrole>
      */
-    public function getTitleFirmroles($sort = false) {
+    public function getTitleFirmroles(bool $sort = false) : Collection {
         if ( ! $sort) {
             return $this->titleFirmroles;
         }
@@ -359,63 +209,37 @@ class Firm extends AbstractEntity {
         return new ArrayCollection(iterator_to_array($iterator));
     }
 
-    /**
-     * Set gender.
-     *
-     * @param null|string $gender
-     *
-     * @return self
-     */
-    public function setGender($gender = null) {
+    public function setGender(?string $gender = null) : self {
         $this->gender = $gender;
 
         return $this;
     }
 
-    /**
-     * Get gender.
-     *
-     * @return null|string
-     */
-    public function getGender() {
+    public function getGender() : ?string {
         return $this->gender;
     }
 
     /**
-     * Set the sources for this firm.
-     *
      * @param Collection<int,FirmSource> $firmSources
      */
-    public function setFirmSources($firmSources) : void {
+    public function setFirmSources(Collection $firmSources) : void {
         $this->firmSources = $firmSources;
     }
 
-    /**
-     * Add firmSource.
-     *
-     * @return self
-     */
-    public function addFirmSource(FirmSource $firmSource) {
+    public function addFirmSource(FirmSource $firmSource) : self {
         $this->firmSources[] = $firmSource;
 
         return $this;
     }
 
-    /**
-     * Remove firmSource.
-     *
-     * @return bool TRUE if this collection contained the specified element, FALSE otherwise.
-     */
-    public function removeFirmSource(FirmSource $firmSource) {
+    public function removeFirmSource(FirmSource $firmSource) : bool {
         return $this->firmSources->removeElement($firmSource);
     }
 
     /**
-     * Get firmSources.
-     *
      * @return Collection<int,FirmSource>
      */
-    public function getFirmSources() {
+    public function getFirmSources() : Collection {
         return $this->firmSources;
     }
 

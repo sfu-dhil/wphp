@@ -2,36 +2,25 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Entity;
 
+use App\Repository\PostStatusRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Nines\UtilBundle\Entity\AbstractTerm;
 
-/**
- * PostStatus.
- *
- * @ORM\Table(name="nines_blog_post_status")
- * @ORM\Entity(repositoryClass="App\Repository\PostStatusRepository")
- */
+#[ORM\Table(name: 'nines_blog_post_status')]
+#[ORM\Entity(repositoryClass: PostStatusRepository::class)]
 class PostStatus extends AbstractTerm {
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     private bool $public = false;
 
     /**
      * @var Collection<int,Post>|Post[]
-     * @ORM\OneToMany(targetEntity="Post", mappedBy="status")
      */
-    private $posts;
+    #[ORM\OneToMany(targetEntity: Post::class, mappedBy: 'status')]
+    private Collection|array $posts;
 
     /**
      * Build the post.
@@ -41,16 +30,10 @@ class PostStatus extends AbstractTerm {
         $this->posts = new ArrayCollection();
     }
 
-    /**
-     * @codeCoverageIgnore
-     */
-    public function getPublic() : ?bool {
+    public function getPublic() : bool {
         return $this->public;
     }
 
-    /**
-     * @codeCoverageIgnore
-     */
     public function setPublic(bool $public) : self {
         $this->public = $public;
 
@@ -59,8 +42,6 @@ class PostStatus extends AbstractTerm {
 
     /**
      * @return Collection<int,Post>|Post[]
-     *
-     * @codeCoverageIgnore
      */
     public function getPosts() : Collection {
         return $this->posts;

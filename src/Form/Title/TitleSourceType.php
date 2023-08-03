@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Form\Title;
 
 use App\Entity\Source;
@@ -24,6 +18,7 @@ use Tetranz\Select2EntityBundle\Form\Type\Select2EntityType;
 class TitleSourceType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) : void {
         $builder->add('source', Select2EntityType::class, [
+            'label' => 'Source',
             'multiple' => false,
             'remote_route' => 'source_typeahead',
             'class' => Source::class,
@@ -33,16 +28,18 @@ class TitleSourceType extends AbstractType {
             'delay' => 250,
             'language' => 'en',
             'required' => true,
+            'help' => 'source.form.name',
             'attr' => [
-                'help_block' => 'source.form.name',
                 'required' => true,
             ],
+            'placeholder' => 'Search for an existing source by name',
         ]);
 
         $builder->add('identifier', TextType::class, [
+            'label' => 'Identifier',
             'required' => true,
+            'help' => 'source.form.identifier',
             'attr' => [
-                'help_block' => 'source.form.identifier',
                 'required' => true,
             ],
         ]);

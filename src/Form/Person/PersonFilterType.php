@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Form\Person;
 
 use App\Entity\Person;
@@ -22,13 +16,7 @@ use Symfony\Component\Form\FormBuilderInterface;
  * PersonFilterType is a subform used in the title search form.
  */
 class PersonFilterType extends AbstractType {
-    /**
-     * @var EntityManagerInterface
-     */
-    private $em;
-
-    public function __construct(EntityManagerInterface $em) {
-        $this->em = $em;
+    public function __construct(private EntityManagerInterface $em) {
     }
 
     /**
@@ -43,17 +31,13 @@ class PersonFilterType extends AbstractType {
         $builder->add('id', TextType::class, [
             'label' => 'ID',
             'required' => false,
-            'attr' => [
-                'help_block' => 'person.search.id',
-            ],
+            'help' => 'person.search.id',
         ]);
 
         $builder->add('name', TextType::class, [
             'label' => 'Name',
             'required' => false,
-            'attr' => [
-                'help_block' => 'person.search.name',
-            ],
+            'help' => 'person.search.name',
         ]);
 
         $builder->add('gender', ChoiceType::class, [
@@ -64,15 +48,17 @@ class PersonFilterType extends AbstractType {
                 'Transgender' => Person::TRANS,
                 'Unknown' => Person::UNKNOWN,
             ],
-            'attr' => [
-                'help_block' => 'person.search.gender',
+            'label_attr' => [
+                'class' => 'checkbox-inline',
             ],
+            'help' => 'person.search.gender',
             'required' => false,
             'expanded' => true,
             'multiple' => true,
         ]);
 
         $builder->add('person_role', ChoiceType::class, [
+            'label' => 'Role',
             'choices' => $roles,
             'choice_label' => fn ($value, $key, $index) => $value->getName(),
             'choice_value' => function ($value) {
@@ -80,13 +66,13 @@ class PersonFilterType extends AbstractType {
                     return $value->getId();
                 }
             },
-            'label' => 'Role',
+            'label_attr' => [
+                'class' => 'checkbox-inline',
+            ],
             'required' => false,
             'expanded' => true,
             'multiple' => true,
-            'attr' => [
-                'help_block' => 'person.search.role',
-            ],
+            'help' => 'person.search.role',
         ]);
     }
 }

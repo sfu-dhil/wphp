@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Services;
 
 use App\Entity\AasMarc;
@@ -24,26 +18,18 @@ use Doctrine\ORM\EntityManagerInterface;
  */
 class MarcManager {
     /**
-     * @var EntityManagerInterface
-     */
-    private $em;
-
-    /**
      * MarcManager constructor.
      */
-    public function __construct(EntityManagerInterface $em) {
-        $this->em = $em;
+    public function __construct(private EntityManagerInterface $em) {
     }
 
     /**
      * Get the title of a MARC record.
      *
      * @param EstcMarc|OsborneMarc $object
-     *
-     * @return string
      */
-    public function getTitle($object) {
-        $repo = $this->em->getRepository(get_class($object));
+    public function getTitle($object) : string {
+        $repo = $this->em->getRepository($object::class);
         $rows = $repo->findBy([
             'titleId' => $object->getTitleId(),
             'field' => '245',
@@ -60,7 +46,7 @@ class MarcManager {
      * @return string
      */
     public function getControlId($object) {
-        $repo = $this->em->getRepository(get_class($object));
+        $repo = $this->em->getRepository($object::class);
         $field = $repo->findOneBy([
             'titleId' => $object->getTitleId(),
             'field' => '001',
@@ -100,7 +86,7 @@ class MarcManager {
      * @return null|string
      */
     public function getAuthor($object) {
-        $repo = $this->em->getRepository(get_class($object));
+        $repo = $this->em->getRepository($object::class);
         $rows = $repo->findBy([
             'titleId' => $object->getTitleId(),
             'field' => '100',
@@ -111,7 +97,6 @@ class MarcManager {
             return $rows[0]->getFieldData();
         }
 
-        return null;
     }
 
     /**
@@ -119,11 +104,9 @@ class MarcManager {
      *
      * @param EstcMarc|OsborneMarc $object
      * @param string $field
-     *
-     * @return array
      */
-    public function getFieldValues($object, $field) {
-        $repo = $this->em->getRepository(get_class($object));
+    public function getFieldValues($object, $field) : array {
+        $repo = $this->em->getRepository($object::class);
         $rows = $repo->findBy([
             'titleId' => $object->getTitleId(),
             'field' => $field,
@@ -142,7 +125,7 @@ class MarcManager {
      * @return EstcMarc[]|OsborneMarc[]
      */
     public function getData($object) {
-        $repo = $this->em->getRepository(get_class($object));
+        $repo = $this->em->getRepository($object::class);
 
         return $repo->findBy(['titleId' => $object->getTitleId()], ['field' => 'ASC', 'subfield' => 'ASC']);
     }

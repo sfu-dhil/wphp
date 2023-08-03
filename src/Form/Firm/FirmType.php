@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Form\Firm;
 
 use App\Entity\Firm;
@@ -27,11 +21,10 @@ class FirmType extends AbstractType {
         $builder->add('name', null, [
             'label' => 'Name',
             'required' => false,
-            'attr' => [
-                'help_block' => 'firm.form.name',
-            ],
+            'help' => 'firm.form.name',
         ]);
         $builder->add('gender', ChoiceType::class, [
+            'label' => 'Gender',
             'expanded' => true,
             'multiple' => false,
             'choices' => [
@@ -40,18 +33,15 @@ class FirmType extends AbstractType {
                 'Unknown' => Firm::UNKNOWN,
             ],
             'empty_data' => Firm::UNKNOWN,
-            'attr' => [
-                'help_block' => 'firm.form.gender',
-            ],
+            'help' => 'firm.form.gender',
         ]);
         $builder->add('streetAddress', null, [
             'label' => 'Street Address',
             'required' => false,
-            'attr' => [
-                'help_block' => 'firm.form.streetAddress',
-            ],
+            'help' => 'firm.form.streetAddress',
         ]);
         $builder->add('city', Select2EntityType::class, [
+            'label' => 'City',
             'multiple' => false,
             'remote_route' => 'geonames_typeahead',
             'class' => Geonames::class,
@@ -60,23 +50,18 @@ class FirmType extends AbstractType {
             'allow_clear' => true,
             'delay' => 250,
             'language' => 'en',
-            'attr' => [
-                'help_block' => 'firm.form.city',
-            ],
+            'help' => 'firm.form.city',
+            'placeholder' => 'Search for an existing city by name',
         ]);
         $builder->add('startDate', null, [
             'label' => 'Start Date',
             'required' => false,
-            'attr' => [
-                'help_block' => 'firm.form.startDate',
-            ],
+            'help' => 'firm.form.startDate',
         ]);
         $builder->add('endDate', null, [
             'label' => 'End Date',
             'required' => false,
-            'attr' => [
-                'help_block' => 'firm.form.endDate',
-            ],
+            'help' => 'firm.form.endDate',
         ]);
         $builder->add('firmSources', CollectionType::class, [
             'label' => 'Firm Sources',
@@ -89,9 +74,9 @@ class FirmType extends AbstractType {
                 'label' => false,
             ],
             'by_reference' => false,
+            'help' => 'firm.form.firmSources',
             'attr' => [
                 'class' => 'collection collection-complex',
-                'help_block' => 'firm.form.firmSources',
             ],
         ]);
 
@@ -102,16 +87,13 @@ class FirmType extends AbstractType {
             'remote_route' => 'firm_typeahead',
             'class' => Firm::class,
             'allow_clear' => true,
-            'attr' => [
-                'help_block' => 'person.form.relatedFirms',
-            ],
+            'help' => 'person.form.relatedFirms',
+            'placeholder' => 'Search for an existing firm by name',
         ]);
         $builder->add('notes', null, [
             'label' => 'Notes',
             'required' => false,
-            'attr' => [
-                'help_block' => 'person.form.notes',
-            ],
+            'help' => 'person.form.notes',
         ]);
         $builder->add('finalcheck', ChoiceType::class, [
             'label' => 'Firm Finalcheck',
@@ -123,9 +105,7 @@ class FirmType extends AbstractType {
             ],
             'required' => true,
             'placeholder' => false,
-            'attr' => [
-                'help_block' => 'firm.form.finalCheck',
-            ],
+            'help' => 'firm.form.finalCheck',
         ]);
     }
 

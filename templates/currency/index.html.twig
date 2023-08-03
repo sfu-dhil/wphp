@@ -8,16 +8,16 @@
 
 {% block body %}
 
-    <div class='btn-toolbar pull-right'>
-        <div class='btn-group'>
+    <div class='btn-toolbar'>
+        <div class='btn-group ms-auto'>
             {% if is_granted('ROLE_CONTENT_ADMIN') %}
                 <a href="{{ path('currency_new') }}" class="btn btn-default">
-                    <span class="glyphicon glyphicon-plus"></span> New
+                    <span class="bi bi-plus-lg"></span> New
                 </a>
             {% endif %}
 
             <a href="{{ path('currency_search') }}" class="btn btn-default">
-                <span class="glyphicon glyphicon-search"></span> Search
+                <span class="bi bi-search"></span> Search
             </a>
         </div>
     </div>

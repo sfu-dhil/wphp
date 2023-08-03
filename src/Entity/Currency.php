@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Entity;
 
 use App\Repository\CurrencyRepository;
@@ -17,63 +11,42 @@ use Doctrine\ORM\Mapping as ORM;
 use Nines\UtilBundle\Entity\AbstractEntity;
 use NumberFormatter;
 
-/**
- * @ORM\Entity(repositoryClass=CurrencyRepository::class)
- */
+#[ORM\Entity(repositoryClass: CurrencyRepository::class)]
 class Currency extends AbstractEntity {
     /**
      * The 3-letter ISO 4217 currency code indicating the currency to use.
      *
      * @see https://en.wikipedia.org/wiki/ISO_4217
      * @see https://www.iso.org/iso-4217-currency-codes.html
-     *
-     * @var string
-     * @ORM\Column(type="string", length=3, nullable=true)
      */
-    private $code;
+    #[ORM\Column(type: 'string', length: 3, nullable: true)]
+    private ?string $code = null;
 
-    /**
-     * @var string
-     * @ORM\Column(type="string", length=64, nullable=false)
-     */
-    private $name;
+    #[ORM\Column(type: 'string', length: 64, nullable: false)]
+    private ?string $name = null;
 
-    /**
-     * @var string
-     * @ORM\Column(type="string", length=4, nullable=true)
-     */
-    private $symbol;
+    #[ORM\Column(type: 'string', length: 4, nullable: true)]
+    private ?string $symbol = null;
 
-    /**
-     * @var string
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $description;
+    #[ORM\Column(type: 'text', nullable: true)]
+    private ?string $description = null;
 
     /**
      * @var Collection<int,Title>
-     * @ORM\OneToMany(targetEntity="App\Entity\Title", mappedBy="otherCurrency")
      */
-    private $titles;
+    #[ORM\OneToMany(targetEntity: Title::class, mappedBy: 'otherCurrency')]
+    private Collection|array $titles;
 
     public function __construct() {
         parent::__construct();
         $this->titles = new ArrayCollection();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function __toString() : string {
         return $this->name;
     }
 
-    /**
-     * @param float $value
-     *
-     * @return bool|string
-     */
-    public function format($value) {
+    public function format(float $value) : bool|string {
         if ($this->code) {
             $fmt = new NumberFormatter('en_CA', NumberFormatter::CURRENCY);
 

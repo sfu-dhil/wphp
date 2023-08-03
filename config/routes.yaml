@@ -1,14 +1,25 @@
 nines_editor:
-  prefix: /editor
-  resource: '@NinesEditorBundle/config/routes.yaml'
+    resource: '@NinesEditorBundle/config/routes.yaml'
+    prefix: '%router.request_context.base_url%/editor'
 
 nines_feedback:
-  prefix: /feedback
-  resource: '@NinesFeedbackBundle/config/routes.yaml'
+    resource: '@NinesFeedbackBundle/config/routes.yaml'
+    prefix: '%router.request_context.base_url%/feedback'
 
 nines_media:
-  prefix: /media
-  resource: '@NinesMediaBundle/config/routes.yaml'
+    resource: '@NinesMediaBundle/config/routes.yaml'
+    prefix: '%router.request_context.base_url%/media'
 
 nines_user:
-  resource: '@NinesUserBundle/config/routes.yaml'
+    resource: '@NinesUserBundle/config/routes.yaml'
+    prefix: '%router.request_context.base_url%'
+
+controllers:
+    resource: ../src/Controller/
+    type: attribute
+    prefix: '%router.request_context.base_url%'
+
+kernel:
+    resource: ../src/Kernel.php
+    type: attribute
+    prefix: '%router.request_context.base_url%'

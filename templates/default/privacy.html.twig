@@ -65,15 +65,13 @@
         <li>By visiting this page on our website: <a href="{{ url('privacy') }}">{{ url('privacy') }}</a></li>
     </ul>
     <h2>Opt Out of Data Collection</h2>
-
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">Analytics Settings</h3>
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title">Analytics Settings</h4>
         </div>
-        <div class="panel-body">
+        <div class="card-body">
             {% if matomo_enabled %}
-                <iframe style="border: 0; height: auto; width: 100%;"
-                        src="{{ matomo_url }}index.php?module=CoreAdminHome&action=optOut&language=en">
+                <iframe style="border: 0; height: auto; width: 100%;" src="{{ matomo_url }}index.php?module=CoreAdminHome&action=optOut&language=en">
                 </iframe>
             {% else %}
                 <p>Tracking is not enabled for this website.</p>

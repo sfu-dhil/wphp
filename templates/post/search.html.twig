@@ -11,11 +11,11 @@
 
 {% block body %}
 
-    <div class='btn-toolbar pull-right'>
-        <div class='btn-group'>
+    <div class='btn-toolbar'>
+        <div class='btn-group ms-auto'>
             {% if is_granted('ROLE_BLOG_ADMIN') %}
                 <a href="{{ path('nines_blog_post_new') }}" class="btn btn-default">
-                    <span class="glyphicon glyphicon-plus"></span> New
+                    <span class="bi bi-plus-lg"></span> New
                 </a>
             {% endif %}
         </div>
@@ -26,14 +26,14 @@
     <form method="get" class="form-horizontal">
         <fieldset>
             <legend>Blog search</legend>
-            <div class='form-group'>
-                <label class='col-sm-2 control-label' for='q'>Search query</label>
-                <div class='col-sm-10'>
+            <div class='mb-3 row'>
+                <label class="h6 col-form-label col-sm-2 text-sm-end" for="q">Search query</label>
+                <div class="col-sm-10">
                     <div class='input-group'>
                         <input type='text' name='q' id='q' class='form-control' value='{{ q }}'>
                         <span class="input-group-btn">
                             <button class="btn btn-primary" type="submit">
-                                <span class='glyphicon glyphicon-search'></span>
+                                <span class='bi bi-search'></span>
                                 Search
                             </button>
                         </span>
@@ -45,22 +45,25 @@
 
     {% if q %}
         {% for post in posts %}
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h2 class="panel-title pull-left">
-                        <a href="{{ path('nines_blog_post_show', { 'id': post.id }) }}">
-                            {{ post.title }}
-                        </a>
-                    </h2>
-                    {% if is_granted('ROLE_BLOG_ADMIN') %}
-                        <div class="panel-title pull-right">{{ post.status.label }}</div>
-                    {% endif %}
-                    <div class="clearfix"></div>
+            <div class="card my-3 p-0">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col card-title">
+                            <a href="{{ path('nines_blog_post_show', { 'id': post.id }) }}">
+                                {{ post.title }}
+                            </a>
+                        </div>
+                        {% if is_granted('ROLE_BLOG_ADMIN') %}
+                            <div class="col-auto card-title">
+                                {{ post.status.label }}
+                            </div>
+                        {% endif %}
+                    </div>
                 </div>
-                <div class="panel-body">
-                    {{ post.excerpt|raw }}
+                <div class="card-body">
+                    <p>{{ post.excerpt|raw }}</p>
                 </div>
-                <div class="panel-footer text-right nines-author">
+                <div class="card-footer text-end nines-author">
                     Posted {{ post.created|date }} by {{ post.user.fullname }} in
                     <a href="{{ path('nines_blog_post_category_show', {'id': post.category.id }) }}">
                         {{ post.category -}}

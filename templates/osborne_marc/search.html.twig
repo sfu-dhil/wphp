@@ -12,13 +12,13 @@
     <form method="get" class="form-horizontal" action="{{ path('resource_osborne_search') }}">
         <fieldset>
             <legend>Search the Osborn MARC records</legend>
-            <div class="form-group">
+            <div class="mb-3 row">
                 <label class='col-sm-2 control-label' for='q'>Search term</label>
                 <div class='input-group'>
                     <input type='text' name='q' id='q' class='form-control' value='{{ q }}'>
                     <span class="input-group-btn">
                         <button class="btn btn-primary" type="submit">
-                            <span class='glyphicon glyphicon-search'></span>
+                            <span class='bi bi-search'></span>
                             Search
                         </button>
                     </span>

@@ -2,17 +2,12 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Controller;
 
 use App\Entity\Currency;
 use App\Form\CurrencyType;
 use App\Repository\CurrencyRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Nines\UtilBundle\Controller\PaginatorTrait;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -23,18 +18,15 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/currency")
- */
+#[Route(path: '/currency')]
 class CurrencyController extends AbstractController implements PaginatorAwareInterface {
     use PaginatorTrait;
 
     /**
-     * @Route("/", name="currency_index", methods={"GET"})
-     *
      * @return array<string,mixed>
-     * @Template
      */
+    #[Route(path: '/', name: 'currency_index', methods: ['GET'])]
+    #[Template]
     public function index(Request $request, CurrencyRepository $currencyRepository) : array {
         $query = $currencyRepository->indexQuery();
         $pageSize = $this->getParameter('page_size');
@@ -46,12 +38,10 @@ class CurrencyController extends AbstractController implements PaginatorAwareInt
     }
 
     /**
-     * @Route("/search", name="currency_search", methods={"GET"})
-     *
-     * @Template
-     *
      * @return array<string,mixed>
      */
+    #[Route(path: '/search', name: 'currency_search', methods: ['GET'])]
+    #[Template]
     public function search(Request $request, CurrencyRepository $currencyRepository) {
         $q = $request->query->get('q');
         if ($q) {
@@ -68,10 +58,9 @@ class CurrencyController extends AbstractController implements PaginatorAwareInt
     }
 
     /**
-     * @Route("/typeahead", name="currency_typeahead", methods={"GET"})
-     *
      * @return JsonResponse
      */
+    #[Route(path: '/typeahead', name: 'currency_typeahead', methods: ['GET'])]
     public function typeahead(Request $request, CurrencyRepository $currencyRepository) {
         $q = $request->query->get('q');
         if ( ! $q) {
@@ -90,19 +79,17 @@ class CurrencyController extends AbstractController implements PaginatorAwareInt
     }
 
     /**
-     * @Route("/new", name="currency_new", methods={"GET", "POST"})
-     * @Template
-     * @IsGranted("ROLE_CONTENT_ADMIN")
-     *
      * @return array<string,mixed>|RedirectResponse
      */
-    public function new(Request $request) {
+    #[Route(path: '/new', name: 'currency_new', methods: ['GET', 'POST'])]
+    #[Template]
+    #[IsGranted('ROLE_CONTENT_ADMIN')]
+    public function new(EntityManagerInterface $entityManager, Request $request) {
         $currency = new Currency();
         $form = $this->createForm(CurrencyType::class, $currency);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($currency);
             $entityManager->flush();
             $this->addFlash('success', 'The new currency has been saved.');
@@ -117,11 +104,10 @@ class CurrencyController extends AbstractController implements PaginatorAwareInt
     }
 
     /**
-     * @Route("/{id}", name="currency_show", methods={"GET"})
-     * @Template
-     *
      * @return array<string,mixed>
      */
+    #[Route(path: '/{id}', name: 'currency_show', methods: ['GET'])]
+    #[Template]
     public function show(Currency $currency) {
         return [
             'currency' => $currency,
@@ -129,19 +115,17 @@ class CurrencyController extends AbstractController implements PaginatorAwareInt
     }
 
     /**
-     * @IsGranted("ROLE_CONTENT_ADMIN")
-     * @Route("/{id}/edit", name="currency_edit", methods={"GET", "POST"})
-     *
-     * @Template
-     *
      * @return array<string,mixed>|RedirectResponse
      */
-    public function edit(Request $request, Currency $currency) {
+    #[IsGranted('ROLE_CONTENT_ADMIN')]
+    #[Route(path: '/{id}/edit', name: 'currency_edit', methods: ['GET', 'POST'])]
+    #[Template]
+    public function edit(EntityManagerInterface $entityManager, Request $request, Currency $currency) {
         $form = $this->createForm(CurrencyType::class, $currency);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $entityManager->flush();
             $this->addFlash('success', 'The updated currency has been saved.');
 
             return $this->redirectToRoute('currency_show', ['id' => $currency->getId()]);
@@ -154,14 +138,12 @@ class CurrencyController extends AbstractController implements PaginatorAwareInt
     }
 
     /**
-     * @IsGranted("ROLE_CONTENT_ADMIN")
-     * @Route("/{id}", name="currency_delete", methods={"DELETE"})
-     *
      * @return RedirectResponse
      */
-    public function delete(Request $request, Currency $currency) {
+    #[IsGranted('ROLE_CONTENT_ADMIN')]
+    #[Route(path: '/{id}', name: 'currency_delete', methods: ['DELETE'])]
+    public function delete(EntityManagerInterface $entityManager, Request $request, Currency $currency) {
         if ($this->isCsrfTokenValid('delete' . $currency->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($currency);
             $entityManager->flush();
             $this->addFlash('success', 'The currency has been deleted.');

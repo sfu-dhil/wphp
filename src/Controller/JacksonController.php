@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Controller;
 
 use App\Entity\Jackson;
@@ -23,10 +17,9 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Jackson controller.
- *
- * @Security("is_granted('ROLE_USER')")
- * @Route("/resource/jackson")
  */
+#[Security("is_granted('ROLE_USER')")]
+#[Route(path: '/resource/jackson')]
 class JacksonController extends AbstractController implements PaginatorAwareInterface {
     use PaginatorTrait;
 
@@ -34,10 +27,9 @@ class JacksonController extends AbstractController implements PaginatorAwareInte
      * Lists all Jackson entities.
      *
      * @return array<string,mixed> *
-     * @Route("/", name="resource_jackson_index", methods={"GET"})
-     *
-     * @Template
      */
+    #[Route(path: '/', name: 'resource_jackson_index', methods: ['GET'])]
+    #[Template]
     public function indexAction(Request $request, EntityManagerInterface $em) {
         $qb = $em->createQueryBuilder();
         $qb->select('e')->from(Jackson::class, 'e')->orderBy('e.id', 'ASC');
@@ -53,8 +45,8 @@ class JacksonController extends AbstractController implements PaginatorAwareInte
      * Search for Jackson entities.
      *
      * @return array<string,mixed> * @Route("/search", name="resource_jackson_search", methods={"GET"})
-     * @Template
      */
+    #[Template]
     public function searchAction(Request $request, JacksonRepository $repo) {
         $q = $request->query->get('q');
         if ($q) {
@@ -74,10 +66,9 @@ class JacksonController extends AbstractController implements PaginatorAwareInte
      * Finds and displays a Jackson entity.
      *
      * @return array<string,mixed> *
-     * @Route("/{id}", name="resource_jackson_show", methods={"GET"})
-     *
-     * @Template
      */
+    #[Route(path: '/{id}', name: 'resource_jackson_show', methods: ['GET'])]
+    #[Template]
     public function showAction(Jackson $jackson) {
         return [
             'jackson' => $jackson,

@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Controller;
 
 use App\Entity\Page;
@@ -24,15 +18,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/blog/page")
- */
+#[Route(path: '/blog/page')]
 class PageController extends AbstractController implements PaginatorAwareInterface {
     use PaginatorTrait;
 
-    /**
-     * @Route("/", name="nines_blog_page_index", methods={"GET"})
-     */
+    #[Route(path: '/', name: 'nines_blog_page_index', methods: ['GET'])]
     public function index(Request $request, PageRepository $pageRepository) : Response {
         $query = $pageRepository->indexQuery($this->isGranted('ROLE_USER'));
         $pageSize = (int) $this->getParameter('page_size');
@@ -43,9 +33,7 @@ class PageController extends AbstractController implements PaginatorAwareInterfa
         ]);
     }
 
-    /**
-     * @Route("/search", name="nines_blog_page_search", methods={"GET"})
-     */
+    #[Route(path: '/search', name: 'nines_blog_page_search', methods: ['GET'])]
     public function search(Request $request, PageRepository $pageRepository) : Response {
         $q = $request->query->get('q');
         if ($q) {
@@ -63,11 +51,9 @@ class PageController extends AbstractController implements PaginatorAwareInterfa
         ]);
     }
 
-    /**
-     * @Route("/new", name="nines_blog_page_new", methods={"GET", "POST"})
-     * @IsGranted("ROLE_CONTENT_ADMIN")
-     */
-    public function new(Request $request, PageRepository $repo) : Response {
+    #[Route(path: '/new', name: 'nines_blog_page_new', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_CONTENT_ADMIN')]
+    public function new(EntityManagerInterface $entityManager, Request $request, PageRepository $repo) : Response {
         /** @var User $user */
         $user = $this->getUser();
         $page = new Page();
@@ -81,7 +67,6 @@ class PageController extends AbstractController implements PaginatorAwareInterfa
                 // make sure all other pages are NOT the home page.
                 $repo->clearHomepages($page);
             }
-            $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($page);
             $entityManager->flush();
             $this->addFlash('success', 'The new page has been saved.');
@@ -95,19 +80,8 @@ class PageController extends AbstractController implements PaginatorAwareInterfa
         ]);
     }
 
-    /**
-     * @Route("/new_popup", name="nines_blog_page_new_popup", methods={"GET", "POST"})
-     * @IsGranted("ROLE_CONTENT_ADMIN")
-     */
-    public function new_popup(Request $request, PageRepository $repo) : Response {
-        return $this->new($request, $repo);
-    }
-
-    /**
-     * @Route("/sort", name="nines_blog_page_sort", methods={"GET", "POST"})
-     *
-     * @IsGranted("ROLE_BLOG_ADMIN")
-     */
+    #[Route(path: '/sort', name: 'nines_blog_page_sort', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_BLOG_ADMIN')]
     public function sortAction(Request $request, EntityManagerInterface $em, PageRepository $repo) : Response {
         if ('POST' === $request->getMethod()) {
             $order = $request->request->get('order');
@@ -133,20 +107,16 @@ class PageController extends AbstractController implements PaginatorAwareInterfa
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="nines_blog_page_show", methods={"GET"})
-     */
+    #[Route(path: '/{id}', name: 'nines_blog_page_show', methods: ['GET'])]
     public function show(Page $page) : Response {
         return $this->render('page/show.html.twig', [
             'page' => $page,
         ]);
     }
 
-    /**
-     * @IsGranted("ROLE_CONTENT_ADMIN")
-     * @Route("/{id}/edit", name="nines_blog_page_edit", methods={"GET", "POST"})
-     */
-    public function edit(Request $request, Page $page, PageRepository $repo) : Response {
+    #[IsGranted('ROLE_CONTENT_ADMIN')]
+    #[Route(path: '/{id}/edit', name: 'nines_blog_page_edit', methods: ['GET', 'POST'])]
+    public function edit(EntityManagerInterface $entityManager, Request $request, Page $page, PageRepository $repo) : Response {
         $form = $this->createForm(PageType::class, $page);
         $form->handleRequest($request);
 
@@ -156,7 +126,7 @@ class PageController extends AbstractController implements PaginatorAwareInterfa
                 $repo->clearHomepages($page);
             }
 
-            $this->getDoctrine()->getManager()->flush();
+            $entityManager->flush();
             $this->addFlash('success', 'The updated page has been saved.');
 
             return $this->redirectToRoute('nines_blog_page_show', ['id' => $page->getId()]);
@@ -168,13 +138,10 @@ class PageController extends AbstractController implements PaginatorAwareInterfa
         ]);
     }
 
-    /**
-     * @IsGranted("ROLE_CONTENT_ADMIN")
-     * @Route("/{id}", name="nines_blog_page_delete", methods={"DELETE"})
-     */
-    public function delete(Request $request, Page $page) : RedirectResponse {
+    #[IsGranted('ROLE_CONTENT_ADMIN')]
+    #[Route(path: '/{id}', name: 'nines_blog_page_delete', methods: ['DELETE'])]
+    public function delete(EntityManagerInterface $entityManager, Request $request, Page $page) : RedirectResponse {
         if ($this->isCsrfTokenValid('delete' . $page->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($page);
             $entityManager->flush();
             $this->addFlash('success', 'The page has been deleted.');

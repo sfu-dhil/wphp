@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Form;
 
 use App\Entity\Post;
@@ -31,9 +25,6 @@ class PostType extends AbstractType {
         $builder->add('title', TextType::class, [
             'label' => 'Title',
             'required' => true,
-            'attr' => [
-                'help_block' => '',
-            ],
         ]);
         $builder->add('category');
         $builder->add('status');
@@ -41,7 +32,6 @@ class PostType extends AbstractType {
             'label' => 'Excerpt',
             'required' => true,
             'attr' => [
-                'help_block' => '',
                 'class' => 'tinymce',
             ],
         ]);
@@ -49,7 +39,6 @@ class PostType extends AbstractType {
             'label' => 'Content',
             'required' => true,
             'attr' => [
-                'help_block' => '',
                 'class' => 'tinymce',
             ],
         ]);
@@ -62,9 +51,6 @@ class PostType extends AbstractType {
                 'No' => false,
             ],
             'required' => true,
-            'attr' => [
-                'help_block' => '',
-            ],
         ]);
     }
 

@@ -10,8 +10,7 @@ services:
       - ./docker/mariadb/custom.cnf:/etc/mysql/conf.d/custom.cnf
       - ./docker/mariadb/init:/docker-entrypoint-initdb.d
       # # HACK: easy sql script running for setting up db
-      # - ./wphp-data.sql:/wphp-data.sql
-      # - ./wphp-schema.sql:/wphp-schema.sql
+      # - ./wphp.sql:/wphp.sql
     environment:
       MARIADB_ROOT_PASSWORD: root
       MARIADB_DATABASE: wphp
@@ -34,15 +33,13 @@ services:
       # code for development
       - .:/var/www/html
 
+      # use the container's var (for cache, etc)
+      - /var/www/html/var
       # persist file uploads in .data
       - .data/app/data:/var/www/html/data
       - .data/app/blog_images:/var/www/html/public/images/blog
-      - .data/app/var:/var/www/html/var
-
-      # ignore local environment files. Allows you to run the app on your local machine as well via the local overrides
-      - ./docker/app/null:/var/www/html/.env.local
-      - ./docker/app/null:/var/www/html/.env.dev.local
-      - ./docker/app/null:/var/www/html/.env.test.local
+      # persist logs
+      - .data/app/log:/var/www/html/var/log
 
       # use the container's node_modules & vendor folders (don't override)
       - /var/www/html/public/node_modules
@@ -66,6 +63,16 @@ services:
       - ./public:/app
       # use the container's node_modules folder (don't override)
       - /app/node_modules
+
+  docs:
+    container_name: wphp_docs_watcher
+    build:
+      context: .
+      target: wphp-docs
+    command: sphinx-autobuild source _site/
+    volumes:
+      - ./docs:/app
+      - ./public/docs/sphinx:/app/_site
 
   mail:
     container_name: wphp_mail

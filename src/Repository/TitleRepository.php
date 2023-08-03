@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Repository;
 
 use App\Entity\Title;
@@ -39,7 +33,7 @@ class TitleRepository extends ServiceEntityRepository {
         if ( ! isset($data[$formName])) {
             return;
         }
-        $term = trim($data[$formName]);
+        $term = trim((string) $data[$formName]);
         if ( ! $term) {
             return;
         }
@@ -112,7 +106,7 @@ class TitleRepository extends ServiceEntityRepository {
                 continue;
             }
             // No mb_substr here, as levenshtein() is hard-limited to 255 bytes!
-            $t2 = mb_substr($t->getTitle(), 0, 255);
+            $t2 = mb_substr((string) $t->getTitle(), 0, 255);
             $lev = 1.0 - levenshtein($t1, $t2) / max(mb_strlen($t1), mb_strlen($t2));
             if ($lev > 0.3) {
                 $similar[] = [
@@ -210,10 +204,10 @@ class TitleRepository extends ServiceEntityRepository {
         }
         if (isset($data['sizeW']) && $data['sizeW']) {
             $m = [];
-            if (preg_match('/^\s*[0-9]+\s*$/', $data['sizeW'])) {
+            if (preg_match('/^\s*[0-9]+\s*$/', (string) $data['sizeW'])) {
                 $qb->andWhere('e.sizeW = :sizeW');
                 $qb->setParameter('sizeW', $data['sizeW']);
-            } elseif (preg_match('/^\s*(\*|[0-9]+)\s*-\s*(\*|[0-9]+)\s*$/', $data['sizeW'], $m)) {
+            } elseif (preg_match('/^\s*(\*|[0-9]+)\s*-\s*(\*|[0-9]+)\s*$/', (string) $data['sizeW'], $m)) {
                 $from = ('*' === $m[1] ? 0 : $m[1]);
                 $to = ('*' === $m[2] ? 9999 : $m[2]);
                 $qb->andWhere('(:sizeW_from <= e.sizeW) AND (e.sizeW <= :sizeW_to)');
@@ -223,10 +217,10 @@ class TitleRepository extends ServiceEntityRepository {
         }
         if (isset($data['sizeL']) && $data['sizeL']) {
             $m = [];
-            if (preg_match('/^\s*[0-9]+\s*$/', $data['sizeL'])) {
+            if (preg_match('/^\s*[0-9]+\s*$/', (string) $data['sizeL'])) {
                 $qb->andWhere('e.sizeL = :sizeL');
                 $qb->setParameter('sizeL', $data['sizeL']);
-            } elseif (preg_match('/^\s*(\*|[0-9]+)\s*-\s*(\*|[0-9]+)\s*$/', $data['sizeL'], $m)) {
+            } elseif (preg_match('/^\s*(\*|[0-9]+)\s*-\s*(\*|[0-9]+)\s*$/', (string) $data['sizeL'], $m)) {
                 $from = ('*' === $m[1] ? 0 : $m[1]);
                 $to = ('*' === $m[2] ? 9999 : $m[2]);
                 $qb->andWhere('(:sizeL_from <= e.sizeL) AND (e.sizeL <= :sizeL_to)');
@@ -252,10 +246,10 @@ class TitleRepository extends ServiceEntityRepository {
         }
         if (isset($data['pubdate']) && $data['pubdate']) {
             $m = [];
-            if (preg_match('/^\s*[0-9]{4}\s*$/', $data['pubdate'])) {
+            if (preg_match('/^\s*[0-9]{4}\s*$/', (string) $data['pubdate'])) {
                 $qb->andWhere("YEAR(STRTODATE(e.pubdate, '%Y')) = :year");
                 $qb->setParameter('year', $data['pubdate']);
-            } elseif (preg_match('/^\s*(\*|[0-9]{4})\s*-\s*(\*|[0-9]{4})\s*$/', $data['pubdate'], $m)) {
+            } elseif (preg_match('/^\s*(\*|[0-9]{4})\s*-\s*(\*|[0-9]{4})\s*$/', (string) $data['pubdate'], $m)) {
                 $from = ('*' === $m[1] ? -1 : $m[1]);
                 $to = ('*' === $m[2] ? 9999 : $m[2]);
                 $qb->andWhere(":from <= YEAR(STRTODATE(e.pubdate, '%Y')) AND YEAR(STRTODATE(e.pubdate, '%Y')) <= :to");
@@ -265,10 +259,10 @@ class TitleRepository extends ServiceEntityRepository {
         }
         if (isset($data['date_of_first_publication']) && $data['date_of_first_publication']) {
             $m = [];
-            if (preg_match('/^\s*[0-9]{4}\s*$/', $data['date_of_first_publication'])) {
+            if (preg_match('/^\s*[0-9]{4}\s*$/', (string) $data['date_of_first_publication'])) {
                 $qb->andWhere("YEAR(STRTODATE(e.dateOfFirstPublication, '%Y')) = :year");
                 $qb->setParameter('year', $data['date_of_first_publication']);
-            } elseif (preg_match('/^\s*(\*|[0-9]{4})\s*-\s*(\*|[0-9]{4})\s*$/', $data['date_of_first_publication'], $m)) {
+            } elseif (preg_match('/^\s*(\*|[0-9]{4})\s*-\s*(\*|[0-9]{4})\s*$/', (string) $data['date_of_first_publication'], $m)) {
                 $from = ('*' === $m[1] ? -1 : $m[1]);
                 $to = ('*' === $m[2] ? 9999 : $m[2]);
                 $qb->andWhere(":from <= YEAR(STRTODATE(e.dateOfFirstPublication, '%Y')) AND YEAR(STRTODATE(e.dateOfFirstPublication, '%Y')) <= :to");
@@ -312,7 +306,7 @@ class TitleRepository extends ServiceEntityRepository {
             $qb->setParameter('total', $total);
         }
 
-        if (isset($data['genre']) && count($data['genre']) > 0) {
+        if (isset($data['genre']) && (is_countable($data['genre']) ? count($data['genre']) : 0) > 0) {
             $conditions = [];
             foreach ($data['genre'] as $idx => $genre) {
                 $alias = 'g_' . $idx;
@@ -338,7 +332,7 @@ class TitleRepository extends ServiceEntityRepository {
         }
 
         // only add the title filter query parts if the subform has data.
-        if (isset($data['person_filter']) && count(array_filter($data['person_filter']))) {
+        if (isset($data['person_filter']) && count((array) array_filter($data['person_filter']))) {
             $filter = $data['person_filter'];
             $idx = '00';
             $trAlias = 'tr_' . $idx;
@@ -368,14 +362,14 @@ class TitleRepository extends ServiceEntityRepository {
                 $qb->setParameter('genders', $genders);
             }
 
-            if (isset($filter['person_role']) && count($filter['person_role']) > 0) {
+            if (isset($filter['person_role']) && (is_countable($filter['person_role']) ? count($filter['person_role']) : 0) > 0) {
                 $qb->andWhere("{$trAlias}.role in (:roles_{$idx})");
                 $qb->setParameter("roles_{$idx}", $filter['person_role']);
             }
         }
 
         // only add the firm filter query parts if the subform has data.
-        if (isset($data['firm_filter']) && count(array_filter($data['firm_filter']))) {
+        if (isset($data['firm_filter']) && count((array) array_filter($data['firm_filter']))) {
             $filter = $data['firm_filter'];
             $idx = '01';
             $tfrAlias = 'tfr_' . $idx;
@@ -390,7 +384,7 @@ class TitleRepository extends ServiceEntityRepository {
                 $qb->andWhere("MATCH({$fAlias}.name) AGAINST(:{$fAlias}_name BOOLEAN) > 0");
                 $qb->setParameter("{$fAlias}_name", $filter['firm_name']);
             }
-            if (isset($filter['firm_role']) && count($filter['firm_role']) > 0) {
+            if (isset($filter['firm_role']) && (is_countable($filter['firm_role']) ? count($filter['firm_role']) : 0) > 0) {
                 $qb->andWhere("{$tfrAlias}.firmrole in (:firmroles_{$idx})");
                 $qb->setParameter("firmroles_{$idx}", $filter['firm_role']);
             }

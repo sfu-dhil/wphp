@@ -2,14 +2,9 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Form;
 
+use App\Entity\Source;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
@@ -24,38 +19,27 @@ class SourceType extends AbstractType {
         $builder->add('name', null, [
             'label' => 'Name',
             'required' => false,
-            'attr' => [
-                'help_block' => '',
-            ],
         ]);
         $builder->add('onlineSource', UrlType::class, [
             'label' => 'Online Source',
             'required' => false,
-            'attr' => [
-                'help_block' => 'Optional. Enter the URL for the source.',
-            ],
+            'help' => 'Optional. Enter the URL for the source.',
         ]);
         $builder->add('description', TextareaType::class, [
             'label' => 'Description',
             'required' => false,
-            'attr' => [
-                'help_block' => 'Provide a short description of the source.',
-                'class' => 'tinymce',
-            ],
+            'help' => 'Provide a short description of the source.',
         ]);
         $builder->add('citation', TextareaType::class, [
             'label' => 'Citation',
             'required' => false,
-            'attr' => [
-                'help_block' => 'Provide citation for the source.',
-                'class' => 'tinymce',
-            ],
+            'help' => 'Provide citation for the source.',
         ]);
     }
 
     public function configureOptions(OptionsResolver $resolver) : void {
         $resolver->setDefaults([
-            'data_class' => 'App\Entity\Source',
+            'data_class' => Source::class,
         ]);
     }
 }

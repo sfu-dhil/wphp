@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Tests\Controller;
 
 use App\Repository\CurrencyRepository;
@@ -98,7 +92,7 @@ class CurrencyTest extends ControllerTestCase {
             return;
         }
         $this->assertSame('application/json', $response->headers->get('content-type'));
-        $json = json_decode($response->getContent());
+        $json = json_decode($response->getContent(), null, 512, JSON_THROW_ON_ERROR);
         $this->assertCount(4, $json);
     }
 
@@ -112,7 +106,7 @@ class CurrencyTest extends ControllerTestCase {
         $response = $this->client->getResponse();
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
         $this->assertSame('application/json', $response->headers->get('content-type'));
-        $json = json_decode($response->getContent());
+        $json = json_decode($response->getContent(), null, 512, JSON_THROW_ON_ERROR);
         $this->assertCount(4, $json);
     }
 
@@ -126,7 +120,7 @@ class CurrencyTest extends ControllerTestCase {
         $response = $this->client->getResponse();
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
         $this->assertSame('application/json', $response->headers->get('content-type'));
-        $json = json_decode($response->getContent());
+        $json = json_decode($response->getContent(), null, 512, JSON_THROW_ON_ERROR);
         $this->assertCount(4, $json);
     }
 
@@ -138,7 +132,7 @@ class CurrencyTest extends ControllerTestCase {
             return;
         }
 
-        $form = $crawler->selectButton('btn-search')->form([
+        $form = $crawler->selectButton('Search')->form([
             'q' => 'currency',
         ]);
 
@@ -151,7 +145,7 @@ class CurrencyTest extends ControllerTestCase {
         $crawler = $this->client->request('GET', '/currency/search');
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
 
-        $form = $crawler->selectButton('btn-search')->form([
+        $form = $crawler->selectButton('Search')->form([
             'q' => 'currency',
         ]);
 
@@ -164,7 +158,7 @@ class CurrencyTest extends ControllerTestCase {
         $crawler = $this->client->request('GET', '/currency/search');
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
 
-        $form = $crawler->selectButton('btn-search')->form([
+        $form = $crawler->selectButton('Search')->form([
             'q' => 'currency',
         ]);
 
@@ -269,8 +263,8 @@ class CurrencyTest extends ControllerTestCase {
      * @group delete
      */
     public function testAdminDelete() : void {
-        $repo = self::$container->get(CurrencyRepository::class);
-        $preCount = count($repo->findAll());
+        $repo = self::getContainer()->get(CurrencyRepository::class);
+        $preCount = is_countable($repo->findAll()) ? count($repo->findAll()) : 0;
 
         $this->login(UserFixtures::ADMIN);
         $crawler = $this->client->request('GET', '/currency/1');
@@ -283,7 +277,7 @@ class CurrencyTest extends ControllerTestCase {
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
 
         $this->em->clear();
-        $postCount = count($repo->findAll());
+        $postCount = is_countable($repo->findAll()) ? count($repo->findAll()) : 0;
         $this->assertSame($preCount - 1, $postCount);
     }
 }

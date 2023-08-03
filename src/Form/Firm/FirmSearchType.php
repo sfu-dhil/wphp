@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Form\Firm;
 
 use App\Form\Person\PersonFilterType;
@@ -32,9 +26,7 @@ class FirmSearchType extends AbstractType {
         $builder->add('name', TextType::class, [
             'label' => 'Search Firms by Name',
             'required' => false,
-            'attr' => [
-                'help_block' => 'firm.search.name',
-            ],
+            'help' => 'firm.search.name',
         ]);
 
         $builder->add('order', ChoiceType::class, [
@@ -49,9 +41,7 @@ class FirmSearchType extends AbstractType {
                 'End Date (Least Recent First)' => 'end_asc',
                 'End Date (Most Recent First)' => 'end_desc',
             ],
-            'attr' => [
-                'help_block' => 'Choose a sort method for the results',
-            ],
+            'help' => 'Choose a sort method for the results',
             'required' => false,
             'expanded' => false,
             'multiple' => false,
@@ -60,9 +50,7 @@ class FirmSearchType extends AbstractType {
         $builder->add('id', TextType::class, [
             'label' => 'Firm ID',
             'required' => false,
-            'attr' => [
-                'help_block' => 'firm.search.id',
-            ],
+            'help' => 'firm.search.id',
         ]);
 
         $builder->add('gender', ChoiceType::class, [
@@ -72,9 +60,10 @@ class FirmSearchType extends AbstractType {
                 'Male' => 'M',
                 'Unknown' => 'U',
             ],
-            'attr' => [
-                'help_block' => 'firm.search.gender',
+            'label_attr' => [
+                'class' => 'checkbox-inline',
             ],
+            'help' => 'firm.search.gender',
             'required' => false,
             'expanded' => true,
             'multiple' => true,
@@ -83,31 +72,23 @@ class FirmSearchType extends AbstractType {
         $builder->add('address', TextType::class, [
             'label' => 'Address',
             'required' => false,
-            'attr' => [
-                'help_block' => 'firm.search.streetAddress',
-            ],
+            'help' => 'firm.search.streetAddress',
         ]);
 
         $builder->add('city', TextType::class, [
             'label' => 'City',
             'required' => false,
-            'attr' => [
-                'help_block' => 'firm.search.city',
-            ],
+            'help' => 'firm.search.city',
         ]);
         $builder->add('start', TextType::class, [
             'label' => 'Start Date',
             'required' => false,
-            'attr' => [
-                'help_block' => 'firm.search.startDate',
-            ],
+            'help' => 'firm.search.startDate',
         ]);
         $builder->add('end', TextType::class, [
             'label' => 'End Date',
             'required' => false,
-            'attr' => [
-                'help_block' => 'firm.search.endDate',
-            ],
+            'help' => 'firm.search.endDate',
         ]);
 
         $builder->add('title_filter', TitleFilterType::class, [
@@ -132,9 +113,10 @@ class FirmSearchType extends AbstractType {
                     'Yes' => 'Y',
                     'No' => 'N',
                 ],
-                'attr' => [
-                    'help_block' => 'firm.search.finalcheck',
+                'label_attr' => [
+                    'class' => 'radio-inline',
                 ],
+                'help' => 'firm.search.finalcheck',
                 'required' => false,
                 'expanded' => true,
                 'multiple' => false,
@@ -144,9 +126,6 @@ class FirmSearchType extends AbstractType {
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver) : void {
         parent::configureOptions($resolver);
         $resolver->setRequired(['user']);

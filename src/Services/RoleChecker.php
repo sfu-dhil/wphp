@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Services;
 
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -18,21 +12,9 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
  */
 class RoleChecker {
     /**
-     * @var AuthorizationCheckerInterface
-     */
-    private $authChecker;
-
-    /**
-     * @var TokenStorageInterface
-     */
-    private $tokenStorage;
-
-    /**
      * RoleChecker constructor.
      */
-    public function __construct(AuthorizationCheckerInterface $authChecker, TokenStorageInterface $tokenStorage) {
-        $this->authChecker = $authChecker;
-        $this->tokenStorage = $tokenStorage;
+    public function __construct(private AuthorizationCheckerInterface $authChecker, private TokenStorageInterface $tokenStorage) {
     }
 
     /**

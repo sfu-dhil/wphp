@@ -11,16 +11,18 @@
     <form method="get" class="form-horizontal" action="{{ path('resource_aas_search') }}">
         <fieldset>
             <legend>Search the AAS Marc records</legend>
-            <div class="form-group">
-                <label class='col-sm-2 control-label' for='q'>Search term</label>
-                <div class='input-group'>
-                    <input type='text' name='q' id='q' class='form-control' value='{{ q }}'>
-                    <span class="input-group-btn">
-                        <button class="btn btn-primary" type="submit">
-                            <span class='glyphicon glyphicon-search'></span>
-                            Search
-                        </button>
-                    </span>
+            <div class="mb-3 row">
+                <label class="h6 col-form-label col-sm-2 text-sm-end" for="q">Search term</label>
+                <div class="col-sm-10">
+                    <div class='input-group'>
+                        <input type='text' name='q' id='q' class='form-control' value='{{ q }}'>
+                        <span class="input-group-btn">
+                            <button class="btn btn-primary" type="submit">
+                                <span class='bi bi-search'></span>
+                                Search
+                            </button>
+                        </span>
+                    </div>
                 </div>
                 <p class="help-block col-sm-offset-2">Search the records by title or author.</p>
             </div>

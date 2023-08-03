@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Form\Title;
 
 use App\Entity\Currency;
@@ -34,9 +28,7 @@ class TitleType extends AbstractType {
         $builder->add('title', null, [
             'label' => 'Title',
             'required' => true,
-            'attr' => [
-                'help_block' => 'title.form.title',
-            ],
+            'help' => 'title.form.title',
         ]);
         $builder->add('titleRoles', CollectionType::class, [
             'label' => 'Personal Contributions',
@@ -49,24 +41,20 @@ class TitleType extends AbstractType {
                 'label' => false,
             ],
             'by_reference' => true,
+            'help' => 'title.form.contributors',
             'attr' => [
                 'class' => 'collection collection-complex',
-                'help_block' => 'title.form.contributors',
             ],
         ]);
         $builder->add('signedAuthor', null, [
             'label' => 'Signed Author',
             'required' => false,
-            'attr' => [
-                'help_block' => 'title.form.signedAuthor',
-            ],
+            'help' => 'title.form.signedAuthor',
         ]);
         $builder->add('pseudonym', null, [
             'label' => 'Pseudonym',
             'required' => false,
-            'attr' => [
-                'help_block' => 'title.form.psuedonym',
-            ],
+            'help' => 'title.form.psuedonym',
         ]);
         $builder->add('titleFirmroles', CollectionType::class, [
             'label' => 'Firm Contributions',
@@ -79,9 +67,9 @@ class TitleType extends AbstractType {
                 'label' => false,
             ],
             'by_reference' => true,
+            'help' => 'title.form.titleFirmRoles',
             'attr' => [
                 'class' => 'collection collection-complex',
-                'help_block' => 'title.form.titleFirmRoles',
             ],
         ]);
         $builder->add('selfpublished', ChoiceType::class, [
@@ -95,74 +83,55 @@ class TitleType extends AbstractType {
             ],
             'required' => false,
             'placeholder' => false,
-            'attr' => [
-                'help_block' => 'title.form.selfPublished',
-            ],
+            'help' => 'title.form.selfPublished',
         ]);
         $builder->add('volumes', null, [
             'label' => 'Volumes',
             'required' => false,
-            'attr' => [
-                'help_block' => 'title.form.volumes',
-            ],
+            'help' => 'title.form.volumes',
         ]);
         $builder->add('pagination', null, [
             'label' => 'Pagination',
             'required' => false,
-            'attr' => [
-                'help_block' => 'title.form.pagination',
-            ],
+            'help' => 'title.form.pagination',
         ]);
         $builder->add('pubdate', null, [
             'label' => 'Publication Date',
             'required' => false,
-            'attr' => [
-                'help_block' => 'title.form.pubDate',
-            ],
+            'help' => 'title.form.pubDate',
         ]);
         $builder->add('edition', null, [
             'label' => 'Edition Statement',
             'required' => false,
-            'attr' => [
-                'help_block' => 'title.form.edition',
-            ],
+            'help' => 'title.form.edition',
         ]);
         $builder->add('editionNumber', null, [
             'label' => 'Edition Number',
             'required' => false,
-            'attr' => [
-                'help_block' => 'title.form.editionNumber',
-            ],
+            'help' => 'title.form.editionNumber',
         ]);
         $builder->add('dateOfFirstPublication', null, [
             'label' => 'Date of First Publication',
             'required' => false,
-            'attr' => [
-                'help_block' => 'title.form.dateOfFirstPublication',
-            ],
+            'help' => 'title.form.dateOfFirstPublication',
         ]);
         $builder->add('imprint', null, [
             'label' => 'Imprint',
             'required' => false,
-            'attr' => [
-                'help_block' => 'title.form.imprint',
-            ],
+            'help' => 'title.form.imprint',
         ]);
         $builder->add('colophon', TextareaType::class, [
             'label' => 'Colophon',
             'required' => false,
-            'attr' => [
-                'help_block' => 'title.form.colophon',
-            ],
+            'help' => 'title.form.colophon',
         ]);
         $builder->add('copyright', null, [
             'label' => 'Copyright Statement',
             'required' => false,
-            'attr' => [
-                'help_block' => 'title.form.copyright',
-            ],
+            'help' => 'title.form.copyright',
         ]);
         $builder->add('locationOfPrinting', Select2EntityType::class, [
+            'label' => 'Location of printing',
             'multiple' => false,
             'remote_route' => 'geonames_typeahead',
             'class' => Geonames::class,
@@ -171,11 +140,11 @@ class TitleType extends AbstractType {
             'allow_clear' => true,
             'delay' => 250,
             'language' => 'en',
-            'attr' => [
-                'help_block' => 'title.form.locationOfPrinting',
-            ],
+            'help' => 'title.form.locationOfPrinting',
+            'placeholder' => 'Search for an existing location by name',
         ]);
         $builder->add('format', EntityType::class, [
+            'label' => 'Format',
             'class' => Format::class,
             'query_builder' => fn (ServiceEntityRepository $repo) => $repo->createQueryBuilder('u')->orderBy('u.name', 'ASC'),
             'choice_label' => fn (Format $format) => "{$format->getName()} ({$format->getAbbreviation()})",
@@ -183,62 +152,46 @@ class TitleType extends AbstractType {
             'expanded' => false,
             'required' => false,
             'placeholder' => 'Unknown',
-            'attr' => [
-                'help_block' => 'title.form.format',
-            ],
+            'help' => 'title.form.format',
         ]);
         $builder->add('sizeL', null, [
             'label' => 'Size L',
             'required' => false,
-            'attr' => [
-                'help_block' => 'title.form.sizeL',
-            ],
+            'help' => 'title.form.sizeL',
         ]);
         $builder->add('sizeW', null, [
             'label' => 'Size W',
             'required' => false,
-            'attr' => [
-                'help_block' => 'title.form.sizeW',
-            ],
+            'help' => 'title.form.sizeW',
         ]);
-        $builder->add('pricePound', null, [
+        $builder->add('pricePound', NumberType::class, [
             'label' => 'Price Pound',
             'required' => false,
-            'attr' => [
-                'help_block' => 'title.form.pricePound',
-            ],
+            'help' => 'title.form.pricePound',
         ]);
-        $builder->add('priceShilling', null, [
+        $builder->add('priceShilling', NumberType::class, [
             'label' => 'Price Shilling',
             'required' => false,
-            'attr' => [
-                'help_block' => 'title.form.priceShilling',
-            ],
+            'help' => 'title.form.priceShilling',
         ]);
-        $builder->add('pricePence', null, [
+        $builder->add('pricePence', NumberType::class, [
             'label' => 'Price Pence',
             'required' => false,
-            'attr' => [
-                'help_block' => 'title.form.pricePence',
-            ],
+            'help' => 'title.form.pricePence',
         ]);
 
         $builder->add('otherPrice', NumberType::class, [
             'label' => 'Non-UK price',
             'scale' => 2,
             'required' => false,
-            'attr' => [
-                'help_block' => 'title.form.otherPrice',
-            ],
+            'help' => 'title.form.otherPrice',
         ]);
 
         $builder->add('otherPrice', NumberType::class, [
             'label' => 'Non-UK price',
             'scale' => 2,
             'required' => false,
-            'attr' => [
-                'help_block' => 'title.form.otherPrice',
-            ],
+            'help' => 'title.form.otherPrice',
         ]);
 
         $builder->add('otherCurrency', EntityType::class, [
@@ -249,38 +202,27 @@ class TitleType extends AbstractType {
             'multiple' => false,
             'required' => false,
             'placeholder' => '',
-            'query_builder' => function (ServiceEntityRepository $er) {
-                return $er->createQueryBuilder('e')
-                    ->orderBy('e.name', 'ASC')
-                ;
-            },
-            'attr' => [
-                'help_block' => 'title.form.otherCurrency',
-            ],
+            'query_builder' => fn (ServiceEntityRepository $er) => $er->createQueryBuilder('e')
+                ->orderBy('e.name', 'ASC'),
+            'help' => 'title.form.otherCurrency',
         ]);
 
         $builder->add('genres', EntityType::class, [
+            'label' => 'Genres',
             'class' => Genre::class,
             'choice_label' => 'name',
             'expanded' => false,
             'multiple' => true,
             'required' => false,
             'placeholder' => 'Unknown',
-            'query_builder' => function (ServiceEntityRepository $er) {
-                return $er->createQueryBuilder('e')
-                    ->orderBy('e.name', 'ASC')
-                ;
-            },
-            'attr' => [
-                'help_block' => 'title.form.genre',
-            ],
+            'query_builder' => fn (ServiceEntityRepository $er) => $er->createQueryBuilder('e')
+                ->orderBy('e.name', 'ASC'),
+            'help' => 'title.form.genre',
         ]);
         $builder->add('shelfmark', null, [
             'label' => 'Shelfmark',
             'required' => false,
-            'attr' => [
-                'help_block' => 'title.form.shelfmark',
-            ],
+            'help' => 'title.form.shelfmark',
         ]);
         $builder->add('titleSources', CollectionType::class, [
             'label' => 'Title Sources',
@@ -293,9 +235,9 @@ class TitleType extends AbstractType {
                 'label' => false,
             ],
             'by_reference' => false,
+            'help' => 'title.form.titleSources',
             'attr' => [
                 'class' => 'collection collection-complex',
-                'help_block' => 'title.form.titleSources',
             ],
         ]);
         $builder->add('relatedTitles', Select2EntityType::class, [
@@ -305,16 +247,11 @@ class TitleType extends AbstractType {
             'remote_route' => 'title_typeahead',
             'class' => Title::class,
             'allow_clear' => true,
-            'attr' => [
-                'help_block' => '',
-            ],
         ]);
         $builder->add('notes', null, [
             'label' => 'Notes',
             'required' => false,
-            'attr' => [
-                'help_block' => 'title.form.notes',
-            ],
+            'help' => 'title.form.notes',
         ]);
         $builder->add('checked', ChoiceType::class, [
             'label' => 'Hand-Verified',
@@ -326,9 +263,7 @@ class TitleType extends AbstractType {
             ],
             'required' => true,
             'placeholder' => false,
-            'attr' => [
-                'help_block' => 'title.form.checked',
-            ],
+            'help' => 'title.form.checked',
         ]);
         $builder->add('finalcheck', ChoiceType::class, [
             'label' => 'Verified',
@@ -340,9 +275,7 @@ class TitleType extends AbstractType {
             ],
             'required' => true,
             'placeholder' => false,
-            'attr' => [
-                'help_block' => 'title.form.finalcheck',
-            ],
+            'help' => 'title.form.finalcheck',
         ]);
         $builder->add('finalattempt', ChoiceType::class, [
             'label' => 'Attempted Verification',
@@ -354,9 +287,7 @@ class TitleType extends AbstractType {
             ],
             'required' => true,
             'placeholder' => false,
-            'attr' => [
-                'help_block' => 'title.form.finalattempt',
-            ],
+            'help' => 'title.form.finalattempt',
         ]);
         $builder->add('editionChecked', ChoiceType::class, [
             'label' => 'Edition Checked',
@@ -368,9 +299,7 @@ class TitleType extends AbstractType {
             ],
             'required' => true,
             'placeholder' => false,
-            'attr' => [
-                'help_block' => 'title.form.editionChecked',
-            ],
+            'help' => 'title.form.editionChecked',
         ]);
     }
 

@@ -2,15 +2,11 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Entity;
 
+use App\Repository\EstcMarcRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Stringable;
 
 /**
  * EstcFields.
@@ -19,156 +15,76 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * The field_data column is text, but Doctrine isn't able to manage a non-fulltext
  * index on a text column. So create it manually.
- *
- * @ORM\Table(name="estc_fields",
- *     indexes={
- *         @ORM\Index(name="estcmarc_cid_idx", columns={"cid"}),
- *         @ORM\Index(name="estcmarc_data_ft", columns={"field_data"}, flags={"fulltext"}),
- *         @ORM\Index(name="estcmarc_data_idx", columns={"field_data"}, options={"lengths": {24} }),
- *         @ORM\Index(name="estcmarc_field_idx", columns={"field"})
- *     }
- * )
- * @ORM\Entity(repositoryClass="App\Repository\EstcMarcRepository")
  */
-class EstcMarc {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $id;
+#[ORM\Table(name: 'estc_fields')]
+#[ORM\Index(name: 'estcmarc_cid_idx', columns: ['cid'])]
+#[ORM\Index(name: 'estcmarc_data_ft', columns: ['field_data'], flags: ['fulltext'])]
+#[ORM\Index(name: 'estcmarc_data_idx', columns: ['field_data'], options: ['lengths' => [24]])]
+#[ORM\Index(name: 'estcmarc_field_idx', columns: ['field'])]
+#[ORM\Entity(repositoryClass: EstcMarcRepository::class)]
+class EstcMarc implements Stringable {
+    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    private ?int $id = null;
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="cid", type="integer")
-     */
-    private $titleId;
+    #[ORM\Column(name: 'cid', type: 'integer')]
+    private ?int $titleId = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="field", type="string", length=3)
-     */
-    private $field;
+    #[ORM\Column(name: 'field', type: 'string', length: 3)]
+    private ?string $field = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="subfield", type="string", length=1, nullable=true)
-     */
-    private $subfield;
+    #[ORM\Column(name: 'subfield', type: 'string', length: 1, nullable: true)]
+    private ?string $subfield = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="field_data", type="text")
-     */
-    private $fieldData;
+    #[ORM\Column(name: 'field_data', type: 'text')]
+    private ?string $fieldData = null;
 
-    /**
-     * Return the field and subfield for this MARC record.
-     */
     public function __toString() : string {
         return $this->field . $this->subfield;
     }
 
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId() {
+    public function getId() : ?int {
         return $this->id;
     }
 
-    /**
-     * Set titleId.
-     *
-     * @param int $titleId
-     *
-     * @return EstcMarc
-     */
-    public function setTitleId($titleId) {
+    public function setTitleId(?int $titleId) : self {
         $this->titleId = $titleId;
 
         return $this;
     }
 
-    /**
-     * Get titleId.
-     *
-     * @return int
-     */
-    public function getTitleId() {
+    public function getTitleId() : ?int {
         return $this->titleId;
     }
 
-    /**
-     * Set field.
-     *
-     * @param string $field
-     *
-     * @return EstcMarc
-     */
-    public function setField($field) {
+    public function setField(?string $field) : self {
         $this->field = $field;
 
         return $this;
     }
 
-    /**
-     * Get field.
-     *
-     * @return string
-     */
-    public function getField() {
+    public function getField() : ?string {
         return $this->field;
     }
 
-    /**
-     * Set subfield.
-     *
-     * @param string $subfield
-     *
-     * @return EstcMarc
-     */
-    public function setSubfield($subfield) {
+    public function setSubfield(?string $subfield) : self {
         $this->subfield = $subfield;
 
         return $this;
     }
 
-    /**
-     * Get subfield.
-     *
-     * @return string
-     */
-    public function getSubfield() {
+    public function getSubfield() : ?string {
         return $this->subfield;
     }
 
-    /**
-     * Set fieldData.
-     *
-     * @param string $fieldData
-     *
-     * @return EstcMarc
-     */
-    public function setFieldData($fieldData) {
+    public function setFieldData(?string $fieldData) : self {
         $this->fieldData = $fieldData;
 
         return $this;
     }
 
-    /**
-     * Get fieldData.
-     *
-     * @return string
-     */
-    public function getFieldData() {
+    public function getFieldData() : ?string {
         return $this->fieldData;
     }
 }

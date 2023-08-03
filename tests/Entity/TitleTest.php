@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Tests\Entity;
 
 use App\Entity\Firmrole;
@@ -20,13 +14,8 @@ use PHPUnit\Framework\TestCase;
 class TitleTest extends TestCase {
     /**
      * @dataProvider getTotalPriceData
-     *
-     * @param mixed $expected
-     * @param mixed $pence
-     * @param mixed $shillings
-     * @param mixed $pounds
      */
-    public function testGetTotalPrice($expected, $pence, $shillings, $pounds) : void {
+    public function testGetTotalPrice(mixed $expected, mixed $pence, mixed $shillings, mixed $pounds) : void {
         $title = new Title();
         $title->setPricePence($pence);
         $title->setPriceShilling($shillings);

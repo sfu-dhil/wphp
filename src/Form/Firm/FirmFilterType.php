@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Form\Firm;
 
 use App\Entity\Firmrole;
@@ -23,13 +17,7 @@ use Symfony\Component\Form\FormBuilderInterface;
  * injected as a dependency.
  */
 class FirmFilterType extends AbstractType {
-    /**
-     * @var EntityManagerInterface
-     */
-    private $em;
-
-    public function __construct(EntityManagerInterface $em) {
-        $this->em = $em;
+    public function __construct(private EntityManagerInterface $em) {
     }
 
     /**
@@ -43,16 +31,12 @@ class FirmFilterType extends AbstractType {
         $builder->add('firm_id', TextType::class, [
             'label' => 'Firm ID',
             'required' => false,
-            'attr' => [
-                'help_block' => 'firm.search.id',
-            ],
+            'help' => 'firm.search.id',
         ]);
         $builder->add('firm_name', TextType::class, [
             'label' => 'Firm Name',
             'required' => false,
-            'attr' => [
-                'help_block' => 'firm.search.name',
-            ],
+            'help' => 'firm.search.name',
         ]);
         $builder->add('firm_gender', ChoiceType::class, [
             'label' => 'Gender',
@@ -61,15 +45,17 @@ class FirmFilterType extends AbstractType {
                 'Male' => 'M',
                 'Unknown' => 'U',
             ],
-            'attr' => [
-                'help_block' => 'firm.search.gender',
+            'label_attr' => [
+                'class' => 'checkbox-inline',
             ],
+            'help' => 'firm.search.gender',
             'required' => false,
             'expanded' => true,
             'multiple' => true,
         ]);
 
         $builder->add('firm_role', ChoiceType::class, [
+            'label' => 'Firm Role',
             'choices' => $roles,
             'choice_label' => fn ($value, $key, $index) => $value->getName(),
             'choice_value' => function ($value) {
@@ -77,20 +63,18 @@ class FirmFilterType extends AbstractType {
                     return $value->getId();
                 }
             },
-            'label' => 'Firm Role',
+            'label_attr' => [
+                'class' => 'checkbox-inline',
+            ],
             'required' => false,
             'expanded' => true,
             'multiple' => true,
-            'attr' => [
-                'help_block' => 'firm.search.role',
-            ],
+            'help' => 'firm.search.role',
         ]);
         $builder->add('firm_address', TextType::class, [
             'label' => 'Firm Address',
             'required' => false,
-            'attr' => [
-                'help_block' => 'firm.search.streetAddress',
-            ],
+            'help' => 'firm.search.streetAddress',
         ]);
     }
 }

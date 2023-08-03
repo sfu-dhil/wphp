@@ -9,6 +9,8 @@ PHPCSF := ./vendor/bin/php-cs-fixer
 PHPSTAN := ./vendor/bin/phpstan
 TWIGCS := ./vendor/bin/twigcs
 
+CODE_DIRS := bin config migrations src templates tests
+
 ## -- Help
 help: ## Outputs this help screen
 	@grep -E '(^[a-zA-Z0-9._-]+:.*?##.*$$)|(^##)' $(MAKEFILE_LIST) | sed -e 's/^.*Makefile[^:]*://' | awk 'BEGIN {FS = ":.*?## "}{printf "\033[32m%-30s\033[0m %s\n", $$1, $$2}' | sed -e 's/\[32m##/[33m/'
@@ -22,7 +24,7 @@ test.reset: ## Create a test database and load the fixtures in it
 	$(CONSOLE) --env=test doctrine:database:create  --quiet --if-not-exists
 	$(CONSOLE) --env=test doctrine:schema:drop  --quiet --force
 	$(CONSOLE) --env=test doctrine:schema:create  --quiet
-## $(CONSOLE) --env=test doctrine:schema:validate  --quiet
+	$(CONSOLE) --env=test doctrine:schema:validate  --quiet
 	$(CONSOLE) --env=test doctrine:cache:clear-metadata --quiet
 	$(CONSOLE) --env=test doctrine:fixtures:load --quiet --no-interaction --group=dev
 
@@ -58,28 +60,28 @@ assets: ## Link assets into /public
 ## Database migrations
 
 migrate: ## Run any migrations as required
-	$(CONSOLE) --env=dev doctrine:migrations:migrate --no-interaction --allow-no-migration
+	$(CONSOLE) doctrine:migrations:migrate --no-interaction --allow-no-migration
 
 migrate.down: ## Undo one migration
 	# This is arcane nonsense and only works in GNU Make
-	$(eval CURRENT=$(shell $(CONSOLE) --env=dev doctrine:migrations:current))
-	$(CONSOLE) --env=dev doctrine:migrations:execute '$(CURRENT)' --down
+	$(eval CURRENT=$(shell $(CONSOLE) doctrine:migrations:current))
+	$(CONSOLE) doctrine:migrations:execute '$(CURRENT)' --down
 
 migrate.diff: ## Generate a migration by diffing the db and entities
-	$(CONSOLE) --env=dev doctrine:migrations:diff --no-interaction --quiet
+	$(CONSOLE) doctrine:migrations:diff --no-interaction --quiet
 
 migrate.status: ## Status of database migrations
-	$(CONSOLE) --env=dev doctrine:migrations:status
+	$(CONSOLE) doctrine:migrations:status
 
 migrate.rollup: ## Roll up all migrations in to a schema definition
 	rm -rf migrations/*
-	$(CONSOLE) --env=dev doctrine:migrations:dump-schema --no-interaction --quiet
-	$(CONSOLE) --env=dev doctrine:migrations:rollup --no-interaction --quiet
+	$(CONSOLE) doctrine:migrations:dump-schema --no-interaction --quiet
+	$(CONSOLE) doctrine:migrations:rollup --no-interaction --quiet
 	$(PHPCSF) fix migrations
 
 migrate.reset: ## Reset all migrations metadata
-	$(CONSOLE) --env=dev doctrine:migrations:version --delete --all --no-interaction --quiet
-	$(CONSOLE) --env=dev doctrine:migrations:version --add --all --no-interaction --quiet
+	$(CONSOLE) doctrine:migrations:version --delete --all --no-interaction --quiet
+	$(CONSOLE) doctrine:migrations:version --add --all --no-interaction --quiet
 
 
 ## -- Container debug targets
@@ -135,11 +137,11 @@ yamllint:
 	$(CONSOLE) lint:yaml templates
 
 stan: ## Run static analysis
-	$(PHPSTAN) --memory-limit=1G analyze $(path)
+	$(PHPSTAN) --memory-limit=1G analyze $(CODE_DIRS)
 
 stan.cc: ## Clear the static analysis cache
 	$(PHPSTAN) clear-result-cache
 
 stan.baseline: ## Generate a new phpstan baseline file
-	$(PHPSTAN) --memory-limit=1G analyze --generate-baseline $(path)
+	$(PHPSTAN) --memory-limit=1G analyze --generate-baseline $(CODE_DIRS)
 

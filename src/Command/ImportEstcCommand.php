@@ -2,37 +2,31 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Command;
 
 use App\Entity\EstcMarc;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use PhpMarc\File;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(name: 'wphp:import:estc')]
 class ImportEstcCommand extends Command {
-    private int $n = 0;
-
-    private bool $save = false;
-
-    private EntityManagerInterface $em;
-
-    protected static $defaultName = 'wphp:import:estc';
-
-    protected static string $defaultDescription = 'Import ESTC MARC data';
+    public function __construct(
+        private EntityManagerInterface $em,
+        private int $n = 0,
+        private bool $save = false,
+    ) {
+        parent::__construct(null);
+    }
 
     protected function configure() : void {
-        $this->setDescription(self::$defaultDescription);
+        $this->setDescription('Import ESTC MARC data');
         $this->addArgument('path', InputArgument::IS_ARRAY, 'One or more files to import');
         $this->addOption('save', null, InputOption::VALUE_NONE, 'Save converted records');
     }
@@ -109,12 +103,5 @@ class ImportEstcCommand extends Command {
         $this->dot(true);
 
         return 0;
-    }
-
-    /**
-     * @required
-     */
-    public function setEntityManager(EntityManagerInterface $em) : void {
-        $this->em = $em;
     }
 }

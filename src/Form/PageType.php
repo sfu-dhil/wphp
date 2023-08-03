@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Form;
 
 use App\Entity\Page;
@@ -30,9 +24,6 @@ class PageType extends AbstractType {
         $builder->add('title', null, [
             'label' => 'Title',
             'required' => true,
-            'attr' => [
-                'help_block' => '',
-            ],
         ]);
         $builder->add('public', ChoiceType::class, [
             'label' => 'Public',
@@ -44,9 +35,7 @@ class PageType extends AbstractType {
             ],
             'required' => true,
             'placeholder' => false,
-            'attr' => [
-                'help_block' => 'Set to no to require users to login before showing this page.',
-            ],
+            'help' => 'Set to no to require users to login before showing this page.',
         ]);
         $builder->add('inMenu', ChoiceType::class, [
             'label' => 'In Menu',
@@ -58,9 +47,7 @@ class PageType extends AbstractType {
             ],
             'required' => true,
             'placeholder' => true,
-            'attr' => [
-                'help_block' => 'Set to no to exclude this page from the menuing system.',
-            ],
+            'help' => 'Set to no to exclude this page from the menuing system.',
         ]);
         $builder->add('homepage', ChoiceType::class, [
             'label' => 'Home page',
@@ -72,15 +59,12 @@ class PageType extends AbstractType {
             ],
             'required' => true,
             'placeholder' => false,
-            'attr' => [
-                'help_block' => 'If Yes, then this page will be displayed on the home page.',
-            ],
+            'help' => 'If Yes, then this page will be displayed on the home page.',
         ]);
         $builder->add('excerpt', TextareaType::class, [
             'label' => 'Excerpt',
             'required' => false,
             'attr' => [
-                'help_block' => '',
                 'class' => 'tinymce',
             ],
         ]);
@@ -88,7 +72,6 @@ class PageType extends AbstractType {
             'label' => 'Content',
             'required' => true,
             'attr' => [
-                'help_block' => '',
                 'class' => 'tinymce',
             ],
         ]);
@@ -102,9 +85,6 @@ class PageType extends AbstractType {
             ],
             'required' => true,
             'placeholder' => false,
-            'attr' => [
-                'help_block' => '',
-            ],
         ]);
     }
 

@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\DataFixtures;
 
 use App\Entity\Format;
@@ -19,7 +13,7 @@ use Doctrine\Persistence\ObjectManager;
  * Load some test format data.
  */
 class FormatFixtures extends Fixture implements FixtureGroupInterface {
-    public const DATA = [
+    final public const DATA = [
         ['folio', 'fo'],
         ['quarto', '4to'],
         ['sexto', '6to'],
@@ -34,16 +28,10 @@ class FormatFixtures extends Fixture implements FixtureGroupInterface {
         ['broadside', 'bs'],
     ];
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getGroups() : array {
         return ['dev', 'test'];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function load(ObjectManager $manager) : void {
         for ($i = 0; $i < 4; $i++) {
             $fixture = new Format();

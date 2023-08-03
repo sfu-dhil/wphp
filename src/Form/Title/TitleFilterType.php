@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Form\Title;
 
 use App\Entity\Genre;
@@ -23,13 +17,7 @@ use Symfony\Component\Form\FormBuilderInterface;
  * service to have the doctrine registry injected as a dependency.
  */
 class TitleFilterType extends AbstractType {
-    /**
-     * @var EntityManagerInterface
-     */
-    private $em;
-
-    public function __construct(EntityManagerInterface $em) {
-        $this->em = $em;
+    public function __construct(private EntityManagerInterface $em) {
     }
 
     /**
@@ -48,20 +36,17 @@ class TitleFilterType extends AbstractType {
         $builder->add('id', TextType::class, [
             'label' => 'ID',
             'required' => false,
-            'attr' => [
-                'help_block' => 'title.search.id',
-            ],
+            'help' => 'title.search.id',
         ]);
 
         $builder->add('title', TextType::class, [
             'label' => 'Title',
             'required' => false,
-            'attr' => [
-                'help_block' => 'title.search.title',
-            ],
+            'help' => 'title.search.title',
         ]);
 
         $builder->add('person_role', ChoiceType::class, [
+            'label' => 'Person Role',
             'choices' => $roles,
             'choice_label' => fn ($value, $key, $index) => $value->getName(),
             'choice_value' => function ($value) {
@@ -69,42 +54,39 @@ class TitleFilterType extends AbstractType {
                     return $value->getId();
                 }
             },
-            'label' => 'Person Role',
+            'label_attr' => [
+                'class' => 'checkbox-inline',
+            ],
             'required' => false,
             'expanded' => true,
             'multiple' => true,
-            'attr' => [
-                'help_block' => 'title.search.titleRoles',
-            ],
+            'help' => 'title.search.titleRoles',
         ]);
 
         $builder->add('pubdate', TextType::class, [
             'label' => 'Date of Publication',
             'required' => false,
-            'attr' => [
-                'help_block' => 'title.search.pubDate',
-            ],
+            'help' => 'title.search.pubDate',
         ]);
 
         $builder->add('genre', ChoiceType::class, [
+            'label' => 'Genre',
             'choices' => $genres,
             'choice_label' => fn ($value, $key, $index) => $value->getName(),
             'choice_value' => fn ($value) => $value->getId(),
-            'label' => 'Genre',
+            'label_attr' => [
+                'class' => 'checkbox-inline',
+            ],
             'required' => false,
             'expanded' => true,
             'multiple' => true,
-            'attr' => [
-                'help_block' => 'title.search.genre',
-            ],
+            'help' => 'title.search.genre',
         ]);
 
         $builder->add('location', TextType::class, [
             'label' => 'Location of Printing',
             'required' => false,
-            'attr' => [
-                'help_block' => 'title.search.locationOfPrinting',
-            ],
+            'help' => 'title.search.locationOfPrinting',
         ]);
     }
 }

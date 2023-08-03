@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Controller;
 
 use App\Entity\Source;
@@ -27,19 +21,17 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Source controller.
- *
- * @Route("/source")
  */
+#[Route(path: '/source')]
 class SourceController extends AbstractController implements PaginatorAwareInterface {
     use PaginatorTrait;
 
     /**
      * Lists all Source entities.
      *
-     * @Route("/", name="source_index", methods={"GET"})
-     * @Template
-     *
      * @return array<string,mixed>     */
+    #[Route(path: '/', name: 'source_index', methods: ['GET'])]
+    #[Template]
     public function indexAction(Request $request, EntityManagerInterface $em, SourceRepository $repo) {
         $qb = $em->createQueryBuilder();
         $qb->select('IDENTITY(ts.source) as srcId, COUNT(DISTINCT(ts.title)) as cnt');
@@ -66,9 +58,9 @@ class SourceController extends AbstractController implements PaginatorAwareInter
      * Typeahead action for editor widgets.
      *
      * @return JsonResponse
-     * @Security("is_granted('ROLE_CONTENT_ADMIN')")
-     * @Route("/typeahead", name="source_typeahead", methods={"GET"})
      */
+    #[Security("is_granted('ROLE_CONTENT_ADMIN')")]
+    #[Route(path: '/typeahead', name: 'source_typeahead', methods: ['GET'])]
     public function typeaheadAction(Request $request, SourceRepository $repo) {
         $q = $request->query->get('q');
         if ( ! $q) {
@@ -89,12 +81,11 @@ class SourceController extends AbstractController implements PaginatorAwareInter
     /**
      * Creates a new Source entity.
      *
-     * @Route("/new", name="source_new", methods={"GET", "POST"})
-     * @Security("is_granted('ROLE_CONTENT_ADMIN')")
-     * @Template
-     *
      * @return array<string,mixed>|RedirectResponse
      */
+    #[Route(path: '/new', name: 'source_new', methods: ['GET', 'POST'])]
+    #[Security("is_granted('ROLE_CONTENT_ADMIN')")]
+    #[Template]
     public function newAction(Request $request, EntityManagerInterface $em) {
         $source = new Source();
         $form = $this->createForm(SourceType::class, $source);
@@ -118,10 +109,9 @@ class SourceController extends AbstractController implements PaginatorAwareInter
     /**
      * Finds and displays a Source entity.
      *
-     * @Route("/{id}", name="source_show", methods={"GET"})
-     * @Template
-     *
      * @return array<string,mixed>     */
+    #[Route(path: '/{id}', name: 'source_show', methods: ['GET'])]
+    #[Template]
     public function showAction(Request $request, Source $source, EntityManagerInterface $em) {
         $dql = 'SELECT t FROM App:Title t INNER JOIN t.titleSources ts WHERE ts.source = :source ORDER BY t.title';
         $query = $em->createQuery($dql);
@@ -137,12 +127,11 @@ class SourceController extends AbstractController implements PaginatorAwareInter
     /**
      * Displays a form to edit an existing Source entity.
      *
-     * @Route("/{id}/edit", name="source_edit", methods={"GET", "POST"})
-     * @Template
-     * @Security("is_granted('ROLE_CONTENT_ADMIN')")
-     *
      * @return array<string,mixed>|RedirectResponse
      */
+    #[Route(path: '/{id}/edit', name: 'source_edit', methods: ['GET', 'POST'])]
+    #[Template]
+    #[Security("is_granted('ROLE_CONTENT_ADMIN')")]
     public function editAction(Request $request, Source $source, EntityManagerInterface $em) {
         $editForm = $this->createForm(SourceType::class, $source);
         $editForm->handleRequest($request);
@@ -163,11 +152,10 @@ class SourceController extends AbstractController implements PaginatorAwareInter
     /**
      * Deletes a Source entity.
      *
-     * @Route("/{id}/delete", name="source_delete", methods={"GET"})
-     * @Security("is_granted('ROLE_CONTENT_ADMIN')")
-     *
      * @return RedirectResponse
      */
+    #[Route(path: '/{id}/delete', name: 'source_delete', methods: ['GET'])]
+    #[Security("is_granted('ROLE_CONTENT_ADMIN')")]
     public function deleteAction(Request $request, Source $source, EntityManagerInterface $em) {
         $em->remove($source);
         $em->flush();

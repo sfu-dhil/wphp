@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\DataFixtures;
 
 use App\Entity\Post;
@@ -22,16 +16,10 @@ use Doctrine\Persistence\ObjectManager;
  * Load some test spotlights.
  */
 class SpotlightsFixtures extends Fixture implements DependentFixtureInterface, FixtureGroupInterface {
-    /**
-     * {@inheritdoc}
-     */
     public static function getGroups() : array {
         return ['setup'];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function load(ObjectManager $manager) : void {
         $status = $manager->getRepository(PostStatus::class)->findOneBy([
             'name' => 'published',
@@ -56,9 +44,6 @@ class SpotlightsFixtures extends Fixture implements DependentFixtureInterface, F
         $manager->flush();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDependencies() : array {
         return [
             SpotlightCategoriesFixtures::class,

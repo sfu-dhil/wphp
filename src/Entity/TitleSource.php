@@ -2,126 +2,60 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * TitleSource.
- *
- * @ORM\Table(name="title_source",
- *     indexes={
- *         @ORM\Index(name="title_source_identifier_idx", columns={"identifier"}),
- *         @ORM\Index(name="title_source_identifier_ft", columns={"identifier"}, flags={"fulltext"})
- *     })
- *     @ORM\Entity
- */
+#[ORM\Table(name: 'title_source')]
+#[ORM\Index(name: 'title_source_identifier_idx', columns: ['identifier'])]
+#[ORM\Index(name: 'title_source_identifier_ft', columns: ['identifier'], flags: ['fulltext'])]
+#[ORM\Entity]
 class TitleSource {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
+    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    private ?int $id = null;
 
-    /**
-     * @var string
-     * @ORM\Column(type="string", length=300, nullable=true)
-     */
-    private $identifier;
+    #[ORM\Column(type: 'string', length: 300, nullable: true)]
+    private string $identifier;
 
-    /**
-     * @var Title
-     * @ORM\ManyToOne(targetEntity="App\Entity\Title", inversedBy="titleSources")
-     */
-    private $title;
+    #[ORM\ManyToOne(targetEntity: Title::class, inversedBy: 'titleSources')]
+    private ?Title $title = null;
 
-    /**
-     * @var Source
-     * @ORM\ManyToOne(targetEntity="App\Entity\Source", inversedBy="titleSources")
-     */
-    private $source;
+    #[ORM\ManyToOne(targetEntity: Source::class, inversedBy: 'titleSources')]
+    private ?Source $source = null;
 
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId() {
+    public function getId() : ?int {
         return $this->id;
     }
 
-    /**
-     * Set identifier.
-     *
-     * @param string $identifier
-     *
-     * @return TitleSource
-     */
-    public function setIdentifier($identifier) {
+    public function setIdentifier(string $identifier) : self {
         $this->identifier = $identifier;
 
         return $this;
     }
 
-    /**
-     * Get identifier.
-     *
-     * @return string
-     */
-    public function getIdentifier() {
+    public function getIdentifier() : string {
         return $this->identifier;
     }
 
-    /**
-     * Set title.
-     *
-     * @param null|\App\Entity\Title $title
-     *
-     * @return TitleSource
-     */
-    public function setTitle(?Title $title = null) {
+    public function setTitle(?Title $title = null) : self {
         $this->title = $title;
 
         return $this;
     }
 
-    /**
-     * Get title.
-     *
-     * @return null|\App\Entity\Title
-     */
-    public function getTitle() {
+    public function getTitle() : ?Title {
         return $this->title;
     }
 
-    /**
-     * Set source.
-     *
-     * @param null|\App\Entity\Source $source
-     *
-     * @return TitleSource
-     */
-    public function setSource(?Source $source = null) {
+    public function setSource(?Source $source = null) : self {
         $this->source = $source;
 
         return $this;
     }
 
-    /**
-     * Get source.
-     *
-     * @return null|\App\Entity\Source
-     */
-    public function getSource() {
+    public function getSource() : Source {
         return $this->source;
     }
 }

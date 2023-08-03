@@ -2,263 +2,134 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Entity;
 
+use App\Repository\TitleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Nines\UtilBundle\Entity\AbstractEntity;
 
-/**
- * Title.
- *
- * @ORM\Table(name="title",
- *     indexes={
- *         @ORM\Index(name="title_title_ft", columns={"title"}, flags={"fulltext"}),
- *         @ORM\Index(name="title_signedauthor_ft", columns={"signed_author"}, flags={"fulltext"}),
- *         @ORM\Index(name="title_pseudonym_idx", columns={"pseudonym"}, flags={"fulltext"}),
- *         @ORM\Index(name="title_imprint_idx", columns={"imprint"}, flags={"fulltext"}),
- *         @ORM\Index(name="title_copyright_idx", columns={"copyright"}, flags={"fulltext"}),
- *         @ORM\Index(name="title_colophon_idx", columns={"colophon"}, flags={"fulltext"}),
- *         @ORM\Index(name="title_shelfmark_idx", columns={"shelfmark"}, flags={"fulltext"}),
- *         @ORM\Index(name="title_notes_idx", columns={"notes"}, flags={"fulltext"}),
- *         @ORM\Index(name="title_price_idx", columns={"price_total"}),
- *         @ORM\Index(name="title_edition_idx", columns={"edition"}, flags={"fulltext"})
- *     })
- *     @ORM\Entity(repositoryClass="App\Repository\TitleRepository")
- *     @ORM\HasLifecycleCallbacks
- */
+#[ORM\Table(name: 'title')]
+#[ORM\Index(name: 'title_title_ft', columns: ['title'], flags: ['fulltext'])]
+#[ORM\Index(name: 'title_signedauthor_ft', columns: ['signed_author'], flags: ['fulltext'])]
+#[ORM\Index(name: 'title_pseudonym_idx', columns: ['pseudonym'], flags: ['fulltext'])]
+#[ORM\Index(name: 'title_imprint_idx', columns: ['imprint'], flags: ['fulltext'])]
+#[ORM\Index(name: 'title_copyright_idx', columns: ['copyright'], flags: ['fulltext'])]
+#[ORM\Index(name: 'title_colophon_idx', columns: ['colophon'], flags: ['fulltext'])]
+#[ORM\Index(name: 'title_shelfmark_idx', columns: ['shelfmark'], flags: ['fulltext'])]
+#[ORM\Index(name: 'title_notes_idx', columns: ['notes'], flags: ['fulltext'])]
+#[ORM\Index(name: 'title_price_idx', columns: ['price_total'])]
+#[ORM\Index(name: 'title_edition_idx', columns: ['edition'], flags: ['fulltext'])]
+#[ORM\Entity(repositoryClass: TitleRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Title extends AbstractEntity {
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="title", type="text", nullable=false)
-     */
-    private $title;
+    #[ORM\Column(name: 'title', type: 'text', nullable: false)]
+    private string $title = '';
 
-    /**
-     * @var int
-     * @ORM\Column(name="edition_number", type="integer", nullable=true)
-     */
-    private $editionNumber;
+    #[ORM\Column(name: 'edition_number', type: 'integer', nullable: true)]
+    private ?int $editionNumber = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="signed_author", type="text", nullable=true)
-     */
-    private $signedAuthor;
+    #[ORM\Column(name: 'signed_author', type: 'text', nullable: true)]
+    private ?string $signedAuthor = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="pseudonym", type="string", length=255, nullable=true)
-     */
-    private $pseudonym;
+    #[ORM\Column(name: 'pseudonym', type: 'string', length: 255, nullable: true)]
+    private ?string $pseudonym = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="imprint", type="text", nullable=true)
-     */
-    private $imprint;
+    #[ORM\Column(name: 'imprint', type: 'text', nullable: true)]
+    private ?string $imprint = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="copyright", type="text", nullable=true)
-     */
-    private $copyright;
+    #[ORM\Column(name: 'copyright', type: 'text', nullable: true)]
+    private ?string $copyright = null;
 
-    /**
-     * @var bool
-     *
-     * @ORM\Column(name="selfpublished", type="boolean", nullable=true)
-     */
-    private $selfpublished = false;
+    #[ORM\Column(name: 'selfpublished', type: 'boolean', nullable: true)]
+    private ?bool $selfpublished = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="pubdate", type="string", length=60, nullable=true)
-     */
-    private $pubdate;
+    #[ORM\Column(name: 'pubdate', type: 'string', length: 60, nullable: true)]
+    private ?string $pubdate = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="date_of_first_publication", type="string", length=40, nullable=true)
-     */
-    private $dateOfFirstPublication;
+    #[ORM\Column(name: 'date_of_first_publication', type: 'string', length: 40, nullable: true)]
+    private ?string $dateOfFirstPublication = null;
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="size_l", type="integer", nullable=true)
-     */
-    private $sizeL;
+    #[ORM\Column(name: 'size_l', type: 'integer', nullable: true)]
+    private ?int $sizeL = null;
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="size_w", type="integer", nullable=true)
-     */
-    private $sizeW;
+    #[ORM\Column(name: 'size_w', type: 'integer', nullable: true)]
+    private ?int $sizeW = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="edition", type="string", length=200, nullable=true)
-     */
-    private $edition;
+    #[ORM\Column(name: 'edition', type: 'string', length: 200, nullable: true)]
+    private ?string $edition = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="colophon", type="text", nullable=true)
-     */
-    private $colophon;
+    #[ORM\Column(name: 'colophon', type: 'text', nullable: true)]
+    private ?string $colophon;
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="volumes", type="integer", nullable=true)
-     */
-    private $volumes;
+    #[ORM\Column(name: 'volumes', type: 'integer', nullable: true)]
+    private ?int $volumes;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="pagination", type="string", length=400, nullable=true)
-     */
-    private $pagination;
+    #[ORM\Column(name: 'pagination', type: 'string', length: 400, nullable: true)]
+    private ?string $pagination;
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="price_total", type="integer", nullable=false)
-     */
-    private $totalPrice;
+    #[ORM\Column(name: 'price_total', type: 'integer', nullable: false)]
+    private int $totalPrice = 0;
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="price_pound", type="integer", nullable=true)
-     */
-    private $pricePound;
+    #[ORM\Column(name: 'price_pound', type: 'integer', nullable: true)]
+    private ?int $pricePound = null;
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="price_shilling", type="integer", nullable=true)
-     */
-    private $priceShilling;
+    #[ORM\Column(name: 'price_shilling', type: 'integer', nullable: true)]
+    private ?int $priceShilling = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="price_pence", type="decimal", precision=9, scale=1, nullable=true)
-     */
-    private $pricePence;
+    #[ORM\Column(name: 'price_pence', type: 'decimal', precision: 9, scale: 1, nullable: true)]
+    private ?float $pricePence = null;
 
-    /**
-     * @var float
-     * @ORM\Column(name="other_price", type="decimal", precision=7, scale=2, nullable=true)
-     */
-    private $otherPrice;
+    #[ORM\Column(name: 'other_price', type: 'decimal', precision: 7, scale: 2, nullable: true)]
+    private ?float $otherPrice = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="shelfmark", type="text", nullable=true)
-     */
-    private $shelfmark;
+    #[ORM\Column(name: 'shelfmark', type: 'text', nullable: true)]
+    private ?string $shelfmark = null;
 
-    /**
-     * @var bool
-     *
-     * @ORM\Column(name="checked", type="boolean", nullable=false)
-     */
-    private $checked = false;
+    #[ORM\Column(name: 'checked', type: 'boolean', nullable: false)]
+    private bool $checked = false;
 
-    /**
-     * @var bool
-     *
-     * @ORM\Column(name="finalcheck", type="boolean", nullable=false)
-     */
-    private $finalcheck = false;
+    #[ORM\Column(name: 'finalcheck', type: 'boolean', nullable: false)]
+    private bool $finalcheck = false;
 
-    /**
-     * @var bool
-     *
-     * @ORM\Column(name="finalattempt", type="boolean", nullable=false)
-     */
-    private $finalattempt = false;
+    #[ORM\Column(name: 'finalattempt', type: 'boolean', nullable: false)]
+    private bool $finalattempt = false;
 
-    /**
-     * @var bool
-     *
-     * @ORM\Column(name="edition_checked", type="boolean", nullable=false)
-     */
-    private $editionChecked = false;
+    #[ORM\Column(name: 'edition_checked', type: 'boolean', nullable: false)]
+    private bool $editionChecked = false;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="notes", type="text", nullable=true)
-     */
-    private $notes;
+    #[ORM\Column(name: 'notes', type: 'text', nullable: true)]
+    private ?string $notes = null;
 
-    /**
-     * @var Geonames
-     *
-     * @ORM\ManyToOne(targetEntity="Geonames", inversedBy="titles")
-     * @ORM\JoinColumns({
-     *     @ORM\JoinColumn(name="location_of_printing", referencedColumnName="geonameid")
-     * })
-     */
-    private $locationOfPrinting;
+    #[ORM\JoinColumn(name: 'location_of_printing', referencedColumnName: 'geonameid')]
+    #[ORM\ManyToOne(targetEntity: Geonames::class, inversedBy: 'titles')]
+    private ?Geonames $locationOfPrinting = null;
 
-    /**
-     * @var Format
-     *
-     * @ORM\ManyToOne(targetEntity="Format", inversedBy="titles")
-     * @ORM\JoinColumns({
-     *     @ORM\JoinColumn(name="format_id", referencedColumnName="id")
-     * })
-     */
-    private $format;
+    #[ORM\JoinColumn(name: 'format_id', referencedColumnName: 'id')]
+    #[ORM\ManyToOne(targetEntity: Format::class, inversedBy: 'titles')]
+    private ?Format $format = null;
 
     /**
      * @var Collection<int,Genre>
-     *
-     * @ORM\ManyToMany(targetEntity="Genre", inversedBy="titles")
      */
-    private $genres;
+    #[ORM\ManyToMany(targetEntity: Genre::class, inversedBy: 'titles')]
+    private Collection|array $genres;
 
-    /**
-     * @var Currency
-     * @ORM\ManyToOne(targetEntity="App\Entity\Currency", inversedBy="titles")
-     */
-    private $otherCurrency;
+    #[ORM\ManyToOne(targetEntity: Currency::class, inversedBy: 'titles')]
+    private ?Currency $otherCurrency = null;
 
     /**
      * @var Collection<int,TitleRole>
-     * @ORM\OneToMany(targetEntity="TitleRole", mappedBy="title")
      */
-    private $titleRoles;
+    #[ORM\OneToMany(targetEntity: TitleRole::class, mappedBy: 'title')]
+    private Collection|array $titleRoles;
 
     /**
      * @var Collection<int,TitleFirmrole>
-     * @ORM\OneToMany(targetEntity="TitleFirmrole", mappedBy="title")
      */
-    private $titleFirmroles;
+    #[ORM\OneToMany(targetEntity: TitleFirmrole::class, mappedBy: 'title')]
+    private Collection|array $titleFirmroles;
 
     /**
      * Title sources are where the bibliographic information comes from. It's
@@ -266,25 +137,22 @@ class Title extends AbstractEntity {
      * information.
      *
      * @var Collection<int,TitleSource>
-     * @ORM\OneToMany(targetEntity="TitleSource", mappedBy="title")
      */
-    private $titleSources;
+    #[ORM\OneToMany(targetEntity: TitleSource::class, mappedBy: 'title')]
+    private Collection|array $titleSources;
 
     /**
      * @var Collection<int,Title>
-     * @ORM\ManyToMany(targetEntity="App\Entity\Title", inversedBy="titlesRelated")
      */
-    private $relatedTitles;
+    #[ORM\ManyToMany(targetEntity: self::class, inversedBy: 'titlesRelated')]
+    private Collection|array $relatedTitles;
 
     /**
      * @var Collection<int,Title>
-     * @ORM\ManyToMany(targetEntity="App\Entity\Title", mappedBy="relatedTitles")
      */
-    private $titlesRelated;
+    #[ORM\ManyToMany(targetEntity: self::class, mappedBy: 'relatedTitles')]
+    private Collection|array $titlesRelated;
 
-    /**
-     * Constructor.
-     */
     public function __construct() {
         parent::__construct();
         $this->totalPrice = 0;
@@ -296,9 +164,6 @@ class Title extends AbstractEntity {
         $this->relatedTitles = new ArrayCollection();
     }
 
-    /**
-     * Return the title's title.
-     */
     public function __toString() : string {
         return $this->title;
     }
@@ -307,34 +172,17 @@ class Title extends AbstractEntity {
         return "({$this->id}) {$this->title}";
     }
 
-    /**
-     * Set title.
-     *
-     * @param string $title
-     *
-     * @return Title
-     */
-    public function setTitle($title) {
+    public function setTitle(string $title) : self {
         $this->title = $title;
 
         return $this;
     }
 
-    /**
-     * Get title.
-     *
-     * @return string
-     */
-    public function getTitle() {
+    public function getTitle() : string {
         return $this->title;
     }
 
-    /**
-     * Get trimmed title.
-     *
-     * @return string
-     */
-    public function getTrimmedTitle() {
+    public function getTrimmedTitle() : string {
         if (str_word_count($this->title) > 128) {
             $words = explode(' ', $this->title, 129);
 
@@ -348,340 +196,176 @@ class Title extends AbstractEntity {
         return "({$this->id}) {$this->title}";
     }
 
-    /**
-     * Set signedAuthor.
-     *
-     * @param string $signedAuthor
-     *
-     * @return Title
-     */
-    public function setSignedAuthor($signedAuthor) {
+    public function setSignedAuthor(?string $signedAuthor) : self {
         $this->signedAuthor = $signedAuthor;
 
         return $this;
     }
 
-    /**
-     * Get signedAuthor.
-     *
-     * @return string
-     */
-    public function getSignedAuthor() {
+    public function getSignedAuthor() : ?string {
         return $this->signedAuthor;
     }
 
-    /**
-     * Set pseudonym.
-     *
-     * @param string $pseudonym
-     *
-     * @return Title
-     */
-    public function setPseudonym($pseudonym) {
+    public function setPseudonym(?string $pseudonym) : self {
         $this->pseudonym = $pseudonym;
 
         return $this;
     }
 
-    /**
-     * Get pseudonym.
-     *
-     * @return string
-     */
-    public function getPseudonym() {
+    public function getPseudonym() : ?string {
         return $this->pseudonym;
     }
 
-    /**
-     * Set imprint.
-     *
-     * @param string $imprint
-     *
-     * @return Title
-     */
-    public function setImprint($imprint) {
+    public function setImprint(?string $imprint) : self {
         $this->imprint = $imprint;
 
         return $this;
     }
 
-    /**
-     * Get imprint.
-     *
-     * @return string
-     */
-    public function getImprint() {
+    public function getImprint() : ?string {
         return $this->imprint;
     }
 
-    /**
-     * Set copyright.
-     *
-     * @param string $copyright
-     *
-     * @return Title
-     */
-    public function setCopyright($copyright) {
+    public function setCopyright(?string $copyright) : self {
         $this->copyright = $copyright;
 
         return $this;
     }
 
-    /**
-     * Get copyright.
-     *
-     * @return string
-     */
-    public function getCopyright() {
+    public function getCopyright() : ?string {
         return $this->copyright;
     }
 
-    /**
-     * Set selfpublished.
-     *
-     * @param bool $selfpublished
-     *
-     * @return Title
-     */
-    public function setSelfpublished($selfpublished) {
+    public function setSelfpublished(?bool $selfpublished) : self {
         $this->selfpublished = $selfpublished;
 
         return $this;
     }
 
-    /**
-     * Get selfpublished.
-     *
-     * @return bool
-     */
-    public function getSelfpublished() {
+    public function getSelfpublished() : ?bool {
         return $this->selfpublished;
     }
 
-    /**
-     * Set pubdate.
-     *
-     * @param string $pubdate
-     *
-     * @return Title
-     */
-    public function setPubdate($pubdate) {
+    public function setPubdate(?string $pubdate) : self {
         $this->pubdate = $pubdate;
 
         return $this;
     }
 
-    /**
-     * Get pubdate.
-     *
-     * @return string
-     */
-    public function getPubdate() {
+    public function getPubdate() : ?string {
         return $this->pubdate;
     }
 
-    /**
-     * Set dateOfFirstPublication.
-     *
-     * @param string $dateOfFirstPublication
-     *
-     * @return Title
-     */
-    public function setDateOfFirstPublication($dateOfFirstPublication) {
+    public function setDateOfFirstPublication(?string $dateOfFirstPublication) : self {
         $this->dateOfFirstPublication = $dateOfFirstPublication;
 
         return $this;
     }
 
-    /**
-     * Get dateOfFirstPublication.
-     *
-     * @return string
-     */
-    public function getDateOfFirstPublication() {
+    public function getDateOfFirstPublication() : ?string {
         return $this->dateOfFirstPublication;
     }
 
-    /**
-     * Set sizeL.
-     *
-     * @param int $sizeL
-     *
-     * @return Title
-     */
-    public function setSizeL($sizeL) {
+    public function setSizeL(?int $sizeL) : self {
         $this->sizeL = $sizeL;
 
         return $this;
     }
 
-    /**
-     * Get sizeL.
-     *
-     * @return int
-     */
-    public function getSizeL() {
+    public function getSizeL() : ?int {
         return $this->sizeL;
     }
 
-    /**
-     * Set sizeW.
-     *
-     * @param int $sizeW
-     *
-     * @return Title
-     */
-    public function setSizeW($sizeW) {
+    public function setSizeW(?int $sizeW) : self {
         $this->sizeW = $sizeW;
 
         return $this;
     }
 
-    /**
-     * Get sizeW.
-     *
-     * @return int
-     */
-    public function getSizeW() {
+    public function getSizeW() : ?int {
         return $this->sizeW;
     }
 
-    /**
-     * Set edition.
-     *
-     * @param string $edition
-     *
-     * @return Title
-     */
-    public function setEdition($edition) {
+    public function setEdition(?string $edition) : self {
         $this->edition = $edition;
 
         return $this;
     }
 
-    /**
-     * Get edition.
-     *
-     * @return string
-     */
-    public function getEdition() {
+    public function getEdition() : ?string {
         return $this->edition;
     }
 
-    /**
-     * Set volumes.
-     *
-     * @param int $volumes
-     *
-     * @return Title
-     */
-    public function setVolumes($volumes) {
+    public function setVolumes(?int $volumes) : self {
         $this->volumes = $volumes;
 
         return $this;
     }
 
-    /**
-     * Get volumes.
-     *
-     * @return int
-     */
-    public function getVolumes() {
+    public function getVolumes() : ?int {
         return $this->volumes;
     }
 
-    /**
-     * Set pagination.
-     *
-     * @param string $pagination
-     *
-     * @return Title
-     */
-    public function setPagination($pagination) {
+    public function setPagination(?string $pagination) : self {
         $this->pagination = $pagination;
 
         return $this;
     }
 
-    /**
-     * Get pagination.
-     *
-     * @return string
-     */
-    public function getPagination() {
+    public function getPagination() : ?string {
         return $this->pagination;
     }
 
-    /**
-     * Set pricePound.
-     *
-     * @param int $pricePound
-     *
-     * @return Title
-     */
-    public function setPricePound($pricePound) {
-        $this->pricePound = $pricePound;
+    public function setPricePound(null|int|string|bool $pricePound) : self {
+        if (is_string($pricePound)) {
+            $this->pricePound = is_numeric($pricePound) ? (int) $pricePound : null;
+        } elseif (is_bool($pricePound)) {
+            $this->pricePound = $pricePound ? 1 : 0;
+        } else {
+            $this->pricePound = $pricePound;
+        }
 
         return $this;
     }
 
-    /**
-     * Get pricePound.
-     *
-     * @return int
-     */
-    public function getPricePound() {
+    public function getPricePound() : ?int {
         return $this->pricePound;
     }
 
-    /**
-     * Set priceShilling.
-     *
-     * @param int $priceShilling
-     *
-     * @return Title
-     */
-    public function setPriceShilling($priceShilling) {
-        $this->priceShilling = $priceShilling;
+    public function setPriceShilling(null|int|string|bool $priceShilling) : self {
+        if (is_string($priceShilling)) {
+            $this->priceShilling = is_numeric($priceShilling) ? (int) $priceShilling : null;
+        } elseif (is_bool($priceShilling)) {
+            $this->priceShilling = $priceShilling ? 1 : 0;
+        } else {
+            $this->priceShilling = $priceShilling;
+        }
 
         return $this;
     }
 
-    /**
-     * Get priceShilling.
-     *
-     * @return int
-     */
-    public function getPriceShilling() {
+    public function getPriceShilling() : ?int {
         return $this->priceShilling;
     }
 
-    /**
-     * Set pricePence.
-     *
-     * @param string $pricePence
-     *
-     * @return Title
-     */
-    public function setPricePence($pricePence) {
-        $this->pricePence = $pricePence;
+    public function setPricePence(null|int|string|bool $pricePence) : self {
+        if (is_string($pricePence)) {
+            $this->pricePence = is_numeric($pricePence) ? (float) $pricePence : null;
+        } elseif (is_bool($pricePence)) {
+            $this->pricePence = $pricePence ? 1 : 0;
+        } else {
+            $this->pricePence = $pricePence;
+        }
 
         return $this;
     }
 
-    /**
-     * Get pricePence.
-     *
-     * @return string
-     */
-    public function getPricePence() {
+    public function getPricePence() : ?float {
         return $this->pricePence;
     }
 
-    /**
-     * @ORM\PrePersist
-     * @ORM\PreUpdate
-     */
+    #[ORM\PrePersist]
+    #[ORM\PreUpdate]
     public function setTotalPrice() : void {
         $this->totalPrice = 0;
 
@@ -691,143 +375,75 @@ class Title extends AbstractEntity {
         if ($this->priceShilling && is_int($this->priceShilling)) {
             $this->totalPrice += $this->priceShilling * 12;
         }
-        if ($this->pricePence && is_int($this->pricePence)) {
-            $this->totalPrice += $this->pricePence;
+        if ($this->pricePence && is_numeric($this->pricePence)) {
+            $this->totalPrice += (int) $this->pricePence;
         }
     }
 
-    /**
-     * Get the totalPrice in pence.
-     *
-     * @return int
-     */
-    public function getTotalPrice() {
+    public function getTotalPrice() : int {
         $this->setTotalPrice();
 
         return $this->totalPrice;
     }
 
-    /**
-     * Set shelfmark.
-     *
-     * @param string $shelfmark
-     *
-     * @return Title
-     */
-    public function setShelfmark($shelfmark) {
+    public function setShelfmark(?string $shelfmark) : self {
         $this->shelfmark = $shelfmark;
 
         return $this;
     }
 
-    /**
-     * Get shelfmark.
-     *
-     * @return string
-     */
-    public function getShelfmark() {
+    public function getShelfmark() : ?string {
         return $this->shelfmark;
     }
 
-    /**
-     * Set checked.
-     *
-     * @param bool $checked
-     *
-     * @return Title
-     */
-    public function setChecked($checked) {
+    public function setChecked(bool $checked) : self {
         $this->checked = $checked;
 
         return $this;
     }
 
-    /**
-     * Get checked.
-     *
-     * @return bool
-     */
-    public function getChecked() {
+    public function getChecked() : bool {
         return $this->checked;
     }
 
-    /**
-     * Set finalcheck.
-     *
-     * @param bool $finalcheck
-     *
-     * @return Title
-     */
-    public function setFinalcheck($finalcheck) {
+    public function setFinalcheck(bool $finalcheck) : self {
         $this->finalcheck = $finalcheck;
 
         return $this;
     }
 
-    /**
-     * Get finalcheck.
-     *
-     * @return bool
-     */
-    public function getFinalcheck() {
+    public function getFinalcheck() : bool {
         return $this->finalcheck;
     }
 
-    /**
-     * Set notes.
-     *
-     * @param string $notes
-     *
-     * @return Title
-     */
-    public function setNotes($notes) {
+    public function setNotes(?string $notes) : self {
         $this->notes = $notes;
 
         return $this;
     }
 
-    /**
-     * Get notes.
-     *
-     * @return string
-     */
-    public function getNotes() {
+    public function getNotes() : ?string {
         return $this->notes;
     }
 
-    /**
-     * Set locationOfPrinting.
-     *
-     * @param Geonames $locationOfPrinting
-     *
-     * @return Title
-     */
-    public function setLocationOfPrinting(?Geonames $locationOfPrinting = null) {
+    public function setLocationOfPrinting(?Geonames $locationOfPrinting = null) : self {
         $this->locationOfPrinting = $locationOfPrinting;
 
         return $this;
     }
 
-    /**
-     * Get locationOfPrinting.
-     *
-     * @return null|Geonames
-     */
-    public function getLocationOfPrinting() {
+    public function getLocationOfPrinting() : ?Geonames {
         return $this->locationOfPrinting;
     }
 
-    /**
-     * Set format.
-     *
-     * @param Format $format
-     *
-     * @return Title
-     */
-    public function setFormat(?Format $format = null) {
+    public function setFormat(?Format $format = null) : self {
         $this->format = $format;
 
         return $this;
+    }
+
+    public function getFormat() : ?Format {
+        return $this->format;
     }
 
     /**
@@ -851,19 +467,7 @@ class Title extends AbstractEntity {
         return $this;
     }
 
-    /**
-     * Get format.
-     *
-     * @return null|Format
-     */
-    public function getFormat() {
-        return $this->format;
-    }
-
-    /**
-     * @return bool
-     */
-    public function hasTitleRole(Person $person, Role $role) {
+    public function hasTitleRole(Person $person, Role $role) : bool {
         foreach ($this->titleRoles as $tr) {
             if ($tr->getPerson() === $person && $tr->getRole() === $role) {
                 return true;
@@ -873,82 +477,41 @@ class Title extends AbstractEntity {
         return false;
     }
 
-    /**
-     * Set editionNumber.
-     *
-     * @param int $editionNumber
-     *
-     * @return Title
-     */
-    public function setEditionNumber($editionNumber) {
+    public function setEditionNumber(?int $editionNumber) : self {
         $this->editionNumber = $editionNumber;
 
         return $this;
     }
 
-    /**
-     * Get editionNumber.
-     *
-     * @return int
-     */
-    public function getEditionNumber() {
+    public function getEditionNumber() : ?int {
         return $this->editionNumber;
     }
 
-    /**
-     * Set finalattempt.
-     *
-     * @param bool $finalattempt
-     *
-     * @return Title
-     */
-    public function setFinalattempt($finalattempt) {
+    public function setFinalattempt(bool $finalattempt) : self {
         $this->finalattempt = $finalattempt;
 
         return $this;
     }
 
-    /**
-     * Get finalattempt.
-     *
-     * @return bool
-     */
-    public function getFinalattempt() {
+    public function getFinalattempt() : bool {
         return $this->finalattempt;
     }
 
-    /**
-     * Set colophon.
-     *
-     * @param null|string $colophon
-     *
-     * @return Title
-     */
-    public function setColophon($colophon = null) {
+    public function setColophon(?string $colophon = null) : self {
         $this->colophon = $colophon;
 
         return $this;
     }
 
-    /**
-     * Get colophon.
-     *
-     * @return null|string
-     */
-    public function getColophon() {
+    public function getColophon() : ?string {
         return $this->colophon;
     }
 
     public function getOtherPrice() : ?float {
-        return (float) $this->otherPrice;
+        return $this->otherPrice;
     }
 
-    /**
-     * @param string $otherPrice
-     *
-     * @return $this
-     */
-    public function setOtherPrice($otherPrice) : self {
+    public function setOtherPrice(?string $otherPrice) : self {
         $this->otherPrice = (float) $otherPrice;
 
         return $this;
@@ -974,14 +537,7 @@ class Title extends AbstractEntity {
         return $this;
     }
 
-    /**
-     * Get titleRoles, optionally filtered by role name.
-     *
-     * @param string $roleName
-     *
-     * @return Collection<int,TitleRole>
-     */
-    public function getTitleRoles($roleName = null) {
+    public function getTitleRoles(?string $roleName = null) : Collection {
         if (null === $roleName) {
             return $this->titleRoles;
         }

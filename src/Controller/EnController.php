@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Controller;
 
 use App\Entity\En;
@@ -23,10 +17,9 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * En controller.
- *
- * @Security("is_granted('ROLE_USER')")
- * @Route("/resource/en")
  */
+#[Security("is_granted('ROLE_USER')")]
+#[Route(path: '/resource/en')]
 class EnController extends AbstractController implements PaginatorAwareInterface {
     use PaginatorTrait;
 
@@ -34,10 +27,9 @@ class EnController extends AbstractController implements PaginatorAwareInterface
      * Lists all En entities.
      *
      * @return array<string,mixed>
-     *
-     * @Route("/", name="resource_en_index", methods={"GET"})
-     * @Template
      */
+    #[Route(path: '/', name: 'resource_en_index', methods: ['GET'])]
+    #[Template]
     public function indexAction(Request $request, EntityManagerInterface $em) {
         $qb = $em->createQueryBuilder();
         $qb->select('e')->from(En::class, 'e')->orderBy('e.id', 'ASC');
@@ -53,9 +45,9 @@ class EnController extends AbstractController implements PaginatorAwareInterface
      * Search for En entities.
      *
      * @return array<string,mixed>
-     * @Route("/search", name="resource_en_search", methods={"GET"})
-     * @Template
      */
+    #[Route(path: '/search', name: 'resource_en_search', methods: ['GET'])]
+    #[Template]
     public function searchAction(Request $request, EnRepository $repo) {
         $q = $request->query->get('q');
         if ($q) {
@@ -75,10 +67,9 @@ class EnController extends AbstractController implements PaginatorAwareInterface
      * Finds and displays a En entity.
      *
      * @return array<string,mixed> *
-     * @Route("/{id}", name="resource_en_show", methods={"GET"})
-     *
-     * @Template
      */
+    #[Route(path: '/{id}', name: 'resource_en_show', methods: ['GET'])]
+    #[Template]
     public function showAction(En $en) {
         return [
             'en' => $en,

@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Controller;
 
 use App\Entity\Title;
@@ -34,20 +28,17 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Title controller.
- *
- * @Route("/title")
  */
+#[Route(path: '/title')]
 class TitleController extends AbstractController implements PaginatorAwareInterface {
     use PaginatorTrait;
 
     /**
      * Lists all Title entities.
      *
-     * @Route("/", name="title_index", methods={"GET"})
-     *
-     * @Template
-     *
      * @return array<string,mixed>     */
+    #[Route(path: '/', name: 'title_index', methods: ['GET'])]
+    #[Template]
     public function indexAction(Request $request, EntityManagerInterface $em) {
         $dql = 'SELECT e FROM App:Title e';
         if (null === $this->getUser()) {
@@ -75,9 +66,9 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
      * Search for titles and return typeahead-widget-friendly JSON.
      *
      * @return JsonResponse
-     * @Security("is_granted('ROLE_CONTENT_ADMIN')")
-     * @Route("/typeahead", name="title_typeahead", methods={"GET"})
      */
+    #[Security("is_granted('ROLE_CONTENT_ADMIN')")]
+    #[Route(path: '/typeahead', name: 'title_typeahead', methods: ['GET'])]
     public function typeaheadAction(Request $request, TitleRepository $repo) {
         $q = $request->query->get('q');
         if ( ! $q) {
@@ -98,10 +89,9 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
     /**
      * Export a CSV with the titles.
      *
-     * @Route("/export", name="title_export", methods={"GET"})
-     *
      * @return BinaryFileResponse
      */
+    #[Route(path: '/export', name: 'title_export', methods: ['GET'])]
     public function exportAction(EntityManagerInterface $em, CsvExporter $exporter) {
         $qb = $em->createQueryBuilder();
         $qb->select('e')->from(Title::class, 'e');
@@ -128,10 +118,9 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
     /**
      * Full text search for Title entities.
      *
-     * @Route("/search", name="title_search", methods={"GET"})
-     * @Template
-     *
      * @return array<string,mixed>     */
+    #[Route(path: '/search', name: 'title_search', methods: ['GET'])]
+    #[Template]
     public function searchAction(Request $request, TitleRepository $repo) {
         $form = $this->createForm(TitleSearchType::class, null, [
             'user' => $this->getUser(),
@@ -142,7 +131,7 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
 
         if ($form->isSubmitted() && $form->isValid()) {
             $data = array_filter($form->getData());
-            if (count($data) > 2) {
+            if (count((array) $data) > 2) {
                 $submitted = true;
                 $query = $repo->buildSearchQuery($data, $this->getUser());
                 $titles = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
@@ -159,11 +148,10 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
     /**
      * Full text search for Title entities.
      *
-     * @Route("/search/export/{format}", name="title_search_export_csv", methods={"GET"}, requirements={"format": "^csv$"})
-     * @Template
-     *
      * @return BinaryFileResponse
      */
+    #[Route(path: '/search/export/{format}', name: 'title_search_export_csv', methods: ['GET'], requirements: ['format' => '^csv$'])]
+    #[Template]
     public function searchExportCsvAction(Request $request, TitleRepository $repo, CsvExporter $exporter) {
         $form = $this->createForm(TitleSearchType::class, null, [
             'user' => $this->getUser(),
@@ -183,7 +171,7 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
                 } else {
                     $value = $paramValue;
                 }
-                $name .= '-' . preg_replace('/[^a-zA-Z0-9-]*/', '', $value);
+                $name .= '-' . preg_replace('/[^a-zA-Z0-9-]*/', '', (string) $value);
             }
             $titles = $query->execute();
         }
@@ -206,13 +194,10 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
     /**
      * Full text search for Title entities.
      *
-     * @Route("/search/export/{format}", name="title_search_export", methods={"GET"})
-     * @Template
-     *
-     * @param mixed $format
-     *
      * @return array<string,mixed>     */
-    public function searchExportAction(Request $request, TitleRepository $repo, $format) {
+    #[Route(path: '/search/export/{format}', name: 'title_search_export', methods: ['GET'])]
+    #[Template]
+    public function searchExportAction(Request $request, TitleRepository $repo, mixed $format) {
         $form = $this->createForm(TitleSearchType::class, null, [
             'user' => $this->getUser(),
         ]);
@@ -233,12 +218,11 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
     /**
      * Creates a new Title entity.
      *
-     * @Route("/new", name="title_new", methods={"GET", "POST"})
-     * @Security("is_granted('ROLE_CONTENT_ADMIN')")
-     * @Template
-     *
      * @return array<string,mixed>|RedirectResponse
      */
+    #[Route(path: '/new', name: 'title_new', methods: ['GET', 'POST'])]
+    #[Security("is_granted('ROLE_CONTENT_ADMIN')")]
+    #[Template]
     public function newAction(Request $request, EntityManagerInterface $em) {
         $title = new Title();
         $form = $this->createForm(TitleType::class, $title);
@@ -285,9 +269,9 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
      * @param string $id
      *
      * @return array<string,mixed> * @Route("/import/{id}", name="title_marc_import", methods={"GET"})
-     * @Security("is_granted('ROLE_CONTENT_ADMIN')")
-     * @Template("title/new.html.twig")
      */
+    #[Security("is_granted('ROLE_CONTENT_ADMIN')")]
+    #[Template('title/new.html.twig')]
     public function importMarcAction(Request $request, EstcMarcImporter $importer, $id) {
         $title = $importer->import($id);
 
@@ -309,10 +293,9 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
     /**
      * Finds and displays a Title entity.
      *
-     * @Route("/{id}.{_format}", name="title_show", defaults={"_format": "html"}, methods={"GET"})
-     * @Template
-     *
      * @return array<string,mixed>     */
+    #[Route(path: '/{id}.{_format}', name: 'title_show', defaults: ['_format' => 'html'], methods: ['GET'])]
+    #[Template]
     public function showAction(Title $title, SourceLinker $linker, TitleRepository $repo) {
         if ( ! $this->getUser() && ! $title->getFinalattempt() && ! $title->getFinalcheck()) {
             throw new AccessDeniedHttpException('This title has not been verified and is not available to the public.');
@@ -333,12 +316,11 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
     /**
      * Displays a form to edit an existing Title entity.
      *
-     * @Route("/{id}/edit", name="title_edit", methods={"GET", "POST"})
-     * @Template
-     * @Security("is_granted('ROLE_CONTENT_ADMIN')")
-     *
      * @return array<string,mixed>|RedirectResponse
      */
+    #[Route(path: '/{id}/edit', name: 'title_edit', methods: ['GET', 'POST'])]
+    #[Template]
+    #[Security("is_granted('ROLE_CONTENT_ADMIN')")]
     public function editAction(Request $request, Title $title, EntityManagerInterface $em) {
         // collect the titleFirmRole objects before modification.
         $titleFirmRoles = new ArrayCollection();
@@ -421,11 +403,10 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
     /**
      * Displays a form to edit an existing Title entity.
      *
-     * @Route("/{id}/copy", name="title_copy", methods={"GET", "POST"})
-     * @Template
-     * @Security("is_granted('ROLE_CONTENT_ADMIN')")
-     *
      * @return array<string,mixed>     */
+    #[Route(path: '/{id}/copy', name: 'title_copy', methods: ['GET', 'POST'])]
+    #[Template]
+    #[Security("is_granted('ROLE_CONTENT_ADMIN')")]
     public function copyAction(Request $request, Title $title, EntityManagerInterface $em) {
         $form = $this->createForm(TitleType::class, $title, [
             'action' => $this->generateUrl('title_new'),
@@ -440,11 +421,10 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
     /**
      * Deletes a Title entity.
      *
-     * @Route("/{id}/delete", name="title_delete", methods={"GET"})
-     * @Security("is_granted('ROLE_CONTENT_ADMIN')")
-     *
      * @return RedirectResponse
      */
+    #[Route(path: '/{id}/delete', name: 'title_delete', methods: ['GET'])]
+    #[Security("is_granted('ROLE_CONTENT_ADMIN')")]
     public function deleteAction(Request $request, Title $title, EntityManagerInterface $em) {
         foreach ($title->getTitleFirmroles() as $tfr) {
             $em->remove($tfr);

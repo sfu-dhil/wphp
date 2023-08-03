@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Tests\Services;
 
 use App\Entity\EstcMarc;
@@ -116,6 +110,6 @@ class MarcManagerTest extends ControllerTestCase {
 
     protected function setUp() : void {
         parent::setUp();
-        $this->manager = self::$container->get(MarcManager::class);
+        $this->manager = self::getContainer()->get(MarcManager::class);
     }
 }

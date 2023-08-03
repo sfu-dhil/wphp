@@ -1,15 +1,15 @@
 {% embed 'partial/table.html.twig' %}
     {% block tbody %}
         <tr>
-            <th data-toggle="popover" data-content="{{ 'geonames.fields.geonameid'|trans }}">Geoname ID</th>
+            <th data-bs-toggle="popover" data-bs-content="{{ 'geonames.fields.geonameid'|trans }}">Geoname ID</th>
             <td>{{ geoname.geonameid }}</td>
         </tr>
         <tr>
-            <th data-toggle="popover" data-content="{{ 'geonames.fields.name'|trans }}">Name</th>
+            <th data-bs-toggle="popover" data-bs-content="{{ 'geonames.fields.name'|trans }}">Name</th>
             <td>{{ geoname.name }}</td>
         </tr>
         <tr>
-            <th data-toggle="popover" data-content="{{ 'geonames.fields.titles'|trans }}">Titles</th>
+            <th data-bs-toggle="popover" data-bs-content="{{ 'geonames.fields.titles'|trans }}">Titles</th>
             <td>
                 <a href="{{ path('geonames_titles', {'id': geoname.geonameid}) }}">
                     {{ geoname.titles|length }}
@@ -17,7 +17,7 @@
             </td>
         </tr>
         <tr>
-            <th data-toggle="popover" data-content="{{ 'geonames.fields.firms'|trans }}">Firms</th>
+            <th data-bs-toggle="popover" data-bs-content="{{ 'geonames.fields.firms'|trans }}">Firms</th>
             <td>
                 <a href="{{ path('geonames_firms', {'id': geoname.geonameid}) }}">
                     {{ geoname.firms|length }}
@@ -25,7 +25,7 @@
             </td>
         </tr>
         <tr>
-            <th data-toggle="popover" data-content="{{ 'geonames.fields.people'|trans }}">People</th>
+            <th data-bs-toggle="popover" data-bs-content="{{ 'geonames.fields.people'|trans }}">People</th>
             <td>
                 <a href="{{ path('geonames_people', {'id': geoname.geonameid}) }}">
                     Born: {{ geoname.peopleBorn | length }}, Died: {{ geoname.peopleDied | length }}
@@ -34,35 +34,35 @@
         </tr>
         {% if is_granted('ROLE_CONTENT_ADMIN') and expandedHeader|default(false) %}
             <tr>
-                <th data-toggle="popover" data-content="{{ 'geonames.fields.asciiname'|trans }}">ASCII name</th>
+                <th data-bs-toggle="popover" data-bs-content="{{ 'geonames.fields.asciiname'|trans }}">ASCII name</th>
                 <td>{{ geoname.asciiname }}</td>
             </tr>
             <tr>
-                <th data-toggle="popover" data-content="{{ 'geonames.fields.latitude'|trans }}">Latitude</th>
+                <th data-bs-toggle="popover" data-bs-content="{{ 'geonames.fields.latitude'|trans }}">Latitude</th>
                 <td>{{ geoname.latitude }}</td>
             </tr>
             <tr>
-                <th data-toggle="popover" data-content="{{ 'geonames.fields.longitude'|trans }}">Longitude</th>
+                <th data-bs-toggle="popover" data-bs-content="{{ 'geonames.fields.longitude'|trans }}">Longitude</th>
                 <td>{{ geoname.longitude }}</td>
             </tr>
             <tr>
-                <th data-toggle="popover" data-content="{{ 'geonames.fields.country'|trans }}">Country</th>
+                <th data-bs-toggle="popover" data-bs-content="{{ 'geonames.fields.country'|trans }}">Country</th>
                 <td>{{ geoname.country }}</td>
             </tr>
             <tr>
-                <th data-toggle="popover" data-content="{{ 'geonames.field.admin1'|trans }}">Admin 1</th>
+                <th data-bs-toggle="popover" data-bs-content="{{ 'geonames.field.admin1'|trans }}">Admin 1</th>
                 <td>{{ geoname.admin1 }}</td>
             </tr>
             <tr>
-                <th data-toggle="popover" data-content="{{ 'geonames.field.admin2'|trans }}">Admin 2</th>
+                <th data-bs-toggle="popover" data-bs-content="{{ 'geonames.field.admin2'|trans }}">Admin 2</th>
                 <td>{{ geoname.admin2 }}</td>
             </tr>
             <tr>
-                <th data-toggle="popover" data-content="{{ 'geonames.field.admin3'|trans }}">Admin 3</th>
+                <th data-bs-toggle="popover" data-bs-content="{{ 'geonames.field.admin3'|trans }}">Admin 3</th>
                 <td>{{ geoname.admin3 }}</td>
             </tr>
             <tr>
-                <th data-toggle="popover" data-content="{{ 'geonames.field.admin4'|trans }}">Admin 4</th>
+                <th data-bs-toggle="popover" data-bs-content="{{ 'geonames.field.admin4'|trans }}">Admin 4</th>
                 <td>{{ geoname.admin4 }}</td>
             </tr>
         {% endif %}

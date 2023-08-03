@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Controller;
 
 use App\Entity\EstcMarc;
@@ -24,10 +18,9 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * EstcMarc controller.
- *
- * @Security("is_granted('ROLE_USER')")
- * @Route("/resource/estc")
  */
+#[Security("is_granted('ROLE_USER')")]
+#[Route(path: '/resource/estc')]
 class EstcMarcController extends AbstractController implements PaginatorAwareInterface {
     use PaginatorTrait;
 
@@ -35,9 +28,9 @@ class EstcMarcController extends AbstractController implements PaginatorAwareInt
      * Lists all EstcMarc entities.
      *
      * @return array<string,mixed> *
-     * @Route("/", name="resource_estc_index", methods={"GET"})
-     * @Template
      */
+    #[Route(path: '/', name: 'resource_estc_index', methods: ['GET'])]
+    #[Template]
     public function indexAction(Request $request, MarcManager $manager, EstcMarcRepository $repo) {
         $query = $repo->indexQuery();
         $estcMarcs = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
@@ -52,8 +45,8 @@ class EstcMarcController extends AbstractController implements PaginatorAwareInt
      * Search for EstcMarc entities.
      *
      * @return array<string,mixed> * @Route("/search", name="resource_estc_search", methods={"GET"})
-     * @Template
      */
+    #[Template]
     public function searchAction(Request $request, MarcManager $manager, EstcMarcRepository $repo) {
         $q = $request->query->get('q');
         if ($q) {
@@ -83,8 +76,8 @@ class EstcMarcController extends AbstractController implements PaginatorAwareInt
      * Search for EstcMarc entities.
      *
      * @return array<string,mixed> * @Route("/imprint_search", name="resource_estc_search_imprint", methods={"GET"})
-     * @Template
      */
+    #[Template]
     public function imprintSearchAction(Request $request, MarcManager $manager, EstcMarcRepository $repo) {
         $q = $request->query->get('q');
         if ($q) {
@@ -114,10 +107,10 @@ class EstcMarcController extends AbstractController implements PaginatorAwareInt
      * Finds and displays a EstcMarc entity.
      *
      * @return array<string,mixed> *
-     * @Route("/{id}", name="resource_estc_show", methods={"GET"})
-     * @ParamConverter("estcMarc", options={"mapping": {"id": "titleId"}})
-     * @Template
      */
+    #[Route(path: '/{id}', name: 'resource_estc_show', methods: ['GET'])]
+    #[ParamConverter('estcMarc', options: ['mapping' => ['id' => 'titleId']])]
+    #[Template]
     public function showAction(EstcMarc $estcMarc, MarcManager $manager) {
         return [
             'estcMarc' => $estcMarc,

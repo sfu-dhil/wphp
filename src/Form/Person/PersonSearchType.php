@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Form\Person;
 
 use App\Entity\Person;
@@ -33,9 +27,7 @@ class PersonSearchType extends AbstractType {
         $builder->add('name', TextType::class, [
             'label' => 'Search Persons by Name',
             'required' => false,
-            'attr' => [
-                'help_block' => 'person.search.name',
-            ],
+            'help' => 'person.search.name',
         ]);
 
         $builder->add('order', ChoiceType::class, [
@@ -52,9 +44,7 @@ class PersonSearchType extends AbstractType {
                 'Death Date (Most Recent Last)' => 'death_asc',
                 'Death Date (Most Recent First)' => 'death_desc',
             ],
-            'attr' => [
-                'help_block' => 'Choose a sort method for the results',
-            ],
+            'help' => 'Choose a sort method for the results',
             'required' => false,
             'expanded' => false,
             'multiple' => false,
@@ -65,9 +55,7 @@ class PersonSearchType extends AbstractType {
         $builder->add('id', TextType::class, [
             'label' => 'Person ID',
             'required' => false,
-            'attr' => [
-                'help_block' => 'person.search.id',
-            ],
+            'help' => 'person.search.id',
         ]);
 
         $builder->add('gender', ChoiceType::class, [
@@ -78,9 +66,10 @@ class PersonSearchType extends AbstractType {
                 'Transgender' => Person::TRANS,
                 'Unknown' => Person::UNKNOWN,
             ],
-            'attr' => [
-                'help_block' => 'person.search.gender',
+            'label_attr' => [
+                'class' => 'checkbox-inline',
             ],
+            'help' => 'person.search.gender',
             'required' => false,
             'expanded' => true,
             'multiple' => true,
@@ -89,55 +78,41 @@ class PersonSearchType extends AbstractType {
         $builder->add('dob', TextType::class, [
             'label' => 'Date of Birth',
             'required' => false,
-            'attr' => [
-                'help_block' => 'person.search.dob',
-            ],
+            'help' => 'person.search.dob',
         ]);
 
         $builder->add('dod', TextType::class, [
             'label' => 'Date of Death',
             'required' => false,
-            'attr' => [
-                'help_block' => 'person.search.dod',
-            ],
+            'help' => 'person.search.dod',
         ]);
 
         $builder->add('birthplace', TextType::class, [
             'label' => 'Place of Birth',
             'required' => false,
-            'attr' => [
-                'help_block' => 'person.search.cityOfBirth',
-            ],
+            'help' => 'person.search.cityOfBirth',
         ]);
 
         $builder->add('deathplace', TextType::class, [
             'label' => 'Place of Death',
             'required' => false,
-            'attr' => [
-                'help_block' => 'person.search.cityOfDeath',
-            ],
+            'help' => 'person.search.cityOfDeath',
         ]);
 
         $builder->add('viafUrl', TextType::class, [
             'label' => 'VIAF URI',
             'required' => false,
-            'attr' => [
-                'help_block' => 'person.search.viafUrl',
-            ],
+            'help' => 'person.search.viafUrl',
         ]);
         $builder->add('wikipediaUrl', TextType::class, [
             'label' => 'Wikipedia URL',
             'required' => false,
-            'attr' => [
-                'help_block' => 'person.search.wikipediaUrl',
-            ],
+            'help' => 'person.search.wikipediaUrl',
         ]);
         $builder->add('imageUrl', TextType::class, [
             'label' => 'Image URL',
             'required' => false,
-            'attr' => [
-                'help_block' => 'person.search.imageUrl',
-            ],
+            'help' => 'person.search.imageUrl',
         ]);
 
         $builder->add('title_filter', TitleFilterType::class, [
@@ -162,9 +137,10 @@ class PersonSearchType extends AbstractType {
                     'Yes' => 'Y',
                     'No' => 'N',
                 ],
-                'attr' => [
-                    'help_block' => 'person.search.finalcheck',
+                'label_attr' => [
+                    'class' => 'radio-inline',
                 ],
+                'help' => 'person.search.finalcheck',
                 'required' => false,
                 'expanded' => true,
                 'multiple' => false,
@@ -174,9 +150,6 @@ class PersonSearchType extends AbstractType {
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver) : void {
         parent::configureOptions($resolver);
         $resolver->setRequired(['entity_manager', 'user']);

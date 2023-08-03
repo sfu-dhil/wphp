@@ -2,18 +2,13 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Controller;
 
 use App\Entity\PostStatus;
 use App\Form\PostStatusType;
 use App\Repository\PostRepository;
 use App\Repository\PostStatusRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Nines\UtilBundle\Controller\PaginatorTrait;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -23,15 +18,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/blog/post_status")
- */
+#[Route(path: '/blog/post_status')]
 class PostStatusController extends AbstractController implements PaginatorAwareInterface {
     use PaginatorTrait;
 
-    /**
-     * @Route("/", name="nines_blog_post_status_index", methods={"GET"})
-     */
+    #[Route(path: '/', name: 'nines_blog_post_status_index', methods: ['GET'])]
     public function index(Request $request, PostStatusRepository $postStatusRepository) : Response {
         $query = $postStatusRepository->indexQuery();
         $pageSize = (int) $this->getParameter('page_size');
@@ -42,17 +33,14 @@ class PostStatusController extends AbstractController implements PaginatorAwareI
         ]);
     }
 
-    /**
-     * @Route("/new", name="nines_blog_post_status_new", methods={"GET", "POST"})
-     * @IsGranted("ROLE_CONTENT_ADMIN")
-     */
-    public function new(Request $request) : Response {
+    #[Route(path: '/new', name: 'nines_blog_post_status_new', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_CONTENT_ADMIN')]
+    public function new(EntityManagerInterface $entityManager, Request $request) : Response {
         $postStatus = new PostStatus();
         $form = $this->createForm(PostStatusType::class, $postStatus);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($postStatus);
             $entityManager->flush();
             $this->addFlash('success', 'The new postStatus has been saved.');
@@ -66,9 +54,7 @@ class PostStatusController extends AbstractController implements PaginatorAwareI
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="nines_blog_post_status_show", methods={"GET"})
-     */
+    #[Route(path: '/{id}', name: 'nines_blog_post_status_show', methods: ['GET'])]
     public function show(Request $request, PostStatus $postStatus, PostRepository $repo) : Response {
         $pageSize = (int) $this->getParameter('page_size');
         $query = $repo->statusQuery($postStatus, $this->isGranted('ROLE_USER'));
@@ -80,16 +66,14 @@ class PostStatusController extends AbstractController implements PaginatorAwareI
         ]);
     }
 
-    /**
-     * @IsGranted("ROLE_CONTENT_ADMIN")
-     * @Route("/{id}/edit", name="nines_blog_post_status_edit", methods={"GET", "POST"})
-     */
-    public function edit(Request $request, PostStatus $postStatus) : Response {
+    #[IsGranted('ROLE_CONTENT_ADMIN')]
+    #[Route(path: '/{id}/edit', name: 'nines_blog_post_status_edit', methods: ['GET', 'POST'])]
+    public function edit(EntityManagerInterface $entityManager, Request $request, PostStatus $postStatus) : Response {
         $form = $this->createForm(PostStatusType::class, $postStatus);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $entityManager->flush();
             $this->addFlash('success', 'The updated postStatus has been saved.');
 
             return $this->redirectToRoute('nines_blog_post_status_show', ['id' => $postStatus->getId()]);
@@ -101,13 +85,10 @@ class PostStatusController extends AbstractController implements PaginatorAwareI
         ]);
     }
 
-    /**
-     * @IsGranted("ROLE_CONTENT_ADMIN")
-     * @Route("/{id}", name="nines_blog_post_status_delete", methods={"DELETE"})
-     */
-    public function delete(Request $request, PostStatus $postStatus) : RedirectResponse {
+    #[IsGranted('ROLE_CONTENT_ADMIN')]
+    #[Route(path: '/{id}', name: 'nines_blog_post_status_delete', methods: ['DELETE'])]
+    public function delete(EntityManagerInterface $entityManager, Request $request, PostStatus $postStatus) : RedirectResponse {
         if ($this->isCsrfTokenValid('delete' . $postStatus->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($postStatus);
             $entityManager->flush();
             $this->addFlash('success', 'The postStatus has been deleted.');

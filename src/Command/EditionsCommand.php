@@ -2,43 +2,28 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Command;
 
 use App\Entity\Title;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(name: 'wphp:check:editions')]
 class EditionsCommand extends Command {
-    public const BATCH_SIZE = 100;
+    final public const BATCH_SIZE = 100;
 
-    /**
-     * @var EntityManagerInterface
-     */
-    private $em;
-
-    protected static $defaultName = 'wphp:check:editions';
-
-    protected static string $defaultDescription = 'Update edition checked field';
-
-    /**
-     * UpdateEditionNumberCommand constructor.
-     */
-    public function __construct(EntityManagerInterface $em) {
-        parent::__construct();
-        $this->em = $em;
+    public function __construct(
+        private EntityManagerInterface $em,
+    ) {
+        parent::__construct(null);
     }
 
     protected function configure() : void {
-        $this->setDescription(self::$defaultDescription);
+        $this->setDescription('Update edition checked field');
         $this->addArgument('file', InputArgument::REQUIRED, 'CSV file to read');
     }
 
@@ -46,7 +31,7 @@ class EditionsCommand extends Command {
         $toCheck = [];
         $fh = fopen($input->getArgument('file'), 'r');
         $skipped = fgetcsv($fh);
-        while (($row = fgetcsv($fh))) {
+        while ($row = fgetcsv($fh)) {
             if ( ! in_array($row[0], $toCheck, true)) {
                 $toCheck[] = $row[0];
             }
@@ -56,7 +41,7 @@ class EditionsCommand extends Command {
         $qb->select('title')->from(Title::class, 'title');
         $iterator = $qb->getQuery()->iterate();
         $n = 0;
-        while (($row = $iterator->next())) {
+        while ($row = $iterator->next()) {
             /** @var Title $title */
             $title = $row[0];
             if ( ! in_array($title->getEdition(), $toCheck, true)) {

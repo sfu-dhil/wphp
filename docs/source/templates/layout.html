@@ -1,0 +1,39 @@
+{% extends '!layout.html' %}
+
+{% block sidebartoc %}
+
+<h3><a href="https://dhil.lib.sfu.ca/wphp">Women’s Print History Project</a></h3>
+<ul>
+  <li><a href="https://dhil.lib.sfu.ca/wphp">Main Site</a></li>
+  <li><a href="https://womensprinthistoryproject.wordpress.com//">Wordpress Blog</a></li>
+  <li><a href="http://dhil.lib.sfu.ca">Digital Humanities Innovation Lab</a></li>
+</ul>
+
+{{ super() }}
+
+{%- if show_source and has_source and sourcename %}
+  <div role="note" aria-label="source link">
+    <h3>{{ _('This Page') }}</h3>
+    <ul class="this-page-menu">
+      <li><a href="{{ pathto('_sources/' + sourcename, true)|e }}"
+            rel="nofollow">{{ _('Show Source') }}</a></li>
+    </ul>
+   </div>
+{%- endif %}
+
+{% endblock %}
+
+{% block footer %}
+
+<div class="footer" role="contentinfo">
+
+  © Copyright 2017, Erik Hanson.	
+  Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.1. <br/>
+
+  <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">
+    <img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png" />
+  </a> This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
+  
+</div>
+
+{% endblock %}

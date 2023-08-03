@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Form\Title;
 
 use App\Form\Firm\FirmFilterType;
@@ -24,19 +18,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * Search form for titles.
  */
 class TitleSearchType extends AbstractType {
-    /**
-     * @var FormatRepository
-     */
-    private $formatRepository;
-
-    /**
-     * @var GenreRepository
-     */
-    private $genreRepository;
-
-    public function __construct(FormatRepository $formatRepository, GenreRepository $genreRepository) {
-        $this->formatRepository = $formatRepository;
-        $this->genreRepository = $genreRepository;
+    public function __construct(private FormatRepository $formatRepository, private GenreRepository $genreRepository) {
     }
 
     /**
@@ -56,9 +38,7 @@ class TitleSearchType extends AbstractType {
         $builder->add('title', TextType::class, [
             'label' => 'Search Titles',
             'required' => false,
-            'attr' => [
-                'help_block' => 'title.search.title',
-            ],
+            'help' => 'title.search.title',
         ]);
 
         $builder->add('order', ChoiceType::class, [
@@ -73,9 +53,7 @@ class TitleSearchType extends AbstractType {
                 'Edition Number (Lowest to Highest)' => 'edition_asc',
                 'Edition Number (Highest to Lowest)' => 'edition_desc',
             ],
-            'attr' => [
-                'help_block' => 'title.search.sort',
-            ],
+            'help' => 'title.search.sort',
             'required' => false,
             'expanded' => false,
             'multiple' => false,
@@ -86,9 +64,7 @@ class TitleSearchType extends AbstractType {
         $builder->add('id', TextType::class, [
             'label' => 'Title ID',
             'required' => false,
-            'attr' => [
-                'help_block' => 'title.search.id',
-            ],
+            'help' => 'title.search.id',
         ]);
         $builder->add('person_filter', PersonFilterType::class, [
             'label' => 'Filter by Person',
@@ -100,16 +76,12 @@ class TitleSearchType extends AbstractType {
         $builder->add('signed_author', TextType::class, [
             'label' => 'Signed Author',
             'required' => false,
-            'attr' => [
-                'help_block' => 'title.search.signedAuthor',
-            ],
+            'help' => 'title.search.signedAuthor',
         ]);
         $builder->add('pseudonym', TextType::class, [
             'label' => 'Pseudonym',
             'required' => false,
-            'attr' => [
-                'help_block' => 'title.search.psuedonym',
-            ],
+            'help' => 'title.search.psuedonym',
         ]);
         $builder->add('firm_filter', FirmFilterType::class, [
             'label' => 'Filter by Firm',
@@ -125,9 +97,10 @@ class TitleSearchType extends AbstractType {
                 'All' => '',
                 'Only self-published' => 'Y',
             ],
-            'attr' => [
-                'help_block' => 'title.search.selfPublished',
+            'label_attr' => [
+                'class' => 'radio-inline',
             ],
+            'help' => 'title.search.selfPublished',
             'required' => false,
             'expanded' => true,
             'multiple' => false,
@@ -137,91 +110,70 @@ class TitleSearchType extends AbstractType {
         $builder->add('volumes', TextType::class, [
             'label' => 'Volumes',
             'required' => false,
-            'attr' => [
-                'help_block' => 'title.search.volumes',
-            ],
+            'help' => 'title.search.volumes',
         ]);
         $builder->add('pubdate', TextType::class, [
             'label' => 'Date of Publication',
             'required' => false,
-            'attr' => [
-                'help_block' => 'title.search.pubDate',
-            ],
+            'help' => 'title.search.pubDate',
         ]);
         $builder->add('date_of_first_publication', TextType::class, [
             'label' => 'Date of First Publication',
             'required' => false,
-            'attr' => [
-                'help_block' => 'title.search.dateOfFirstPublication',
-            ],
+            'help' => 'title.search.dateOfFirstPublication',
         ]);
         $builder->add('editionNumber', TextType::class, [
             'label' => 'Edition Number',
             'required' => false,
-            'attr' => [
-                'help_block' => 'title.search.editionNumber',
-            ],
+            'help' => 'title.search.editionNumber',
         ]);
         $builder->add('editionStatement', TextType::class, [
             'label' => 'Edition Statement',
             'required' => false,
-            'attr' => [
-                'help_block' => 'title.search.editionStatement',
-            ],
+            'help' => 'title.search.editionStatement',
         ]);
         $builder->add('imprint', TextType::class, [
             'label' => 'Imprint',
             'required' => false,
-            'attr' => [
-                'help_block' => 'title.search.imprint',
-            ],
+            'help' => 'title.search.imprint',
         ]);
         $builder->add('colophon', null, [
             'label' => 'Colophon',
             'required' => false,
-            'attr' => [
-                'help_block' => 'title.search.colophon',
-            ],
+            'help' => 'title.search.colophon',
         ]);
         $builder->add('copyright', null, [
             'label' => 'Copyright Statement',
             'required' => false,
-            'attr' => [
-                'help_block' => 'title.search.copyright',
-            ],
+            'help' => 'title.search.copyright',
         ]);
         $builder->add('location', TextType::class, [
             'label' => 'Location of Printing',
             'required' => false,
-            'attr' => [
-                'help_block' => 'title.search.locationOfPrinting',
-            ],
+            'help' => 'title.search.locationOfPrinting',
         ]);
         $builder->add('format', ChoiceType::class, [
+            'label' => 'Format',
             'choices' => $formats,
             'choice_label' => fn ($value, $key, $index) => $value->getName(),
             'choice_value' => fn ($value) => $value->getId(),
-            'label' => 'Format',
+            'label_attr' => [
+                'class' => 'checkbox-inline',
+            ],
             'required' => false,
             'expanded' => true,
             'multiple' => true,
-            'attr' => [
-                'help_block' => 'title.search.format',
-            ],
+            'help' => 'title.search.format',
         ]);
         $builder->add('sizeL', TextType::class, [
             'label' => 'Length',
             'required' => false,
-            'attr' => [
-                'help_block' => 'title.search.sizeL',
-            ],
+            'help' => 'title.search.sizeL',
         ]);
         $builder->add('sizeW', TextType::class, [
             'label' => 'Width',
             'required' => false,
-            'attr' => [
-                'help_block' => 'title.search.sizeW',
-            ],
+            'help' => 'title.search.sizeW',
         ]);
         $builder->add('price_filter', PriceType::class, [
             'label' => 'Filter by Price',
@@ -232,23 +184,22 @@ class TitleSearchType extends AbstractType {
         ]);
 
         $builder->add('genre', ChoiceType::class, [
+            'label' => 'Genre',
             'choices' => $genres,
             'choice_label' => fn ($value, $key, $index) => $value->getName(),
             'choice_value' => fn ($value) => $value ? $value->getid() : null,
-            'label' => 'Genre',
+            'label_attr' => [
+                'class' => 'checkbox-inline',
+            ],
             'required' => false,
             'expanded' => true,
             'multiple' => true,
-            'attr' => [
-                'help_block' => 'title.search.genre',
-            ],
+            'help' => 'title.search.genre',
         ]);
         $builder->add('shelfmark', null, [
             'label' => 'Shelfmark',
             'required' => false,
-            'attr' => [
-                'help_block' => 'title.search.shelfmark',
-            ],
+            'help' => 'title.search.shelfmark',
         ]);
         $builder->add('titlesource_filter', TitleSourceFilterType::class, [
             'label' => 'Filter by Source',
@@ -261,9 +212,7 @@ class TitleSearchType extends AbstractType {
         $builder->add('notes', null, [
             'label' => 'Notes',
             'required' => false,
-            'attr' => [
-                'help_block' => 'title.search.notes',
-            ],
+            'help' => 'title.search.notes',
         ]);
 
         if ($user) {
@@ -273,9 +222,10 @@ class TitleSearchType extends AbstractType {
                     'Yes' => 'Y',
                     'No' => 'N',
                 ],
-                'attr' => [
-                    'help_block' => 'title.search.checked',
+                'label_attr' => [
+                    'class' => 'radio-inline',
                 ],
+                'help' => 'title.search.checked',
                 'required' => false,
                 'expanded' => true,
                 'multiple' => false,
@@ -289,9 +239,10 @@ class TitleSearchType extends AbstractType {
                     'Yes' => 'Y',
                     'No' => 'N',
                 ],
-                'attr' => [
-                    'help_block' => 'title.search.finalcheck',
+                'label_attr' => [
+                    'class' => 'radio-inline',
                 ],
+                'help' => 'title.search.finalcheck',
                 'required' => false,
                 'expanded' => true,
                 'multiple' => false,
@@ -305,9 +256,10 @@ class TitleSearchType extends AbstractType {
                     'Yes' => 'Y',
                     'No' => 'N',
                 ],
-                'attr' => [
-                    'help_block' => 'title.search.finalattempt',
+                'label_attr' => [
+                    'class' => 'radio-inline',
                 ],
+                'help' => 'title.search.finalattempt',
                 'required' => false,
                 'expanded' => true,
                 'multiple' => false,
@@ -317,9 +269,6 @@ class TitleSearchType extends AbstractType {
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver) : void {
         parent::configureOptions($resolver);
         $resolver->setRequired(['user']);

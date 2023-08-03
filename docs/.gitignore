@@ -1,0 +1,15 @@
+*.pyc
+*.egg
+*.so
+*.swp
+.dir-locals.el
+.cache/
+.mypy_cache/
+.ropeproject/
+TAGS
+.tags
+.tox
+sphinx/pycode/Grammar*pickle
+distribute-*
+
+_site/

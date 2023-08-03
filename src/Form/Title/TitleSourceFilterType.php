@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Form\Title;
 
 use App\Entity\Source;
@@ -27,9 +21,9 @@ class TitleSourceFilterType extends AbstractType {
      */
     public function buildForm(FormBuilderInterface $builder, array $options) : void {
         $builder->add('source', EntityType::class, [
+            'label' => 'Source',
             'class' => Source::class,
             'query_builder' => fn (ServiceEntityRepository $er) => $er->createQueryBuilder('ts')->orderBy('ts.name', 'ASC'),
-            'label' => 'Source',
             'choice_label' => 'name',
             'required' => false,
             'expanded' => false,
@@ -48,9 +42,6 @@ class TitleSourceFilterType extends AbstractType {
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver) : void {
         $resolver->setDefaults([
             'data_class' => TitleSource::class,

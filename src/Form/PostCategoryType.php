@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Form;
 
 use App\Entity\PostCategory;
@@ -30,22 +24,15 @@ class PostCategoryType extends AbstractType {
         $builder->add('name', TextType::class, [
             'label' => 'Name',
             'required' => true,
-            'attr' => [
-                'help_block' => '',
-            ],
         ]);
         $builder->add('label', TextType::class, [
             'label' => 'Label',
             'required' => true,
-            'attr' => [
-                'help_block' => '',
-            ],
         ]);
         $builder->add('description', TextareaType::class, [
             'label' => 'Description',
             'required' => false,
             'attr' => [
-                'help_block' => '',
                 'class' => 'tinymce',
             ],
         ]);

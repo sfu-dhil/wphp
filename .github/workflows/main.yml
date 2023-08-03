@@ -1,6 +1,11 @@
 name: Unit Tests
 
-on: [push]
+on:
+  push:
+    branches:
+    - '*'
+    tags:
+    - '*'
 
 jobs:
   unit-tests:
@@ -12,10 +17,11 @@ jobs:
     - name: Make .env.test.local
       run: |
         touch .env.test.local
-        echo DATABASE_URL="mysql://wphp:password@127.0.0.1:3306/wphp_test?serverVersion=mariadb-10.10.0" >> .env.test.local
+        echo DATABASE_URL="mysql://wphp:password@127.0.0.1:3306/wphp?serverVersion=mariadb-10.10.0" >> .env.test.local
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v2
+
     - name: Login to Docker Hub
       uses: docker/login-action@v1
       with:
@@ -24,6 +30,7 @@ jobs:
 
     - name: Shutdown Ubuntu MySQL (SUDO)
       run: sudo service mysql stop
+
     - name: Set up MariaDB
       uses: getong/mariadb-action@v1.1
       with:
@@ -36,6 +43,7 @@ jobs:
       with:
         context: .
         load: true
+        pull: true
         tags: dhilsfu/wphp:latest
         cache-from: type=registry,ref=dhilsfu/wphp:buildcache
         cache-to: type=registry,ref=dhilsfu/wphp:buildcache,mode=max
@@ -46,3 +54,40 @@ jobs:
           -v "${GITHUB_WORKSPACE}/.env.test.local":/var/www/html/.env.test.local \
           --network host \
           dhilsfu/wphp:latest make test
+
+  deploy-image:
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/')
+    needs:
+    - unit-tests
+    steps:
+    - name: Checkout source code
+      uses: actions/checkout@v3
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+
+    - name: Login to Docker Hub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKER_HUB_USERNAME }}
+        password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
+    - name: Build & Push Symfony Base
+      uses: docker/build-push-action@v4
+      with:
+        context: .
+        push: true
+        pull: true
+        tags: dhilsfu/wphp:latest,dhilsfu/wphp:${{github.ref_name}}
+        cache-from: type=registry,ref=dhilsfu/wphp:buildcache
+        cache-to: type=registry,ref=dhilsfu/wphp:buildcache,mode=max
+
+    - name: Trigger Gitlab Deploy Job
+      run: |
+        curl -X POST \
+          --fail \
+          -F token=${{ secrets.GITLAB_CI_TOKEN }} \
+          -F "ref=main" \
+          -F "variables[APP_RELEASE_TAG]=${{github.ref_name}}" \
+          https://git.lib.sfu.ca/api/v4/projects/526/trigger/pipeline

@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Controller;
 
 use App\Entity\Firmrole;
@@ -26,19 +20,17 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Firmrole controller.
- *
- * @Route("/firmrole")
  */
+#[Route(path: '/firmrole')]
 class FirmroleController extends AbstractController implements PaginatorAwareInterface {
     use PaginatorTrait;
 
     /**
      * Lists all Firmrole entities.
      *
-     * @Route("/", name="firmrole_index", methods={"GET"})
-     * @Template
-     *
      * @return array<string,mixed>     */
+    #[Route(path: '/', name: 'firmrole_index', methods: ['GET'])]
+    #[Template]
     public function indexAction(Request $request, EntityManagerInterface $em) {
         $dql = 'SELECT e FROM App:Firmrole e ORDER BY e.name';
         $query = $em->createQuery($dql);
@@ -57,9 +49,9 @@ class FirmroleController extends AbstractController implements PaginatorAwareInt
      * Typeahead action for editor widgets.
      *
      * @return JsonResponse
-     * @Security("is_granted('ROLE_CONTENT_ADMIN')")
-     * @Route("/typeahead", name="firmrole_typeahead", methods={"GET"})
      */
+    #[Security("is_granted('ROLE_CONTENT_ADMIN')")]
+    #[Route(path: '/typeahead', name: 'firmrole_typeahead', methods: ['GET'])]
     public function typeaheadAction(Request $request, FirmroleRepository $repo) {
         $q = $request->query->get('q');
         if ( ! $q) {
@@ -80,12 +72,11 @@ class FirmroleController extends AbstractController implements PaginatorAwareInt
     /**
      * Creates a new Firmrole entity.
      *
-     * @Route("/new", name="firmrole_new", methods={"GET", "POST"})
-     * @Security("is_granted('ROLE_CONTENT_ADMIN')")
-     * @Template
-     *
      * @return array<string,mixed>|RedirectResponse
      */
+    #[Route(path: '/new', name: 'firmrole_new', methods: ['GET', 'POST'])]
+    #[Security("is_granted('ROLE_CONTENT_ADMIN')")]
+    #[Template]
     public function newAction(Request $request, EntityManagerInterface $em) {
         $firmrole = new Firmrole();
         $form = $this->createForm(FirmroleType::class, $firmrole);
@@ -109,10 +100,9 @@ class FirmroleController extends AbstractController implements PaginatorAwareInt
     /**
      * Finds and displays a Firmrole entity.
      *
-     * @Route("/{id}", name="firmrole_show", methods={"GET"})
-     * @Template
-     *
      * @return array<string,mixed>     */
+    #[Route(path: '/{id}', name: 'firmrole_show', methods: ['GET'])]
+    #[Template]
     public function showAction(Request $request, Firmrole $firmrole, EntityManagerInterface $em) {
         $dql = 'SELECT tfr FROM App:TitleFirmrole tfr WHERE tfr.firmrole = :firmrole';
         $query = $em->createQuery($dql);
@@ -128,12 +118,11 @@ class FirmroleController extends AbstractController implements PaginatorAwareInt
     /**
      * Displays a form to edit an existing Firmrole entity.
      *
-     * @Route("/{id}/edit", name="firmrole_edit", methods={"GET", "POST"})
-     * @Template
-     * @Security("is_granted('ROLE_CONTENT_ADMIN')")
-     *
      * @return array<string,mixed>|RedirectResponse
      */
+    #[Route(path: '/{id}/edit', name: 'firmrole_edit', methods: ['GET', 'POST'])]
+    #[Template]
+    #[Security("is_granted('ROLE_CONTENT_ADMIN')")]
     public function editAction(Request $request, Firmrole $firmrole, EntityManagerInterface $em) {
         $editForm = $this->createForm(FirmroleType::class, $firmrole);
         $editForm->handleRequest($request);
@@ -154,11 +143,10 @@ class FirmroleController extends AbstractController implements PaginatorAwareInt
     /**
      * Deletes a Firmrole entity.
      *
-     * @Route("/{id}/delete", name="firmrole_delete", methods={"GET"})
-     * @Security("is_granted('ROLE_CONTENT_ADMIN')")
-     *
      * @return RedirectResponse
      */
+    #[Route(path: '/{id}/delete', name: 'firmrole_delete', methods: ['GET'])]
+    #[Security("is_granted('ROLE_CONTENT_ADMIN')")]
     public function deleteAction(Request $request, Firmrole $firmrole, EntityManagerInterface $em) {
         $em->remove($firmrole);
         $em->flush();

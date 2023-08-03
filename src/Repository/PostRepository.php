@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Repository;
 
 use App\Entity\Post;
@@ -22,6 +16,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Post[] findAll()
  * @method Post[] findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  * @method null|Post findOneBy(array $criteria, array $orderBy = null)
+ *
  * @phpstan-extends ServiceEntityRepository<Post>
  */
 class PostRepository extends ServiceEntityRepository {

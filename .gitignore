@@ -28,15 +28,21 @@ coverage/
 # Yarn packages.
 node_modules
 
+# docs
+/public/docs
+
 # Docker
 .data
 
 # MISC
-/config/deploy.yaml
 /*.sql
 /data
 /src/.preload.php
-.DS_Store
 public/docs
-
 public/images/blog
+
+# Code coverage and QA reports
+public/dev
+
+# Mac DS_Store
+.DS_Store

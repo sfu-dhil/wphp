@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Controller;
 
 use App\Entity\Role;
@@ -26,19 +20,17 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Role controller.
- *
- * @Route("/role")
  */
+#[Route(path: '/role')]
 class RoleController extends AbstractController implements PaginatorAwareInterface {
     use PaginatorTrait;
 
     /**
      * Lists all Role entities.
      *
-     * @Route("/", name="role_index", methods={"GET"})
-     * @Template
-     *
      * @return array<string,mixed>     */
+    #[Route(path: '/', name: 'role_index', methods: ['GET'])]
+    #[Template]
     public function indexAction(Request $request, RoleRepository $repo, EntityManagerInterface $em) {
         $dql = 'SELECT e FROM App:Role e ORDER BY e.name';
         $query = $em->createQuery($dql);
@@ -51,11 +43,10 @@ class RoleController extends AbstractController implements PaginatorAwareInterfa
     }
 
     /**
-     * @Security("is_granted('ROLE_CONTENT_ADMIN')")
-     * @Route("/typeahead", name="role_typeahead", methods={"GET"})
-     *
      * @return JsonResponse
      */
+    #[Security("is_granted('ROLE_CONTENT_ADMIN')")]
+    #[Route(path: '/typeahead', name: 'role_typeahead', methods: ['GET'])]
     public function typeaheadAction(Request $request, RoleRepository $repo) {
         $q = $request->query->get('q');
         if ( ! $q) {
@@ -76,13 +67,11 @@ class RoleController extends AbstractController implements PaginatorAwareInterfa
     /**
      * Creates a new Role entity.
      *
-     * @Route("/new", name="role_new", methods={"GET", "POST"})
-     *
-     * @Security("is_granted('ROLE_CONTENT_ADMIN')")
-     * @Template
-     *
      * @return array<string,mixed>|RedirectResponse
      */
+    #[Route(path: '/new', name: 'role_new', methods: ['GET', 'POST'])]
+    #[Security("is_granted('ROLE_CONTENT_ADMIN')")]
+    #[Template]
     public function newAction(Request $request, EntityManagerInterface $em) {
         $role = new Role();
         $form = $this->createForm(RoleType::class, $role);
@@ -106,10 +95,9 @@ class RoleController extends AbstractController implements PaginatorAwareInterfa
     /**
      * Finds and displays a Role entity.
      *
-     * @Route("/{id}", name="role_show", methods={"GET"})
-     * @Template
-     *
      * @return array<string,mixed>     */
+    #[Route(path: '/{id}', name: 'role_show', methods: ['GET'])]
+    #[Template]
     public function showAction(Request $request, Role $role, EntityManagerInterface $em) {
         $dql = 'SELECT tr FROM App:TitleRole tr INNER JOIN tr.person p WHERE tr.role = :role ORDER BY p.lastName, p.firstName';
         $query = $em->createQuery($dql);
@@ -125,12 +113,11 @@ class RoleController extends AbstractController implements PaginatorAwareInterfa
     /**
      * Displays a form to edit an existing Role entity.
      *
-     * @Route("/{id}/edit", name="role_edit", methods={"GET", "POST"})
-     * @Security("is_granted('ROLE_CONTENT_ADMIN')")
-     * @Template
-     *
      * @return array<string,mixed>|RedirectResponse
      */
+    #[Route(path: '/{id}/edit', name: 'role_edit', methods: ['GET', 'POST'])]
+    #[Security("is_granted('ROLE_CONTENT_ADMIN')")]
+    #[Template]
     public function editAction(Request $request, Role $role, EntityManagerInterface $em) {
         $editForm = $this->createForm(RoleType::class, $role);
         $editForm->handleRequest($request);
@@ -151,11 +138,10 @@ class RoleController extends AbstractController implements PaginatorAwareInterfa
     /**
      * Deletes a Role entity.
      *
-     * @Route("/{id}/delete", name="role_delete", methods={"GET"})
-     * @Security("is_granted('ROLE_CONTENT_ADMIN')")
-     *
      * @return RedirectResponse
      */
+    #[Route(path: '/{id}/delete', name: 'role_delete', methods: ['GET'])]
+    #[Security("is_granted('ROLE_CONTENT_ADMIN')")]
     public function deleteAction(Request $request, Role $role, EntityManagerInterface $em) {
         $em->remove($role);
         $em->flush();

@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Tests\Controller;
 
 use App\Entity\Firm;
@@ -54,7 +48,7 @@ class FirmControllerTest extends ControllerTestCase {
         $crawler = $this->client->request('GET', '/firm/typeahead?q=name');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $this->assertSame('application/json', $this->client->getResponse()->headers->get('Content-Type'));
-        $json = json_decode($this->client->getResponse()->getContent());
+        $json = json_decode($this->client->getResponse()->getContent(), null, 512, JSON_THROW_ON_ERROR);
         $this->assertCount(4, $json);
     }
 
@@ -101,8 +95,7 @@ class FirmControllerTest extends ControllerTestCase {
             'firm[endDate]' => '1999',
             'firm[finalcheck]' => 1,
             'firm[notes]' => 'New Notes',
-        ])
-        ;
+        ]);
 
         $this->client->submit($form);
         $this->assertTrue($this->client->getResponse()->isRedirect('/firm/1'));

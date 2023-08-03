@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\DataFixtures;
 
 use App\Entity\Post;
@@ -21,7 +15,7 @@ use Nines\UserBundle\DataFixtures\UserFixtures;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class PostFixtures extends Fixture implements DependentFixtureInterface, FixtureGroupInterface {
-    public const FILES = [
+    final public const FILES = [
         'holmes_1.pdf',
         'holmes_2.pdf',
         'holmes_3.pdf',
@@ -35,9 +29,6 @@ class PostFixtures extends Fixture implements DependentFixtureInterface, Fixture
         return ['dev', 'test'];
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function load(ObjectManager $manager) : void {
         $this->pdfManager->setCopy(true);
         for ($i = 1; $i <= 5; $i++) {
@@ -56,7 +47,6 @@ class PostFixtures extends Fixture implements DependentFixtureInterface, Fixture
             $upload = new UploadedFile(dirname(__DIR__, 2) . '/vendor/sfu-dhil/nines/MediaBundle/Tests/data/pdf/' . $file, $file, 'application/pdf', null, true);
             $pdf = new Pdf();
             $pdf->setFile($upload);
-            $pdf->setPublic(0 === ($i % 2));
             $pdf->setOriginalName($file);
             $pdf->setDescription("<p>This is paragraph {$i}</p>");
             $pdf->setLicense("<p>This is paragraph {$i}</p>");
@@ -70,8 +60,6 @@ class PostFixtures extends Fixture implements DependentFixtureInterface, Fixture
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return array<string>
      */
     public function getDependencies() : array {
@@ -82,9 +70,7 @@ class PostFixtures extends Fixture implements DependentFixtureInterface, Fixture
         ];
     }
 
-    /**
-     * @required
-     */
+    #[\Symfony\Contracts\Service\Attribute\Required]
     public function setPdfManager(PdfManager $pdfManager) : void {
         $this->pdfManager = $pdfManager;
     }

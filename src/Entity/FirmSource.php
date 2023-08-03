@@ -2,126 +2,63 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * FirmSource.
- *
- * @ORM\Table(name="firm_source",
- *     indexes={
- *         @ORM\Index(name="firm_source_identifier_idx", columns={"identifier"}),
- *         @ORM\Index(name="firm_source_identifier_ft", columns={"identifier"}, flags={"fulltext"})
- *     })
- *     @ORM\Entity
  */
+#[ORM\Table(name: 'firm_source')]
+#[ORM\Index(name: 'firm_source_identifier_idx', columns: ['identifier'])]
+#[ORM\Index(name: 'firm_source_identifier_ft', columns: ['identifier'], flags: ['fulltext'])]
+#[ORM\Entity]
 class FirmSource {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
+    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    private ?int $id = null;
 
-    /**
-     * @var string
-     * @ORM\Column(type="string", length=300, nullable=true)
-     */
-    private $identifier;
+    #[ORM\Column(type: 'string', length: 300, nullable: true)]
+    private ?string $identifier = null;
 
-    /**
-     * @var Firm
-     * @ORM\ManyToOne(targetEntity="App\Entity\Firm", inversedBy="firmSources")
-     */
-    private $firm;
+    #[ORM\ManyToOne(targetEntity: Firm::class, inversedBy: 'firmSources')]
+    private ?Firm $firm = null;
 
-    /**
-     * @var Source
-     * @ORM\ManyToOne(targetEntity="App\Entity\Source", inversedBy="firmSources")
-     */
-    private $source;
+    #[ORM\ManyToOne(targetEntity: Source::class, inversedBy: 'firmSources')]
+    private ?Source $source = null;
 
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId() {
+    public function getId() : ?int {
         return $this->id;
     }
 
-    /**
-     * Set identifier.
-     *
-     * @param string $identifier
-     *
-     * @return FirmSource
-     */
-    public function setIdentifier($identifier) {
+    public function setIdentifier(?string $identifier) : self {
         $this->identifier = $identifier;
 
         return $this;
     }
 
-    /**
-     * Get identifier.
-     *
-     * @return string
-     */
-    public function getIdentifier() {
+    public function getIdentifier() : ?string {
         return $this->identifier;
     }
 
-    /**
-     * Set firm.
-     *
-     * @param null|\App\Entity\Firm $firm
-     *
-     * @return FirmSource
-     */
-    public function setFirm(?Firm $firm = null) {
+    public function setFirm(?Firm $firm = null) : self {
         $this->firm = $firm;
 
         return $this;
     }
 
-    /**
-     * Get firm.
-     *
-     * @return null|\App\Entity\Firm
-     */
-    public function getFirm() {
+    public function getFirm() : ?Firm {
         return $this->firm;
     }
 
-    /**
-     * Set source.
-     *
-     * @param null|\App\Entity\Source $source
-     *
-     * @return FirmSource
-     */
-    public function setSource(?Source $source = null) {
+    public function setSource(?Source $source = null) : self {
         $this->source = $source;
 
         return $this;
     }
 
-    /**
-     * Get source.
-     *
-     * @return null|\App\Entity\Source
-     */
-    public function getSource() {
+    public function getSource() : ?Source {
         return $this->source;
     }
 }

@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Tests\Entity;
 
 use App\Entity\Currency;
@@ -17,7 +11,7 @@ use PHPUnit\Framework\TestCase;
  * Description of PersonTest.
  */
 class CurrencyTest extends TestCase {
-    //put your code here
+    // put your code here
 
     /**
      * @return array[]
@@ -50,14 +44,8 @@ class CurrencyTest extends TestCase {
 
     /**
      * @dataProvider getData
-     *
-     * @param mixed $code
-     * @param mixed $symbol
-     * @param mixed $name
-     * @param mixed $value
-     * @param mixed $expected
      */
-    public function testFormat($code, $symbol, $name, $value, $expected) : void {
+    public function testFormat(mixed $code, mixed $symbol, mixed $name, mixed $value, mixed $expected) : void {
         $currency = new Currency();
         $currency->setCode($code);
         $currency->setName($name);

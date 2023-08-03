@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Controller;
 
 use App\Entity\Format;
@@ -26,19 +20,17 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Format controller.
- *
- * @Route("/format")
  */
+#[Route(path: '/format')]
 class FormatController extends AbstractController implements PaginatorAwareInterface {
     use PaginatorTrait;
 
     /**
      * Lists all Format entities.
      *
-     * @Route("/", name="format_index", methods={"GET"})
-     * @Template
-     *
      * @return array<string,mixed>     */
+    #[Route(path: '/', name: 'format_index', methods: ['GET'])]
+    #[Template]
     public function indexAction(Request $request, FormatRepository $repo, EntityManagerInterface $em) {
         $dql = 'SELECT e FROM App:Format e ORDER BY e.id';
         $query = $em->createQuery($dql);
@@ -54,9 +46,9 @@ class FormatController extends AbstractController implements PaginatorAwareInter
      * Searchf for formats and return a JSON response for a typeahead widget.
      *
      * @return JsonResponse
-     * @Security("is_granted('ROLE_CONTENT_ADMIN')")
-     * @Route("/typeahead", name="format_typeahead", methods={"GET"})
      */
+    #[Security("is_granted('ROLE_CONTENT_ADMIN')")]
+    #[Route(path: '/typeahead', name: 'format_typeahead', methods: ['GET'])]
     public function typeaheadAction(Request $request, FormatRepository $repo) {
         $q = $request->query->get('q');
         if ( ! $q) {
@@ -77,12 +69,11 @@ class FormatController extends AbstractController implements PaginatorAwareInter
     /**
      * Creates a new Format entity.
      *
-     * @Route("/new", name="format_new", methods={"GET", "POST"})
-     * @Security("is_granted('ROLE_CONTENT_ADMIN')")
-     * @Template
-     *
      * @return array<string,mixed>|RedirectResponse
      */
+    #[Route(path: '/new', name: 'format_new', methods: ['GET', 'POST'])]
+    #[Security("is_granted('ROLE_CONTENT_ADMIN')")]
+    #[Template]
     public function newAction(Request $request, EntityManagerInterface $em) {
         $format = new Format();
         $form = $this->createForm(FormatType::class, $format);
@@ -106,10 +97,9 @@ class FormatController extends AbstractController implements PaginatorAwareInter
     /**
      * Finds and displays a Format entity.
      *
-     * @Route("/{id}", name="format_show", methods={"GET"})
-     * @Template
-     *
      * @return array<string,mixed>     */
+    #[Route(path: '/{id}', name: 'format_show', methods: ['GET'])]
+    #[Template]
     public function showAction(Request $request, Format $format, EntityManagerInterface $em) {
         $dql = 'SELECT t FROM App:Title t WHERE t.format = :format';
         if (null === $this->getUser()) {
@@ -130,12 +120,11 @@ class FormatController extends AbstractController implements PaginatorAwareInter
     /**
      * Displays a form to edit an existing Format entity.
      *
-     * @Route("/{id}/edit", name="format_edit", methods={"GET", "POST"})
-     * @Security("is_granted('ROLE_CONTENT_ADMIN')")
-     * @Template
-     *
      * @return array<string,mixed>|RedirectResponse
      */
+    #[Route(path: '/{id}/edit', name: 'format_edit', methods: ['GET', 'POST'])]
+    #[Security("is_granted('ROLE_CONTENT_ADMIN')")]
+    #[Template]
     public function editAction(Request $request, Format $format, EntityManagerInterface $em) {
         $editForm = $this->createForm(FormatType::class, $format);
         $editForm->handleRequest($request);
@@ -156,11 +145,10 @@ class FormatController extends AbstractController implements PaginatorAwareInter
     /**
      * Deletes a Format entity.
      *
-     * @Route("/{id}/delete", name="format_delete", methods={"GET"})
-     * @Security("is_granted('ROLE_CONTENT_ADMIN')")
-     *
      * @return RedirectResponse
      */
+    #[Route(path: '/{id}/delete', name: 'format_delete', methods: ['GET'])]
+    #[Security("is_granted('ROLE_CONTENT_ADMIN')")]
     public function deleteAction(Request $request, Format $format, EntityManagerInterface $em) {
         $em->remove($format);
         $em->flush();

@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Command;
 
 use App\Entity\Format;
@@ -27,51 +21,42 @@ use Exception;
 use PhpMarc\Field;
 use PhpMarc\File;
 use PhpMarc\Record;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(name: 'wphp:convert:aas')]
 class ConvertAasCommand extends Command {
-    public const AAS = 99;
+    final public const AAS = 99;
 
-    public const NAME_PUNCT = [
+    final public const NAME_PUNCT = [
         '/(\w\w).$/u' => '$1',
         '/,$/u' => '',
     ];
 
-    public const FORMATS = '/\((fo|6mo|4to|6mo|8vo|12mo|16mo|18mo|24mo|32mo|48mo|64mo|bs)\)/u';
+    final public const FORMATS = '/\((fo|6mo|4to|6mo|8vo|12mo|16mo|18mo|24mo|32mo|48mo|64mo|bs)\)/u';
 
-    public const BATCH = 25;
+    final public const BATCH = 25;
 
-    private bool $save = false;
-
-    private EntityManagerInterface $em;
-
-    private int $n = 0;
-
-    private PersonRepository $personRepository;
-
-    /**
-     * @var string[]
-     */
-    private array $names;
-
-    private RoleRepository $roleRepository;
-
-    private FormatRepository $formatRepository;
-
-    private GenreRepository $genreRepository;
-
-    private SourceRepository $sourceRepository;
-
-    protected static $defaultName = 'wphp:convert:aas';
-
-    protected static string $defaultDescription = 'Add a short description for your command';
+    public function __construct(
+        private EntityManagerInterface $em,
+        private PersonRepository $personRepository,
+        private RoleRepository $roleRepository,
+        private FormatRepository $formatRepository,
+        private GenreRepository $genreRepository,
+        private SourceRepository $sourceRepository,
+        private array $names = [],
+        private int $n = 0,
+        private bool $save = false,
+    ) {
+        parent::__construct(null);
+    }
 
     protected function configure() : void {
-        $this->setDescription(self::$defaultDescription);
+        $this->setDescription('Add a short description for your command');
         $this->addArgument('path', InputArgument::IS_ARRAY, 'One or more files to import');
         $this->addOption('save', null, InputOption::VALUE_NONE, 'Save converted records');
         $this->addOption('limit', null, InputOption::VALUE_REQUIRED, 'Limit the number of converted records', 0);
@@ -92,7 +77,7 @@ class ConvertAasCommand extends Command {
     /**
      * Read the list of women's names and titles.
      */
-    protected function getNames() : void {
+    protected function getNames() : never {
         $data = file_get_contents('data/women.txt');
         $data = preg_split("/\n/u", $data);
         $data = array_filter($data);
@@ -155,7 +140,7 @@ class ConvertAasCommand extends Command {
     protected function parseTitle(Field $field) : string {
         $title = '';
         foreach ($field->subfields() as $subfield) {
-            $part = preg_replace('/\s*[[:punct:]]*$/u', '', $subfield);
+            $part = preg_replace('/\s*[[:punct:]]*$/u', '', (string) $subfield);
             $title .= $part . ' ';
         }
 
@@ -245,7 +230,7 @@ class ConvertAasCommand extends Command {
             echo "\n{$path}\n";
             $file = new File();
             $file->file($path);
-            while (($record = $file->next())) {
+            while ($record = $file->next()) {
                 try {
                     $this->processRecord($record);
                     $this->dot();
@@ -303,9 +288,6 @@ class ConvertAasCommand extends Command {
         return $person;
     }
 
-    /**
-     * @param ?Field $field
-     */
     protected function parsePerson(?Field $field) : ?Person {
         if ( ! $field || '0' === $field->ind1) {
             return null;
@@ -318,7 +300,7 @@ class ConvertAasCommand extends Command {
         if ($field->subfield('q')) {
             $nameParts[1] = preg_replace('/^\\(|\\),?$/u', '', $field->subfield('q'));
         }
-        if (($datePart = $field->subfield('d'))) {
+        if ($datePart = $field->subfield('d')) {
             $m = [];
             preg_match('/(\d\d\d\d)-/u', $datePart, $m);
             $dob = $m[1] ?? null;
@@ -338,7 +320,7 @@ class ConvertAasCommand extends Command {
         if (isset($record->fields[500])) {
             foreach ($record->fields[500] as $field) {
                 if ($general = $field->subfield('a')) {
-                    if (preg_match('/^copyright/ui', $general)) {
+                    if (preg_match('/^copyright/ui', (string) $general)) {
                         $title->setCopyright($general);
                     }
                 }
@@ -348,7 +330,7 @@ class ConvertAasCommand extends Command {
         $notes = [];
         foreach ($record->fields as $fields) {
             foreach ($fields as $field) {
-                if ('5' === mb_substr($field->tagno, 0, 1)) {
+                if ('5' === mb_substr((string) $field->tagno, 0, 1)) {
                     $notes[] = $field->subfield('a');
                 }
             }
@@ -421,47 +403,5 @@ class ConvertAasCommand extends Command {
             }
         }
         $this->save($title);
-    }
-
-    /**
-     * @required
-     */
-    public function setEntityManager(EntityManagerInterface $em) : void {
-        $this->em = $em;
-    }
-
-    /**
-     * @required
-     */
-    public function setPersonRepository(PersonRepository $personRepository) : void {
-        $this->personRepository = $personRepository;
-    }
-
-    /**
-     * @required
-     */
-    public function setRoleRepository(RoleRepository $roleRepository) : void {
-        $this->roleRepository = $roleRepository;
-    }
-
-    /**
-     * @required
-     */
-    public function setFormatRepository(FormatRepository $formatRepository) : void {
-        $this->formatRepository = $formatRepository;
-    }
-
-    /**
-     * @required
-     */
-    public function setGenreRepository(GenreRepository $genreRepository) : void {
-        $this->genreRepository = $genreRepository;
-    }
-
-    /**
-     * @required
-     */
-    public function setSourceRepository(SourceRepository $sourceRepository) : void {
-        $this->sourceRepository = $sourceRepository;
     }
 }

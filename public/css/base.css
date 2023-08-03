@@ -731,6 +731,8 @@ div.embedded-form {
   border: 1px solid lightgrey;
   padding-top: 15px;
   padding-right: 15px;
+  padding-left: 5px;
+  padding-right: 5px;
 }
 
 /* Select2 typeaheads are a bit short. */
@@ -744,6 +746,17 @@ p.help-block {
 }
 p.help-block a {
   text-decoration: underline;
+}
+
+.form-check.form-check-inline {
+  display: inline-block;
+  min-width: 25%;
+}
+
+@media (min-width: 768px) {
+  .col-form-label {
+    text-align: right;
+  }
 }
 
 h1 {
@@ -1207,6 +1220,7 @@ nav.navbar:before, nav.navbar:after, .navbar-nav:before, .navbar-nav:after, .nav
   font-size: 20px;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
   margin: 0;
+  padding: 0;
   border-radius: 0;
   min-height: unset;
   height: 4.25rem;
@@ -1330,13 +1344,18 @@ nav.navbar:before, nav.navbar:after, .navbar-nav:before, .navbar-nav:after, .nav
   }
 }
 @media (max-width: 991px) {
-  .nav-container .navbar-collapse.collapse {
+  .nav-container .navbar-collapse.collapse:not(.show) {
+    display: none !important;
+  }
+  .nav-container .navbar-collapse.collapse .navbar-nav {
+    max-height: 40vh;
     overflow-y: auto !important;
     overflow-x: hidden !important;
   }
-  .nav-container .navbar-collapse.collapse:not(.in) {
-    display: none !important;
-  }
+}
+.nav-container .navbar-collapse .nav-item a {
+  padding-left: 1em;
+  padding-right: 1em;
 }
 
 .navbar-default .navbar-nav li.open > a {
@@ -1360,6 +1379,8 @@ nav.navbar:before, nav.navbar:after, .navbar-nav:before, .navbar-nav:after, .nav
 
 @media (min-width: 991px) {
   .navbar-default #navbar li > .dropdown-menu {
+    left: 0;
+    position: absolute;
     max-height: calc(98vh - 4.25rem);
     overflow-y: auto;
     width: max-content;
@@ -1546,6 +1567,9 @@ for bootstrap tables
   font-size: 0.925rem;
   margin-bottom: 0;
 }
+.tbl-container .table > :not(caption) > * > * {
+  background-color: transparent;
+}
 .tbl-container .table.table-striped {
   border: 1px solid #fafafa;
 }
@@ -1560,7 +1584,6 @@ for bootstrap tables
 }
 .tbl-container .table.table-striped > tbody > tr:nth-of-type(odd) {
   background: #F9FAFA;
-  border: none;
 }
 .tbl-container .table.table-striped > tbody > tr:nth-of-type(odd):hover, .tbl-container .table.table-striped > tbody > tr:nth-of-type(odd):focus {
   background: #ebeeee;
@@ -1644,7 +1667,7 @@ for bootstrap tables
   margin: 0;
 }
 
-th[data-toggle=popover], .person-meta-grid [data-toggle=popover].heading {
+th[data-bs-toggle=popover], .person-meta-grid [data-bs-toggle=popover].heading {
   cursor: help;
 }
 

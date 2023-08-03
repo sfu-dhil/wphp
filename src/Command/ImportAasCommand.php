@@ -2,33 +2,29 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Command;
 
 use App\Entity\AasMarc;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpMarc\File;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(name: 'wphp:import:aas')]
 class ImportAasCommand extends Command {
-    public const AAS = 99;
+    final public const AAS = 99;
 
-    private EntityManagerInterface $em;
-
-    protected static $defaultName = 'wphp:import:aas';
-
-    protected static string $defaultDescription = 'Add a short description for your command';
+    public function __construct(
+        private EntityManagerInterface $em,
+    ) {
+        parent::__construct(null);
+    }
 
     protected function configure() : void {
-        $this->setDescription(self::$defaultDescription);
+        $this->setDescription('Add a short description for your command');
         $this->addArgument('path', InputArgument::IS_ARRAY, 'One or more files to import');
     }
 
@@ -41,7 +37,7 @@ class ImportAasCommand extends Command {
             $file = new File();
             $file->file($path);
             // @phpstan-ignore-next-line
-            while (($record = $file->next())) {
+            while ($record = $file->next()) {
                 $ldr = new AasMarc();
                 $ldr->setTitleId($recordCount);
                 $ldr->setField('ldr');
@@ -82,12 +78,5 @@ class ImportAasCommand extends Command {
         echo "\r{$recordCount} - {$n}\n";
 
         return 0;
-    }
-
-    /**
-     * @required
-     */
-    public function setEntityManager(EntityManagerInterface $em) : void {
-        $this->em = $em;
     }
 }

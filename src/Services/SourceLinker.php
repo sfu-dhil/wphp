@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Services;
 
 use App\Entity\AasMarc;
@@ -25,27 +19,9 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  */
 class SourceLinker {
     /**
-     * @var EntityManagerInterface
-     */
-    private $em;
-
-    /**
-     * @var UrlGeneratorInterface
-     */
-    private $generator;
-
-    /**
-     * @var RoleChecker
-     */
-    private $checker;
-
-    /**
      * SourceLinker constructor.
      */
-    public function __construct(EntityManagerInterface $em, UrlGeneratorInterface $generator, RoleChecker $checker) {
-        $this->em = $em;
-        $this->generator = $generator;
-        $this->checker = $checker;
+    public function __construct(private EntityManagerInterface $em, private UrlGeneratorInterface $generator, private RoleChecker $checker) {
     }
 
     /**
@@ -79,7 +55,6 @@ class SourceLinker {
             ]);
         }
 
-        return null;
     }
 
     /**
@@ -105,18 +80,13 @@ class SourceLinker {
             ]);
         }
 
-        return null;
     }
 
     /**
      * Generate an Orlando link. The link will be internal if the user is logged in or to the Orlando website
      * otherwise.
-     *
-     * @param string $data
-     *
-     * @return null|string
      */
-    public function orlando($data) {
+    public function orlando(string $data) : ?string {
         if ( ! $this->checker->hasRole('ROLE_USER')) {
             return null;
         }
@@ -154,12 +124,8 @@ class SourceLinker {
 
     /**
      * Generate a English Novel link. The link will be internal if the user is logged in or null otherwise.
-     *
-     * @param string $data
-     *
-     * @return null|string
      */
-    public function en($data) {
+    public function en(string $data) : ?string {
         if ( ! $this->checker->hasRole('ROLE_USER')) {
             return null;
         }
@@ -178,12 +144,8 @@ class SourceLinker {
 
     /**
      * Generate an Osborne link. The link will be internal if the user is logged in or null otherwise.
-     *
-     * @param string $data
-     *
-     * @return null|string
      */
-    public function osborne($data) {
+    public function osborne(string $data) : ?string {
         if ( ! $this->checker->hasRole('ROLE_USER')) {
             return null;
         }
@@ -205,10 +167,8 @@ class SourceLinker {
      * Generate a link to the ECCO website for all users.
      *
      * @param string $data
-     *
-     * @return string
      */
-    public function ecco($data) {
+    public function ecco($data) : string {
         // No role checking for this one.
         $id = substr_replace($data, '0', 2, 0);
 
@@ -217,12 +177,8 @@ class SourceLinker {
 
     /**
      * If the data matches https? it will be returned as is. Otherwise generate a URL based on the source.
-     *
-     * @param string $data
-     *
-     * @return null|string
      */
-    public function url(Source $source, $data) {
+    public function url(Source $source, string $data) : ?string {
         if (preg_match('/https?:/', $data)) {
             return $data;
         }

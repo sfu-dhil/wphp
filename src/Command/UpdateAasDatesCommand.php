@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Command;
 
 use App\Entity\AasMarc;
@@ -16,26 +10,25 @@ use App\Entity\Title;
 use App\Entity\TitleSource;
 use App\Repository\AasMarcRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(name: 'wphp:update:aas-dates')]
 class UpdateAasDatesCommand extends Command {
-    private EntityManagerInterface $em;
-
-    private int $n = 0;
-
-    private AasMarcRepository $aasRepo;
-
-    private $save = false;
-
-    protected static $defaultName = 'wphp:update:aas-dates';
-
-    protected static string $defaultDescription = 'Update the imported AAS records dates';
+    public function __construct(
+        private EntityManagerInterface $em,
+        private AasMarcRepository $aasRepo,
+        private int $n = 0,
+        private $save = false,
+    ) {
+        parent::__construct(null);
+    }
 
     protected function configure() : void {
-        $this->setDescription(self::$defaultDescription);
+        $this->setDescription('Update the imported AAS records dates');
         $this->addOption('save', null, InputOption::VALUE_NONE, 'Save changes to database');
     }
 
@@ -120,19 +113,5 @@ class UpdateAasDatesCommand extends Command {
         $this->dot(true);
 
         return 0;
-    }
-
-    /**
-     * @required
-     */
-    public function setEntityManager(EntityManagerInterface $em) : void {
-        $this->em = $em;
-    }
-
-    /**
-     * @required
-     */
-    public function setAasMarcRepository(AasMarcRepository $aasRepo) : void {
-        $this->aasRepo = $aasRepo;
     }
 }

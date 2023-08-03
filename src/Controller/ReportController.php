@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Controller;
 
 use App\Entity\Title;
@@ -19,34 +13,32 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * Reports controller.
- *
- * @Route("/report")
- * @Security("is_granted('ROLE_CONTENT_ADMIN')")
  */
+#[Route(path: '/report')]
+#[Security("is_granted('ROLE_CONTENT_ADMIN')")]
 class ReportController extends AbstractController implements PaginatorAwareInterface {
     use PaginatorTrait;
 
     /**
      * Index for all reports.
      *
-     * @Route("/", name="report_index", methods={"GET"})
-     * @Template
-     *
      * @return array<string,mixed>
      */
-    public function indexAction(Request $request, EntityManagerInterface $em) {
-        $router = $this->get('router');
+    #[Route(path: '/', name: 'report_index', methods: ['GET'])]
+    #[Template]
+    public function indexAction(UrlGeneratorInterface $router, Request $request, EntityManagerInterface $em) {
         $routeCollection = $router->getRouteCollection()->all();
-        $reportRoutes = array_filter($routeCollection, fn ($route) => preg_match('/\/report\/.+/', $route->getPath()));
+        $reportRoutes = array_filter($routeCollection, fn ($route) => preg_match('/\/report\/.+/', (string) $route->getPath()));
         $reports = [];
         foreach ($reportRoutes as $route) {
             $defaults = $route->getDefaults();
             $path = $route->getPath();
             $controller = $defaults['_controller'];
-            $bits = preg_split('/:+/', $controller);
+            $bits = preg_split('/:+/', (string) $controller);
             $method = end($bits);
             $reports[$path] = $this->{$method}($request, $em);
         }
@@ -59,10 +51,9 @@ class ReportController extends AbstractController implements PaginatorAwareInter
     /**
      * List titles that need to be final checked.
      *
-     * @Route("/titles_fc", name="report_titles_check", methods={"GET"})
-     * @Template
-     *
      * @return array<string,mixed>     */
+    #[Route(path: '/titles_fc', name: 'report_titles_check', methods: ['GET'])]
+    #[Template]
     public function titlesFinalCheckAction(Request $request, EntityManagerInterface $em) {
         $dql = 'SELECT e FROM App:Title e WHERE e.finalcheck = 0 AND e.finalattempt = 0 ORDER BY e.id';
         $query = $em->createQuery($dql);
@@ -78,10 +69,9 @@ class ReportController extends AbstractController implements PaginatorAwareInter
     /**
      * List bad publication dates for titles.
      *
-     * @Route("/titles_date", name="report_titles_date", methods={"GET"})
-     * @Template
-     *
      * @return array<string,mixed>     */
+    #[Route(path: '/titles_date', name: 'report_titles_date', methods: ['GET'])]
+    #[Template]
     public function titlesDateAction(Request $request, EntityManagerInterface $em) {
         $dql = "SELECT e FROM App:Title e WHERE e.pubdate IS NOT NULL AND e.pubdate != '' AND regexp(e.pubdate,'[^0-9-]') = 1";
         $query = $em->createQuery($dql);
@@ -97,10 +87,9 @@ class ReportController extends AbstractController implements PaginatorAwareInter
     /**
      * List firms that have not been checked.
      *
-     * @Route("/firms_fc", name="report_firms_fc", methods={"GET"})
-     * @Template
-     *
      * @return array<string,mixed>     */
+    #[Route(path: '/firms_fc', name: 'report_firms_fc', methods: ['GET'])]
+    #[Template]
     public function firmsFinalCheckAction(Request $request, EntityManagerInterface $em) {
         $dql = 'SELECT e FROM App:Firm e WHERE e.finalcheck != 1';
         $query = $em->createQuery($dql);
@@ -116,10 +105,9 @@ class ReportController extends AbstractController implements PaginatorAwareInter
     /**
      * List firms that have not been checked.
      *
-     * @Route("/persons_fc", name="report_persons_fc", methods={"GET"})
-     * @Template
-     *
      * @return array<string,mixed>     */
+    #[Route(path: '/persons_fc', name: 'report_persons_fc', methods: ['GET'])]
+    #[Template]
     public function personsFinalCheckAction(Request $request, EntityManagerInterface $em) {
         $dql = 'SELECT e FROM App:Person e WHERE e.finalcheck != 1';
         $query = $em->createQuery($dql);
@@ -137,10 +125,9 @@ class ReportController extends AbstractController implements PaginatorAwareInter
      * List of titles where the edition field contains a number
      * or the words "Irish" or "American".
      *
-     * @Route("/editions", name="report_editions", methods={"GET"})
-     * @Template
-     *
      * @return array<string,mixed>     */
+    #[Route(path: '/editions', name: 'report_editions', methods: ['GET'])]
+    #[Template]
     public function editionsAction(Request $request, EntityManagerInterface $em) {
         $qb = $em->createQueryBuilder();
         $qb->select('title')
@@ -163,10 +150,9 @@ class ReportController extends AbstractController implements PaginatorAwareInter
     /**
      * Titles that do.
      *
-     * @Route("/editions_check", name="report_editions_to_check", methods={"GET"})
-     * @Template
-     *
      * @return array<string,mixed>     */
+    #[Route(path: '/editions_check', name: 'report_editions_to_check', methods: ['GET'])]
+    #[Template]
     public function editionsToCheckAction(Request $request, EntityManagerInterface $em) {
         $qb = $em->createQueryBuilder();
         $qb->select('title')
@@ -185,10 +171,9 @@ class ReportController extends AbstractController implements PaginatorAwareInter
     }
 
     /**
-     * @Route("/titles_unverified_persons", name="titles_unverified_persons", methods={"GET"})
-     * @Template
-     *
      * @return array<string,mixed>     */
+    #[Route(path: '/titles_unverified_persons', name: 'titles_unverified_persons', methods: ['GET'])]
+    #[Template]
     public function titlesWithUnverifiedPersons(Request $request, EntityManagerInterface $em) {
         $qb = $em->createQueryBuilder();
         $qb->select('title')
@@ -209,10 +194,9 @@ class ReportController extends AbstractController implements PaginatorAwareInter
     }
 
     /**
-     * @Route("/titles_unverified_firms", name="titles_unverified_firms", methods={"GET"})
-     * @Template
-     *
      * @return array<string,mixed>     */
+    #[Route(path: '/titles_unverified_firms', name: 'titles_unverified_firms', methods: ['GET'])]
+    #[Template]
     public function titlesWithUnverifiedFirms(Request $request, EntityManagerInterface $em) {
         $qb = $em->createQueryBuilder();
         $qb->select('title')
@@ -233,10 +217,9 @@ class ReportController extends AbstractController implements PaginatorAwareInter
     }
 
     /**
-     * @Route("/unchecked_aas_titles", name="unchecked_aas_titles", methods={"GET"})
-     * @Template
-     *
      * @return array<string,mixed>     */
+    #[Route(path: '/unchecked_aas_titles', name: 'unchecked_aas_titles', methods: ['GET'])]
+    #[Template]
     public function uncheckedAasTitles(Request $request, EntityManagerInterface $em) {
         /**
          * List the American Antiquarian Society (AAS) as a source
@@ -250,7 +233,7 @@ class ReportController extends AbstractController implements PaginatorAwareInter
             ->andWhere('(title.checked = 0 AND title.finalattempt = 0 AND title.finalcheck = 0)')
             ->innerJoin('title.titleSources', 'ts')
             ->andWhere('ts.source = 75')
-            ;
+        ;
 
         $titles = $this->paginator->paginate($qb, $request->query->getInt('page', 1), 25, [
             'defaultSortFieldName' => ['title.title', 'title.pubdate'],

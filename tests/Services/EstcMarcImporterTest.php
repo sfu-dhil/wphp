@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Services;
 
 use App\Entity\EstcMarc;
@@ -59,12 +53,8 @@ class EstcMarcImporterTest extends ControllerTestCase {
 
     /**
      * @dataProvider getDatesData
-     *
-     * @param mixed $expectedDob
-     * @param mixed $expectedDod
-     * @param mixed $data
      */
-    public function testGetDates($expectedDob, $expectedDod, $data) : void {
+    public function testGetDates(mixed $expectedDob, mixed $expectedDod, mixed $data) : void {
         $f2 = new EstcMarc();
         $f2->setField('100')->setSubfield('d')->setFieldData($data);
         list($dob, $dod) = $this->importer->getDates(['100d' => $f2]);
@@ -108,11 +98,8 @@ class EstcMarcImporterTest extends ControllerTestCase {
 
     /**
      * @dataProvider guessFormatData
-     *
-     * @param mixed $name
-     * @param mixed $data
      */
-    public function testGuessFormat($name, $data) : void {
+    public function testGuessFormat(mixed $name, mixed $data) : void {
         $f1 = new EstcMarc();
         $f1->setFieldData($data);
         $format = $this->importer->guessFormat(['300c' => $f1]);
@@ -135,12 +122,8 @@ class EstcMarcImporterTest extends ControllerTestCase {
 
     /**
      * @dataProvider guessDimensionsData
-     *
-     * @param mixed $width
-     * @param mixed $height
-     * @param mixed $data
      */
-    public function testGuessDimensions($width, $height, $data) : void {
+    public function testGuessDimensions(mixed $width, mixed $height, mixed $data) : void {
         $f1 = new EstcMarc();
         $f1->setFieldData($data);
         list($w, $h) = $this->importer->guessDimensions(['300c' => $f1]);
@@ -163,14 +146,14 @@ class EstcMarcImporterTest extends ControllerTestCase {
 
     protected function setUp() : void {
         parent::setUp();
-        $this->importer = self::$container->get(EstcMarcImporter::class);
+        $this->importer = self::getContainer()->get(EstcMarcImporter::class);
     }
 
-//    public function testImport() {
-//        $repo = $this->createMock(EstcMarcRepository::class);
-//        $repo->method('findBy')->willReturn(array(
-//
-//        ));
-//    }
-//    245a, 245b, 300a, 260b, 260c, 001
+    //    public function testImport() {
+    //        $repo = $this->createMock(EstcMarcRepository::class);
+    //        $repo->method('findBy')->willReturn(array(
+    //
+    //        ));
+    //    }
+    //    245a, 245b, 300a, 260b, 260c, 001
 }

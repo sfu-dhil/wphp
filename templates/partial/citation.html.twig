@@ -23,7 +23,7 @@
         <ul class="nav nav-pills">
             {% for style in stylesToUse|keys %}
                 <li{% if loop.first %} class="active"{% endif %}>
-                    <a data-toggle="tab" href="#{{ style }}">{{ stylesToUse[style] }}</a>
+                    <a data-bs-toggle="tab" href="#{{ style }}">{{ stylesToUse[style] }}</a>
                 </li>
             {% endfor %}
         </ul>

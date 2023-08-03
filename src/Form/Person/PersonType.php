@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Form\Person;
 
 use App\Entity\Firm;
@@ -28,25 +22,20 @@ class PersonType extends AbstractType {
         $builder->add('lastName', null, [
             'label' => 'Last Name',
             'required' => false,
-            'attr' => [
-                'help_block' => 'person.form.lastName',
-            ],
+            'help' => 'person.form.lastName',
         ]);
         $builder->add('firstName', null, [
             'label' => 'First Name',
             'required' => false,
-            'attr' => [
-                'help_block' => 'person.form.firstName',
-            ],
+            'help' => 'person.form.firstName',
         ]);
         $builder->add('title', null, [
             'label' => 'Title',
             'required' => false,
-            'attr' => [
-                'help_block' => 'person.form.title',
-            ],
+            'help' => 'person.form.title',
         ]);
         $builder->add('gender', ChoiceType::class, [
+            'label' => 'Gender',
             'expanded' => true,
             'multiple' => false,
             'choices' => [
@@ -55,23 +44,17 @@ class PersonType extends AbstractType {
                 'Transgender' => Person::TRANS,
                 'Unknown' => Person::UNKNOWN,
             ],
-            'attr' => [
-                'help_block' => 'person.form.gender',
-            ],
+            'help' => 'person.form.gender',
         ]);
         $builder->add('dob', null, [
             'label' => 'Date of Birth',
             'required' => false,
-            'attr' => [
-                'help_block' => 'person.form.dob',
-            ],
+            'help' => 'person.form.dob',
         ]);
         $builder->add('dod', null, [
             'label' => 'Death Date',
             'required' => false,
-            'attr' => [
-                'help_block' => 'person.form.dod',
-            ],
+            'help' => 'person.form.dod',
         ]);
         $builder->add('cityOfBirth', Select2EntityType::class, [
             'label' => 'Place of Birth',
@@ -83,9 +66,8 @@ class PersonType extends AbstractType {
             'allow_clear' => true,
             'delay' => 250,
             'language' => 'en',
-            'attr' => [
-                'help_block' => 'person.form.cityOfBirth',
-            ],
+            'help' => 'person.form.cityOfBirth',
+            'placeholder' => 'Search for an existing city by name',
         ]);
         $builder->add('cityOfDeath', Select2EntityType::class, [
             'label' => 'Place of Death',
@@ -97,9 +79,8 @@ class PersonType extends AbstractType {
             'allow_clear' => true,
             'delay' => 250,
             'language' => 'en',
-            'attr' => [
-                'help_block' => 'person.form.cityOfDeath',
-            ],
+            'help' => 'person.form.cityOfDeath',
+            'placeholder' => 'Search for an existing city by name',
         ]);
         $builder->add('relatedFirms', Select2EntityType::class, [
             'label' => 'Related Firms',
@@ -108,37 +89,28 @@ class PersonType extends AbstractType {
             'remote_route' => 'firm_typeahead',
             'class' => Firm::class,
             'allow_clear' => true,
-            'attr' => [
-                'help_block' => 'person.form.relatedFirms',
-            ],
+            'help' => 'person.form.relatedFirms',
+            'placeholder' => 'Search for an existing firm by name',
         ]);
         $builder->add('viafUrl', UrlType::class, [
             'label' => 'VIAF URI',
             'required' => false,
-            'attr' => [
-                'help_block' => 'person.form.viafUrl',
-            ],
+            'help' => 'person.form.viafUrl',
         ]);
         $builder->add('wikipediaUrl', UrlType::class, [
             'label' => 'Wikipedia URL',
             'required' => false,
-            'attr' => [
-                'help_block' => 'person.form.wikipediaUrl',
-            ],
+            'help' => 'person.form.wikipediaUrl',
         ]);
         $builder->add('imageUrl', UrlType::class, [
             'label' => 'Image URL',
             'required' => false,
-            'attr' => [
-                'help_block' => 'person.form.imageUrl',
-            ],
+            'help' => 'person.form.imageUrl',
         ]);
         $builder->add('notes', null, [
             'label' => 'Notes',
             'required' => false,
-            'attr' => [
-                'help_block' => 'person.form.notes',
-            ],
+            'help' => 'person.form.notes',
         ]);
         $builder->add('finalcheck', ChoiceType::class, [
             'label' => 'Verified',
@@ -150,9 +122,7 @@ class PersonType extends AbstractType {
             ],
             'required' => true,
             'placeholder' => false,
-            'attr' => [
-                'help_block' => 'person.form.finalCheck',
-            ],
+            'help' => 'person.form.finalCheck',
         ]);
     }
 

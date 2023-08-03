@@ -2,527 +2,253 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Entity;
 
+use App\Repository\EnRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Stringable;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * English Novel bibliographic entry.
- *
- * @ORM\Table(name="en",
- *     indexes={
- *         @ORM\Index(name="en_ft", columns={"author", "title"}, flags={"fulltext"})
- *     },
- *     uniqueConstraints={
- *         @ORM\UniqueConstraint(name="en_enid_uniq", columns={"en_id"})
- *     }
- * )
- * @ORM\Entity(repositoryClass="App\Repository\EnRepository")
  */
-class En {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
+#[ORM\Table(name: 'en')]
+#[ORM\Index(name: 'en_ft', columns: ['author', 'title'], flags: ['fulltext'])]
+#[ORM\UniqueConstraint(name: 'en_enid_uniq', columns: ['en_id'])]
+#[ORM\Entity(repositoryClass: EnRepository::class)]
+class En implements Stringable {
+    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    private ?int $id = null;
 
-    /**
-     * @var string
-     * @ORM\Column(name="en_id", type="string", length=20)
-     */
-    private $enId;
+    #[ORM\Column(name: 'en_id', type: 'string', length: 20)]
+    private ?string $enId = null;
 
-    /**
-     * @var int
-     * @ORM\Column(name="year", type="integer")
-     * @Assert\Range(min=0, max=2018)
-     */
-    private $year;
+    #[ORM\Column(name: 'year', type: 'integer')]
+    #[Assert\Range(min: 0, max: 2018)]
+    private ?int $year = null;
 
-    /**
-     * @var string
-     * @ORM\Column(name="author", type="string", length=160)
-     */
-    private $author;
+    #[ORM\Column(name: 'author', type: 'string', length: 160)]
+    private ?string $author = null;
 
-    /**
-     * @var string
-     * @ORM\Column(name="editor", type="string", length=160, nullable=true)
-     */
-    private $editor;
+    #[ORM\Column(name: 'editor', type: 'string', length: 160, nullable: true)]
+    private ?string $editor = null;
 
-    /**
-     * @var string
-     * @ORM\Column(name="translator", type="string", length=160, nullable=true)
-     */
-    private $translator;
+    #[ORM\Column(name: 'translator', type: 'string', length: 160, nullable: true)]
+    private ?string $translator = null;
 
-    /**
-     * @var string
-     * @ORM\Column(name="title", type="text")
-     */
-    private $title;
+    #[ORM\Column(name: 'title', type: 'text')]
+    private ?string $title = null;
 
-    /**
-     * @var string
-     * @ORM\Column(name="publish_place", type="string", length=100)
-     */
-    private $publishPlace;
+    #[ORM\Column(name: 'publish_place', type: 'string', length: 100)]
+    private ?string $publishPlace = null;
 
-    /**
-     * @var string
-     * @ORM\Column(name="imprint_details", type="text")
-     */
-    private $imprint;
+    #[ORM\Column(name: 'imprint_details', type: 'text')]
+    private ?string $imprint = null;
 
-    /**
-     * @var string
-     * @ORM\Column(name="pagination", type="string", length=100)
-     */
-    private $pagination;
+    #[ORM\Column(name: 'pagination', type: 'string', length: 100)]
+    private ?string $pagination = null;
 
-    /**
-     * @var string
-     * @ORM\Column(name="format", type="string", length=8)
-     */
-    private $format;
+    #[ORM\Column(name: 'format', type: 'string', length: 8)]
+    private ?string $format = null;
 
-    /**
-     * @var string
-     * @ORM\Column(name="price", type="string", length=100, nullable=true)
-     */
-    private $price;
+    #[ORM\Column(name: 'price', type: 'string', length: 100, nullable: true)]
+    private ?string $price = null;
 
-    /**
-     * @var string
-     * @ORM\Column(name="contemporary", type="string", length=200, nullable=true)
-     */
-    private $contemporary;
+    #[ORM\Column(name: 'contemporary', type: 'string', length: 200, nullable: true)]
+    private ?string $contemporary = null;
 
-    /**
-     * @var string
-     * @ORM\Column(name="shelfmark", type="string", length=200)
-     */
-    private $shelfmark;
+    #[ORM\Column(name: 'shelfmark', type: 'string', length: 200)]
+    private ?string $shelfmark = null;
 
-    /**
-     * @var string
-     * @ORM\Column(name="further_editions", type="text", nullable=true)
-     */
-    private $editions;
+    #[ORM\Column(name: 'further_editions', type: 'text', nullable: true)]
+    private ?string $editions = null;
 
-    /**
-     * @var string
-     * @ORM\Column(name="genre", type="string", length=64, nullable=true)
-     */
-    private $genre;
+    #[ORM\Column(name: 'genre', type: 'string', length: 64, nullable: true)]
+    private ?string $genre = null;
 
-    /**
-     * @var string
-     * @ORM\Column(name="gender", type="string", length=1, nullable=true)
-     */
-    private $gender;
+    #[ORM\Column(name: 'gender', type: 'string', length: 1, nullable: true)]
+    private ?string $gender = null;
 
-    /**
-     * @var string
-     * @ORM\Column(name="notes", type="text")
-     */
-    private $notes;
+    #[ORM\Column(name: 'notes', type: 'text')]
+    private ?string $notes = null;
 
     public function __toString() : string {
         return $this->title;
     }
 
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId() {
+    public function getId() : ?int {
         return $this->id;
     }
 
-    /**
-     * Set enId.
-     *
-     * @param string $enId
-     *
-     * @return En
-     */
-    public function setEnId($enId) {
+    public function setEnId(?string $enId) : self {
         $this->enId = $enId;
 
         return $this;
     }
 
-    /**
-     * Get enId.
-     *
-     * @return string
-     */
-    public function getEnId() {
+    public function getEnId() : ?string {
         return $this->enId;
     }
 
-    /**
-     * Set year.
-     *
-     * @param int $year
-     *
-     * @return En
-     */
-    public function setYear($year) {
+    public function setYear(?int $year) : self {
         $this->year = $year;
 
         return $this;
     }
 
-    /**
-     * Get year.
-     *
-     * @return int
-     */
-    public function getYear() {
+    public function getYear() : ?int {
         return $this->year;
     }
 
-    /**
-     * Set author.
-     *
-     * @param string $author
-     *
-     * @return En
-     */
-    public function setAuthor($author) {
+    public function setAuthor(?string $author) : self {
         $this->author = $author;
 
         return $this;
     }
 
-    /**
-     * Get author.
-     *
-     * @return string
-     */
-    public function getAuthor() {
+    public function getAuthor() : ?string {
         return $this->author;
     }
 
-    /**
-     * Set editor.
-     *
-     * @param string $editor
-     *
-     * @return En
-     */
-    public function setEditor($editor) {
+    public function setEditor(?string $editor) : self {
         $this->editor = $editor;
 
         return $this;
     }
 
-    /**
-     * Get editor.
-     *
-     * @return string
-     */
-    public function getEditor() {
+    public function getEditor() : ?string {
         return $this->editor;
     }
 
-    /**
-     * Set translator.
-     *
-     * @param string $translator
-     *
-     * @return En
-     */
-    public function setTranslator($translator) {
+    public function setTranslator(?string $translator) : self {
         $this->translator = $translator;
 
         return $this;
     }
 
-    /**
-     * Get translator.
-     *
-     * @return string
-     */
-    public function getTranslator() {
+    public function getTranslator() : ?string {
         return $this->translator;
     }
 
-    /**
-     * Set title.
-     *
-     * @param string $title
-     *
-     * @return En
-     */
-    public function setTitle($title) {
+    public function setTitle(?string $title) : self {
         $this->title = $title;
 
         return $this;
     }
 
-    /**
-     * Get title.
-     *
-     * @return string
-     */
-    public function getTitle() {
+    public function getTitle() : ?string {
         return $this->title;
     }
 
-    /**
-     * Set publishPlace.
-     *
-     * @param string $publishPlace
-     *
-     * @return En
-     */
-    public function setPublishPlace($publishPlace) {
+    public function setPublishPlace(?string $publishPlace) : self {
         $this->publishPlace = $publishPlace;
 
         return $this;
     }
 
-    /**
-     * Get publishPlace.
-     *
-     * @return string
-     */
-    public function getPublishPlace() {
+    public function getPublishPlace() : ?string {
         return $this->publishPlace;
     }
 
-    /**
-     * Set imprint.
-     *
-     * @param string $imprint
-     *
-     * @return En
-     */
-    public function setImprint($imprint) {
+    public function setImprint(?string $imprint) : self {
         $this->imprint = $imprint;
 
         return $this;
     }
 
-    /**
-     * Get imprint.
-     *
-     * @return string
-     */
-    public function getImprint() {
+    public function getImprint() : ?string {
         return $this->imprint;
     }
 
-    /**
-     * Set pagination.
-     *
-     * @param string $pagination
-     *
-     * @return En
-     */
-    public function setPagination($pagination) {
+    public function setPagination(?string $pagination) : self {
         $this->pagination = $pagination;
 
         return $this;
     }
 
-    /**
-     * Get pagination.
-     *
-     * @return string
-     */
-    public function getPagination() {
+    public function getPagination() : ?string {
         return $this->pagination;
     }
 
-    /**
-     * Set format.
-     *
-     * @param string $format
-     *
-     * @return En
-     */
-    public function setFormat($format) {
+    public function setFormat(?string $format) : self {
         $this->format = $format;
 
         return $this;
     }
 
-    /**
-     * Get format.
-     *
-     * @return string
-     */
-    public function getFormat() {
+    public function getFormat() : ?string {
         return $this->format;
     }
 
-    /**
-     * Set price.
-     *
-     * @param string $price
-     *
-     * @return En
-     */
-    public function setPrice($price) {
+    public function setPrice(?string $price) : self {
         $this->price = $price;
 
         return $this;
     }
 
-    /**
-     * Get price.
-     *
-     * @return string
-     */
-    public function getPrice() {
+    public function getPrice() : ?string {
         return $this->price;
     }
 
-    /**
-     * Set contemporary.
-     *
-     * @param string $contemporary
-     *
-     * @return En
-     */
-    public function setContemporary($contemporary) {
+    public function setContemporary(?string $contemporary) : self {
         $this->contemporary = $contemporary;
 
         return $this;
     }
 
-    /**
-     * Get contemporary.
-     *
-     * @return string
-     */
-    public function getContemporary() {
+    public function getContemporary() : ?string {
         return $this->contemporary;
     }
 
-    /**
-     * Set shelfmark.
-     *
-     * @param string $shelfmark
-     *
-     * @return En
-     */
-    public function setShelfmark($shelfmark) {
+    public function setShelfmark(?string $shelfmark) : self {
         $this->shelfmark = $shelfmark;
 
         return $this;
     }
 
-    /**
-     * Get shelfmark.
-     *
-     * @return string
-     */
-    public function getShelfmark() {
+    public function getShelfmark() : ?string {
         return $this->shelfmark;
     }
 
-    /**
-     * Set editions.
-     *
-     * @param string $editions
-     *
-     * @return En
-     */
-    public function setEditions($editions) {
+    public function setEditions(?string $editions) : self {
         $this->editions = $editions;
 
         return $this;
     }
 
-    /**
-     * Get editions.
-     *
-     * @return string
-     */
-    public function getEditions() {
+    public function getEditions() : ?string {
         return $this->editions;
     }
 
-    /**
-     * Set genre.
-     *
-     * @param string $genre
-     *
-     * @return En
-     */
-    public function setGenre($genre) {
+    public function setGenre(?string $genre) : self {
         $this->genre = $genre;
 
         return $this;
     }
 
-    /**
-     * Get genre.
-     *
-     * @return string
-     */
-    public function getGenre() {
+    public function getGenre() : ?string {
         return $this->genre;
     }
 
-    /**
-     * Set gender.
-     *
-     * @param string $gender
-     *
-     * @return En
-     */
-    public function setGender($gender) {
+    public function setGender(?string $gender) : self {
         $this->gender = $gender;
 
         return $this;
     }
 
-    /**
-     * Get gender.
-     *
-     * @return string
-     */
-    public function getGender() {
+    public function getGender() : ?string {
         return $this->gender;
     }
 
-    /**
-     * Set notes.
-     *
-     * @param string $notes
-     *
-     * @return En
-     */
-    public function setNotes($notes) {
+    public function setNotes(?string $notes) : self {
         $this->notes = $notes;
 
         return $this;
     }
 
-    /**
-     * Get notes.
-     *
-     * @return string
-     */
-    public function getNotes() {
+    public function getNotes() : ?string {
         return $this->notes;
     }
 }

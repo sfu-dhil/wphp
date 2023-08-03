@@ -12,23 +12,23 @@
     <div id="controls" class="collapse">
         {{ form_rest(search_form) }}
     </div>
-    <div class="form-group">
+    <div class="mb-3 row">
         <div class="col-sm-2"></div>
 
         <div class="col-sm-10">
             <input type="submit" value="Search" class="btn btn-primary"/>
-            <a class="btn btn-primary" role="button" data-toggle="collapse" href="#controls" aria-expanded="false"
+            <a class="btn btn-primary" role="button" data-bs-toggle="collapse" href="#controls" aria-expanded="false"
                aria-controls="collapseExample">Advanced Search</a>
             {% include 'partial/export.html.twig' with {'path': 'firm_export_all', 'csvOnly': true} %}
         </div>
     </div>
     {{ form_end(search_form) }}
 
-    <div class='btn-toolbar pull-right'>
-        <div class='btn-group'>
+    <div class='btn-toolbar'>
+        <div class='btn-group ms-auto'>
             {% if is_granted('ROLE_CONTENT_ADMIN') %}
                 <a href="{{ path('firm_new') }}" class="btn btn-default">
-                    <span class="glyphicon glyphicon-plus"></span> Add Firm
+                    <span class="bi bi-plus-lg"></span> Add Firm
                 </a>
             {% endif %}
         </div>

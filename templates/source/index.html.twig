@@ -5,11 +5,11 @@
 {% endblock %}
 
 {% block body %}
-    <div class='btn-toolbar pull-right'>
-        <div class='btn-group'>
+    <div class='btn-toolbar'>
+        <div class='btn-group ms-auto'>
             {% if is_granted('ROLE_CONTENT_ADMIN') %}
                 <a href="{{ path('source_new') }}" class="btn btn-default">
-                    <span class="glyphicon glyphicon-plus"></span> Add Source
+                    <span class="bi bi-plus-lg"></span> Add Source
                 </a>
             {% endif %}
         </div>

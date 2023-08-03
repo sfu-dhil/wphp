@@ -14,9 +14,9 @@
         <input type='hidden' name='order' id='order' value='' />
 
         <div class="btn-toolbar">
-            <div class="btn-group pull-right">
+            <div class="btn-group ms-auto">
                 <a href="{{ path('nines_blog_page_index') }}" class="btn btn-default">
-                    <span class="glyphicon glyphicon-arrow-left"></span> Back
+                    <span class="bi bi-arrow-left"></span> Back
                 </a>
             </div>
         </div>
@@ -30,7 +30,7 @@
             {% endfor %}
         </ul>
 
-        <div class='form-group'>
+        <div class='mb-3 row'>
             <button type='submit' class='btn btn-primary'>Save</button>
         </div>
 
@@ -39,7 +39,7 @@
 {% endblock %}
 
 {% block javascripts %}
-    <script src="{{ asset('node_modules/jquery-ui-dist/jquery-ui.min.js') }}"></script>
+    <script src="{{ asset_prefix|default('') ~ asset('node_modules/jquery-ui-dist/jquery-ui.min.js') }}"></script>
     <script>
         $(document).ready(function () {
             $('#list-order').sortable({

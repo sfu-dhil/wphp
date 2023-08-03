@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Form\Title;
 
 use App\Entity\Person;
@@ -25,6 +19,7 @@ use Tetranz\Select2EntityBundle\Form\Type\Select2EntityType;
 class TitlePersonType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) : void {
         $builder->add('person', Select2EntityType::class, [
+            'label' => 'Person',
             'multiple' => false,
             'text_property' => 'getFormId',
             'remote_route' => 'person_typeahead',
@@ -35,21 +30,23 @@ class TitlePersonType extends AbstractType {
             'delay' => 250,
             'language' => 'en',
             'required' => true,
+            'help' => 'person.search.name',
             'attr' => [
-                'help_block' => 'person.search.name',
                 'required' => true,
             ],
+            'placeholder' => 'Search for an existing person by name',
         ]);
 
         $builder->add('role', EntityType::class, [
+            'label' => 'Person Role',
             'class' => Role::class,
             'choice_label' => 'name',
             'multiple' => false,
             'expanded' => false,
             'placeholder' => 'Select a role',
             'required' => true,
+            'help' => 'title.form.titleRoles',
             'attr' => [
-                'help_block' => 'title.form.titleRoles',
                 'required' => true,
             ],
         ]);

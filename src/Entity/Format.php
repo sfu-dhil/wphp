@@ -2,59 +2,36 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Entity;
 
+use App\Repository\FormatRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Stringable;
 
-/**
- * Format.
- *
- * @ORM\Table(name="format")
- * @ORM\Entity(repositoryClass="App\Repository\FormatRepository")
- */
-class Format {
-    /**
-     * @var bool
-     *
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $id;
+#[ORM\Table(name: 'format')]
+#[ORM\Entity(repositoryClass: FormatRepository::class)]
+class Format implements Stringable {
+    #[ORM\Column(name: 'id', type: 'integer', nullable: false)]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    private ?int $id = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="name", type="text", nullable=true)
-     */
-    private $name;
+    #[ORM\Column(name: 'name', type: 'text', nullable: true)]
+    private ?string $name = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="abbreviation", type="string", length=10, nullable=true)
-     */
-    private $abbreviation;
+    #[ORM\Column(name: 'abbreviation', type: 'string', length: 10, nullable: true)]
+    private ?string $abbreviation = null;
 
-    /**
-     * @var string
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $description;
+    #[ORM\Column(type: 'text', nullable: true)]
+    private ?string $description = null;
 
     /**
      * @var Collection<int,Title>
-     * @ORM\OneToMany(targetEntity="Title", mappedBy="format")
      */
-    private $titles;
+    #[ORM\OneToMany(targetEntity: Title::class, mappedBy: 'format')]
+    private Collection|array $titles;
 
     /**
      * Constructor.
@@ -67,105 +44,54 @@ class Format {
         return $this->name;
     }
 
-    /**
-     * Get id.
-     *
-     * @return bool
-     */
-    public function getId() {
+    public function getId() : ?int {
         return $this->id;
     }
 
-    /**
-     * Set name.
-     *
-     * @param string $name
-     *
-     * @return Format
-     */
-    public function setName($name) {
+    public function setName(?string $name) : self {
         $this->name = $name;
 
         return $this;
     }
 
-    /**
-     * Get name.
-     *
-     * @return string
-     */
-    public function getName() {
+    public function getName() : ?string {
         return $this->name;
     }
 
-    /**
-     * Set abbrevOne.
-     *
-     * @param string $abbreviation
-     *
-     * @return Format
-     */
-    public function setAbbreviation($abbreviation) {
+    public function setAbbreviation(?string $abbreviation) : self {
         $this->abbreviation = $abbreviation;
 
         return $this;
     }
 
-    /**
-     * Get abbreviation.
-     *
-     * @return string
-     */
-    public function getAbbreviation() {
+    public function getAbbreviation() : ?string {
         return $this->abbreviation;
     }
 
-    /**
-     * Add title.
-     *
-     * @return Format
-     */
-    public function addTitle(Title $title) {
+    public function addTitle(Title $title) : self {
         $this->titles[] = $title;
 
         return $this;
     }
 
-    /**
-     * Remove title.
-     */
     public function removeTitle(Title $title) : void {
         $this->titles->removeElement($title);
     }
 
     /**
-     * Get titles.
-     *
      * @return Collection<int,Title>
      */
-    public function getTitles() {
+    public function getTitles() : Collection {
         return $this->titles;
     }
 
-    /**
-     * Set description.
-     *
-     * @param null|string $description
-     *
-     * @return Format
-     */
-    public function setDescription($description = null) {
+    public function setDescription(?string $description = null) : self {
         $this->description = $description;
 
         return $this;
     }
 
-    /**
-     * Get description.
-     *
-     * @return null|string
-     */
-    public function getDescription() {
+    public function getDescription() : ?string {
         return $this->description;
     }
 }

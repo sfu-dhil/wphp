@@ -8,9 +8,9 @@
 
 {% block body %}
     <div class="btn-toolbar">
-        <div class="btn-group pull-right">
+        <div class="btn-group ms-auto">
             <a href="{{ path('title_marc_import', {'id': estcMarc.titleId}) }}" class="btn btn-default" target="_blank">
-                <span class="glyphicon glyphicon-save"></span> Import </a>
+                <span class="bi bi-cloud-arrow-down-fill"></span> Import </a>
         </div>
     </div>
     {% set data = manager.getData(estcMarc) %}
@@ -21,8 +21,8 @@
             {% block tbody %}
                 {% for field in data|filter(f => f.field < 100) %}
                     <tr>
-                        <th style='white-space: normal' data-toggle="popover"
-                            data-content='{{ manager.getFieldName(field) }}'>
+                        <th style='white-space: normal' data-bs-toggle="popover"
+                            data-bs-content='{{ manager.getFieldName(field) }}'>
                             {{ manager.getFieldName(field)|u.truncate(20, '...', false) }} ({{ field }})
                         </th>
                         <td>{{ field.getFieldData() }}</td>
@@ -50,8 +50,8 @@
             </tr>
             {% for field in data|filter(f => f.field >= 100) %}
                 <tr>
-                    <th style='white-space: normal' data-toggle="popover"
-                        data-content='{{ manager.getFieldName(field) }}'>
+                    <th style='white-space: normal' data-bs-toggle="popover"
+                        data-bs-content='{{ manager.getFieldName(field) }}'>
                         {{ manager.getFieldName(field)|u.truncate(20, '...', false) }} ({{ field }})
                     </th>
                     <td>{{ field.getFieldData() }}</td>

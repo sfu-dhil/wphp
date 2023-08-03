@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Controller;
 
 use App\Entity\Page;
@@ -31,13 +25,12 @@ class DefaultController extends AbstractController implements PaginatorAwareInte
     /**
      * Home page.
      *
-     * @Route("/", name="homepage")
-     * @Template
-     *
      * @throws NonUniqueResultException
      *
      * @return array<string,mixed>
      */
+    #[Route(path: '/', name: 'homepage')]
+    #[Template]
     public function indexAction(EntityManagerInterface $em) {
         $pageRepo = $em->getRepository(Page::class);
 
@@ -70,11 +63,10 @@ class DefaultController extends AbstractController implements PaginatorAwareInte
     /**
      * Privacy page.
      *
-     * @Route("/privacy", name="privacy")
-     * @Template
-     *
      * @return array{}
      */
+    #[Route(path: '/privacy', name: 'privacy')]
+    #[Template]
     public function privacyAction(Request $request) {
         return [];
     }

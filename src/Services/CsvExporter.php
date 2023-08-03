@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Services;
 
 use App\Entity\Firm;
@@ -108,12 +102,12 @@ class CsvExporter {
             $title->getPseudonym(),
             $title->getImprint(),
             $title->getSelfPublished() ? 'yes' : 'no',
-            ($title->getLocationOfPrinting() ? $title->getLocationOfPrinting()->getName() : ''),
-            ($title->getLocationOfPrinting() ? $title->getLocationOfPrinting()->getCountry() : ''),
-            ($title->getLocationOfPrinting() ? $title->getLocationOfPrinting()->getLatitude() : ''),
-            ($title->getLocationOfPrinting() ? $title->getLocationOfPrinting()->getLongitude() : ''),
+            $title->getLocationOfPrinting() ? $title->getLocationOfPrinting()->getName() : '',
+            $title->getLocationOfPrinting() ? $title->getLocationOfPrinting()->getCountry() : '',
+            $title->getLocationOfPrinting() ? $title->getLocationOfPrinting()->getLatitude() : '',
+            $title->getLocationOfPrinting() ? $title->getLocationOfPrinting()->getLongitude() : '',
             $title->getPubDate(),
-            ($title->getFormat() ? $title->getFormat()->getName() : ''),
+            $title->getFormat() ? $title->getFormat()->getName() : '',
             $title->getSizeL(),
             $title->getSizeW(),
             $title->getEdition(),
@@ -123,7 +117,7 @@ class CsvExporter {
             $title->getPricePound(),
             $title->getPriceShilling(),
             $title->getPricePence(),
-            ($title->getOtherPrice() ? $title->getOtherCurrency()->format($title->getOtherPrice()) : ''),
+            $title->getOtherPrice() ? $title->getOtherCurrency()->format($title->getOtherPrice()) : '',
             implode('; ', $title->getGenres()->toArray()),
             $title->getShelfmark(),
         ];

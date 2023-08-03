@@ -2,134 +2,61 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * TitleFirmrole.
- *
- * @ORM\Table(name="title_firmrole")
- * @ORM\Entity
- */
+#[ORM\Table(name: 'title_firmrole')]
+#[ORM\Entity]
 class TitleFirmrole {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $id;
+    #[ORM\Column(name: 'id', type: 'integer', nullable: false)]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    private ?int $id = null;
 
-    /**
-     * @var Title
-     *
-     * @ORM\ManyToOne(targetEntity="Title", inversedBy="titleFirmroles")
-     * @ORM\JoinColumns({
-     *     @ORM\JoinColumn(name="title_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
-     * })
-     */
-    private $title;
+    #[ORM\JoinColumn(name: 'title_id', referencedColumnName: 'id', nullable: false, onDelete: 'CASCADE')]
+    #[ORM\ManyToOne(targetEntity: Title::class, inversedBy: 'titleFirmroles')]
+    private ?Title $title = null;
 
-    /**
-     * @var Firm
-     *
-     * @ORM\ManyToOne(targetEntity="Firm", inversedBy="titleFirmroles")
-     * @ORM\JoinColumns({
-     *     @ORM\JoinColumn(name="firm_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
-     * })
-     */
-    private $firm;
+    #[ORM\JoinColumn(name: 'firm_id', referencedColumnName: 'id', nullable: false, onDelete: 'CASCADE')]
+    #[ORM\ManyToOne(targetEntity: Firm::class, inversedBy: 'titleFirmroles')]
+    private ?Firm $firm = null;
 
-    /**
-     * @var Firmrole
-     *
-     * @ORM\ManyToOne(targetEntity="Firmrole")
-     * @ORM\JoinColumns({
-     *     @ORM\JoinColumn(name="firmrole_id", referencedColumnName="id", nullable=false)
-     * })
-     */
-    private $firmrole;
+    #[ORM\JoinColumn(name: 'firmrole_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity: Firmrole::class)]
+    private ?Firmrole $firmrole = null;
 
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId() {
+    public function getId() : ?int {
         return $this->id;
     }
 
-    /**
-     * Set title.
-     *
-     * @param Title $title
-     *
-     * @return TitleFirmrole
-     */
-    public function setTitle(?Title $title = null) {
+    public function setTitle(?Title $title = null) : self {
         $this->title = $title;
 
         return $this;
     }
 
-    /**
-     * Get title.
-     *
-     * @return Title
-     */
-    public function getTitle() {
+    public function getTitle() : ?Title {
         return $this->title;
     }
 
-    /**
-     * Set firm.
-     *
-     * @param Firm $firm
-     *
-     * @return TitleFirmrole
-     */
-    public function setFirm(?Firm $firm = null) {
+    public function setFirm(?Firm $firm = null) : self {
         $this->firm = $firm;
 
         return $this;
     }
 
-    /**
-     * Get firm.
-     *
-     * @return Firm
-     */
-    public function getFirm() {
+    public function getFirm() : ?Firm {
         return $this->firm;
     }
 
-    /**
-     * Set firmrole.
-     *
-     * @param Firmrole $firmrole
-     *
-     * @return TitleFirmrole
-     */
-    public function setFirmrole(?Firmrole $firmrole = null) {
+    public function setFirmrole(?Firmrole $firmrole = null) : self {
         $this->firmrole = $firmrole;
 
         return $this;
     }
 
-    /**
-     * Get firmrole.
-     *
-     * @return Firmrole
-     */
-    public function getFirmrole() {
+    public function getFirmrole() : ?Firmrole {
         return $this->firmrole;
     }
 }

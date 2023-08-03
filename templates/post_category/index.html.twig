@@ -2,18 +2,15 @@
 
 {% block pageheader %}
     <h1>Post Category List</h1>
-    <p class="count">
-        Displaying {{ post_categories|length }} post_categories of {{ post_categories.getTotalItemCount }} total.
-    </p>
 {% endblock %}
 
 {% block body %}
 
     {% if is_granted('ROLE_BLOG_ADMIN') %}
-        <div class='btn-toolbar pull-right'>
-            <div class='btn-group'>
+        <div class='btn-toolbar'>
+            <div class='btn-group ms-auto'>
                 <a href="{{ path('nines_blog_post_category_new') }}" class="btn btn-default">
-                    <span class="glyphicon glyphicon-plus"></span> New
+                    <span class="bi bi-plus-lg"></span> New
                 </a>
             </div>
         </div>
@@ -21,7 +18,8 @@
 
     {% embed '@NinesUtil/term/partial/index.html.twig' with {
         'terms': post_categories,
-        'path': 'nines_blog_post_category_show'
+        'path': 'nines_blog_post_category_show',
+        'caption': post_categories.getTotalItemCount ~ ' total',
     } %}
     {% endembed %}
 

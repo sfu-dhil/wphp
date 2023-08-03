@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2022 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Form;
 
 use App\Entity\Currency;
@@ -28,29 +22,19 @@ class CurrencyType extends AbstractType {
         $builder->add('code', TextType::class, [
             'label' => 'Code',
             'required' => false,
-            'attr' => [
-                'help_block' => '',
-            ],
         ]);
         $builder->add('name', TextType::class, [
             'label' => 'Name',
             'required' => true,
-            'attr' => [
-                'help_block' => '',
-            ],
         ]);
         $builder->add('symbol', TextType::class, [
             'label' => 'Symbol',
             'required' => false,
-            'attr' => [
-                'help_block' => '',
-            ],
         ]);
         $builder->add('description', TextareaType::class, [
             'label' => 'Description',
             'required' => false,
             'attr' => [
-                'help_block' => '',
                 'class' => 'tinymce',
             ],
         ]);
