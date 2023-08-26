@@ -279,6 +279,8 @@ details.accordion[aria-expanded=true] svg {
 }*/
 input.btn-default,
 input.btn-primary,
+button.btn-default,
+button.btn-primary,
 a.btn-default,
 a.btn-primary {
   /* Rectangle 10: */
@@ -300,6 +302,10 @@ a.btn-primary {
 input.btn-default:link, input.btn-default:visited,
 input.btn-primary:link,
 input.btn-primary:visited,
+button.btn-default:link,
+button.btn-default:visited,
+button.btn-primary:link,
+button.btn-primary:visited,
 a.btn-default:link,
 a.btn-default:visited,
 a.btn-primary:link,
@@ -311,6 +317,14 @@ input.btn-primary:hover,
 input.btn-primary:focus,
 input.btn-primary:active:focus,
 input.btn-primary:active,
+button.btn-default:hover,
+button.btn-default:focus,
+button.btn-default:active:focus,
+button.btn-default:active,
+button.btn-primary:hover,
+button.btn-primary:focus,
+button.btn-primary:active:focus,
+button.btn-primary:active,
 a.btn-default:hover,
 a.btn-default:focus,
 a.btn-default:active:focus,
@@ -1271,6 +1285,7 @@ nav.navbar:before, nav.navbar:after, .navbar-nav:before, .navbar-nav:after, .nav
   height: 4.25rem;
   grid-column-gap: 0.6944444444em;
   grid-template-columns: minmax(11.5rem, calc((100vw - var(--container_width)) * 0.5)) minmax(auto, var(--container_width));
+  margin: 0 auto;
 }
 @media (max-width: 991px) {
   .nav-container {

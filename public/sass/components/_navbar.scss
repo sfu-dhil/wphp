@@ -71,6 +71,7 @@ nav.navbar, .navbar-nav, .navbar-collapse, .nav-container, .navbar-right{
   height: $header_height;
   grid-column-gap: ms(-2);
   grid-template-columns: minmax(11.5rem, calc( (100vw - var(--container_width)) * 0.5))  minmax(auto, var(--container_width));
+  margin: 0 auto;
   @media (max-width: $nav_breakpoint){
     height:auto;
     min-height: $header_height;
