@@ -38,25 +38,22 @@ class DefaultController extends AbstractController implements PaginatorAwareInte
             $em->find(PostCategory::class, 1),
             $em->find(PostCategory::class, 2),
             $em->find(PostCategory::class, 3),
+            $em->find(PostCategory::class, 9),
+            $em->find(PostCategory::class, 10),
         ];
-        $qb = $em->createQueryBuilder();
-        $qb->select('p');
-        $qb->from(Post::class, 'p');
-        $qb->where('p.category = :category');
-        $qb->innerJoin('p.status', 's');
-        $qb->andWhere('s.public = 1');
-        $qb->orderBy('p.id', 'desc');
-        $qb->setMaxResults(1);
-
-        $spotlights = [];
-
-        foreach ($spotlightCategories as $cat) {
-            $spotlights[] = $qb->getQuery()->setParameter('category', $cat)->getOneOrNullResult();
-        }
+        $qb = $em->createQueryBuilder()
+            ->select('p')
+            ->from(Post::class, 'p')
+            ->where('p.category IN (:category)')
+            ->innerJoin('p.status', 's')
+            ->andWhere('s.public = 1')
+            ->orderBy('p.id', 'desc')
+            ->setParameter('category', $spotlightCategories)
+            ->setMaxResults(3);
 
         return [
             'homepage' => $pageRepo->findHomepage(),
-            'spotlights' => $spotlights,
+            'spotlights' => $qb->getQuery()->getResult(),
         ];
     }
 
