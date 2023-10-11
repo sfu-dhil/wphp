@@ -1,6 +1,5 @@
 const path = require('path');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const RemoveEmptyScriptsPlugin = require('webpack-remove-empty-scripts');
 
 module.exports = {
   entry: {
@@ -53,11 +52,16 @@ module.exports = {
   },
   plugins: [
     // css extraction into dedicated file
-    new RemoveEmptyScriptsPlugin({ verbose: true }),
     new MiniCssExtractPlugin({
       filename: './css/[name].css',
     }),
   ],
+  watchOptions: {
+    ignored: [
+      '**/fonts',
+      '**/images',
+    ],
+  },
   resolve: {
     extensions: ['.js', '.scss'],
     modules: ['node_modules'],
