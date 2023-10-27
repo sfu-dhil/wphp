@@ -23,7 +23,7 @@
         "ninsuo/symfony-collection": "^2.1",
         "phpdocumentor/reflection-docblock": "^5.3",
         "sensio/framework-extra-bundle": "^6.2",
-        "sfu-dhil/nines": "6.3.5",
+        "sfu-dhil/nines": "6.3.11",
         "symfony/asset": "6.3.*",
         "symfony/console": "6.3.*",
         "symfony/dotenv": "6.3.*",
