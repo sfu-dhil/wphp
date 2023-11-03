@@ -218,21 +218,21 @@ class ReportController extends AbstractController implements PaginatorAwareInter
 
     /**
      * @return array<string,mixed>     */
-    #[Route(path: '/unchecked_aas_titles', name: 'unchecked_aas_titles', methods: ['GET'])]
+    #[Route(path: '/titles_unverified_estc', name: 'titles_unverified_estc', methods: ['GET'])]
     #[Template]
-    public function uncheckedAasTitles(Request $request, EntityManagerInterface $em) {
+    public function unverifiedEstcTitles(Request $request, EntityManagerInterface $em) {
         /**
-         * List the American Antiquarian Society (AAS) as a source
+         * List the ESTC as a source
          * Are not final-checked, not hand-checked, and not attempted verified
-         * That have a publication date between 1801 and 1819 (inclusive).
+         * That have a publication date before 1750 (inclusive).
          */
         $qb = $em->createQueryBuilder();
         $qb->select('title')
             ->from(Title::class, 'title')
-            ->where("1801 <= YEAR(STRTODATE(title.pubdate, '%Y')) AND YEAR(STRTODATE(title.pubdate, '%Y')) <= 1819")
+            ->where("YEAR(STRTODATE(title.pubdate, '%Y')) < 1750")
             ->andWhere('(title.checked = 0 AND title.finalattempt = 0 AND title.finalcheck = 0)')
             ->innerJoin('title.titleSources', 'ts')
-            ->andWhere('ts.source = 75')
+            ->andWhere('ts.source = 2')
         ;
 
         $titles = $this->paginator->paginate($qb, $request->query->getInt('page', 1), 25, [
@@ -241,7 +241,7 @@ class ReportController extends AbstractController implements PaginatorAwareInter
         ]);
 
         return [
-            'heading' => 'AAS Titles (1801-1819)',
+            'heading' => 'ESTC Titles (pre 1750)',
             'titles' => $titles,
             'sortable' => true,
             'count' => $titles->getTotalItemCount(),

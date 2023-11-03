@@ -175,8 +175,8 @@ class Builder extends AbstractBuilder {
                 ],
             ]);
 
-            $browse->addChild('AAS Titles', [
-                'route' => 'unchecked_aas_titles',
+            $browse->addChild('ESTC Titles (pre 1750)', [
+                'route' => 'titles_unverified_estc',
                 'linkAttributes' => [
                     'class' => 'dropdown-item link-dark',
                 ],

@@ -3,8 +3,8 @@
 {% block pageheader %}
     <h1>{{ heading }}</h1>
     {% if titles|length > 0 %}
-        Displaying {{ titles|length }} titles of {{ titles.getTotalItemCount }} total
-        that are published between 1801–1819 (inclusive), list the AAS as a source, and are not verified
+        Displaying {{ titles|length }} titles of {{ titles.getTotalItemCount }} total that
+        that are published before 1750, list the ESTC as a source, and are not verified
     {% else %}
         No titles to display.
     {% endif %}
@@ -27,7 +27,7 @@
                         'header': 'Title',
                         'field': ['title.title', 'title.pubdate'],
                     } %}
-                    <th>AAS ID</th>
+                    <th>ESTC ID</th>
                     <th>Attempted Verification</th>
                     <th>Verified</th>
                     {% include 'partial/sortable.html.twig' with {
@@ -47,7 +47,7 @@
 
             {% block tbody %}
                 {% for title in titles %}
-                    {% set aas = title.titleSources|filter(ts => ts.source.id == 75)|first  %}
+                    {% set estc = title.titleSources|filter(ts => ts.source.id == 2)|first  %}
                     <tr>
                         <td>
                             <a href="{{ path('title_show', { 'id': title.id }) }}">
@@ -59,7 +59,7 @@
                                 {{ title.title }}
                             </a>
                         </td>
-                        <td>{{ aas.identifier }}</td>
+                        <td>{{ estc.identifier }}</td>
                         <td>{% if title.finalattempt %}Yes{% else %}No{% endif %}</td>
                         <td>{% if title.finalcheck %}Yes{% else %}No{% endif %}</td>
                         <td>{{ title.pubdate }}</td>
