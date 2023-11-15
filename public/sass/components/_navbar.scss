@@ -124,6 +124,12 @@ nav.navbar, .navbar-nav, .navbar-collapse, .nav-container, .navbar-right{
           margin-left:auto;
           margin-right: 1rem;
         }
+        .dropdown-menu {
+          @media(min-width: $nav_breakpoint){
+            right: 0;
+            left: auto;
+          }
+        }
       }
     }
   }
