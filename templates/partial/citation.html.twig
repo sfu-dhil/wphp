@@ -22,15 +22,17 @@
         {% if stylesToUse|length > 1 %}
         <ul class="nav nav-pills">
             {% for style in stylesToUse|keys %}
-                <li{% if loop.first %} class="active"{% endif %}>
-                    <a data-bs-toggle="tab" href="#{{ style }}">{{ stylesToUse[style] }}</a>
+                <li class="nav-item">
+                    <a class="nav-link {% if loop.first %}active{% endif %}" {% if loop.first %}aria-current="page"{% endif %} data-bs-toggle="tab" href="#{{ style }}">
+                        {{ stylesToUse[style] }}
+                    </a>
                 </li>
             {% endfor %}
         </ul>
         {% endif %}
         <div class="tab-content">
             {% for style in stylesToUse|keys %}
-                <div id="{{ style }}" class="tab-pane fade{% if loop.first %} in active{% endif %}">
+                <div id="{{ style }}" class="tab-pane fade{% if loop.first %} show active{% endif %}">
                     <div>
                         <p{% if not (style == 'bibtext') %} class="citation"{% endif %}>
                             {% include 'partial/citation/' ~ style ~ '.html.twig' %}
