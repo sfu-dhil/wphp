@@ -26,8 +26,8 @@ class CsvExporter {
             $firm->getGender(),
             $firm->getStreetAddress(),
             $firm->getCity() ? $firm->getCity()->getName() : '',
-            preg_replace('/-00/', '', $firm->getStartDate()),
-            preg_replace('/-00/', '', $firm->getEndDate()),
+            preg_replace('/-00/', '', (string) $firm->getStartDate() ?? ''),
+            preg_replace('/-00/', '', (string) $firm->getEndDate() ?? ''),
         ];
     }
 

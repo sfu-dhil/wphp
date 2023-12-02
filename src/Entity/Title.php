@@ -183,13 +183,14 @@ class Title extends AbstractEntity {
     }
 
     public function getTrimmedTitle() : string {
-        if (str_word_count($this->title) > 128) {
-            $words = explode(' ', $this->title, 129);
+        $trimmedTitle = preg_replace('/--+/', '', (string) $this->title ?? '');
+        if (str_word_count($trimmedTitle) > 128) {
+            $words = explode(' ', $trimmedTitle, 129);
 
             return implode(' ', array_slice($words, 0, 128));
         }
 
-        return $this->title;
+        return $trimmedTitle;
     }
 
     public function getFormId() : string {
