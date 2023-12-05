@@ -17,7 +17,7 @@ class TitleSource {
     private ?int $id = null;
 
     #[ORM\Column(type: 'string', length: 300, nullable: true)]
-    private string $identifier;
+    private ?string $identifier;
 
     #[ORM\ManyToOne(targetEntity: Title::class, inversedBy: 'titleSources')]
     private ?Title $title = null;
@@ -29,13 +29,13 @@ class TitleSource {
         return $this->id;
     }
 
-    public function setIdentifier(string $identifier) : self {
+    public function setIdentifier(?string $identifier) : self {
         $this->identifier = $identifier;
 
         return $this;
     }
 
-    public function getIdentifier() : string {
+    public function getIdentifier() : ?string {
         return $this->identifier;
     }
 

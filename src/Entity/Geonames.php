@@ -72,7 +72,7 @@ class Geonames implements Stringable {
     private ?string $timezone;
 
     #[ORM\Column(name: 'moddate', type: 'date', nullable: true)]
-    private DateTimeInterface $moddate;
+    private ?DateTimeInterface $moddate;
 
     /**
      * @var Collection<int,Title>
