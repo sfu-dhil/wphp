@@ -55,7 +55,7 @@ class TitleSource {
         return $this;
     }
 
-    public function getSource() : Source {
+    public function getSource() : ?Source {
         return $this->source;
     }
 }

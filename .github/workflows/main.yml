@@ -45,12 +45,10 @@ jobs:
       uses: docker/build-push-action@v5
       with:
         context: .
-        platforms: linux/amd64,linux/arm64
         load: true
         pull: true
         tags: dhilsfu/wphp:latest
         cache-from: type=registry,ref=dhilsfu/wphp:buildcache
-        cache-to: type=registry,ref=dhilsfu/wphp:buildcache,mode=max
 
     - name: Run Unit Tests
       run: |
