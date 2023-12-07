@@ -28,7 +28,7 @@
     "swup": "^2.0.14",
     "symfony-collection": "^2.1.30",
     "tablesorter": "^2.31.3",
-    "tinymce": "^5.10.7"
+    "tinymce": "^5.10.9"
   },
   "devDependencies": {
     "css-loader": "^6.8.1",
