@@ -13,7 +13,6 @@ use Nines\UtilBundle\Entity\AbstractEntity;
 #[ORM\Table(name: 'firm')]
 #[ORM\Index(name: 'firm_name_ft', columns: ['name'], flags: ['fulltext'])]
 #[ORM\Index(name: 'firm_address_ft', columns: ['street_address'], flags: ['fulltext'])]
-#[ORM\UniqueConstraint(name: 'firm_uniq', columns: ['name', 'city_id', 'start_date', 'end_date'])]
 #[ORM\Entity(repositoryClass: FirmRepository::class)]
 class Firm extends AbstractEntity {
     final public const MALE = 'M';

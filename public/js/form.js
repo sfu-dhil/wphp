@@ -47,7 +47,7 @@
             return
         }
         $('.collection-simple').collection({
-            init_with_n_elements: 1,
+            init_with_n_elements: 0,
             allow_up: false,
             allow_down: false,
             max: 400,
@@ -62,7 +62,7 @@
             return
         }
         $('.collection-complex').collection({
-            init_with_n_elements: 1,
+            init_with_n_elements: 0,
             allow_up: false,
             allow_down: false,
             max: 400,

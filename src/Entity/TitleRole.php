@@ -7,7 +7,6 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Table(name: 'title_role')]
-#[ORM\UniqueConstraint(name: 'titlerole_uniq', columns: ['title_id', 'person_id', 'role_id'])]
 #[ORM\Entity]
 class TitleRole {
     #[ORM\Column(name: 'id', type: 'integer', nullable: false)]
