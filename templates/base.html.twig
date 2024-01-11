@@ -71,6 +71,14 @@
             </div>
         {% endif %}
 
+        {% if block('action_buttons') is defined %}
+            <div class='btn-toolbar'>
+                <div class='btn-group ms-auto'>
+                    {{ block('action_buttons') }}
+                </div>
+            </div>
+        {% endif %}
+
         {% block body %}
         {% endblock %}
     </main>
