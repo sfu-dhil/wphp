@@ -1,4 +1,4 @@
-FROM python:3.9.17 AS wphp-docs
+FROM python:3.12-slim AS wphp-docs
 WORKDIR /app
 
 # build python deps
@@ -9,7 +9,7 @@ COPY docs /app
 
 RUN sphinx-build source _site
 
-FROM node:20.4 AS wphp-webpack
+FROM node:21.5-slim AS wphp-webpack
 WORKDIR /app
 
 RUN apt-get update \
