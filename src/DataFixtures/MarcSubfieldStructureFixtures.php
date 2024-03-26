@@ -25,7 +25,7 @@ class MarcSubfieldStructureFixtures extends Fixture implements FixtureGroupInter
                 $fixture->setTagField(sprintf('%d', 100 + $j));
                 $fixture->setTagSubfield($subfield);
                 $fixture->setName('Field ' . (100 + $j) . $subfield);
-                $fixture->setHidden(0 === $i % 4);
+                $fixture->setHidden($i % 4);
                 $manager->persist($fixture);
                 $this->setReference("marcsubfield.{$j}.{$i}", $fixture);
             }

@@ -79,10 +79,10 @@ class Title extends AbstractEntity {
     private ?int $priceShilling = null;
 
     #[ORM\Column(name: 'price_pence', type: 'decimal', precision: 9, scale: 1, nullable: true)]
-    private ?float $pricePence = null;
+    private ?string $pricePence = null;
 
     #[ORM\Column(name: 'other_price', type: 'decimal', precision: 7, scale: 2, nullable: true)]
-    private ?float $otherPrice = null;
+    private ?string $otherPrice = null;
 
     #[ORM\Column(name: 'shelfmark', type: 'text', nullable: true)]
     private ?string $shelfmark = null;
@@ -351,17 +351,17 @@ class Title extends AbstractEntity {
 
     public function setPricePence(null|int|string|bool $pricePence) : self {
         if (is_string($pricePence)) {
-            $this->pricePence = is_numeric($pricePence) ? (float) $pricePence : null;
+            $this->pricePence = (string) (is_numeric($pricePence) ? (float) $pricePence : null);
         } elseif (is_bool($pricePence)) {
-            $this->pricePence = $pricePence ? 1 : 0;
+            $this->pricePence = (string) ($pricePence ? 1 : 0);
         } else {
-            $this->pricePence = $pricePence;
+            $this->pricePence = (string) $pricePence;
         }
 
         return $this;
     }
 
-    public function getPricePence() : ?float {
+    public function getPricePence() : ?string {
         return $this->pricePence;
     }
 
@@ -508,12 +508,12 @@ class Title extends AbstractEntity {
         return $this->colophon;
     }
 
-    public function getOtherPrice() : ?float {
+    public function getOtherPrice() : ?string {
         return $this->otherPrice;
     }
 
     public function setOtherPrice(?string $otherPrice) : self {
-        $this->otherPrice = (float) $otherPrice;
+        $this->otherPrice = (string) ((float) $otherPrice);
 
         return $this;
     }

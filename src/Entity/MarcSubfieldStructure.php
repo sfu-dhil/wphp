@@ -27,10 +27,10 @@ class MarcSubfieldStructure implements Stringable {
     private ?string $name = null;
 
     #[ORM\Column(name: 'isurl', type: 'boolean', nullable: true)]
-    private ?bool $isUrl = null;
+    private ?bool $isUrl;
 
     #[ORM\Column(name: 'hidden', type: 'integer', nullable: true)]
-    private ?bool $hidden = false;
+    private ?int $hidden;
 
     public function __toString() : string {
         return $this->name;
@@ -80,13 +80,13 @@ class MarcSubfieldStructure implements Stringable {
         return $this->isUrl;
     }
 
-    public function setHidden(?bool $hidden) : self {
+    public function setHidden(?int $hidden) : self {
         $this->hidden = $hidden;
 
         return $this;
     }
 
-    public function getHidden() : ?bool {
+    public function getHidden() : ?int {
         return $this->hidden;
     }
 }
