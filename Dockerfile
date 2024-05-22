@@ -9,7 +9,7 @@ COPY docs /app
 
 RUN sphinx-build source _site
 
-FROM node:21.5-slim AS wphp-webpack
+FROM node:21.6-slim AS wphp-webpack
 WORKDIR /app
 
 RUN apt-get update \
