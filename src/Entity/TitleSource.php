@@ -17,7 +17,7 @@ class TitleSource {
     private ?int $id = null;
 
     #[ORM\Column(type: 'string', length: 300, nullable: true)]
-    private ?string $identifier;
+    private ?string $identifier = null;
 
     #[ORM\ManyToOne(targetEntity: Title::class, inversedBy: 'titleSources')]
     private ?Title $title = null;
