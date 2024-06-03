@@ -20,6 +20,7 @@ class TitleSourceFilterType extends AbstractType {
      * Build the form.
      */
     public function buildForm(FormBuilderInterface $builder, array $options) : void {
+        $builder->setMethod('get');
         $builder->add('source', EntityType::class, [
             'label' => 'Source',
             'class' => Source::class,
