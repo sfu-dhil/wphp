@@ -50,7 +50,7 @@ class Firm extends AbstractEntity {
      * @var Collection<int,TitleFirmrole>
      */
     #[ORM\OneToMany(targetEntity: TitleFirmrole::class, mappedBy: 'firm')]
-    private Collection|array $titleFirmroles;
+    private array|Collection $titleFirmroles;
 
     /**
      * Firm sources are where the bibliographic information comes from.
@@ -58,25 +58,25 @@ class Firm extends AbstractEntity {
      * @var Collection<int,FirmSource>
      */
     #[ORM\OneToMany(targetEntity: FirmSource::class, mappedBy: 'firm')]
-    private Collection|array $firmSources;
+    private array|Collection $firmSources;
 
     /**
      * @var Collection<int,Person>
      */
     #[ORM\ManyToMany(targetEntity: Person::class, mappedBy: 'relatedFirms')]
-    private Collection|array $relatedPeople;
+    private array|Collection $relatedPeople;
 
     /**
      * @var Collection<int,Firm>
      */
     #[ORM\ManyToMany(targetEntity: self::class, inversedBy: 'firmsRelated')]
-    private Collection|array $relatedFirms;
+    private array|Collection $relatedFirms;
 
     /**
      * @var Collection<int,Firm>
      */
     #[ORM\ManyToMany(targetEntity: self::class, mappedBy: 'relatedFirms')]
-    private Collection|array $firmsRelated;
+    private array|Collection $firmsRelated;
 
     public function __construct() {
         parent::__construct();

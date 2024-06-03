@@ -114,7 +114,7 @@ class Title extends AbstractEntity {
      * @var Collection<int,Genre>
      */
     #[ORM\ManyToMany(targetEntity: Genre::class, inversedBy: 'titles')]
-    private Collection|array $genres;
+    private array|Collection $genres;
 
     #[ORM\ManyToOne(targetEntity: Currency::class, inversedBy: 'titles')]
     private ?Currency $otherCurrency = null;
@@ -123,13 +123,13 @@ class Title extends AbstractEntity {
      * @var Collection<int,TitleRole>
      */
     #[ORM\OneToMany(targetEntity: TitleRole::class, mappedBy: 'title')]
-    private Collection|array $titleRoles;
+    private array|Collection $titleRoles;
 
     /**
      * @var Collection<int,TitleFirmrole>
      */
     #[ORM\OneToMany(targetEntity: TitleFirmrole::class, mappedBy: 'title')]
-    private Collection|array $titleFirmroles;
+    private array|Collection $titleFirmroles;
 
     /**
      * Title sources are where the bibliographic information comes from. It's
@@ -139,19 +139,19 @@ class Title extends AbstractEntity {
      * @var Collection<int,TitleSource>
      */
     #[ORM\OneToMany(targetEntity: TitleSource::class, mappedBy: 'title')]
-    private Collection|array $titleSources;
+    private array|Collection $titleSources;
 
     /**
      * @var Collection<int,Title>
      */
     #[ORM\ManyToMany(targetEntity: self::class, inversedBy: 'titlesRelated')]
-    private Collection|array $relatedTitles;
+    private array|Collection $relatedTitles;
 
     /**
      * @var Collection<int,Title>
      */
     #[ORM\ManyToMany(targetEntity: self::class, mappedBy: 'relatedTitles')]
-    private Collection|array $titlesRelated;
+    private array|Collection $titlesRelated;
 
     public function __construct() {
         parent::__construct();
@@ -317,7 +317,7 @@ class Title extends AbstractEntity {
         return $this->pagination;
     }
 
-    public function setPricePound(null|int|string|bool $pricePound) : self {
+    public function setPricePound(null|bool|int|string $pricePound) : self {
         if (is_string($pricePound)) {
             $this->pricePound = is_numeric($pricePound) ? (int) $pricePound : null;
         } elseif (is_bool($pricePound)) {
@@ -333,7 +333,7 @@ class Title extends AbstractEntity {
         return $this->pricePound;
     }
 
-    public function setPriceShilling(null|int|string|bool $priceShilling) : self {
+    public function setPriceShilling(null|bool|int|string $priceShilling) : self {
         if (is_string($priceShilling)) {
             $this->priceShilling = is_numeric($priceShilling) ? (int) $priceShilling : null;
         } elseif (is_bool($priceShilling)) {
@@ -349,7 +349,7 @@ class Title extends AbstractEntity {
         return $this->priceShilling;
     }
 
-    public function setPricePence(null|int|string|bool $pricePence) : self {
+    public function setPricePence(null|bool|int|string $pricePence) : self {
         if (is_string($pricePence)) {
             $this->pricePence = (string) (is_numeric($pricePence) ? (float) $pricePence : null);
         } elseif (is_bool($pricePence)) {

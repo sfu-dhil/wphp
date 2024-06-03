@@ -35,7 +35,7 @@ class Currency extends AbstractEntity {
      * @var Collection<int,Title>
      */
     #[ORM\OneToMany(targetEntity: Title::class, mappedBy: 'otherCurrency')]
-    private Collection|array $titles;
+    private array|Collection $titles;
 
     public function __construct() {
         parent::__construct();

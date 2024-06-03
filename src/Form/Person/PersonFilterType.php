@@ -16,8 +16,7 @@ use Symfony\Component\Form\FormBuilderInterface;
  * PersonFilterType is a subform used in the title search form.
  */
 class PersonFilterType extends AbstractType {
-    public function __construct(private EntityManagerInterface $em) {
-    }
+    public function __construct(private EntityManagerInterface $em) {}
 
     /**
      * Build the form.

@@ -34,7 +34,7 @@ class OrlandoBiblio implements Stringable {
     private ?string $introduction = null;
 
     #[ORM\Column(name: 'TRANSLATOR', type: 'text', nullable: true)]
-    private ?String $translator = null;
+    private ?string $translator = null;
 
     #[ORM\Column(name: 'ILLUSTRATOR', type: 'text', nullable: true)]
     private ?string $illustrator = null;

@@ -49,7 +49,8 @@ class DefaultController extends AbstractController implements PaginatorAwareInte
             ->andWhere('s.public = 1')
             ->orderBy('p.id', 'desc')
             ->setParameter('category', $spotlightCategories)
-            ->setMaxResults(3);
+            ->setMaxResults(3)
+        ;
 
         return [
             'homepage' => $pageRepo->findHomepage(),

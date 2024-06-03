@@ -17,8 +17,7 @@ use Symfony\Component\Form\FormBuilderInterface;
  * injected as a dependency.
  */
 class FirmFilterType extends AbstractType {
-    public function __construct(private EntityManagerInterface $em) {
-    }
+    public function __construct(private EntityManagerInterface $em) {}
 
     /**
      * Build the form type.

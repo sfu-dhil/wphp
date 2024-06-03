@@ -36,13 +36,13 @@ class Source implements Stringable {
      * @var Collection<int,TitleSource>
      */
     #[ORM\OneToMany(targetEntity: TitleSource::class, mappedBy: 'source')]
-    private Collection|array $titleSources;
+    private array|Collection $titleSources;
 
     /**
      * @var Collection<int,FirmSource>
      */
     #[ORM\OneToMany(targetEntity: FirmSource::class, mappedBy: 'source')]
-    private Collection|array $firmSources;
+    private array|Collection $firmSources;
 
     public function __construct() {
         $this->titleSources = new ArrayCollection();

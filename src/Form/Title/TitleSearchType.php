@@ -18,8 +18,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * Search form for titles.
  */
 class TitleSearchType extends AbstractType {
-    public function __construct(private FormatRepository $formatRepository, private GenreRepository $genreRepository) {
-    }
+    public function __construct(private FormatRepository $formatRepository, private GenreRepository $genreRepository) {}
 
     /**
      * Build the form.

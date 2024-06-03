@@ -78,25 +78,25 @@ class Geonames implements Stringable {
      * @var Collection<int,Title>
      */
     #[ORM\OneToMany(targetEntity: Title::class, mappedBy: 'locationOfPrinting')]
-    private Collection|array $titles;
+    private array|Collection $titles;
 
     /**
      * @var Collection<int,Firm>
      */
     #[ORM\OneToMany(targetEntity: Firm::class, mappedBy: 'city')]
-    private Collection|array $firms;
+    private array|Collection $firms;
 
     /**
      * @var Collection<int,Person>
      */
     #[ORM\OneToMany(targetEntity: Person::class, mappedBy: 'cityOfBirth')]
-    private Collection|array $peopleBorn;
+    private array|Collection $peopleBorn;
 
     /**
      * @var Collection<int,Person>
      */
     #[ORM\OneToMany(targetEntity: Person::class, mappedBy: 'cityOfDeath')]
-    private Collection|array $peopleDied;
+    private array|Collection $peopleDied;
 
     public function __construct() {
         $this->titles = new ArrayCollection();

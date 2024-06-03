@@ -28,7 +28,7 @@ class Genre implements Stringable {
      * @var Collection<int,Title>
      */
     #[ORM\ManyToMany(targetEntity: Title::class, mappedBy: 'genres')]
-    private Collection|array $titles;
+    private array|Collection $titles;
 
     public function __construct() {
         $this->titles = new ArrayCollection();

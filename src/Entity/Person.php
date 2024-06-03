@@ -74,13 +74,13 @@ class Person extends AbstractEntity {
      * @var Collection<int,TitleRole>
      */
     #[ORM\OneToMany(targetEntity: TitleRole::class, mappedBy: 'person')]
-    private Collection|array $titleRoles;
+    private array|Collection $titleRoles;
 
     /**
      * @var Collection<int,Firm>
      */
     #[ORM\ManyToMany(targetEntity: Firm::class, inversedBy: 'relatedPeople')]
-    private Collection|array $relatedFirms;
+    private array|Collection $relatedFirms;
 
     public function __construct() {
         parent::__construct();

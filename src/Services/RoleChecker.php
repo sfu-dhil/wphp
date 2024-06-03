@@ -14,8 +14,7 @@ class RoleChecker {
     /**
      * RoleChecker constructor.
      */
-    public function __construct(private AuthorizationCheckerInterface $authChecker, private TokenStorageInterface $tokenStorage) {
-    }
+    public function __construct(private AuthorizationCheckerInterface $authChecker, private TokenStorageInterface $tokenStorage) {}
 
     /**
      * Check that the current use has the given role.

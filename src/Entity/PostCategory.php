@@ -17,7 +17,7 @@ class PostCategory extends AbstractTerm {
      * @var Collection<int,Post>|Post[]
      */
     #[ORM\OneToMany(targetEntity: Post::class, mappedBy: 'category')]
-    private Collection|array $posts;
+    private array|Collection $posts;
 
     public function __construct() {
         parent::__construct();

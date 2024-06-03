@@ -17,8 +17,7 @@ use Symfony\Component\Form\FormBuilderInterface;
  * service to have the doctrine registry injected as a dependency.
  */
 class TitleFilterType extends AbstractType {
-    public function __construct(private EntityManagerInterface $em) {
-    }
+    public function __construct(private EntityManagerInterface $em) {}
 
     /**
      * Build the form.

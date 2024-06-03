@@ -20,8 +20,7 @@ class MarcManager {
     /**
      * MarcManager constructor.
      */
-    public function __construct(private EntityManagerInterface $em) {
-    }
+    public function __construct(private EntityManagerInterface $em) {}
 
     /**
      * Get the title of a MARC record.

@@ -21,8 +21,7 @@ class SourceLinker {
     /**
      * SourceLinker constructor.
      */
-    public function __construct(private EntityManagerInterface $em, private UrlGeneratorInterface $generator, private RoleChecker $checker) {
-    }
+    public function __construct(private EntityManagerInterface $em, private UrlGeneratorInterface $generator, private RoleChecker $checker) {}
 
     /**
      * Set the role checker.

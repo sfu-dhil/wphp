@@ -16,7 +16,7 @@ class SourceLinkerTest extends ControllerTestCase {
      */
     private $linker;
 
-    private RoleChecker&MockObject $checker;
+    private MockObject&RoleChecker $checker;
 
     public function testSanity() : void {
         $this->assertInstanceOf(SourceLinker::class, $this->linker);

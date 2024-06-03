@@ -20,7 +20,7 @@ class PostStatus extends AbstractTerm {
      * @var Collection<int,Post>|Post[]
      */
     #[ORM\OneToMany(targetEntity: Post::class, mappedBy: 'status')]
-    private Collection|array $posts;
+    private array|Collection $posts;
 
     /**
      * Build the post.

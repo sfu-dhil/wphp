@@ -21,8 +21,7 @@ class Builder extends AbstractBuilder {
         private PageRepository $pageRepository,
         private EntityManagerInterface $em,
         private array $spotlightMenuItems = [],
-    ) {
-    }
+    ) {}
 
     /**
      * Build the navigation menu and return it.

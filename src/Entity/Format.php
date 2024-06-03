@@ -31,7 +31,7 @@ class Format implements Stringable {
      * @var Collection<int,Title>
      */
     #[ORM\OneToMany(targetEntity: Title::class, mappedBy: 'format')]
-    private Collection|array $titles;
+    private array|Collection $titles;
 
     /**
      * Constructor.
