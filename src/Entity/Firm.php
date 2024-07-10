@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use App\Repository\FirmRepository;
+use DateTimeInterface;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -216,6 +218,19 @@ class Firm extends AbstractEntity {
 
     public function getGender() : ?string {
         return $this->gender;
+    }
+
+    public function getGenderString() : ?string {
+        switch ($this->gender){
+            case Firm::MALE:
+                return 'Male';
+            case Firm::FEMALE:
+                return 'Female';
+            case Firm::UNKNOWN:
+                return 'Unknown';
+            default:
+                return null;
+        }
     }
 
     /**

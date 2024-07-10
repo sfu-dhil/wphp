@@ -277,6 +277,13 @@ class Title extends AbstractEntity {
         return $this->sizeL;
     }
 
+    public function getSizeLString() : ?string {
+        if ($this->sizeL) {
+            return "{$this->sizeL} cm";
+        }
+        return null;
+    }
+
     public function setSizeW(?int $sizeW) : self {
         $this->sizeW = $sizeW;
 
@@ -285,6 +292,20 @@ class Title extends AbstractEntity {
 
     public function getSizeW() : ?int {
         return $this->sizeW;
+    }
+
+    public function getSizeWString() : ?string {
+        if ($this->sizeW) {
+            return "{$this->sizeW} cm";
+        }
+        return null;
+    }
+
+    public function getSizeString() : ?string {
+        if ($this->sizeW && $this->sizeL) {
+            return "{$this->sizeW} cm x {$this->sizeL} cm";
+        }
+        return null;
     }
 
     public function setEdition(?string $edition) : self {

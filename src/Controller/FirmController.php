@@ -18,12 +18,16 @@ use Nines\UtilBundle\Controller\PaginatorTrait;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use App\Services\JsonLdSerializer;
 
 /**
  * Firm controller.
@@ -32,13 +36,8 @@ use Symfony\Component\Routing\Annotation\Route;
 class FirmController extends AbstractController implements PaginatorAwareInterface {
     use PaginatorTrait;
 
-    /**
-     * Lists all Firm entities.
-     *
-     * @return array<string,mixed>     */
-    #[Route(path: '/', name: 'firm_index', methods: ['GET'])]
-    #[Template]
-    public function indexAction(Request $request, EntityManagerInterface $em) {
+    #[Route(path: '/.{_format}', name: 'firm_index', defaults: ['_format' => 'html'], methods: ['GET'])]
+    public function indexAction(Request $request, JsonLdSerializer $jsonLdSerializer, EntityManagerInterface $em) : Response {
         $form = $this->createForm(FirmSearchType::class, null, [
             'action' => $this->generateUrl('firm_search'),
             'user' => $this->getUser(),
@@ -56,11 +55,40 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
             'defaultSortDirection' => 'asc',
         ]);
 
-        return [
+        if ($request->getRequestFormat() == 'json') {
+            $jsonLdItems = [];
+            foreach ($firms->getItems() as $firm) {
+                $jsonLdItems []= $jsonLdSerializer->getFirm($firm);
+            }
+            $requestParams = $request->query->all();
+            $lastPage = (int) ceil((float) $firms->getTotalItemCount() / (float) $firms->getItemNumberPerPage());
+            $currentPage = $firms->getCurrentPageNumber();
+            $jsonLd = [
+                '@context' => 'https://www.w3.org/ns/hydra/core#',
+                '@type' => 'Collection',
+                '@id' => $this->generateUrl('firm_index', [], UrlGeneratorInterface::ABSOLUTE_URL),
+                'totalItems' => $firms->getTotalItemCount(),
+                'member' => $jsonLdItems,
+                'view' => [
+                    '@id' => $this->generateUrl('firm_index', array_merge($requestParams, ['page' => $currentPage]), UrlGeneratorInterface::ABSOLUTE_URL),
+                    '@type' => 'PartialCollectionView',
+                    'first' => $this->generateUrl('firm_index', array_merge($requestParams, ['page' => 1]), UrlGeneratorInterface::ABSOLUTE_URL),
+                    'previous' => $currentPage == 1 ? null : $this->generateUrl('firm_index', array_merge($requestParams, ['page' => $currentPage - 1]), UrlGeneratorInterface::ABSOLUTE_URL),
+                    'next' => $currentPage == $lastPage ? null : $this->generateUrl('firm_index', array_merge($requestParams, ['page' => $currentPage + 1]), UrlGeneratorInterface::ABSOLUTE_URL),
+                    'last' => $this->generateUrl('firm_index', array_merge($requestParams, ['page' => $lastPage]), UrlGeneratorInterface::ABSOLUTE_URL),
+                ],
+            ];
+            $response = new JsonResponse($jsonLd);
+            $response->headers->set('Content-Type', 'application/ld+json');
+            return $response;
+        } elseif ($request->getRequestFormat() == 'xml') {
+            throw new AccessDeniedHttpException('RDF is not available on the index page.');
+        }
+        return $this->render('firm/index.html.twig', [
             'search_form' => $form->createView(),
             'firms' => $firms,
             'sortable' => true,
-        ];
+        ]);
     }
 
     /**
@@ -237,8 +265,19 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
      *
      * @return array<string,mixed>     */
     #[Route(path: '/{id}.{_format}', name: 'firm_show', defaults: ['_format' => 'html'], methods: ['GET'])]
-    #[Template]
-    public function showAction(Request $request, Firm $firm, SourceLinker $linker) {
+    public function showAction(Request $request, JsonLdSerializer $jsonLdSerializer, SourceLinker $linker, Firm $firm) : Response {
+        if (in_array($request->getRequestFormat(),  ['xml', 'json'])) {
+            $jsonLd = $jsonLdSerializer->getFirm($firm);
+            if ($request->getRequestFormat() == 'xml') {
+                $response = new Response($jsonLdSerializer->toRDF($jsonLd));
+                $response->headers->set('Content-Type', 'application/rdf+xml');
+                return $response;
+            } else {
+                $response = new JsonResponse($jsonLd);
+                $response->headers->set('Content-Type', 'application/ld+json');
+                return $response;
+            }
+        }
         $firmRoles = $firm->getTitleFirmroles(true);
         if ( ! $this->getUser()) {
             $firmRoles = $firmRoles->filter(function (TitleFirmrole $tfr) {
@@ -249,11 +288,11 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
         }
         $pagination = $this->paginator->paginate($firmRoles, $request->query->getInt('page', 1), 25);
 
-        return [
+        return $this->render('firm/show.html.twig', [
             'firm' => $firm,
             'pagination' => $pagination,
             'linker' => $linker,
-        ];
+        ]);
     }
 
     /**

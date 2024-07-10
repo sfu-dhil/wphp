@@ -137,6 +137,21 @@ class Person extends AbstractEntity {
         return $this->gender;
     }
 
+    public function getGenderString() : ?string {
+        switch ($this->gender){
+            case Person::MALE:
+                return 'Male';
+            case Person::FEMALE:
+                return 'Female';
+            case Person::UNKNOWN:
+                return 'Unknown';
+            case Person::TRANS:
+                return 'Trans';
+            default:
+                return null;
+        }
+    }
+
     public function setDob(?string $dob) : self {
         $this->dob = $dob;
 

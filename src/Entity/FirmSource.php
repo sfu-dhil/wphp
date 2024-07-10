@@ -61,4 +61,73 @@ class FirmSource {
     public function getSource() : ?Source {
         return $this->source;
     }
+
+    public function getIri() : ?string {
+        $sourceId = $this->getSource()->getId();
+        if (!in_array($sourceId, [30, 93, 100, 143])) {
+            // Skip all but:
+            // WorldCat (30)
+            // British Book Trade Index (93)
+            // London Metropolitan Archives Collections Catalogue (100)
+            // Wikipedia (143)
+            return null;
+        } elseif (!$this->getIdentifier()) {
+            return null;
+        }elseif (preg_match('/https?:/', $this->getIdentifier())) {
+            return $this->getIdentifier();
+        }
+        if ($sourceId == 93) {
+            // British Book Trade Index
+            $bbtiIdentifier = (int) $this->getIdentifier();
+            if ($bbtiIdentifier) {
+                return "http://bbti.bodleian.ox.ac.uk/details/?traderid={$bbtiIdentifier}";
+            }
+        }
+        return null;
+        /*
+         * Skipped sources that don't really work (with some notes):
+         *
+         * 2 ESTC (57 records)
+         * For books not firms
+         *
+         * 4 The English Novel 1830-1836 (1 record)
+         * For books not firms (identifier is n/a)
+         *
+         * 5 ECCO (5 records)
+         * For books not firms
+         *
+         * 7 British Library (1 record)
+         * For books not firms
+         *
+         * 11 Jackson Bibliography (2 records)
+         * For books not firms
+         *
+         * 13 Google Books (3 records)
+         * For books not firms
+         *
+         * 34 None (2 records, 1 link and 1 n/a)
+         * ???
+         *
+         * 75 American Antiquarian Society (14 records)
+         * 1 link doesn't work, rest not sure how to link. not sure if books or firms
+         *
+         * 94 Nonconformist and Dissenting Women's Studies, 1650-1850 (2 records)
+         * links don't work?
+         *
+         * 102 A Directory of Printers and Others in Allied Trades, London & Vicinity 1800-1840 (1 record)
+         * Name?
+         *
+         * 114 Dictionary for Members of the Dublin Book Trade, 1550-1800 (1 record)
+         * Name?
+         *
+         * 118 The Print Trade in Ireland 1550-1775 (5 records)
+         * Names?
+         *
+         * 122 Thomas, Lucy and Henry Lasher Gardner, Opposite St. Clement’s Church in the Strand, 1739–1805 (1 record)
+         * n/a
+         *
+         * 133 Plomer's Dictionary of Printers & Booksellers 1726 - 1775 (4 records)
+         * Names?
+         */
+    }
 }

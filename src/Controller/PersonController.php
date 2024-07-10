@@ -16,12 +16,16 @@ use Nines\UtilBundle\Controller\PaginatorTrait;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use App\Services\JsonLdSerializer;
 
 /**
  * Person controller.
@@ -30,13 +34,8 @@ use Symfony\Component\Routing\Annotation\Route;
 class PersonController extends AbstractController implements PaginatorAwareInterface {
     use PaginatorTrait;
 
-    /**
-     * Lists all Person entities.
-     *
-     * @return array<string,mixed>     */
-    #[Route(path: '/', name: 'person_index', methods: ['GET'])]
-    #[Template]
-    public function indexAction(Request $request, EntityManagerInterface $em) {
+    #[Route(path: '/.{_format}', name: 'person_index', defaults: ['_format' => 'html'], methods: ['GET'])]
+    public function indexAction(Request $request, JsonLdSerializer $jsonLdSerializer, EntityManagerInterface $em) : Response {
         $form = $this->createForm(PersonSearchType::class, null, [
             'action' => $this->generateUrl('person_search'),
             'entity_manager' => $em,
@@ -52,11 +51,40 @@ class PersonController extends AbstractController implements PaginatorAwareInter
             'defaultSortDirection' => 'asc',
         ]);
 
-        return [
+        if ($request->getRequestFormat() == 'json') {
+            $jsonLdItems = [];
+            foreach ($people->getItems() as $person) {
+                $jsonLdItems []= $jsonLdSerializer->getPerson($person);
+            }
+            $requestParams = $request->query->all();
+            $lastPage = (int) ceil((float) $people->getTotalItemCount() / (float) $people->getItemNumberPerPage());
+            $currentPage = $people->getCurrentPageNumber();
+            $jsonLd = [
+                '@context' => 'https://www.w3.org/ns/hydra/core#',
+                '@type' => 'Collection',
+                '@id' => $this->generateUrl('person_index', [], UrlGeneratorInterface::ABSOLUTE_URL),
+                'totalItems' => $people->getTotalItemCount(),
+                'member' => $jsonLdItems,
+                'view' => [
+                    '@id' => $this->generateUrl('person_index', array_merge($requestParams, ['page' => $currentPage]), UrlGeneratorInterface::ABSOLUTE_URL),
+                    '@type' => 'PartialCollectionView',
+                    'first' => $this->generateUrl('person_index', array_merge($requestParams, ['page' => 1]), UrlGeneratorInterface::ABSOLUTE_URL),
+                    'previous' => $currentPage == 1 ? null : $this->generateUrl('person_index', array_merge($requestParams, ['page' => $currentPage - 1]), UrlGeneratorInterface::ABSOLUTE_URL),
+                    'next' => $currentPage == $lastPage ? null : $this->generateUrl('person_index', array_merge($requestParams, ['page' => $currentPage + 1]), UrlGeneratorInterface::ABSOLUTE_URL),
+                    'last' => $this->generateUrl('person_index', array_merge($requestParams, ['page' => $lastPage]), UrlGeneratorInterface::ABSOLUTE_URL),
+                ],
+            ];
+            $response = new JsonResponse($jsonLd);
+            $response->headers->set('Content-Type', 'application/ld+json');
+            return $response;
+        } elseif ($request->getRequestFormat() == 'xml') {
+            throw new AccessDeniedHttpException('RDF is not available on the index page.');
+        }
+        return $this->render('person/index.html.twig', [
             'search_form' => $form->createView(),
             'people' => $people,
             'sortable' => true,
-        ];
+        ]);
     }
 
     /**
@@ -260,8 +288,19 @@ class PersonController extends AbstractController implements PaginatorAwareInter
      *
      * @return array<string,mixed>     */
     #[Route(path: '/{id}.{_format}', name: 'person_show', defaults: ['_format' => 'html'], methods: ['GET'])]
-    #[Template]
-    public function showAction(Request $request, Person $person) {
+    public function showAction(Request $request, JsonLdSerializer $jsonLdSerializer, Person $person) : Response {
+        if (in_array($request->getRequestFormat(),  ['xml', 'json'])) {
+            $jsonLd = $jsonLdSerializer->getPerson($person);
+            if ($request->getRequestFormat() == 'xml') {
+                $response = new Response($jsonLdSerializer->toRDF($jsonLd));
+                $response->headers->set('Content-Type', 'application/rdf+xml');
+                return $response;
+            } else {
+                $response = new JsonResponse($jsonLd);
+                $response->headers->set('Content-Type', 'application/ld+json');
+                return $response;
+            }
+        }
         $titleRoles = $person->getTitleRoles(true);
         if ( ! $this->getUser()) {
             $titleRoles = $titleRoles->filter(function (TitleRole $tr) {
@@ -270,13 +309,12 @@ class PersonController extends AbstractController implements PaginatorAwareInter
                 return $title->getFinalattempt() || $title->getFinalcheck();
             });
         }
-
         $pagination = $this->paginator->paginate($titleRoles, $request->query->getInt('page', 1), 25);
 
-        return [
+        return $this->render('person/show.html.twig', [
             'person' => $person,
             'pagination' => $pagination,
-        ];
+        ]);
     }
 
     /**
