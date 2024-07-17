@@ -186,6 +186,12 @@ class Builder extends AbstractBuilder {
                     'class' => 'dropdown-item link-dark',
                 ],
             ]);
+            $browse->addChild('Titles without a genre', [
+                'route' => 'report_titles_genre',
+                'linkAttributes' => [
+                    'class' => 'dropdown-item link-dark',
+                ],
+            ]);
             $browse->addChild('Titles with Bad Publication Date', [
                 'route' => 'report_titles_date',
                 'linkAttributes' => [

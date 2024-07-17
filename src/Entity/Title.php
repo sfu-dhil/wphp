@@ -88,16 +88,16 @@ class Title extends AbstractEntity {
     private ?string $shelfmark = null;
 
     #[ORM\Column(name: 'checked', type: 'boolean', nullable: false)]
-    private bool $checked = false;
+    private ?bool $checked = false;
 
     #[ORM\Column(name: 'finalcheck', type: 'boolean', nullable: false)]
-    private bool $finalcheck = false;
+    private ?bool $finalcheck = false;
 
     #[ORM\Column(name: 'finalattempt', type: 'boolean', nullable: false)]
-    private bool $finalattempt = false;
+    private ?bool $finalattempt = false;
 
     #[ORM\Column(name: 'edition_checked', type: 'boolean', nullable: false)]
-    private bool $editionChecked = false;
+    private ?bool $editionChecked = false;
 
     #[ORM\Column(name: 'notes', type: 'text', nullable: true)]
     private ?string $notes = null;
@@ -418,23 +418,23 @@ class Title extends AbstractEntity {
         return $this->shelfmark;
     }
 
-    public function setChecked(bool $checked) : self {
+    public function setChecked(?bool $checked) : self {
         $this->checked = $checked;
 
         return $this;
     }
 
-    public function getChecked() : bool {
+    public function getChecked() : ?bool {
         return $this->checked;
     }
 
-    public function setFinalcheck(bool $finalcheck) : self {
+    public function setFinalcheck(?bool $finalcheck) : self {
         $this->finalcheck = $finalcheck;
 
         return $this;
     }
 
-    public function getFinalcheck() : bool {
+    public function getFinalcheck() : ?bool {
         return $this->finalcheck;
     }
 
@@ -509,13 +509,13 @@ class Title extends AbstractEntity {
         return $this->editionNumber;
     }
 
-    public function setFinalattempt(bool $finalattempt) : self {
+    public function setFinalattempt(?bool $finalattempt) : self {
         $this->finalattempt = $finalattempt;
 
         return $this;
     }
 
-    public function getFinalattempt() : bool {
+    public function getFinalattempt() : ?bool {
         return $this->finalattempt;
     }
 
@@ -549,11 +549,11 @@ class Title extends AbstractEntity {
         return $this;
     }
 
-    public function getEditionChecked() : bool {
+    public function getEditionChecked() : ?bool {
         return $this->editionChecked;
     }
 
-    public function setEditionChecked(bool $editionChecked) : self {
+    public function setEditionChecked(?bool $editionChecked) : self {
         $this->editionChecked = $editionChecked;
 
         return $this;

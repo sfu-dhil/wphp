@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\Entity\Title;
 use App\Form\Title\TitleSourceFilterType;
+use App\Form\Title\TitleCheckFilterType;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Nines\UtilBundle\Controller\PaginatorTrait;
@@ -80,6 +81,44 @@ class ReportController extends AbstractController implements PaginatorAwareInter
 
         return [
             'heading' => 'Titles to Final Check',
+            'titles' => $titles,
+            'count' => $titles->getTotalItemCount(),
+            'search_form' => $form->createView(),
+        ];
+    }
+
+    /**
+     * List titles missing a genre
+     */
+    #[Route(path: '/titles_genre', name: 'report_titles_genre', methods: ['GET'])]
+    #[Template]
+    public function titlesGenreAction(Request $request, EntityManagerInterface $em) : array {
+        $form = $this->createForm(TitleCheckFilterType::class);
+        $form->handleRequest($request);
+
+        $qb = $em->createQueryBuilder();
+        $qb->select('title')
+            ->from(Title::class, 'title')
+            ->leftJoin('title.genres', 'g')
+            ->where('g.id IS NULL')
+        ;
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $filter = $form->getData();
+            if (!is_null($filter->getFinalcheck())) {
+                $qb->andWhere('title.finalcheck = :finalcheck');
+                $qb->setParameter('finalcheck', $filter->getFinalcheck());
+            }
+            if (!is_null($filter->getFinalattempt())) {
+                $qb->andWhere('title.finalattempt = :finalattempt');
+                $qb->setParameter('finalattempt', $filter->getFinalattempt());
+            }
+        }
+
+        $titles = $this->paginator->paginate($qb, $request->query->getInt('page', 1), 25);
+
+        return [
+            'heading' => 'Titles without a genre',
             'titles' => $titles,
             'count' => $titles->getTotalItemCount(),
             'search_form' => $form->createView(),
