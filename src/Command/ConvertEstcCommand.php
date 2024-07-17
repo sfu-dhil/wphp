@@ -177,7 +177,7 @@ class ConvertEstcCommand extends Command {
                     if ( ! $data = $field->subfields[$s] ?? null) {
                         continue;
                     }
-                    $given = preg_replace('/^[^,]*,\\s*/u', '', (string) $data);
+                    $given = preg_replace('/^[^,]*,\s*/u', '', (string) $data);
                     foreach ($this->names as $name) {
                         $m = [];
                         if (preg_match("/\\b({$name})\\b/ui", $given, $m)) {

@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Entity\Title;
-use App\Form\Title\TitleSourceFilterType;
 use App\Form\Title\TitleCheckFilterType;
+use App\Form\Title\TitleSourceFilterType;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Nines\UtilBundle\Controller\PaginatorTrait;
@@ -88,7 +88,7 @@ class ReportController extends AbstractController implements PaginatorAwareInter
     }
 
     /**
-     * List titles missing a genre
+     * List titles missing a genre.
      */
     #[Route(path: '/titles_genre', name: 'report_titles_genre', methods: ['GET'])]
     #[Template]
@@ -105,11 +105,11 @@ class ReportController extends AbstractController implements PaginatorAwareInter
 
         if ($form->isSubmitted() && $form->isValid()) {
             $filter = $form->getData();
-            if (!is_null($filter->getFinalcheck())) {
+            if (null !== $filter->getFinalcheck()) {
                 $qb->andWhere('title.finalcheck = :finalcheck');
                 $qb->setParameter('finalcheck', $filter->getFinalcheck());
             }
-            if (!is_null($filter->getFinalattempt())) {
+            if (null !== $filter->getFinalattempt()) {
                 $qb->andWhere('title.finalattempt = :finalattempt');
                 $qb->setParameter('finalattempt', $filter->getFinalattempt());
             }

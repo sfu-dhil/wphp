@@ -4,17 +4,16 @@ declare(strict_types=1);
 
 namespace App\Services;
 
-use App\Entity\Genre;
-use App\Entity\Format;
 use App\Entity\Firm;
-use App\Entity\Title;
-use App\Entity\Person;
+use App\Entity\Format;
 use App\Entity\Geonames;
+use App\Entity\Person;
+use App\Entity\Title;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Spatie\SchemaOrg\Schema;
-use Spatie\SchemaOrg;
 use EasyRdf\Graph;
+use Spatie\SchemaOrg;
+use Spatie\SchemaOrg\Schema;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class JsonLdSerializer {
     public function __construct(
@@ -25,13 +24,16 @@ class JsonLdSerializer {
     public function toRDF(SchemaOrg\Type $jsonLd) : string {
         $graph = new Graph();
         $graph->parse(json_encode($jsonLd->toArray()), 'jsonld');
+
         return $graph->serialise('rdfxml');
     }
 
     public function simplifyArray(array $entityArray) : mixed {
         switch (count($entityArray)) {
             case 0: return null;
+
             case 1: return $entityArray[0];
+
             default: return array_unique($entityArray);
         }
     }
@@ -41,7 +43,7 @@ class JsonLdSerializer {
         foreach ($firm->getFirmSources() as $firmSource) {
             $iri = $firmSource->getIri();
             if ($iri) {
-                $sameAs []= $iri;
+                $sameAs[] = $iri;
             }
         }
 
@@ -58,19 +60,19 @@ class JsonLdSerializer {
     public function getFirm(Firm $firm) : SchemaOrg\MultiTypedEntity {
         $affiliation = [];
         foreach (array_merge($firm->getFirmsRelated()->toArray(), $firm->getRelatedFirms()->toArray()) as $relatedFirm) {
-            $affiliation []= $this->getFirmStub($relatedFirm);
+            $affiliation[] = $this->getFirmStub($relatedFirm);
         }
 
         $members = [];
         foreach ($firm->getRelatedPeople() as $relatedPerson) {
-            $members []= $this->getPersonStub($relatedPerson);
+            $members[] = $this->getPersonStub($relatedPerson);
         }
 
         $entity = $this->getFirmStub($firm);
         $entity->organization()
             ->name($firm->getName())
-            ->setProperty('foundingDate', $firm->getStartDate()) //->foundingDate() expects DatetimeInterface
-            ->setProperty('dissolutionDate', $firm->getEndDate()) //->dissolutionDate() expects DatetimeInterface
+            ->setProperty('foundingDate', $firm->getStartDate()) // ->foundingDate() expects DatetimeInterface
+            ->setProperty('dissolutionDate', $firm->getEndDate()) // ->dissolutionDate() expects DatetimeInterface
             ->address(
                 Schema::postalAddress()
                     ->streetAddress($firm->getStreetAddress())
@@ -89,31 +91,31 @@ class JsonLdSerializer {
         return $entity;
     }
 
-    public function getPersonStub(Person $person) : \Spatie\SchemaOrg\Person {
+    public function getPersonStub(Person $person) : SchemaOrg\Person {
         $sameAs = [];
         if ($person->getViafUrl()) {
-            $sameAs []= $person->getViafUrl();
+            $sameAs[] = $person->getViafUrl();
         }
         if ($person->getWikipediaUrl()) {
-            $sameAs []= $person->getWikipediaUrl();
+            $sameAs[] = $person->getWikipediaUrl();
         }
+
         return Schema::person()
             ->identifier($this->generator->generate('person_show', ['id' => $person->getId()], UrlGeneratorInterface::ABSOLUTE_URL))
             ->sameAs($this->simplifyArray($sameAs))
         ;
     }
 
-
-    public function getPerson(Person $person) : \Spatie\SchemaOrg\Person {
+    public function getPerson(Person $person) : SchemaOrg\Person {
         $memberOf = [];
         foreach ($person->getRelatedFirms() as $relatedFirm) {
-            $memberOf []= $this->getFirmStub($relatedFirm);
+            $memberOf[] = $this->getFirmStub($relatedFirm);
         }
 
         $alternateName = [];
         foreach ($person->getTitleRoles() as $titleRole) {
             if ($titleRole->getTitle()->getPseudonym()) {
-                $alternateName []= $titleRole->getTitle()->getPseudonym();
+                $alternateName[] = $titleRole->getTitle()->getPseudonym();
             }
         }
 
@@ -123,9 +125,9 @@ class JsonLdSerializer {
             ->honorificPrefix($person->getTitle())
             ->alternateName($this->simplifyArray($alternateName))
             ->gender($person->getGenderString())
-            ->setProperty('birthDate', $person->getDob()) //->birthDate() expects DatetimeInterface
+            ->setProperty('birthDate', $person->getDob()) // ->birthDate() expects DatetimeInterface
             ->birthPlace($this->getGeoname($person->getCityOfBirth()))
-            ->setProperty('deathDate', $person->getDod()) //->deathDate() expects DatetimeInterface
+            ->setProperty('deathDate', $person->getDod()) // ->deathDate() expects DatetimeInterface
             ->deathPlace($this->getGeoname($person->getCityOfDeath()))
             ->image($person->getImageUrl())
             ->description($person->getNotes())
@@ -138,7 +140,7 @@ class JsonLdSerializer {
         foreach ($title->getTitleSources() as $titleSource) {
             $iri = $titleSource->getIri();
             if ($iri) {
-                $sameAs []= $iri;
+                $sameAs[] = $iri;
             }
         }
 
@@ -158,12 +160,12 @@ class JsonLdSerializer {
         $numberOfPages = null;
         $hasPart = [];
         if ($title->getVolumes() > 1) {
-            $paginationParts = preg_split('/;|,/', ($title->getPagination() ?? ''));
+            $paginationParts = preg_split('/;|,/', $title->getPagination() ?? '');
 
-            for ($index = 0; $index < $title->getVolumes(); ++$index) {
-                $volumeNumber = $index+1;
+            for ($index = 0; $index < $title->getVolumes(); $index++) {
+                $volumeNumber = $index + 1;
                 $volumeNumberOfPages = null;
-                if($index < count($paginationParts) && preg_match('/\d+/', $paginationParts[$index], $match)) {
+                if ($index < count($paginationParts) && preg_match('/\d+/', $paginationParts[$index], $match)) {
                     $volumeNumberOfPages = (int) $match[0];
                 }
 
@@ -176,17 +178,17 @@ class JsonLdSerializer {
                 $entity->book()
                     ->numberOfPages($volumeNumberOfPages)
                 ;
-                $hasPart []= $entity;
+                $hasPart[] = $entity;
             }
         } else {
-            if(preg_match('/\d+/', $title->getPagination(), $match)) {
+            if (preg_match('/\d+/', $title->getPagination(), $match)) {
                 $numberOfPages = (int) $match[0];
             }
         }
 
         $genre = [];
         foreach ($title->getGenres() as $titleGenre) {
-            $genre []= $titleGenre->getName();
+            $genre[] = $titleGenre->getName();
         }
 
         $offeredBy = [];
@@ -203,72 +205,71 @@ class JsonLdSerializer {
             $firmEntity = $this->getFirm($titleFirmRole->getFirm());
             $roleId = $titleFirmRole->getFirmrole()->getId();
 
-            if ($roleId == 1) {
+            if (1 === $roleId) {
                 // Unknown
-                $contributor []= $firmEntity; //Unknown so go with more generic contributor
-            } elseif ($roleId == 2) {
+                $contributor[] = $firmEntity; // Unknown so go with more generic contributor
+            } elseif (2 === $roleId) {
                 // Publisher
-                $publisher []= $firmEntity;
-            } elseif ($roleId == 3) {
+                $publisher[] = $firmEntity;
+            } elseif (3 === $roleId) {
                 // Printer
-                $manufacturer []= $firmEntity;
-                $provider []= $firmEntity;
-            } elseif ($roleId == 4) {
+                $manufacturer[] = $firmEntity;
+                $provider[] = $firmEntity;
+            } elseif (4 === $roleId) {
                 // Bookseller
-                $offeredBy []= $firmEntity;
-                $provider []= $firmEntity;
+                $offeredBy[] = $firmEntity;
+                $provider[] = $firmEntity;
             }
         }
         foreach ($title->getTitleRoles() as $titleRole) {
             $personEntity = $this->getPerson($titleRole->getPerson());
             $roleId = $titleRole->getRole()->getId();
 
-            if ($roleId == 1) {
+            if (1 === $roleId) {
                 // Author
-                $author []= $personEntity;
-            } elseif ($roleId == 2) {
+                $author[] = $personEntity;
+            } elseif (2 === $roleId) {
                 // Publisher
-                $publisher []= $personEntity;
-            } elseif ($roleId == 3) {
+                $publisher[] = $personEntity;
+            } elseif (3 === $roleId) {
                 // Bookseller
-                $provider []= $personEntity;
-            } elseif ($roleId == 4) {
+                $provider[] = $personEntity;
+            } elseif (4 === $roleId) {
                 // Printer
-                $provider []= $personEntity;
-            } elseif ($roleId == 5) {
+                $provider[] = $personEntity;
+            } elseif (5 === $roleId) {
                 // Editor
-                $editor []= $personEntity;
-            } elseif ($roleId == 6) {
+                $editor[] = $personEntity;
+            } elseif (6 === $roleId) {
                 // Editor
-                $translator []= $personEntity;
-            } elseif ($roleId == 7) {
+                $translator[] = $personEntity;
+            } elseif (7 === $roleId) {
                 // Engraver
-                $contributor []= $personEntity; // Engraver is harder to pin down so generic contributor
-            } elseif ($roleId == 9) {
+                $contributor[] = $personEntity; // Engraver is harder to pin down so generic contributor
+            } elseif (9 === $roleId) {
                 // Introducer
-                $contributor []= $personEntity; // Introducer is harder to pin down so generic contributor
-            } elseif ($roleId == 10) {
+                $contributor[] = $personEntity; // Introducer is harder to pin down so generic contributor
+            } elseif (10 === $roleId) {
                 // Illustrator
-                $illustrator []= $personEntity;
-            } elseif ($roleId == 11) {
+                $illustrator[] = $personEntity;
+            } elseif (11 === $roleId) {
                 // Compiler
-                $contributor []= $personEntity; // Compiler is harder to pin down so generic contributor
-            } elseif ($roleId == 12) {
+                $contributor[] = $personEntity; // Compiler is harder to pin down so generic contributor
+            } elseif (12 === $roleId) {
                 // Composer
-                $contributor []= $personEntity; // Composer is harder to pin down so generic contributor
-            } elseif ($roleId == 13) {
+                $contributor[] = $personEntity; // Composer is harder to pin down so generic contributor
+            } elseif (13 === $roleId) {
                 // Contributor
-                $contributor []= $personEntity;
-            } elseif ($roleId == 16) {
+                $contributor[] = $personEntity;
+            } elseif (16 === $roleId) {
                 // Copyright Holder
-                $copyrightHolder []= $personEntity;
+                $copyrightHolder[] = $personEntity;
             }
         }
 
-
         $offers = [];
         if ($title->getTotalPrice() && $title->getTotalPrice() > 0) {
-            $offers []= Schema::offer()
+            $offers[] = Schema::offer()
                 ->price($title->getTotalPrice())
                 ->priceCurrency('GBX')
                 ->description('Price in British Pence')
@@ -278,7 +279,7 @@ class JsonLdSerializer {
         }
         if ($title->getOtherPrice() && $title->getOtherCurrency()) {
             $currency = $title->getOtherCurrency();
-            $offers []= Schema::offer()
+            $offers[] = Schema::offer()
                 ->price($title->getOtherPrice())
                 ->priceCurrency($currency->getCode())
                 ->serialNumber($title->getShelfmark())
@@ -288,27 +289,27 @@ class JsonLdSerializer {
 
         $isSimilarTo = [];
         foreach (array_merge($title->getRelatedTitles()->toArray(), $title->getTitlesRelated()->toArray()) as $relatedTitle) {
-            $isSimilarTo []= $this->getTitleStub($relatedTitle);
+            $isSimilarTo[] = $this->getTitleStub($relatedTitle);
         }
 
         $description = '';
         if ($title->getNotes()) {
-            $description .= "Notes: " . $title->getNotes();
+            $description .= 'Notes: ' . $title->getNotes();
         }
         if ($title->getSignedAuthor()) {
-            $description .= "\nSigned Author: " .$title->getSignedAuthor();
+            $description .= "\nSigned Author: " . $title->getSignedAuthor();
         }
-        if (!is_null($title->getSelfpublished()) && $title->getSelfpublished()) {
+        if (null !== $title->getSelfpublished() && $title->getSelfpublished()) {
             $description .= "\nSelf-published";
         }
         if ($title->getImprint()) {
-            $description .= "\nImprint: " .$title->getImprint();
+            $description .= "\nImprint: " . $title->getImprint();
         }
         if ($title->getColophon()) {
-            $description .= "\nColophon: " .$title->getColophon();
+            $description .= "\nColophon: " . $title->getColophon();
         }
         if ($title->getDateOfFirstPublication()) {
-            $description .= "\nDate of first publication: " .$title->getDateOfFirstPublication();
+            $description .= "\nDate of first publication: " . $title->getDateOfFirstPublication();
         }
 
         $entity = $this->getTitleStub($title);
@@ -317,7 +318,7 @@ class JsonLdSerializer {
             ->bookEdition($title->getEdition())
             ->version($title->getEditionNumber())
             ->copyrightNotice($title->getCopyright())
-            ->setProperty('datePublished', $title->getPubdate()) //->datePublished() expects DatetimeInterface
+            ->setProperty('datePublished', $title->getPubdate()) // ->datePublished() expects DatetimeInterface
             ->numberOfPages($numberOfPages)
             ->hasPart($this->simplifyArray($hasPart))
             ->offers($offers)
@@ -347,7 +348,7 @@ class JsonLdSerializer {
     }
 
     public function getFormat(?Format $format) : ?SchemaOrg\BookFormatType {
-        if (!$format) {
+        if ( ! $format) {
             return null;
         }
 
@@ -360,17 +361,18 @@ class JsonLdSerializer {
         ;
     }
 
-
     public function getGeonameStub(Geonames $geoname) : ?SchemaOrg\Place {
         return Schema::place()
             ->identifier($this->generator->generate('geonames_show', ['id' => $geoname->getGeonameid()], UrlGeneratorInterface::ABSOLUTE_URL))
-            ->sameAs("https://www.geonames.org/{$geoname->getGeonameid()}");
+            ->sameAs("https://www.geonames.org/{$geoname->getGeonameid()}")
+        ;
     }
 
     public function getGeoname(?Geonames $geoname) : ?SchemaOrg\Place {
-        if (!$geoname) {
+        if ( ! $geoname) {
             return null;
         }
+
         return $this->getGeonameStub($geoname)
             ->geo(
                 Schema::geoCoordinates()
@@ -382,6 +384,7 @@ class JsonLdSerializer {
                     ->addressLocality($geoname->getName())
                     ->addressCountry($geoname->getCountry())
             )
-            ->name($geoname->getName());
+            ->name($geoname->getName())
+        ;
     }
 }

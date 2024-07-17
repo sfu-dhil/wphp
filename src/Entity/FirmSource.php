@@ -64,25 +64,28 @@ class FirmSource {
 
     public function getIri() : ?string {
         $sourceId = $this->getSource()->getId();
-        if (!in_array($sourceId, [30, 93, 100, 143])) {
+        if ( ! in_array($sourceId, [30, 93, 100, 143], true)) {
             // Skip all but:
             // WorldCat (30)
             // British Book Trade Index (93)
             // London Metropolitan Archives Collections Catalogue (100)
             // Wikipedia (143)
             return null;
-        } elseif (!$this->getIdentifier()) {
+        }
+        if ( ! $this->getIdentifier()) {
             return null;
-        }elseif (preg_match('/https?:/', $this->getIdentifier())) {
+        }
+        if (preg_match('/https?:/', $this->getIdentifier())) {
             return $this->getIdentifier();
         }
-        if ($sourceId == 93) {
+        if (93 === $sourceId) {
             // British Book Trade Index
             $bbtiIdentifier = (int) $this->getIdentifier();
             if ($bbtiIdentifier) {
                 return "http://bbti.bodleian.ox.ac.uk/details/?traderid={$bbtiIdentifier}";
             }
         }
+
         return null;
         /*
          * Skipped sources that don't really work (with some notes):

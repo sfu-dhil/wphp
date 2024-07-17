@@ -10,6 +10,7 @@ use App\Form\Firm\FirmSearchType;
 use App\Form\Firm\FirmType;
 use App\Repository\FirmRepository;
 use App\Services\CsvExporter;
+use App\Services\JsonLdSerializer;
 use App\Services\SourceLinker;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
@@ -18,16 +19,15 @@ use Nines\UtilBundle\Controller\PaginatorTrait;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-use App\Services\JsonLdSerializer;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * Firm controller.
@@ -55,10 +55,10 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
             'defaultSortDirection' => 'asc',
         ]);
 
-        if ($request->getRequestFormat() == 'json') {
+        if ('json' === $request->getRequestFormat()) {
             $jsonLdItems = [];
             foreach ($firms->getItems() as $firm) {
-                $jsonLdItems []= $jsonLdSerializer->getFirm($firm);
+                $jsonLdItems[] = $jsonLdSerializer->getFirm($firm);
             }
             $requestParams = $request->query->all();
             $lastPage = (int) ceil((float) $firms->getTotalItemCount() / (float) $firms->getItemNumberPerPage());
@@ -73,17 +73,20 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
                     '@id' => $this->generateUrl('firm_index', array_merge($requestParams, ['page' => $currentPage]), UrlGeneratorInterface::ABSOLUTE_URL),
                     '@type' => 'PartialCollectionView',
                     'first' => $this->generateUrl('firm_index', array_merge($requestParams, ['page' => 1]), UrlGeneratorInterface::ABSOLUTE_URL),
-                    'previous' => $currentPage == 1 ? null : $this->generateUrl('firm_index', array_merge($requestParams, ['page' => $currentPage - 1]), UrlGeneratorInterface::ABSOLUTE_URL),
-                    'next' => $currentPage == $lastPage ? null : $this->generateUrl('firm_index', array_merge($requestParams, ['page' => $currentPage + 1]), UrlGeneratorInterface::ABSOLUTE_URL),
+                    'previous' => 1 === $currentPage ? null : $this->generateUrl('firm_index', array_merge($requestParams, ['page' => $currentPage - 1]), UrlGeneratorInterface::ABSOLUTE_URL),
+                    'next' => $currentPage === $lastPage ? null : $this->generateUrl('firm_index', array_merge($requestParams, ['page' => $currentPage + 1]), UrlGeneratorInterface::ABSOLUTE_URL),
                     'last' => $this->generateUrl('firm_index', array_merge($requestParams, ['page' => $lastPage]), UrlGeneratorInterface::ABSOLUTE_URL),
                 ],
             ];
             $response = new JsonResponse($jsonLd);
             $response->headers->set('Content-Type', 'application/ld+json');
+
             return $response;
-        } elseif ($request->getRequestFormat() == 'xml') {
+        }
+        if ('xml' === $request->getRequestFormat()) {
             throw new AccessDeniedHttpException('RDF is not available on the index page.');
         }
+
         return $this->render('firm/index.html.twig', [
             'search_form' => $form->createView(),
             'firms' => $firms,
@@ -266,17 +269,19 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
      * @return array<string,mixed>     */
     #[Route(path: '/{id}.{_format}', name: 'firm_show', defaults: ['_format' => 'html'], methods: ['GET'])]
     public function showAction(Request $request, JsonLdSerializer $jsonLdSerializer, SourceLinker $linker, Firm $firm) : Response {
-        if (in_array($request->getRequestFormat(),  ['xml', 'json'])) {
+        if (in_array($request->getRequestFormat(), ['xml', 'json'], true)) {
             $jsonLd = $jsonLdSerializer->getFirm($firm);
-            if ($request->getRequestFormat() == 'xml') {
+            if ('xml' === $request->getRequestFormat()) {
                 $response = new Response($jsonLdSerializer->toRDF($jsonLd));
                 $response->headers->set('Content-Type', 'application/rdf+xml');
-                return $response;
-            } else {
-                $response = new JsonResponse($jsonLd);
-                $response->headers->set('Content-Type', 'application/ld+json');
+
                 return $response;
             }
+            $response = new JsonResponse($jsonLd);
+            $response->headers->set('Content-Type', 'application/ld+json');
+
+            return $response;
+
         }
         $firmRoles = $firm->getTitleFirmroles(true);
         if ( ! $this->getUser()) {

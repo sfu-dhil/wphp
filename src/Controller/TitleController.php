@@ -10,6 +10,7 @@ use App\Form\Title\TitleType;
 use App\Repository\TitleRepository;
 use App\Services\CsvExporter;
 use App\Services\EstcMarcImporter;
+use App\Services\JsonLdSerializer;
 use App\Services\SourceLinker;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
@@ -20,14 +21,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use App\Services\JsonLdSerializer;
 
 /**
  * Title controller.
@@ -57,10 +57,10 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
             'defaultSortDirection' => 'asc',
         ]);
 
-        if ($request->getRequestFormat() == 'json') {
+        if ('json' === $request->getRequestFormat()) {
             $jsonLdItems = [];
             foreach ($titles->getItems() as $title) {
-                $jsonLdItems []= $jsonLdSerializer->getTitle($title);
+                $jsonLdItems[] = $jsonLdSerializer->getTitle($title);
             }
             $requestParams = $request->query->all();
             $lastPage = (int) ceil((float) $titles->getTotalItemCount() / (float) $titles->getItemNumberPerPage());
@@ -75,17 +75,20 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
                     '@id' => $this->generateUrl('title_index', array_merge($requestParams, ['page' => $currentPage]), UrlGeneratorInterface::ABSOLUTE_URL),
                     '@type' => 'PartialCollectionView',
                     'first' => $this->generateUrl('title_index', array_merge($requestParams, ['page' => 1]), UrlGeneratorInterface::ABSOLUTE_URL),
-                    'previous' => $currentPage == 1 ? null : $this->generateUrl('title_index', array_merge($requestParams, ['page' => $currentPage - 1]), UrlGeneratorInterface::ABSOLUTE_URL),
-                    'next' => $currentPage == $lastPage ? null : $this->generateUrl('title_index', array_merge($requestParams, ['page' => $currentPage + 1]), UrlGeneratorInterface::ABSOLUTE_URL),
+                    'previous' => 1 === $currentPage ? null : $this->generateUrl('title_index', array_merge($requestParams, ['page' => $currentPage - 1]), UrlGeneratorInterface::ABSOLUTE_URL),
+                    'next' => $currentPage === $lastPage ? null : $this->generateUrl('title_index', array_merge($requestParams, ['page' => $currentPage + 1]), UrlGeneratorInterface::ABSOLUTE_URL),
                     'last' => $this->generateUrl('title_index', array_merge($requestParams, ['page' => $lastPage]), UrlGeneratorInterface::ABSOLUTE_URL),
                 ],
             ];
             $response = new JsonResponse($jsonLd);
             $response->headers->set('Content-Type', 'application/ld+json');
+
             return $response;
-        } elseif ($request->getRequestFormat() == 'xml') {
+        }
+        if ('xml' === $request->getRequestFormat()) {
             throw new AccessDeniedHttpException('RDF is not available on the index page.');
         }
+
         return $this->render('title/index.html.twig', [
             'search_form' => $form->createView(),
             'titles' => $titles,
@@ -330,17 +333,19 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
         if ( ! $this->getUser() && ! $title->getFinalattempt() && ! $title->getFinalcheck()) {
             throw new AccessDeniedHttpException('This title has not been verified and is not available to the public.');
         }
-        if (in_array($request->getRequestFormat(),  ['xml', 'json'])) {
+        if (in_array($request->getRequestFormat(), ['xml', 'json'], true)) {
             $jsonLd = $jsonLdSerializer->getTitle($title);
-            if ($request->getRequestFormat() == 'xml') {
+            if ('xml' === $request->getRequestFormat()) {
                 $response = new Response($jsonLdSerializer->toRDF($jsonLd));
                 $response->headers->set('Content-Type', 'application/rdf+xml');
-                return $response;
-            } else {
-                $response = new JsonResponse($jsonLd);
-                $response->headers->set('Content-Type', 'application/ld+json');
+
                 return $response;
             }
+            $response = new JsonResponse($jsonLd);
+            $response->headers->set('Content-Type', 'application/ld+json');
+
+            return $response;
+
         }
         $similar = [];
         if ($this->getUser()) {

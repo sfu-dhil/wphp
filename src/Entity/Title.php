@@ -281,6 +281,7 @@ class Title extends AbstractEntity {
         if ($this->sizeL) {
             return "{$this->sizeL} cm";
         }
+
         return null;
     }
 
@@ -298,6 +299,7 @@ class Title extends AbstractEntity {
         if ($this->sizeW) {
             return "{$this->sizeW} cm";
         }
+
         return null;
     }
 
@@ -305,6 +307,7 @@ class Title extends AbstractEntity {
         if ($this->sizeW && $this->sizeL) {
             return "{$this->sizeW} cm x {$this->sizeL} cm";
         }
+
         return null;
     }
 

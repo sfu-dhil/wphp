@@ -60,17 +60,19 @@ class TitleSource {
     }
 
     public function getIri() : ?string {
-        if (!$this->getIdentifier()) {
+        if ( ! $this->getIdentifier()) {
             return null;
-        } elseif (preg_match('/https?:/', $this->getIdentifier())) {
+        }
+        if (preg_match('/https?:/', $this->getIdentifier())) {
             return $this->getIdentifier();
         }
 
         $sourceId = $this->getSource()->getId();
-        if ($sourceId == 2) {
+        if (2 === $sourceId) {
             // ESTC
             return "http://estc.bl.uk/{$this->getIdentifier()}";
-        } elseif (in_array($sourceId, [3, 4, 78, 79, 80, 81, 82, 83, 84])) {
+        }
+        if (in_array($sourceId, [3, 4, 78, 79, 80, 81, 82, 83, 84], true)) {
             // TODO: Note I'm making up a iri for this
             // The English Novel 1770-1829
             // The English Novel 1830-1836
@@ -82,66 +84,89 @@ class TitleSource {
             // The English Novel, 1800–1829: Update 5 (August 2004–August 2005)
             // The English Novel, 1800–1829 & 1830–1836 : Update 6 (August 2005–August 2009)
             $tenIdentifier = str_replace(' ', '', $this->getIdentifier());
+
             return "The English Novel:{$tenIdentifier}";
-        } elseif ($sourceId == 5) {
+        }
+        if (5 === $sourceId) {
             // TODO: Note I cannot access the resource to check if it works. Semi based on the SourceLinker but without modifying the identifier the same way (only remove the `GALE|` part)
             // ECCO / Eighteenth Century Collections Online
             $galeIdentifier = str_replace('GALE|', '', $this->getIdentifier());
+
             return "http://link.galegroup.com/apps/doc/{$galeIdentifier}/ECCO";
-        } elseif ($sourceId == 7) {
+        }
+        if (7 === $sourceId) {
             // TODO: The website isn't up atm so just guessing that these links work
             // British Library
             return "http://explore.bl.uk/{$this->getIdentifier()}";
-        } elseif ($sourceId == 8) {
+        }
+        if (8 === $sourceId) {
             // TODO: Note I'm making up this link (can't find the proper way to ref identifier to a page)
             // Orlando
             return "http://orlando.cambridge.org/{$this->getIdentifier()}";
-        } elseif ($sourceId == 11) {
+        }
+        if (11 === $sourceId) {
             // Jackson Bibliography
             return "https://jacksonbibliography.library.utoronto.ca/search/details/{$this->getIdentifier()}";
-        } elseif ($sourceId == 12) {
+        }
+        if (12 === $sourceId) {
             // Hathi Trust Digital Library
             return "https://catalog.hathitrust.org/Record/{$this->getIdentifier()}";
-        } elseif ($sourceId == 13) {
+        }
+        if (13 === $sourceId) {
             // Google Books
             return "https://books.google.ca/books?id={$this->getIdentifier()}";
-        } elseif ($sourceId == 14) {
+        }
+        if (14 === $sourceId) {
             // TODO: Note I'm making up a iri for this
             // NSTC (Nineteenth Century Short Title Catalogue)
             return "NSTC:{$this->getIdentifier()}";
-        } elseif ($sourceId == 15) {
+        }
+        if (15 === $sourceId) {
             // TODO: Note I cannot access the resource to check if it works. based on ECCO (5)
             // NCCO (Nineteenth Century Collections Online)
             $galeIdentifier = str_replace('GALE|', '', $this->getIdentifier());
+
             return "http://link.galegroup.com/apps/doc/{$galeIdentifier}/NCCO";
-        } elseif ($sourceId == 20 && is_integer($this->getIdentifier())) {
+        }
+        if (20 === $sourceId && is_int($this->getIdentifier())) {
             // Stanford University Library
             return "https://searchworks.stanford.edu/view/{$this->getIdentifier()}";
-        } elseif ($sourceId == 23) {
+        }
+        if (23 === $sourceId) {
             // Osborne Collection of Early Children's Books
             $osborneIdentifier = str_replace('u', '', $this->getIdentifier());
+
             return "https://www.torontopubliclibrary.ca/detail.jsp?Ntt={$osborneIdentifier}";
-        } elseif ($sourceId == 28) {
+        }
+        if (28 === $sourceId) {
             // Internet Archive
             return "https://archive.org/details/{$this->getIdentifier()}";
-        }elseif ($sourceId == 28) {
+        }
+        if (28 === $sourceId) {
             // WorldCat
             return "http://www.worldcat.org/oclc/{$this->getIdentifier()}";
-        } elseif ($sourceId == 50) {
+        }
+        if (50 === $sourceId) {
             // Osborne Collection of Early Children's Books
             $btwIdentifier = str_replace('BTW', '', $this->getIdentifier());
+
             return "https://www.british-travel-writing.org/texts/{$btwIdentifier}";
-        } elseif ($sourceId == 56) {
+        }
+        if (56 === $sourceId) {
             // Bodleian Library
             return "http://solo.bodleian.ox.ac.uk/permalink/f/ds4uo7/oxfaleph{$this->getIdentifier()}";
-        } elseif ($sourceId == 75) {
+        }
+        if (75 === $sourceId) {
             // American Antiquarian Society
             $aasIdentifier = str_replace('Catalog Record #', '', $this->getIdentifier());
+
             return "https://catalog.mwa.org/vwebv/holdingsInfo?bibId={$aasIdentifier}";
-        } elseif ($sourceId == 132) {
+        }
+        if (132 === $sourceId) {
             // Baker Library, Harvard University
             return "http://id.lib.harvard.edu/alma/{$this->getIdentifier()}/catalog";
         }
+
         return null;
         /*
          * Skipped sources that don't really work (with some notes):

@@ -10,22 +10,22 @@ use App\Form\Person\PersonSearchType;
 use App\Form\Person\PersonType;
 use App\Repository\PersonRepository;
 use App\Services\CsvExporter;
+use App\Services\JsonLdSerializer;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Nines\UtilBundle\Controller\PaginatorTrait;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-use App\Services\JsonLdSerializer;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * Person controller.
@@ -51,10 +51,10 @@ class PersonController extends AbstractController implements PaginatorAwareInter
             'defaultSortDirection' => 'asc',
         ]);
 
-        if ($request->getRequestFormat() == 'json') {
+        if ('json' === $request->getRequestFormat()) {
             $jsonLdItems = [];
             foreach ($people->getItems() as $person) {
-                $jsonLdItems []= $jsonLdSerializer->getPerson($person);
+                $jsonLdItems[] = $jsonLdSerializer->getPerson($person);
             }
             $requestParams = $request->query->all();
             $lastPage = (int) ceil((float) $people->getTotalItemCount() / (float) $people->getItemNumberPerPage());
@@ -69,17 +69,20 @@ class PersonController extends AbstractController implements PaginatorAwareInter
                     '@id' => $this->generateUrl('person_index', array_merge($requestParams, ['page' => $currentPage]), UrlGeneratorInterface::ABSOLUTE_URL),
                     '@type' => 'PartialCollectionView',
                     'first' => $this->generateUrl('person_index', array_merge($requestParams, ['page' => 1]), UrlGeneratorInterface::ABSOLUTE_URL),
-                    'previous' => $currentPage == 1 ? null : $this->generateUrl('person_index', array_merge($requestParams, ['page' => $currentPage - 1]), UrlGeneratorInterface::ABSOLUTE_URL),
-                    'next' => $currentPage == $lastPage ? null : $this->generateUrl('person_index', array_merge($requestParams, ['page' => $currentPage + 1]), UrlGeneratorInterface::ABSOLUTE_URL),
+                    'previous' => 1 === $currentPage ? null : $this->generateUrl('person_index', array_merge($requestParams, ['page' => $currentPage - 1]), UrlGeneratorInterface::ABSOLUTE_URL),
+                    'next' => $currentPage === $lastPage ? null : $this->generateUrl('person_index', array_merge($requestParams, ['page' => $currentPage + 1]), UrlGeneratorInterface::ABSOLUTE_URL),
                     'last' => $this->generateUrl('person_index', array_merge($requestParams, ['page' => $lastPage]), UrlGeneratorInterface::ABSOLUTE_URL),
                 ],
             ];
             $response = new JsonResponse($jsonLd);
             $response->headers->set('Content-Type', 'application/ld+json');
+
             return $response;
-        } elseif ($request->getRequestFormat() == 'xml') {
+        }
+        if ('xml' === $request->getRequestFormat()) {
             throw new AccessDeniedHttpException('RDF is not available on the index page.');
         }
+
         return $this->render('person/index.html.twig', [
             'search_form' => $form->createView(),
             'people' => $people,
@@ -289,17 +292,19 @@ class PersonController extends AbstractController implements PaginatorAwareInter
      * @return array<string,mixed>     */
     #[Route(path: '/{id}.{_format}', name: 'person_show', defaults: ['_format' => 'html'], methods: ['GET'])]
     public function showAction(Request $request, JsonLdSerializer $jsonLdSerializer, Person $person) : Response {
-        if (in_array($request->getRequestFormat(),  ['xml', 'json'])) {
+        if (in_array($request->getRequestFormat(), ['xml', 'json'], true)) {
             $jsonLd = $jsonLdSerializer->getPerson($person);
-            if ($request->getRequestFormat() == 'xml') {
+            if ('xml' === $request->getRequestFormat()) {
                 $response = new Response($jsonLdSerializer->toRDF($jsonLd));
                 $response->headers->set('Content-Type', 'application/rdf+xml');
-                return $response;
-            } else {
-                $response = new JsonResponse($jsonLd);
-                $response->headers->set('Content-Type', 'application/ld+json');
+
                 return $response;
             }
+            $response = new JsonResponse($jsonLd);
+            $response->headers->set('Content-Type', 'application/ld+json');
+
+            return $response;
+
         }
         $titleRoles = $person->getTitleRoles(true);
         if ( ! $this->getUser()) {

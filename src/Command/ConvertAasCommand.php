@@ -296,9 +296,9 @@ class ConvertAasCommand extends Command {
         $dod = '';
 
         $fullName = preg_replace(array_keys(self::NAME_PUNCT), array_values(self::NAME_PUNCT), $field->subfield('a'));
-        $nameParts = preg_split('/,\\s*/u', $fullName, 2);
+        $nameParts = preg_split('/,\s*/u', $fullName, 2);
         if ($field->subfield('q')) {
-            $nameParts[1] = preg_replace('/^\\(|\\),?$/u', '', $field->subfield('q'));
+            $nameParts[1] = preg_replace('/^\(|\),?$/u', '', $field->subfield('q'));
         }
         if ($datePart = $field->subfield('d')) {
             $m = [];
@@ -350,11 +350,11 @@ class ConvertAasCommand extends Command {
             if ($dimensions = $physicalDesc->subfield('c')) {
                 $title->setFormat($this->parseFormat($dimensions));
                 $m = [];
-                if (preg_match('/(\\d+)\\s*x(\\d+)\\s*cm/u', $dimensions, $m)) {
+                if (preg_match('/(\d+)\s*x(\d+)\s*cm/u', $dimensions, $m)) {
                     $title->setSizeL($m[1]);
                     $title->setSizeW($m[2]);
                 } else {
-                    if (preg_match('/(\\d+)\\s*cm/u', $dimensions, $m)) {
+                    if (preg_match('/(\d+)\s*cm/u', $dimensions, $m)) {
                         $title->setSizeL($m[1]);
                     }
                 }

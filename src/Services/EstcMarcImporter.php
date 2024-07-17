@@ -190,11 +190,11 @@ class EstcMarcImporter {
         }
         $data = $fields['300c']->getFieldData();
         $matches = [];
-        if (preg_match('/(\\d+)\\s*(?:cm)?\\s*x\\s*(\\d+)\\s*(?:cm)?/', (string) $data, $matches)) {
+        if (preg_match('/(\d+)\s*(?:cm)?\s*x\s*(\d+)\s*(?:cm)?/', (string) $data, $matches)) {
             return [$matches[1], $matches[2]];
         }
 
-        if (preg_match('/(\\d+)\\s*(?:cm|mm)/', (string) $data, $matches)) {
+        if (preg_match('/(\d+)\s*(?:cm|mm)/', (string) $data, $matches)) {
             return [$matches[1], null];
         }
 
@@ -225,7 +225,7 @@ class EstcMarcImporter {
             $title->setImprint($fields['260b']->getFieldData());
         }
         if (isset($fields['260c'])) {
-            $title->setPubdate(preg_replace('/\\.$/', '', $fields['260c']->getFieldData()));
+            $title->setPubdate(preg_replace('/\.$/', '', $fields['260c']->getFieldData()));
         }
 
         $titleSource = new TitleSource();
