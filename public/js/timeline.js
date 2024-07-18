@@ -54,7 +54,7 @@ class PersonTimeline{
      * @returns {number}
      */
     get numOfBooks(){
-        return this.data['@graph'].length;
+        return this.data.hasOfferCatalog?.numberOfItems || 0;
     }
 
     /**
@@ -90,7 +90,7 @@ class PersonTimeline{
      * @returns {Array}
      */
     get books(){
-        return this.data['@graph'];
+        return this.data.hasOfferCatalog?.itemListElement || [];
     }
 
     /**
@@ -98,14 +98,14 @@ class PersonTimeline{
      * @returns {Object}
      */
     get birth(){
-        return this.parseDate(this.data['birthDate']);
+        return this.parseDate(this.data.birthDate);
     }
     /**
      * Gets the parsed death date
      * @returns {Object}
      */
     get death(){
-        return this.parseDate(this.data['deathDate']);
+        return this.parseDate(this.data.deathDate);
     }
 
     /**
@@ -185,7 +185,7 @@ class PersonTimeline{
             console.error(e);
         });
     }
-    
+
     /**
      * Observes the Timeline so we can add styling, handling, etc
      * rather than try and hook into TimelineJS's processing (which
@@ -295,7 +295,7 @@ class PersonTimeline{
         // Now construct the events for the books
         for (const b of this.books){
             // Bail on books that don't have a publication date
-            if (!b['datePublished']){
+            if (!b.datePublished){
                 continue;
             }
             let book_event = this.buildBookEvent(b);
@@ -315,8 +315,8 @@ class PersonTimeline{
     buildBookEvent(b){
         let link = `<a href="${b['@id']}">View title record</a>`;
         // Publication dates can be ranges so we have to split it
-        let datePublished = parseInt(b['datePublished'].split('-')[0]);
-        let genre = b['genre'][0];
+        let datePublished = parseInt(b.datePublished?.split('-')[0] ?? '0');
+        let genre = Array.isArray(b.genre) ?  b.genre[0] : b.genre;
         let ageCaption;
         if (this.death && datePublished > this.death.year) {
             ageCaption = `<p>Published posthumously</p>`;

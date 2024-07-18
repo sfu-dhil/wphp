@@ -82,6 +82,7 @@ class JsonLdSerializer {
             ->location($this->getGeoname($firm->getCity()))
             ->description($firm->getNotes())
             ->members($this->simplifyArray($members))
+            ->hasOfferCatalog($this->getPublisherOfferCatalog($firm))
         ;
         $entity->person()
             ->affiliation($this->simplifyArray($affiliation))
@@ -132,6 +133,7 @@ class JsonLdSerializer {
             ->image($person->getImageUrl())
             ->description($person->getNotes())
             ->memberOf($this->simplifyArray($memberOf))
+            ->hasOfferCatalog($this->getAuthorOfferCatalog($person))
         ;
     }
 
@@ -154,7 +156,7 @@ class JsonLdSerializer {
         return $entity;
     }
 
-    public function getTitle(Title $title) : SchemaOrg\MultiTypedEntity {
+    public function getTitle(Title $title, bool $stubEntities = false) : SchemaOrg\MultiTypedEntity {
         // $title->getPseudonym(); used in Person (list of person's alternative names)
 
         $numberOfPages = null;
@@ -165,7 +167,7 @@ class JsonLdSerializer {
             for ($index = 0; $index < $title->getVolumes(); $index++) {
                 $volumeNumber = $index + 1;
                 $volumeNumberOfPages = null;
-                if ($index < count($paginationParts) && preg_match('/\d+/', $paginationParts[$index], $match)) {
+                if ($index < count($paginationParts) && preg_match('/\d+/', $paginationParts[$index] ?? '', $match)) {
                     $volumeNumberOfPages = (int) $match[0];
                 }
 
@@ -181,7 +183,7 @@ class JsonLdSerializer {
                 $hasPart[] = $entity;
             }
         } else {
-            if (preg_match('/\d+/', $title->getPagination(), $match)) {
+            if (preg_match('/\d+/', $title->getPagination() ?? '', $match)) {
                 $numberOfPages = (int) $match[0];
             }
         }
@@ -202,7 +204,7 @@ class JsonLdSerializer {
         $copyrightHolder = [];
         $manufacturer = [];
         foreach ($title->getTitleFirmroles() as $titleFirmRole) {
-            $firmEntity = $this->getFirm($titleFirmRole->getFirm());
+            $firmEntity = $stubEntities ? $this->getFirmStub($titleFirmRole->getFirm()) : $this->getFirm($titleFirmRole->getFirm());
             $roleId = $titleFirmRole->getFirmrole()->getId();
 
             if (1 === $roleId) {
@@ -222,7 +224,7 @@ class JsonLdSerializer {
             }
         }
         foreach ($title->getTitleRoles() as $titleRole) {
-            $personEntity = $this->getPerson($titleRole->getPerson());
+            $personEntity = $stubEntities ? $this->getPersonStub($titleRole->getPerson()) : $this->getPerson($titleRole->getPerson());
             $roleId = $titleRole->getRole()->getId();
 
             if (1 === $roleId) {
@@ -385,6 +387,49 @@ class JsonLdSerializer {
                     ->addressCountry($geoname->getCountry())
             )
             ->name($geoname->getName())
+        ;
+    }
+
+    public function getPublisherOfferCatalog(Firm $firm) : ?SchemaOrg\OfferCatalog {
+        $itemListElement = [];
+        foreach ($firm->getTitleFirmroles() as $titleFirmRole) {
+            $roleId = $titleFirmRole->getFirmrole()->getId();
+
+            if (2 === $roleId) {
+                // Publisher
+                $itemListElement[] = $this->getTitle($titleFirmRole->getTitle(), true);
+            }
+        }
+
+        if (0 === count($itemListElement)) {
+            return null;
+        }
+
+        return Schema::offerCatalog()
+            ->itemListElement($itemListElement)
+            ->numberOfItems(count($itemListElement))
+            ->description("List of books published by {$firm->getName()}")
+        ;
+    }
+
+    public function getAuthorOfferCatalog(Person $person) : ?SchemaOrg\OfferCatalog {
+        $itemListElement = [];
+        foreach ($person->getTitleRoles() as $titleRole) {
+            $roleId = $titleRole->getRole()->getId();
+            if (1 === $roleId) {
+                // Author
+                $itemListElement[] = $this->getTitle($titleRole->getTitle(), true);
+            }
+        }
+
+        if (0 === count($itemListElement)) {
+            return null;
+        }
+
+        return Schema::offerCatalog()
+            ->itemListElement($itemListElement)
+            ->numberOfItems(count($itemListElement))
+            ->description("List of books authored by {$person->getLastName()}, {$person->getFirstName()}")
         ;
     }
 }
