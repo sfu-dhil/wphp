@@ -23,8 +23,8 @@
             <li><a href="{{ path(path, parameters|merge({'format': 'apa'})) }}{{ query }}">APA</a></li>
             <li><a href="{{ path(path, parameters|merge({'format': 'bibtex'})) }}{{ query }}">BibTex</a></li>
             <li><a href="{{ path(path, parameters|merge({'format': 'csv'})) }}{{ query }}">CSV</a></li>
-            {% if json is defined %}
-                <li><a href='{{ json }}'>JSON-LD</a></li>
+            {% if jsonld is defined %}
+                <li><a href='{{ jsonld }}'>JSON-LD</a></li>
             {% endif %}
             {% if rdf is defined %}
                 <li><a href='{{ rdf }}'>RDF/XML</a></li>

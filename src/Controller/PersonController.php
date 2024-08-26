@@ -51,7 +51,7 @@ class PersonController extends AbstractController implements PaginatorAwareInter
             'defaultSortDirection' => 'asc',
         ]);
 
-        if ('json' === $request->getRequestFormat()) {
+        if (in_array($request->getRequestFormat(), ['jsonld', 'json'])) {
             $jsonLdItems = [];
             foreach ($people->getItems() as $person) {
                 $jsonLdItems[] = $jsonLdSerializer->getPerson($person);
@@ -79,7 +79,7 @@ class PersonController extends AbstractController implements PaginatorAwareInter
 
             return $response;
         }
-        if ('xml' === $request->getRequestFormat()) {
+        if (in_array($request->getRequestFormat(), ['rdf', 'xml'])) {
             throw new AccessDeniedHttpException('RDF is not available on the index page.');
         }
 
@@ -292,19 +292,16 @@ class PersonController extends AbstractController implements PaginatorAwareInter
      * @return array<string,mixed>     */
     #[Route(path: '/{id}.{_format}', name: 'person_show', defaults: ['_format' => 'html'], methods: ['GET'])]
     public function showAction(Request $request, JsonLdSerializer $jsonLdSerializer, Person $person) : Response {
-        if (in_array($request->getRequestFormat(), ['xml', 'json'], true)) {
+        if (in_array($request->getRequestFormat(), ['rdf', 'xml'])) {
             $jsonLd = $jsonLdSerializer->getPerson($person);
-            if ('xml' === $request->getRequestFormat()) {
-                $response = new Response($jsonLdSerializer->toRDF($jsonLd));
-                $response->headers->set('Content-Type', 'application/rdf+xml');
-
-                return $response;
-            }
+            $response = new Response($jsonLdSerializer->toRDF($jsonLd));
+            $response->headers->set('Content-Type', 'application/rdf+xml');
+            return $response;
+        } elseif (in_array($request->getRequestFormat(), ['jsonld', 'json'])) {
+            $jsonLd = $jsonLdSerializer->getPerson($person);
             $response = new JsonResponse($jsonLd);
             $response->headers->set('Content-Type', 'application/ld+json');
-
             return $response;
-
         }
         $titleRoles = $person->getTitleRoles(true);
         if ( ! $this->getUser()) {

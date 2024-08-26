@@ -22,8 +22,8 @@
         {% include 'partial/export.html.twig' with {
             'path': 'person_export',
             'parameters': {'id': person.id},
-            'json': path('person_show', {'id': person.id, '_format': 'json'}),
-            'rdf': path('person_show', {'id': person.id, '_format': 'xml'}),
+            'jsonld': path('person_show', {'id': person.id, '_format': 'jsonld'}),
+            'rdf': path('person_show', {'id': person.id, '_format': 'rdf'}),
         } %}
     {% endset %}
 {% endembed %}

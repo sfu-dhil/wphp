@@ -184,3 +184,10 @@ Automatically fix some standards errors
     docker exec -it wphp_app make dump.params
     docker exec -it wphp_app make dump.router
     docker exec -it wphp_app make dump.twig
+
+# RDF & jsonld exports
+
+    docker exec -it wphp_app php -d memory_limit=1G ./bin/console wphp:export nines --no-debug
+    docker exec -it wphp_app php -d memory_limit=1G ./bin/console wphp:export 18thConnect --no-debug
+    docker exec -it wphp_app php -d memory_limit=1G ./bin/console wphp:export jsonld --no-debug
+    docker exec -it wphp_app php -d memory_limit=1G ./bin/console wphp:export rdfxml --no-debug

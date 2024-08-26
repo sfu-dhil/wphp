@@ -55,7 +55,7 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
             'defaultSortDirection' => 'asc',
         ]);
 
-        if ('json' === $request->getRequestFormat()) {
+        if (in_array($request->getRequestFormat(), ['jsonld', 'json'])) {
             $jsonLdItems = [];
             foreach ($firms->getItems() as $firm) {
                 $jsonLdItems[] = $jsonLdSerializer->getFirm($firm);
@@ -83,7 +83,7 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
 
             return $response;
         }
-        if ('xml' === $request->getRequestFormat()) {
+        if (in_array($request->getRequestFormat(), ['rdf', 'xml'])) {
             throw new AccessDeniedHttpException('RDF is not available on the index page.');
         }
 
@@ -269,19 +269,16 @@ class FirmController extends AbstractController implements PaginatorAwareInterfa
      * @return array<string,mixed>     */
     #[Route(path: '/{id}.{_format}', name: 'firm_show', defaults: ['_format' => 'html'], methods: ['GET'])]
     public function showAction(Request $request, JsonLdSerializer $jsonLdSerializer, SourceLinker $linker, Firm $firm) : Response {
-        if (in_array($request->getRequestFormat(), ['xml', 'json'], true)) {
+        if (in_array($request->getRequestFormat(), ['rdf', 'xml'])) {
+            $jsonLd = $jsonLdSerializer->getFirm($firm, true);
+            $response = new Response($jsonLdSerializer->toRDF($jsonLd));
+            $response->headers->set('Content-Type', 'application/rdf+xml');
+            return $response;
+        } elseif (in_array($request->getRequestFormat(), ['jsonld', 'json'])) {
             $jsonLd = $jsonLdSerializer->getFirm($firm);
-            if ('xml' === $request->getRequestFormat()) {
-                $response = new Response($jsonLdSerializer->toRDF($jsonLd));
-                $response->headers->set('Content-Type', 'application/rdf+xml');
-
-                return $response;
-            }
             $response = new JsonResponse($jsonLd);
             $response->headers->set('Content-Type', 'application/ld+json');
-
             return $response;
-
         }
         $firmRoles = $firm->getTitleFirmroles(true);
         if ( ! $this->getUser()) {

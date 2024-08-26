@@ -3,10 +3,8 @@
 {% set makeTimeline = pagination|length > 0 %}
 
 {% block htmlhead %}
-    <link href='{{ path('person_show', {'id': person.id, '_format': 'xml'}) }}' type='application/rdf+xml'
-          rel='alternate'/>
-    <link href='{{ path('person_show', {'id': person.id, '_format': 'json'}) }}' type='application/ld+json'
-          rel='alternate'/>
+    <link href='{{ path('person_show', {'id': person.id, '_format': 'rdf'}) }}' type='application/rdf+xml' rel='alternate'/>
+    <link href='{{ path('person_show', {'id': person.id, '_format': 'jsonld'}) }}' type='application/ld+json' rel='alternate'/>
 {% endblock %}
 
 {% block styles %}

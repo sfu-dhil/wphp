@@ -144,6 +144,9 @@ class Title extends AbstractEntity {
     /**
      * @var Collection<int,Title>
      */
+    #[ORM\JoinTable(name: 'title_title')]
+    #[ORM\JoinColumn(name: 'title_source', referencedColumnName: 'id')]
+    #[ORM\InverseJoinColumn(name: 'title_target', referencedColumnName: 'id', unique: true)]
     #[ORM\ManyToMany(targetEntity: self::class, inversedBy: 'titlesRelated')]
     private array|Collection $relatedTitles;
 

@@ -23,7 +23,7 @@ class JsonLdSerializer {
 
     public function toRDF(SchemaOrg\Type $jsonLd) : string {
         $graph = new Graph();
-        $graph->parse(json_encode($jsonLd->toArray()), 'jsonld');
+        $graph->parse(json_encode($jsonLd), 'jsonld');
 
         return $graph->serialise('rdfxml');
     }
@@ -34,7 +34,7 @@ class JsonLdSerializer {
 
             case 1: return $entityArray[0];
 
-            default: return array_unique($entityArray);
+            default: return array_values(array_unique($entityArray));
         }
     }
 
@@ -75,6 +75,7 @@ class JsonLdSerializer {
             ->setProperty('dissolutionDate', $firm->getEndDate()) // ->dissolutionDate() expects DatetimeInterface
             ->address(
                 Schema::postalAddress()
+                    ->identifier($this->generator->generate('firm_show', ['id' => $firm->getId()], UrlGeneratorInterface::ABSOLUTE_URL) . '#postalAddress')
                     ->streetAddress($firm->getStreetAddress())
                     ->addressLocality($firm->getCity()?->getName())
                     ->addressCountry($firm->getCity()?->getCountry())
@@ -116,7 +117,7 @@ class JsonLdSerializer {
         $alternateName = [];
         foreach ($person->getTitleRoles() as $titleRole) {
             if ($titleRole->getTitle()->getPseudonym()) {
-                $alternateName[] = $titleRole->getTitle()->getPseudonym();
+                $alternateName[] = trim($titleRole->getTitle()->getPseudonym());
             }
         }
 
@@ -157,8 +158,6 @@ class JsonLdSerializer {
     }
 
     public function getTitle(Title $title, bool $stubEntities = false) : SchemaOrg\MultiTypedEntity {
-        // $title->getPseudonym(); used in Person (list of person's alternative names)
-
         $numberOfPages = null;
         $hasPart = [];
         if ($title->getVolumes() > 1) {
@@ -173,7 +172,7 @@ class JsonLdSerializer {
 
                 $entity = new SchemaOrg\MultiTypedEntity();
                 $entity->publicationVolume()
-                    // ->identifier($this->generator->generate('title_show', ['id' => $title->getId()], UrlGeneratorInterface::ABSOLUTE_URL) . "#volume={$volumeNumber}")
+                    ->identifier($this->generator->generate('title_show', ['id' => $title->getId()], UrlGeneratorInterface::ABSOLUTE_URL) . "#volume={$volumeNumber}")
                     ->volumeNumber($volumeNumber)
                     // ->pagination($title->getPagination())
                 ;
@@ -243,7 +242,7 @@ class JsonLdSerializer {
                 // Editor
                 $editor[] = $personEntity;
             } elseif (6 === $roleId) {
-                // Editor
+                // Translator
                 $translator[] = $personEntity;
             } elseif (7 === $roleId) {
                 // Engraver
@@ -272,6 +271,7 @@ class JsonLdSerializer {
         $offers = [];
         if ($title->getTotalPrice() && $title->getTotalPrice() > 0) {
             $offers[] = Schema::offer()
+                ->identifier($this->generator->generate('title_show', ['id' => $title->getId()], UrlGeneratorInterface::ABSOLUTE_URL) . '#offer-GBX')
                 ->price($title->getTotalPrice())
                 ->priceCurrency('GBX')
                 ->description('Price in British Pence')
@@ -282,6 +282,7 @@ class JsonLdSerializer {
         if ($title->getOtherPrice() && $title->getOtherCurrency()) {
             $currency = $title->getOtherCurrency();
             $offers[] = Schema::offer()
+                ->identifier($this->generator->generate('title_show', ['id' => $title->getId()], UrlGeneratorInterface::ABSOLUTE_URL) . '#offer-' . $currency->getCode())
                 ->price($title->getOtherPrice())
                 ->priceCurrency($currency->getCode())
                 ->serialNumber($title->getShelfmark())
@@ -378,11 +379,13 @@ class JsonLdSerializer {
         return $this->getGeonameStub($geoname)
             ->geo(
                 Schema::geoCoordinates()
+                    ->identifier($this->generator->generate('geonames_show', ['id' => $geoname->getGeonameid()], UrlGeneratorInterface::ABSOLUTE_URL) . '#geoCoordinates')
                     ->longitude($geoname->getLongitude())
                     ->latitude($geoname->getLatitude())
             )
             ->address(
                 Schema::postalAddress()
+                    ->identifier($this->generator->generate('geonames_show', ['id' => $geoname->getGeonameid()], UrlGeneratorInterface::ABSOLUTE_URL) . '#postalAddress')
                     ->addressLocality($geoname->getName())
                     ->addressCountry($geoname->getCountry())
             )
@@ -406,6 +409,7 @@ class JsonLdSerializer {
         }
 
         return Schema::offerCatalog()
+            ->identifier($this->generator->generate('firm_show', ['id' => $firm->getId()], UrlGeneratorInterface::ABSOLUTE_URL) . '#offerCatalog')
             ->itemListElement($itemListElement)
             ->numberOfItems(count($itemListElement))
             ->description("List of books published by {$firm->getName()}")
@@ -427,6 +431,7 @@ class JsonLdSerializer {
         }
 
         return Schema::offerCatalog()
+            ->identifier($this->generator->generate('person_show', ['id' => $person->getId()], UrlGeneratorInterface::ABSOLUTE_URL) . '#offerCatalog')
             ->itemListElement($itemListElement)
             ->numberOfItems(count($itemListElement))
             ->description("List of books authored by {$person->getLastName()}, {$person->getFirstName()}")

@@ -28,6 +28,7 @@ parameters:
         - spotlight_firms
         - miscellaneous-spotlights
 
+    export_root_dir: '%kernel.project_dir%/data/%kernel.environment%/exports'
     nines.editor.upload_dir: '%kernel.project_dir%/public/images/blog'
     page_size: 25
 

@@ -11,6 +11,7 @@ use App\Repository\TitleRepository;
 use App\Services\CsvExporter;
 use App\Services\EstcMarcImporter;
 use App\Services\JsonLdSerializer;
+use App\Services\NinesSerializer;
 use App\Services\SourceLinker;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
@@ -57,7 +58,7 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
             'defaultSortDirection' => 'asc',
         ]);
 
-        if ('json' === $request->getRequestFormat()) {
+        if (in_array($request->getRequestFormat(), ['jsonld', 'json'])) {
             $jsonLdItems = [];
             foreach ($titles->getItems() as $title) {
                 $jsonLdItems[] = $jsonLdSerializer->getTitle($title);
@@ -85,7 +86,7 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
 
             return $response;
         }
-        if ('xml' === $request->getRequestFormat()) {
+        if (in_array($request->getRequestFormat(), ['rdf', 'xml'])) {
             throw new AccessDeniedHttpException('RDF is not available on the index page.');
         }
 
@@ -133,13 +134,14 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
             $qb->where('e.finalcheck = 1 OR e.finalattempt = 1');
         }
         $qb->orderBy('e.id');
-        $iterator = $qb->getQuery()->iterate();
+        $iterator = $qb->getQuery()->toIterable();
         $tmpPath = tempnam(sys_get_temp_dir(), 'wphp-export-');
         $fh = fopen($tmpPath, 'w');
         fputcsv($fh, $exporter->titleHeaders());
 
-        foreach ($iterator as $row) {
-            fputcsv($fh, $exporter->titleRow($row[0]));
+        foreach ($iterator as $title) {
+            fputcsv($fh, $exporter->titleRow($title));
+            $em->detach($title);
         }
         fclose($fh);
         $response = new BinaryFileResponse($tmpPath);
@@ -327,25 +329,22 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
     /**
      * Finds and displays a Title entity.
      *
-     * @return array<string,mixed>     */
+     */
     #[Route(path: '/{id}.{_format}', name: 'title_show', defaults: ['_format' => 'html'], methods: ['GET'])]
     public function showAction(Request $request, JsonLdSerializer $jsonLdSerializer, SourceLinker $linker, TitleRepository $repo, Title $title) : Response {
         if ( ! $this->getUser() && ! $title->getFinalattempt() && ! $title->getFinalcheck()) {
             throw new AccessDeniedHttpException('This title has not been verified and is not available to the public.');
         }
-        if (in_array($request->getRequestFormat(), ['xml', 'json'], true)) {
+        if (in_array($request->getRequestFormat(), ['rdf', 'xml'])) {
+            $jsonLd = $jsonLdSerializer->getTitle($title, true);
+            $response = new Response($jsonLdSerializer->toRDF($jsonLd));
+            $response->headers->set('Content-Type', 'application/rdf+xml');
+            return $response;
+        } elseif (in_array($request->getRequestFormat(), ['jsonld', 'json'])) {
             $jsonLd = $jsonLdSerializer->getTitle($title);
-            if ('xml' === $request->getRequestFormat()) {
-                $response = new Response($jsonLdSerializer->toRDF($jsonLd));
-                $response->headers->set('Content-Type', 'application/rdf+xml');
-
-                return $response;
-            }
             $response = new JsonResponse($jsonLd);
             $response->headers->set('Content-Type', 'application/ld+json');
-
             return $response;
-
         }
         $similar = [];
         if ($this->getUser()) {
@@ -356,7 +355,23 @@ class TitleController extends AbstractController implements PaginatorAwareInterf
             'title' => $title,
             'linker' => $linker,
             'similar' => $similar,
+            'relations' => array_merge($title->getRelatedTitles()->toArray(), $title->getTitlesRelated()->toArray()),
         ]);
+    }
+
+    /**
+     * Finds and displays a Title entity.
+     */
+    #[Route(path: '/{id}/nines.rdf', name: 'nines_title_show', defaults: ['_format' => 'rdf'], methods: ['GET'])]
+    public function showNines(NinesSerializer $ninesSerializer, Title $title) : Response {
+        if ( ! $this->getUser() && ! $title->getFinalattempt() && ! $title->getFinalcheck()) {
+            throw new AccessDeniedHttpException('This title has not been verified and is not available to the public.');
+        }
+
+        $response = new Response($ninesSerializer->getTitle($title));
+        $response->headers->set('Content-Type', 'application/rdf+xml');
+
+        return $response;
     }
 
     /**
