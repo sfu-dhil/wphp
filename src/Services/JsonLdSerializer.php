@@ -101,6 +101,9 @@ class JsonLdSerializer {
         if ($person->getWikipediaUrl()) {
             $sameAs[] = $person->getWikipediaUrl();
         }
+        if ($person->getJacksonUrl()) {
+            $sameAs[] = $person->getJacksonUrl();
+        }
 
         return Schema::person()
             ->identifier($this->generator->generate('person_show', ['id' => $person->getId()], UrlGeneratorInterface::ABSOLUTE_URL))

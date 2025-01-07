@@ -117,6 +117,14 @@
                             {% endif %}
                         </td>
                     </tr>
+                    <tr>
+                        <th data-bs-toggle="popover" data-bs-content="{{ 'person.fields.jacksonUrl'|trans }}">Jackson Entry</th>
+                        <td>
+                            {% if person.jacksonUrl %}
+                                <a href="{{person.jacksonUrl }}">{{ person.jacksonUrl }}</a>
+                            {% endif %}
+                        </td>
+                    </tr>
                     <tr data-bs-toggle="popover" data-bs-content="{{ 'person.fields.imageUrl'|trans }}">
                         <th>Image URL</th>
                         <td>

@@ -53,6 +53,10 @@ class Person extends AbstractEntity {
     private ?string $wikipediaUrl = null;
 
     #[Assert\Url]
+    #[ORM\Column(name: 'jackson_url', type: 'string', length: 255, nullable: true)]
+    private ?string $jacksonUrl = null;
+
+    #[Assert\Url]
     #[ORM\Column(name: 'image_link', type: 'string', length: 255, nullable: true)]
     private ?string $imageUrl = null;
 
@@ -270,6 +274,17 @@ class Person extends AbstractEntity {
 
     public function getWikipediaUrl() : ?string {
         return $this->wikipediaUrl;
+    }
+
+
+    public function setJacksonUrl(?string $jacksonUrl = null) : self {
+        $this->jacksonUrl = $jacksonUrl;
+
+        return $this;
+    }
+
+    public function getJacksonUrl() : ?string {
+        return $this->jacksonUrl;
     }
 
     public function setImageUrl(?string $imageUrl = null) : self {

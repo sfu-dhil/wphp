@@ -163,6 +163,7 @@ person:
     title: Person's aristocratic title
     viafUrl: Link to perons's Virtual International Authority File if available
     wikipediaUrl: Link to person's Wikipedia entry
+    jacksonUrl: Link to person's Jackson Bibliography entry
   form:
     <<: *person_fields
     cityOfBirth: Enter the place of birth
@@ -177,6 +178,7 @@ person:
     title: Enter the person's aristocratic title, where appropriate
     viafUrl: Enter the link to a person's Virtual International Authority File if available
     wikipediaUrl: Enter the person’s entry in Wikipedia if available
+    jacksonUrl: Enter the person’s entry in Jackson Bibliography if available
   search:
     <<: *person_fields
     id: Search for a person by entering the person ID
@@ -187,6 +189,7 @@ person:
     name: Search for all or part of a person's name
     viafUrl: Enter a VIAF URI to check if we have a corresponding record. Enter <kbd>blank</kbd> to find records which do not have VIAF URIs.
     wikipediaUrl: Enter a Wikipedia URL to check if we have a corresponding record. Enter <kbd>blank</kbd> to find records which do not have Wikipedia URLs.
+    jacksonUrl: Enter a Jackson Bibliography URL to check if we have a corresponding record. Enter <kbd>blank</kbd> to find records which do not have Jackson Bibliography URLs.
     finalcheck: Limit results to person records that have been verified or not verified
 
 source:

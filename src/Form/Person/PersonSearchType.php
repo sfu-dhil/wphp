@@ -109,6 +109,11 @@ class PersonSearchType extends AbstractType {
             'required' => false,
             'help' => 'person.search.wikipediaUrl',
         ]);
+        $builder->add('jacksonUrl', TextType::class, [
+            'label' => 'Jackson URL',
+            'required' => false,
+            'help' => 'person.search.jacksonUrl',
+        ]);
         $builder->add('imageUrl', TextType::class, [
             'label' => 'Image URL',
             'required' => false,

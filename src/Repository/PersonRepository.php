@@ -242,6 +242,14 @@ class PersonRepository extends ServiceEntityRepository {
                 $qb->setParameter('wikipediaUrl', $data['wikipediaUrl']);
             }
         }
+        if (isset($data['jacksonUrl']) && $data['jacksonUrl']) {
+            if ('blank' === $data['jacksonUrl']) {
+                $qb->andWhere('e.jacksonUrl IS NULL');
+            } else {
+                $qb->andWhere('MATCH(e.jacksonUrl) AGAINST(:jacksonUrl BOOLEAN) > 0');
+                $qb->setParameter('jacksonUrl', $data['jacksonUrl']);
+            }
+        }
         if (isset($data['imageUrl']) && $data['imageUrl']) {
             if ('blank' === $data['imageUrl']) {
                 $qb->andWhere('e.imageUrl IS NULL');

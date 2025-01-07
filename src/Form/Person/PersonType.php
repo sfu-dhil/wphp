@@ -102,6 +102,11 @@ class PersonType extends AbstractType {
             'required' => false,
             'help' => 'person.form.wikipediaUrl',
         ]);
+        $builder->add('jacksonUrl', UrlType::class, [
+            'label' => 'Jackson URL',
+            'required' => false,
+            'help' => 'person.form.jacksonUrl',
+        ]);
         $builder->add('imageUrl', UrlType::class, [
             'label' => 'Image URL',
             'required' => false,
