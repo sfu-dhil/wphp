@@ -183,6 +183,9 @@ class PersonRepository extends ServiceEntityRepository {
             if (in_array('U', $data['gender'], true)) {
                 $genders[] = 'U';
             }
+            if (in_array('T', $data['gender'], true)) {
+                $genders[] = 'T';
+            }
             $qb->andWhere('e.gender in (:genders)');
             $qb->setParameter('genders', $genders);
         }

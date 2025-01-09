@@ -358,6 +358,9 @@ class TitleRepository extends ServiceEntityRepository {
                 if (in_array('U', $filter['gender'], true)) {
                     $genders[] = '';
                 }
+                if (in_array('T', $filter['gender'], true)) {
+                    $genders[] = 'T';
+                }
                 $qb->andWhere("{$pAlias}.gender in (:genders)");
                 $qb->setParameter('genders', $genders);
             }
