@@ -128,7 +128,7 @@ class GeonamesController extends AbstractController implements PaginatorAwareInt
         $client = new GeoNamesClient($user);
         $repo = $em->getRepository(Geonames::class);
 
-        foreach ($request->request->get('geonameid') as $geonameid) {
+        foreach ($request->request->all('geonameid') as $geonameid) {
             $data = $client->get([
                 'geonameId' => $geonameid,
                 'lang' => 'en',
