@@ -22,6 +22,7 @@
                 <th>Name</th>
                 <th>Description</th>
                 <th>Titles</th>
+                <th>Firms</th>
             </tr>
         {% endblock %}
         {% block tbody %}
@@ -35,8 +36,17 @@
                     <td>{{ source.description | raw }}</td>
                     <td>
                         <a href="{{ path('source_show', { 'id': source.id }) }}">
-                            {% if counts[source.id] is defined %}
-                                {{ counts[source.id] }}
+                            {% if titleCounts[source.id] is defined %}
+                                {{ titleCounts[source.id] }}
+                            {% else %}
+                                0
+                            {% endif %}
+                        </a>
+                    </td>
+                    <td>
+                        <a href="{{ path('source_firm_show', { 'id': source.id }) }}">
+                            {% if firmCounts[source.id] is defined %}
+                                {{ firmCounts[source.id] }}
                             {% else %}
                                 0
                             {% endif %}

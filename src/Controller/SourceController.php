@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\Entity\Source;
 use App\Entity\TitleSource;
+use App\Entity\FirmSource;
 use App\Form\SourceType;
 use App\Repository\SourceRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -33,14 +34,23 @@ class SourceController extends AbstractController implements PaginatorAwareInter
     #[Route(path: '/', name: 'source_index', methods: ['GET'])]
     #[Template]
     public function indexAction(Request $request, EntityManagerInterface $em, SourceRepository $repo) {
-        $qb = $em->createQueryBuilder();
-        $qb->select('IDENTITY(ts.source) as srcId, COUNT(DISTINCT(ts.title)) as cnt');
-        $qb->from(TitleSource::class, 'ts');
-        $qb->groupBy('ts.source');
-        $qb->orderBy('ts.source');
-        $counts = [];
-        foreach ($qb->getQuery()->getResult() as $result) {
-            $counts[$result['srcId']] = $result['cnt'];
+        $titleQb = $em->createQueryBuilder();
+        $titleQb->select('IDENTITY(ts.source) as srcId, COUNT(DISTINCT(ts.title)) as cnt');
+        $titleQb->from(TitleSource::class, 'ts');
+        $titleQb->groupBy('ts.source');
+        $titleQb->orderBy('ts.source');
+        $titleCounts = [];
+        foreach ($titleQb->getQuery()->getResult() as $result) {
+            $titleCounts[$result['srcId']] = $result['cnt'];
+        }
+        $firmQb = $em->createQueryBuilder();
+        $firmQb->select('IDENTITY(fs.source) as srcId, COUNT(DISTINCT(fs.firm)) as cnt');
+        $firmQb->from(FirmSource::class, 'fs');
+        $firmQb->groupBy('fs.source');
+        $firmQb->orderBy('fs.source');
+        $firmCounts = [];
+        foreach ($firmQb->getQuery()->getResult() as $result) {
+            $firmCounts[$result['srcId']] = $result['cnt'];
         }
 
         $dql = 'SELECT e FROM App:Source e ORDER BY e.name';
@@ -50,7 +60,8 @@ class SourceController extends AbstractController implements PaginatorAwareInter
         return [
             'sources' => $sources,
             'repo' => $repo,
-            'counts' => $counts,
+            'titleCounts' => $titleCounts,
+            'firmCounts' => $firmCounts,
         ];
     }
 
@@ -113,14 +124,38 @@ class SourceController extends AbstractController implements PaginatorAwareInter
     #[Route(path: '/{id}', name: 'source_show', methods: ['GET'])]
     #[Template]
     public function showAction(Request $request, Source $source, EntityManagerInterface $em) {
-        $dql = 'SELECT t FROM App:Title t INNER JOIN t.titleSources ts WHERE ts.source = :source ORDER BY t.title';
-        $query = $em->createQuery($dql);
+        $query = $em->createQuery('SELECT t FROM App:Title t INNER JOIN t.titleSources ts WHERE ts.source = :source ORDER BY t.title');
         $query->setParameter('source', $source);
         $titles = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
 
+        $titleCountQuery = $em->createQuery('SELECT COUNT(DISTINCT(t.id)) FROM App:Title t INNER JOIN t.titleSources ts WHERE ts.source = :source');
+        $titleCountQuery->setParameter('source', $source);
+        $firmCountQuery = $em->createQuery('SELECT COUNT(DISTINCT(f.id)) FROM App:Firm f INNER JOIN f.firmSources fs WHERE fs.source = :source');
+        $firmCountQuery->setParameter('source', $source);
         return [
             'source' => $source,
             'titles' => $titles,
+            'titleCount' => $titleCountQuery->getSingleScalarResult(),
+            'firmCount' => $firmCountQuery->getSingleScalarResult(),
+        ];
+    }
+
+    #[Route(path: '/{id}/firms', name: 'source_firm_show', methods: ['GET'])]
+    #[Template]
+    public function firmsAction(Request $request, Source $source, EntityManagerInterface $em) {
+        $query = $em->createQuery('SELECT f FROM App:Firm f INNER JOIN f.firmSources fs WHERE fs.source = :source ORDER BY f.name');
+        $query->setParameter('source', $source);
+        $firms = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
+
+        $titleCountQuery = $em->createQuery('SELECT COUNT(DISTINCT(t.id)) FROM App:Title t INNER JOIN t.titleSources ts WHERE ts.source = :source');
+        $titleCountQuery->setParameter('source', $source);
+        $firmCountQuery = $em->createQuery('SELECT COUNT(DISTINCT(f.id)) FROM App:Firm f INNER JOIN f.firmSources fs WHERE fs.source = :source');
+        $firmCountQuery->setParameter('source', $source);
+        return [
+            'source' => $source,
+            'firms' => $firms,
+            'titleCount' => $titleCountQuery->getSingleScalarResult(),
+            'firmCount' => $firmCountQuery->getSingleScalarResult(),
         ];
     }
 

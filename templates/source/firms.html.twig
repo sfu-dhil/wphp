@@ -5,7 +5,6 @@
 {% endblock %}
 
 {% block body %}
-
     {% if is_granted('ROLE_CONTENT_ADMIN') %}
         <div class="btn-toolbar">
             <div class="btn-group ms-auto">
@@ -60,11 +59,11 @@
             </tr>
         {% endblock %}
     {% endembed %}
-    <a href="{{ path('source_firm_show', { 'id': source.id }) }}" class="btn btn-default">
-        View Source Firms
+    <a href="{{ path('source_show', { 'id': source.id }) }}" class="btn btn-default">
+        View Source Titles
     </a>
 
-    {% embed 'title/partial/page.html.twig' with {'titles': titles} %}
+    {% embed 'firm/partial/page.html.twig' with {'firms': firms} %}
     {% endembed %}
 
 {% endblock %}
