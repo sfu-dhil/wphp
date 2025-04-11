@@ -7,7 +7,7 @@
 
 {% block htmlhead %}
 <meta name="citation_title" content="{{ post.title }}"/>
-<meta name="citation_series_title" content="{{ post.category  }}"/>
+<meta name="citation_series_title" content="{{ post.category }}"/>
 <meta name="citation_journal_title" content="The Women's Print History Project"/>
 <meta name="citation_journal_abbrev" content="WPHP"/>
 <meta name="citation_public_url" content="{{ url('nines_blog_post_show', {'id': post.id}) }}"/>
@@ -53,11 +53,11 @@
     </div>
     <div class="blog-content">
         {% if post.pdfs|length > 0 %}
-            <div class="pdf-buttons d-grid gap-2">
+            <div class="pdf-buttons d-grid gap-2 justify-content-end">
                 {% for pdf in post.pdfs %}
-                    <a class="btn btn-link text-end" href="{{ path('nines_media_pdf_view', {'id': pdf.id}) }}" target="_blank">
-                        {{ pdf.originalName|trim('.pdf') }}
+                    <a class="btn btn-primary" href="{{ path('nines_media_pdf_view', {'id': pdf.id}) }}" target="_blank">
                         <i class="bi bi-file-pdf"></i>
+                        {{ post.category == 'News' ? 'Download PDF Transcript' : 'Download PDF Version' }}
                     </a>
                 {% endfor %}
             </div>
