@@ -174,7 +174,7 @@ class Builder extends AbstractBuilder {
                 ],
             ]);
 
-            $browse->addChild('ESTC Titles (pre 1750)', [
+            $browse->addChild('ESTC Titles (pre 1800)', [
                 'route' => 'titles_unverified_estc',
                 'linkAttributes' => [
                     'class' => 'dropdown-item link-dark',

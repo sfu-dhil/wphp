@@ -16,6 +16,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Doctrine\ORM\Query\Expr;
 
 /**
  * Reports controller.
@@ -273,15 +274,16 @@ class ReportController extends AbstractController implements PaginatorAwareInter
         /**
          * List the ESTC as a source
          * Are not final-checked, not hand-checked, and not attempted verified
-         * That have a publication date before 1750 (inclusive).
+         * That have a publication date before 1800 (inclusive).
          */
         $qb = $em->createQueryBuilder();
         $qb->select('title')
             ->from(Title::class, 'title')
-            ->where("YEAR(STRTODATE(title.pubdate, '%Y')) < 1750")
+            ->where("YEAR(STRTODATE(title.pubdate, '%Y')) <= 1800")
             ->andWhere('(title.checked = 0 AND title.finalattempt = 0 AND title.finalcheck = 0)')
-            ->innerJoin('title.titleSources', 'ts')
-            ->andWhere('ts.source = 2')
+            ->join('title.titleSources', 'ts', Expr\Join::WITH, $qb->expr()->eq('ts.source', 2))
+            ->leftJoin('title.titleSources', 'ts_2', Expr\Join::WITH, $qb->expr()->eq('ts_2.source', 75))
+            ->andWhere('ts_2.id IS NULL')
         ;
 
         $titles = $this->paginator->paginate($qb, $request->query->getInt('page', 1), 25, [
@@ -290,7 +292,7 @@ class ReportController extends AbstractController implements PaginatorAwareInter
         ]);
 
         return [
-            'heading' => 'ESTC Titles (pre 1750)',
+            'heading' => 'ESTC Titles (pre 1800 excluding AAS)',
             'titles' => $titles,
             'sortable' => true,
             'count' => $titles->getTotalItemCount(),
