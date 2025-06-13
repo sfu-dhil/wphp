@@ -268,9 +268,9 @@ class ReportController extends AbstractController implements PaginatorAwareInter
         ];
     }
 
-    #[Route(path: '/titles_unverified_estc', name: 'titles_unverified_estc', methods: ['GET'])]
+    #[Route(path: '/titles_unverified', name: 'titles_unverified', methods: ['GET'])]
     #[Template]
-    public function unverifiedEstcTitles(Request $request, EntityManagerInterface $em) : array {
+    public function unverifiedTitles(Request $request, EntityManagerInterface $em) : array {
         /**
          * List the ESTC as a source
          * Are not final-checked, not hand-checked, and not attempted verified
@@ -281,9 +281,8 @@ class ReportController extends AbstractController implements PaginatorAwareInter
             ->from(Title::class, 'title')
             ->where("YEAR(STRTODATE(title.pubdate, '%Y')) <= 1800")
             ->andWhere('(title.checked = 0 AND title.finalattempt = 0 AND title.finalcheck = 0)')
-            ->join('title.titleSources', 'ts', Expr\Join::WITH, $qb->expr()->eq('ts.source', 2))
-            ->leftJoin('title.titleSources', 'ts_2', Expr\Join::WITH, $qb->expr()->eq('ts_2.source', 75))
-            ->andWhere('ts_2.id IS NULL')
+            ->leftJoin('title.titleSources', 'ts', Expr\Join::WITH, $qb->expr()->eq('ts.source', 75))
+            ->andWhere('ts.id IS NULL')
         ;
 
         $titles = $this->paginator->paginate($qb, $request->query->getInt('page', 1), 25, [
@@ -292,7 +291,7 @@ class ReportController extends AbstractController implements PaginatorAwareInter
         ]);
 
         return [
-            'heading' => 'ESTC Titles (pre 1800 excluding AAS)',
+            'heading' => 'Unverified Pre-1800 Titles (excluding AAS)',
             'titles' => $titles,
             'sortable' => true,
             'count' => $titles->getTotalItemCount(),
