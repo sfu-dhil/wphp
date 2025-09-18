@@ -279,7 +279,7 @@ class ReportController extends AbstractController implements PaginatorAwareInter
         $qb = $em->createQueryBuilder();
         $qb->select('title')
             ->from(Title::class, 'title')
-            ->where("YEAR(STRTODATE(title.pubdate, '%Y')) <= 1800")
+            ->where("(CAST(REGEXP_REPLACE(title.pubdate,'^[^0-9]+', '') AS UNSIGNED) <= 1800 OR title.pubdate IS NULL)")
             ->andWhere('(title.checked = 0 AND title.finalattempt = 0 AND title.finalcheck = 0)')
             ->leftJoin('title.titleSources', 'ts', Expr\Join::WITH, $qb->expr()->eq('ts.source', 75))
             ->andWhere('ts.id IS NULL')
