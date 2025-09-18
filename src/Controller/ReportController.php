@@ -119,7 +119,46 @@ class ReportController extends AbstractController implements PaginatorAwareInter
         $titles = $this->paginator->paginate($qb, $request->query->getInt('page', 1), 25);
 
         return [
-            'heading' => 'Titles without a genre',
+            'heading' => 'Titles Without a Genre',
+            'titles' => $titles,
+            'count' => $titles->getTotalItemCount(),
+            'search_form' => $form->createView(),
+        ];
+    }
+
+    #[Route(path: '/titles_multi_genres', name: 'report_titles_multi_genres', methods: ['GET'])]
+    #[Template]
+    public function titlesMultiGenres(Request $request, EntityManagerInterface $em) : array {
+        $form = $this->createForm(TitleCheckFilterType::class);
+        $form->handleRequest($request);
+
+        $qb = $em->createQueryBuilder();
+        $qb->select('title')
+            ->addSelect('COUNT(g.id) AS HIDDEN genre_count')
+            ->from(Title::class, 'title')
+            ->join('title.genres', 'g')
+            ->andHaving('genre_count >= 2')
+            ->groupBy('title.id')
+        ;
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $filter = $form->getData();
+            if (null !== $filter->getFinalcheck()) {
+                $qb->andWhere('title.finalcheck = :finalcheck');
+                $qb->setParameter('finalcheck', $filter->getFinalcheck());
+            }
+            if (null !== $filter->getFinalattempt()) {
+                $qb->andWhere('title.finalattempt = :finalattempt');
+                $qb->setParameter('finalattempt', $filter->getFinalattempt());
+            }
+        }
+
+        $titles = $this->paginator->paginate($qb, $request->query->getInt('page', 1), 25, [
+            'wrap-queries' => true
+        ]);
+
+        return [
+            'heading' => 'Titles with Multiple Genres',
             'titles' => $titles,
             'count' => $titles->getTotalItemCount(),
             'search_form' => $form->createView(),

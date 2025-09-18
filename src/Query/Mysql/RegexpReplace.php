@@ -1,7 +1,7 @@
 <?php
 // taken from https://github.com/beberlei/DoctrineExtensions/pull/406
 
-namespace DoctrineExtensions\Query\Mysql;
+namespace App\Query\Mysql;
 
 use Doctrine\ORM\Query\AST\Functions\FunctionNode;
 use Doctrine\ORM\Query\Lexer;

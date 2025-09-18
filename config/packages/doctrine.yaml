@@ -19,7 +19,7 @@ doctrine:
                 alias: App
         dql:
             string_functions:
-                regexp_replace: DoctrineExtensions\Query\Mysql\RegexpReplace
+                regexp_replace: App\Query\Mysql\RegexpReplace
 
 when@test:
     doctrine:
