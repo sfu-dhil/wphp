@@ -174,7 +174,7 @@ class Builder extends AbstractBuilder {
                 ],
             ]);
 
-            $browse->addChild('Unverified Pre-1800 Titles (excluding AAS)', [
+            $browse->addChild('Unverified Titles (excluding AAS)', [
                 'route' => 'titles_unverified',
                 'linkAttributes' => [
                     'class' => 'dropdown-item link-dark',

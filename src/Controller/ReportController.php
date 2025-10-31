@@ -310,16 +310,10 @@ class ReportController extends AbstractController implements PaginatorAwareInter
     #[Route(path: '/titles_unverified', name: 'titles_unverified', methods: ['GET'])]
     #[Template]
     public function unverifiedTitles(Request $request, EntityManagerInterface $em) : array {
-        /**
-         * List the ESTC as a source
-         * Are not final-checked, not hand-checked, and not attempted verified
-         * That have a publication date before 1800 (inclusive).
-         */
         $qb = $em->createQueryBuilder();
         $qb->select('title')
             ->from(Title::class, 'title')
-            ->where("(CAST(REGEXP_REPLACE(title.pubdate,'^[^0-9]+', '') AS UNSIGNED) <= 1800 OR title.pubdate IS NULL)")
-            ->andWhere('(title.checked = 0 AND title.finalattempt = 0 AND title.finalcheck = 0)')
+            ->where('(title.checked = 0 AND title.finalattempt = 0 AND title.finalcheck = 0)')
             ->leftJoin('title.titleSources', 'ts', Expr\Join::WITH, $qb->expr()->eq('ts.source', 75))
             ->andWhere('ts.id IS NULL')
         ;
@@ -330,7 +324,7 @@ class ReportController extends AbstractController implements PaginatorAwareInter
         ]);
 
         return [
-            'heading' => 'Unverified Pre-1800 Titles (excluding AAS)',
+            'heading' => 'Unverified Titles (excluding AAS)',
             'titles' => $titles,
             'sortable' => true,
             'count' => $titles->getTotalItemCount(),
