@@ -53,7 +53,6 @@ security:
     access_control:
         # Default controller stuff - open to the public
         - { path: ^%router.request_context.base_url%/$, roles: PUBLIC_ACCESS }
-        - { path: ^%router.request_context.base_url%/privacy$, roles: PUBLIC_ACCESS }
 
         # user controller stuff - open to the public
         - { path: ^%router.request_context.base_url%/request$, roles: PUBLIC_ACCESS }

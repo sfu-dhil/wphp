@@ -58,14 +58,4 @@ class DefaultController extends AbstractController implements PaginatorAwareInte
         ];
     }
 
-    /**
-     * Privacy page.
-     *
-     * @return array{}
-     */
-    #[Route(path: '/privacy', name: 'privacy')]
-    #[Template]
-    public function privacyAction(Request $request) {
-        return [];
-    }
 }
