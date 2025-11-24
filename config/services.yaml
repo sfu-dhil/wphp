@@ -16,11 +16,6 @@ parameters:
 
     wphp.geonames.username: '%env(GEONAMES_USERNAME)%'
 
-    dhil.matomo_enabled: '%env(bool:MATOMO_ENABLED)%'
-    dhil.matomo_url: //matomo.lib.sfu.ca/library/
-    dhil.matomo_siteid: 32
-    dhil.matomo_domain: dhil.lib.sfu.ca/wphp
-
     wphp.title_index_authors: 3
     wphp.spotlight_menu:
         - spotlight_titles

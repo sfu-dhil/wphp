@@ -88,8 +88,5 @@
     {% block javascripts %}
     {% endblock %}
     <script src="{{ asset_prefix|default('') ~ asset('js/dist/main.js') }}" type="module"></script>
-    {% if matomo_enabled %}
-        {% include '@NinesUtil/matomo.html.twig' %}
-    {% endif %}
 </body>
 </html>
