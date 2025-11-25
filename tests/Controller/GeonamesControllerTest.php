@@ -28,7 +28,7 @@ class GeonamesControllerTest extends ControllerTestCase {
     public function testAnonTypeahead() : void {
         $crawler = $this->client->request('GET', '/geonames/typeahead?q=name');
         $this->assertSame(302, $this->client->getResponse()->getStatusCode());
-        $this->assertSame('text/html; charset=UTF-8', $this->client->getResponse()->headers->get('Content-Type'));
+        $this->assertSame('text/html; charset=utf-8', $this->client->getResponse()->headers->get('Content-Type'));
         $this->assertStringContainsStringIgnoringCase('Redirecting', $this->client->getResponse()->getContent());
     }
 
