@@ -22,7 +22,7 @@ services:
 
   app:
     container_name: wphp_app
-    # image: dhil/wphp
+    # image: ghcr.io/sfu-dhil/wphp
     build:
       context: .
       target: wphp

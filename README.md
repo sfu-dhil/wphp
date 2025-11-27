@@ -1,3 +1,7 @@
+[![Docker Image Latest Badge](https://ghcr-badge.egpl.dev/sfu-dhil/wphp/latest_tag?trim=major&label=latest)](https://github.com/sfu-dhil/wphp/pkgs/container/wphp)
+[![Docker Image Size badge](https://ghcr-badge.egpl.dev/sfu-dhil/wphp/size)](https://github.com/sfu-dhil/wphp/pkgs/container/wphp)
+
+
 # Women's Print History Project
 
 [Women's Print History Project](https://womensprinthistoryproject.com/) (affectionately known as WPHP) is a PHP application written using the [Symfony Framework](https://symfony.com/). It is a digital tool for collecting data about women in the print and publishing industry in England,

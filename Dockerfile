@@ -33,7 +33,7 @@ RUN yarn --production \
     && yarn cache clean
 
 
-FROM dhilsfu/symfony-base:php-8.2-apache AS wphp
+FROM ghcr.io/sfu-dhil/symfony-base:php-8.2-apache AS wphp
 ENV GIT_REPO=https://github.com/sfu-dhil/wphp
 
 # basic deps installer (no script/plugings)
