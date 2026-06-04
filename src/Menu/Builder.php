@@ -210,6 +210,12 @@ class Builder extends AbstractBuilder {
                     'class' => 'dropdown-item link-dark',
                 ],
             ]);
+            $browse->addChild('Firms with Unknown Gender and No Attached Titles', [
+                'route' => 'report_firms_unknown_gender_no_titles',
+                'linkAttributes' => [
+                    'class' => 'dropdown-item link-dark',
+                ],
+            ]);
             $browse->addChild('Persons to Check', [
                 'route' => 'report_persons_fc',
                 'linkAttributes' => [

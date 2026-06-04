@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Entity\Title;
+use App\Entity\Firm;
 use App\Form\Title\TitleCheckFilterType;
 use App\Form\Title\TitleSourceFilterType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -195,6 +196,33 @@ class ReportController extends AbstractController implements PaginatorAwareInter
 
         return [
             'heading' => 'Firms to Final Check',
+            'firms' => $firms,
+            'count' => $firms->getTotalItemCount(),
+        ];
+    }
+
+    /**
+     * List firms that have unknown gender and no titles.
+     *
+     * @return array<string,mixed>     */
+    #[Route(path: '/firms_unknown_gender_no_titles', name: 'report_firms_unknown_gender_no_titles', methods: ['GET'])]
+    #[Template]
+    public function firmsUnknownGenderNoTitles(Request $request, EntityManagerInterface $em) {
+        $qb = $em->createQueryBuilder();
+        $qb->select('firm')
+            ->addSelect('COUNT(tfr.id) AS HIDDEN title_count')
+            ->from(Firm::class, 'firm')
+            ->leftJoin('firm.titleFirmroles', 'tfr')
+            ->where('firm.gender = \'U\'')
+            ->andHaving('title_count = 0')
+            ->groupBy('firm.id')
+        ;
+        $firms = $this->paginator->paginate($qb, $request->query->getInt('page', 1), 25, [
+            'wrap-queries' => true
+        ]);
+
+        return [
+            'heading' => 'Firms with Unknown Gender and No Attached Titles',
             'firms' => $firms,
             'count' => $firms->getTotalItemCount(),
         ];
