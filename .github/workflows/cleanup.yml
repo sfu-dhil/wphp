@@ -1,0 +1,26 @@
+name: Cleanup Old ghcr.io Images
+
+on:
+  # Runs every Saturday@3:00am
+  schedule:
+  - cron: '0 3 * * 6'
+    timezone: 'America/Vancouver'
+  # Allows manual triggering
+  workflow_dispatch:
+
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+    steps:
+    - name: Delete untagged/partial/orphaned images older than 30 days
+      uses: dataaxiom/ghcr-cleanup-action@v1
+      with:
+        delete-untagged: true
+        delete-ghost-images: true
+        delete-partial-images: true
+        delete-orphaned-images: true
+        older-than: 30 days
+        validate: true
